@@ -20,11 +20,14 @@ jobs:
     runs-on: ubuntu-latest
     environment: prod
     steps:
-
-      - name: Set DEPLOY_PATH with default
-        run: |
-          DEPLOY_PATH="${DEPLOY_PATH:-./dist}"
-          echo "DEPLOY_PATH=$DEPLOY_PATH" >> $GITHUB_ENV
+    - name: Debug OIDC info
+      run: |
+        echo "GITHUB_REPOSITORY=${GITHUB_REPOSITORY}"
+        echo "GITHUB_REF=${GITHUB_REF}"
+          - name: Set DEPLOY_PATH with default
+            run: |
+              DEPLOY_PATH="${DEPLOY_PATH:-./dist}"
+              echo "DEPLOY_PATH=$DEPLOY_PATH" >> $GITHUB_ENV
 
       - uses: actions/checkout@v3
 
