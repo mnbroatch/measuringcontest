@@ -1,0 +1,38 @@
+name: Deploy to S3 on vX.X.X Tag
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AWS_ACCOUNT_ID: ${{ vars.AWS_ACCOUNT_ID }}
+  AWS_ROLE_NAME: ${{ vars.AWS_ROLE_NAME }}
+  AWS_REGION: ${{ vars.AWS_REGION }}
+  S3_BUCKET_NAME: ${{ vars.S3_BUCKET_NAME }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+
+      - name: Set DEPLOY_PATH with default
+        run: |
+          DEPLOY_PATH="${DEPLOY_PATH:-./dist}"
+          echo "DEPLOY_PATH=$DEPLOY_PATH" >> $GITHUB_ENV
+
+      - uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/${{ env.AWS_ROLE_NAME }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Sync files to S3
+        run: aws s3 sync $DEPLOY_PATH s3://${{ env.S3_BUCKET_NAME }} --delete
