@@ -968,7 +968,9 @@ var react_dom = __webpack_require__(961);
 function App() {
   return /*#__PURE__*/react.createElement("div", {
     className: "content"
-  }, "Hello");
+  }, "Hello", /*#__PURE__*/react.createElement("a", {
+    href: "https://auth.measuringcontest.com/login?client_id=lmckmqd7bndat4ot0ajl7u2uk&response_type=code&scope=email+openid+profile&redirect_uri=https://measuringcontest.com"
+  }, "Login with Google"));
 }
 // EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
 var injectStylesIntoStyleTag = __webpack_require__(72);
