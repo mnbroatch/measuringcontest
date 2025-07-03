@@ -11,7 +11,7 @@ permissions:
 
 env:
   AWS_ACCOUNT_ID: ${{ vars.AWS_ACCOUNT_ID }}
-  AWS_ROLE_NAME: ${{ vars.AWS_ROLE_NAME }}
+  AWS_DYNAMO_DB_ROLE_NAME: ${{ vars.AWS_DYNAMO_DB_ROLE_NAME }}
   AWS_REGION: ${{ vars.AWS_REGION }}
 
 jobs:
@@ -32,7 +32,7 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/${{ env.AWS_ROLE_NAME }}
+          role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/${{ env.AWS_DYNAMO_DB_ROLE_NAME }}
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Install Node.js dependencies
