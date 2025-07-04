@@ -1,20 +1,28 @@
 import React from 'react'
-import authConstants from "./constants/auth.js";
+import { Amplify } from '@aws-amplify/core';
+import {
+  cognitoConfig,
+} from "./constants/auth.js";
 import useCognitoAuth from "./hooks/useCognitoAuth.js";
 
+Amplify.configure(cognitoConfig);
+
 export default function App () {
-  const auth = useCognitoAuth({
-    ...authConstants,
-    Storage: localStorage
-  })
+  const auth = useCognitoAuth()
 
   console.log('auth', auth)
 
   return (
     <div className="content">
-      <a href="https://auth.measuringcontest.com/login?client_id=lmckmqd7bndat4ot0ajl7u2uk&response_type=code&scope=email+openid+profile&redirect_uri=https://measuringcontest.com">
+      <button onClick={auth.login}>
         Login with Google
-      </a>
+      </button>
+      <button onClick={auth.logout}>
+        Logout
+      </button>
+      <div>
+        {auth.isAuthenticated}
+      </div>
     </div>
   )
 }

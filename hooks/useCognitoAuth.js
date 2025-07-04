@@ -1,54 +1,53 @@
-import { useState, useEffect, useCallback } from "react";
-import { CognitoAuth } from "amazon-cognito-auth-js";
+import { useState, useEffect } from "react";
+import { signInWithRedirect, handleRedirect, signOut, getCurrentUser, fetchAuthSession } from '@aws-amplify/auth';
 
-export default function useCognitoAuth(authData, storage = localStorage) {
-  const [auth, setAuth] = useState(null);
+export default function useCognitoAuth() {
   const [loading, setLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  useEffect(() => {
-    const authInstance = new CognitoAuth(authData);
-
-    authInstance.userhandler = {
-      onSuccess: function (result) {
-        setLoading(false);
-        console.log("Login success!", result);
-      },
-      onFailure: function (err) {
-        console.error("Login error", err);
-        setLoading(false);
-      },
-    };
-
-    setAuth(authInstance);
-
-    if (window.location.href.includes("#id_token")) {
-      // we are coming from Managed Login redirect
-      authInstance.parseCognitoWebResponse(window.location.href);
-    } else {
+useEffect(() => {
+  const checkAuth = async () => {
+    try {
+      console.log('Calling getCurrentUser...');
+      const user = await getCurrentUser();
+      console.log('? getCurrentUser succeeded:', user);
+      setIsAuthenticated(true);
+    } catch (error) {
+      console.error('? getCurrentUser failed:', error);
+      setIsAuthenticated(false);
+    } finally {
       setLoading(false);
     }
-  }, []);
+  };
 
-  const login = () => {
-    auth?.getSession(); // Triggers redirect to Managed Login
-  }
+  checkAuth();
+}, []);
 
-  const logout = () => {
-    auth?.signOut();
-  }
+  const login = async () => {
+    await signInWithRedirect(); // This will redirect to the hosted UI
+  };
 
-  const session = auth?.getSignInUserSession();
-  const idToken = session?.isValid() ? session.getIdToken().getJwtToken() : null;
+  const logout = async () => {
+    await signOut();
+    setIsAuthenticated(false);
+  };
 
-  const getIdToken = () => {
-    const session = auth?.getSignInUserSession();
-    return (session?.isValid() && session.getIdToken().getJwtToken()) || null
-  }
+  const getIdToken = async () => {
+    try {
+      const { tokens } = await fetchAuthSession();
+      return tokens.idToken.toString();
+    } catch (error) {
+      return null;
+    }
+  };
+
+  console.log('getCurrentUser', getCurrentUser)
 
   return {
     getIdToken,
     login,
     logout,
     loading,
+    isAuthenticated,
   };
 }
