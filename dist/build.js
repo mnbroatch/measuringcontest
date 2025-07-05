@@ -6650,7 +6650,6 @@ var USER_POOL_ID = "us-west-1_G8hKy1gmb";
 var AUTH_DOMAIN = "auth.measuringcontest.com";
 var AUTH_SCOPES = ["openid", "email", "profile"];
 var COGNITO_RESPONSE_TYPE = 'code';
-var AWS_REGION = 'us-west-1';
 var cognitoConfig = {
   Auth: {
     Cognito: {
@@ -8751,17 +8750,14 @@ function useCognitoAuth() {
   (0,react.useEffect)(function () {
     var checkAuth = /*#__PURE__*/function () {
       var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
-        var user, _t;
+        var _t;
         return _regenerator().w(function (_context) {
           while (1) switch (_context.n) {
             case 0:
               _context.p = 0;
-              console.log('Calling getCurrentUser...');
               _context.n = 1;
               return getCurrentUser_getCurrentUser();
             case 1:
-              user = _context.v;
-              console.log('? getCurrentUser succeeded:', user);
               setIsAuthenticated(true);
               _context.n = 3;
               break;
@@ -8835,6 +8831,8 @@ function useCognitoAuth() {
           case 2:
             _context4.p = 2;
             _t2 = _context4.v;
+            console.log('error getting id token:');
+            console.error(_t2);
             return _context4.a(2, null);
         }
       }, _callee4, null, [[0, 2]]);
@@ -8843,16 +8841,160 @@ function useCognitoAuth() {
       return _ref4.apply(this, arguments);
     };
   }();
-  console.log('getCurrentUser', getCurrentUser_getCurrentUser);
+  var getUserId = /*#__PURE__*/function () {
+    var _ref5 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5() {
+      var _yield$fetchAuthSessi2, tokens, payload, _t3;
+      return _regenerator().w(function (_context5) {
+        while (1) switch (_context5.n) {
+          case 0:
+            _context5.p = 0;
+            _context5.n = 1;
+            return fetchAuthSession_fetchAuthSession();
+          case 1:
+            _yield$fetchAuthSessi2 = _context5.v;
+            tokens = _yield$fetchAuthSessi2.tokens;
+            payload = JSON.parse(atob(tokens.idToken.toString().split('.')[1]));
+            return _context5.a(2, payload.sub);
+          case 2:
+            _context5.p = 2;
+            _t3 = _context5.v;
+            console.log('error getting user id:');
+            console.error(_t3);
+            return _context5.a(2, null);
+        }
+      }, _callee5, null, [[0, 2]]);
+    }));
+    return function getUserId() {
+      return _ref5.apply(this, arguments);
+    };
+  }();
   return {
     getIdToken: getIdToken,
+    getUserId: getUserId,
     login: login,
     logout: logout,
     loading: loading,
     isAuthenticated: isAuthenticated
   };
 }
+;// ./utils/make-request.js
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+var _excluded = ["method", "headers", "body"];
+function make_request_regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return make_request_regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (make_request_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, make_request_regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, make_request_regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), make_request_regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", make_request_regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), make_request_regeneratorDefine2(u), make_request_regeneratorDefine2(u, o, "Generator"), make_request_regeneratorDefine2(u, n, function () { return this; }), make_request_regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (make_request_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function make_request_regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } make_request_regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { if (r) i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n;else { var o = function o(r, n) { make_request_regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); }; o("next", 0), o("throw", 1), o("return", 2); } }, make_request_regeneratorDefine2(e, r, n, t); }
+function make_request_ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? make_request_ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : make_request_ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
+function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
+function make_request_asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function make_request_asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { make_request_asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { make_request_asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function makeRequest(_x) {
+  return _makeRequest.apply(this, arguments);
+}
+function _makeRequest() {
+  _makeRequest = make_request_asyncToGenerator(/*#__PURE__*/make_request_regenerator().m(function _callee(url) {
+    var options,
+      _options$method,
+      method,
+      _options$headers,
+      headers,
+      body,
+      restOptions,
+      fetchHeaders,
+      fetchOptions,
+      response,
+      data,
+      contentType,
+      error,
+      _args = arguments;
+    return make_request_regenerator().w(function (_context) {
+      while (1) switch (_context.n) {
+        case 0:
+          options = _args.length > 1 && _args[1] !== undefined ? _args[1] : {};
+          _options$method = options.method, method = _options$method === void 0 ? 'GET' : _options$method, _options$headers = options.headers, headers = _options$headers === void 0 ? {} : _options$headers, body = options.body, restOptions = _objectWithoutProperties(options, _excluded);
+          fetchHeaders = new Headers(headers); // Set Content-Type for JSON body if not set and body is present
+          if (body && !fetchHeaders.has('Content-Type')) {
+            fetchHeaders.set('Content-Type', 'application/json');
+          }
+
+          // Prepare fetch options
+          fetchOptions = _objectSpread({
+            method: method,
+            headers: fetchHeaders
+          }, restOptions); // If body is an object (not FormData), stringify it
+          if (body && !(body instanceof FormData)) {
+            fetchOptions.body = JSON.stringify(body);
+          } else if (body) {
+            // If FormData or other body types, send as-is
+            fetchOptions.body = body;
+          }
+
+          // Make the fetch call
+          _context.n = 1;
+          return fetch(url, fetchOptions);
+        case 1:
+          response = _context.v;
+          contentType = response.headers.get('content-type') || '';
+          if (!contentType.includes('application/json')) {
+            _context.n = 3;
+            break;
+          }
+          _context.n = 2;
+          return response.json();
+        case 2:
+          data = _context.v;
+          _context.n = 5;
+          break;
+        case 3:
+          _context.n = 4;
+          return response.text();
+        case 4:
+          data = _context.v;
+        case 5:
+          if (response.ok) {
+            _context.n = 6;
+            break;
+          }
+          error = new Error("HTTP ".concat(response.status, " ").concat(response.statusText));
+          error.status = response.status;
+          error.statusText = response.statusText;
+          error.data = data;
+          throw error;
+        case 6:
+          return _context.a(2, data);
+      }
+    }, _callee);
+  }));
+  return _makeRequest.apply(this, arguments);
+}
+;// ./utils/make-authenticated-request.js
+function make_authenticated_request_typeof(o) { "@babel/helpers - typeof"; return make_authenticated_request_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, make_authenticated_request_typeof(o); }
+function make_authenticated_request_ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function make_authenticated_request_objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? make_authenticated_request_ownKeys(Object(t), !0).forEach(function (r) { make_authenticated_request_defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : make_authenticated_request_ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function make_authenticated_request_defineProperty(e, r, t) { return (r = make_authenticated_request_toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function make_authenticated_request_toPropertyKey(t) { var i = make_authenticated_request_toPrimitive(t, "string"); return "symbol" == make_authenticated_request_typeof(i) ? i : i + ""; }
+function make_authenticated_request_toPrimitive(t, r) { if ("object" != make_authenticated_request_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != make_authenticated_request_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+function makeAuthenticatedRequest(url, token) {
+  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  if (!token) {
+    throw new Error("authenticated request attempted with no token: ".concat(url));
+  }
+  var headers = new Headers(options.headers);
+  headers.set('Authorization', "Bearer ".concat(token));
+  return makeRequest(url, make_authenticated_request_objectSpread(make_authenticated_request_objectSpread({}, options), {}, {
+    headers: headers
+  }));
+}
 ;// ./app.js
+function app_regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return app_regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (app_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, app_regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, app_regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), app_regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", app_regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), app_regeneratorDefine2(u), app_regeneratorDefine2(u, o, "Generator"), app_regeneratorDefine2(u, n, function () { return this; }), app_regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (app_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function app_regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } app_regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { if (r) i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n;else { var o = function o(r, n) { app_regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); }; o("next", 0), o("throw", 1), o("return", 2); } }, app_regeneratorDefine2(e, r, n, t); }
+function app_asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function app_asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { app_asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { app_asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+
 
 
 
@@ -8860,14 +9002,45 @@ function useCognitoAuth() {
 DefaultAmplify.configure(cognitoConfig);
 function App() {
   var auth = useCognitoAuth();
-  console.log('auth.isAuthenticated', auth.isAuthenticated);
+  var putNumberInCloud = /*#__PURE__*/function () {
+    var _ref = app_asyncToGenerator(/*#__PURE__*/app_regenerator().m(function _callee() {
+      var idToken, userId;
+      return app_regenerator().w(function (_context) {
+        while (1) switch (_context.n) {
+          case 0:
+            _context.n = 1;
+            return auth.getIdToken();
+          case 1:
+            idToken = _context.v;
+            _context.n = 2;
+            return auth.getUserId();
+          case 2:
+            userId = _context.v;
+            makeAuthenticatedRequest('https://api.measuringcontest.com', idToken, {
+              method: 'PUT',
+              body: {
+                id: userId,
+                name: Date.now()
+              }
+            });
+          case 3:
+            return _context.a(2);
+        }
+      }, _callee);
+    }));
+    return function putNumberInCloud() {
+      return _ref.apply(this, arguments);
+    };
+  }();
   return /*#__PURE__*/react.createElement("div", {
     className: "content"
   }, !auth.loading && !auth.isAuthenticated && /*#__PURE__*/react.createElement("button", {
     onClick: auth.login
-  }, "Login with Google"), !auth.loading && auth.isAuthenticated && /*#__PURE__*/react.createElement("button", {
+  }, "Login with Google"), !auth.loading && auth.isAuthenticated && /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement("button", {
     onClick: auth.logout
-  }, "Logout"));
+  }, "Logout"), /*#__PURE__*/react.createElement("button", {
+    onClick: putNumberInCloud
+  }, "put now in cloud")));
 }
 // EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
 var injectStylesIntoStyleTag = __webpack_require__(72);

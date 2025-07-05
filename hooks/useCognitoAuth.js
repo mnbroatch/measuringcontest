@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { signInWithRedirect, handleRedirect, signOut, getCurrentUser, fetchAuthSession } from '@aws-amplify/auth';
+import { signInWithRedirect, signOut, getCurrentUser, fetchAuthSession, fetchUserAttributes } from '@aws-amplify/auth';
 
 export default function useCognitoAuth() {
   const [loading, setLoading] = useState(true);
@@ -8,9 +8,7 @@ export default function useCognitoAuth() {
 useEffect(() => {
   const checkAuth = async () => {
     try {
-      console.log('Calling getCurrentUser...');
-      const user = await getCurrentUser();
-      console.log('? getCurrentUser succeeded:', user);
+      await getCurrentUser();
       setIsAuthenticated(true);
     } catch (error) {
       console.error('? getCurrentUser failed:', error);
@@ -37,14 +35,27 @@ useEffect(() => {
       const { tokens } = await fetchAuthSession();
       return tokens.idToken.toString();
     } catch (error) {
+      console.log('error getting id token:');
+      console.error(error);
       return null;
     }
   };
 
-  console.log('getCurrentUser', getCurrentUser)
+  const getUserId = async () => {
+    try {
+      const { tokens } = await fetchAuthSession();
+      const payload = JSON.parse(atob(tokens.idToken.toString().split('.')[1]));
+      return payload.sub;
+    } catch (error) {
+      console.log('error getting user id:');
+      console.error(error);
+      return null;
+    }
+  };
 
   return {
     getIdToken,
+    getUserId,
     login,
     logout,
     loading,
