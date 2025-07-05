@@ -963,6 +963,316 @@ var __webpack_exports__ = {};
 var react = __webpack_require__(540);
 // EXTERNAL MODULE: ./node_modules/react-dom/index.js
 var react_dom = __webpack_require__(961);
+;// ./node_modules/@aws-amplify/core/node_modules/js-cookie/dist/js.cookie.mjs
+/*! js-cookie v3.0.5 | MIT */
+/* eslint-disable no-var */
+function js_cookie_assign (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];
+    for (var key in source) {
+      target[key] = source[key];
+    }
+  }
+  return target
+}
+/* eslint-enable no-var */
+
+/* eslint-disable no-var */
+var defaultConverter = {
+  read: function (value) {
+    if (value[0] === '"') {
+      value = value.slice(1, -1);
+    }
+    return value.replace(/(%[\dA-F]{2})+/gi, decodeURIComponent)
+  },
+  write: function (value) {
+    return encodeURIComponent(value).replace(
+      /%(2[346BF]|3[AC-F]|40|5[BDE]|60|7[BCD])/g,
+      decodeURIComponent
+    )
+  }
+};
+/* eslint-enable no-var */
+
+/* eslint-disable no-var */
+
+function init (converter, defaultAttributes) {
+  function set (name, value, attributes) {
+    if (typeof document === 'undefined') {
+      return
+    }
+
+    attributes = js_cookie_assign({}, defaultAttributes, attributes);
+
+    if (typeof attributes.expires === 'number') {
+      attributes.expires = new Date(Date.now() + attributes.expires * 864e5);
+    }
+    if (attributes.expires) {
+      attributes.expires = attributes.expires.toUTCString();
+    }
+
+    name = encodeURIComponent(name)
+      .replace(/%(2[346B]|5E|60|7C)/g, decodeURIComponent)
+      .replace(/[()]/g, escape);
+
+    var stringifiedAttributes = '';
+    for (var attributeName in attributes) {
+      if (!attributes[attributeName]) {
+        continue
+      }
+
+      stringifiedAttributes += '; ' + attributeName;
+
+      if (attributes[attributeName] === true) {
+        continue
+      }
+
+      // Considers RFC 6265 section 5.2:
+      // ...
+      // 3.  If the remaining unparsed-attributes contains a %x3B (";")
+      //     character:
+      // Consume the characters of the unparsed-attributes up to,
+      // not including, the first %x3B (";") character.
+      // ...
+      stringifiedAttributes += '=' + attributes[attributeName].split(';')[0];
+    }
+
+    return (document.cookie =
+      name + '=' + converter.write(value, name) + stringifiedAttributes)
+  }
+
+  function get (name) {
+    if (typeof document === 'undefined' || (arguments.length && !name)) {
+      return
+    }
+
+    // To prevent the for loop in the first place assign an empty array
+    // in case there are no cookies at all.
+    var cookies = document.cookie ? document.cookie.split('; ') : [];
+    var jar = {};
+    for (var i = 0; i < cookies.length; i++) {
+      var parts = cookies[i].split('=');
+      var value = parts.slice(1).join('=');
+
+      try {
+        var found = decodeURIComponent(parts[0]);
+        jar[found] = converter.read(value, found);
+
+        if (name === found) {
+          break
+        }
+      } catch (e) {}
+    }
+
+    return name ? jar[name] : jar
+  }
+
+  return Object.create(
+    {
+      set,
+      get,
+      remove: function (name, attributes) {
+        set(
+          name,
+          '',
+          js_cookie_assign({}, attributes, {
+            expires: -1
+          })
+        );
+      },
+      withAttributes: function (attributes) {
+        return init(this.converter, js_cookie_assign({}, this.attributes, attributes))
+      },
+      withConverter: function (converter) {
+        return init(js_cookie_assign({}, this.converter, converter), this.attributes)
+      }
+    },
+    {
+      attributes: { value: Object.freeze(defaultAttributes) },
+      converter: { value: Object.freeze(converter) }
+    }
+  )
+}
+
+var api = init(defaultConverter, { path: '/' });
+/* eslint-enable no-var */
+
+
+
+;// ./node_modules/@aws-amplify/core/dist/esm/storage/CookieStorage.mjs
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+class CookieStorage {
+    constructor(data = {}) {
+        const { path, domain, expires, sameSite, secure } = data;
+        this.domain = domain;
+        this.path = path || '/';
+        this.expires = Object.prototype.hasOwnProperty.call(data, 'expires')
+            ? expires
+            : 365;
+        this.secure = Object.prototype.hasOwnProperty.call(data, 'secure')
+            ? secure
+            : true;
+        if (Object.prototype.hasOwnProperty.call(data, 'sameSite')) {
+            if (!sameSite || !['strict', 'lax', 'none'].includes(sameSite)) {
+                throw new Error('The sameSite value of cookieStorage must be "lax", "strict" or "none".');
+            }
+            if (sameSite === 'none' && !this.secure) {
+                throw new Error('sameSite = None requires the Secure attribute in latest browser versions.');
+            }
+            this.sameSite = sameSite;
+        }
+    }
+    async setItem(key, value) {
+        api.set(key, value, this.getData());
+    }
+    async getItem(key) {
+        const item = api.get(key);
+        return item ?? null;
+    }
+    async removeItem(key) {
+        api.remove(key, this.getData());
+    }
+    async clear() {
+        const cookie = api.get();
+        const promises = Object.keys(cookie).map(key => this.removeItem(key));
+        await Promise.all(promises);
+    }
+    getData() {
+        return {
+            path: this.path,
+            expires: this.expires,
+            domain: this.domain,
+            secure: this.secure,
+            ...(this.sameSite && { sameSite: this.sameSite }),
+        };
+    }
+}
+
+
+//# sourceMappingURL=CookieStorage.mjs.map
+
+;// ./node_modules/@aws-amplify/core/dist/esm/types/errors.mjs
+var AmplifyErrorCode;
+(function (AmplifyErrorCode) {
+    AmplifyErrorCode["NoEndpointId"] = "NoEndpointId";
+    AmplifyErrorCode["PlatformNotSupported"] = "PlatformNotSupported";
+    AmplifyErrorCode["Unknown"] = "Unknown";
+    AmplifyErrorCode["NetworkError"] = "NetworkError";
+})(AmplifyErrorCode || (AmplifyErrorCode = {}));
+
+
+//# sourceMappingURL=errors.mjs.map
+
+;// ./node_modules/@aws-amplify/core/dist/esm/errors/AmplifyError.mjs
+class AmplifyError extends Error {
+    /**
+     *  Constructs an AmplifyError.
+     *
+     * @param message text that describes the main problem.
+     * @param underlyingError the underlying cause of the error.
+     * @param recoverySuggestion suggestion to recover from the error.
+     *
+     */
+    constructor({ message, name, recoverySuggestion, underlyingError, metadata, }) {
+        super(message);
+        this.name = name;
+        this.underlyingError = underlyingError;
+        this.recoverySuggestion = recoverySuggestion;
+        if (metadata) {
+            // If metadata exists, explicitly only record the following properties.
+            const { extendedRequestId, httpStatusCode, requestId } = metadata;
+            this.metadata = { extendedRequestId, httpStatusCode, requestId };
+        }
+        // Hack for making the custom error class work when transpiled to es5
+        // TODO: Delete the following 2 lines after we change the build target to >= es2015
+        this.constructor = AmplifyError;
+        Object.setPrototypeOf(this, AmplifyError.prototype);
+    }
+}
+
+
+//# sourceMappingURL=AmplifyError.mjs.map
+
+;// ./node_modules/@aws-amplify/core/dist/esm/errors/PlatformNotSupportedError.mjs
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+class PlatformNotSupportedError extends AmplifyError {
+    constructor() {
+        super({
+            name: AmplifyErrorCode.PlatformNotSupported,
+            message: 'Function not supported on current platform',
+        });
+    }
+}
+
+
+//# sourceMappingURL=PlatformNotSupportedError.mjs.map
+
+;// ./node_modules/@aws-amplify/core/dist/esm/storage/KeyValueStorage.mjs
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+/**
+ * @internal
+ */
+class KeyValueStorage {
+    constructor(storage) {
+        this.storage = storage;
+    }
+    /**
+     * This is used to set a specific item in storage
+     * @param {string} key - the key for the item
+     * @param {object} value - the value
+     * @returns {string} value that was set
+     */
+    async setItem(key, value) {
+        if (!this.storage)
+            throw new PlatformNotSupportedError();
+        this.storage.setItem(key, value);
+    }
+    /**
+     * This is used to get a specific key from storage
+     * @param {string} key - the key for the item
+     * This is used to clear the storage
+     * @returns {string} the data item
+     */
+    async getItem(key) {
+        if (!this.storage)
+            throw new PlatformNotSupportedError();
+        return this.storage.getItem(key);
+    }
+    /**
+     * This is used to remove an item from storage
+     * @param {string} key - the key being set
+     * @returns {string} value - value that was deleted
+     */
+    async removeItem(key) {
+        if (!this.storage)
+            throw new PlatformNotSupportedError();
+        this.storage.removeItem(key);
+    }
+    /**
+     * This is used to clear the storage
+     * @returns {string} nothing
+     */
+    async clear() {
+        if (!this.storage)
+            throw new PlatformNotSupportedError();
+        this.storage.clear();
+    }
+}
+
+
+//# sourceMappingURL=KeyValueStorage.mjs.map
+
 ;// ./node_modules/@aws-amplify/core/dist/esm/constants.mjs
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
@@ -1168,35 +1478,218 @@ ConsoleLogger.BIND_ALL_LOG_LEVELS = false;
 
 //# sourceMappingURL=ConsoleLogger.mjs.map
 
-;// ./node_modules/@aws-amplify/core/dist/esm/errors/AmplifyError.mjs
-class AmplifyError extends Error {
-    /**
-     *  Constructs an AmplifyError.
-     *
-     * @param message text that describes the main problem.
-     * @param underlyingError the underlying cause of the error.
-     * @param recoverySuggestion suggestion to recover from the error.
-     *
-     */
-    constructor({ message, name, recoverySuggestion, underlyingError, metadata, }) {
-        super(message);
-        this.name = name;
-        this.underlyingError = underlyingError;
-        this.recoverySuggestion = recoverySuggestion;
-        if (metadata) {
-            // If metadata exists, explicitly only record the following properties.
-            const { extendedRequestId, httpStatusCode, requestId } = metadata;
-            this.metadata = { extendedRequestId, httpStatusCode, requestId };
+;// ./node_modules/@aws-amplify/core/dist/esm/storage/InMemoryStorage.mjs
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+/**
+ * @internal
+ */
+class InMemoryStorage {
+    constructor() {
+        this.storage = new Map();
+    }
+    get length() {
+        return this.storage.size;
+    }
+    key(index) {
+        if (index > this.length - 1) {
+            return null;
         }
-        // Hack for making the custom error class work when transpiled to es5
-        // TODO: Delete the following 2 lines after we change the build target to >= es2015
-        this.constructor = AmplifyError;
-        Object.setPrototypeOf(this, AmplifyError.prototype);
+        return Array.from(this.storage.keys())[index];
+    }
+    setItem(key, value) {
+        this.storage.set(key, value);
+    }
+    getItem(key) {
+        return this.storage.get(key) ?? null;
+    }
+    removeItem(key) {
+        this.storage.delete(key);
+    }
+    clear() {
+        this.storage.clear();
     }
 }
 
 
-//# sourceMappingURL=AmplifyError.mjs.map
+//# sourceMappingURL=InMemoryStorage.mjs.map
+
+;// ./node_modules/@aws-amplify/core/dist/esm/storage/utils.mjs
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+/**
+ * @internal
+ * @returns Either a reference to window.localStorage or an in-memory storage as fallback
+ */
+const logger = new ConsoleLogger('CoreStorageUtils');
+const getLocalStorageWithFallback = () => {
+    try {
+        // Attempt to use localStorage directly
+        if (typeof window !== 'undefined' && window.localStorage) {
+            return window.localStorage;
+        }
+    }
+    catch (e) {
+        // Handle any errors related to localStorage access
+        logger.info('localStorage not found. InMemoryStorage is used as a fallback.');
+    }
+    // Return in-memory storage as a fallback if localStorage is not accessible
+    return new InMemoryStorage();
+};
+/**
+ * @internal
+ * @returns Either a reference to window.sessionStorage or an in-memory storage as fallback
+ */
+const getSessionStorageWithFallback = () => {
+    try {
+        // Attempt to use sessionStorage directly
+        if (typeof window !== 'undefined' && window.sessionStorage) {
+            // Verify we can actually use it by testing access
+            window.sessionStorage.getItem('test');
+            return window.sessionStorage;
+        }
+        throw new Error('sessionStorage is not defined');
+    }
+    catch (e) {
+        // Handle any errors related to sessionStorage access
+        logger.info('sessionStorage not found. InMemoryStorage is used as a fallback.');
+        return new InMemoryStorage();
+    }
+};
+
+
+//# sourceMappingURL=utils.mjs.map
+
+;// ./node_modules/@aws-amplify/core/dist/esm/storage/DefaultStorage.mjs
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+/**
+ * @internal
+ */
+class DefaultStorage extends KeyValueStorage {
+    constructor() {
+        super(getLocalStorageWithFallback());
+    }
+}
+
+
+//# sourceMappingURL=DefaultStorage.mjs.map
+
+;// ./node_modules/@aws-amplify/core/dist/esm/storage/SessionStorage.mjs
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+/**
+ * @internal
+ */
+class SessionStorage extends KeyValueStorage {
+    constructor() {
+        super(getSessionStorageWithFallback());
+    }
+}
+
+
+//# sourceMappingURL=SessionStorage.mjs.map
+
+;// ./node_modules/@aws-amplify/core/dist/esm/storage/SyncKeyValueStorage.mjs
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+/**
+ * @internal
+ */
+class SyncKeyValueStorage {
+    constructor(storage) {
+        this._storage = storage;
+    }
+    get storage() {
+        if (!this._storage)
+            throw new PlatformNotSupportedError();
+        return this._storage;
+    }
+    /**
+     * This is used to set a specific item in storage
+     * @param {string} key - the key for the item
+     * @param {object} value - the value
+     * @returns {string} value that was set
+     */
+    setItem(key, value) {
+        this.storage.setItem(key, value);
+    }
+    /**
+     * This is used to get a specific key from storage
+     * @param {string} key - the key for the item
+     * This is used to clear the storage
+     * @returns {string} the data item
+     */
+    getItem(key) {
+        return this.storage.getItem(key);
+    }
+    /**
+     * This is used to remove an item from storage
+     * @param {string} key - the key being set
+     * @returns {string} value - value that was deleted
+     */
+    removeItem(key) {
+        this.storage.removeItem(key);
+    }
+    /**
+     * This is used to clear the storage
+     * @returns {string} nothing
+     */
+    clear() {
+        this.storage.clear();
+    }
+}
+
+
+//# sourceMappingURL=SyncKeyValueStorage.mjs.map
+
+;// ./node_modules/@aws-amplify/core/dist/esm/storage/SyncSessionStorage.mjs
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+/**
+ * @internal
+ */
+class SyncSessionStorage extends SyncKeyValueStorage {
+    constructor() {
+        super(getSessionStorageWithFallback());
+    }
+}
+
+
+//# sourceMappingURL=SyncSessionStorage.mjs.map
+
+;// ./node_modules/@aws-amplify/core/dist/esm/storage/index.mjs
+
+
+
+
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+const defaultStorage = new DefaultStorage();
+const sessionStorage = new SessionStorage();
+const syncSessionStorage = new SyncSessionStorage();
+const sharedInMemoryStorage = new KeyValueStorage(new InMemoryStorage());
+
+
+//# sourceMappingURL=index.mjs.map
 
 ;// ./node_modules/@aws-amplify/core/dist/esm/Hub/index.mjs
 
@@ -1210,7 +1703,7 @@ class AmplifyError extends Error {
 const AMPLIFY_SYMBOL = (typeof Symbol !== 'undefined'
     ? Symbol('amplify_default')
     : '@@amplify_default');
-const logger = new ConsoleLogger('Hub');
+const Hub_logger = new ConsoleLogger('Hub');
 class HubClass {
     constructor(name) {
         this.listeners = new Map();
@@ -1236,7 +1729,7 @@ class HubClass {
     _remove(channel, listener) {
         const holder = this.listeners.get(channel);
         if (!holder) {
-            logger.warn(`No listeners for ${channel}`);
+            Hub_logger.warn(`No listeners for ${channel}`);
             return;
         }
         this.listeners.set(channel, [
@@ -1248,7 +1741,7 @@ class HubClass {
             this.protectedChannels.indexOf(channel) > -1) {
             const hasAccess = ampSymbol === AMPLIFY_SYMBOL;
             if (!hasAccess) {
-                logger.warn(`WARNING: ${channel} is protected and dispatching on it can have unintended consequences`);
+                Hub_logger.warn(`WARNING: ${channel} is protected and dispatching on it can have unintended consequences`);
             }
         }
         const capsule = {
@@ -1261,7 +1754,7 @@ class HubClass {
             this._toListeners(capsule);
         }
         catch (e) {
-            logger.error(e);
+            Hub_logger.error(e);
         }
     }
     listen(channel, callback, listenerName = 'noname') {
@@ -1294,12 +1787,12 @@ class HubClass {
         const holder = this.listeners.get(channel);
         if (holder) {
             holder.forEach(listener => {
-                logger.debug(`Dispatching to ${channel} with `, payload);
+                Hub_logger.debug(`Dispatching to ${channel} with `, payload);
                 try {
                     listener.callback(capsule);
                 }
                 catch (e) {
-                    logger.error(e);
+                    Hub_logger.error(e);
                 }
             });
         }
@@ -2840,440 +3333,6 @@ const Amplify_Amplify = new AmplifyClass();
 
 //# sourceMappingURL=Amplify.mjs.map
 
-;// ./constants/auth.js
-var USER_POOL_CLIENT_ID = "lmckmqd7bndat4ot0ajl7u2uk";
-var USER_POOL_ID = "us-west-1_G8hKy1gmb";
-var AUTH_DOMAIN = "auth.measuringcontest.com";
-var AUTH_SCOPES = ["openid", "email", "profile"];
-var COGNITO_RESPONSE_TYPE = 'code';
-var AWS_REGION = 'us-west-1';
-var cognitoConfig = {
-  Auth: {
-    Cognito: {
-      userPoolId: USER_POOL_ID,
-      userPoolClientId: USER_POOL_CLIENT_ID,
-      loginWith: {
-        oauth: {
-          domain: AUTH_DOMAIN,
-          scopes: AUTH_SCOPES,
-          redirectSignIn: [window.origin],
-          redirectSignOut: [window.origin],
-          responseType: COGNITO_RESPONSE_TYPE
-        }
-      }
-    }
-  }
-};
-;// ./node_modules/@aws-amplify/core/dist/esm/utils/globalHelpers/index.mjs
-
-
-
-
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-const getCrypto = () => {
-    if (typeof window === 'object' && typeof window.crypto === 'object') {
-        return window.crypto;
-    }
-    // Next.js global polyfill
-    if (typeof crypto === 'object') {
-        return crypto;
-    }
-    throw new AmplifyError({
-        name: 'MissingPolyfill',
-        message: 'Cannot resolve the `crypto` function from the environment.',
-    });
-};
-const getBtoa = () => {
-    // browser
-    if (typeof window !== 'undefined' && typeof window.btoa === 'function') {
-        return window.btoa;
-    }
-    // Next.js global polyfill
-    if (typeof btoa === 'function') {
-        return btoa;
-    }
-    throw new AmplifyError({
-        name: 'Base64EncoderError',
-        message: 'Cannot resolve the `btoa` function from the environment.',
-    });
-};
-const getAtob = () => {
-    // browser
-    if (typeof window !== 'undefined' && typeof window.atob === 'function') {
-        return window.atob;
-    }
-    // Next.js global polyfill
-    if (typeof atob === 'function') {
-        return atob;
-    }
-    throw new AmplifyError({
-        name: 'Base64EncoderError',
-        message: 'Cannot resolve the `atob` function from the environment.',
-    });
-};
-
-
-//# sourceMappingURL=index.mjs.map
-
-;// ./node_modules/@aws-amplify/core/dist/esm/utils/convert/base64/base64Decoder.mjs
-
-
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-const base64Decoder = {
-    convert(input, options) {
-        let inputStr = input;
-        // urlSafe character replacement options conform to the base64 url spec
-        // https://datatracker.ietf.org/doc/html/rfc4648#page-7
-        if (options?.urlSafe) {
-            inputStr = inputStr.replace(/-/g, '+').replace(/_/g, '/');
-        }
-        return getAtob()(inputStr);
-    },
-};
-
-
-//# sourceMappingURL=base64Decoder.mjs.map
-
-;// ./node_modules/@aws-amplify/core/dist/esm/errors/createAssertionFunction.mjs
-
-
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-const createAssertionFunction = (errorMap, AssertionError = AmplifyError) => (assertion, name, additionalContext) => {
-    const { message, recoverySuggestion } = errorMap[name];
-    if (!assertion) {
-        throw new AssertionError({
-            name,
-            message: additionalContext
-                ? `${message} ${additionalContext}`
-                : message,
-            recoverySuggestion,
-        });
-    }
-};
-
-
-//# sourceMappingURL=createAssertionFunction.mjs.map
-
-;// ./node_modules/@aws-amplify/core/dist/esm/singleton/Auth/utils/errorHelpers.mjs
-
-
-
-
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-var errorHelpers_AuthConfigurationErrorCode;
-(function (AuthConfigurationErrorCode) {
-    AuthConfigurationErrorCode["AuthTokenConfigException"] = "AuthTokenConfigException";
-    AuthConfigurationErrorCode["AuthUserPoolAndIdentityPoolException"] = "AuthUserPoolAndIdentityPoolException";
-    AuthConfigurationErrorCode["AuthUserPoolException"] = "AuthUserPoolException";
-    AuthConfigurationErrorCode["InvalidIdentityPoolIdException"] = "InvalidIdentityPoolIdException";
-    AuthConfigurationErrorCode["OAuthNotConfigureException"] = "OAuthNotConfigureException";
-})(errorHelpers_AuthConfigurationErrorCode || (errorHelpers_AuthConfigurationErrorCode = {}));
-const authConfigurationErrorMap = {
-    [errorHelpers_AuthConfigurationErrorCode.AuthTokenConfigException]: {
-        message: 'Auth Token Provider not configured.',
-        recoverySuggestion: 'Make sure to call Amplify.configure in your app.',
-    },
-    [errorHelpers_AuthConfigurationErrorCode.AuthUserPoolAndIdentityPoolException]: {
-        message: 'Auth UserPool or IdentityPool not configured.',
-        recoverySuggestion: 'Make sure to call Amplify.configure in your app with UserPoolId and IdentityPoolId.',
-    },
-    [errorHelpers_AuthConfigurationErrorCode.AuthUserPoolException]: {
-        message: 'Auth UserPool not configured.',
-        recoverySuggestion: 'Make sure to call Amplify.configure in your app with userPoolId and userPoolClientId.',
-    },
-    [errorHelpers_AuthConfigurationErrorCode.InvalidIdentityPoolIdException]: {
-        message: 'Invalid identity pool id provided.',
-        recoverySuggestion: 'Make sure a valid identityPoolId is given in the config.',
-    },
-    [errorHelpers_AuthConfigurationErrorCode.OAuthNotConfigureException]: {
-        message: 'oauth param not configured.',
-        recoverySuggestion: 'Make sure to call Amplify.configure with oauth parameter in your app.',
-    },
-};
-const errorHelpers_assert = createAssertionFunction(authConfigurationErrorMap);
-
-
-//# sourceMappingURL=errorHelpers.mjs.map
-
-;// ./node_modules/@aws-amplify/core/dist/esm/singleton/Auth/utils/index.mjs
-
-
-
-
-
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-function utils_assertTokenProviderConfig(cognitoConfig) {
-    let assertionValid = true; // assume valid until otherwise proveed
-    if (!cognitoConfig) {
-        assertionValid = false;
-    }
-    else {
-        assertionValid =
-            !!cognitoConfig.userPoolId && !!cognitoConfig.userPoolClientId;
-    }
-    errorHelpers_assert(assertionValid, errorHelpers_AuthConfigurationErrorCode.AuthUserPoolException);
-}
-function assertOAuthConfig(cognitoConfig) {
-    const validOAuthConfig = !!cognitoConfig?.loginWith?.oauth?.domain &&
-        !!cognitoConfig?.loginWith?.oauth?.redirectSignOut &&
-        !!cognitoConfig?.loginWith?.oauth?.redirectSignIn &&
-        !!cognitoConfig?.loginWith?.oauth?.responseType;
-    errorHelpers_assert(validOAuthConfig, errorHelpers_AuthConfigurationErrorCode.OAuthNotConfigureException);
-}
-function assertIdentityPoolIdConfig(cognitoConfig) {
-    const validConfig = !!cognitoConfig?.identityPoolId;
-    assert(validConfig, AuthConfigurationErrorCode.InvalidIdentityPoolIdException);
-}
-/**
- * Decodes payload of JWT token
- *
- * @param {String} token A string representing a token to be decoded
- * @throws {@link Error} - Throws error when token is invalid or payload malformed.
- */
-function decodeJWT(token) {
-    const tokenParts = token.split('.');
-    if (tokenParts.length !== 3) {
-        throw new Error('Invalid token');
-    }
-    try {
-        const base64WithUrlSafe = tokenParts[1];
-        const base64 = base64WithUrlSafe.replace(/-/g, '+').replace(/_/g, '/');
-        const jsonStr = decodeURIComponent(base64Decoder
-            .convert(base64)
-            .split('')
-            .map(char => `%${`00${char.charCodeAt(0).toString(16)}`.slice(-2)}`)
-            .join(''));
-        const payload = JSON.parse(jsonStr);
-        return {
-            toString: () => token,
-            payload,
-        };
-    }
-    catch (err) {
-        throw new Error('Invalid token payload');
-    }
-}
-
-
-//# sourceMappingURL=index.mjs.map
-
-;// ./node_modules/@aws-amplify/auth/dist/esm/errors/AuthError.mjs
-
-
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-class AuthError_AuthError extends AmplifyError {
-    constructor(params) {
-        super(params);
-        // Hack for making the custom error class work when transpiled to es5
-        // TODO: Delete the following 2 lines after we change the build target to >= es2015
-        this.constructor = AuthError_AuthError;
-        Object.setPrototypeOf(this, AuthError_AuthError.prototype);
-    }
-}
-
-
-//# sourceMappingURL=AuthError.mjs.map
-
-;// ./node_modules/@aws-amplify/auth/dist/esm/errors/constants.mjs
-
-
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-const constants_USER_UNAUTHENTICATED_EXCEPTION = 'UserUnAuthenticatedException';
-const USER_ALREADY_AUTHENTICATED_EXCEPTION = 'UserAlreadyAuthenticatedException';
-const constants_DEVICE_METADATA_NOT_FOUND_EXCEPTION = 'DeviceMetadataNotFoundException';
-const AUTO_SIGN_IN_EXCEPTION = 'AutoSignInException';
-const INVALID_REDIRECT_EXCEPTION = 'InvalidRedirectException';
-const INVALID_APP_SCHEME_EXCEPTION = 'InvalidAppSchemeException';
-const INVALID_PREFERRED_REDIRECT_EXCEPTION = 'InvalidPreferredRedirectUrlException';
-const invalidRedirectException = new AuthError_AuthError({
-    name: INVALID_REDIRECT_EXCEPTION,
-    message: 'signInRedirect or signOutRedirect had an invalid format or was not found.',
-    recoverySuggestion: 'Please make sure the signIn/Out redirect in your oauth config is valid.',
-});
-const invalidAppSchemeException = new AuthError_AuthError({
-    name: INVALID_APP_SCHEME_EXCEPTION,
-    message: 'A valid non-http app scheme was not found in the config.',
-    recoverySuggestion: 'Please make sure a valid custom app scheme is present in the config.',
-});
-const invalidPreferredRedirectUrlException = new AuthError_AuthError({
-    name: INVALID_PREFERRED_REDIRECT_EXCEPTION,
-    message: 'The given preferredRedirectUrl does not match any items in the redirectSignOutUrls array from the config.',
-    recoverySuggestion: 'Please make sure a matching preferredRedirectUrl is provided.',
-});
-const INVALID_ORIGIN_EXCEPTION = 'InvalidOriginException';
-const invalidOriginException = new AuthError_AuthError({
-    name: INVALID_ORIGIN_EXCEPTION,
-    message: 'redirect is coming from a different origin. The oauth flow needs to be initiated from the same origin',
-    recoverySuggestion: 'Please call signInWithRedirect from the same origin.',
-});
-const OAUTH_SIGNOUT_EXCEPTION = 'OAuthSignOutException';
-const TOKEN_REFRESH_EXCEPTION = 'TokenRefreshException';
-const UNEXPECTED_SIGN_IN_INTERRUPTION_EXCEPTION = 'UnexpectedSignInInterruptionException';
-
-
-//# sourceMappingURL=constants.mjs.map
-
-;// ./node_modules/@aws-amplify/auth/dist/esm/providers/cognito/utils/types.mjs
-
-
-
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-function isTypeUserPoolConfig(authConfig) {
-    if (authConfig &&
-        authConfig.Cognito.userPoolId &&
-        authConfig.Cognito.userPoolClientId) {
-        return true;
-    }
-    return false;
-}
-function assertAuthTokens(tokens) {
-    if (!tokens || !tokens.accessToken) {
-        throw new AuthError_AuthError({
-            name: constants_USER_UNAUTHENTICATED_EXCEPTION,
-            message: 'User needs to be authenticated to call this API.',
-            recoverySuggestion: 'Sign in before calling this API again.',
-        });
-    }
-}
-function assertIdTokenInAuthTokens(tokens) {
-    if (!tokens || !tokens.idToken) {
-        throw new AuthError({
-            name: USER_UNAUTHENTICATED_EXCEPTION,
-            message: 'User needs to be authenticated to call this API.',
-            recoverySuggestion: 'Sign in before calling this API again.',
-        });
-    }
-}
-const oAuthTokenRefreshException = new AuthError_AuthError({
-    name: TOKEN_REFRESH_EXCEPTION,
-    message: `Token refresh is not supported when authenticated with the 'implicit grant' (token) oauth flow. 
-	Please change your oauth configuration to use 'code grant' flow.`,
-    recoverySuggestion: `Please logout and change your Amplify configuration to use "code grant" flow. 
-	E.g { responseType: 'code' }`,
-});
-const tokenRefreshException = new AuthError_AuthError({
-    name: constants_USER_UNAUTHENTICATED_EXCEPTION,
-    message: 'User needs to be authenticated to call this API.',
-    recoverySuggestion: 'Sign in before calling this API again.',
-});
-function assertAuthTokensWithRefreshToken(tokens) {
-    if (isAuthenticatedWithImplicitOauthFlow(tokens)) {
-        throw oAuthTokenRefreshException;
-    }
-    if (!isAuthenticatedWithRefreshToken(tokens)) {
-        throw tokenRefreshException;
-    }
-}
-function assertDeviceMetadata(deviceMetadata) {
-    if (!deviceMetadata ||
-        !deviceMetadata.deviceKey ||
-        !deviceMetadata.deviceGroupKey ||
-        !deviceMetadata.randomPassword) {
-        throw new AuthError({
-            name: DEVICE_METADATA_NOT_FOUND_EXCEPTION,
-            message: 'Either deviceKey, deviceGroupKey or secretPassword were not found during the sign-in process.',
-            recoverySuggestion: 'Make sure to not clear storage after calling the signIn API.',
-        });
-    }
-}
-const OAuthStorageKeys = {
-    inflightOAuth: 'inflightOAuth',
-    oauthSignIn: 'oauthSignIn',
-    oauthPKCE: 'oauthPKCE',
-    oauthState: 'oauthState',
-};
-function isAuthenticated(tokens) {
-    return tokens?.accessToken || tokens?.idToken;
-}
-function isAuthenticatedWithRefreshToken(tokens) {
-    return isAuthenticated(tokens) && tokens?.refreshToken;
-}
-function isAuthenticatedWithImplicitOauthFlow(tokens) {
-    return isAuthenticated(tokens) && !tokens?.refreshToken;
-}
-
-
-//# sourceMappingURL=types.mjs.map
-
-;// ./node_modules/@aws-amplify/auth/dist/esm/providers/cognito/apis/internal/getCurrentUser.mjs
-
-
-
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-const getCurrentUser = async (amplify) => {
-    const authConfig = amplify.getConfig().Auth?.Cognito;
-    utils_assertTokenProviderConfig(authConfig);
-    const tokens = await amplify.Auth.getTokens({ forceRefresh: false });
-    assertAuthTokens(tokens);
-    const { 'cognito:username': username, sub } = tokens.idToken?.payload ?? {};
-    const authUser = {
-        username: username,
-        userId: sub,
-    };
-    const signInDetails = getSignInDetailsFromTokens(tokens);
-    if (signInDetails) {
-        authUser.signInDetails = signInDetails;
-    }
-    return authUser;
-};
-function getSignInDetailsFromTokens(tokens) {
-    return tokens?.signInDetails;
-}
-
-
-//# sourceMappingURL=getCurrentUser.mjs.map
-
-;// ./node_modules/@aws-amplify/auth/dist/esm/providers/cognito/apis/getCurrentUser.mjs
-
-
-
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-/**
- * Gets the current user from the idToken.
- *
- * @param input -  The GetCurrentUserInput object.
- * @returns GetCurrentUserOutput
- * @throws - {@link InitiateAuthException} - Thrown when the service fails to refresh the tokens.
- * @throws AuthTokenConfigException - Thrown when the token provider config is invalid.
- */
-const getCurrentUser_getCurrentUser = async () => {
-    return getCurrentUser(Amplify_Amplify);
-};
-
-
-//# sourceMappingURL=getCurrentUser.mjs.map
-
-;// ./node_modules/@aws-amplify/core/dist/esm/utils/urlSafeEncode.mjs
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-function urlSafeEncode(str) {
-    return str
-        .split('')
-        .map(char => char.charCodeAt(0).toString(16).padStart(2, '0'))
-        .join('');
-}
-
-
-//# sourceMappingURL=urlSafeEncode.mjs.map
-
-;// ./node_modules/@aws-amplify/core/dist/esm/utils/isBrowser.mjs
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-const isBrowser = () => typeof window !== 'undefined' && typeof window.document !== 'undefined';
-
-
-//# sourceMappingURL=isBrowser.mjs.map
-
 ;// ./node_modules/@aws-amplify/core/dist/esm/Platform/types.mjs
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
@@ -3845,800 +3904,6 @@ const getAmplifyUserAgent = (customUserAgentDetails) => {
 
 //# sourceMappingURL=index.mjs.map
 
-;// ./node_modules/@aws-amplify/auth/dist/esm/utils/getAuthUserAgentValue.mjs
-
-
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-const getAuthUserAgentValue_getAuthUserAgentValue = (action, customUserAgentDetails) => getAmplifyUserAgent({
-    category: Category.Auth,
-    action,
-    ...customUserAgentDetails,
-});
-
-
-//# sourceMappingURL=getAuthUserAgentValue.mjs.map
-
-;// ./node_modules/@aws-amplify/core/dist/esm/types/errors.mjs
-var AmplifyErrorCode;
-(function (AmplifyErrorCode) {
-    AmplifyErrorCode["NoEndpointId"] = "NoEndpointId";
-    AmplifyErrorCode["PlatformNotSupported"] = "PlatformNotSupported";
-    AmplifyErrorCode["Unknown"] = "Unknown";
-    AmplifyErrorCode["NetworkError"] = "NetworkError";
-})(AmplifyErrorCode || (AmplifyErrorCode = {}));
-
-
-//# sourceMappingURL=errors.mjs.map
-
-;// ./node_modules/@aws-amplify/core/dist/esm/errors/PlatformNotSupportedError.mjs
-
-
-
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-class PlatformNotSupportedError extends AmplifyError {
-    constructor() {
-        super({
-            name: AmplifyErrorCode.PlatformNotSupported,
-            message: 'Function not supported on current platform',
-        });
-    }
-}
-
-
-//# sourceMappingURL=PlatformNotSupportedError.mjs.map
-
-;// ./node_modules/@aws-amplify/core/dist/esm/storage/KeyValueStorage.mjs
-
-
-
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-/**
- * @internal
- */
-class KeyValueStorage {
-    constructor(storage) {
-        this.storage = storage;
-    }
-    /**
-     * This is used to set a specific item in storage
-     * @param {string} key - the key for the item
-     * @param {object} value - the value
-     * @returns {string} value that was set
-     */
-    async setItem(key, value) {
-        if (!this.storage)
-            throw new PlatformNotSupportedError();
-        this.storage.setItem(key, value);
-    }
-    /**
-     * This is used to get a specific key from storage
-     * @param {string} key - the key for the item
-     * This is used to clear the storage
-     * @returns {string} the data item
-     */
-    async getItem(key) {
-        if (!this.storage)
-            throw new PlatformNotSupportedError();
-        return this.storage.getItem(key);
-    }
-    /**
-     * This is used to remove an item from storage
-     * @param {string} key - the key being set
-     * @returns {string} value - value that was deleted
-     */
-    async removeItem(key) {
-        if (!this.storage)
-            throw new PlatformNotSupportedError();
-        this.storage.removeItem(key);
-    }
-    /**
-     * This is used to clear the storage
-     * @returns {string} nothing
-     */
-    async clear() {
-        if (!this.storage)
-            throw new PlatformNotSupportedError();
-        this.storage.clear();
-    }
-}
-
-
-//# sourceMappingURL=KeyValueStorage.mjs.map
-
-;// ./node_modules/@aws-amplify/core/dist/esm/storage/InMemoryStorage.mjs
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-/**
- * @internal
- */
-class InMemoryStorage {
-    constructor() {
-        this.storage = new Map();
-    }
-    get length() {
-        return this.storage.size;
-    }
-    key(index) {
-        if (index > this.length - 1) {
-            return null;
-        }
-        return Array.from(this.storage.keys())[index];
-    }
-    setItem(key, value) {
-        this.storage.set(key, value);
-    }
-    getItem(key) {
-        return this.storage.get(key) ?? null;
-    }
-    removeItem(key) {
-        this.storage.delete(key);
-    }
-    clear() {
-        this.storage.clear();
-    }
-}
-
-
-//# sourceMappingURL=InMemoryStorage.mjs.map
-
-;// ./node_modules/@aws-amplify/core/dist/esm/storage/utils.mjs
-
-
-
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-/**
- * @internal
- * @returns Either a reference to window.localStorage or an in-memory storage as fallback
- */
-const utils_logger = new ConsoleLogger('CoreStorageUtils');
-const getLocalStorageWithFallback = () => {
-    try {
-        // Attempt to use localStorage directly
-        if (typeof window !== 'undefined' && window.localStorage) {
-            return window.localStorage;
-        }
-    }
-    catch (e) {
-        // Handle any errors related to localStorage access
-        utils_logger.info('localStorage not found. InMemoryStorage is used as a fallback.');
-    }
-    // Return in-memory storage as a fallback if localStorage is not accessible
-    return new InMemoryStorage();
-};
-/**
- * @internal
- * @returns Either a reference to window.sessionStorage or an in-memory storage as fallback
- */
-const getSessionStorageWithFallback = () => {
-    try {
-        // Attempt to use sessionStorage directly
-        if (typeof window !== 'undefined' && window.sessionStorage) {
-            // Verify we can actually use it by testing access
-            window.sessionStorage.getItem('test');
-            return window.sessionStorage;
-        }
-        throw new Error('sessionStorage is not defined');
-    }
-    catch (e) {
-        // Handle any errors related to sessionStorage access
-        utils_logger.info('sessionStorage not found. InMemoryStorage is used as a fallback.');
-        return new InMemoryStorage();
-    }
-};
-
-
-//# sourceMappingURL=utils.mjs.map
-
-;// ./node_modules/@aws-amplify/core/dist/esm/storage/DefaultStorage.mjs
-
-
-
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-/**
- * @internal
- */
-class DefaultStorage extends KeyValueStorage {
-    constructor() {
-        super(getLocalStorageWithFallback());
-    }
-}
-
-
-//# sourceMappingURL=DefaultStorage.mjs.map
-
-;// ./node_modules/@aws-amplify/core/dist/esm/storage/SessionStorage.mjs
-
-
-
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-/**
- * @internal
- */
-class SessionStorage extends KeyValueStorage {
-    constructor() {
-        super(getSessionStorageWithFallback());
-    }
-}
-
-
-//# sourceMappingURL=SessionStorage.mjs.map
-
-;// ./node_modules/@aws-amplify/core/dist/esm/storage/SyncKeyValueStorage.mjs
-
-
-
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-/**
- * @internal
- */
-class SyncKeyValueStorage {
-    constructor(storage) {
-        this._storage = storage;
-    }
-    get storage() {
-        if (!this._storage)
-            throw new PlatformNotSupportedError();
-        return this._storage;
-    }
-    /**
-     * This is used to set a specific item in storage
-     * @param {string} key - the key for the item
-     * @param {object} value - the value
-     * @returns {string} value that was set
-     */
-    setItem(key, value) {
-        this.storage.setItem(key, value);
-    }
-    /**
-     * This is used to get a specific key from storage
-     * @param {string} key - the key for the item
-     * This is used to clear the storage
-     * @returns {string} the data item
-     */
-    getItem(key) {
-        return this.storage.getItem(key);
-    }
-    /**
-     * This is used to remove an item from storage
-     * @param {string} key - the key being set
-     * @returns {string} value - value that was deleted
-     */
-    removeItem(key) {
-        this.storage.removeItem(key);
-    }
-    /**
-     * This is used to clear the storage
-     * @returns {string} nothing
-     */
-    clear() {
-        this.storage.clear();
-    }
-}
-
-
-//# sourceMappingURL=SyncKeyValueStorage.mjs.map
-
-;// ./node_modules/@aws-amplify/core/dist/esm/storage/SyncSessionStorage.mjs
-
-
-
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-/**
- * @internal
- */
-class SyncSessionStorage extends SyncKeyValueStorage {
-    constructor() {
-        super(getSessionStorageWithFallback());
-    }
-}
-
-
-//# sourceMappingURL=SyncSessionStorage.mjs.map
-
-;// ./node_modules/@aws-amplify/core/dist/esm/storage/index.mjs
-
-
-
-
-
-
-
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-const defaultStorage = new DefaultStorage();
-const sessionStorage = new SessionStorage();
-const syncSessionStorage = new SyncSessionStorage();
-const sharedInMemoryStorage = new KeyValueStorage(new InMemoryStorage());
-
-
-//# sourceMappingURL=index.mjs.map
-
-;// ./node_modules/@aws-amplify/auth/dist/esm/providers/cognito/tokenProvider/types.mjs
-const AuthTokenStorageKeys = {
-    accessToken: 'accessToken',
-    idToken: 'idToken',
-    oidcProvider: 'oidcProvider',
-    clockDrift: 'clockDrift',
-    refreshToken: 'refreshToken',
-    deviceKey: 'deviceKey',
-    randomPasswordKey: 'randomPasswordKey',
-    deviceGroupKey: 'deviceGroupKey',
-    signInDetails: 'signInDetails',
-    oauthMetadata: 'oauthMetadata',
-};
-
-
-//# sourceMappingURL=types.mjs.map
-
-;// ./node_modules/@aws-amplify/auth/dist/esm/providers/cognito/tokenProvider/errorHelpers.mjs
-
-
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-var TokenProviderErrorCode;
-(function (TokenProviderErrorCode) {
-    TokenProviderErrorCode["InvalidAuthTokens"] = "InvalidAuthTokens";
-})(TokenProviderErrorCode || (TokenProviderErrorCode = {}));
-const tokenValidationErrorMap = {
-    [TokenProviderErrorCode.InvalidAuthTokens]: {
-        message: 'Invalid tokens.',
-        recoverySuggestion: 'Make sure the tokens are valid.',
-    },
-};
-const tokenProvider_errorHelpers_assert = createAssertionFunction(tokenValidationErrorMap);
-
-
-//# sourceMappingURL=errorHelpers.mjs.map
-
-;// ./node_modules/@aws-amplify/auth/dist/esm/providers/cognito/tokenProvider/constants.mjs
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-const AUTH_KEY_PREFIX = 'CognitoIdentityServiceProvider';
-
-
-//# sourceMappingURL=constants.mjs.map
-
-;// ./node_modules/@aws-amplify/auth/dist/esm/providers/cognito/tokenProvider/TokenStore.mjs
-
-
-
-
-
-
-class DefaultTokenStore {
-    getKeyValueStorage() {
-        if (!this.keyValueStorage) {
-            throw new AuthError_AuthError({
-                name: 'KeyValueStorageNotFoundException',
-                message: 'KeyValueStorage was not found in TokenStore',
-            });
-        }
-        return this.keyValueStorage;
-    }
-    setKeyValueStorage(keyValueStorage) {
-        this.keyValueStorage = keyValueStorage;
-    }
-    setAuthConfig(authConfig) {
-        this.authConfig = authConfig;
-    }
-    async loadTokens() {
-        // TODO(v6): migration logic should be here
-        // Reading V5 tokens old format
-        try {
-            const authKeys = await this.getAuthKeys();
-            const accessTokenString = await this.getKeyValueStorage().getItem(authKeys.accessToken);
-            if (!accessTokenString) {
-                throw new AuthError_AuthError({
-                    name: 'NoSessionFoundException',
-                    message: 'Auth session was not found. Make sure to call signIn.',
-                });
-            }
-            const accessToken = decodeJWT(accessTokenString);
-            const itString = await this.getKeyValueStorage().getItem(authKeys.idToken);
-            const idToken = itString ? decodeJWT(itString) : undefined;
-            const refreshToken = (await this.getKeyValueStorage().getItem(authKeys.refreshToken)) ??
-                undefined;
-            const clockDriftString = (await this.getKeyValueStorage().getItem(authKeys.clockDrift)) ?? '0';
-            const clockDrift = Number.parseInt(clockDriftString);
-            const signInDetails = await this.getKeyValueStorage().getItem(authKeys.signInDetails);
-            const tokens = {
-                accessToken,
-                idToken,
-                refreshToken,
-                deviceMetadata: (await this.getDeviceMetadata()) ?? undefined,
-                clockDrift,
-                username: await this.getLastAuthUser(),
-            };
-            if (signInDetails) {
-                tokens.signInDetails = JSON.parse(signInDetails);
-            }
-            return tokens;
-        }
-        catch (err) {
-            return null;
-        }
-    }
-    async storeTokens(tokens) {
-        tokenProvider_errorHelpers_assert(tokens !== undefined, TokenProviderErrorCode.InvalidAuthTokens);
-        const lastAuthUser = tokens.username;
-        await this.getKeyValueStorage().setItem(this.getLastAuthUserKey(), lastAuthUser);
-        const authKeys = await this.getAuthKeys();
-        await this.getKeyValueStorage().setItem(authKeys.accessToken, tokens.accessToken.toString());
-        if (tokens.idToken) {
-            await this.getKeyValueStorage().setItem(authKeys.idToken, tokens.idToken.toString());
-        }
-        else {
-            await this.getKeyValueStorage().removeItem(authKeys.idToken);
-        }
-        if (tokens.refreshToken) {
-            await this.getKeyValueStorage().setItem(authKeys.refreshToken, tokens.refreshToken);
-        }
-        else {
-            await this.getKeyValueStorage().removeItem(authKeys.refreshToken);
-        }
-        if (tokens.deviceMetadata) {
-            if (tokens.deviceMetadata.deviceKey) {
-                await this.getKeyValueStorage().setItem(authKeys.deviceKey, tokens.deviceMetadata.deviceKey);
-            }
-            if (tokens.deviceMetadata.deviceGroupKey) {
-                await this.getKeyValueStorage().setItem(authKeys.deviceGroupKey, tokens.deviceMetadata.deviceGroupKey);
-            }
-            await this.getKeyValueStorage().setItem(authKeys.randomPasswordKey, tokens.deviceMetadata.randomPassword);
-        }
-        if (tokens.signInDetails) {
-            await this.getKeyValueStorage().setItem(authKeys.signInDetails, JSON.stringify(tokens.signInDetails));
-        }
-        else {
-            await this.getKeyValueStorage().removeItem(authKeys.signInDetails);
-        }
-        await this.getKeyValueStorage().setItem(authKeys.clockDrift, `${tokens.clockDrift}`);
-    }
-    async clearTokens() {
-        const authKeys = await this.getAuthKeys();
-        // Not calling clear because it can remove data that is not managed by AuthTokenStore
-        await Promise.all([
-            this.getKeyValueStorage().removeItem(authKeys.accessToken),
-            this.getKeyValueStorage().removeItem(authKeys.idToken),
-            this.getKeyValueStorage().removeItem(authKeys.clockDrift),
-            this.getKeyValueStorage().removeItem(authKeys.refreshToken),
-            this.getKeyValueStorage().removeItem(authKeys.signInDetails),
-            this.getKeyValueStorage().removeItem(this.getLastAuthUserKey()),
-            this.getKeyValueStorage().removeItem(authKeys.oauthMetadata),
-        ]);
-    }
-    async getDeviceMetadata(username) {
-        const authKeys = await this.getAuthKeys(username);
-        const deviceKey = await this.getKeyValueStorage().getItem(authKeys.deviceKey);
-        const deviceGroupKey = await this.getKeyValueStorage().getItem(authKeys.deviceGroupKey);
-        const randomPassword = await this.getKeyValueStorage().getItem(authKeys.randomPasswordKey);
-        return randomPassword && deviceGroupKey && deviceKey
-            ? {
-                deviceKey,
-                deviceGroupKey,
-                randomPassword,
-            }
-            : null;
-    }
-    async clearDeviceMetadata(username) {
-        const authKeys = await this.getAuthKeys(username);
-        await Promise.all([
-            this.getKeyValueStorage().removeItem(authKeys.deviceKey),
-            this.getKeyValueStorage().removeItem(authKeys.deviceGroupKey),
-            this.getKeyValueStorage().removeItem(authKeys.randomPasswordKey),
-        ]);
-    }
-    async getAuthKeys(username) {
-        utils_assertTokenProviderConfig(this.authConfig?.Cognito);
-        const lastAuthUser = username ?? (await this.getLastAuthUser());
-        return createKeysForAuthStorage(AUTH_KEY_PREFIX, `${this.authConfig.Cognito.userPoolClientId}.${lastAuthUser}`);
-    }
-    getLastAuthUserKey() {
-        utils_assertTokenProviderConfig(this.authConfig?.Cognito);
-        const identifier = this.authConfig.Cognito.userPoolClientId;
-        return `${AUTH_KEY_PREFIX}.${identifier}.LastAuthUser`;
-    }
-    async getLastAuthUser() {
-        const lastAuthUser = (await this.getKeyValueStorage().getItem(this.getLastAuthUserKey())) ??
-            'username';
-        return lastAuthUser;
-    }
-    async setOAuthMetadata(metadata) {
-        const { oauthMetadata: oauthMetadataKey } = await this.getAuthKeys();
-        await this.getKeyValueStorage().setItem(oauthMetadataKey, JSON.stringify(metadata));
-    }
-    async getOAuthMetadata() {
-        const { oauthMetadata: oauthMetadataKey } = await this.getAuthKeys();
-        const oauthMetadata = await this.getKeyValueStorage().getItem(oauthMetadataKey);
-        return oauthMetadata && JSON.parse(oauthMetadata);
-    }
-}
-const createKeysForAuthStorage = (provider, identifier) => {
-    return getAuthStorageKeys(AuthTokenStorageKeys)(`${provider}`, identifier);
-};
-function getAuthStorageKeys(authKeys) {
-    const keys = Object.values({ ...authKeys });
-    return (prefix, identifier) => keys.reduce((acc, authKey) => ({
-        ...acc,
-        [authKey]: `${prefix}.${identifier}.${authKey}`,
-    }), {});
-}
-
-
-//# sourceMappingURL=TokenStore.mjs.map
-
-;// ./node_modules/@aws-amplify/auth/dist/esm/providers/cognito/utils/signInWithRedirectStore.mjs
-
-
-
-
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-const V5_HOSTED_UI_KEY = 'amplify-signin-with-hostedUI';
-const signInWithRedirectStore_name = 'CognitoIdentityServiceProvider';
-class DefaultOAuthStore {
-    constructor(keyValueStorage) {
-        this.keyValueStorage = keyValueStorage;
-    }
-    async clearOAuthInflightData() {
-        utils_assertTokenProviderConfig(this.cognitoConfig);
-        const authKeys = signInWithRedirectStore_createKeysForAuthStorage(signInWithRedirectStore_name, this.cognitoConfig.userPoolClientId);
-        await Promise.all([
-            this.keyValueStorage.removeItem(authKeys.inflightOAuth),
-            this.keyValueStorage.removeItem(authKeys.oauthPKCE),
-            this.keyValueStorage.removeItem(authKeys.oauthState),
-        ]);
-    }
-    async clearOAuthData() {
-        utils_assertTokenProviderConfig(this.cognitoConfig);
-        const authKeys = signInWithRedirectStore_createKeysForAuthStorage(signInWithRedirectStore_name, this.cognitoConfig.userPoolClientId);
-        await this.clearOAuthInflightData();
-        await this.keyValueStorage.removeItem(V5_HOSTED_UI_KEY); // remove in case a customer migrated an App from v5 to v6
-        return this.keyValueStorage.removeItem(authKeys.oauthSignIn);
-    }
-    loadOAuthState() {
-        utils_assertTokenProviderConfig(this.cognitoConfig);
-        const authKeys = signInWithRedirectStore_createKeysForAuthStorage(signInWithRedirectStore_name, this.cognitoConfig.userPoolClientId);
-        return this.keyValueStorage.getItem(authKeys.oauthState);
-    }
-    storeOAuthState(state) {
-        utils_assertTokenProviderConfig(this.cognitoConfig);
-        const authKeys = signInWithRedirectStore_createKeysForAuthStorage(signInWithRedirectStore_name, this.cognitoConfig.userPoolClientId);
-        return this.keyValueStorage.setItem(authKeys.oauthState, state);
-    }
-    loadPKCE() {
-        utils_assertTokenProviderConfig(this.cognitoConfig);
-        const authKeys = signInWithRedirectStore_createKeysForAuthStorage(signInWithRedirectStore_name, this.cognitoConfig.userPoolClientId);
-        return this.keyValueStorage.getItem(authKeys.oauthPKCE);
-    }
-    storePKCE(pkce) {
-        utils_assertTokenProviderConfig(this.cognitoConfig);
-        const authKeys = signInWithRedirectStore_createKeysForAuthStorage(signInWithRedirectStore_name, this.cognitoConfig.userPoolClientId);
-        return this.keyValueStorage.setItem(authKeys.oauthPKCE, pkce);
-    }
-    setAuthConfig(authConfigParam) {
-        this.cognitoConfig = authConfigParam;
-    }
-    async loadOAuthInFlight() {
-        utils_assertTokenProviderConfig(this.cognitoConfig);
-        const authKeys = signInWithRedirectStore_createKeysForAuthStorage(signInWithRedirectStore_name, this.cognitoConfig.userPoolClientId);
-        return ((await this.keyValueStorage.getItem(authKeys.inflightOAuth)) === 'true');
-    }
-    async storeOAuthInFlight(inflight) {
-        utils_assertTokenProviderConfig(this.cognitoConfig);
-        const authKeys = signInWithRedirectStore_createKeysForAuthStorage(signInWithRedirectStore_name, this.cognitoConfig.userPoolClientId);
-        await this.keyValueStorage.setItem(authKeys.inflightOAuth, `${inflight}`);
-    }
-    async loadOAuthSignIn() {
-        utils_assertTokenProviderConfig(this.cognitoConfig);
-        const authKeys = signInWithRedirectStore_createKeysForAuthStorage(signInWithRedirectStore_name, this.cognitoConfig.userPoolClientId);
-        const isLegacyHostedUISignIn = await this.keyValueStorage.getItem(V5_HOSTED_UI_KEY);
-        const [isOAuthSignIn, preferPrivateSession] = (await this.keyValueStorage.getItem(authKeys.oauthSignIn))?.split(',') ??
-            [];
-        return {
-            isOAuthSignIn: isOAuthSignIn === 'true' || isLegacyHostedUISignIn === 'true',
-            preferPrivateSession: preferPrivateSession === 'true',
-        };
-    }
-    async storeOAuthSignIn(oauthSignIn, preferPrivateSession = false) {
-        utils_assertTokenProviderConfig(this.cognitoConfig);
-        const authKeys = signInWithRedirectStore_createKeysForAuthStorage(signInWithRedirectStore_name, this.cognitoConfig.userPoolClientId);
-        await this.keyValueStorage.setItem(authKeys.oauthSignIn, `${oauthSignIn},${preferPrivateSession}`);
-    }
-}
-const signInWithRedirectStore_createKeysForAuthStorage = (provider, identifier) => {
-    return getAuthStorageKeys(OAuthStorageKeys)(provider, identifier);
-};
-
-
-//# sourceMappingURL=signInWithRedirectStore.mjs.map
-
-;// ./node_modules/@aws-amplify/auth/dist/esm/providers/cognito/utils/oauth/oAuthStore.mjs
-
-
-
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-const oAuthStore = new DefaultOAuthStore(defaultStorage);
-
-
-//# sourceMappingURL=oAuthStore.mjs.map
-
-;// ./node_modules/@aws-amplify/core/dist/esm/utils/amplifyUrl/index.mjs
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-const amplifyUrl_AmplifyUrl = URL;
-const AmplifyUrlSearchParams = (/* unused pure expression or super */ null && (URLSearchParams));
-
-
-//# sourceMappingURL=index.mjs.map
-
-;// ./node_modules/@aws-amplify/core/dist/esm/utils/urlSafeDecode.mjs
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-function urlSafeDecode(hex) {
-    const matchArr = hex.match(/.{2}/g) || [];
-    return matchArr.map(char => String.fromCharCode(parseInt(char, 16))).join('');
-}
-
-
-//# sourceMappingURL=urlSafeDecode.mjs.map
-
-;// ./node_modules/@aws-amplify/core/dist/esm/utils/deDupeAsyncFunction.mjs
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-/**
- * returns in-flight promise if there is one
- *
- * @param asyncFunction - asyncFunction to be deduped.
- * @returns - the return type of the callback
- */
-const deDupeAsyncFunction = (asyncFunction) => {
-    let inflightPromise;
-    return async (...args) => {
-        if (inflightPromise)
-            return inflightPromise;
-        inflightPromise = new Promise((resolve, reject) => {
-            asyncFunction(...args)
-                .then(result => {
-                resolve(result);
-            })
-                .catch(error => {
-                reject(error);
-            })
-                .finally(() => {
-                inflightPromise = undefined;
-            });
-        });
-        return inflightPromise;
-    };
-};
-
-
-//# sourceMappingURL=deDupeAsyncFunction.mjs.map
-
-;// ./node_modules/@aws-amplify/auth/dist/esm/foundation/parsers/regionParsers.mjs
-
-
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-function regionParsers_getRegionFromUserPoolId(userPoolId) {
-    const region = userPoolId?.split('_')[0];
-    if (!userPoolId ||
-        userPoolId.indexOf('_') < 0 ||
-        !region ||
-        typeof region !== 'string')
-        throw new AuthError_AuthError({
-            name: 'InvalidUserPoolId',
-            message: 'Invalid user pool id provided.',
-        });
-    return region;
-}
-function getRegionFromIdentityPoolId(identityPoolId) {
-    if (!identityPoolId || !identityPoolId.includes(':')) {
-        throw new AuthError({
-            name: 'InvalidIdentityPoolIdException',
-            message: 'Invalid identity pool id provided.',
-            recoverySuggestion: 'Make sure a valid identityPoolId is given in the config.',
-        });
-    }
-    return identityPoolId.split(':')[0];
-}
-
-
-//# sourceMappingURL=regionParsers.mjs.map
-
-;// ./node_modules/@aws-amplify/core/dist/esm/clients/internal/composeServiceApi.mjs
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-/**
- * Compose a service API handler that accepts input as defined shape and responds conforming to defined output shape.
- * A service API handler is composed with:
- * * A transfer handler
- * * A serializer function
- * * A deserializer function
- * * A default config object
- *
- * The returned service API handler, when called, will trigger the following workflow:
- * 1. When calling the service API handler function, the default config object is merged into the input config
- * object to assign the default values of some omitted configs, resulting to a resolved config object.
- * 2. The `endpointResolver` function from the default config object will be invoked with the resolved config object and
- * API input object resulting to an endpoint instance.
- * 3. The serializer function is invoked with API input object and the endpoint instance resulting to an HTTP request
- * instance.
- * 4. The HTTP request instance and the resolved config object is passed to the transfer handler function.
- * 5. The transfer handler function resolves to an HTTP response instance(can be either successful or failed status code).
- * 6. The deserializer function is invoked with the HTTP response instance resulting to the API output object, and
- * return to the caller.
- *
- *
- * @param transferHandler Async function for dispatching HTTP requests and returning HTTP response.
- * @param serializer  Async function for converting object in defined input shape into HTTP request targeting a given
- * 	endpoint.
- * @param deserializer Async function for converting HTTP response into output object in defined output shape, or error
- * 	shape.
- * @param defaultConfig  object containing default options to be consumed by transfer handler, serializer and
- *  deserializer.
- * @returns a async service API handler function that accepts a config object and input object in defined shape, returns
- * 	an output object in defined shape. It may also throw error instance in defined shape in deserializer. The config
- *  object type is composed with options type of transferHandler, endpointResolver function as well as endpointResolver
- *  function's input options type, region string. The config object property will be marked as optional if it's also
- * 	defined in defaultConfig.
- *
- * @internal
- */
-const composeServiceApi = (transferHandler, serializer, deserializer, defaultConfig) => {
-    return async (config, input) => {
-        const resolvedConfig = {
-            ...defaultConfig,
-            ...config,
-        };
-        // We need to allow different endpoints based on both given config(other than region) and input.
-        // However for most of non-S3 services, region is the only input for endpoint resolver.
-        const endpoint = await resolvedConfig.endpointResolver(resolvedConfig, input);
-        // Unlike AWS SDK clients, a serializer should NOT populate the `host` or `content-length` headers.
-        // Both of these headers are prohibited per Spec(https://developer.mozilla.org/en-US/docs/Glossary/Forbidden_header_name).
-        // They will be populated automatically by browser, or node-fetch polyfill.
-        const request = await serializer(input, endpoint);
-        const response = await transferHandler(request, {
-            ...resolvedConfig,
-        });
-        return deserializer(response);
-    };
-};
-
-
-//# sourceMappingURL=composeServiceApi.mjs.map
-
-;// ./node_modules/@aws-amplify/auth/dist/esm/foundation/factories/serviceClients/cognitoIdentityProvider/shared/serde/createUserPoolSerializer.mjs
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-const createUserPoolSerializer = (operation) => (input, endpoint) => {
-    const headers = getSharedHeaders(operation);
-    const body = JSON.stringify(input);
-    return buildHttpRpcRequest(endpoint, headers, body);
-};
-const getSharedHeaders = (operation) => ({
-    'content-type': 'application/x-amz-json-1.1',
-    'x-amz-target': `AWSCognitoIdentityProviderService.${operation}`,
-});
-const buildHttpRpcRequest = ({ url }, headers, body) => ({
-    headers,
-    url,
-    body,
-    method: 'POST',
-});
-
-
-//# sourceMappingURL=createUserPoolSerializer.mjs.map
-
 ;// ./node_modules/@aws-amplify/core/dist/esm/clients/serde/responseInfo.mjs
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
@@ -4709,74 +3974,96 @@ const parseJsonBody = async (response) => {
 
 //# sourceMappingURL=json.mjs.map
 
-;// ./node_modules/@aws-amplify/auth/dist/esm/errors/utils/assertServiceError.mjs
-
-
-
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-function assertServiceError(error) {
-    if (!error ||
-        error.name === 'Error' ||
-        error instanceof TypeError) {
-        throw new AuthError_AuthError({
-            name: AmplifyErrorCode.Unknown,
-            message: 'An unknown error has occurred.',
-            underlyingError: error,
-        });
-    }
-}
-
-
-//# sourceMappingURL=assertServiceError.mjs.map
-
-;// ./node_modules/@aws-amplify/auth/dist/esm/foundation/factories/serviceClients/cognitoIdentityProvider/shared/serde/createUserPoolDeserializer.mjs
-
-
-
-
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-const createUserPoolDeserializer = () => async (response) => {
-    if (response.statusCode >= 300) {
-        const error = await parseJsonError(response);
-        assertServiceError(error);
-        throw new AuthError_AuthError({
-            name: error.name,
-            message: error.message,
-            metadata: error.$metadata,
-        });
-    }
-    return parseJsonBody(response);
-};
-
-
-//# sourceMappingURL=createUserPoolDeserializer.mjs.map
-
-;// ./node_modules/@aws-amplify/core/dist/esm/clients/internal/composeTransferHandler.mjs
+;// ./node_modules/@aws-amplify/core/dist/esm/clients/internal/composeServiceApi.mjs
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 /**
- * Compose a transfer handler with a core transfer handler and a list of middleware.
- * @param coreHandler Core transfer handler
- * @param middleware	List of middleware
- * @returns A transfer handler whose option type is the union of the core
- * 	transfer handler's option type and the middleware's option type.
+ * Compose a service API handler that accepts input as defined shape and responds conforming to defined output shape.
+ * A service API handler is composed with:
+ * * A transfer handler
+ * * A serializer function
+ * * A deserializer function
+ * * A default config object
+ *
+ * The returned service API handler, when called, will trigger the following workflow:
+ * 1. When calling the service API handler function, the default config object is merged into the input config
+ * object to assign the default values of some omitted configs, resulting to a resolved config object.
+ * 2. The `endpointResolver` function from the default config object will be invoked with the resolved config object and
+ * API input object resulting to an endpoint instance.
+ * 3. The serializer function is invoked with API input object and the endpoint instance resulting to an HTTP request
+ * instance.
+ * 4. The HTTP request instance and the resolved config object is passed to the transfer handler function.
+ * 5. The transfer handler function resolves to an HTTP response instance(can be either successful or failed status code).
+ * 6. The deserializer function is invoked with the HTTP response instance resulting to the API output object, and
+ * return to the caller.
+ *
+ *
+ * @param transferHandler Async function for dispatching HTTP requests and returning HTTP response.
+ * @param serializer  Async function for converting object in defined input shape into HTTP request targeting a given
+ * 	endpoint.
+ * @param deserializer Async function for converting HTTP response into output object in defined output shape, or error
+ * 	shape.
+ * @param defaultConfig  object containing default options to be consumed by transfer handler, serializer and
+ *  deserializer.
+ * @returns a async service API handler function that accepts a config object and input object in defined shape, returns
+ * 	an output object in defined shape. It may also throw error instance in defined shape in deserializer. The config
+ *  object type is composed with options type of transferHandler, endpointResolver function as well as endpointResolver
+ *  function's input options type, region string. The config object property will be marked as optional if it's also
+ * 	defined in defaultConfig.
+ *
  * @internal
  */
-const composeTransferHandler = (coreHandler, middleware) => (request, options) => {
-    const context = {};
-    let composedHandler = (composeHandlerRequest) => coreHandler(composeHandlerRequest, options);
-    for (let i = middleware.length - 1; i >= 0; i--) {
-        const m = middleware[i];
-        const resolvedMiddleware = m(options);
-        composedHandler = resolvedMiddleware(composedHandler, context);
-    }
-    return composedHandler(request);
+const composeServiceApi = (transferHandler, serializer, deserializer, defaultConfig) => {
+    return async (config, input) => {
+        const resolvedConfig = {
+            ...defaultConfig,
+            ...config,
+        };
+        // We need to allow different endpoints based on both given config(other than region) and input.
+        // However for most of non-S3 services, region is the only input for endpoint resolver.
+        const endpoint = await resolvedConfig.endpointResolver(resolvedConfig, input);
+        // Unlike AWS SDK clients, a serializer should NOT populate the `host` or `content-length` headers.
+        // Both of these headers are prohibited per Spec(https://developer.mozilla.org/en-US/docs/Glossary/Forbidden_header_name).
+        // They will be populated automatically by browser, or node-fetch polyfill.
+        const request = await serializer(input, endpoint);
+        const response = await transferHandler(request, {
+            ...resolvedConfig,
+        });
+        return deserializer(response);
+    };
 };
 
 
-//# sourceMappingURL=composeTransferHandler.mjs.map
+//# sourceMappingURL=composeServiceApi.mjs.map
+
+;// ./node_modules/@aws-amplify/core/dist/esm/utils/retry/constants.mjs
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+const MAX_DELAY_MS = 5 * 60 * 1000;
+
+
+//# sourceMappingURL=constants.mjs.map
+
+;// ./node_modules/@aws-amplify/core/dist/esm/utils/retry/jitteredBackoff.mjs
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+/**
+ * @private
+ * Internal use of Amplify only
+ */
+function jitteredBackoff(maxDelayMs = MAX_DELAY_MS) {
+    const BASE_TIME_MS = 100;
+    const JITTER_FACTOR = 100;
+    return attempt => {
+        const delay = 2 ** attempt * BASE_TIME_MS + JITTER_FACTOR * Math.random();
+        return delay > maxDelayMs ? false : delay;
+    };
+}
+
+
+//# sourceMappingURL=jitteredBackoff.mjs.map
 
 ;// ./node_modules/@aws-amplify/core/dist/esm/clients/middleware/retry/constants.mjs
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
@@ -4785,6 +4072,148 @@ const DEFAULT_RETRY_ATTEMPTS = 3;
 const AMZ_SDK_INVOCATION_ID_HEADER = 'amz-sdk-invocation-id';
 const AMZ_SDK_REQUEST_HEADER = 'amz-sdk-request';
 const DEFAULT_MAX_DELAY_MS = 5 * 60 * 1000;
+
+
+//# sourceMappingURL=constants.mjs.map
+
+;// ./node_modules/@aws-amplify/core/dist/esm/clients/middleware/retry/jitteredBackoff.mjs
+
+
+
+
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+// TODO: [v6] The separate retry utility is used by Data packages now and will replaced by retry middleware.
+const jitteredBackoff_jitteredBackoff = attempt => {
+    const delayFunction = jitteredBackoff(DEFAULT_MAX_DELAY_MS);
+    const delay = delayFunction(attempt);
+    // The delayFunction returns false when the delay is greater than the max delay(5 mins).
+    // In this case, the retry middleware will delay 5 mins instead, as a ceiling of the delay.
+    return delay === false ? DEFAULT_MAX_DELAY_MS : delay;
+};
+
+
+//# sourceMappingURL=jitteredBackoff.mjs.map
+
+;// ./node_modules/@aws-amplify/core/dist/esm/clients/middleware/retry/isClockSkewError.mjs
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+// via https://github.com/aws/aws-sdk-js-v3/blob/ab0e7be36e7e7f8a0c04834357aaad643c7912c3/packages/service-error-classification/src/constants.ts#L8
+const CLOCK_SKEW_ERROR_CODES = [
+    'AuthFailure',
+    'InvalidSignatureException',
+    'RequestExpired',
+    'RequestInTheFuture',
+    'RequestTimeTooSkewed',
+    'SignatureDoesNotMatch',
+    'BadRequestException', // API Gateway
+];
+/**
+ * Given an error code, returns true if it is related to a clock skew error.
+ *
+ * @param errorCode String representation of some error.
+ * @returns True if given error is present in `CLOCK_SKEW_ERROR_CODES`, false otherwise.
+ *
+ * @internal
+ */
+const isClockSkewError = (errorCode) => !!errorCode && CLOCK_SKEW_ERROR_CODES.includes(errorCode);
+
+
+//# sourceMappingURL=isClockSkewError.mjs.map
+
+;// ./node_modules/@aws-amplify/core/dist/esm/clients/middleware/retry/defaultRetryDecider.mjs
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+/**
+ * Get retry decider function
+ * @param errorParser Function to load JavaScript error from HTTP response
+ */
+const getRetryDecider = (errorParser) => async (response, error) => {
+    const parsedError = error ??
+        (await errorParser(response)) ??
+        undefined;
+    const errorCode = parsedError?.code || parsedError?.name;
+    const statusCode = response?.statusCode;
+    const isRetryable = isConnectionError(error) ||
+        isThrottlingError(statusCode, errorCode) ||
+        isClockSkewError(errorCode) ||
+        isServerSideError(statusCode, errorCode);
+    return {
+        retryable: isRetryable,
+    };
+};
+// reference: https://github.com/aws/aws-sdk-js-v3/blob/ab0e7be36e7e7f8a0c04834357aaad643c7912c3/packages/service-error-classification/src/constants.ts#L22-L37
+const THROTTLING_ERROR_CODES = [
+    'BandwidthLimitExceeded',
+    'EC2ThrottledException',
+    'LimitExceededException',
+    'PriorRequestNotComplete',
+    'ProvisionedThroughputExceededException',
+    'RequestLimitExceeded',
+    'RequestThrottled',
+    'RequestThrottledException',
+    'SlowDown',
+    'ThrottledException',
+    'Throttling',
+    'ThrottlingException',
+    'TooManyRequestsException',
+];
+const TIMEOUT_ERROR_CODES = [
+    'TimeoutError',
+    'RequestTimeout',
+    'RequestTimeoutException',
+];
+const isThrottlingError = (statusCode, errorCode) => statusCode === 429 ||
+    (!!errorCode && THROTTLING_ERROR_CODES.includes(errorCode));
+const isConnectionError = (error) => [
+    AmplifyErrorCode.NetworkError,
+    // TODO(vNext): unify the error code `ERR_NETWORK` used by the Storage XHR handler
+    'ERR_NETWORK',
+].includes(error?.name);
+const isServerSideError = (statusCode, errorCode) => (!!statusCode && [500, 502, 503, 504].includes(statusCode)) ||
+    (!!errorCode && TIMEOUT_ERROR_CODES.includes(errorCode));
+
+
+//# sourceMappingURL=defaultRetryDecider.mjs.map
+
+;// ./node_modules/@aws-amplify/core/dist/esm/foundation/factories/serviceClients/cognitoIdentity/constants.mjs
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+/**
+ * The service name used to sign requests if the API requires authentication.
+ */
+const COGNITO_IDENTITY_SERVICE_NAME = 'cognito-identity';
+const DEFAULT_SERVICE_CLIENT_API_CONFIG = {
+    service: COGNITO_IDENTITY_SERVICE_NAME,
+    retryDecider: getRetryDecider(parseJsonError),
+    computeDelay: jitteredBackoff_jitteredBackoff,
+    cache: 'no-store',
+};
 
 
 //# sourceMappingURL=constants.mjs.map
@@ -5073,6 +4502,31 @@ const userAgentMiddlewareFactory = ({ userAgentHeader = 'x-amz-user-agent', user
 
 //# sourceMappingURL=middleware.mjs.map
 
+;// ./node_modules/@aws-amplify/core/dist/esm/clients/internal/composeTransferHandler.mjs
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+/**
+ * Compose a transfer handler with a core transfer handler and a list of middleware.
+ * @param coreHandler Core transfer handler
+ * @param middleware	List of middleware
+ * @returns A transfer handler whose option type is the union of the core
+ * 	transfer handler's option type and the middleware's option type.
+ * @internal
+ */
+const composeTransferHandler = (coreHandler, middleware) => (request, options) => {
+    const context = {};
+    let composedHandler = (composeHandlerRequest) => coreHandler(composeHandlerRequest, options);
+    for (let i = middleware.length - 1; i >= 0; i--) {
+        const m = middleware[i];
+        const resolvedMiddleware = m(options);
+        composedHandler = resolvedMiddleware(composedHandler, context);
+    }
+    return composedHandler(request);
+};
+
+
+//# sourceMappingURL=composeTransferHandler.mjs.map
+
 ;// ./node_modules/@aws-amplify/core/dist/esm/clients/utils/memoization.mjs
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
@@ -5181,214 +4635,515 @@ const unauthenticatedHandler = composeTransferHandler(fetchTransferHandler, [
 
 //# sourceMappingURL=unauthenticated.mjs.map
 
-;// ./node_modules/@aws-amplify/auth/dist/esm/foundation/factories/serviceClients/cognitoIdentityProvider/shared/handler/cognitoUserPoolTransferHandler.mjs
-
-
-
+;// ./node_modules/@aws-amplify/core/dist/esm/foundation/factories/middleware/createDisableCacheMiddleware.mjs
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 /**
  * A Cognito Identity-specific middleware that disables caching for all requests.
  */
-const disableCacheMiddlewareFactory = () => (next, _) => async function disableCacheMiddleware(request) {
+const createDisableCacheMiddleware = () => next => async function disableCacheMiddleware(request) {
     request.headers['cache-control'] = 'no-store';
     return next(request);
 };
+
+
+//# sourceMappingURL=createDisableCacheMiddleware.mjs.map
+
+;// ./node_modules/@aws-amplify/core/dist/esm/foundation/factories/serviceClients/cognitoIdentity/handler/cognitoIdentityTransferHandler.mjs
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
 /**
  * A Cognito Identity-specific transfer handler that does NOT sign requests, and
  * disables caching.
  *
  * @internal
  */
-const cognitoUserPoolTransferHandler = composeTransferHandler(unauthenticatedHandler, [disableCacheMiddlewareFactory]);
+const cognitoIdentityTransferHandler = composeTransferHandler(unauthenticatedHandler, [createDisableCacheMiddleware]);
 
 
-//# sourceMappingURL=cognitoUserPoolTransferHandler.mjs.map
+//# sourceMappingURL=cognitoIdentityTransferHandler.mjs.map
 
-;// ./node_modules/@aws-amplify/core/dist/esm/clients/middleware/retry/isClockSkewError.mjs
+;// ./node_modules/@aws-amplify/core/dist/esm/foundation/factories/serviceClients/cognitoIdentity/serde/createClientSerializer.mjs
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-// via https://github.com/aws/aws-sdk-js-v3/blob/ab0e7be36e7e7f8a0c04834357aaad643c7912c3/packages/service-error-classification/src/constants.ts#L8
-const CLOCK_SKEW_ERROR_CODES = [
-    'AuthFailure',
-    'InvalidSignatureException',
-    'RequestExpired',
-    'RequestInTheFuture',
-    'RequestTimeTooSkewed',
-    'SignatureDoesNotMatch',
-    'BadRequestException', // API Gateway
-];
-/**
- * Given an error code, returns true if it is related to a clock skew error.
- *
- * @param errorCode String representation of some error.
- * @returns True if given error is present in `CLOCK_SKEW_ERROR_CODES`, false otherwise.
- *
- * @internal
- */
-const isClockSkewError = (errorCode) => !!errorCode && CLOCK_SKEW_ERROR_CODES.includes(errorCode);
-
-
-//# sourceMappingURL=isClockSkewError.mjs.map
-
-;// ./node_modules/@aws-amplify/core/dist/esm/clients/middleware/retry/defaultRetryDecider.mjs
-
-
-
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-/**
- * Get retry decider function
- * @param errorParser Function to load JavaScript error from HTTP response
- */
-const getRetryDecider = (errorParser) => async (response, error) => {
-    const parsedError = error ??
-        (await errorParser(response)) ??
-        undefined;
-    const errorCode = parsedError?.code || parsedError?.name;
-    const statusCode = response?.statusCode;
-    const isRetryable = isConnectionError(error) ||
-        isThrottlingError(statusCode, errorCode) ||
-        isClockSkewError(errorCode) ||
-        isServerSideError(statusCode, errorCode);
-    return {
-        retryable: isRetryable,
-    };
+const createClientSerializer = (operation) => (input, endpoint) => {
+    const headers = getSharedHeaders(operation);
+    const body = JSON.stringify(input);
+    return buildHttpRpcRequest(endpoint, headers, body);
 };
-// reference: https://github.com/aws/aws-sdk-js-v3/blob/ab0e7be36e7e7f8a0c04834357aaad643c7912c3/packages/service-error-classification/src/constants.ts#L22-L37
-const THROTTLING_ERROR_CODES = [
-    'BandwidthLimitExceeded',
-    'EC2ThrottledException',
-    'LimitExceededException',
-    'PriorRequestNotComplete',
-    'ProvisionedThroughputExceededException',
-    'RequestLimitExceeded',
-    'RequestThrottled',
-    'RequestThrottledException',
-    'SlowDown',
-    'ThrottledException',
-    'Throttling',
-    'ThrottlingException',
-    'TooManyRequestsException',
-];
-const TIMEOUT_ERROR_CODES = [
-    'TimeoutError',
-    'RequestTimeout',
-    'RequestTimeoutException',
-];
-const isThrottlingError = (statusCode, errorCode) => statusCode === 429 ||
-    (!!errorCode && THROTTLING_ERROR_CODES.includes(errorCode));
-const isConnectionError = (error) => [
-    AmplifyErrorCode.NetworkError,
-    // TODO(vNext): unify the error code `ERR_NETWORK` used by the Storage XHR handler
-    'ERR_NETWORK',
-].includes(error?.name);
-const isServerSideError = (statusCode, errorCode) => (!!statusCode && [500, 502, 503, 504].includes(statusCode)) ||
-    (!!errorCode && TIMEOUT_ERROR_CODES.includes(errorCode));
-
-
-//# sourceMappingURL=defaultRetryDecider.mjs.map
-
-;// ./node_modules/@aws-amplify/core/dist/esm/utils/retry/constants.mjs
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-const MAX_DELAY_MS = 5 * 60 * 1000;
-
-
-//# sourceMappingURL=constants.mjs.map
-
-;// ./node_modules/@aws-amplify/core/dist/esm/utils/retry/jitteredBackoff.mjs
-
-
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-/**
- * @private
- * Internal use of Amplify only
- */
-function jitteredBackoff(maxDelayMs = MAX_DELAY_MS) {
-    const BASE_TIME_MS = 100;
-    const JITTER_FACTOR = 100;
-    return attempt => {
-        const delay = 2 ** attempt * BASE_TIME_MS + JITTER_FACTOR * Math.random();
-        return delay > maxDelayMs ? false : delay;
-    };
-}
-
-
-//# sourceMappingURL=jitteredBackoff.mjs.map
-
-;// ./node_modules/@aws-amplify/core/dist/esm/clients/middleware/retry/jitteredBackoff.mjs
-
-
-
-
-
-
-
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-// TODO: [v6] The separate retry utility is used by Data packages now and will replaced by retry middleware.
-const jitteredBackoff_jitteredBackoff = attempt => {
-    const delayFunction = jitteredBackoff(DEFAULT_MAX_DELAY_MS);
-    const delay = delayFunction(attempt);
-    // The delayFunction returns false when the delay is greater than the max delay(5 mins).
-    // In this case, the retry middleware will delay 5 mins instead, as a ceiling of the delay.
-    return delay === false ? DEFAULT_MAX_DELAY_MS : delay;
-};
-
-
-//# sourceMappingURL=jitteredBackoff.mjs.map
-
-;// ./node_modules/@aws-amplify/auth/dist/esm/foundation/constants.mjs
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-/**
- * The service name used to sign requests if the API requires authentication.
- */
-const COGNITO_IDP_SERVICE_NAME = 'cognito-idp';
-
-
-//# sourceMappingURL=constants.mjs.map
-
-;// ./node_modules/@aws-amplify/auth/dist/esm/foundation/factories/serviceClients/cognitoIdentityProvider/constants.mjs
-
-
-
-
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-const DEFAULT_SERVICE_CLIENT_API_CONFIG = {
-    service: COGNITO_IDP_SERVICE_NAME,
-    retryDecider: getRetryDecider(parseJsonError),
-    computeDelay: jitteredBackoff_jitteredBackoff,
-    get userAgentValue() {
-        return getAmplifyUserAgent();
-    },
-    cache: 'no-store',
-};
-
-
-//# sourceMappingURL=constants.mjs.map
-
-;// ./node_modules/@aws-amplify/auth/dist/esm/foundation/factories/serviceClients/cognitoIdentityProvider/createInitiateAuthClient.mjs
-
-
-
-
-
-
-
-
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-const createInitiateAuthClient_createInitiateAuthClient = (config) => composeServiceApi(cognitoUserPoolTransferHandler, createUserPoolSerializer('InitiateAuth'), createUserPoolDeserializer(), {
-    ...DEFAULT_SERVICE_CLIENT_API_CONFIG,
-    ...config,
+const getSharedHeaders = (operation) => ({
+    'content-type': 'application/x-amz-json-1.1',
+    'x-amz-target': `AWSCognitoIdentityService.${operation}`,
+});
+const buildHttpRpcRequest = ({ url }, headers, body) => ({
+    headers,
+    url,
+    body,
+    method: 'POST',
 });
 
 
-//# sourceMappingURL=createInitiateAuthClient.mjs.map
+//# sourceMappingURL=createClientSerializer.mjs.map
+
+;// ./node_modules/@aws-amplify/core/dist/esm/foundation/factories/serviceClients/cognitoIdentity/createGetCredentialsForIdentityClient.mjs
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+const createGetCredentialsForIdentityClient = (config) => composeServiceApi(cognitoIdentityTransferHandler, createClientSerializer('GetCredentialsForIdentity'), getCredentialsForIdentityDeserializer, {
+    ...DEFAULT_SERVICE_CLIENT_API_CONFIG,
+    ...config,
+    userAgentValue: getAmplifyUserAgent(),
+});
+const getCredentialsForIdentityDeserializer = async (response) => {
+    if (response.statusCode >= 300) {
+        const error = await parseJsonError(response);
+        throw error;
+    }
+    const body = await parseJsonBody(response);
+    return {
+        IdentityId: body.IdentityId,
+        Credentials: deserializeCredentials(body.Credentials),
+        $metadata: parseMetadata(response),
+    };
+};
+const deserializeCredentials = ({ Expiration, ...rest } = {}) => ({
+    ...rest,
+    Expiration: Expiration && new Date(Expiration * 1000),
+});
+
+
+//# sourceMappingURL=createGetCredentialsForIdentityClient.mjs.map
+
+;// ./node_modules/@aws-amplify/core/dist/esm/utils/globalHelpers/index.mjs
+
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+const getCrypto = () => {
+    if (typeof window === 'object' && typeof window.crypto === 'object') {
+        return window.crypto;
+    }
+    // Next.js global polyfill
+    if (typeof crypto === 'object') {
+        return crypto;
+    }
+    throw new AmplifyError({
+        name: 'MissingPolyfill',
+        message: 'Cannot resolve the `crypto` function from the environment.',
+    });
+};
+const getBtoa = () => {
+    // browser
+    if (typeof window !== 'undefined' && typeof window.btoa === 'function') {
+        return window.btoa;
+    }
+    // Next.js global polyfill
+    if (typeof btoa === 'function') {
+        return btoa;
+    }
+    throw new AmplifyError({
+        name: 'Base64EncoderError',
+        message: 'Cannot resolve the `btoa` function from the environment.',
+    });
+};
+const getAtob = () => {
+    // browser
+    if (typeof window !== 'undefined' && typeof window.atob === 'function') {
+        return window.atob;
+    }
+    // Next.js global polyfill
+    if (typeof atob === 'function') {
+        return atob;
+    }
+    throw new AmplifyError({
+        name: 'Base64EncoderError',
+        message: 'Cannot resolve the `atob` function from the environment.',
+    });
+};
+
+
+//# sourceMappingURL=index.mjs.map
+
+;// ./node_modules/@aws-amplify/core/dist/esm/utils/convert/base64/base64Decoder.mjs
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+const base64Decoder = {
+    convert(input, options) {
+        let inputStr = input;
+        // urlSafe character replacement options conform to the base64 url spec
+        // https://datatracker.ietf.org/doc/html/rfc4648#page-7
+        if (options?.urlSafe) {
+            inputStr = inputStr.replace(/-/g, '+').replace(/_/g, '/');
+        }
+        return getAtob()(inputStr);
+    },
+};
+
+
+//# sourceMappingURL=base64Decoder.mjs.map
+
+;// ./node_modules/@aws-amplify/core/dist/esm/errors/createAssertionFunction.mjs
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+const createAssertionFunction = (errorMap, AssertionError = AmplifyError) => (assertion, name, additionalContext) => {
+    const { message, recoverySuggestion } = errorMap[name];
+    if (!assertion) {
+        throw new AssertionError({
+            name,
+            message: additionalContext
+                ? `${message} ${additionalContext}`
+                : message,
+            recoverySuggestion,
+        });
+    }
+};
+
+
+//# sourceMappingURL=createAssertionFunction.mjs.map
+
+;// ./node_modules/@aws-amplify/core/dist/esm/singleton/Auth/utils/errorHelpers.mjs
+
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+var AuthConfigurationErrorCode;
+(function (AuthConfigurationErrorCode) {
+    AuthConfigurationErrorCode["AuthTokenConfigException"] = "AuthTokenConfigException";
+    AuthConfigurationErrorCode["AuthUserPoolAndIdentityPoolException"] = "AuthUserPoolAndIdentityPoolException";
+    AuthConfigurationErrorCode["AuthUserPoolException"] = "AuthUserPoolException";
+    AuthConfigurationErrorCode["InvalidIdentityPoolIdException"] = "InvalidIdentityPoolIdException";
+    AuthConfigurationErrorCode["OAuthNotConfigureException"] = "OAuthNotConfigureException";
+})(AuthConfigurationErrorCode || (AuthConfigurationErrorCode = {}));
+const authConfigurationErrorMap = {
+    [AuthConfigurationErrorCode.AuthTokenConfigException]: {
+        message: 'Auth Token Provider not configured.',
+        recoverySuggestion: 'Make sure to call Amplify.configure in your app.',
+    },
+    [AuthConfigurationErrorCode.AuthUserPoolAndIdentityPoolException]: {
+        message: 'Auth UserPool or IdentityPool not configured.',
+        recoverySuggestion: 'Make sure to call Amplify.configure in your app with UserPoolId and IdentityPoolId.',
+    },
+    [AuthConfigurationErrorCode.AuthUserPoolException]: {
+        message: 'Auth UserPool not configured.',
+        recoverySuggestion: 'Make sure to call Amplify.configure in your app with userPoolId and userPoolClientId.',
+    },
+    [AuthConfigurationErrorCode.InvalidIdentityPoolIdException]: {
+        message: 'Invalid identity pool id provided.',
+        recoverySuggestion: 'Make sure a valid identityPoolId is given in the config.',
+    },
+    [AuthConfigurationErrorCode.OAuthNotConfigureException]: {
+        message: 'oauth param not configured.',
+        recoverySuggestion: 'Make sure to call Amplify.configure with oauth parameter in your app.',
+    },
+};
+const assert = createAssertionFunction(authConfigurationErrorMap);
+
+
+//# sourceMappingURL=errorHelpers.mjs.map
+
+;// ./node_modules/@aws-amplify/core/dist/esm/singleton/Auth/utils/index.mjs
+
+
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+function utils_assertTokenProviderConfig(cognitoConfig) {
+    let assertionValid = true; // assume valid until otherwise proveed
+    if (!cognitoConfig) {
+        assertionValid = false;
+    }
+    else {
+        assertionValid =
+            !!cognitoConfig.userPoolId && !!cognitoConfig.userPoolClientId;
+    }
+    assert(assertionValid, AuthConfigurationErrorCode.AuthUserPoolException);
+}
+function assertOAuthConfig(cognitoConfig) {
+    const validOAuthConfig = !!cognitoConfig?.loginWith?.oauth?.domain &&
+        !!cognitoConfig?.loginWith?.oauth?.redirectSignOut &&
+        !!cognitoConfig?.loginWith?.oauth?.redirectSignIn &&
+        !!cognitoConfig?.loginWith?.oauth?.responseType;
+    assert(validOAuthConfig, AuthConfigurationErrorCode.OAuthNotConfigureException);
+}
+function assertIdentityPoolIdConfig(cognitoConfig) {
+    const validConfig = !!cognitoConfig?.identityPoolId;
+    assert(validConfig, AuthConfigurationErrorCode.InvalidIdentityPoolIdException);
+}
+/**
+ * Decodes payload of JWT token
+ *
+ * @param {String} token A string representing a token to be decoded
+ * @throws {@link Error} - Throws error when token is invalid or payload malformed.
+ */
+function decodeJWT(token) {
+    const tokenParts = token.split('.');
+    if (tokenParts.length !== 3) {
+        throw new Error('Invalid token');
+    }
+    try {
+        const base64WithUrlSafe = tokenParts[1];
+        const base64 = base64WithUrlSafe.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonStr = decodeURIComponent(base64Decoder
+            .convert(base64)
+            .split('')
+            .map(char => `%${`00${char.charCodeAt(0).toString(16)}`.slice(-2)}`)
+            .join(''));
+        const payload = JSON.parse(jsonStr);
+        return {
+            toString: () => token,
+            payload,
+        };
+    }
+    catch (err) {
+        throw new Error('Invalid token payload');
+    }
+}
+
+
+//# sourceMappingURL=index.mjs.map
+
+;// ./node_modules/@aws-amplify/auth/dist/esm/errors/AuthError.mjs
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+class AuthError_AuthError extends AmplifyError {
+    constructor(params) {
+        super(params);
+        // Hack for making the custom error class work when transpiled to es5
+        // TODO: Delete the following 2 lines after we change the build target to >= es2015
+        this.constructor = AuthError_AuthError;
+        Object.setPrototypeOf(this, AuthError_AuthError.prototype);
+    }
+}
+
+
+//# sourceMappingURL=AuthError.mjs.map
+
+;// ./node_modules/@aws-amplify/auth/dist/esm/errors/utils/assertServiceError.mjs
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+function assertServiceError(error) {
+    if (!error ||
+        error.name === 'Error' ||
+        error instanceof TypeError) {
+        throw new AuthError_AuthError({
+            name: AmplifyErrorCode.Unknown,
+            message: 'An unknown error has occurred.',
+            underlyingError: error,
+        });
+    }
+}
+
+
+//# sourceMappingURL=assertServiceError.mjs.map
+
+;// ./node_modules/@aws-amplify/auth/dist/esm/foundation/parsers/regionParsers.mjs
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+function regionParsers_getRegionFromUserPoolId(userPoolId) {
+    const region = userPoolId?.split('_')[0];
+    if (!userPoolId ||
+        userPoolId.indexOf('_') < 0 ||
+        !region ||
+        typeof region !== 'string')
+        throw new AuthError_AuthError({
+            name: 'InvalidUserPoolId',
+            message: 'Invalid user pool id provided.',
+        });
+    return region;
+}
+function getRegionFromIdentityPoolId(identityPoolId) {
+    if (!identityPoolId || !identityPoolId.includes(':')) {
+        throw new AuthError_AuthError({
+            name: 'InvalidIdentityPoolIdException',
+            message: 'Invalid identity pool id provided.',
+            recoverySuggestion: 'Make sure a valid identityPoolId is given in the config.',
+        });
+    }
+    return identityPoolId.split(':')[0];
+}
+
+
+//# sourceMappingURL=regionParsers.mjs.map
+
+;// ./node_modules/@aws-amplify/auth/dist/esm/errors/constants.mjs
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+const USER_UNAUTHENTICATED_EXCEPTION = 'UserUnAuthenticatedException';
+const USER_ALREADY_AUTHENTICATED_EXCEPTION = 'UserAlreadyAuthenticatedException';
+const constants_DEVICE_METADATA_NOT_FOUND_EXCEPTION = 'DeviceMetadataNotFoundException';
+const AUTO_SIGN_IN_EXCEPTION = 'AutoSignInException';
+const INVALID_REDIRECT_EXCEPTION = 'InvalidRedirectException';
+const INVALID_APP_SCHEME_EXCEPTION = 'InvalidAppSchemeException';
+const INVALID_PREFERRED_REDIRECT_EXCEPTION = 'InvalidPreferredRedirectUrlException';
+const invalidRedirectException = new AuthError_AuthError({
+    name: INVALID_REDIRECT_EXCEPTION,
+    message: 'signInRedirect or signOutRedirect had an invalid format or was not found.',
+    recoverySuggestion: 'Please make sure the signIn/Out redirect in your oauth config is valid.',
+});
+const invalidAppSchemeException = new AuthError_AuthError({
+    name: INVALID_APP_SCHEME_EXCEPTION,
+    message: 'A valid non-http app scheme was not found in the config.',
+    recoverySuggestion: 'Please make sure a valid custom app scheme is present in the config.',
+});
+const invalidPreferredRedirectUrlException = new AuthError_AuthError({
+    name: INVALID_PREFERRED_REDIRECT_EXCEPTION,
+    message: 'The given preferredRedirectUrl does not match any items in the redirectSignOutUrls array from the config.',
+    recoverySuggestion: 'Please make sure a matching preferredRedirectUrl is provided.',
+});
+const INVALID_ORIGIN_EXCEPTION = 'InvalidOriginException';
+const invalidOriginException = new AuthError_AuthError({
+    name: INVALID_ORIGIN_EXCEPTION,
+    message: 'redirect is coming from a different origin. The oauth flow needs to be initiated from the same origin',
+    recoverySuggestion: 'Please call signInWithRedirect from the same origin.',
+});
+const OAUTH_SIGNOUT_EXCEPTION = 'OAuthSignOutException';
+const TOKEN_REFRESH_EXCEPTION = 'TokenRefreshException';
+const UNEXPECTED_SIGN_IN_INTERRUPTION_EXCEPTION = 'UnexpectedSignInInterruptionException';
+
+
+//# sourceMappingURL=constants.mjs.map
+
+;// ./node_modules/@aws-amplify/auth/dist/esm/providers/cognito/utils/types.mjs
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+function isTypeUserPoolConfig(authConfig) {
+    if (authConfig &&
+        authConfig.Cognito.userPoolId &&
+        authConfig.Cognito.userPoolClientId) {
+        return true;
+    }
+    return false;
+}
+function assertAuthTokens(tokens) {
+    if (!tokens || !tokens.accessToken) {
+        throw new AuthError_AuthError({
+            name: USER_UNAUTHENTICATED_EXCEPTION,
+            message: 'User needs to be authenticated to call this API.',
+            recoverySuggestion: 'Sign in before calling this API again.',
+        });
+    }
+}
+function assertIdTokenInAuthTokens(tokens) {
+    if (!tokens || !tokens.idToken) {
+        throw new AuthError_AuthError({
+            name: USER_UNAUTHENTICATED_EXCEPTION,
+            message: 'User needs to be authenticated to call this API.',
+            recoverySuggestion: 'Sign in before calling this API again.',
+        });
+    }
+}
+const oAuthTokenRefreshException = new AuthError_AuthError({
+    name: TOKEN_REFRESH_EXCEPTION,
+    message: `Token refresh is not supported when authenticated with the 'implicit grant' (token) oauth flow. 
+	Please change your oauth configuration to use 'code grant' flow.`,
+    recoverySuggestion: `Please logout and change your Amplify configuration to use "code grant" flow. 
+	E.g { responseType: 'code' }`,
+});
+const tokenRefreshException = new AuthError_AuthError({
+    name: USER_UNAUTHENTICATED_EXCEPTION,
+    message: 'User needs to be authenticated to call this API.',
+    recoverySuggestion: 'Sign in before calling this API again.',
+});
+function assertAuthTokensWithRefreshToken(tokens) {
+    if (isAuthenticatedWithImplicitOauthFlow(tokens)) {
+        throw oAuthTokenRefreshException;
+    }
+    if (!isAuthenticatedWithRefreshToken(tokens)) {
+        throw tokenRefreshException;
+    }
+}
+function assertDeviceMetadata(deviceMetadata) {
+    if (!deviceMetadata ||
+        !deviceMetadata.deviceKey ||
+        !deviceMetadata.deviceGroupKey ||
+        !deviceMetadata.randomPassword) {
+        throw new AuthError({
+            name: DEVICE_METADATA_NOT_FOUND_EXCEPTION,
+            message: 'Either deviceKey, deviceGroupKey or secretPassword were not found during the sign-in process.',
+            recoverySuggestion: 'Make sure to not clear storage after calling the signIn API.',
+        });
+    }
+}
+const OAuthStorageKeys = {
+    inflightOAuth: 'inflightOAuth',
+    oauthSignIn: 'oauthSignIn',
+    oauthPKCE: 'oauthPKCE',
+    oauthState: 'oauthState',
+};
+function isAuthenticated(tokens) {
+    return tokens?.accessToken || tokens?.idToken;
+}
+function isAuthenticatedWithRefreshToken(tokens) {
+    return isAuthenticated(tokens) && tokens?.refreshToken;
+}
+function isAuthenticatedWithImplicitOauthFlow(tokens) {
+    return isAuthenticated(tokens) && !tokens?.refreshToken;
+}
+
+
+//# sourceMappingURL=types.mjs.map
 
 ;// ./node_modules/@aws-amplify/core/dist/esm/clients/endpoints/partitions.mjs
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
@@ -5461,6 +5216,881 @@ const getDnsSuffix = (region) => {
 
 
 //# sourceMappingURL=getDnsSuffix.mjs.map
+
+;// ./node_modules/@aws-amplify/core/dist/esm/utils/amplifyUrl/index.mjs
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+const amplifyUrl_AmplifyUrl = URL;
+const AmplifyUrlSearchParams = (/* unused pure expression or super */ null && (URLSearchParams));
+
+
+//# sourceMappingURL=index.mjs.map
+
+;// ./node_modules/@aws-amplify/core/dist/esm/foundation/factories/serviceClients/cognitoIdentity/cognitoIdentityPoolEndpointResolver.mjs
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+const cognitoIdentityPoolEndpointResolver = ({ region, }) => ({
+    url: new amplifyUrl_AmplifyUrl(`https://${COGNITO_IDENTITY_SERVICE_NAME}.${region}.${getDnsSuffix(region)}`),
+});
+
+
+//# sourceMappingURL=cognitoIdentityPoolEndpointResolver.mjs.map
+
+;// ./node_modules/@aws-amplify/auth/dist/esm/providers/cognito/factories/createCognitoIdentityPoolEndpointResolver.mjs
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+const createCognitoIdentityPoolEndpointResolver = ({ endpointOverride }) => (input) => {
+    if (endpointOverride) {
+        return { url: new amplifyUrl_AmplifyUrl(endpointOverride) };
+    }
+    return cognitoIdentityPoolEndpointResolver(input);
+};
+
+
+//# sourceMappingURL=createCognitoIdentityPoolEndpointResolver.mjs.map
+
+;// ./node_modules/@aws-amplify/core/dist/esm/foundation/factories/serviceClients/cognitoIdentity/createGetIdClient.mjs
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+const createGetIdClient = (config) => composeServiceApi(cognitoIdentityTransferHandler, createClientSerializer('GetId'), getIdDeserializer, {
+    ...DEFAULT_SERVICE_CLIENT_API_CONFIG,
+    ...config,
+    userAgentValue: getAmplifyUserAgent(),
+});
+const getIdDeserializer = async (response) => {
+    if (response.statusCode >= 300) {
+        const error = await parseJsonError(response);
+        throw error;
+    }
+    const body = await parseJsonBody(response);
+    return {
+        IdentityId: body.IdentityId,
+        $metadata: parseMetadata(response),
+    };
+};
+
+
+//# sourceMappingURL=createGetIdClient.mjs.map
+
+;// ./node_modules/@aws-amplify/auth/dist/esm/providers/cognito/credentialsProvider/utils.mjs
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+function formLoginsMap(idToken) {
+    const issuer = decodeJWT(idToken).payload.iss;
+    const res = {};
+    if (!issuer) {
+        throw new AuthError_AuthError({
+            name: 'InvalidIdTokenException',
+            message: 'Invalid Idtoken.',
+        });
+    }
+    const domainName = issuer.replace(/(^\w+:|^)\/\//, '');
+    res[domainName] = idToken;
+    return res;
+}
+
+
+//# sourceMappingURL=utils.mjs.map
+
+;// ./node_modules/@aws-amplify/auth/dist/esm/providers/cognito/credentialsProvider/IdentityIdProvider.mjs
+
+
+
+
+
+
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+/**
+ * Provides a Cognito identityId
+ *
+ * @param tokens - The AuthTokens received after SignIn
+ * @returns string
+ * @throws configuration exceptions: `InvalidIdentityPoolIdException`
+ *  - Auth errors that may arise from misconfiguration.
+ * @throws service exceptions: {@link GetIdException }
+ */
+async function cognitoIdentityIdProvider({ tokens, authConfig, identityIdStore, }) {
+    identityIdStore.setAuthConfig({ Cognito: authConfig });
+    // will return null only if there is no identityId cached or if there is an error retrieving it
+    const identityId = await identityIdStore.loadIdentityId();
+    if (identityId) {
+        return identityId.id;
+    }
+    const logins = tokens?.idToken
+        ? formLoginsMap(tokens.idToken.toString())
+        : {};
+    const generatedIdentityId = await generateIdentityId(logins, authConfig);
+    // Store generated identityId
+    identityIdStore.storeIdentityId({
+        id: generatedIdentityId,
+        type: tokens ? 'primary' : 'guest',
+    });
+    return generatedIdentityId;
+}
+async function generateIdentityId(logins, authConfig) {
+    const identityPoolId = authConfig?.identityPoolId;
+    const region = getRegionFromIdentityPoolId(identityPoolId);
+    const getId = createGetIdClient({
+        endpointResolver: createCognitoIdentityPoolEndpointResolver({
+            endpointOverride: authConfig.identityPoolEndpoint,
+        }),
+    });
+    // IdentityId is absent so get it using IdentityPoolId with Cognito's GetId API
+    let idResult;
+    // for a first-time user, this will return a brand new identity
+    // for a returning user, this will retrieve the previous identity assocaited with the logins
+    try {
+        idResult = (await getId({
+            region,
+        }, {
+            IdentityPoolId: identityPoolId,
+            Logins: logins,
+        })).IdentityId;
+    }
+    catch (e) {
+        assertServiceError(e);
+        throw new AuthError_AuthError(e);
+    }
+    if (!idResult) {
+        throw new AuthError_AuthError({
+            name: 'GetIdResponseException',
+            message: 'Received undefined response from getId operation',
+            recoverySuggestion: 'Make sure to pass a valid identityPoolId in the configuration.',
+        });
+    }
+    return idResult;
+}
+
+
+//# sourceMappingURL=IdentityIdProvider.mjs.map
+
+;// ./node_modules/@aws-amplify/auth/dist/esm/providers/cognito/credentialsProvider/credentialsProvider.mjs
+
+
+
+
+
+
+
+
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+const credentialsProvider_logger = new ConsoleLogger('CognitoCredentialsProvider');
+const CREDENTIALS_TTL = 50 * 60 * 1000; // 50 min, can be modified on config if required in the future
+class CognitoAWSCredentialsAndIdentityIdProvider {
+    constructor(identityIdStore) {
+        this._nextCredentialsRefresh = 0;
+        this._identityIdStore = identityIdStore;
+    }
+    async clearCredentialsAndIdentityId() {
+        credentialsProvider_logger.debug('Clearing out credentials and identityId');
+        this._credentialsAndIdentityId = undefined;
+        await this._identityIdStore.clearIdentityId();
+    }
+    async clearCredentials() {
+        credentialsProvider_logger.debug('Clearing out in-memory credentials');
+        this._credentialsAndIdentityId = undefined;
+    }
+    async getCredentialsAndIdentityId(getCredentialsOptions) {
+        const isAuthenticated = getCredentialsOptions.authenticated;
+        const { tokens } = getCredentialsOptions;
+        const { authConfig } = getCredentialsOptions;
+        try {
+            assertIdentityPoolIdConfig(authConfig?.Cognito);
+        }
+        catch {
+            // No identity pool configured, skipping
+            return;
+        }
+        if (!isAuthenticated && !authConfig.Cognito.allowGuestAccess) {
+            // TODO(V6): return partial result like Native platforms
+            return;
+        }
+        const { forceRefresh } = getCredentialsOptions;
+        const tokenHasChanged = this.hasTokenChanged(tokens);
+        const identityId = await cognitoIdentityIdProvider({
+            tokens,
+            authConfig: authConfig.Cognito,
+            identityIdStore: this._identityIdStore,
+        });
+        // Clear cached credentials when forceRefresh is true OR the cache token has changed
+        if (forceRefresh || tokenHasChanged) {
+            this.clearCredentials();
+        }
+        if (!isAuthenticated) {
+            return this.getGuestCredentials(identityId, authConfig.Cognito);
+        }
+        else {
+            assertIdTokenInAuthTokens(tokens);
+            return this.credsForOIDCTokens(authConfig.Cognito, tokens, identityId);
+        }
+    }
+    async getGuestCredentials(identityId, authConfig) {
+        // Return existing in-memory cached credentials only if it exists, is not past it's lifetime and is unauthenticated credentials
+        if (this._credentialsAndIdentityId &&
+            !this.isPastTTL() &&
+            this._credentialsAndIdentityId.isAuthenticatedCreds === false) {
+            credentialsProvider_logger.info('returning stored credentials as they neither past TTL nor expired.');
+            return this._credentialsAndIdentityId;
+        }
+        // Clear to discard if any authenticated credentials are set and start with a clean slate
+        this.clearCredentials();
+        const region = getRegionFromIdentityPoolId(authConfig.identityPoolId);
+        const getCredentialsForIdentity = createGetCredentialsForIdentityClient({
+            endpointResolver: createCognitoIdentityPoolEndpointResolver({
+                endpointOverride: authConfig.identityPoolEndpoint,
+            }),
+        });
+        // use identityId to obtain guest credentials
+        // save credentials in-memory
+        // No logins params should be passed for guest creds:
+        // https://docs.aws.amazon.com/cognitoidentity/latest/APIReference/API_GetCredentialsForIdentity.html
+        let clientResult;
+        try {
+            clientResult = await getCredentialsForIdentity({ region }, {
+                IdentityId: identityId,
+            });
+        }
+        catch (e) {
+            assertServiceError(e);
+            throw new AuthError_AuthError(e);
+        }
+        if (clientResult?.Credentials?.AccessKeyId &&
+            clientResult?.Credentials?.SecretKey) {
+            this._nextCredentialsRefresh = new Date().getTime() + CREDENTIALS_TTL;
+            const res = {
+                credentials: {
+                    accessKeyId: clientResult.Credentials.AccessKeyId,
+                    secretAccessKey: clientResult.Credentials.SecretKey,
+                    sessionToken: clientResult.Credentials.SessionToken,
+                    expiration: clientResult.Credentials.Expiration,
+                },
+                identityId,
+            };
+            if (clientResult.IdentityId) {
+                res.identityId = clientResult.IdentityId;
+                this._identityIdStore.storeIdentityId({
+                    id: clientResult.IdentityId,
+                    type: 'guest',
+                });
+            }
+            this._credentialsAndIdentityId = {
+                ...res,
+                isAuthenticatedCreds: false,
+            };
+            return res;
+        }
+        else {
+            throw new AuthError_AuthError({
+                name: 'CredentialsNotFoundException',
+                message: `Cognito did not respond with either Credentials, AccessKeyId or SecretKey.`,
+            });
+        }
+    }
+    async credsForOIDCTokens(authConfig, authTokens, identityId) {
+        if (this._credentialsAndIdentityId &&
+            !this.isPastTTL() &&
+            this._credentialsAndIdentityId.isAuthenticatedCreds === true) {
+            credentialsProvider_logger.debug('returning stored credentials as they neither past TTL nor expired.');
+            return this._credentialsAndIdentityId;
+        }
+        // Clear to discard if any unauthenticated credentials are set and start with a clean slate
+        this.clearCredentials();
+        const logins = authTokens.idToken
+            ? formLoginsMap(authTokens.idToken.toString())
+            : {};
+        const region = getRegionFromIdentityPoolId(authConfig.identityPoolId);
+        const getCredentialsForIdentity = createGetCredentialsForIdentityClient({
+            endpointResolver: createCognitoIdentityPoolEndpointResolver({
+                endpointOverride: authConfig.identityPoolEndpoint,
+            }),
+        });
+        let clientResult;
+        try {
+            clientResult = await getCredentialsForIdentity({ region }, {
+                IdentityId: identityId,
+                Logins: logins,
+            });
+        }
+        catch (e) {
+            assertServiceError(e);
+            throw new AuthError_AuthError(e);
+        }
+        if (clientResult?.Credentials?.AccessKeyId &&
+            clientResult?.Credentials?.SecretKey) {
+            this._nextCredentialsRefresh = new Date().getTime() + CREDENTIALS_TTL;
+            const res = {
+                credentials: {
+                    accessKeyId: clientResult.Credentials.AccessKeyId,
+                    secretAccessKey: clientResult.Credentials.SecretKey,
+                    sessionToken: clientResult.Credentials.SessionToken,
+                    expiration: clientResult.Credentials.Expiration,
+                },
+                identityId,
+            };
+            if (clientResult.IdentityId) {
+                res.identityId = clientResult.IdentityId;
+                // note: the following call removes guest identityId from the persistent store (localStorage)
+                this._identityIdStore.storeIdentityId({
+                    id: clientResult.IdentityId,
+                    type: 'primary',
+                });
+            }
+            // Store the credentials in-memory along with the expiration
+            this._credentialsAndIdentityId = {
+                ...res,
+                isAuthenticatedCreds: true,
+                associatedIdToken: authTokens.idToken?.toString(),
+            };
+            return res;
+        }
+        else {
+            throw new AuthError_AuthError({
+                name: 'CredentialsException',
+                message: `Cognito did not respond with either Credentials, AccessKeyId or SecretKey.`,
+            });
+        }
+    }
+    isPastTTL() {
+        return this._nextCredentialsRefresh === undefined
+            ? true
+            : this._nextCredentialsRefresh <= Date.now();
+    }
+    hasTokenChanged(tokens) {
+        return (!!tokens &&
+            !!this._credentialsAndIdentityId?.associatedIdToken &&
+            tokens.idToken?.toString() !==
+                this._credentialsAndIdentityId.associatedIdToken);
+    }
+}
+
+
+//# sourceMappingURL=credentialsProvider.mjs.map
+
+;// ./node_modules/@aws-amplify/auth/dist/esm/providers/cognito/tokenProvider/types.mjs
+const AuthTokenStorageKeys = {
+    accessToken: 'accessToken',
+    idToken: 'idToken',
+    oidcProvider: 'oidcProvider',
+    clockDrift: 'clockDrift',
+    refreshToken: 'refreshToken',
+    deviceKey: 'deviceKey',
+    randomPasswordKey: 'randomPasswordKey',
+    deviceGroupKey: 'deviceGroupKey',
+    signInDetails: 'signInDetails',
+    oauthMetadata: 'oauthMetadata',
+};
+
+
+//# sourceMappingURL=types.mjs.map
+
+;// ./node_modules/@aws-amplify/auth/dist/esm/providers/cognito/tokenProvider/errorHelpers.mjs
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+var TokenProviderErrorCode;
+(function (TokenProviderErrorCode) {
+    TokenProviderErrorCode["InvalidAuthTokens"] = "InvalidAuthTokens";
+})(TokenProviderErrorCode || (TokenProviderErrorCode = {}));
+const tokenValidationErrorMap = {
+    [TokenProviderErrorCode.InvalidAuthTokens]: {
+        message: 'Invalid tokens.',
+        recoverySuggestion: 'Make sure the tokens are valid.',
+    },
+};
+const errorHelpers_assert = createAssertionFunction(tokenValidationErrorMap);
+
+
+//# sourceMappingURL=errorHelpers.mjs.map
+
+;// ./node_modules/@aws-amplify/auth/dist/esm/providers/cognito/tokenProvider/constants.mjs
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+const AUTH_KEY_PREFIX = 'CognitoIdentityServiceProvider';
+
+
+//# sourceMappingURL=constants.mjs.map
+
+;// ./node_modules/@aws-amplify/auth/dist/esm/providers/cognito/tokenProvider/TokenStore.mjs
+
+
+
+
+
+
+class DefaultTokenStore {
+    getKeyValueStorage() {
+        if (!this.keyValueStorage) {
+            throw new AuthError_AuthError({
+                name: 'KeyValueStorageNotFoundException',
+                message: 'KeyValueStorage was not found in TokenStore',
+            });
+        }
+        return this.keyValueStorage;
+    }
+    setKeyValueStorage(keyValueStorage) {
+        this.keyValueStorage = keyValueStorage;
+    }
+    setAuthConfig(authConfig) {
+        this.authConfig = authConfig;
+    }
+    async loadTokens() {
+        // TODO(v6): migration logic should be here
+        // Reading V5 tokens old format
+        try {
+            const authKeys = await this.getAuthKeys();
+            const accessTokenString = await this.getKeyValueStorage().getItem(authKeys.accessToken);
+            if (!accessTokenString) {
+                throw new AuthError_AuthError({
+                    name: 'NoSessionFoundException',
+                    message: 'Auth session was not found. Make sure to call signIn.',
+                });
+            }
+            const accessToken = decodeJWT(accessTokenString);
+            const itString = await this.getKeyValueStorage().getItem(authKeys.idToken);
+            const idToken = itString ? decodeJWT(itString) : undefined;
+            const refreshToken = (await this.getKeyValueStorage().getItem(authKeys.refreshToken)) ??
+                undefined;
+            const clockDriftString = (await this.getKeyValueStorage().getItem(authKeys.clockDrift)) ?? '0';
+            const clockDrift = Number.parseInt(clockDriftString);
+            const signInDetails = await this.getKeyValueStorage().getItem(authKeys.signInDetails);
+            const tokens = {
+                accessToken,
+                idToken,
+                refreshToken,
+                deviceMetadata: (await this.getDeviceMetadata()) ?? undefined,
+                clockDrift,
+                username: await this.getLastAuthUser(),
+            };
+            if (signInDetails) {
+                tokens.signInDetails = JSON.parse(signInDetails);
+            }
+            return tokens;
+        }
+        catch (err) {
+            return null;
+        }
+    }
+    async storeTokens(tokens) {
+        errorHelpers_assert(tokens !== undefined, TokenProviderErrorCode.InvalidAuthTokens);
+        const lastAuthUser = tokens.username;
+        await this.getKeyValueStorage().setItem(this.getLastAuthUserKey(), lastAuthUser);
+        const authKeys = await this.getAuthKeys();
+        await this.getKeyValueStorage().setItem(authKeys.accessToken, tokens.accessToken.toString());
+        if (tokens.idToken) {
+            await this.getKeyValueStorage().setItem(authKeys.idToken, tokens.idToken.toString());
+        }
+        else {
+            await this.getKeyValueStorage().removeItem(authKeys.idToken);
+        }
+        if (tokens.refreshToken) {
+            await this.getKeyValueStorage().setItem(authKeys.refreshToken, tokens.refreshToken);
+        }
+        else {
+            await this.getKeyValueStorage().removeItem(authKeys.refreshToken);
+        }
+        if (tokens.deviceMetadata) {
+            if (tokens.deviceMetadata.deviceKey) {
+                await this.getKeyValueStorage().setItem(authKeys.deviceKey, tokens.deviceMetadata.deviceKey);
+            }
+            if (tokens.deviceMetadata.deviceGroupKey) {
+                await this.getKeyValueStorage().setItem(authKeys.deviceGroupKey, tokens.deviceMetadata.deviceGroupKey);
+            }
+            await this.getKeyValueStorage().setItem(authKeys.randomPasswordKey, tokens.deviceMetadata.randomPassword);
+        }
+        if (tokens.signInDetails) {
+            await this.getKeyValueStorage().setItem(authKeys.signInDetails, JSON.stringify(tokens.signInDetails));
+        }
+        else {
+            await this.getKeyValueStorage().removeItem(authKeys.signInDetails);
+        }
+        await this.getKeyValueStorage().setItem(authKeys.clockDrift, `${tokens.clockDrift}`);
+    }
+    async clearTokens() {
+        const authKeys = await this.getAuthKeys();
+        // Not calling clear because it can remove data that is not managed by AuthTokenStore
+        await Promise.all([
+            this.getKeyValueStorage().removeItem(authKeys.accessToken),
+            this.getKeyValueStorage().removeItem(authKeys.idToken),
+            this.getKeyValueStorage().removeItem(authKeys.clockDrift),
+            this.getKeyValueStorage().removeItem(authKeys.refreshToken),
+            this.getKeyValueStorage().removeItem(authKeys.signInDetails),
+            this.getKeyValueStorage().removeItem(this.getLastAuthUserKey()),
+            this.getKeyValueStorage().removeItem(authKeys.oauthMetadata),
+        ]);
+    }
+    async getDeviceMetadata(username) {
+        const authKeys = await this.getAuthKeys(username);
+        const deviceKey = await this.getKeyValueStorage().getItem(authKeys.deviceKey);
+        const deviceGroupKey = await this.getKeyValueStorage().getItem(authKeys.deviceGroupKey);
+        const randomPassword = await this.getKeyValueStorage().getItem(authKeys.randomPasswordKey);
+        return randomPassword && deviceGroupKey && deviceKey
+            ? {
+                deviceKey,
+                deviceGroupKey,
+                randomPassword,
+            }
+            : null;
+    }
+    async clearDeviceMetadata(username) {
+        const authKeys = await this.getAuthKeys(username);
+        await Promise.all([
+            this.getKeyValueStorage().removeItem(authKeys.deviceKey),
+            this.getKeyValueStorage().removeItem(authKeys.deviceGroupKey),
+            this.getKeyValueStorage().removeItem(authKeys.randomPasswordKey),
+        ]);
+    }
+    async getAuthKeys(username) {
+        utils_assertTokenProviderConfig(this.authConfig?.Cognito);
+        const lastAuthUser = username ?? (await this.getLastAuthUser());
+        return createKeysForAuthStorage(AUTH_KEY_PREFIX, `${this.authConfig.Cognito.userPoolClientId}.${lastAuthUser}`);
+    }
+    getLastAuthUserKey() {
+        utils_assertTokenProviderConfig(this.authConfig?.Cognito);
+        const identifier = this.authConfig.Cognito.userPoolClientId;
+        return `${AUTH_KEY_PREFIX}.${identifier}.LastAuthUser`;
+    }
+    async getLastAuthUser() {
+        const lastAuthUser = (await this.getKeyValueStorage().getItem(this.getLastAuthUserKey())) ??
+            'username';
+        return lastAuthUser;
+    }
+    async setOAuthMetadata(metadata) {
+        const { oauthMetadata: oauthMetadataKey } = await this.getAuthKeys();
+        await this.getKeyValueStorage().setItem(oauthMetadataKey, JSON.stringify(metadata));
+    }
+    async getOAuthMetadata() {
+        const { oauthMetadata: oauthMetadataKey } = await this.getAuthKeys();
+        const oauthMetadata = await this.getKeyValueStorage().getItem(oauthMetadataKey);
+        return oauthMetadata && JSON.parse(oauthMetadata);
+    }
+}
+const createKeysForAuthStorage = (provider, identifier) => {
+    return getAuthStorageKeys(AuthTokenStorageKeys)(`${provider}`, identifier);
+};
+function getAuthStorageKeys(authKeys) {
+    const keys = Object.values({ ...authKeys });
+    return (prefix, identifier) => keys.reduce((acc, authKey) => ({
+        ...acc,
+        [authKey]: `${prefix}.${identifier}.${authKey}`,
+    }), {});
+}
+
+
+//# sourceMappingURL=TokenStore.mjs.map
+
+;// ./node_modules/@aws-amplify/auth/dist/esm/providers/cognito/credentialsProvider/types.mjs
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+const IdentityIdStorageKeys = {
+    identityId: 'identityId',
+};
+
+
+//# sourceMappingURL=types.mjs.map
+
+;// ./node_modules/@aws-amplify/auth/dist/esm/providers/cognito/credentialsProvider/IdentityIdStore.mjs
+
+
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+const IdentityIdStore_logger = new ConsoleLogger('DefaultIdentityIdStore');
+class DefaultIdentityIdStore {
+    setAuthConfig(authConfigParam) {
+        assertIdentityPoolIdConfig(authConfigParam.Cognito);
+        this.authConfig = authConfigParam;
+        this._authKeys = IdentityIdStore_createKeysForAuthStorage('Cognito', authConfigParam.Cognito.identityPoolId);
+    }
+    constructor(keyValueStorage) {
+        this._authKeys = {};
+        this._hasGuestIdentityId = false;
+        this.keyValueStorage = keyValueStorage;
+    }
+    async loadIdentityId() {
+        assertIdentityPoolIdConfig(this.authConfig?.Cognito);
+        try {
+            if (this._primaryIdentityId) {
+                return {
+                    id: this._primaryIdentityId,
+                    type: 'primary',
+                };
+            }
+            else {
+                const storedIdentityId = await this.keyValueStorage.getItem(this._authKeys.identityId);
+                if (storedIdentityId) {
+                    this._hasGuestIdentityId = true;
+                    return {
+                        id: storedIdentityId,
+                        type: 'guest',
+                    };
+                }
+                return null;
+            }
+        }
+        catch (err) {
+            IdentityIdStore_logger.log('Error getting stored IdentityId.', err);
+            return null;
+        }
+    }
+    async storeIdentityId(identity) {
+        assertIdentityPoolIdConfig(this.authConfig?.Cognito);
+        if (identity.type === 'guest') {
+            this.keyValueStorage.setItem(this._authKeys.identityId, identity.id);
+            // Clear in-memory storage of primary identityId
+            this._primaryIdentityId = undefined;
+            this._hasGuestIdentityId = true;
+        }
+        else {
+            this._primaryIdentityId = identity.id;
+            // Clear locally stored guest id
+            if (this._hasGuestIdentityId) {
+                this.keyValueStorage.removeItem(this._authKeys.identityId);
+                this._hasGuestIdentityId = false;
+            }
+        }
+    }
+    async clearIdentityId() {
+        this._primaryIdentityId = undefined;
+        await this.keyValueStorage.removeItem(this._authKeys.identityId);
+    }
+}
+const IdentityIdStore_createKeysForAuthStorage = (provider, identifier) => {
+    return getAuthStorageKeys(IdentityIdStorageKeys)(`com.amplify.${provider}`, identifier);
+};
+
+
+//# sourceMappingURL=IdentityIdStore.mjs.map
+
+;// ./node_modules/@aws-amplify/auth/dist/esm/providers/cognito/credentialsProvider/index.mjs
+
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+/**
+ * Cognito specific implmentation of the CredentialsProvider interface
+ * that manages setting and getting of AWS Credentials.
+ *
+ * @throws configuration expections: `InvalidIdentityPoolIdException`
+ *  - Auth errors that may arise from misconfiguration.
+ * @throws service expections: {@link GetCredentialsForIdentityException}, {@link GetIdException}
+ *
+ */
+const cognitoCredentialsProvider = new CognitoAWSCredentialsAndIdentityIdProvider(new DefaultIdentityIdStore(defaultStorage));
+
+
+//# sourceMappingURL=index.mjs.map
+
+;// ./node_modules/@aws-amplify/core/dist/esm/utils/deDupeAsyncFunction.mjs
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+/**
+ * returns in-flight promise if there is one
+ *
+ * @param asyncFunction - asyncFunction to be deduped.
+ * @returns - the return type of the callback
+ */
+const deDupeAsyncFunction = (asyncFunction) => {
+    let inflightPromise;
+    return async (...args) => {
+        if (inflightPromise)
+            return inflightPromise;
+        inflightPromise = new Promise((resolve, reject) => {
+            asyncFunction(...args)
+                .then(result => {
+                resolve(result);
+            })
+                .catch(error => {
+                reject(error);
+            })
+                .finally(() => {
+                inflightPromise = undefined;
+            });
+        });
+        return inflightPromise;
+    };
+};
+
+
+//# sourceMappingURL=deDupeAsyncFunction.mjs.map
+
+;// ./node_modules/@aws-amplify/auth/dist/esm/foundation/factories/serviceClients/cognitoIdentityProvider/shared/serde/createUserPoolSerializer.mjs
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+const createUserPoolSerializer = (operation) => (input, endpoint) => {
+    const headers = createUserPoolSerializer_getSharedHeaders(operation);
+    const body = JSON.stringify(input);
+    return createUserPoolSerializer_buildHttpRpcRequest(endpoint, headers, body);
+};
+const createUserPoolSerializer_getSharedHeaders = (operation) => ({
+    'content-type': 'application/x-amz-json-1.1',
+    'x-amz-target': `AWSCognitoIdentityProviderService.${operation}`,
+});
+const createUserPoolSerializer_buildHttpRpcRequest = ({ url }, headers, body) => ({
+    headers,
+    url,
+    body,
+    method: 'POST',
+});
+
+
+//# sourceMappingURL=createUserPoolSerializer.mjs.map
+
+;// ./node_modules/@aws-amplify/auth/dist/esm/foundation/factories/serviceClients/cognitoIdentityProvider/shared/serde/createUserPoolDeserializer.mjs
+
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+const createUserPoolDeserializer = () => async (response) => {
+    if (response.statusCode >= 300) {
+        const error = await parseJsonError(response);
+        assertServiceError(error);
+        throw new AuthError_AuthError({
+            name: error.name,
+            message: error.message,
+            metadata: error.$metadata,
+        });
+    }
+    return parseJsonBody(response);
+};
+
+
+//# sourceMappingURL=createUserPoolDeserializer.mjs.map
+
+;// ./node_modules/@aws-amplify/auth/dist/esm/foundation/factories/serviceClients/cognitoIdentityProvider/shared/handler/cognitoUserPoolTransferHandler.mjs
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+/**
+ * A Cognito Identity-specific middleware that disables caching for all requests.
+ */
+const disableCacheMiddlewareFactory = () => (next, _) => async function disableCacheMiddleware(request) {
+    request.headers['cache-control'] = 'no-store';
+    return next(request);
+};
+/**
+ * A Cognito Identity-specific transfer handler that does NOT sign requests, and
+ * disables caching.
+ *
+ * @internal
+ */
+const cognitoUserPoolTransferHandler = composeTransferHandler(unauthenticatedHandler, [disableCacheMiddlewareFactory]);
+
+
+//# sourceMappingURL=cognitoUserPoolTransferHandler.mjs.map
+
+;// ./node_modules/@aws-amplify/auth/dist/esm/foundation/constants.mjs
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+/**
+ * The service name used to sign requests if the API requires authentication.
+ */
+const COGNITO_IDP_SERVICE_NAME = 'cognito-idp';
+
+
+//# sourceMappingURL=constants.mjs.map
+
+;// ./node_modules/@aws-amplify/auth/dist/esm/foundation/factories/serviceClients/cognitoIdentityProvider/constants.mjs
+
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+const constants_DEFAULT_SERVICE_CLIENT_API_CONFIG = {
+    service: COGNITO_IDP_SERVICE_NAME,
+    retryDecider: getRetryDecider(parseJsonError),
+    computeDelay: jitteredBackoff_jitteredBackoff,
+    get userAgentValue() {
+        return getAmplifyUserAgent();
+    },
+    cache: 'no-store',
+};
+
+
+//# sourceMappingURL=constants.mjs.map
+
+;// ./node_modules/@aws-amplify/auth/dist/esm/foundation/factories/serviceClients/cognitoIdentityProvider/createInitiateAuthClient.mjs
+
+
+
+
+
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+const createInitiateAuthClient_createInitiateAuthClient = (config) => composeServiceApi(cognitoUserPoolTransferHandler, createUserPoolSerializer('InitiateAuth'), createUserPoolDeserializer(), {
+    ...constants_DEFAULT_SERVICE_CLIENT_API_CONFIG,
+    ...config,
+});
+
+
+//# sourceMappingURL=createInitiateAuthClient.mjs.map
 
 ;// ./node_modules/@aws-amplify/auth/dist/esm/foundation/cognitoUserPoolEndpointResolver.mjs
 
@@ -5589,6 +6219,14 @@ const refreshAuthTokensWithoutDedupe = (/* unused pure expression or super */ nu
 
 //# sourceMappingURL=refreshAuthTokens.mjs.map
 
+;// ./node_modules/@aws-amplify/core/dist/esm/utils/isBrowser.mjs
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+const isBrowser = () => typeof window !== 'undefined' && typeof window.document !== 'undefined';
+
+
+//# sourceMappingURL=isBrowser.mjs.map
+
 ;// ./node_modules/@aws-amplify/core/dist/esm/utils/isTokenExpired.mjs
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
@@ -5599,6 +6237,103 @@ function isTokenExpired({ expiresAt, clockDrift, tolerance = 5000, }) {
 
 
 //# sourceMappingURL=isTokenExpired.mjs.map
+
+;// ./node_modules/@aws-amplify/auth/dist/esm/providers/cognito/utils/signInWithRedirectStore.mjs
+
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+const V5_HOSTED_UI_KEY = 'amplify-signin-with-hostedUI';
+const signInWithRedirectStore_name = 'CognitoIdentityServiceProvider';
+class DefaultOAuthStore {
+    constructor(keyValueStorage) {
+        this.keyValueStorage = keyValueStorage;
+    }
+    async clearOAuthInflightData() {
+        utils_assertTokenProviderConfig(this.cognitoConfig);
+        const authKeys = signInWithRedirectStore_createKeysForAuthStorage(signInWithRedirectStore_name, this.cognitoConfig.userPoolClientId);
+        await Promise.all([
+            this.keyValueStorage.removeItem(authKeys.inflightOAuth),
+            this.keyValueStorage.removeItem(authKeys.oauthPKCE),
+            this.keyValueStorage.removeItem(authKeys.oauthState),
+        ]);
+    }
+    async clearOAuthData() {
+        utils_assertTokenProviderConfig(this.cognitoConfig);
+        const authKeys = signInWithRedirectStore_createKeysForAuthStorage(signInWithRedirectStore_name, this.cognitoConfig.userPoolClientId);
+        await this.clearOAuthInflightData();
+        await this.keyValueStorage.removeItem(V5_HOSTED_UI_KEY); // remove in case a customer migrated an App from v5 to v6
+        return this.keyValueStorage.removeItem(authKeys.oauthSignIn);
+    }
+    loadOAuthState() {
+        utils_assertTokenProviderConfig(this.cognitoConfig);
+        const authKeys = signInWithRedirectStore_createKeysForAuthStorage(signInWithRedirectStore_name, this.cognitoConfig.userPoolClientId);
+        return this.keyValueStorage.getItem(authKeys.oauthState);
+    }
+    storeOAuthState(state) {
+        utils_assertTokenProviderConfig(this.cognitoConfig);
+        const authKeys = signInWithRedirectStore_createKeysForAuthStorage(signInWithRedirectStore_name, this.cognitoConfig.userPoolClientId);
+        return this.keyValueStorage.setItem(authKeys.oauthState, state);
+    }
+    loadPKCE() {
+        utils_assertTokenProviderConfig(this.cognitoConfig);
+        const authKeys = signInWithRedirectStore_createKeysForAuthStorage(signInWithRedirectStore_name, this.cognitoConfig.userPoolClientId);
+        return this.keyValueStorage.getItem(authKeys.oauthPKCE);
+    }
+    storePKCE(pkce) {
+        utils_assertTokenProviderConfig(this.cognitoConfig);
+        const authKeys = signInWithRedirectStore_createKeysForAuthStorage(signInWithRedirectStore_name, this.cognitoConfig.userPoolClientId);
+        return this.keyValueStorage.setItem(authKeys.oauthPKCE, pkce);
+    }
+    setAuthConfig(authConfigParam) {
+        this.cognitoConfig = authConfigParam;
+    }
+    async loadOAuthInFlight() {
+        utils_assertTokenProviderConfig(this.cognitoConfig);
+        const authKeys = signInWithRedirectStore_createKeysForAuthStorage(signInWithRedirectStore_name, this.cognitoConfig.userPoolClientId);
+        return ((await this.keyValueStorage.getItem(authKeys.inflightOAuth)) === 'true');
+    }
+    async storeOAuthInFlight(inflight) {
+        utils_assertTokenProviderConfig(this.cognitoConfig);
+        const authKeys = signInWithRedirectStore_createKeysForAuthStorage(signInWithRedirectStore_name, this.cognitoConfig.userPoolClientId);
+        await this.keyValueStorage.setItem(authKeys.inflightOAuth, `${inflight}`);
+    }
+    async loadOAuthSignIn() {
+        utils_assertTokenProviderConfig(this.cognitoConfig);
+        const authKeys = signInWithRedirectStore_createKeysForAuthStorage(signInWithRedirectStore_name, this.cognitoConfig.userPoolClientId);
+        const isLegacyHostedUISignIn = await this.keyValueStorage.getItem(V5_HOSTED_UI_KEY);
+        const [isOAuthSignIn, preferPrivateSession] = (await this.keyValueStorage.getItem(authKeys.oauthSignIn))?.split(',') ??
+            [];
+        return {
+            isOAuthSignIn: isOAuthSignIn === 'true' || isLegacyHostedUISignIn === 'true',
+            preferPrivateSession: preferPrivateSession === 'true',
+        };
+    }
+    async storeOAuthSignIn(oauthSignIn, preferPrivateSession = false) {
+        utils_assertTokenProviderConfig(this.cognitoConfig);
+        const authKeys = signInWithRedirectStore_createKeysForAuthStorage(signInWithRedirectStore_name, this.cognitoConfig.userPoolClientId);
+        await this.keyValueStorage.setItem(authKeys.oauthSignIn, `${oauthSignIn},${preferPrivateSession}`);
+    }
+}
+const signInWithRedirectStore_createKeysForAuthStorage = (provider, identifier) => {
+    return getAuthStorageKeys(OAuthStorageKeys)(provider, identifier);
+};
+
+
+//# sourceMappingURL=signInWithRedirectStore.mjs.map
+
+;// ./node_modules/@aws-amplify/auth/dist/esm/providers/cognito/utils/oauth/oAuthStore.mjs
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+const oAuthStore = new DefaultOAuthStore(defaultStorage);
+
+
+//# sourceMappingURL=oAuthStore.mjs.map
 
 ;// ./node_modules/@aws-amplify/auth/dist/esm/providers/cognito/utils/oauth/inflightPromise.mjs
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
@@ -5818,6 +6553,209 @@ const { tokenOrchestrator } = cognitoUserPoolsTokenProvider;
 
 //# sourceMappingURL=tokenProvider.mjs.map
 
+;// ./node_modules/aws-amplify/dist/esm/initSingleton.mjs
+
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+const DefaultAmplify = {
+    /**
+     * Configures Amplify with the {@link resourceConfig} and {@link libraryOptions}.
+     *
+     * @param resourceConfig The {@link ResourcesConfig} object that is typically imported from the
+     * `amplifyconfiguration.json` file. It can also be an object literal created inline when calling `Amplify.configure`.
+     * @param libraryOptions The {@link LibraryOptions} additional options for the library.
+     *
+     * @example
+     * import config from './amplifyconfiguration.json';
+     *
+     * Amplify.configure(config);
+     */
+    configure(resourceConfig, libraryOptions) {
+        const resolvedResourceConfig = parseAmplifyConfig(resourceConfig);
+        const cookieBasedKeyValueStorage = new CookieStorage({ sameSite: 'lax' });
+        const resolvedKeyValueStorage = libraryOptions?.ssr
+            ? cookieBasedKeyValueStorage
+            : defaultStorage;
+        const resolvedCredentialsProvider = libraryOptions?.ssr
+            ? new CognitoAWSCredentialsAndIdentityIdProvider(new DefaultIdentityIdStore(cookieBasedKeyValueStorage))
+            : cognitoCredentialsProvider;
+        // If no Auth config is provided, no special handling will be required, configure as is.
+        // Otherwise, we can assume an Auth config is provided from here on.
+        if (!resolvedResourceConfig.Auth) {
+            Amplify_Amplify.configure(resolvedResourceConfig, libraryOptions);
+            return;
+        }
+        // If Auth options are provided, always just configure as is.
+        // Otherwise, we can assume no Auth libraryOptions were provided from here on.
+        if (libraryOptions?.Auth) {
+            Amplify_Amplify.configure(resolvedResourceConfig, libraryOptions);
+            return;
+        }
+        // If no Auth libraryOptions were previously configured, then always add default providers.
+        if (!Amplify_Amplify.libraryOptions.Auth) {
+            cognitoUserPoolsTokenProvider.setAuthConfig(resolvedResourceConfig.Auth);
+            cognitoUserPoolsTokenProvider.setKeyValueStorage(
+            // TODO: allow configure with a public interface
+            resolvedKeyValueStorage);
+            Amplify_Amplify.configure(resolvedResourceConfig, {
+                ...libraryOptions,
+                Auth: {
+                    tokenProvider: cognitoUserPoolsTokenProvider,
+                    credentialsProvider: resolvedCredentialsProvider,
+                },
+            });
+            return;
+        }
+        // At this point, Auth libraryOptions would have been previously configured and no overriding
+        // Auth options were given, so we should preserve the currently configured Auth libraryOptions.
+        if (libraryOptions) {
+            const authLibraryOptions = Amplify_Amplify.libraryOptions.Auth;
+            // If ssr is provided through libraryOptions, we should respect the intentional reconfiguration.
+            if (libraryOptions.ssr !== undefined) {
+                cognitoUserPoolsTokenProvider.setKeyValueStorage(
+                // TODO: allow configure with a public interface
+                resolvedKeyValueStorage);
+                authLibraryOptions.credentialsProvider = resolvedCredentialsProvider;
+            }
+            Amplify_Amplify.configure(resolvedResourceConfig, {
+                Auth: authLibraryOptions,
+                ...libraryOptions,
+            });
+            return;
+        }
+        // Finally, if there were no libraryOptions given at all, we should simply not touch the currently
+        // configured libraryOptions.
+        Amplify_Amplify.configure(resolvedResourceConfig);
+    },
+    /**
+     * Returns the {@link ResourcesConfig} object passed in as the `resourceConfig` parameter when calling
+     * `Amplify.configure`.
+     *
+     * @returns An {@link ResourcesConfig} object.
+     */
+    getConfig() {
+        return Amplify_Amplify.getConfig();
+    },
+};
+
+
+//# sourceMappingURL=initSingleton.mjs.map
+
+;// ./constants/auth.js
+var USER_POOL_CLIENT_ID = "lmckmqd7bndat4ot0ajl7u2uk";
+var USER_POOL_ID = "us-west-1_G8hKy1gmb";
+var AUTH_DOMAIN = "auth.measuringcontest.com";
+var AUTH_SCOPES = ["openid", "email", "profile"];
+var COGNITO_RESPONSE_TYPE = 'code';
+var AWS_REGION = 'us-west-1';
+var cognitoConfig = {
+  Auth: {
+    Cognito: {
+      userPoolId: USER_POOL_ID,
+      userPoolClientId: USER_POOL_CLIENT_ID,
+      loginWith: {
+        oauth: {
+          domain: AUTH_DOMAIN,
+          scopes: AUTH_SCOPES,
+          redirectSignIn: [window.origin],
+          redirectSignOut: [window.origin],
+          responseType: COGNITO_RESPONSE_TYPE
+        }
+      }
+    }
+  }
+};
+;// ./node_modules/@aws-amplify/auth/dist/esm/providers/cognito/apis/internal/getCurrentUser.mjs
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+const getCurrentUser = async (amplify) => {
+    const authConfig = amplify.getConfig().Auth?.Cognito;
+    utils_assertTokenProviderConfig(authConfig);
+    const tokens = await amplify.Auth.getTokens({ forceRefresh: false });
+    assertAuthTokens(tokens);
+    const { 'cognito:username': username, sub } = tokens.idToken?.payload ?? {};
+    const authUser = {
+        username: username,
+        userId: sub,
+    };
+    const signInDetails = getSignInDetailsFromTokens(tokens);
+    if (signInDetails) {
+        authUser.signInDetails = signInDetails;
+    }
+    return authUser;
+};
+function getSignInDetailsFromTokens(tokens) {
+    return tokens?.signInDetails;
+}
+
+
+//# sourceMappingURL=getCurrentUser.mjs.map
+
+;// ./node_modules/@aws-amplify/auth/dist/esm/providers/cognito/apis/getCurrentUser.mjs
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+/**
+ * Gets the current user from the idToken.
+ *
+ * @param input -  The GetCurrentUserInput object.
+ * @returns GetCurrentUserOutput
+ * @throws - {@link InitiateAuthException} - Thrown when the service fails to refresh the tokens.
+ * @throws AuthTokenConfigException - Thrown when the token provider config is invalid.
+ */
+const getCurrentUser_getCurrentUser = async () => {
+    return getCurrentUser(Amplify_Amplify);
+};
+
+
+//# sourceMappingURL=getCurrentUser.mjs.map
+
+;// ./node_modules/@aws-amplify/core/dist/esm/utils/urlSafeEncode.mjs
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+function urlSafeEncode(str) {
+    return str
+        .split('')
+        .map(char => char.charCodeAt(0).toString(16).padStart(2, '0'))
+        .join('');
+}
+
+
+//# sourceMappingURL=urlSafeEncode.mjs.map
+
+;// ./node_modules/@aws-amplify/auth/dist/esm/utils/getAuthUserAgentValue.mjs
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+const getAuthUserAgentValue_getAuthUserAgentValue = (action, customUserAgentDetails) => getAmplifyUserAgent({
+    category: Category.Auth,
+    action,
+    ...customUserAgentDetails,
+});
+
+
+//# sourceMappingURL=getAuthUserAgentValue.mjs.map
+
+;// ./node_modules/@aws-amplify/core/dist/esm/utils/urlSafeDecode.mjs
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+function urlSafeDecode(hex) {
+    const matchArr = hex.match(/.{2}/g) || [];
+    return matchArr.map(char => String.fromCharCode(parseInt(char, 16))).join('');
+}
+
+
+//# sourceMappingURL=urlSafeDecode.mjs.map
+
 ;// ./node_modules/@aws-amplify/auth/dist/esm/providers/cognito/tokenProvider/cacheTokens.mjs
 
 
@@ -5890,7 +6828,7 @@ const dispatchSignedInHubEvent = async () => {
         }, 'Auth', AMPLIFY_SYMBOL);
     }
     catch (error) {
-        if (error.name === constants_USER_UNAUTHENTICATED_EXCEPTION) {
+        if (error.name === USER_UNAUTHENTICATED_EXCEPTION) {
             throw new AuthError_AuthError({
                 name: UNEXPECTED_SIGN_IN_INTERRUPTION_EXCEPTION,
                 message: ERROR_MESSAGE,
@@ -7607,7 +8545,7 @@ const handleOAuthSignOut = async (cognitoConfig, store, tokenOrchestrator, redir
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 const createRevokeTokenClient = (config) => composeServiceApi(cognitoUserPoolTransferHandler, createUserPoolSerializer('RevokeToken'), createUserPoolDeserializer(), {
-    ...DEFAULT_SERVICE_CLIENT_API_CONFIG,
+    ...constants_DEFAULT_SERVICE_CLIENT_API_CONFIG,
     ...config,
 });
 
@@ -7626,7 +8564,7 @@ const createRevokeTokenClient = (config) => composeServiceApi(cognitoUserPoolTra
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 const createGlobalSignOutClient = (config) => composeServiceApi(cognitoUserPoolTransferHandler, createUserPoolSerializer('GlobalSignOut'), createUserPoolDeserializer(), {
-    ...DEFAULT_SERVICE_CLIENT_API_CONFIG,
+    ...constants_DEFAULT_SERVICE_CLIENT_API_CONFIG,
     ...config,
 });
 
@@ -7919,17 +8857,17 @@ function useCognitoAuth() {
 
 
 
-Amplify_Amplify.configure(cognitoConfig);
+DefaultAmplify.configure(cognitoConfig);
 function App() {
   var auth = useCognitoAuth();
-  console.log('auth', auth);
+  console.log('auth.isAuthenticated', auth.isAuthenticated);
   return /*#__PURE__*/react.createElement("div", {
     className: "content"
-  }, /*#__PURE__*/react.createElement("button", {
+  }, !auth.loading && !auth.isAuthenticated && /*#__PURE__*/react.createElement("button", {
     onClick: auth.login
-  }, "Login with Google"), /*#__PURE__*/react.createElement("button", {
+  }, "Login with Google"), !auth.loading && auth.isAuthenticated && /*#__PURE__*/react.createElement("button", {
     onClick: auth.logout
-  }, "Logout"), /*#__PURE__*/react.createElement("div", null, auth.isAuthenticated));
+  }, "Logout"));
 }
 // EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
 var injectStylesIntoStyleTag = __webpack_require__(72);

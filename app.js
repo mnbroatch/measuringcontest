@@ -1,5 +1,5 @@
 import React from 'react'
-import { Amplify } from '@aws-amplify/core';
+import { Amplify } from 'aws-amplify';
 import {
   cognitoConfig,
 } from "./constants/auth.js";
@@ -10,19 +10,20 @@ Amplify.configure(cognitoConfig);
 export default function App () {
   const auth = useCognitoAuth()
 
-  console.log('auth', auth)
+  console.log('auth.isAuthenticated', auth.isAuthenticated)
 
   return (
     <div className="content">
-      <button onClick={auth.login}>
-        Login with Google
-      </button>
-      <button onClick={auth.logout}>
-        Logout
-      </button>
-      <div>
-        {auth.isAuthenticated}
-      </div>
+      {!auth.loading && !auth.isAuthenticated && (
+        <button onClick={auth.login}>
+          Login with Google
+        </button>
+      )}
+      {!auth.loading && auth.isAuthenticated && (
+        <button onClick={auth.logout}>
+          Logout
+        </button>
+      )}
     </div>
   )
 }
