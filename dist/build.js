@@ -963,7 +963,7 @@ var __webpack_exports__ = {};
 var react = __webpack_require__(540);
 // EXTERNAL MODULE: ./node_modules/react-dom/index.js
 var react_dom = __webpack_require__(961);
-;// ./node_modules/@aws-amplify/core/node_modules/js-cookie/dist/js.cookie.mjs
+;// ./node_modules/js-cookie/dist/js.cookie.mjs
 /*! js-cookie v3.0.5 | MIT */
 /* eslint-disable no-var */
 function js_cookie_assign (target) {
@@ -4311,11 +4311,11 @@ const addOrIncrementMetadataAttempts = (nextHandlerOutput, attempts) => {
 
 //# sourceMappingURL=retryMiddleware.mjs.map
 
-;// ./node_modules/@aws-amplify/core/node_modules/uuid/dist/esm-browser/native.js
+;// ./node_modules/uuid/dist/esm-browser/native.js
 const randomUUID = typeof crypto !== 'undefined' && crypto.randomUUID && crypto.randomUUID.bind(crypto);
 /* harmony default export */ const esm_browser_native = ({ randomUUID });
 
-;// ./node_modules/@aws-amplify/core/node_modules/uuid/dist/esm-browser/rng.js
+;// ./node_modules/uuid/dist/esm-browser/rng.js
 let getRandomValues;
 const rnds8 = new Uint8Array(16);
 function rng() {
@@ -4328,7 +4328,7 @@ function rng() {
     return getRandomValues(rnds8);
 }
 
-;// ./node_modules/@aws-amplify/core/node_modules/uuid/dist/esm-browser/stringify.js
+;// ./node_modules/uuid/dist/esm-browser/stringify.js
 
 const byteToHex = [];
 for (let i = 0; i < 256; ++i) {
@@ -4365,7 +4365,7 @@ function stringify(arr, offset = 0) {
 }
 /* harmony default export */ const esm_browser_stringify = ((/* unused pure expression or super */ null && (stringify)));
 
-;// ./node_modules/@aws-amplify/core/node_modules/uuid/dist/esm-browser/v4.js
+;// ./node_modules/uuid/dist/esm-browser/v4.js
 
 
 
