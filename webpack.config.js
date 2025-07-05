@@ -1,4 +1,5 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin')
+const CopyPlugin = require("copy-webpack-plugin");
 
 class CacheBustPlugin {
   apply(compiler) {
@@ -39,7 +40,12 @@ module.exports = {
         version: Date.now(),
       },
     }),
-    new CacheBustPlugin()
+    new CacheBustPlugin(),
+    new CopyPlugin({
+      patterns: [
+        { from: "static", to: "" },
+      ],
+    }),
   ],
   module: {
     rules: [

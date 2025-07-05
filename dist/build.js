@@ -6660,8 +6660,8 @@ var cognitoConfig = {
         oauth: {
           domain: AUTH_DOMAIN,
           scopes: AUTH_SCOPES,
-          redirectSignIn: [window.origin],
-          redirectSignOut: [window.origin],
+          redirectSignIn: typeof window === 'undefined' ? null : [window.origin],
+          redirectSignOut: typeof window === 'undefined' ? null : [window.origin],
           responseType: COGNITO_RESPONSE_TYPE
         }
       }
