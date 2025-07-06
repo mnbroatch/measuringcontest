@@ -9000,6 +9000,10 @@ function app_asyncToGenerator(n) { return function () { var t = this, e = argume
 
 
 DefaultAmplify.configure(cognitoConfig);
+var apiUrl = {
+  'https://measuringcontest.com': 'https://api.measuringcontest.com',
+  'http://localhost:8080': 'https://api-local.measuringcontest.com'
+}[window.origin];
 function App() {
   var auth = useCognitoAuth();
   var putNumberInCloud = /*#__PURE__*/function () {
@@ -9016,7 +9020,7 @@ function App() {
             return auth.getUserId();
           case 2:
             userId = _context.v;
-            makeAuthenticatedRequest('https://api.measuringcontest.com', idToken, {
+            makeAuthenticatedRequest(apiUrl, idToken, {
               method: 'PUT',
               body: {
                 id: userId,

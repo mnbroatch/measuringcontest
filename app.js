@@ -8,6 +8,11 @@ import makeAuthenticatedRequest from "./utils/make-authenticated-request.js";
 
 Amplify.configure(cognitoConfig);
 
+const apiUrl = {
+  'https://measuringcontest.com': 'https://api.measuringcontest.com',
+  'http://localhost:8080': 'https://api-local.measuringcontest.com'
+}[window.origin]
+
 export default function App () {
   const auth = useCognitoAuth()
 
@@ -15,7 +20,7 @@ export default function App () {
     const idToken = await auth.getIdToken()
     const userId = await auth.getUserId()
     makeAuthenticatedRequest(
-      'https://api.measuringcontest.com',
+      apiUrl,
       idToken,
       {
         method: 'PUT',
