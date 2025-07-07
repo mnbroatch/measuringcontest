@@ -26,6 +26,9 @@ jobs:
           - name: testfunction
             path: lambda/testfunction
             zip: testfunction.zip
+          - name: getsessionid
+            path: lambda/get-session-id
+            zip: getsessionid.zip
 
     steps:
       - uses: actions/checkout@v3
