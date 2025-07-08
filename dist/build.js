@@ -9021,7 +9021,10 @@ function App() {
             userId = _context.v;
             _context.n = 3;
             return makeAuthenticatedRequest(apiUrl, idToken, {
-              method: 'POST'
+              method: 'POST',
+              body: {
+                createdBy: userId
+              }
             });
           case 3:
             session = _context.v;
