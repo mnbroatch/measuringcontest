@@ -4,9 +4,10 @@ const { DynamoDBDocumentClient, UpdateCommand } = require("@aws-sdk/lib-dynamodb
 const client = new DynamoDBClient();
 const dynamoDb = DynamoDBDocumentClient.from(client);
 
-exports.handler = async () => {
+exports.handler = async (event) => {
   try {
-    const session = await createSession(await getSessionCode())
+    const body = JSON.parse(event.body || "{}");
+    const session = await createSession(await getSessionCode(), body.createdBy)
     return { val: session }
   } catch (error) {
     return {
@@ -45,20 +46,16 @@ function encodeAlphaCode(num) {
   return code;
 }
 
-async function createSession (sessionCode) {
+async function createSession (sessionCode, createdBy) {
   return dynamoDb.send(
     new UpdateCommand({
       TableName: "measuringcontest-sessions",
       Key: { sessioncode: sessionCode },
-      UpdateExpression: "SET #status = :status, #createdAt = :createdAt, #expiresAt = :expiresAt",
-      ExpressionAttributeNames: {
-        "#status": "status",
-        "#createdAt": "createdAt",
-        "#expiresAtSeconds": "expiresAt",
-      },
+      UpdateExpression: "SET status = :status, createdAt = :createdAt, expiresAtSeconds = :expiresAtSeconds, createdBy = :createdBy",
       ExpressionAttributeValues: {
         ":status": "waiting",
         ":createdAt": new Date().toISOString(),
+        ":createdBy": createdBy,
         ":expiresAtSeconds": Math.floor(Date.now()/ 1000) + 24 * 60 * 60,
       },
       ConditionExpression: "attribute_not_exists(sessioncode)",

@@ -19,7 +19,7 @@ export default function App () {
     const session = await makeAuthenticatedRequest(
       apiUrl,
       idToken,
-      { method: 'POST' }
+      { method: 'POST', body: { createdBy: userId } }
     )
     console.log('session', session)
   }
