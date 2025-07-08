@@ -5,8 +5,8 @@ const client = new DynamoDBClient();
 const dynamoDb = DynamoDBDocumentClient.from(client);
 
 exports.handler = async () => {
-  const session = await createSession(await getSessionCode())
   try {
+    const session = await createSession(await getSessionCode())
     return {
       statusCode: 200,
       body: JSON.stringify({ value: session }),
