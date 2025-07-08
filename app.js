@@ -8,25 +8,24 @@ import makeAuthenticatedRequest from "./utils/make-authenticated-request.js";
 
 Amplify.configure(cognitoConfig);
 
+// TODO: env
 const apiUrl = {
-  'https://measuringcontest.com': 'https://api.measuringcontest.com',
-  'http://localhost:8080': 'https://api-local.measuringcontest.com'
+  'https://measuringcontest.com': 'https://api.measuringcontest.com/sessions',
+  'http://localhost:8080': 'https://api-local.measuringcontest.com/sessions'
 }[window.origin]
 
 export default function App () {
   const auth = useCognitoAuth()
 
-  const putNumberInCloud = async () => {
+  const createSession = async () => {
     const idToken = await auth.getIdToken()
     const userId = await auth.getUserId()
-    makeAuthenticatedRequest(
+    const session = await makeAuthenticatedRequest(
       apiUrl,
       idToken,
-      {
-        method: 'PUT',
-        body: { id: userId, name: Date.now() }
-      }
+      { method: 'POST' }
     )
+    console.log('session', session)
   }
 
   return (
@@ -41,8 +40,8 @@ export default function App () {
           <button onClick={auth.logout}>
             Logout
           </button>
-          <button onClick={putNumberInCloud}>
-            put now in cloud
+          <button onClick={createSession}>
+            create session
           </button>
         </>
       )}

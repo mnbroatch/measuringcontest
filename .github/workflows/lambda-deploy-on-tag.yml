@@ -23,12 +23,9 @@ jobs:
     strategy:
       matrix:
         lambda:
-          - name: testfunction
-            path: lambda/testfunction
-            zip: testfunction.zip
-          - name: getsessionid
-            path: lambda/get-session-id
-            zip: getsessionid.zip
+          - name: createsession
+            path: lambda/create-session
+            zip: createsession.zip
 
     steps:
       - uses: actions/checkout@v3

@@ -9000,15 +9000,17 @@ function app_asyncToGenerator(n) { return function () { var t = this, e = argume
 
 
 DefaultAmplify.configure(cognitoConfig);
+
+// TODO: env
 var apiUrl = {
-  'https://measuringcontest.com': 'https://api.measuringcontest.com',
-  'http://localhost:8080': 'https://api-local.measuringcontest.com'
+  'https://measuringcontest.com': 'https://api.measuringcontest.com/sessions',
+  'http://localhost:8080': 'https://api-local.measuringcontest.com/sessions'
 }[window.origin];
 function App() {
   var auth = useCognitoAuth();
-  var putNumberInCloud = /*#__PURE__*/function () {
+  var createSession = /*#__PURE__*/function () {
     var _ref = app_asyncToGenerator(/*#__PURE__*/app_regenerator().m(function _callee() {
-      var idToken, userId;
+      var idToken, userId, session;
       return app_regenerator().w(function (_context) {
         while (1) switch (_context.n) {
           case 0:
@@ -9020,19 +9022,19 @@ function App() {
             return auth.getUserId();
           case 2:
             userId = _context.v;
-            makeAuthenticatedRequest(apiUrl, idToken, {
-              method: 'PUT',
-              body: {
-                id: userId,
-                name: Date.now()
-              }
+            _context.n = 3;
+            return makeAuthenticatedRequest(apiUrl, idToken, {
+              method: 'POST'
             });
           case 3:
+            session = _context.v;
+            console.log('session', session);
+          case 4:
             return _context.a(2);
         }
       }, _callee);
     }));
-    return function putNumberInCloud() {
+    return function createSession() {
       return _ref.apply(this, arguments);
     };
   }();
@@ -9043,8 +9045,8 @@ function App() {
   }, "Login with Google"), !auth.loading && auth.isAuthenticated && /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement("button", {
     onClick: auth.logout
   }, "Logout"), /*#__PURE__*/react.createElement("button", {
-    onClick: putNumberInCloud
-  }, "put now in cloud")));
+    onClick: createSession
+  }, "create session")));
 }
 // EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
 var injectStylesIntoStyleTag = __webpack_require__(72);
