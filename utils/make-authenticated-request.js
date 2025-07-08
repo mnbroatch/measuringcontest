@@ -7,5 +7,5 @@ export default function makeAuthenticatedRequest (url, token, options = {}) {
   console.log('url', url)
   const headers = new Headers(options.headers);
   headers.set('Authorization',  `Bearer ${token}`);
-  return makeRequest(url, { ...options, credentials: 'include', headers })
+  return makeRequest(url, { ...options, headers })
 }
