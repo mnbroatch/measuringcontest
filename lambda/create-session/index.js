@@ -62,7 +62,7 @@ async function createSession (sessionCode) {
         ":status": "waiting",
         ":createdAt": new Date().toISOString(),
       },
-      ConditionExpression: "attribute_not_exists(sessionCode)", // avoid overwrite if by some chance code re-used
+      ConditionExpression: "attribute_not_exists(sessioncode)", // avoid overwrite if by some chance code re-used
     })
   )
 }
