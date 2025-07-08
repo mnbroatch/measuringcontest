@@ -4,11 +4,26 @@ const { DynamoDBDocumentClient, UpdateCommand } = require("@aws-sdk/lib-dynamodb
 const client = new DynamoDBClient();
 const dynamoDb = DynamoDBDocumentClient.from(client);
 
+
+// TODO: env variable
+const allowedOrigins = [
+  "https://measuringcontest.com",
+  "https://localhost:8080",
+];
+
+const isAllowed = allowedOrigins.includes(requestOrigin);
+const corsHeaders = {
+  "Content-Type": "application/json",
+  "Access-Control-Allow-Origin": isAllowed ? requestOrigin : "",
+  "Access-Control-Allow-Credentials": "true",
+};
+
 exports.handler = async () => {
   try {
     const session = await createSession(await getSessionCode())
     return {
       statusCode: 200,
+      headers: corsHeaders,
       body: JSON.stringify({ val: session }),
     };
   } catch (error) {
@@ -17,6 +32,7 @@ exports.handler = async () => {
     return {
       statusCode: 500,
       headers: { "Content-Type": "application/json" },
+      headers: corsHeaders,
       body: JSON.stringify({
         message: error.message,
         name: error.name,
