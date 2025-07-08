@@ -9,7 +9,7 @@ exports.handler = async () => {
     const session = await createSession(await getSessionCode())
     return {
       statusCode: 200,
-      body: JSON.stringify({ data: session }),
+      body: JSON.stringify({ val: session }),
     };
   } catch (error) {
     console.log('error in createsession:');
@@ -33,13 +33,13 @@ async function getSessionCode () {
       Key: {
         property: "sessioncounter",
       },
-      UpdateExpression: "ADD data :inc",
+      UpdateExpression: "ADD val :inc",
       ExpressionAttributeValues: {
         ":inc": 1,
       },
       ReturnValues: "UPDATED_NEW",
     })
-  )).Attributes.data
+  )).Attributes.val
 
   return encodeAlphaCode(sessionCounter)
 }
