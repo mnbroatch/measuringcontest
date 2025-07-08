@@ -50,16 +50,24 @@ async function createSession (sessionCode) {
     new UpdateCommand({
       TableName: "measuringcontest-sessions",
       Key: { sessioncode: sessionCode },
-      UpdateExpression: "SET #status = :status, #createdAt = :createdAt",
+      UpdateExpression: "SET #status = :status, #createdAt = :createdAt, #expiresAt = :expiresAt",
       ExpressionAttributeNames: {
         "#status": "status",
         "#createdAt": "createdAt",
+        "#expiresAtSeconds": "expiresAt",
       },
       ExpressionAttributeValues: {
         ":status": "waiting",
         ":createdAt": new Date().toISOString(),
+        ":expiresAtSeconds": Math.floor(Date.now()/ 1000) + 24 * 60 * 60,
       },
-      ConditionExpression: "attribute_not_exists(sessioncode)", // avoid overwrite if by some chance code re-used
+      ConditionExpression: "attribute_not_exists(sessioncode)",
     })
   )
 }
+
+
+
+
+
+

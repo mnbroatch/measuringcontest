@@ -8931,6 +8931,7 @@ function _makeRequest() {
             // If FormData or other body types, send as-is
             fetchOptions.body = body;
           }
+          console.log('fetchOptions', fetchOptions);
 
           // Make the fetch call
           _context.n = 1;
@@ -8983,6 +8984,7 @@ function makeAuthenticatedRequest(url, token) {
   if (!token) {
     throw new Error("authenticated request attempted with no token: ".concat(url));
   }
+  console.log('url', url);
   var headers = new Headers(options.headers);
   headers.set('Authorization', "Bearer ".concat(token));
   return makeRequest(url, make_authenticated_request_objectSpread(make_authenticated_request_objectSpread({}, options), {}, {
