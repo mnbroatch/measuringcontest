@@ -7,7 +7,7 @@ const MAX_SESSIONS_PER_USER = 1
 
 exports.handler = async (event) => {
   try {
-    await assertUserSessionLimit
+    await assertUserSessionLimit(event.createdBy)
     const session = await createSession(await getSessionCode(), event.createdBy)
     return { val: session }
   } catch (error) {
