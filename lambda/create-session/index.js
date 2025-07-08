@@ -10,11 +10,9 @@ exports.handler = async () => {
     return { val: session }
   } catch (error) {
     return {
-      error: {
-        message: error.message,
-        name: error.name,
-        stack: error.stack, // optional
-      }
+      errorMessage: error.message,
+      errorStack: error.stack,
+      errorName: error.name,
     }
   }
 }
