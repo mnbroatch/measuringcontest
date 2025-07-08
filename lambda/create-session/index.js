@@ -1,11 +1,13 @@
 const { DynamoDBClient } = require("@aws-sdk/client-dynamodb")
-const { DynamoDBDocumentClient, UpdateCommand } = require("@aws-sdk/lib-dynamodb")
+const { DynamoDBDocumentClient, QueryCommand, UpdateCommand } = require("@aws-sdk/lib-dynamodb")
 
-const client = new DynamoDBClient();
-const dynamoDb = DynamoDBDocumentClient.from(client);
+const client = new DynamoDBClient()
+const dynamoDb = DynamoDBDocumentClient.from(client)
+const MAX_SESSIONS_PER_USER = 1
 
 exports.handler = async (event) => {
   try {
+    await assertUserSessionLimit
     const session = await createSession(await getSessionCode(), event.createdBy)
     return { val: session }
   } catch (error) {
@@ -63,7 +65,18 @@ async function createSession (sessionCode, createdBy) {
 }
 
 
+async function assertUserSessionLimit (userId) {
+  const { Count } = await dynamoDb.send(new QueryCommand({
+    TableName: "measuringcontest-sessions",
+    IndexName: "createdBy-index",
+    KeyConditionExpression: "createdBy = :createdBy",
+    ExpressionAttributeValues: {
+      ":createdBy": userId,
+    },
+    Select: "COUNT",
+  }));
 
-
-
-
+  if (Count >= MAX_SESSIONS_PER_USER) {
+    throw new Error("You have reached the maximum number of sessions allowed.");
+  }
+}
