@@ -33,13 +33,13 @@ async function getSessionCode () {
       Key: {
         property: "sessioncounter",
       },
-      UpdateExpression: "ADD value :inc",
+      UpdateExpression: "ADD data :inc",
       ExpressionAttributeValues: {
         ":inc": 1,
       },
       ReturnValues: "UPDATED_NEW",
     })
-  )).Attributes.value
+  )).Attributes.data
 
   return encodeAlphaCode(sessionCounter)
 }
