@@ -51,9 +51,9 @@ async function createSession (sessionCode, createdBy) {
     new UpdateCommand({
       TableName: "measuringcontest-sessions",
       Key: { sessioncode: sessionCode },
-      UpdateExpression: "SET status = :status, createdAt = :createdAt, expiresAtSeconds = :expiresAtSeconds, createdBy = :createdBy",
+      UpdateExpression: "SET sessionStatus = :sessionStatus, createdAt = :createdAt, expiresAtSeconds = :expiresAtSeconds, createdBy = :createdBy",
       ExpressionAttributeValues: {
-        ":status": "waiting",
+        ":sessionStatus": "waiting",
         ":createdAt": new Date().toISOString(),
         ":createdBy": createdBy,
         ":expiresAtSeconds": Math.floor(Date.now()/ 1000) + 24 * 60 * 60,
