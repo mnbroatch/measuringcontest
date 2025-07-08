@@ -9002,12 +9002,7 @@ function app_asyncToGenerator(n) { return function () { var t = this, e = argume
 
 
 DefaultAmplify.configure(cognitoConfig);
-
-// TODO: env
-var apiUrl = {
-  'https://measuringcontest.com': 'https://api.measuringcontest.com/sessions',
-  'http://localhost:8080': 'https://api-local.measuringcontest.com/sessions'
-}[window.origin];
+var apiUrl = 'https://api.measuringcontest.com/sessions';
 function App() {
   var auth = useCognitoAuth();
   var createSession = /*#__PURE__*/function () {

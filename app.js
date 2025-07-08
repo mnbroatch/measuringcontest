@@ -8,11 +8,7 @@ import makeAuthenticatedRequest from "./utils/make-authenticated-request.js";
 
 Amplify.configure(cognitoConfig);
 
-// TODO: env
-const apiUrl = {
-  'https://measuringcontest.com': 'https://api.measuringcontest.com/sessions',
-  'http://localhost:8080': 'https://api-local.measuringcontest.com/sessions'
-}[window.origin]
+const apiUrl = 'https://api.measuringcontest.com/sessions'
 
 export default function App () {
   const auth = useCognitoAuth()
