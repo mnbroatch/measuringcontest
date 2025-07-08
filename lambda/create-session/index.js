@@ -9,12 +9,14 @@ exports.handler = async () => {
     const session = await createSession(await getSessionCode())
     return {
       statusCode: 200,
-      body: JSON.stringify({ value: session }),
+      body: JSON.stringify({ data: session }),
     };
   } catch (error) {
+    console.log('error in createsession:');
     console.error(error);
     return {
       statusCode: 500,
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         message: error.message,
         name: error.name,
