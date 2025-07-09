@@ -13,6 +13,7 @@ exports.handler = async (event) => {
     errorStep = 1
     return { val: session }
   } catch (error) {
+    console.log('errorStep', errorStep)
     return {
       errorMessage: error.message,
       errorStack: error.stack,
