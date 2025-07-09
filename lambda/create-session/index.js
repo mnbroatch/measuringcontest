@@ -10,6 +10,7 @@ exports.handler = async (event) => {
     const session = await createSession(await getSessionCode(), event.requestContext.authorizer.claims.sub)
     return { val: session }
   } catch (error) {
+    console.log(event)
     return {
       errorMessage: error.message,
       errorStack: error.stack,
