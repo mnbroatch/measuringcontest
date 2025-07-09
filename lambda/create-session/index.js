@@ -14,6 +14,7 @@ exports.handler = async (event) => {
       errorMessage: error.message,
       errorStack: error.stack,
       errorName: error.name,
+      event: event
     }
   }
 }
