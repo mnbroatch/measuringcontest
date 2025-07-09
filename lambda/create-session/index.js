@@ -5,22 +5,25 @@ const client = new DynamoDBClient()
 const dynamoDb = DynamoDBDocumentClient.from(client)
 const MAX_SESSIONS_PER_USER = 1
 
+let errorStep = 0
+
 exports.handler = async (event) => {
   try {
     const session = await createSession(await getSessionCode(), event.requestContext.authorizer.claims.sub)
+    errorStep = 1
     return { val: session }
   } catch (error) {
-    console.log(event)
     return {
       errorMessage: error.message,
       errorStack: error.stack,
       errorName: error.name,
-      event: event
+      errorStep,
     }
   }
 }
 
 async function createSession (sessionCode, userId) {
+  errorStep = 2
   const params = {
     TransactItems: [
       {
@@ -32,7 +35,7 @@ async function createSession (sessionCode, userId) {
           ExpressionAttributeValues: {
             ":newSession": [sessionCode],
             ":emptyList": [],
-            ":now": new Date().toISOString(),
+            ":now": Date.now(),
             ":maxSessions": MAX_SESSIONS_PER_USER,
           }
         }
@@ -44,7 +47,7 @@ async function createSession (sessionCode, userId) {
             sessionCode,
             createdBy: userId,
             sessionStatus: "waiting",
-            createdAt: new Date().toISOString(),
+            createdAt: Date.now(),
             expiresAtSeconds: Math.floor(Date.now() / 1000) + 24 * 3600
           },
           ConditionExpression: "attribute_not_exists(sessionCode)"
@@ -52,8 +55,10 @@ async function createSession (sessionCode, userId) {
       }
     ]
   };
+  errorStep = 3
 
   await dynamoDb.send(new TransactWriteCommand(params));
+  errorStep = 4
   return { success: true, sessionCode };
 }
 
@@ -71,6 +76,8 @@ async function getSessionCode () {
       ReturnValues: "UPDATED_NEW",
     })
   )).Attributes.val
+
+  errorStep = 'a'
 
   return encodeAlphaCode(sessionCounter)
 }
