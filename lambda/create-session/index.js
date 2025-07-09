@@ -5,26 +5,20 @@ const client = new DynamoDBClient()
 const dynamoDb = DynamoDBDocumentClient.from(client)
 const MAX_SESSIONS_PER_USER = 1
 
-let errorStep = 0
-
 exports.handler = async (event) => {
   try {
     const session = await createSession(await getSessionCode(), event.requestContext.authorizer.claims.sub)
-    errorStep = 1
     return { val: session }
   } catch (error) {
-    console.log('errorStep', errorStep)
     return {
       errorMessage: error.message,
-      errorStack: error.stack,
       errorName: error.name,
-      errorStep,
     }
   }
 }
 
 async function createSession (sessionCode, userId) {
-  errorStep = 2
+  console.log('userId', userId)
   const params = {
     TransactItems: [
       {
@@ -56,10 +50,8 @@ async function createSession (sessionCode, userId) {
       }
     ]
   };
-  errorStep = 3
 
   await dynamoDb.send(new TransactWriteCommand(params));
-  errorStep = 4
   return { success: true, sessionCode };
 }
 
@@ -78,7 +70,6 @@ async function getSessionCode () {
     })
   )).Attributes.val
 
-  errorStep = 'a'
 
   return encodeAlphaCode(sessionCounter)
 }
