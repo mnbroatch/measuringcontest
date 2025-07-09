@@ -1,5 +1,5 @@
 const { DynamoDBClient } = require("@aws-sdk/client-dynamodb")
-const { DynamoDBDocumentClient, QueryCommand, UpdateCommand } = require("@aws-sdk/lib-dynamodb")
+const { DynamoDBDocumentClient, UpdateCommand, TransactWriteCommand } = require("@aws-sdk/lib-dynamodb")
 
 const client = new DynamoDBClient()
 const dynamoDb = DynamoDBDocumentClient.from(client)
@@ -7,8 +7,7 @@ const MAX_SESSIONS_PER_USER = 1
 
 exports.handler = async (event) => {
   try {
-    await assertUserSessionLimit(event.createdBy)
-    const session = await createSession(await getSessionCode(), event.createdBy)
+    const session = await createSession(await getSessionCode(), event.requestContext.authorizer.claims.sub)
     return { val: session }
   } catch (error) {
     return {
@@ -17,6 +16,43 @@ exports.handler = async (event) => {
       errorName: error.name,
     }
   }
+}
+
+async function createSession (sessionCode, userId) {
+  const params = {
+    TransactItems: [
+      {
+        Update: {
+          TableName: "measuringcontest-users",
+          Key: { userId },
+          UpdateExpression: 'SET sessions = list_append(if_not_exists(sessions, :emptyList), :newSession), createdAt = if_not_exists(createdAt, :now)',
+          ConditionExpression: "attribute_not_exists(sessions) OR size(sessions) < :maxSessions",
+          ExpressionAttributeValues: {
+            ":newSession": [sessionCode],
+            ":emptyList": [],
+            ":now": new Date().toISOString(),
+            ":maxSessions": MAX_SESSIONS_PER_USER,
+          }
+        }
+      },
+      {
+        Put: {
+          TableName: "measuringcontest-sessions",
+          Item: {
+            sessionCode,
+            createdBy: userId,
+            sessionStatus: "waiting",
+            createdAt: new Date().toISOString(),
+            expiresAtSeconds: Math.floor(Date.now() / 1000) + 24 * 3600
+          },
+          ConditionExpression: "attribute_not_exists(sessionCode)"
+        }
+      }
+    ]
+  };
+
+  await dynamoDb.send(new TransactWriteCommand(params));
+  return { success: true, sessionCode };
 }
 
 async function getSessionCode () {
@@ -45,38 +81,4 @@ function encodeAlphaCode(num) {
     num = Math.floor(num / 26);
   }
   return code;
-}
-
-async function createSession (sessionCode, createdBy) {
-  return dynamoDb.send(
-    new UpdateCommand({
-      TableName: "measuringcontest-sessions",
-      Key: { sessioncode: sessionCode },
-      UpdateExpression: "SET sessionStatus = :sessionStatus, createdAt = :createdAt, expiresAtSeconds = :expiresAtSeconds, createdBy = :createdBy",
-      ExpressionAttributeValues: {
-        ":sessionStatus": "waiting",
-        ":createdAt": new Date().toISOString(),
-        ":createdBy": createdBy,
-        ":expiresAtSeconds": Math.floor(Date.now()/ 1000) + 24 * 60 * 60,
-      },
-      ConditionExpression: "attribute_not_exists(sessioncode)",
-    })
-  )
-}
-
-
-async function assertUserSessionLimit (userId) {
-  const { Count } = await dynamoDb.send(new QueryCommand({
-    TableName: "measuringcontest-sessions",
-    IndexName: "createdBy-index",
-    KeyConditionExpression: "createdBy = :createdBy",
-    ExpressionAttributeValues: {
-      ":createdBy": userId,
-    },
-    Select: "COUNT",
-  }));
-
-  if (Count >= MAX_SESSIONS_PER_USER) {
-    throw new Error("You have reached the maximum number of sessions allowed.");
-  }
 }

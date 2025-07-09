@@ -8841,36 +8841,8 @@ function useCognitoAuth() {
       return _ref4.apply(this, arguments);
     };
   }();
-  var getUserId = /*#__PURE__*/function () {
-    var _ref5 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5() {
-      var _yield$fetchAuthSessi2, tokens, payload, _t3;
-      return _regenerator().w(function (_context5) {
-        while (1) switch (_context5.n) {
-          case 0:
-            _context5.p = 0;
-            _context5.n = 1;
-            return fetchAuthSession_fetchAuthSession();
-          case 1:
-            _yield$fetchAuthSessi2 = _context5.v;
-            tokens = _yield$fetchAuthSessi2.tokens;
-            payload = JSON.parse(atob(tokens.idToken.toString().split('.')[1]));
-            return _context5.a(2, payload.sub);
-          case 2:
-            _context5.p = 2;
-            _t3 = _context5.v;
-            console.log('error getting user id:');
-            console.error(_t3);
-            return _context5.a(2, null);
-        }
-      }, _callee5, null, [[0, 2]]);
-    }));
-    return function getUserId() {
-      return _ref5.apply(this, arguments);
-    };
-  }();
   return {
     getIdToken: getIdToken,
-    getUserId: getUserId,
     login: login,
     logout: logout,
     loading: loading,
@@ -9007,7 +8979,7 @@ function App() {
   var auth = useCognitoAuth();
   var createSession = /*#__PURE__*/function () {
     var _ref = app_asyncToGenerator(/*#__PURE__*/app_regenerator().m(function _callee() {
-      var idToken, userId, session;
+      var idToken, session;
       return app_regenerator().w(function (_context) {
         while (1) switch (_context.n) {
           case 0:
@@ -9016,20 +8988,13 @@ function App() {
           case 1:
             idToken = _context.v;
             _context.n = 2;
-            return auth.getUserId();
-          case 2:
-            userId = _context.v;
-            _context.n = 3;
             return makeAuthenticatedRequest(apiUrl, idToken, {
-              method: 'POST',
-              body: {
-                createdBy: userId
-              }
+              method: 'POST'
             });
-          case 3:
+          case 2:
             session = _context.v;
             console.log('session', session);
-          case 4:
+          case 3:
             return _context.a(2);
         }
       }, _callee);

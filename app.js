@@ -15,11 +15,10 @@ export default function App () {
 
   const createSession = async () => {
     const idToken = await auth.getIdToken()
-    const userId = await auth.getUserId()
     const session = await makeAuthenticatedRequest(
       apiUrl,
       idToken,
-      { method: 'POST', body: { createdBy: userId } }
+      { method: 'POST' }
     )
     console.log('session', session)
   }

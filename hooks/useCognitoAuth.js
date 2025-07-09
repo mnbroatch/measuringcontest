@@ -41,21 +41,8 @@ useEffect(() => {
     }
   };
 
-  const getUserId = async () => {
-    try {
-      const { tokens } = await fetchAuthSession();
-      const payload = JSON.parse(atob(tokens.idToken.toString().split('.')[1]));
-      return payload.sub;
-    } catch (error) {
-      console.log('error getting user id:');
-      console.error(error);
-      return null;
-    }
-  };
-
   return {
     getIdToken,
-    getUserId,
     login,
     logout,
     loading,
