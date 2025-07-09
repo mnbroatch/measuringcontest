@@ -4,21 +4,28 @@ const { DynamoDBDocumentClient, UpdateCommand, TransactWriteCommand } = require(
 const client = new DynamoDBClient()
 const dynamoDb = DynamoDBDocumentClient.from(client)
 const MAX_SESSIONS_PER_USER = 1
+const MAX_SESSIONS_ERROR_MESSAGE = 'You have reached the maximum number of sessions allowed.'
+const MAX_SESSIONS_ERROR_NAME = 'MAX_SESSIONS_ERROR'
 
 exports.handler = async (event) => {
   try {
     const session = await createSession(await getSessionCode(), event.requestContext.authorizer.claims.sub)
     return { val: session }
   } catch (error) {
+    let errorMessage = error.message
+    let errorName = error.name
+    if (error.name === "TransactionCanceledException" && error.message.includes("ConditionalCheckFailed")) {
+      errorMessage = MAX_SESSIONS_ERROR_MESSAGE
+      errorName = MAX_SESSIONS_ERROR_NAME
+    }
     return {
-      errorMessage: error.message,
-      errorName: error.name,
+      errorMessage,
+      errorName,
     }
   }
 }
 
 async function createSession (sessionCode, userId) {
-  console.log('userId', userId)
   const params = {
     TransactItems: [
       {
