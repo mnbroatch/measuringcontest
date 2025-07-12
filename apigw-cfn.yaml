@@ -1,0 +1,119 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  MyApi:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: MyApi
+
+  SessionsResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      ParentId: !GetAtt MyApi.RootResourceId
+      PathPart: sessions
+      RestApiId: !Ref MyApi
+
+  CreateSessionFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: createsession
+      Runtime: nodejs18.x
+      Handler: index.handler
+      Role: arn:aws:iam::637304540124:role/your-lambda-execution-role  # ?? Replace this with your actual role
+      Code:
+        ZipFile: |
+          exports.handler = async (event) => {
+            return {
+              statusCode: 200,
+              body: JSON.stringify({ message: "Session created!" })
+            };
+          };
+
+  LambdaInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref CreateSessionFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${MyApi}/*/POST/sessions
+
+  CognitoAuthorizer:
+    Type: AWS::ApiGateway::Authorizer
+    Properties:
+      Name: measuringcontest-authorizer
+      Type: COGNITO_USER_POOLS
+      IdentitySource: method.request.header.Authorization
+      RestApiId: !Ref MyApi
+      ProviderARNs:
+        - !Sub arn:aws:cognito-idp:${AWS::Region}:${AWS::AccountId}:userpool/us-west-1_G8hKy1gmb
+
+  SessionsPostMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref MyApi
+      ResourceId: !Ref SessionsResource
+      HttpMethod: POST
+      AuthorizationType: COGNITO_USER_POOLS
+      AuthorizerId: !Ref CognitoAuthorizer
+      Integration:
+        IntegrationHttpMethod: POST
+        Type: AWS
+        Uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CreateSessionFunction.Arn}/invocations
+        PassthroughBehavior: WHEN_NO_TEMPLATES
+        RequestTemplates:
+          application/json: |
+            #set($inputRoot = $input.path('$'))
+            {
+              "requestContext": {
+                "authorizer": {
+                  "claims": {
+                    "sub": "$context.authorizer.claims.sub"
+                  }
+                }
+              }
+            }
+        IntegrationResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+            ResponseTemplates:
+              application/json: ''
+          - StatusCode: 500
+            SelectionPattern: '5\d{2}'
+      MethodResponses:
+        - StatusCode: 200
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: true
+        - StatusCode: 500
+
+  SessionsOptionsMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref MyApi
+      ResourceId: !Ref SessionsResource
+      HttpMethod: OPTIONS
+      AuthorizationType: NONE
+      Integration:
+        Type: MOCK
+        IntegrationResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Methods: "'OPTIONS,POST'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+            ResponseTemplates:
+              application/json: ''
+      MethodResponses:
+        - StatusCode: 200
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Headers: true
+            method.response.header.Access-Control-Allow-Methods: true
+            method.response.header.Access-Control-Allow-Origin: true
+
+  ApiDeployment:
+    Type: AWS::ApiGateway::Deployment
+    DependsOn:
+      - SessionsPostMethod
+      - SessionsOptionsMethod
+    Properties:
+      RestApiId: !Ref MyApi
+      StageName: prod
