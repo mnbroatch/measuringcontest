@@ -1,8 +1,11 @@
 import React from 'react'
-import { useCreateSessionMutation } from "../utils/use-create-session-mutation.js";
+import { useCreateSessionMutation } from "../queries/use-create-session-mutation.js";
+import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
 
 export default function CreateSessionPage () {
-  const createSessionMutation  = useCreateSessionMutation()
+  const createSessionMutation = useCreateSessionMutation()
+  const auth = useCognitoAuth()
+
   return (
     <div className="content">
       {!auth.loading && !auth.isAuthenticated && (

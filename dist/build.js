@@ -22868,6 +22868,38 @@ const getCurrentUser_getCurrentUser = async () => {
 
 //# sourceMappingURL=getCurrentUser.mjs.map
 
+;// ./node_modules/@aws-amplify/core/dist/esm/singleton/apis/internal/fetchAuthSession.mjs
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+const fetchAuthSession = (amplify, options) => {
+    return amplify.Auth.fetchAuthSession(options);
+};
+
+
+//# sourceMappingURL=fetchAuthSession.mjs.map
+
+;// ./node_modules/@aws-amplify/core/dist/esm/singleton/apis/fetchAuthSession.mjs
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+/**
+ * Fetch the auth session including the tokens and credentials if they are available. By default it
+ * does not refresh the auth tokens or credentials if they are loaded in storage already. You can force a refresh
+ * with `{ forceRefresh: true }` input.
+ *
+ * @param options - Options configuring the fetch behavior.
+ * @throws {@link AuthError} - Throws error when session information cannot be refreshed.
+ * @returns Promise<AuthSession>
+ */
+const fetchAuthSession_fetchAuthSession = (options) => {
+    return fetchAuthSession(Amplify_Amplify, options);
+};
+
+
+//# sourceMappingURL=fetchAuthSession.mjs.map
+
 ;// ./node_modules/@aws-amplify/core/dist/esm/utils/urlSafeEncode.mjs
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
@@ -24844,313 +24876,6 @@ const isSessionRevocable = (token) => !!token?.payload?.origin_jti;
 
 //# sourceMappingURL=signOut.mjs.map
 
-;// ./node_modules/@aws-amplify/core/dist/esm/singleton/apis/internal/fetchAuthSession.mjs
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-const fetchAuthSession = (amplify, options) => {
-    return amplify.Auth.fetchAuthSession(options);
-};
-
-
-//# sourceMappingURL=fetchAuthSession.mjs.map
-
-;// ./node_modules/@aws-amplify/core/dist/esm/singleton/apis/fetchAuthSession.mjs
-
-
-
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-/**
- * Fetch the auth session including the tokens and credentials if they are available. By default it
- * does not refresh the auth tokens or credentials if they are loaded in storage already. You can force a refresh
- * with `{ forceRefresh: true }` input.
- *
- * @param options - Options configuring the fetch behavior.
- * @throws {@link AuthError} - Throws error when session information cannot be refreshed.
- * @returns Promise<AuthSession>
- */
-const fetchAuthSession_fetchAuthSession = (options) => {
-    return fetchAuthSession(Amplify_Amplify, options);
-};
-
-
-//# sourceMappingURL=fetchAuthSession.mjs.map
-
-;// ./contexts/cognito-auth-context.js
-function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
-function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { if (r) i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n;else { var o = function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); }; o("next", 0), o("throw", 1), o("return", 2); } }, _regeneratorDefine2(e, r, n, t); }
-function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
-function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
-function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-
-
-var CognitoAuthContext = /*#__PURE__*/(0,react.createContext)();
-function CognitoAuthProvider(_ref) {
-  var children = _ref.children;
-  var _useState = (0,react.useState)(true),
-    _useState2 = _slicedToArray(_useState, 2),
-    loading = _useState2[0],
-    setLoading = _useState2[1];
-  var _useState3 = (0,react.useState)(false),
-    _useState4 = _slicedToArray(_useState3, 2),
-    isAuthenticated = _useState4[0],
-    setIsAuthenticated = _useState4[1];
-  (0,react.useEffect)(function () {
-    var checkAuth = /*#__PURE__*/function () {
-      var _ref2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
-        var _t;
-        return _regenerator().w(function (_context) {
-          while (1) switch (_context.n) {
-            case 0:
-              _context.p = 0;
-              _context.n = 1;
-              return getCurrentUser_getCurrentUser();
-            case 1:
-              setIsAuthenticated(true);
-              _context.n = 3;
-              break;
-            case 2:
-              _context.p = 2;
-              _t = _context.v;
-              console.error('? getCurrentUser failed:', _t);
-              setIsAuthenticated(false);
-            case 3:
-              _context.p = 3;
-              setLoading(false);
-              return _context.f(3);
-            case 4:
-              return _context.a(2);
-          }
-        }, _callee, null, [[0, 2, 3, 4]]);
-      }));
-      return function checkAuth() {
-        return _ref2.apply(this, arguments);
-      };
-    }();
-    checkAuth();
-  }, []);
-  var login = /*#__PURE__*/function () {
-    var _ref3 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
-      return _regenerator().w(function (_context2) {
-        while (1) switch (_context2.n) {
-          case 0:
-            _context2.n = 1;
-            return signInWithRedirect();
-          case 1:
-            return _context2.a(2);
-        }
-      }, _callee2);
-    }));
-    return function login() {
-      return _ref3.apply(this, arguments);
-    };
-  }();
-  var logout = /*#__PURE__*/function () {
-    var _ref4 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3() {
-      return _regenerator().w(function (_context3) {
-        while (1) switch (_context3.n) {
-          case 0:
-            _context3.n = 1;
-            return signOut();
-          case 1:
-            setIsAuthenticated(false);
-          case 2:
-            return _context3.a(2);
-        }
-      }, _callee3);
-    }));
-    return function logout() {
-      return _ref4.apply(this, arguments);
-    };
-  }();
-  var getIdToken = /*#__PURE__*/function () {
-    var _ref5 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee4() {
-      var _yield$fetchAuthSessi, tokens, _t2;
-      return _regenerator().w(function (_context4) {
-        while (1) switch (_context4.n) {
-          case 0:
-            _context4.p = 0;
-            _context4.n = 1;
-            return fetchAuthSession_fetchAuthSession();
-          case 1:
-            _yield$fetchAuthSessi = _context4.v;
-            tokens = _yield$fetchAuthSessi.tokens;
-            return _context4.a(2, tokens.idToken.toString());
-          case 2:
-            _context4.p = 2;
-            _t2 = _context4.v;
-            console.log('error getting id token:');
-            console.error(_t2);
-            return _context4.a(2, null);
-        }
-      }, _callee4, null, [[0, 2]]);
-    }));
-    return function getIdToken() {
-      return _ref5.apply(this, arguments);
-    };
-  }();
-  var getUserId = /*#__PURE__*/function () {
-    var _ref6 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5() {
-      var _yield$fetchAuthSessi2, tokens, payload, _t3;
-      return _regenerator().w(function (_context5) {
-        while (1) switch (_context5.n) {
-          case 0:
-            _context5.p = 0;
-            _context5.n = 1;
-            return fetchAuthSession_fetchAuthSession();
-          case 1:
-            _yield$fetchAuthSessi2 = _context5.v;
-            tokens = _yield$fetchAuthSessi2.tokens;
-            payload = JSON.parse(atob(tokens.idToken.toString().split('.')[1]));
-            return _context5.a(2, payload.sub);
-          case 2:
-            _context5.p = 2;
-            _t3 = _context5.v;
-            console.log('error getting user id:');
-            console.error(_t3);
-            return _context5.a(2, null);
-        }
-      }, _callee5, null, [[0, 2]]);
-    }));
-    return function getUserId() {
-      return _ref6.apply(this, arguments);
-    };
-  }();
-  return /*#__PURE__*/react.createElement(CognitoAuthContext.Provider, {
-    value: {
-      isAuthenticated: isAuthenticated,
-      loading: loading,
-      login: login,
-      logout: logout,
-      getIdToken: getIdToken,
-      getUserId: getUserId
-    }
-  }, children);
-}
-
-// Custom hook for using auth context
-function useCognitoAuth() {
-  return (0,react.useContext)(CognitoAuthContext);
-}
-;// ./utils/make-request.js
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-var _excluded = ["method", "headers", "body"];
-function make_request_regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return make_request_regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (make_request_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, make_request_regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, make_request_regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), make_request_regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", make_request_regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), make_request_regeneratorDefine2(u), make_request_regeneratorDefine2(u, o, "Generator"), make_request_regeneratorDefine2(u, n, function () { return this; }), make_request_regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (make_request_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
-function make_request_regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } make_request_regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { if (r) i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n;else { var o = function o(r, n) { make_request_regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); }; o("next", 0), o("throw", 1), o("return", 2); } }, make_request_regeneratorDefine2(e, r, n, t); }
-function make_request_ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? make_request_ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : make_request_ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
-function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
-function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
-function make_request_asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
-function make_request_asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { make_request_asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { make_request_asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
-function makeRequest(_x) {
-  return _makeRequest.apply(this, arguments);
-}
-function _makeRequest() {
-  _makeRequest = make_request_asyncToGenerator(/*#__PURE__*/make_request_regenerator().m(function _callee(url) {
-    var options,
-      _options$method,
-      method,
-      _options$headers,
-      headers,
-      body,
-      restOptions,
-      fetchHeaders,
-      fetchOptions,
-      response,
-      data,
-      contentType,
-      error,
-      _args = arguments;
-    return make_request_regenerator().w(function (_context) {
-      while (1) switch (_context.n) {
-        case 0:
-          options = _args.length > 1 && _args[1] !== undefined ? _args[1] : {};
-          _options$method = options.method, method = _options$method === void 0 ? 'GET' : _options$method, _options$headers = options.headers, headers = _options$headers === void 0 ? {} : _options$headers, body = options.body, restOptions = _objectWithoutProperties(options, _excluded);
-          fetchHeaders = new Headers(headers); // Set Content-Type for JSON body if not set and body is present
-          if (body && !fetchHeaders.has('Content-Type')) {
-            fetchHeaders.set('Content-Type', 'application/json');
-          }
-
-          // Prepare fetch options
-          fetchOptions = _objectSpread({
-            method: method,
-            headers: fetchHeaders
-          }, restOptions); // If body is an object (not FormData), stringify it
-          if (body && !(body instanceof FormData)) {
-            fetchOptions.body = JSON.stringify(body);
-          } else if (body) {
-            // If FormData or other body types, send as-is
-            fetchOptions.body = body;
-          }
-          console.log('fetchOptions', fetchOptions);
-
-          // Make the fetch call
-          _context.n = 1;
-          return fetch(url, fetchOptions);
-        case 1:
-          response = _context.v;
-          contentType = response.headers.get('content-type') || '';
-          if (!contentType.includes('application/json')) {
-            _context.n = 3;
-            break;
-          }
-          _context.n = 2;
-          return response.json();
-        case 2:
-          data = _context.v;
-          _context.n = 5;
-          break;
-        case 3:
-          _context.n = 4;
-          return response.text();
-        case 4:
-          data = _context.v;
-        case 5:
-          if (response.ok) {
-            _context.n = 6;
-            break;
-          }
-          error = new Error("HTTP ".concat(response.status, " ").concat(response.statusText));
-          error.status = response.status;
-          error.statusText = response.statusText;
-          error.data = data;
-          throw error;
-        case 6:
-          return _context.a(2, data);
-      }
-    }, _callee);
-  }));
-  return _makeRequest.apply(this, arguments);
-}
-;// ./utils/make-authenticated-request.js
-function make_authenticated_request_typeof(o) { "@babel/helpers - typeof"; return make_authenticated_request_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, make_authenticated_request_typeof(o); }
-function make_authenticated_request_ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function make_authenticated_request_objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? make_authenticated_request_ownKeys(Object(t), !0).forEach(function (r) { make_authenticated_request_defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : make_authenticated_request_ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function make_authenticated_request_defineProperty(e, r, t) { return (r = make_authenticated_request_toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
-function make_authenticated_request_toPropertyKey(t) { var i = make_authenticated_request_toPrimitive(t, "string"); return "symbol" == make_authenticated_request_typeof(i) ? i : i + ""; }
-function make_authenticated_request_toPrimitive(t, r) { if ("object" != make_authenticated_request_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != make_authenticated_request_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-
-function makeAuthenticatedRequest(url, token) {
-  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-  if (!token) {
-    throw new Error("authenticated request attempted with no token: ".concat(url));
-  }
-  console.log('url', url);
-  var headers = new Headers(options.headers);
-  headers.set('Authorization', "Bearer ".concat(token));
-  return makeRequest(url, make_authenticated_request_objectSpread(make_authenticated_request_objectSpread({}, options), {}, {
-    headers: headers
-  }));
-}
 // EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
 var jsx_runtime = __webpack_require__(848);
 ;// ./node_modules/@tanstack/react-query/build/modern/QueryClientProvider.js
@@ -25186,88 +24911,31 @@ var QueryClientProvider = ({
 };
 
 //# sourceMappingURL=QueryClientProvider.js.map
-;// ./node_modules/@tanstack/query-core/build/modern/notifyManager.js
-// src/notifyManager.ts
-var defaultScheduler = (cb) => setTimeout(cb, 0);
-function createNotifyManager() {
-  let queue = [];
-  let transactions = 0;
-  let notifyFn = (callback) => {
-    callback();
-  };
-  let batchNotifyFn = (callback) => {
-    callback();
-  };
-  let scheduleFn = defaultScheduler;
-  const schedule = (callback) => {
-    if (transactions) {
-      queue.push(callback);
-    } else {
-      scheduleFn(() => {
-        notifyFn(callback);
-      });
-    }
-  };
-  const flush = () => {
-    const originalQueue = queue;
-    queue = [];
-    if (originalQueue.length) {
-      scheduleFn(() => {
-        batchNotifyFn(() => {
-          originalQueue.forEach((callback) => {
-            notifyFn(callback);
-          });
-        });
-      });
-    }
-  };
-  return {
-    batch: (callback) => {
-      let result;
-      transactions++;
-      try {
-        result = callback();
-      } finally {
-        transactions--;
-        if (!transactions) {
-          flush();
-        }
-      }
-      return result;
-    },
-    /**
-     * All calls to the wrapped function will be batched.
-     */
-    batchCalls: (callback) => {
-      return (...args) => {
-        schedule(() => {
-          callback(...args);
-        });
-      };
-    },
-    schedule,
-    /**
-     * Use this method to set a custom notify function.
-     * This can be used to for example wrap notifications with `React.act` while running tests.
-     */
-    setNotifyFunction: (fn) => {
-      notifyFn = fn;
-    },
-    /**
-     * Use this method to set a custom function to batch notifications together into a single tick.
-     * By default React Query will use the batch function provided by ReactDOM or React Native.
-     */
-    setBatchNotifyFunction: (fn) => {
-      batchNotifyFn = fn;
-    },
-    setScheduler: (fn) => {
-      scheduleFn = fn;
-    }
-  };
-}
-var notifyManager = createNotifyManager();
+;// ./node_modules/@tanstack/query-core/build/modern/subscribable.js
+// src/subscribable.ts
+var Subscribable = class {
+  constructor() {
+    this.listeners = /* @__PURE__ */ new Set();
+    this.subscribe = this.subscribe.bind(this);
+  }
+  subscribe(listener) {
+    this.listeners.add(listener);
+    this.onSubscribe();
+    return () => {
+      this.listeners.delete(listener);
+      this.onUnsubscribe();
+    };
+  }
+  hasListeners() {
+    return this.listeners.size > 0;
+  }
+  onSubscribe() {
+  }
+  onUnsubscribe() {
+  }
+};
 
-//# sourceMappingURL=notifyManager.js.map
+//# sourceMappingURL=subscribable.js.map
 ;// ./node_modules/@tanstack/query-core/build/modern/utils.js
 // src/utils.ts
 var isServer = typeof window === "undefined" || "Deno" in globalThis;
@@ -25485,62 +25153,6 @@ function shouldThrowError(throwOnError, params) {
 }
 
 //# sourceMappingURL=utils.js.map
-;// ./node_modules/@tanstack/query-core/build/modern/removable.js
-// src/removable.ts
-
-var Removable = class {
-  #gcTimeout;
-  destroy() {
-    this.clearGcTimeout();
-  }
-  scheduleGc() {
-    this.clearGcTimeout();
-    if (isValidTimeout(this.gcTime)) {
-      this.#gcTimeout = setTimeout(() => {
-        this.optionalRemove();
-      }, this.gcTime);
-    }
-  }
-  updateGcTime(newGcTime) {
-    this.gcTime = Math.max(
-      this.gcTime || 0,
-      newGcTime ?? (isServer ? Infinity : 5 * 60 * 1e3)
-    );
-  }
-  clearGcTimeout() {
-    if (this.#gcTimeout) {
-      clearTimeout(this.#gcTimeout);
-      this.#gcTimeout = void 0;
-    }
-  }
-};
-
-//# sourceMappingURL=removable.js.map
-;// ./node_modules/@tanstack/query-core/build/modern/subscribable.js
-// src/subscribable.ts
-var Subscribable = class {
-  constructor() {
-    this.listeners = /* @__PURE__ */ new Set();
-    this.subscribe = this.subscribe.bind(this);
-  }
-  subscribe(listener) {
-    this.listeners.add(listener);
-    this.onSubscribe();
-    return () => {
-      this.listeners.delete(listener);
-      this.onUnsubscribe();
-    };
-  }
-  hasListeners() {
-    return this.listeners.size > 0;
-  }
-  onSubscribe() {
-  }
-  onUnsubscribe() {
-  }
-};
-
-//# sourceMappingURL=subscribable.js.map
 ;// ./node_modules/@tanstack/query-core/build/modern/focusManager.js
 // src/focusManager.ts
 
@@ -25607,6 +25219,88 @@ var FocusManager = class extends Subscribable {
 var focusManager = new FocusManager();
 
 //# sourceMappingURL=focusManager.js.map
+;// ./node_modules/@tanstack/query-core/build/modern/notifyManager.js
+// src/notifyManager.ts
+var defaultScheduler = (cb) => setTimeout(cb, 0);
+function createNotifyManager() {
+  let queue = [];
+  let transactions = 0;
+  let notifyFn = (callback) => {
+    callback();
+  };
+  let batchNotifyFn = (callback) => {
+    callback();
+  };
+  let scheduleFn = defaultScheduler;
+  const schedule = (callback) => {
+    if (transactions) {
+      queue.push(callback);
+    } else {
+      scheduleFn(() => {
+        notifyFn(callback);
+      });
+    }
+  };
+  const flush = () => {
+    const originalQueue = queue;
+    queue = [];
+    if (originalQueue.length) {
+      scheduleFn(() => {
+        batchNotifyFn(() => {
+          originalQueue.forEach((callback) => {
+            notifyFn(callback);
+          });
+        });
+      });
+    }
+  };
+  return {
+    batch: (callback) => {
+      let result;
+      transactions++;
+      try {
+        result = callback();
+      } finally {
+        transactions--;
+        if (!transactions) {
+          flush();
+        }
+      }
+      return result;
+    },
+    /**
+     * All calls to the wrapped function will be batched.
+     */
+    batchCalls: (callback) => {
+      return (...args) => {
+        schedule(() => {
+          callback(...args);
+        });
+      };
+    },
+    schedule,
+    /**
+     * Use this method to set a custom notify function.
+     * This can be used to for example wrap notifications with `React.act` while running tests.
+     */
+    setNotifyFunction: (fn) => {
+      notifyFn = fn;
+    },
+    /**
+     * Use this method to set a custom function to batch notifications together into a single tick.
+     * By default React Query will use the batch function provided by ReactDOM or React Native.
+     */
+    setBatchNotifyFunction: (fn) => {
+      batchNotifyFn = fn;
+    },
+    setScheduler: (fn) => {
+      scheduleFn = fn;
+    }
+  };
+}
+var notifyManager = createNotifyManager();
+
+//# sourceMappingURL=notifyManager.js.map
 ;// ./node_modules/@tanstack/query-core/build/modern/onlineManager.js
 // src/onlineManager.ts
 
@@ -25841,459 +25535,37 @@ function createRetryer(config) {
 }
 
 //# sourceMappingURL=retryer.js.map
-;// ./node_modules/@tanstack/query-core/build/modern/mutation.js
-// src/mutation.ts
+;// ./node_modules/@tanstack/query-core/build/modern/removable.js
+// src/removable.ts
 
-
-
-var Mutation = class extends Removable {
-  #observers;
-  #mutationCache;
-  #retryer;
-  constructor(config) {
-    super();
-    this.mutationId = config.mutationId;
-    this.#mutationCache = config.mutationCache;
-    this.#observers = [];
-    this.state = config.state || getDefaultState();
-    this.setOptions(config.options);
-    this.scheduleGc();
+var Removable = class {
+  #gcTimeout;
+  destroy() {
+    this.clearGcTimeout();
   }
-  setOptions(options) {
-    this.options = options;
-    this.updateGcTime(this.options.gcTime);
-  }
-  get meta() {
-    return this.options.meta;
-  }
-  addObserver(observer) {
-    if (!this.#observers.includes(observer)) {
-      this.#observers.push(observer);
-      this.clearGcTimeout();
-      this.#mutationCache.notify({
-        type: "observerAdded",
-        mutation: this,
-        observer
-      });
+  scheduleGc() {
+    this.clearGcTimeout();
+    if (isValidTimeout(this.gcTime)) {
+      this.#gcTimeout = setTimeout(() => {
+        this.optionalRemove();
+      }, this.gcTime);
     }
   }
-  removeObserver(observer) {
-    this.#observers = this.#observers.filter((x) => x !== observer);
-    this.scheduleGc();
-    this.#mutationCache.notify({
-      type: "observerRemoved",
-      mutation: this,
-      observer
-    });
+  updateGcTime(newGcTime) {
+    this.gcTime = Math.max(
+      this.gcTime || 0,
+      newGcTime ?? (isServer ? Infinity : 5 * 60 * 1e3)
+    );
   }
-  optionalRemove() {
-    if (!this.#observers.length) {
-      if (this.state.status === "pending") {
-        this.scheduleGc();
-      } else {
-        this.#mutationCache.remove(this);
-      }
+  clearGcTimeout() {
+    if (this.#gcTimeout) {
+      clearTimeout(this.#gcTimeout);
+      this.#gcTimeout = void 0;
     }
-  }
-  continue() {
-    return this.#retryer?.continue() ?? // continuing a mutation assumes that variables are set, mutation must have been dehydrated before
-    this.execute(this.state.variables);
-  }
-  async execute(variables) {
-    const onContinue = () => {
-      this.#dispatch({ type: "continue" });
-    };
-    this.#retryer = createRetryer({
-      fn: () => {
-        if (!this.options.mutationFn) {
-          return Promise.reject(new Error("No mutationFn found"));
-        }
-        return this.options.mutationFn(variables);
-      },
-      onFail: (failureCount, error) => {
-        this.#dispatch({ type: "failed", failureCount, error });
-      },
-      onPause: () => {
-        this.#dispatch({ type: "pause" });
-      },
-      onContinue,
-      retry: this.options.retry ?? 0,
-      retryDelay: this.options.retryDelay,
-      networkMode: this.options.networkMode,
-      canRun: () => this.#mutationCache.canRun(this)
-    });
-    const restored = this.state.status === "pending";
-    const isPaused = !this.#retryer.canStart();
-    try {
-      if (restored) {
-        onContinue();
-      } else {
-        this.#dispatch({ type: "pending", variables, isPaused });
-        await this.#mutationCache.config.onMutate?.(
-          variables,
-          this
-        );
-        const context = await this.options.onMutate?.(variables);
-        if (context !== this.state.context) {
-          this.#dispatch({
-            type: "pending",
-            context,
-            variables,
-            isPaused
-          });
-        }
-      }
-      const data = await this.#retryer.start();
-      await this.#mutationCache.config.onSuccess?.(
-        data,
-        variables,
-        this.state.context,
-        this
-      );
-      await this.options.onSuccess?.(data, variables, this.state.context);
-      await this.#mutationCache.config.onSettled?.(
-        data,
-        null,
-        this.state.variables,
-        this.state.context,
-        this
-      );
-      await this.options.onSettled?.(data, null, variables, this.state.context);
-      this.#dispatch({ type: "success", data });
-      return data;
-    } catch (error) {
-      try {
-        await this.#mutationCache.config.onError?.(
-          error,
-          variables,
-          this.state.context,
-          this
-        );
-        await this.options.onError?.(
-          error,
-          variables,
-          this.state.context
-        );
-        await this.#mutationCache.config.onSettled?.(
-          void 0,
-          error,
-          this.state.variables,
-          this.state.context,
-          this
-        );
-        await this.options.onSettled?.(
-          void 0,
-          error,
-          variables,
-          this.state.context
-        );
-        throw error;
-      } finally {
-        this.#dispatch({ type: "error", error });
-      }
-    } finally {
-      this.#mutationCache.runNext(this);
-    }
-  }
-  #dispatch(action) {
-    const reducer = (state) => {
-      switch (action.type) {
-        case "failed":
-          return {
-            ...state,
-            failureCount: action.failureCount,
-            failureReason: action.error
-          };
-        case "pause":
-          return {
-            ...state,
-            isPaused: true
-          };
-        case "continue":
-          return {
-            ...state,
-            isPaused: false
-          };
-        case "pending":
-          return {
-            ...state,
-            context: action.context,
-            data: void 0,
-            failureCount: 0,
-            failureReason: null,
-            error: null,
-            isPaused: action.isPaused,
-            status: "pending",
-            variables: action.variables,
-            submittedAt: Date.now()
-          };
-        case "success":
-          return {
-            ...state,
-            data: action.data,
-            failureCount: 0,
-            failureReason: null,
-            error: null,
-            status: "success",
-            isPaused: false
-          };
-        case "error":
-          return {
-            ...state,
-            data: void 0,
-            error: action.error,
-            failureCount: state.failureCount + 1,
-            failureReason: action.error,
-            isPaused: false,
-            status: "error"
-          };
-      }
-    };
-    this.state = reducer(this.state);
-    notifyManager.batch(() => {
-      this.#observers.forEach((observer) => {
-        observer.onMutationUpdate(action);
-      });
-      this.#mutationCache.notify({
-        mutation: this,
-        type: "updated",
-        action
-      });
-    });
-  }
-};
-function getDefaultState() {
-  return {
-    context: void 0,
-    data: void 0,
-    error: null,
-    failureCount: 0,
-    failureReason: null,
-    isPaused: false,
-    status: "idle",
-    variables: void 0,
-    submittedAt: 0
-  };
-}
-
-//# sourceMappingURL=mutation.js.map
-;// ./node_modules/@tanstack/query-core/build/modern/mutationObserver.js
-// src/mutationObserver.ts
-
-
-
-
-var MutationObserver = class extends Subscribable {
-  #client;
-  #currentResult = void 0;
-  #currentMutation;
-  #mutateOptions;
-  constructor(client, options) {
-    super();
-    this.#client = client;
-    this.setOptions(options);
-    this.bindMethods();
-    this.#updateResult();
-  }
-  bindMethods() {
-    this.mutate = this.mutate.bind(this);
-    this.reset = this.reset.bind(this);
-  }
-  setOptions(options) {
-    const prevOptions = this.options;
-    this.options = this.#client.defaultMutationOptions(options);
-    if (!shallowEqualObjects(this.options, prevOptions)) {
-      this.#client.getMutationCache().notify({
-        type: "observerOptionsUpdated",
-        mutation: this.#currentMutation,
-        observer: this
-      });
-    }
-    if (prevOptions?.mutationKey && this.options.mutationKey && hashKey(prevOptions.mutationKey) !== hashKey(this.options.mutationKey)) {
-      this.reset();
-    } else if (this.#currentMutation?.state.status === "pending") {
-      this.#currentMutation.setOptions(this.options);
-    }
-  }
-  onUnsubscribe() {
-    if (!this.hasListeners()) {
-      this.#currentMutation?.removeObserver(this);
-    }
-  }
-  onMutationUpdate(action) {
-    this.#updateResult();
-    this.#notify(action);
-  }
-  getCurrentResult() {
-    return this.#currentResult;
-  }
-  reset() {
-    this.#currentMutation?.removeObserver(this);
-    this.#currentMutation = void 0;
-    this.#updateResult();
-    this.#notify();
-  }
-  mutate(variables, options) {
-    this.#mutateOptions = options;
-    this.#currentMutation?.removeObserver(this);
-    this.#currentMutation = this.#client.getMutationCache().build(this.#client, this.options);
-    this.#currentMutation.addObserver(this);
-    return this.#currentMutation.execute(variables);
-  }
-  #updateResult() {
-    const state = this.#currentMutation?.state ?? getDefaultState();
-    this.#currentResult = {
-      ...state,
-      isPending: state.status === "pending",
-      isSuccess: state.status === "success",
-      isError: state.status === "error",
-      isIdle: state.status === "idle",
-      mutate: this.mutate,
-      reset: this.reset
-    };
-  }
-  #notify(action) {
-    notifyManager.batch(() => {
-      if (this.#mutateOptions && this.hasListeners()) {
-        const variables = this.#currentResult.variables;
-        const context = this.#currentResult.context;
-        if (action?.type === "success") {
-          this.#mutateOptions.onSuccess?.(action.data, variables, context);
-          this.#mutateOptions.onSettled?.(action.data, null, variables, context);
-        } else if (action?.type === "error") {
-          this.#mutateOptions.onError?.(action.error, variables, context);
-          this.#mutateOptions.onSettled?.(
-            void 0,
-            action.error,
-            variables,
-            context
-          );
-        }
-      }
-      this.listeners.forEach((listener) => {
-        listener(this.#currentResult);
-      });
-    });
   }
 };
 
-//# sourceMappingURL=mutationObserver.js.map
-;// ./node_modules/@tanstack/react-query/build/modern/useMutation.js
-"use client";
-
-// src/useMutation.ts
-
-
-
-function useMutation(options, queryClient) {
-  const client = useQueryClient(queryClient);
-  const [observer] = react.useState(
-    () => new MutationObserver(
-      client,
-      options
-    )
-  );
-  react.useEffect(() => {
-    observer.setOptions(options);
-  }, [observer, options]);
-  const result = react.useSyncExternalStore(
-    react.useCallback(
-      (onStoreChange) => observer.subscribe(notifyManager.batchCalls(onStoreChange)),
-      [observer]
-    ),
-    () => observer.getCurrentResult(),
-    () => observer.getCurrentResult()
-  );
-  const mutate = react.useCallback(
-    (variables, mutateOptions) => {
-      observer.mutate(variables, mutateOptions).catch(utils_noop);
-    },
-    [observer]
-  );
-  if (result.error && shouldThrowError(observer.options.throwOnError, [result.error])) {
-    throw result.error;
-  }
-  return { ...result, mutate, mutateAsync: result.mutate };
-}
-
-//# sourceMappingURL=useMutation.js.map
-;// ./pages/create-session-page.js
-function create_session_page_regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return create_session_page_regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (create_session_page_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, create_session_page_regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, create_session_page_regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), create_session_page_regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", create_session_page_regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), create_session_page_regeneratorDefine2(u), create_session_page_regeneratorDefine2(u, o, "Generator"), create_session_page_regeneratorDefine2(u, n, function () { return this; }), create_session_page_regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (create_session_page_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
-function create_session_page_regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } create_session_page_regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { if (r) i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n;else { var o = function o(r, n) { create_session_page_regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); }; o("next", 0), o("throw", 1), o("return", 2); } }, create_session_page_regeneratorDefine2(e, r, n, t); }
-function create_session_page_asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
-function create_session_page_asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { create_session_page_asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { create_session_page_asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
-
-
-
-
-var apiUrl = 'https://api.measuringcontest.com/sessions';
-function CreateSessionPage() {
-  var queryClient = useQueryClient();
-  var auth = useCognitoAuth();
-
-  // Mutations
-  var createSessionMutation = useMutation({
-    mutationFn: function () {
-      var _mutationFn = create_session_page_asyncToGenerator(/*#__PURE__*/create_session_page_regenerator().m(function _callee() {
-        var _t, _t2, _t3, _t4;
-        return create_session_page_regenerator().w(function (_context) {
-          while (1) switch (_context.n) {
-            case 0:
-              _t = makeAuthenticatedRequest;
-              _t2 = apiUrl;
-              _context.n = 1;
-              return auth.getIdToken();
-            case 1:
-              _t3 = _context.v;
-              _t4 = {
-                method: 'POST'
-              };
-              return _context.a(2, _t(_t2, _t3, _t4));
-          }
-        }, _callee);
-      }));
-      function mutationFn() {
-        return _mutationFn.apply(this, arguments);
-      }
-      return mutationFn;
-    }(),
-    onSuccess: function () {
-      var _onSuccess = create_session_page_asyncToGenerator(/*#__PURE__*/create_session_page_regenerator().m(function _callee2() {
-        var _t5, _t6, _t7, _t8;
-        return create_session_page_regenerator().w(function (_context2) {
-          while (1) switch (_context2.n) {
-            case 0:
-              _t5 = queryClient;
-              _context2.n = 1;
-              return auth.getUserId();
-            case 1:
-              _t6 = _context2.v;
-              _t7 = ['userSessions', _t6];
-              _t8 = {
-                queryKey: _t7
-              };
-              _t5.invalidateQueries.call(_t5, _t8);
-            case 2:
-              return _context2.a(2);
-          }
-        }, _callee2);
-      }));
-      function onSuccess() {
-        return _onSuccess.apply(this, arguments);
-      }
-      return onSuccess;
-    }()
-  });
-  return /*#__PURE__*/react.createElement("div", {
-    className: "content"
-  }, !auth.loading && !auth.isAuthenticated && /*#__PURE__*/react.createElement("button", {
-    onClick: auth.login
-  }, "Login with Google"), !auth.loading && auth.isAuthenticated && !createSessionMutation.loading && /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement("button", {
-    onClick: auth.logout
-  }, "Logout"), /*#__PURE__*/react.createElement("button", {
-    onClick: createSessionMutation.mutate
-  }, "create session")), createSessionMutation.loading && "loading");
-}
+//# sourceMappingURL=removable.js.map
 ;// ./node_modules/@tanstack/query-core/build/modern/query.js
 // src/query.ts
 
@@ -26318,7 +25590,7 @@ var Query = class extends Removable {
     this.#cache = this.#client.getQueryCache();
     this.queryKey = config.queryKey;
     this.queryHash = config.queryHash;
-    this.#initialState = query_getDefaultState(this.options);
+    this.#initialState = getDefaultState(this.options);
     this.state = config.state ?? this.#initialState;
     this.scheduleGc();
   }
@@ -26663,7 +25935,7 @@ function fetchState(data, options) {
     }
   };
 }
-function query_getDefaultState(options) {
+function getDefaultState(options) {
   const data = typeof options.initialData === "function" ? options.initialData() : options.initialData;
   const hasData = data !== void 0;
   const initialDataUpdatedAt = hasData ? typeof options.initialDataUpdatedAt === "function" ? options.initialDataUpdatedAt() : options.initialDataUpdatedAt : 0;
@@ -26684,6 +25956,1311 @@ function query_getDefaultState(options) {
 }
 
 //# sourceMappingURL=query.js.map
+;// ./node_modules/@tanstack/query-core/build/modern/queryObserver.js
+// src/queryObserver.ts
+
+
+
+
+
+
+var QueryObserver = class extends Subscribable {
+  constructor(client, options) {
+    super();
+    this.options = options;
+    this.#client = client;
+    this.#selectError = null;
+    this.#currentThenable = pendingThenable();
+    if (!this.options.experimental_prefetchInRender) {
+      this.#currentThenable.reject(
+        new Error("experimental_prefetchInRender feature flag is not enabled")
+      );
+    }
+    this.bindMethods();
+    this.setOptions(options);
+  }
+  #client;
+  #currentQuery = void 0;
+  #currentQueryInitialState = void 0;
+  #currentResult = void 0;
+  #currentResultState;
+  #currentResultOptions;
+  #currentThenable;
+  #selectError;
+  #selectFn;
+  #selectResult;
+  // This property keeps track of the last query with defined data.
+  // It will be used to pass the previous data and query to the placeholder function between renders.
+  #lastQueryWithDefinedData;
+  #staleTimeoutId;
+  #refetchIntervalId;
+  #currentRefetchInterval;
+  #trackedProps = /* @__PURE__ */ new Set();
+  bindMethods() {
+    this.refetch = this.refetch.bind(this);
+  }
+  onSubscribe() {
+    if (this.listeners.size === 1) {
+      this.#currentQuery.addObserver(this);
+      if (shouldFetchOnMount(this.#currentQuery, this.options)) {
+        this.#executeFetch();
+      } else {
+        this.updateResult();
+      }
+      this.#updateTimers();
+    }
+  }
+  onUnsubscribe() {
+    if (!this.hasListeners()) {
+      this.destroy();
+    }
+  }
+  shouldFetchOnReconnect() {
+    return shouldFetchOn(
+      this.#currentQuery,
+      this.options,
+      this.options.refetchOnReconnect
+    );
+  }
+  shouldFetchOnWindowFocus() {
+    return shouldFetchOn(
+      this.#currentQuery,
+      this.options,
+      this.options.refetchOnWindowFocus
+    );
+  }
+  destroy() {
+    this.listeners = /* @__PURE__ */ new Set();
+    this.#clearStaleTimeout();
+    this.#clearRefetchInterval();
+    this.#currentQuery.removeObserver(this);
+  }
+  setOptions(options) {
+    const prevOptions = this.options;
+    const prevQuery = this.#currentQuery;
+    this.options = this.#client.defaultQueryOptions(options);
+    if (this.options.enabled !== void 0 && typeof this.options.enabled !== "boolean" && typeof this.options.enabled !== "function" && typeof resolveEnabled(this.options.enabled, this.#currentQuery) !== "boolean") {
+      throw new Error(
+        "Expected enabled to be a boolean or a callback that returns a boolean"
+      );
+    }
+    this.#updateQuery();
+    this.#currentQuery.setOptions(this.options);
+    if (prevOptions._defaulted && !shallowEqualObjects(this.options, prevOptions)) {
+      this.#client.getQueryCache().notify({
+        type: "observerOptionsUpdated",
+        query: this.#currentQuery,
+        observer: this
+      });
+    }
+    const mounted = this.hasListeners();
+    if (mounted && shouldFetchOptionally(
+      this.#currentQuery,
+      prevQuery,
+      this.options,
+      prevOptions
+    )) {
+      this.#executeFetch();
+    }
+    this.updateResult();
+    if (mounted && (this.#currentQuery !== prevQuery || resolveEnabled(this.options.enabled, this.#currentQuery) !== resolveEnabled(prevOptions.enabled, this.#currentQuery) || resolveStaleTime(this.options.staleTime, this.#currentQuery) !== resolveStaleTime(prevOptions.staleTime, this.#currentQuery))) {
+      this.#updateStaleTimeout();
+    }
+    const nextRefetchInterval = this.#computeRefetchInterval();
+    if (mounted && (this.#currentQuery !== prevQuery || resolveEnabled(this.options.enabled, this.#currentQuery) !== resolveEnabled(prevOptions.enabled, this.#currentQuery) || nextRefetchInterval !== this.#currentRefetchInterval)) {
+      this.#updateRefetchInterval(nextRefetchInterval);
+    }
+  }
+  getOptimisticResult(options) {
+    const query = this.#client.getQueryCache().build(this.#client, options);
+    const result = this.createResult(query, options);
+    if (shouldAssignObserverCurrentProperties(this, result)) {
+      this.#currentResult = result;
+      this.#currentResultOptions = this.options;
+      this.#currentResultState = this.#currentQuery.state;
+    }
+    return result;
+  }
+  getCurrentResult() {
+    return this.#currentResult;
+  }
+  trackResult(result, onPropTracked) {
+    return new Proxy(result, {
+      get: (target, key) => {
+        this.trackProp(key);
+        onPropTracked?.(key);
+        return Reflect.get(target, key);
+      }
+    });
+  }
+  trackProp(key) {
+    this.#trackedProps.add(key);
+  }
+  getCurrentQuery() {
+    return this.#currentQuery;
+  }
+  refetch({ ...options } = {}) {
+    return this.fetch({
+      ...options
+    });
+  }
+  fetchOptimistic(options) {
+    const defaultedOptions = this.#client.defaultQueryOptions(options);
+    const query = this.#client.getQueryCache().build(this.#client, defaultedOptions);
+    return query.fetch().then(() => this.createResult(query, defaultedOptions));
+  }
+  fetch(fetchOptions) {
+    return this.#executeFetch({
+      ...fetchOptions,
+      cancelRefetch: fetchOptions.cancelRefetch ?? true
+    }).then(() => {
+      this.updateResult();
+      return this.#currentResult;
+    });
+  }
+  #executeFetch(fetchOptions) {
+    this.#updateQuery();
+    let promise = this.#currentQuery.fetch(
+      this.options,
+      fetchOptions
+    );
+    if (!fetchOptions?.throwOnError) {
+      promise = promise.catch(utils_noop);
+    }
+    return promise;
+  }
+  #updateStaleTimeout() {
+    this.#clearStaleTimeout();
+    const staleTime = resolveStaleTime(
+      this.options.staleTime,
+      this.#currentQuery
+    );
+    if (isServer || this.#currentResult.isStale || !isValidTimeout(staleTime)) {
+      return;
+    }
+    const time = timeUntilStale(this.#currentResult.dataUpdatedAt, staleTime);
+    const timeout = time + 1;
+    this.#staleTimeoutId = setTimeout(() => {
+      if (!this.#currentResult.isStale) {
+        this.updateResult();
+      }
+    }, timeout);
+  }
+  #computeRefetchInterval() {
+    return (typeof this.options.refetchInterval === "function" ? this.options.refetchInterval(this.#currentQuery) : this.options.refetchInterval) ?? false;
+  }
+  #updateRefetchInterval(nextInterval) {
+    this.#clearRefetchInterval();
+    this.#currentRefetchInterval = nextInterval;
+    if (isServer || resolveEnabled(this.options.enabled, this.#currentQuery) === false || !isValidTimeout(this.#currentRefetchInterval) || this.#currentRefetchInterval === 0) {
+      return;
+    }
+    this.#refetchIntervalId = setInterval(() => {
+      if (this.options.refetchIntervalInBackground || focusManager.isFocused()) {
+        this.#executeFetch();
+      }
+    }, this.#currentRefetchInterval);
+  }
+  #updateTimers() {
+    this.#updateStaleTimeout();
+    this.#updateRefetchInterval(this.#computeRefetchInterval());
+  }
+  #clearStaleTimeout() {
+    if (this.#staleTimeoutId) {
+      clearTimeout(this.#staleTimeoutId);
+      this.#staleTimeoutId = void 0;
+    }
+  }
+  #clearRefetchInterval() {
+    if (this.#refetchIntervalId) {
+      clearInterval(this.#refetchIntervalId);
+      this.#refetchIntervalId = void 0;
+    }
+  }
+  createResult(query, options) {
+    const prevQuery = this.#currentQuery;
+    const prevOptions = this.options;
+    const prevResult = this.#currentResult;
+    const prevResultState = this.#currentResultState;
+    const prevResultOptions = this.#currentResultOptions;
+    const queryChange = query !== prevQuery;
+    const queryInitialState = queryChange ? query.state : this.#currentQueryInitialState;
+    const { state } = query;
+    let newState = { ...state };
+    let isPlaceholderData = false;
+    let data;
+    if (options._optimisticResults) {
+      const mounted = this.hasListeners();
+      const fetchOnMount = !mounted && shouldFetchOnMount(query, options);
+      const fetchOptionally = mounted && shouldFetchOptionally(query, prevQuery, options, prevOptions);
+      if (fetchOnMount || fetchOptionally) {
+        newState = {
+          ...newState,
+          ...fetchState(state.data, query.options)
+        };
+      }
+      if (options._optimisticResults === "isRestoring") {
+        newState.fetchStatus = "idle";
+      }
+    }
+    let { error, errorUpdatedAt, status } = newState;
+    data = newState.data;
+    let skipSelect = false;
+    if (options.placeholderData !== void 0 && data === void 0 && status === "pending") {
+      let placeholderData;
+      if (prevResult?.isPlaceholderData && options.placeholderData === prevResultOptions?.placeholderData) {
+        placeholderData = prevResult.data;
+        skipSelect = true;
+      } else {
+        placeholderData = typeof options.placeholderData === "function" ? options.placeholderData(
+          this.#lastQueryWithDefinedData?.state.data,
+          this.#lastQueryWithDefinedData
+        ) : options.placeholderData;
+      }
+      if (placeholderData !== void 0) {
+        status = "success";
+        data = replaceData(
+          prevResult?.data,
+          placeholderData,
+          options
+        );
+        isPlaceholderData = true;
+      }
+    }
+    if (options.select && data !== void 0 && !skipSelect) {
+      if (prevResult && data === prevResultState?.data && options.select === this.#selectFn) {
+        data = this.#selectResult;
+      } else {
+        try {
+          this.#selectFn = options.select;
+          data = options.select(data);
+          data = replaceData(prevResult?.data, data, options);
+          this.#selectResult = data;
+          this.#selectError = null;
+        } catch (selectError) {
+          this.#selectError = selectError;
+        }
+      }
+    }
+    if (this.#selectError) {
+      error = this.#selectError;
+      data = this.#selectResult;
+      errorUpdatedAt = Date.now();
+      status = "error";
+    }
+    const isFetching = newState.fetchStatus === "fetching";
+    const isPending = status === "pending";
+    const isError = status === "error";
+    const isLoading = isPending && isFetching;
+    const hasData = data !== void 0;
+    const result = {
+      status,
+      fetchStatus: newState.fetchStatus,
+      isPending,
+      isSuccess: status === "success",
+      isError,
+      isInitialLoading: isLoading,
+      isLoading,
+      data,
+      dataUpdatedAt: newState.dataUpdatedAt,
+      error,
+      errorUpdatedAt,
+      failureCount: newState.fetchFailureCount,
+      failureReason: newState.fetchFailureReason,
+      errorUpdateCount: newState.errorUpdateCount,
+      isFetched: newState.dataUpdateCount > 0 || newState.errorUpdateCount > 0,
+      isFetchedAfterMount: newState.dataUpdateCount > queryInitialState.dataUpdateCount || newState.errorUpdateCount > queryInitialState.errorUpdateCount,
+      isFetching,
+      isRefetching: isFetching && !isPending,
+      isLoadingError: isError && !hasData,
+      isPaused: newState.fetchStatus === "paused",
+      isPlaceholderData,
+      isRefetchError: isError && hasData,
+      isStale: isStale(query, options),
+      refetch: this.refetch,
+      promise: this.#currentThenable
+    };
+    const nextResult = result;
+    if (this.options.experimental_prefetchInRender) {
+      const finalizeThenableIfPossible = (thenable) => {
+        if (nextResult.status === "error") {
+          thenable.reject(nextResult.error);
+        } else if (nextResult.data !== void 0) {
+          thenable.resolve(nextResult.data);
+        }
+      };
+      const recreateThenable = () => {
+        const pending = this.#currentThenable = nextResult.promise = pendingThenable();
+        finalizeThenableIfPossible(pending);
+      };
+      const prevThenable = this.#currentThenable;
+      switch (prevThenable.status) {
+        case "pending":
+          if (query.queryHash === prevQuery.queryHash) {
+            finalizeThenableIfPossible(prevThenable);
+          }
+          break;
+        case "fulfilled":
+          if (nextResult.status === "error" || nextResult.data !== prevThenable.value) {
+            recreateThenable();
+          }
+          break;
+        case "rejected":
+          if (nextResult.status !== "error" || nextResult.error !== prevThenable.reason) {
+            recreateThenable();
+          }
+          break;
+      }
+    }
+    return nextResult;
+  }
+  updateResult() {
+    const prevResult = this.#currentResult;
+    const nextResult = this.createResult(this.#currentQuery, this.options);
+    this.#currentResultState = this.#currentQuery.state;
+    this.#currentResultOptions = this.options;
+    if (this.#currentResultState.data !== void 0) {
+      this.#lastQueryWithDefinedData = this.#currentQuery;
+    }
+    if (shallowEqualObjects(nextResult, prevResult)) {
+      return;
+    }
+    this.#currentResult = nextResult;
+    const shouldNotifyListeners = () => {
+      if (!prevResult) {
+        return true;
+      }
+      const { notifyOnChangeProps } = this.options;
+      const notifyOnChangePropsValue = typeof notifyOnChangeProps === "function" ? notifyOnChangeProps() : notifyOnChangeProps;
+      if (notifyOnChangePropsValue === "all" || !notifyOnChangePropsValue && !this.#trackedProps.size) {
+        return true;
+      }
+      const includedProps = new Set(
+        notifyOnChangePropsValue ?? this.#trackedProps
+      );
+      if (this.options.throwOnError) {
+        includedProps.add("error");
+      }
+      return Object.keys(this.#currentResult).some((key) => {
+        const typedKey = key;
+        const changed = this.#currentResult[typedKey] !== prevResult[typedKey];
+        return changed && includedProps.has(typedKey);
+      });
+    };
+    this.#notify({ listeners: shouldNotifyListeners() });
+  }
+  #updateQuery() {
+    const query = this.#client.getQueryCache().build(this.#client, this.options);
+    if (query === this.#currentQuery) {
+      return;
+    }
+    const prevQuery = this.#currentQuery;
+    this.#currentQuery = query;
+    this.#currentQueryInitialState = query.state;
+    if (this.hasListeners()) {
+      prevQuery?.removeObserver(this);
+      query.addObserver(this);
+    }
+  }
+  onQueryUpdate() {
+    this.updateResult();
+    if (this.hasListeners()) {
+      this.#updateTimers();
+    }
+  }
+  #notify(notifyOptions) {
+    notifyManager.batch(() => {
+      if (notifyOptions.listeners) {
+        this.listeners.forEach((listener) => {
+          listener(this.#currentResult);
+        });
+      }
+      this.#client.getQueryCache().notify({
+        query: this.#currentQuery,
+        type: "observerResultsUpdated"
+      });
+    });
+  }
+};
+function shouldLoadOnMount(query, options) {
+  return resolveEnabled(options.enabled, query) !== false && query.state.data === void 0 && !(query.state.status === "error" && options.retryOnMount === false);
+}
+function shouldFetchOnMount(query, options) {
+  return shouldLoadOnMount(query, options) || query.state.data !== void 0 && shouldFetchOn(query, options, options.refetchOnMount);
+}
+function shouldFetchOn(query, options, field) {
+  if (resolveEnabled(options.enabled, query) !== false && resolveStaleTime(options.staleTime, query) !== "static") {
+    const value = typeof field === "function" ? field(query) : field;
+    return value === "always" || value !== false && isStale(query, options);
+  }
+  return false;
+}
+function shouldFetchOptionally(query, prevQuery, options, prevOptions) {
+  return (query !== prevQuery || resolveEnabled(prevOptions.enabled, query) === false) && (!options.suspense || query.state.status !== "error") && isStale(query, options);
+}
+function isStale(query, options) {
+  return resolveEnabled(options.enabled, query) !== false && query.isStaleByTime(resolveStaleTime(options.staleTime, query));
+}
+function shouldAssignObserverCurrentProperties(observer, optimisticResult) {
+  if (!shallowEqualObjects(observer.getCurrentResult(), optimisticResult)) {
+    return true;
+  }
+  return false;
+}
+
+//# sourceMappingURL=queryObserver.js.map
+;// ./node_modules/@tanstack/react-query/build/modern/QueryErrorResetBoundary.js
+"use client";
+
+// src/QueryErrorResetBoundary.tsx
+
+
+function createValue() {
+  let isReset = false;
+  return {
+    clearReset: () => {
+      isReset = false;
+    },
+    reset: () => {
+      isReset = true;
+    },
+    isReset: () => {
+      return isReset;
+    }
+  };
+}
+var QueryErrorResetBoundaryContext = react.createContext(createValue());
+var useQueryErrorResetBoundary = () => react.useContext(QueryErrorResetBoundaryContext);
+var QueryErrorResetBoundary = ({
+  children
+}) => {
+  const [value] = React.useState(() => createValue());
+  return /* @__PURE__ */ jsx(QueryErrorResetBoundaryContext.Provider, { value, children: typeof children === "function" ? children(value) : children });
+};
+
+//# sourceMappingURL=QueryErrorResetBoundary.js.map
+;// ./node_modules/@tanstack/react-query/build/modern/errorBoundaryUtils.js
+"use client";
+
+// src/errorBoundaryUtils.ts
+
+
+var ensurePreventErrorBoundaryRetry = (options, errorResetBoundary) => {
+  if (options.suspense || options.throwOnError || options.experimental_prefetchInRender) {
+    if (!errorResetBoundary.isReset()) {
+      options.retryOnMount = false;
+    }
+  }
+};
+var useClearResetErrorBoundary = (errorResetBoundary) => {
+  react.useEffect(() => {
+    errorResetBoundary.clearReset();
+  }, [errorResetBoundary]);
+};
+var getHasError = ({
+  result,
+  errorResetBoundary,
+  throwOnError,
+  query,
+  suspense
+}) => {
+  return result.isError && !errorResetBoundary.isReset() && !result.isFetching && query && (suspense && result.data === void 0 || shouldThrowError(throwOnError, [result.error, query]));
+};
+
+//# sourceMappingURL=errorBoundaryUtils.js.map
+;// ./node_modules/@tanstack/react-query/build/modern/IsRestoringProvider.js
+"use client";
+
+// src/IsRestoringProvider.ts
+
+var IsRestoringContext = react.createContext(false);
+var useIsRestoring = () => react.useContext(IsRestoringContext);
+var IsRestoringProvider = IsRestoringContext.Provider;
+
+//# sourceMappingURL=IsRestoringProvider.js.map
+;// ./node_modules/@tanstack/react-query/build/modern/suspense.js
+// src/suspense.ts
+var defaultThrowOnError = (_error, query) => query.state.data === void 0;
+var ensureSuspenseTimers = (defaultedOptions) => {
+  if (defaultedOptions.suspense) {
+    const clamp = (value) => value === "static" ? value : Math.max(value ?? 1e3, 1e3);
+    const originalStaleTime = defaultedOptions.staleTime;
+    defaultedOptions.staleTime = typeof originalStaleTime === "function" ? (...args) => clamp(originalStaleTime(...args)) : clamp(originalStaleTime);
+    if (typeof defaultedOptions.gcTime === "number") {
+      defaultedOptions.gcTime = Math.max(defaultedOptions.gcTime, 1e3);
+    }
+  }
+};
+var willFetch = (result, isRestoring) => result.isLoading && result.isFetching && !isRestoring;
+var shouldSuspend = (defaultedOptions, result) => defaultedOptions?.suspense && result.isPending;
+var fetchOptimistic = (defaultedOptions, observer, errorResetBoundary) => observer.fetchOptimistic(defaultedOptions).catch(() => {
+  errorResetBoundary.clearReset();
+});
+
+//# sourceMappingURL=suspense.js.map
+;// ./node_modules/@tanstack/react-query/build/modern/useBaseQuery.js
+"use client";
+
+// src/useBaseQuery.ts
+
+
+
+
+
+
+
+function useBaseQuery(options, Observer, queryClient) {
+  if (false) // removed by dead control flow
+{}
+  const isRestoring = useIsRestoring();
+  const errorResetBoundary = useQueryErrorResetBoundary();
+  const client = useQueryClient(queryClient);
+  const defaultedOptions = client.defaultQueryOptions(options);
+  client.getDefaultOptions().queries?._experimental_beforeQuery?.(
+    defaultedOptions
+  );
+  if (false) // removed by dead control flow
+{}
+  defaultedOptions._optimisticResults = isRestoring ? "isRestoring" : "optimistic";
+  ensureSuspenseTimers(defaultedOptions);
+  ensurePreventErrorBoundaryRetry(defaultedOptions, errorResetBoundary);
+  useClearResetErrorBoundary(errorResetBoundary);
+  const isNewCacheEntry = !client.getQueryCache().get(defaultedOptions.queryHash);
+  const [observer] = react.useState(
+    () => new Observer(
+      client,
+      defaultedOptions
+    )
+  );
+  const result = observer.getOptimisticResult(defaultedOptions);
+  const shouldSubscribe = !isRestoring && options.subscribed !== false;
+  react.useSyncExternalStore(
+    react.useCallback(
+      (onStoreChange) => {
+        const unsubscribe = shouldSubscribe ? observer.subscribe(notifyManager.batchCalls(onStoreChange)) : utils_noop;
+        observer.updateResult();
+        return unsubscribe;
+      },
+      [observer, shouldSubscribe]
+    ),
+    () => observer.getCurrentResult(),
+    () => observer.getCurrentResult()
+  );
+  react.useEffect(() => {
+    observer.setOptions(defaultedOptions);
+  }, [defaultedOptions, observer]);
+  if (shouldSuspend(defaultedOptions, result)) {
+    throw fetchOptimistic(defaultedOptions, observer, errorResetBoundary);
+  }
+  if (getHasError({
+    result,
+    errorResetBoundary,
+    throwOnError: defaultedOptions.throwOnError,
+    query: client.getQueryCache().get(defaultedOptions.queryHash),
+    suspense: defaultedOptions.suspense
+  })) {
+    throw result.error;
+  }
+  ;
+  client.getDefaultOptions().queries?._experimental_afterQuery?.(
+    defaultedOptions,
+    result
+  );
+  if (defaultedOptions.experimental_prefetchInRender && !isServer && willFetch(result, isRestoring)) {
+    const promise = isNewCacheEntry ? (
+      // Fetch immediately on render in order to ensure `.promise` is resolved even if the component is unmounted
+      fetchOptimistic(defaultedOptions, observer, errorResetBoundary)
+    ) : (
+      // subscribe to the "cache promise" so that we can finalize the currentThenable once data comes in
+      client.getQueryCache().get(defaultedOptions.queryHash)?.promise
+    );
+    promise?.catch(utils_noop).finally(() => {
+      observer.updateResult();
+    });
+  }
+  return !defaultedOptions.notifyOnChangeProps ? observer.trackResult(result) : result;
+}
+
+//# sourceMappingURL=useBaseQuery.js.map
+;// ./node_modules/@tanstack/react-query/build/modern/useQuery.js
+"use client";
+
+// src/useQuery.ts
+
+
+function useQuery(options, queryClient) {
+  return useBaseQuery(options, QueryObserver, queryClient);
+}
+
+//# sourceMappingURL=useQuery.js.map
+;// ./node_modules/@tanstack/query-core/build/modern/mutation.js
+// src/mutation.ts
+
+
+
+var Mutation = class extends Removable {
+  #observers;
+  #mutationCache;
+  #retryer;
+  constructor(config) {
+    super();
+    this.mutationId = config.mutationId;
+    this.#mutationCache = config.mutationCache;
+    this.#observers = [];
+    this.state = config.state || mutation_getDefaultState();
+    this.setOptions(config.options);
+    this.scheduleGc();
+  }
+  setOptions(options) {
+    this.options = options;
+    this.updateGcTime(this.options.gcTime);
+  }
+  get meta() {
+    return this.options.meta;
+  }
+  addObserver(observer) {
+    if (!this.#observers.includes(observer)) {
+      this.#observers.push(observer);
+      this.clearGcTimeout();
+      this.#mutationCache.notify({
+        type: "observerAdded",
+        mutation: this,
+        observer
+      });
+    }
+  }
+  removeObserver(observer) {
+    this.#observers = this.#observers.filter((x) => x !== observer);
+    this.scheduleGc();
+    this.#mutationCache.notify({
+      type: "observerRemoved",
+      mutation: this,
+      observer
+    });
+  }
+  optionalRemove() {
+    if (!this.#observers.length) {
+      if (this.state.status === "pending") {
+        this.scheduleGc();
+      } else {
+        this.#mutationCache.remove(this);
+      }
+    }
+  }
+  continue() {
+    return this.#retryer?.continue() ?? // continuing a mutation assumes that variables are set, mutation must have been dehydrated before
+    this.execute(this.state.variables);
+  }
+  async execute(variables) {
+    const onContinue = () => {
+      this.#dispatch({ type: "continue" });
+    };
+    this.#retryer = createRetryer({
+      fn: () => {
+        if (!this.options.mutationFn) {
+          return Promise.reject(new Error("No mutationFn found"));
+        }
+        return this.options.mutationFn(variables);
+      },
+      onFail: (failureCount, error) => {
+        this.#dispatch({ type: "failed", failureCount, error });
+      },
+      onPause: () => {
+        this.#dispatch({ type: "pause" });
+      },
+      onContinue,
+      retry: this.options.retry ?? 0,
+      retryDelay: this.options.retryDelay,
+      networkMode: this.options.networkMode,
+      canRun: () => this.#mutationCache.canRun(this)
+    });
+    const restored = this.state.status === "pending";
+    const isPaused = !this.#retryer.canStart();
+    try {
+      if (restored) {
+        onContinue();
+      } else {
+        this.#dispatch({ type: "pending", variables, isPaused });
+        await this.#mutationCache.config.onMutate?.(
+          variables,
+          this
+        );
+        const context = await this.options.onMutate?.(variables);
+        if (context !== this.state.context) {
+          this.#dispatch({
+            type: "pending",
+            context,
+            variables,
+            isPaused
+          });
+        }
+      }
+      const data = await this.#retryer.start();
+      await this.#mutationCache.config.onSuccess?.(
+        data,
+        variables,
+        this.state.context,
+        this
+      );
+      await this.options.onSuccess?.(data, variables, this.state.context);
+      await this.#mutationCache.config.onSettled?.(
+        data,
+        null,
+        this.state.variables,
+        this.state.context,
+        this
+      );
+      await this.options.onSettled?.(data, null, variables, this.state.context);
+      this.#dispatch({ type: "success", data });
+      return data;
+    } catch (error) {
+      try {
+        await this.#mutationCache.config.onError?.(
+          error,
+          variables,
+          this.state.context,
+          this
+        );
+        await this.options.onError?.(
+          error,
+          variables,
+          this.state.context
+        );
+        await this.#mutationCache.config.onSettled?.(
+          void 0,
+          error,
+          this.state.variables,
+          this.state.context,
+          this
+        );
+        await this.options.onSettled?.(
+          void 0,
+          error,
+          variables,
+          this.state.context
+        );
+        throw error;
+      } finally {
+        this.#dispatch({ type: "error", error });
+      }
+    } finally {
+      this.#mutationCache.runNext(this);
+    }
+  }
+  #dispatch(action) {
+    const reducer = (state) => {
+      switch (action.type) {
+        case "failed":
+          return {
+            ...state,
+            failureCount: action.failureCount,
+            failureReason: action.error
+          };
+        case "pause":
+          return {
+            ...state,
+            isPaused: true
+          };
+        case "continue":
+          return {
+            ...state,
+            isPaused: false
+          };
+        case "pending":
+          return {
+            ...state,
+            context: action.context,
+            data: void 0,
+            failureCount: 0,
+            failureReason: null,
+            error: null,
+            isPaused: action.isPaused,
+            status: "pending",
+            variables: action.variables,
+            submittedAt: Date.now()
+          };
+        case "success":
+          return {
+            ...state,
+            data: action.data,
+            failureCount: 0,
+            failureReason: null,
+            error: null,
+            status: "success",
+            isPaused: false
+          };
+        case "error":
+          return {
+            ...state,
+            data: void 0,
+            error: action.error,
+            failureCount: state.failureCount + 1,
+            failureReason: action.error,
+            isPaused: false,
+            status: "error"
+          };
+      }
+    };
+    this.state = reducer(this.state);
+    notifyManager.batch(() => {
+      this.#observers.forEach((observer) => {
+        observer.onMutationUpdate(action);
+      });
+      this.#mutationCache.notify({
+        mutation: this,
+        type: "updated",
+        action
+      });
+    });
+  }
+};
+function mutation_getDefaultState() {
+  return {
+    context: void 0,
+    data: void 0,
+    error: null,
+    failureCount: 0,
+    failureReason: null,
+    isPaused: false,
+    status: "idle",
+    variables: void 0,
+    submittedAt: 0
+  };
+}
+
+//# sourceMappingURL=mutation.js.map
+;// ./node_modules/@tanstack/query-core/build/modern/mutationObserver.js
+// src/mutationObserver.ts
+
+
+
+
+var MutationObserver = class extends Subscribable {
+  #client;
+  #currentResult = void 0;
+  #currentMutation;
+  #mutateOptions;
+  constructor(client, options) {
+    super();
+    this.#client = client;
+    this.setOptions(options);
+    this.bindMethods();
+    this.#updateResult();
+  }
+  bindMethods() {
+    this.mutate = this.mutate.bind(this);
+    this.reset = this.reset.bind(this);
+  }
+  setOptions(options) {
+    const prevOptions = this.options;
+    this.options = this.#client.defaultMutationOptions(options);
+    if (!shallowEqualObjects(this.options, prevOptions)) {
+      this.#client.getMutationCache().notify({
+        type: "observerOptionsUpdated",
+        mutation: this.#currentMutation,
+        observer: this
+      });
+    }
+    if (prevOptions?.mutationKey && this.options.mutationKey && hashKey(prevOptions.mutationKey) !== hashKey(this.options.mutationKey)) {
+      this.reset();
+    } else if (this.#currentMutation?.state.status === "pending") {
+      this.#currentMutation.setOptions(this.options);
+    }
+  }
+  onUnsubscribe() {
+    if (!this.hasListeners()) {
+      this.#currentMutation?.removeObserver(this);
+    }
+  }
+  onMutationUpdate(action) {
+    this.#updateResult();
+    this.#notify(action);
+  }
+  getCurrentResult() {
+    return this.#currentResult;
+  }
+  reset() {
+    this.#currentMutation?.removeObserver(this);
+    this.#currentMutation = void 0;
+    this.#updateResult();
+    this.#notify();
+  }
+  mutate(variables, options) {
+    this.#mutateOptions = options;
+    this.#currentMutation?.removeObserver(this);
+    this.#currentMutation = this.#client.getMutationCache().build(this.#client, this.options);
+    this.#currentMutation.addObserver(this);
+    return this.#currentMutation.execute(variables);
+  }
+  #updateResult() {
+    const state = this.#currentMutation?.state ?? mutation_getDefaultState();
+    this.#currentResult = {
+      ...state,
+      isPending: state.status === "pending",
+      isSuccess: state.status === "success",
+      isError: state.status === "error",
+      isIdle: state.status === "idle",
+      mutate: this.mutate,
+      reset: this.reset
+    };
+  }
+  #notify(action) {
+    notifyManager.batch(() => {
+      if (this.#mutateOptions && this.hasListeners()) {
+        const variables = this.#currentResult.variables;
+        const context = this.#currentResult.context;
+        if (action?.type === "success") {
+          this.#mutateOptions.onSuccess?.(action.data, variables, context);
+          this.#mutateOptions.onSettled?.(action.data, null, variables, context);
+        } else if (action?.type === "error") {
+          this.#mutateOptions.onError?.(action.error, variables, context);
+          this.#mutateOptions.onSettled?.(
+            void 0,
+            action.error,
+            variables,
+            context
+          );
+        }
+      }
+      this.listeners.forEach((listener) => {
+        listener(this.#currentResult);
+      });
+    });
+  }
+};
+
+//# sourceMappingURL=mutationObserver.js.map
+;// ./node_modules/@tanstack/react-query/build/modern/useMutation.js
+"use client";
+
+// src/useMutation.ts
+
+
+
+function useMutation(options, queryClient) {
+  const client = useQueryClient(queryClient);
+  const [observer] = react.useState(
+    () => new MutationObserver(
+      client,
+      options
+    )
+  );
+  react.useEffect(() => {
+    observer.setOptions(options);
+  }, [observer, options]);
+  const result = react.useSyncExternalStore(
+    react.useCallback(
+      (onStoreChange) => observer.subscribe(notifyManager.batchCalls(onStoreChange)),
+      [observer]
+    ),
+    () => observer.getCurrentResult(),
+    () => observer.getCurrentResult()
+  );
+  const mutate = react.useCallback(
+    (variables, mutateOptions) => {
+      observer.mutate(variables, mutateOptions).catch(utils_noop);
+    },
+    [observer]
+  );
+  if (result.error && shouldThrowError(observer.options.throwOnError, [result.error])) {
+    throw result.error;
+  }
+  return { ...result, mutate, mutateAsync: result.mutate };
+}
+
+//# sourceMappingURL=useMutation.js.map
+;// ./contexts/cognito-auth-context.js
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { if (r) i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n;else { var o = function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); }; o("next", 0), o("throw", 1), o("return", 2); } }, _regeneratorDefine2(e, r, n, t); }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+
+
+
+var CognitoAuthContext = /*#__PURE__*/(0,react.createContext)();
+var AUTH_QUERY_KEY = 'auth';
+var AUTH_SESSION_KEY = 'authSession';
+function CognitoAuthProvider(_ref) {
+  var _authSession$tokens$i, _authSession$tokens;
+  var children = _ref.children;
+  var queryClient = useQueryClient();
+  var _useQuery = useQuery({
+      queryKey: [AUTH_QUERY_KEY],
+      queryFn: function () {
+        var _queryFn = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
+          var _t;
+          return _regenerator().w(function (_context) {
+            while (1) switch (_context.n) {
+              case 0:
+                _context.p = 0;
+                _context.n = 1;
+                return getCurrentUser_getCurrentUser();
+              case 1:
+                return _context.a(2, _context.v);
+              case 2:
+                _context.p = 2;
+                _t = _context.v;
+                if (_t.name !== 'UserUnAuthenticatedException') {
+                  console.error(_t);
+                }
+                return _context.a(2, null);
+            }
+          }, _callee, null, [[0, 2]]);
+        }));
+        function queryFn() {
+          return _queryFn.apply(this, arguments);
+        }
+        return queryFn;
+      }(),
+      staleTime: 1000 * 60 * 5
+    }),
+    currentUser = _useQuery.data,
+    currentUserLoading = _useQuery.isLoading;
+  var isAuthenticated = !!currentUser;
+  var _useQuery2 = useQuery({
+      queryKey: [AUTH_SESSION_KEY],
+      queryFn: fetchAuthSession_fetchAuthSession,
+      enabled: isAuthenticated,
+      staleTime: 1000 * 60 * 55,
+      refetchInterval: 1000 * 60 * 55,
+      refetchOnWindowFocus: true
+    }),
+    authSession = _useQuery2.data,
+    authSessionLoading = _useQuery2.isLoading;
+  var _useMutation = useMutation({
+      mutationFn: signInWithRedirect
+    }),
+    login = _useMutation.mutateAsync,
+    signInLoading = _useMutation.isLoading;
+  var _useMutation2 = useMutation({
+      mutationFn: signOut,
+      onSuccess: function onSuccess() {
+        queryClient.clear();
+      }
+    }),
+    logout = _useMutation2.mutateAsync,
+    signOutLoading = _useMutation2.isLoading;
+  var idToken = (_authSession$tokens$i = authSession === null || authSession === void 0 || (_authSession$tokens = authSession.tokens) === null || _authSession$tokens === void 0 || (_authSession$tokens = _authSession$tokens.idToken) === null || _authSession$tokens === void 0 ? void 0 : _authSession$tokens.toString()) !== null && _authSession$tokens$i !== void 0 ? _authSession$tokens$i : null;
+  var userId = (0,react.useMemo)(function () {
+    if (!idToken) return null;
+    try {
+      return JSON.parse(atob(idToken.split('.')[1])).sub;
+    } catch (_unused) {
+      return null;
+    }
+  }, [idToken]);
+  return /*#__PURE__*/react.createElement(CognitoAuthContext.Provider, {
+    value: {
+      isAuthenticated: isAuthenticated,
+      loading: authSessionLoading || currentUserLoading || signOutLoading || signInLoading,
+      login: login,
+      logout: logout,
+      idToken: idToken,
+      userId: userId
+    }
+  }, children);
+}
+
+// Custom hook for using auth context
+function useCognitoAuth() {
+  return (0,react.useContext)(CognitoAuthContext);
+}
+;// ./utils/make-request.js
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+var _excluded = ["method", "headers", "body"];
+function make_request_regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return make_request_regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (make_request_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, make_request_regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, make_request_regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), make_request_regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", make_request_regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), make_request_regeneratorDefine2(u), make_request_regeneratorDefine2(u, o, "Generator"), make_request_regeneratorDefine2(u, n, function () { return this; }), make_request_regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (make_request_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function make_request_regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } make_request_regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { if (r) i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n;else { var o = function o(r, n) { make_request_regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); }; o("next", 0), o("throw", 1), o("return", 2); } }, make_request_regeneratorDefine2(e, r, n, t); }
+function make_request_ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? make_request_ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : make_request_ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
+function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
+function make_request_asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function make_request_asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { make_request_asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { make_request_asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function makeRequest(_x) {
+  return _makeRequest.apply(this, arguments);
+}
+function _makeRequest() {
+  _makeRequest = make_request_asyncToGenerator(/*#__PURE__*/make_request_regenerator().m(function _callee(url) {
+    var options,
+      _options$method,
+      method,
+      _options$headers,
+      headers,
+      body,
+      restOptions,
+      fetchHeaders,
+      fetchOptions,
+      response,
+      data,
+      contentType,
+      error,
+      _args = arguments;
+    return make_request_regenerator().w(function (_context) {
+      while (1) switch (_context.n) {
+        case 0:
+          options = _args.length > 1 && _args[1] !== undefined ? _args[1] : {};
+          _options$method = options.method, method = _options$method === void 0 ? 'GET' : _options$method, _options$headers = options.headers, headers = _options$headers === void 0 ? {} : _options$headers, body = options.body, restOptions = _objectWithoutProperties(options, _excluded);
+          fetchHeaders = new Headers(headers); // Set Content-Type for JSON body if not set and body is present
+          if (body && !fetchHeaders.has('Content-Type')) {
+            fetchHeaders.set('Content-Type', 'application/json');
+          }
+
+          // Prepare fetch options
+          fetchOptions = _objectSpread({
+            method: method,
+            headers: fetchHeaders
+          }, restOptions); // If body is an object (not FormData), stringify it
+          if (body && !(body instanceof FormData)) {
+            fetchOptions.body = JSON.stringify(body);
+          } else if (body) {
+            // If FormData or other body types, send as-is
+            fetchOptions.body = body;
+          }
+          console.log('fetchOptions', fetchOptions);
+
+          // Make the fetch call
+          _context.n = 1;
+          return fetch(url, fetchOptions);
+        case 1:
+          response = _context.v;
+          contentType = response.headers.get('content-type') || '';
+          if (!contentType.includes('application/json')) {
+            _context.n = 3;
+            break;
+          }
+          _context.n = 2;
+          return response.json();
+        case 2:
+          data = _context.v;
+          _context.n = 5;
+          break;
+        case 3:
+          _context.n = 4;
+          return response.text();
+        case 4:
+          data = _context.v;
+        case 5:
+          if (response.ok) {
+            _context.n = 6;
+            break;
+          }
+          error = new Error("HTTP ".concat(response.status, " ").concat(response.statusText));
+          error.status = response.status;
+          error.statusText = response.statusText;
+          error.data = data;
+          throw error;
+        case 6:
+          return _context.a(2, data);
+      }
+    }, _callee);
+  }));
+  return _makeRequest.apply(this, arguments);
+}
+;// ./utils/make-authenticated-request.js
+function make_authenticated_request_typeof(o) { "@babel/helpers - typeof"; return make_authenticated_request_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, make_authenticated_request_typeof(o); }
+function make_authenticated_request_ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function make_authenticated_request_objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? make_authenticated_request_ownKeys(Object(t), !0).forEach(function (r) { make_authenticated_request_defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : make_authenticated_request_ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function make_authenticated_request_defineProperty(e, r, t) { return (r = make_authenticated_request_toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function make_authenticated_request_toPropertyKey(t) { var i = make_authenticated_request_toPrimitive(t, "string"); return "symbol" == make_authenticated_request_typeof(i) ? i : i + ""; }
+function make_authenticated_request_toPrimitive(t, r) { if ("object" != make_authenticated_request_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != make_authenticated_request_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+function makeAuthenticatedRequest(url, token) {
+  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  if (!token) {
+    throw new Error("authenticated request attempted with no token: ".concat(url));
+  }
+  console.log('url', url);
+  var headers = new Headers(options.headers);
+  headers.set('Authorization', "Bearer ".concat(token));
+  return makeRequest(url, make_authenticated_request_objectSpread(make_authenticated_request_objectSpread({}, options), {}, {
+    headers: headers
+  }));
+}
+;// ./queries/use-create-session-mutation.js
+function use_create_session_mutation_regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return use_create_session_mutation_regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (use_create_session_mutation_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, use_create_session_mutation_regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, use_create_session_mutation_regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), use_create_session_mutation_regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", use_create_session_mutation_regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), use_create_session_mutation_regeneratorDefine2(u), use_create_session_mutation_regeneratorDefine2(u, o, "Generator"), use_create_session_mutation_regeneratorDefine2(u, n, function () { return this; }), use_create_session_mutation_regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (use_create_session_mutation_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function use_create_session_mutation_regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } use_create_session_mutation_regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { if (r) i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n;else { var o = function o(r, n) { use_create_session_mutation_regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); }; o("next", 0), o("throw", 1), o("return", 2); } }, use_create_session_mutation_regeneratorDefine2(e, r, n, t); }
+function use_create_session_mutation_asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function use_create_session_mutation_asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { use_create_session_mutation_asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { use_create_session_mutation_asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+
+
+
+var apiUrl = 'https://api.measuringcontest.com/sessions';
+var useCreateSessionMutation = function useCreateSessionMutation() {
+  var queryClient = useQueryClient();
+  var auth = useCognitoAuth();
+  return useMutation({
+    mutationFn: function () {
+      var _mutationFn = use_create_session_mutation_asyncToGenerator(/*#__PURE__*/use_create_session_mutation_regenerator().m(function _callee() {
+        var _t, _t2, _t3, _t4;
+        return use_create_session_mutation_regenerator().w(function (_context) {
+          while (1) switch (_context.n) {
+            case 0:
+              _t = makeAuthenticatedRequest;
+              _t2 = apiUrl;
+              _context.n = 1;
+              return auth.idToken();
+            case 1:
+              _t3 = _context.v;
+              _t4 = {
+                method: 'POST'
+              };
+              return _context.a(2, _t(_t2, _t3, _t4));
+          }
+        }, _callee);
+      }));
+      function mutationFn() {
+        return _mutationFn.apply(this, arguments);
+      }
+      return mutationFn;
+    }(),
+    onSuccess: function () {
+      var _onSuccess = use_create_session_mutation_asyncToGenerator(/*#__PURE__*/use_create_session_mutation_regenerator().m(function _callee2() {
+        var _t5, _t6, _t7, _t8;
+        return use_create_session_mutation_regenerator().w(function (_context2) {
+          while (1) switch (_context2.n) {
+            case 0:
+              _t5 = queryClient;
+              _context2.n = 1;
+              return auth.userId();
+            case 1:
+              _t6 = _context2.v;
+              _t7 = ['userSessions', _t6];
+              _t8 = {
+                queryKey: _t7
+              };
+              _t5.invalidateQueries.call(_t5, _t8);
+            case 2:
+              return _context2.a(2);
+          }
+        }, _callee2);
+      }));
+      function onSuccess() {
+        return _onSuccess.apply(this, arguments);
+      }
+      return onSuccess;
+    }()
+  });
+};
+;// ./pages/create-session-page.js
+
+
+
+function CreateSessionPage() {
+  var createSessionMutation = useCreateSessionMutation();
+  var auth = useCognitoAuth();
+  return /*#__PURE__*/react.createElement("div", {
+    className: "content"
+  }, !auth.loading && !auth.isAuthenticated && /*#__PURE__*/react.createElement("button", {
+    onClick: auth.login
+  }, "Login with Google"), !auth.loading && auth.isAuthenticated && !createSessionMutation.loading && /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement("button", {
+    onClick: auth.logout
+  }, "Logout"), /*#__PURE__*/react.createElement("button", {
+    onClick: createSessionMutation.mutate
+  }, "create session")), createSessionMutation.loading && "loading");
+}
 ;// ./node_modules/@tanstack/query-core/build/modern/queryCache.js
 // src/queryCache.ts
 
@@ -27328,9 +27905,9 @@ var QueryClient = class {
 DefaultAmplify.configure(cognitoConfig);
 var queryClient = new QueryClient();
 function App() {
-  return /*#__PURE__*/react.createElement(CognitoAuthProvider, null, /*#__PURE__*/react.createElement(QueryClientProvider, {
+  return /*#__PURE__*/react.createElement(QueryClientProvider, {
     client: queryClient
-  }, /*#__PURE__*/react.createElement(CreateSessionPage, null)));
+  }, /*#__PURE__*/react.createElement(CognitoAuthProvider, null, /*#__PURE__*/react.createElement(CreateSessionPage, null)));
 }
 // EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
 var injectStylesIntoStyleTag = __webpack_require__(72);

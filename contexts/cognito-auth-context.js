@@ -1,74 +1,76 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useMemo } from 'react';
 import {
   signInWithRedirect,
   signOut,
   getCurrentUser,
   fetchAuthSession
 } from '@aws-amplify/auth';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 const CognitoAuthContext = createContext();
 
+const AUTH_QUERY_KEY = 'auth';
+const AUTH_SESSION_KEY = 'authSession';
+
 export function CognitoAuthProvider({ children }) {
-  const [loading, setLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    const checkAuth = async () => {
+  const { data: currentUser, isLoading: currentUserLoading } = useQuery({
+    queryKey: [AUTH_QUERY_KEY],
+    queryFn: async () => {
       try {
-        await getCurrentUser();
-        setIsAuthenticated(true);
+        return await getCurrentUser();
       } catch (error) {
-        console.error('? getCurrentUser failed:', error);
-        setIsAuthenticated(false);
-      } finally {
-        setLoading(false);
+        if (error.name !== 'UserUnAuthenticatedException') {
+          console.error(error);
+        }
+        return null;
       }
-    };
+    },
+    staleTime: 1000 * 60 * 5,
+  });
 
-    checkAuth();
-  }, []);
+  const isAuthenticated = !!currentUser
 
-  const login = async () => {
-    await signInWithRedirect(); // This will redirect to the hosted UI
-  };
+  const { data: authSession, isLoading: authSessionLoading } = useQuery({
+    queryKey: [AUTH_SESSION_KEY],
+    queryFn: fetchAuthSession,
+    enabled: isAuthenticated,
+    staleTime: 1000 * 60 * 55,
+    refetchInterval: 1000 * 60 * 55,
+    refetchOnWindowFocus: true,
+  });
 
-  const logout = async () => {
-    await signOut();
-    setIsAuthenticated(false);
-  };
+  const { mutateAsync: login, isLoading: signInLoading } = useMutation({
+    mutationFn: signInWithRedirect,
+  });
 
-  const getIdToken = async () => {
+  const { mutateAsync: logout, isLoading: signOutLoading } = useMutation({
+    mutationFn: signOut,
+    onSuccess: () => {
+      queryClient.clear()
+    },
+  });
+
+  const idToken = authSession?.tokens?.idToken?.toString() ?? null
+  const userId = useMemo(() => {
+    if (!idToken) return null;
     try {
-      const { tokens } = await fetchAuthSession();
-      return tokens.idToken.toString();
-    } catch (error) {
-      console.log('error getting id token:');
-      console.error(error);
+      return JSON.parse(atob(idToken.split('.')[1])).sub;
+    } catch {
       return null;
     }
-  };
-
-  const getUserId = async () => {
-    try {
-      const { tokens } = await fetchAuthSession();
-      const payload = JSON.parse(atob(tokens.idToken.toString().split('.')[1]));
-      return payload.sub;
-    } catch (error) {
-      console.log('error getting user id:');
-      console.error(error);
-      return null;
-    }
-  };
+  }, [idToken]);
 
   return (
     <CognitoAuthContext.Provider
       value={{
         isAuthenticated,
-        loading,
+        loading: authSessionLoading || currentUserLoading || signOutLoading || signInLoading,
         login,
         logout,
-        getIdToken,
-        getUserId
+        idToken,
+        userId
       }}
     >
       {children}
@@ -80,3 +82,4 @@ export function CognitoAuthProvider({ children }) {
 export function useCognitoAuth() {
   return useContext(CognitoAuthContext);
 }
+

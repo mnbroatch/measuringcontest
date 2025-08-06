@@ -10,10 +10,10 @@ const queryClient = new QueryClient()
 
 export default function App () {
   return (
-    <CognitoAuthProvider>
-      <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <CognitoAuthProvider>
         <CreateSessionPage />
-      </QueryClientProvider>
-    </CognitoAuthProvider>
+      </CognitoAuthProvider>
+    </QueryClientProvider>
   )
 }
