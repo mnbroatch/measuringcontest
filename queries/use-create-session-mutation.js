@@ -9,13 +9,13 @@ export const useCreateSessionMutation = () => {
   const auth = useCognitoAuth()
 
   return useMutation({
-    mutationFn: async () => makeAuthenticatedRequest(
+    mutationFn: () => makeAuthenticatedRequest(
       apiUrl,
-      await auth.idToken(),
+      auth.idToken,
       { method: 'POST' }
     ),
-    onSuccess: async () => {
-      queryClient.invalidateQueries({ queryKey: ['userSessions', await auth.userId()] })
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['userSessions', auth.userId] })
     },
   })
 }
