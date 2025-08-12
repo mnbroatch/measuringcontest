@@ -14,5 +14,6 @@ export const useMeQuery = () => {
       auth.idToken,
       { method: 'GET' }
     ),
+    enabled: !!auth.idToken
   })
 }

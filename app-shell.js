@@ -1,7 +1,7 @@
 import React from 'react'
-import { useCreateSessionMutation } from "../queries/use-create-session-mutation.js";
-import { useMeQuery } from "../queries/use-me-query.js";
-import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
+import { useCreateSessionMutation } from "./queries/use-create-session-mutation.js";
+import { useMeQuery } from "./queries/use-me-query.js";
+import { useCognitoAuth } from "./contexts/cognito-auth-context.js";
 
 export default function CreateSessionPage () {
   const createSessionMutation = useCreateSessionMutation()

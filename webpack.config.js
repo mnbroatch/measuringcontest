@@ -1,5 +1,6 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require("copy-webpack-plugin");
+const { tanstackRouter } = require('@tanstack/router-plugin/webpack')
 
 class CacheBustPlugin {
   apply(compiler) {
@@ -33,6 +34,10 @@ module.exports = {
     minimize: false
   },
   plugins: [
+    tanstackRouter({
+      target: 'react',
+      autoCodeSplitting: true,
+    }),
     new HtmlWebPackPlugin({
       title: 'Measuring Contest',
       template: './index.html',
