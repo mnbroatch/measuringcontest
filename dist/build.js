@@ -31975,7 +31975,7 @@ function createRoute(options) {
 }
 function createRootRouteWithContext() {
   return (options) => {
-    return route_createRootRoute(options);
+    return createRootRoute(options);
   };
 }
 const rootRouteWithContext = (/* unused pure expression or super */ null && (createRootRouteWithContext));
@@ -32030,7 +32030,7 @@ class RootRoute extends BaseRootRoute {
     this.$$typeof = Symbol.for("react.memo");
   }
 }
-function route_createRootRoute(options) {
+function createRootRoute(options) {
   return new RootRoute(options);
 }
 function createRouteMask(opts) {
@@ -33048,7 +33048,7 @@ function AppShell() {
     className: "content"
   }, /*#__PURE__*/react.createElement(Outlet, null)));
 }
-var _root_Route = route_createRootRoute({
+var _root_Route = createRootRoute({
   component: AppShell
 });
 if (false) // removed by dead control flow
@@ -33085,19 +33085,18 @@ function IndexPage() {
   var me = useMeQuery();
   return /*#__PURE__*/react.createElement(react.Fragment, null, ((_me$data = me.data) === null || _me$data === void 0 || (_me$data = _me$data.sessions) === null || _me$data === void 0 ? void 0 : _me$data.length) === 0 && /*#__PURE__*/react.createElement("button", {
     onClick: createSessionMutation.mutate
-  }, "create session"), ((_me$data2 = me.data) === null || _me$data2 === void 0 || (_me$data2 = _me$data2.sessions) === null || _me$data2 === void 0 ? void 0 : _me$data2.length) > 0 && me.data.sessions.map(function (sessionId) {
+  }, "create session"), ((_me$data2 = me.data) === null || _me$data2 === void 0 || (_me$data2 = _me$data2.sessions) === null || _me$data2 === void 0 ? void 0 : _me$data2.length) > 0 && me.data.sessions.map(function (sessionId, i) {
     return /*#__PURE__*/react.createElement("a", {
+      key: i,
       onClick: function onClick() {
         console.log(sessionId);
       }
     }, sessionId);
   }));
 }
-var routes_Route = createRootRoute("/")({
+var routes_Route = createFileRoute("/")({
   component: IndexPage
 });
-if (false) // removed by dead control flow
-{}
 ;// ./src/routeTree.gen.js
 /* eslint-disable */
 
