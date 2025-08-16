@@ -33026,6 +33026,7 @@ var useMeQuery = function useMeQuery() {
         method: 'GET'
       });
     },
+    staleTime: 1000 * 60 * 55,
     enabled: !!auth.idToken
   });
 };

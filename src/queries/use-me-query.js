@@ -14,6 +14,7 @@ export const useMeQuery = () => {
       auth.idToken,
       { method: 'GET' }
     ),
+    staleTime: 1000 * 60 * 55,
     enabled: !!auth.idToken
   })
 }

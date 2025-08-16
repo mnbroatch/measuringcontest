@@ -6,7 +6,6 @@ import { useMeQuery } from "../queries/use-me-query.js";
 export default function IndexPage () {
   const createSessionMutation = useCreateSessionMutation()
   const me = useMeQuery()
-  console.log('me.data', me.data)
 
   return !me.isLoading && (
     <>
