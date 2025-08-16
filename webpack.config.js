@@ -37,6 +37,7 @@ module.exports = {
     tanstackRouter({
       target: 'react',
       autoCodeSplitting: true,
+      disableTypes: true,
     }),
     new HtmlWebPackPlugin({
       title: 'Measuring Contest',
