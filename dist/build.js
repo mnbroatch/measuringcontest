@@ -32898,6 +32898,27 @@ function RouterProvider({ router, ...rest }) {
 
 //# sourceMappingURL=RouterProvider.js.map
 
+;// ./src/routes/__root.js
+
+
+
+function AppShell() {
+  var auth = useCognitoAuth();
+  return /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement("div", {
+    className: "login-bar"
+  }, !auth.loading && !auth.isAuthenticated && /*#__PURE__*/react.createElement("button", {
+    onClick: auth.login
+  }, "Login with Google"), !auth.loading && auth.isAuthenticated && /*#__PURE__*/react.createElement("button", {
+    onClick: auth.logout
+  }, "Logout")), /*#__PURE__*/react.createElement("div", {
+    className: "content"
+  }, /*#__PURE__*/react.createElement(Outlet, null)));
+}
+var _root_Route = createRootRoute({
+  component: AppShell
+});
+if (false) // removed by dead control flow
+{}
 ;// ./src/utils/make-request.js
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 var _excluded = ["method", "headers", "body"];
@@ -32952,7 +32973,6 @@ function _makeRequest() {
             // If FormData or other body types, send as-is
             fetchOptions.body = body;
           }
-          console.log('fetchOptions', fetchOptions);
 
           // Make the fetch call
           _context.n = 1;
@@ -33005,65 +33025,23 @@ function makeAuthenticatedRequest(url, token) {
   if (!token) {
     throw new Error("authenticated request attempted with no token: ".concat(url));
   }
-  console.log('url', url);
   var headers = new Headers(options.headers);
   headers.set('Authorization', "Bearer ".concat(token));
   return makeRequest(url, make_authenticated_request_objectSpread(make_authenticated_request_objectSpread({}, options), {}, {
     headers: headers
   }));
 }
-;// ./src/queries/use-me-query.js
-
-
-
-var apiUrl = 'https://api.measuringcontest.com/me';
-var useMeQuery = function useMeQuery() {
-  var auth = useCognitoAuth();
-  return useQuery({
-    queryKey: [auth.idToken],
-    queryFn: function queryFn() {
-      return makeAuthenticatedRequest(apiUrl, auth.idToken, {
-        method: 'GET'
-      });
-    },
-    enabled: !!auth.idToken
-  });
-};
-;// ./src/routes/__root.js
-
-
-
-
-function AppShell() {
-  var auth = useCognitoAuth();
-  var me = useMeQuery();
-  console.log('me.data', me.data);
-  return /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement("div", {
-    className: "login-bar"
-  }, !auth.loading && !auth.isAuthenticated && /*#__PURE__*/react.createElement("button", {
-    onClick: auth.login
-  }, "Login with Google"), !auth.loading && auth.isAuthenticated && /*#__PURE__*/react.createElement("button", {
-    onClick: auth.logout
-  }, "Logout")), /*#__PURE__*/react.createElement("div", {
-    className: "content"
-  }, /*#__PURE__*/react.createElement(Outlet, null)));
-}
-var _root_Route = createRootRoute({
-  component: AppShell
-});
-if (false) // removed by dead control flow
-{}
 ;// ./src/queries/use-create-session-mutation.js
 
 
 
-var use_create_session_mutation_apiUrl = 'https://api.measuringcontest.com/sessions';
+var apiUrl = 'https://api.measuringcontest.com/sessions';
 var useCreateSessionMutation = function useCreateSessionMutation() {
   var queryClient = useQueryClient();
   var auth = useCognitoAuth();
   return useMutation({
     mutationFn: function mutationFn() {
-      return makeAuthenticatedRequest(use_create_session_mutation_apiUrl, auth.idToken, {
+      return makeAuthenticatedRequest(apiUrl, auth.idToken, {
         method: 'POST'
       });
     },
@@ -33072,6 +33050,25 @@ var useCreateSessionMutation = function useCreateSessionMutation() {
         queryKey: ['userSessions', auth.userId]
       });
     }
+  });
+};
+;// ./src/queries/use-me-query.js
+
+
+
+var use_me_query_apiUrl = 'https://api.measuringcontest.com/me';
+var useMeQuery = function useMeQuery() {
+  var auth = useCognitoAuth();
+  return useQuery({
+    queryKey: [auth.idToken],
+    queryFn: function queryFn() {
+      console.log('auth.idToken', auth.idToken);
+      return makeAuthenticatedRequest(use_me_query_apiUrl, auth.idToken, {
+        method: 'GET'
+      });
+    },
+    staleTime: 1000 * 60 * 50,
+    enabled: !!auth.idToken
   });
 };
 ;// ./src/routes/index.js

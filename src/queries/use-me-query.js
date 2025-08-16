@@ -9,11 +9,14 @@ export const useMeQuery = () => {
 
   return useQuery({
     queryKey: [auth.idToken],
-    queryFn: () => makeAuthenticatedRequest(
+    queryFn: () => { 
+      console.log('auth.idToken', auth.idToken)
+    return makeAuthenticatedRequest(
       apiUrl,
       auth.idToken,
       { method: 'GET' }
-    ),
-    enabled: !!auth.idToken
+    )},
+    staleTime: 1000 * 60 * 50,
+    enabled: !!auth.idToken,
   })
 }

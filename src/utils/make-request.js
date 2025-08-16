@@ -28,8 +28,6 @@ export default async function makeRequest (url, options = {}) {
     fetchOptions.body = body;
   }
 
-  console.log('fetchOptions', fetchOptions)
-
   // Make the fetch call
   const response = await fetch(url, fetchOptions);
 

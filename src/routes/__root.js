@@ -1,12 +1,9 @@
 import React from 'react'
-import { useMeQuery } from "../queries/use-me-query.js";
 import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
 import { createRootRoute, Outlet } from '@tanstack/react-router'
 
 export default function AppShell () {
   const auth = useCognitoAuth()
-  const me = useMeQuery()
-  console.log('me.data', me.data)
 
   return (
     <>
