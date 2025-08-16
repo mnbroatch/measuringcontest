@@ -35,7 +35,7 @@ async function createSession (sessionCode, userId) {
           UpdateExpression: "ADD sessions :s SET createdAt = if_not_exists(createdAt, :now)",
           ConditionExpression: "attribute_not_exists(sessions) OR size(sessions) < :maxSessions",
           ExpressionAttributeValues: {
-            ":s": dynamoDb.createSet([sessionCode]),
+            ":s": [sessionCode],
             ":now": Date.now(),
             ":maxSessions": MAX_SESSIONS_PER_USER,
           }
