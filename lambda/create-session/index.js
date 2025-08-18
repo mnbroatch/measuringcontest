@@ -77,8 +77,7 @@ async function getSessionCode () {
     })
   )).Attributes.val
 
-
-  return encodeAlphaCode(sessionCounter)
+  return encodeAlphaCode(scramble(sessionCounter))
 }
 
 function encodeAlphaCode(num) {
@@ -89,4 +88,13 @@ function encodeAlphaCode(num) {
     num = Math.floor(num / 26);
   }
   return code;
+}
+
+// make session code less predictable so people don't easily guess others'
+// someone could definitely reverse engineer this but probably won't
+function scramble(n) {
+  const N = 26 ** 4 // total 4-letter codes
+  const m = 314159  // coprime with N
+  const b = 69420
+  return (m * n + b) % N
 }
