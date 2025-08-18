@@ -6,16 +6,13 @@ const apiUrl = 'https://api.measuringcontest.com/me'
 
 export const useMeQuery = () => {
   const auth = useCognitoAuth()
-
   return useQuery({
     queryKey: [auth.idToken],
-    queryFn: () => { 
-      console.log('auth.idToken', auth.idToken)
-    return makeAuthenticatedRequest(
+    queryFn: () => makeAuthenticatedRequest(
       apiUrl,
       auth.idToken,
       { method: 'GET' }
-    )},
+    ),
     staleTime: 1000 * 60 * 50,
     enabled: !!auth.idToken,
   })

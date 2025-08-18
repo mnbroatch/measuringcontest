@@ -6,10 +6,9 @@ import { useMeQuery } from "../queries/use-me-query.js";
 export default function IndexPage () {
   const createSessionMutation = useCreateSessionMutation()
   const me = useMeQuery()
-
-  return (
+  return !me.isLoading && (
     <>
-      {me.data?.sessions?.length === 0 && (
+      {!me.data?.sessions?.length && (
         <button onClick={createSessionMutation.mutate}>
           create session
         </button>

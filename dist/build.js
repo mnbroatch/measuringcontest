@@ -33062,7 +33062,6 @@ var useMeQuery = function useMeQuery() {
   return useQuery({
     queryKey: [auth.idToken],
     queryFn: function queryFn() {
-      console.log('auth.idToken', auth.idToken);
       return makeAuthenticatedRequest(use_me_query_apiUrl, auth.idToken, {
         method: 'GET'
       });
@@ -33080,7 +33079,7 @@ function IndexPage() {
   var _me$data, _me$data2;
   var createSessionMutation = useCreateSessionMutation();
   var me = useMeQuery();
-  return /*#__PURE__*/react.createElement(react.Fragment, null, ((_me$data = me.data) === null || _me$data === void 0 || (_me$data = _me$data.sessions) === null || _me$data === void 0 ? void 0 : _me$data.length) === 0 && /*#__PURE__*/react.createElement("button", {
+  return !me.isLoading && /*#__PURE__*/react.createElement(react.Fragment, null, !((_me$data = me.data) !== null && _me$data !== void 0 && (_me$data = _me$data.sessions) !== null && _me$data !== void 0 && _me$data.length) && /*#__PURE__*/react.createElement("button", {
     onClick: createSessionMutation.mutate
   }, "create session"), ((_me$data2 = me.data) === null || _me$data2 === void 0 || (_me$data2 = _me$data2.sessions) === null || _me$data2 === void 0 ? void 0 : _me$data2.length) > 0 && me.data.sessions.map(function (sessionId, i) {
     return /*#__PURE__*/react.createElement("a", {
