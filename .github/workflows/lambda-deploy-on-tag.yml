@@ -26,6 +26,9 @@ jobs:
           - name: createsession
             path: lambda/create-session
             zip: createsession.zip
+          - name: deletesession
+            path: lambda/delete-session
+            zip: deletesession.zip
 
     steps:
       - uses: actions/checkout@v3
