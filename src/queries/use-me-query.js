@@ -7,7 +7,7 @@ const apiUrl = 'https://api.measuringcontest.com/me'
 export const useMeQuery = () => {
   const auth = useCognitoAuth()
   return useQuery({
-    queryKey: [auth.idToken],
+    queryKey: ['me', auth.userId],
     queryFn: () => makeAuthenticatedRequest(
       apiUrl,
       auth.idToken,

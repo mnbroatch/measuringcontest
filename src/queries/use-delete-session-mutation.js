@@ -15,7 +15,7 @@ export const useDeleteSessionMutation = () => {
       { method: 'DELETE' }
     ),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['userSessions', auth.userId] })
+      queryClient.invalidateQueries({ queryKey: ['me', auth.userId] })
     },
   })
 }

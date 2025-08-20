@@ -15,7 +15,7 @@ export const useCreateSessionMutation = () => {
       { method: 'POST' }
     ),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['userSessions', auth.userId] })
+      queryClient.invalidateQueries({ queryKey: ['me', auth.userId] })
     },
   })
 }

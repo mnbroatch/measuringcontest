@@ -33047,7 +33047,7 @@ var useCreateSessionMutation = function useCreateSessionMutation() {
     },
     onSuccess: function onSuccess() {
       queryClient.invalidateQueries({
-        queryKey: ['userSessions', auth.userId]
+        queryKey: ['me', auth.userId]
       });
     }
   });
@@ -33068,7 +33068,7 @@ var useDeleteSessionMutation = function useDeleteSessionMutation() {
     },
     onSuccess: function onSuccess() {
       queryClient.invalidateQueries({
-        queryKey: ['userSessions', auth.userId]
+        queryKey: ['me', auth.userId]
       });
     }
   });
@@ -33081,7 +33081,7 @@ var use_me_query_apiUrl = 'https://api.measuringcontest.com/me';
 var useMeQuery = function useMeQuery() {
   var auth = useCognitoAuth();
   return useQuery({
-    queryKey: [auth.idToken],
+    queryKey: ['me', auth.userId],
     queryFn: function queryFn() {
       return makeAuthenticatedRequest(use_me_query_apiUrl, auth.idToken, {
         method: 'GET'
