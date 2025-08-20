@@ -69,5 +69,3 @@ async function deleteSession(sessionCode, creatorUserId) {
 
   return { success: true, sessionCode };
 }
-
-module.exports = { deleteSession };

@@ -1,10 +1,12 @@
-import { createFileRoute } from "@tanstack/react-router"
 import React from 'react'
+import { createFileRoute } from "@tanstack/react-router"
 import { useCreateSessionMutation } from "../queries/use-create-session-mutation.js";
+import { useDeleteSessionMutation } from "../queries/use-delete-session-mutation.js";
 import { useMeQuery } from "../queries/use-me-query.js";
 
 export default function IndexPage () {
   const createSessionMutation = useCreateSessionMutation()
+  const deleteSessionMutation = useDeleteSessionMutation()
   const me = useMeQuery()
   return !me.isLoading && (
     <>
@@ -14,9 +16,14 @@ export default function IndexPage () {
         </button>
       )}
       {me.data?.sessions?.length > 0 && me.data.sessions.map((sessionId, i) => (
-        <a key={i} onClick={() => { console.log(sessionId) }}>
-          {sessionId}
-        </a>
+        <React.Fragment key={i+'delete'}>
+          <a onClick={() => { console.log(sessionId) }}>
+            {sessionId}
+          </a>
+          <button onClick={() => { deleteSessionMutation.mutate(sessionId) }}>
+            delete
+          </button>
+        </React.Fragment >
       ))}
     </>
   )
