@@ -33052,6 +33052,27 @@ var useCreateSessionMutation = function useCreateSessionMutation() {
     }
   });
 };
+;// ./src/queries/use-delete-session-mutation.js
+
+
+
+var use_delete_session_mutation_apiUrl = 'https://api.measuringcontest.com/sessions';
+var useDeleteSessionMutation = function useDeleteSessionMutation() {
+  var queryClient = useQueryClient();
+  var auth = useCognitoAuth();
+  return useMutation({
+    mutationFn: function mutationFn(sessionId) {
+      return makeAuthenticatedRequest("".concat(use_delete_session_mutation_apiUrl, "/").concat(sessionId), auth.idToken, {
+        method: 'DELETE'
+      });
+    },
+    onSuccess: function onSuccess() {
+      queryClient.invalidateQueries({
+        queryKey: ['userSessions', auth.userId]
+      });
+    }
+  });
+};
 ;// ./src/queries/use-me-query.js
 
 
@@ -33075,19 +33096,26 @@ var useMeQuery = function useMeQuery() {
 
 
 
+
 function IndexPage() {
   var _me$data, _me$data2;
   var createSessionMutation = useCreateSessionMutation();
+  var deleteSessionMutation = useDeleteSessionMutation();
   var me = useMeQuery();
   return !me.isLoading && /*#__PURE__*/react.createElement(react.Fragment, null, !((_me$data = me.data) !== null && _me$data !== void 0 && (_me$data = _me$data.sessions) !== null && _me$data !== void 0 && _me$data.length) && /*#__PURE__*/react.createElement("button", {
     onClick: createSessionMutation.mutate
   }, "create session"), ((_me$data2 = me.data) === null || _me$data2 === void 0 || (_me$data2 = _me$data2.sessions) === null || _me$data2 === void 0 ? void 0 : _me$data2.length) > 0 && me.data.sessions.map(function (sessionId, i) {
-    return /*#__PURE__*/react.createElement("a", {
-      key: i,
+    return /*#__PURE__*/react.createElement(react.Fragment, {
+      key: i + 'delete'
+    }, /*#__PURE__*/react.createElement("a", {
       onClick: function onClick() {
         console.log(sessionId);
       }
-    }, sessionId);
+    }, sessionId), /*#__PURE__*/react.createElement("button", {
+      onClick: function onClick() {
+        deleteSessionMutation.mutate(sessionId);
+      }
+    }, "delete"));
   }));
 }
 var routes_Route = createFileRoute("/")({
