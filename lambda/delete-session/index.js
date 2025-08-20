@@ -7,7 +7,7 @@ const dynamoDb = DynamoDBDocumentClient.from(client);
 exports.handler = async (event) => {
   try {
     const session = await deleteSession(
-      event.pathParameters.sessionCode,
+      event.sessionCode,
       event.requestContext.authorizer.claims.sub
     );
     return { val: session };
