@@ -48,7 +48,7 @@ async function createSession (sessionCode, userId) {
           Item: {
             sessionCode,
             createdBy: userId,
-            members: [userId],
+            members: new Set([userId]),
             sessionStatus: "waiting",
             createdAt: Date.now(),
             expiresAtSeconds: Math.floor(Date.now() / 1000) + 24 * 3600
