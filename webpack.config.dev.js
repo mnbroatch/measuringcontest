@@ -2,5 +2,16 @@ const config = require('./webpack.config.js')
 
 module.exports = {
   ...config,
-  mode: 'development'
+  output: {
+    ...config.output,
+    publicPath: '/',
+  },
+  mode: 'development',
+  devServer: {
+    historyApiFallback: {
+      rewrites: [
+        { from: /./, to: '/index.html' }, 
+      ],
+    },
+  }
 }
