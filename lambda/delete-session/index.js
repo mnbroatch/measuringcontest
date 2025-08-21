@@ -39,8 +39,7 @@ async function deleteSession(sessionCode, creatorUserId) {
       {
         Delete: {
           TableName: "measuringcontest-sessions",
-          Key: { sessionCode },
-          ConditionExpression: "attribute_exists(sessionCode)"
+          Key: { sessionCode }
         }
       }
     ]

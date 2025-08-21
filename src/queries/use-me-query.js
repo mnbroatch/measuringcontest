@@ -1,19 +1,26 @@
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
 import makeAuthenticatedRequest from "../utils/make-authenticated-request.js";
-import { useQuery } from '@tanstack/react-query'
+import makePreloadAuthenticatedQuery from "../utils/make-preload-authenticated-query.js";
 
 const apiUrl = 'https://api.measuringcontest.com/me'
 
 export const useMeQuery = () => {
   const auth = useCognitoAuth()
-  return useQuery({
-    queryKey: ['me', auth.userId],
+  return useSuspenseQuery(getOptions(auth.idToken))
+}
+
+function getOptions (idToken) {
+  return {
+    queryKey: ['me', idToken],
     queryFn: () => makeAuthenticatedRequest(
       apiUrl,
-      auth.idToken,
+      idToken,
       { method: 'GET' }
     ),
     staleTime: 1000 * 60 * 50,
-    enabled: !!auth.idToken,
-  })
+    enabled: !!idToken,
+  }
 }
+
+useMeQuery.preload = makePreloadAuthenticatedQuery(getOptions)

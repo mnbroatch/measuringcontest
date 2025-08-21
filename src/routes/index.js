@@ -35,5 +35,6 @@ export default function IndexPage () {
 }
 
 export const Route = createFileRoute("/")({
+  loader: () => useMeQuery.preload(),
   component: IndexPage
 })

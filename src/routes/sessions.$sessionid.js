@@ -1,7 +1,5 @@
 import React from 'react'
 import { createFileRoute } from "@tanstack/react-router"
-import { useCreateSessionMutation } from "../queries/use-create-session-mutation.js";
-import { useDeleteSessionMutation } from "../queries/use-delete-session-mutation.js";
 import { useSessionQuery } from "../queries/use-session-query.js";
 
 export default function SessionPage () {
@@ -15,5 +13,6 @@ export default function SessionPage () {
 }
 
 export const Route = createFileRoute("/sessions/$sessionid")({
-  component: SessionPage
+  loader: ({ params }) => useSessionQuery.preload(params.sessionid),
+  component: SessionPage,
 })

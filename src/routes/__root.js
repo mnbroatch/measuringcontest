@@ -8,12 +8,12 @@ export default function AppShell () {
   return (
     <>
       <div className="login-bar">
-        {!auth.loading && !auth.isAuthenticated && (
+        {!auth.loading && !auth.idToken && (
           <button onClick={auth.login}>
             Login with Google
           </button>
         )}
-        {!auth.loading && auth.isAuthenticated && (
+        {!auth.loading && !!auth.idToken && (
           <button onClick={auth.logout}>
             Logout
           </button>

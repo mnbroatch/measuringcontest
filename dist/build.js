@@ -23008,88 +23008,1072 @@ var cognitoConfig = {
     }
   }
 };
-;// ./node_modules/@aws-amplify/auth/dist/esm/providers/cognito/apis/internal/getCurrentUser.mjs
+// EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
+var jsx_runtime = __webpack_require__(637);
+;// ./node_modules/@tanstack/react-query/build/modern/QueryClientProvider.js
+"use client";
+
+// src/QueryClientProvider.tsx
 
 
-
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-const getCurrentUser = async (amplify) => {
-    const authConfig = amplify.getConfig().Auth?.Cognito;
-    utils_assertTokenProviderConfig(authConfig);
-    const tokens = await amplify.Auth.getTokens({ forceRefresh: false });
-    assertAuthTokens(tokens);
-    const { 'cognito:username': username, sub } = tokens.idToken?.payload ?? {};
-    const authUser = {
-        username: username,
-        userId: sub,
-    };
-    const signInDetails = getSignInDetailsFromTokens(tokens);
-    if (signInDetails) {
-        authUser.signInDetails = signInDetails;
-    }
-    return authUser;
+var QueryClientContext = react.createContext(
+  void 0
+);
+var useQueryClient = (queryClient) => {
+  const client = react.useContext(QueryClientContext);
+  if (queryClient) {
+    return queryClient;
+  }
+  if (!client) {
+    throw new Error("No QueryClient set, use QueryClientProvider to set one");
+  }
+  return client;
 };
-function getSignInDetailsFromTokens(tokens) {
-    return tokens?.signInDetails;
+var QueryClientProvider = ({
+  client,
+  children
+}) => {
+  react.useEffect(() => {
+    client.mount();
+    return () => {
+      client.unmount();
+    };
+  }, [client]);
+  return /* @__PURE__ */ (0,jsx_runtime.jsx)(QueryClientContext.Provider, { value: client, children });
+};
+
+//# sourceMappingURL=QueryClientProvider.js.map
+;// ./node_modules/@tanstack/query-core/build/modern/notifyManager.js
+// src/notifyManager.ts
+var defaultScheduler = (cb) => setTimeout(cb, 0);
+function createNotifyManager() {
+  let queue = [];
+  let transactions = 0;
+  let notifyFn = (callback) => {
+    callback();
+  };
+  let batchNotifyFn = (callback) => {
+    callback();
+  };
+  let scheduleFn = defaultScheduler;
+  const schedule = (callback) => {
+    if (transactions) {
+      queue.push(callback);
+    } else {
+      scheduleFn(() => {
+        notifyFn(callback);
+      });
+    }
+  };
+  const flush = () => {
+    const originalQueue = queue;
+    queue = [];
+    if (originalQueue.length) {
+      scheduleFn(() => {
+        batchNotifyFn(() => {
+          originalQueue.forEach((callback) => {
+            notifyFn(callback);
+          });
+        });
+      });
+    }
+  };
+  return {
+    batch: (callback) => {
+      let result;
+      transactions++;
+      try {
+        result = callback();
+      } finally {
+        transactions--;
+        if (!transactions) {
+          flush();
+        }
+      }
+      return result;
+    },
+    /**
+     * All calls to the wrapped function will be batched.
+     */
+    batchCalls: (callback) => {
+      return (...args) => {
+        schedule(() => {
+          callback(...args);
+        });
+      };
+    },
+    schedule,
+    /**
+     * Use this method to set a custom notify function.
+     * This can be used to for example wrap notifications with `React.act` while running tests.
+     */
+    setNotifyFunction: (fn) => {
+      notifyFn = fn;
+    },
+    /**
+     * Use this method to set a custom function to batch notifications together into a single tick.
+     * By default React Query will use the batch function provided by ReactDOM or React Native.
+     */
+    setBatchNotifyFunction: (fn) => {
+      batchNotifyFn = fn;
+    },
+    setScheduler: (fn) => {
+      scheduleFn = fn;
+    }
+  };
+}
+var notifyManager = createNotifyManager();
+
+//# sourceMappingURL=notifyManager.js.map
+;// ./node_modules/@tanstack/query-core/build/modern/utils.js
+// src/utils.ts
+var isServer = typeof window === "undefined" || "Deno" in globalThis;
+function utils_noop() {
+}
+function functionalUpdate(updater, input) {
+  return typeof updater === "function" ? updater(input) : updater;
+}
+function isValidTimeout(value) {
+  return typeof value === "number" && value >= 0 && value !== Infinity;
+}
+function timeUntilStale(updatedAt, staleTime) {
+  return Math.max(updatedAt + (staleTime || 0) - Date.now(), 0);
+}
+function resolveStaleTime(staleTime, query) {
+  return typeof staleTime === "function" ? staleTime(query) : staleTime;
+}
+function resolveEnabled(enabled, query) {
+  return typeof enabled === "function" ? enabled(query) : enabled;
+}
+function matchQuery(filters, query) {
+  const {
+    type = "all",
+    exact,
+    fetchStatus,
+    predicate,
+    queryKey,
+    stale
+  } = filters;
+  if (queryKey) {
+    if (exact) {
+      if (query.queryHash !== hashQueryKeyByOptions(queryKey, query.options)) {
+        return false;
+      }
+    } else if (!partialMatchKey(query.queryKey, queryKey)) {
+      return false;
+    }
+  }
+  if (type !== "all") {
+    const isActive = query.isActive();
+    if (type === "active" && !isActive) {
+      return false;
+    }
+    if (type === "inactive" && isActive) {
+      return false;
+    }
+  }
+  if (typeof stale === "boolean" && query.isStale() !== stale) {
+    return false;
+  }
+  if (fetchStatus && fetchStatus !== query.state.fetchStatus) {
+    return false;
+  }
+  if (predicate && !predicate(query)) {
+    return false;
+  }
+  return true;
+}
+function matchMutation(filters, mutation) {
+  const { exact, status, predicate, mutationKey } = filters;
+  if (mutationKey) {
+    if (!mutation.options.mutationKey) {
+      return false;
+    }
+    if (exact) {
+      if (hashKey(mutation.options.mutationKey) !== hashKey(mutationKey)) {
+        return false;
+      }
+    } else if (!partialMatchKey(mutation.options.mutationKey, mutationKey)) {
+      return false;
+    }
+  }
+  if (status && mutation.state.status !== status) {
+    return false;
+  }
+  if (predicate && !predicate(mutation)) {
+    return false;
+  }
+  return true;
+}
+function hashQueryKeyByOptions(queryKey, options) {
+  const hashFn = options?.queryKeyHashFn || hashKey;
+  return hashFn(queryKey);
+}
+function hashKey(queryKey) {
+  return JSON.stringify(
+    queryKey,
+    (_, val) => isPlainObject(val) ? Object.keys(val).sort().reduce((result, key) => {
+      result[key] = val[key];
+      return result;
+    }, {}) : val
+  );
+}
+function partialMatchKey(a, b) {
+  if (a === b) {
+    return true;
+  }
+  if (typeof a !== typeof b) {
+    return false;
+  }
+  if (a && b && typeof a === "object" && typeof b === "object") {
+    return Object.keys(b).every((key) => partialMatchKey(a[key], b[key]));
+  }
+  return false;
+}
+function replaceEqualDeep(a, b) {
+  if (a === b) {
+    return a;
+  }
+  const array = isPlainArray(a) && isPlainArray(b);
+  if (array || isPlainObject(a) && isPlainObject(b)) {
+    const aItems = array ? a : Object.keys(a);
+    const aSize = aItems.length;
+    const bItems = array ? b : Object.keys(b);
+    const bSize = bItems.length;
+    const copy = array ? [] : {};
+    const aItemsSet = new Set(aItems);
+    let equalItems = 0;
+    for (let i = 0; i < bSize; i++) {
+      const key = array ? i : bItems[i];
+      if ((!array && aItemsSet.has(key) || array) && a[key] === void 0 && b[key] === void 0) {
+        copy[key] = void 0;
+        equalItems++;
+      } else {
+        copy[key] = replaceEqualDeep(a[key], b[key]);
+        if (copy[key] === a[key] && a[key] !== void 0) {
+          equalItems++;
+        }
+      }
+    }
+    return aSize === bSize && equalItems === aSize ? a : copy;
+  }
+  return b;
+}
+function shallowEqualObjects(a, b) {
+  if (!b || Object.keys(a).length !== Object.keys(b).length) {
+    return false;
+  }
+  for (const key in a) {
+    if (a[key] !== b[key]) {
+      return false;
+    }
+  }
+  return true;
+}
+function isPlainArray(value) {
+  return Array.isArray(value) && value.length === Object.keys(value).length;
+}
+function isPlainObject(o) {
+  if (!hasObjectPrototype(o)) {
+    return false;
+  }
+  const ctor = o.constructor;
+  if (ctor === void 0) {
+    return true;
+  }
+  const prot = ctor.prototype;
+  if (!hasObjectPrototype(prot)) {
+    return false;
+  }
+  if (!prot.hasOwnProperty("isPrototypeOf")) {
+    return false;
+  }
+  if (Object.getPrototypeOf(o) !== Object.prototype) {
+    return false;
+  }
+  return true;
+}
+function hasObjectPrototype(o) {
+  return Object.prototype.toString.call(o) === "[object Object]";
+}
+function sleep(timeout) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, timeout);
+  });
+}
+function replaceData(prevData, data, options) {
+  if (typeof options.structuralSharing === "function") {
+    return options.structuralSharing(prevData, data);
+  } else if (options.structuralSharing !== false) {
+    if (false) // removed by dead control flow
+{}
+    return replaceEqualDeep(prevData, data);
+  }
+  return data;
+}
+function keepPreviousData(previousData) {
+  return previousData;
+}
+function addToEnd(items, item, max = 0) {
+  const newItems = [...items, item];
+  return max && newItems.length > max ? newItems.slice(1) : newItems;
+}
+function addToStart(items, item, max = 0) {
+  const newItems = [item, ...items];
+  return max && newItems.length > max ? newItems.slice(0, -1) : newItems;
+}
+var skipToken = Symbol();
+function ensureQueryFn(options, fetchOptions) {
+  if (false) // removed by dead control flow
+{}
+  if (!options.queryFn && fetchOptions?.initialPromise) {
+    return () => fetchOptions.initialPromise;
+  }
+  if (!options.queryFn || options.queryFn === skipToken) {
+    return () => Promise.reject(new Error(`Missing queryFn: '${options.queryHash}'`));
+  }
+  return options.queryFn;
+}
+function shouldThrowError(throwOnError, params) {
+  if (typeof throwOnError === "function") {
+    return throwOnError(...params);
+  }
+  return !!throwOnError;
 }
 
+//# sourceMappingURL=utils.js.map
+;// ./node_modules/@tanstack/query-core/build/modern/removable.js
+// src/removable.ts
 
-//# sourceMappingURL=getCurrentUser.mjs.map
-
-;// ./node_modules/@aws-amplify/auth/dist/esm/providers/cognito/apis/getCurrentUser.mjs
-
-
-
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-/**
- * Gets the current user from the idToken.
- *
- * @param input -  The GetCurrentUserInput object.
- * @returns GetCurrentUserOutput
- * @throws - {@link InitiateAuthException} - Thrown when the service fails to refresh the tokens.
- * @throws AuthTokenConfigException - Thrown when the token provider config is invalid.
- */
-const getCurrentUser_getCurrentUser = async () => {
-    return getCurrentUser(Amplify_Amplify);
+var Removable = class {
+  #gcTimeout;
+  destroy() {
+    this.clearGcTimeout();
+  }
+  scheduleGc() {
+    this.clearGcTimeout();
+    if (isValidTimeout(this.gcTime)) {
+      this.#gcTimeout = setTimeout(() => {
+        this.optionalRemove();
+      }, this.gcTime);
+    }
+  }
+  updateGcTime(newGcTime) {
+    this.gcTime = Math.max(
+      this.gcTime || 0,
+      newGcTime ?? (isServer ? Infinity : 5 * 60 * 1e3)
+    );
+  }
+  clearGcTimeout() {
+    if (this.#gcTimeout) {
+      clearTimeout(this.#gcTimeout);
+      this.#gcTimeout = void 0;
+    }
+  }
 };
 
-
-//# sourceMappingURL=getCurrentUser.mjs.map
-
-;// ./node_modules/@aws-amplify/core/dist/esm/singleton/apis/internal/fetchAuthSession.mjs
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-const fetchAuthSession = (amplify, options) => {
-    return amplify.Auth.fetchAuthSession(options);
+//# sourceMappingURL=removable.js.map
+;// ./node_modules/@tanstack/query-core/build/modern/subscribable.js
+// src/subscribable.ts
+var Subscribable = class {
+  constructor() {
+    this.listeners = /* @__PURE__ */ new Set();
+    this.subscribe = this.subscribe.bind(this);
+  }
+  subscribe(listener) {
+    this.listeners.add(listener);
+    this.onSubscribe();
+    return () => {
+      this.listeners.delete(listener);
+      this.onUnsubscribe();
+    };
+  }
+  hasListeners() {
+    return this.listeners.size > 0;
+  }
+  onSubscribe() {
+  }
+  onUnsubscribe() {
+  }
 };
 
-
-//# sourceMappingURL=fetchAuthSession.mjs.map
-
-;// ./node_modules/@aws-amplify/core/dist/esm/singleton/apis/fetchAuthSession.mjs
-
+//# sourceMappingURL=subscribable.js.map
+;// ./node_modules/@tanstack/query-core/build/modern/focusManager.js
+// src/focusManager.ts
 
 
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-/**
- * Fetch the auth session including the tokens and credentials if they are available. By default it
- * does not refresh the auth tokens or credentials if they are loaded in storage already. You can force a refresh
- * with `{ forceRefresh: true }` input.
- *
- * @param options - Options configuring the fetch behavior.
- * @throws {@link AuthError} - Throws error when session information cannot be refreshed.
- * @returns Promise<AuthSession>
- */
-const fetchAuthSession_fetchAuthSession = (options) => {
-    return fetchAuthSession(Amplify_Amplify, options);
+var FocusManager = class extends Subscribable {
+  #focused;
+  #cleanup;
+  #setup;
+  constructor() {
+    super();
+    this.#setup = (onFocus) => {
+      if (!isServer && window.addEventListener) {
+        const listener = () => onFocus();
+        window.addEventListener("visibilitychange", listener, false);
+        return () => {
+          window.removeEventListener("visibilitychange", listener);
+        };
+      }
+      return;
+    };
+  }
+  onSubscribe() {
+    if (!this.#cleanup) {
+      this.setEventListener(this.#setup);
+    }
+  }
+  onUnsubscribe() {
+    if (!this.hasListeners()) {
+      this.#cleanup?.();
+      this.#cleanup = void 0;
+    }
+  }
+  setEventListener(setup) {
+    this.#setup = setup;
+    this.#cleanup?.();
+    this.#cleanup = setup((focused) => {
+      if (typeof focused === "boolean") {
+        this.setFocused(focused);
+      } else {
+        this.onFocus();
+      }
+    });
+  }
+  setFocused(focused) {
+    const changed = this.#focused !== focused;
+    if (changed) {
+      this.#focused = focused;
+      this.onFocus();
+    }
+  }
+  onFocus() {
+    const isFocused = this.isFocused();
+    this.listeners.forEach((listener) => {
+      listener(isFocused);
+    });
+  }
+  isFocused() {
+    if (typeof this.#focused === "boolean") {
+      return this.#focused;
+    }
+    return globalThis.document?.visibilityState !== "hidden";
+  }
+};
+var focusManager = new FocusManager();
+
+//# sourceMappingURL=focusManager.js.map
+;// ./node_modules/@tanstack/query-core/build/modern/onlineManager.js
+// src/onlineManager.ts
+
+
+var OnlineManager = class extends Subscribable {
+  #online = true;
+  #cleanup;
+  #setup;
+  constructor() {
+    super();
+    this.#setup = (onOnline) => {
+      if (!isServer && window.addEventListener) {
+        const onlineListener = () => onOnline(true);
+        const offlineListener = () => onOnline(false);
+        window.addEventListener("online", onlineListener, false);
+        window.addEventListener("offline", offlineListener, false);
+        return () => {
+          window.removeEventListener("online", onlineListener);
+          window.removeEventListener("offline", offlineListener);
+        };
+      }
+      return;
+    };
+  }
+  onSubscribe() {
+    if (!this.#cleanup) {
+      this.setEventListener(this.#setup);
+    }
+  }
+  onUnsubscribe() {
+    if (!this.hasListeners()) {
+      this.#cleanup?.();
+      this.#cleanup = void 0;
+    }
+  }
+  setEventListener(setup) {
+    this.#setup = setup;
+    this.#cleanup?.();
+    this.#cleanup = setup(this.setOnline.bind(this));
+  }
+  setOnline(online) {
+    const changed = this.#online !== online;
+    if (changed) {
+      this.#online = online;
+      this.listeners.forEach((listener) => {
+        listener(online);
+      });
+    }
+  }
+  isOnline() {
+    return this.#online;
+  }
+};
+var onlineManager = new OnlineManager();
+
+//# sourceMappingURL=onlineManager.js.map
+;// ./node_modules/@tanstack/query-core/build/modern/thenable.js
+// src/thenable.ts
+
+function pendingThenable() {
+  let resolve;
+  let reject;
+  const thenable = new Promise((_resolve, _reject) => {
+    resolve = _resolve;
+    reject = _reject;
+  });
+  thenable.status = "pending";
+  thenable.catch(() => {
+  });
+  function finalize(data) {
+    Object.assign(thenable, data);
+    delete thenable.resolve;
+    delete thenable.reject;
+  }
+  thenable.resolve = (value) => {
+    finalize({
+      status: "fulfilled",
+      value
+    });
+    resolve(value);
+  };
+  thenable.reject = (reason) => {
+    finalize({
+      status: "rejected",
+      reason
+    });
+    reject(reason);
+  };
+  return thenable;
+}
+function tryResolveSync(promise) {
+  let data;
+  promise.then((result) => {
+    data = result;
+    return result;
+  }, noop)?.catch(noop);
+  if (data !== void 0) {
+    return { data };
+  }
+  return void 0;
+}
+
+//# sourceMappingURL=thenable.js.map
+;// ./node_modules/@tanstack/query-core/build/modern/retryer.js
+// src/retryer.ts
+
+
+
+
+function defaultRetryDelay(failureCount) {
+  return Math.min(1e3 * 2 ** failureCount, 3e4);
+}
+function canFetch(networkMode) {
+  return (networkMode ?? "online") === "online" ? onlineManager.isOnline() : true;
+}
+var CancelledError = class extends Error {
+  constructor(options) {
+    super("CancelledError");
+    this.revert = options?.revert;
+    this.silent = options?.silent;
+  }
+};
+function isCancelledError(value) {
+  return value instanceof CancelledError;
+}
+function createRetryer(config) {
+  let isRetryCancelled = false;
+  let failureCount = 0;
+  let isResolved = false;
+  let continueFn;
+  const thenable = pendingThenable();
+  const cancel = (cancelOptions) => {
+    if (!isResolved) {
+      reject(new CancelledError(cancelOptions));
+      config.abort?.();
+    }
+  };
+  const cancelRetry = () => {
+    isRetryCancelled = true;
+  };
+  const continueRetry = () => {
+    isRetryCancelled = false;
+  };
+  const canContinue = () => focusManager.isFocused() && (config.networkMode === "always" || onlineManager.isOnline()) && config.canRun();
+  const canStart = () => canFetch(config.networkMode) && config.canRun();
+  const resolve = (value) => {
+    if (!isResolved) {
+      isResolved = true;
+      config.onSuccess?.(value);
+      continueFn?.();
+      thenable.resolve(value);
+    }
+  };
+  const reject = (value) => {
+    if (!isResolved) {
+      isResolved = true;
+      config.onError?.(value);
+      continueFn?.();
+      thenable.reject(value);
+    }
+  };
+  const pause = () => {
+    return new Promise((continueResolve) => {
+      continueFn = (value) => {
+        if (isResolved || canContinue()) {
+          continueResolve(value);
+        }
+      };
+      config.onPause?.();
+    }).then(() => {
+      continueFn = void 0;
+      if (!isResolved) {
+        config.onContinue?.();
+      }
+    });
+  };
+  const run = () => {
+    if (isResolved) {
+      return;
+    }
+    let promiseOrValue;
+    const initialPromise = failureCount === 0 ? config.initialPromise : void 0;
+    try {
+      promiseOrValue = initialPromise ?? config.fn();
+    } catch (error) {
+      promiseOrValue = Promise.reject(error);
+    }
+    Promise.resolve(promiseOrValue).then(resolve).catch((error) => {
+      if (isResolved) {
+        return;
+      }
+      const retry = config.retry ?? (isServer ? 0 : 3);
+      const retryDelay = config.retryDelay ?? defaultRetryDelay;
+      const delay = typeof retryDelay === "function" ? retryDelay(failureCount, error) : retryDelay;
+      const shouldRetry = retry === true || typeof retry === "number" && failureCount < retry || typeof retry === "function" && retry(failureCount, error);
+      if (isRetryCancelled || !shouldRetry) {
+        reject(error);
+        return;
+      }
+      failureCount++;
+      config.onFail?.(failureCount, error);
+      sleep(delay).then(() => {
+        return canContinue() ? void 0 : pause();
+      }).then(() => {
+        if (isRetryCancelled) {
+          reject(error);
+        } else {
+          run();
+        }
+      });
+    });
+  };
+  return {
+    promise: thenable,
+    cancel,
+    continue: () => {
+      continueFn?.();
+      return thenable;
+    },
+    cancelRetry,
+    continueRetry,
+    canStart,
+    start: () => {
+      if (canStart()) {
+        run();
+      } else {
+        pause().then(run);
+      }
+      return thenable;
+    }
+  };
+}
+
+//# sourceMappingURL=retryer.js.map
+;// ./node_modules/@tanstack/query-core/build/modern/mutation.js
+// src/mutation.ts
+
+
+
+var Mutation = class extends Removable {
+  #observers;
+  #mutationCache;
+  #retryer;
+  constructor(config) {
+    super();
+    this.mutationId = config.mutationId;
+    this.#mutationCache = config.mutationCache;
+    this.#observers = [];
+    this.state = config.state || getDefaultState();
+    this.setOptions(config.options);
+    this.scheduleGc();
+  }
+  setOptions(options) {
+    this.options = options;
+    this.updateGcTime(this.options.gcTime);
+  }
+  get meta() {
+    return this.options.meta;
+  }
+  addObserver(observer) {
+    if (!this.#observers.includes(observer)) {
+      this.#observers.push(observer);
+      this.clearGcTimeout();
+      this.#mutationCache.notify({
+        type: "observerAdded",
+        mutation: this,
+        observer
+      });
+    }
+  }
+  removeObserver(observer) {
+    this.#observers = this.#observers.filter((x) => x !== observer);
+    this.scheduleGc();
+    this.#mutationCache.notify({
+      type: "observerRemoved",
+      mutation: this,
+      observer
+    });
+  }
+  optionalRemove() {
+    if (!this.#observers.length) {
+      if (this.state.status === "pending") {
+        this.scheduleGc();
+      } else {
+        this.#mutationCache.remove(this);
+      }
+    }
+  }
+  continue() {
+    return this.#retryer?.continue() ?? // continuing a mutation assumes that variables are set, mutation must have been dehydrated before
+    this.execute(this.state.variables);
+  }
+  async execute(variables) {
+    const onContinue = () => {
+      this.#dispatch({ type: "continue" });
+    };
+    this.#retryer = createRetryer({
+      fn: () => {
+        if (!this.options.mutationFn) {
+          return Promise.reject(new Error("No mutationFn found"));
+        }
+        return this.options.mutationFn(variables);
+      },
+      onFail: (failureCount, error) => {
+        this.#dispatch({ type: "failed", failureCount, error });
+      },
+      onPause: () => {
+        this.#dispatch({ type: "pause" });
+      },
+      onContinue,
+      retry: this.options.retry ?? 0,
+      retryDelay: this.options.retryDelay,
+      networkMode: this.options.networkMode,
+      canRun: () => this.#mutationCache.canRun(this)
+    });
+    const restored = this.state.status === "pending";
+    const isPaused = !this.#retryer.canStart();
+    try {
+      if (restored) {
+        onContinue();
+      } else {
+        this.#dispatch({ type: "pending", variables, isPaused });
+        await this.#mutationCache.config.onMutate?.(
+          variables,
+          this
+        );
+        const context = await this.options.onMutate?.(variables);
+        if (context !== this.state.context) {
+          this.#dispatch({
+            type: "pending",
+            context,
+            variables,
+            isPaused
+          });
+        }
+      }
+      const data = await this.#retryer.start();
+      await this.#mutationCache.config.onSuccess?.(
+        data,
+        variables,
+        this.state.context,
+        this
+      );
+      await this.options.onSuccess?.(data, variables, this.state.context);
+      await this.#mutationCache.config.onSettled?.(
+        data,
+        null,
+        this.state.variables,
+        this.state.context,
+        this
+      );
+      await this.options.onSettled?.(data, null, variables, this.state.context);
+      this.#dispatch({ type: "success", data });
+      return data;
+    } catch (error) {
+      try {
+        await this.#mutationCache.config.onError?.(
+          error,
+          variables,
+          this.state.context,
+          this
+        );
+        await this.options.onError?.(
+          error,
+          variables,
+          this.state.context
+        );
+        await this.#mutationCache.config.onSettled?.(
+          void 0,
+          error,
+          this.state.variables,
+          this.state.context,
+          this
+        );
+        await this.options.onSettled?.(
+          void 0,
+          error,
+          variables,
+          this.state.context
+        );
+        throw error;
+      } finally {
+        this.#dispatch({ type: "error", error });
+      }
+    } finally {
+      this.#mutationCache.runNext(this);
+    }
+  }
+  #dispatch(action) {
+    const reducer = (state) => {
+      switch (action.type) {
+        case "failed":
+          return {
+            ...state,
+            failureCount: action.failureCount,
+            failureReason: action.error
+          };
+        case "pause":
+          return {
+            ...state,
+            isPaused: true
+          };
+        case "continue":
+          return {
+            ...state,
+            isPaused: false
+          };
+        case "pending":
+          return {
+            ...state,
+            context: action.context,
+            data: void 0,
+            failureCount: 0,
+            failureReason: null,
+            error: null,
+            isPaused: action.isPaused,
+            status: "pending",
+            variables: action.variables,
+            submittedAt: Date.now()
+          };
+        case "success":
+          return {
+            ...state,
+            data: action.data,
+            failureCount: 0,
+            failureReason: null,
+            error: null,
+            status: "success",
+            isPaused: false
+          };
+        case "error":
+          return {
+            ...state,
+            data: void 0,
+            error: action.error,
+            failureCount: state.failureCount + 1,
+            failureReason: action.error,
+            isPaused: false,
+            status: "error"
+          };
+      }
+    };
+    this.state = reducer(this.state);
+    notifyManager.batch(() => {
+      this.#observers.forEach((observer) => {
+        observer.onMutationUpdate(action);
+      });
+      this.#mutationCache.notify({
+        mutation: this,
+        type: "updated",
+        action
+      });
+    });
+  }
+};
+function getDefaultState() {
+  return {
+    context: void 0,
+    data: void 0,
+    error: null,
+    failureCount: 0,
+    failureReason: null,
+    isPaused: false,
+    status: "idle",
+    variables: void 0,
+    submittedAt: 0
+  };
+}
+
+//# sourceMappingURL=mutation.js.map
+;// ./node_modules/@tanstack/query-core/build/modern/mutationObserver.js
+// src/mutationObserver.ts
+
+
+
+
+var MutationObserver = class extends Subscribable {
+  #client;
+  #currentResult = void 0;
+  #currentMutation;
+  #mutateOptions;
+  constructor(client, options) {
+    super();
+    this.#client = client;
+    this.setOptions(options);
+    this.bindMethods();
+    this.#updateResult();
+  }
+  bindMethods() {
+    this.mutate = this.mutate.bind(this);
+    this.reset = this.reset.bind(this);
+  }
+  setOptions(options) {
+    const prevOptions = this.options;
+    this.options = this.#client.defaultMutationOptions(options);
+    if (!shallowEqualObjects(this.options, prevOptions)) {
+      this.#client.getMutationCache().notify({
+        type: "observerOptionsUpdated",
+        mutation: this.#currentMutation,
+        observer: this
+      });
+    }
+    if (prevOptions?.mutationKey && this.options.mutationKey && hashKey(prevOptions.mutationKey) !== hashKey(this.options.mutationKey)) {
+      this.reset();
+    } else if (this.#currentMutation?.state.status === "pending") {
+      this.#currentMutation.setOptions(this.options);
+    }
+  }
+  onUnsubscribe() {
+    if (!this.hasListeners()) {
+      this.#currentMutation?.removeObserver(this);
+    }
+  }
+  onMutationUpdate(action) {
+    this.#updateResult();
+    this.#notify(action);
+  }
+  getCurrentResult() {
+    return this.#currentResult;
+  }
+  reset() {
+    this.#currentMutation?.removeObserver(this);
+    this.#currentMutation = void 0;
+    this.#updateResult();
+    this.#notify();
+  }
+  mutate(variables, options) {
+    this.#mutateOptions = options;
+    this.#currentMutation?.removeObserver(this);
+    this.#currentMutation = this.#client.getMutationCache().build(this.#client, this.options);
+    this.#currentMutation.addObserver(this);
+    return this.#currentMutation.execute(variables);
+  }
+  #updateResult() {
+    const state = this.#currentMutation?.state ?? getDefaultState();
+    this.#currentResult = {
+      ...state,
+      isPending: state.status === "pending",
+      isSuccess: state.status === "success",
+      isError: state.status === "error",
+      isIdle: state.status === "idle",
+      mutate: this.mutate,
+      reset: this.reset
+    };
+  }
+  #notify(action) {
+    notifyManager.batch(() => {
+      if (this.#mutateOptions && this.hasListeners()) {
+        const variables = this.#currentResult.variables;
+        const context = this.#currentResult.context;
+        if (action?.type === "success") {
+          this.#mutateOptions.onSuccess?.(action.data, variables, context);
+          this.#mutateOptions.onSettled?.(action.data, null, variables, context);
+        } else if (action?.type === "error") {
+          this.#mutateOptions.onError?.(action.error, variables, context);
+          this.#mutateOptions.onSettled?.(
+            void 0,
+            action.error,
+            variables,
+            context
+          );
+        }
+      }
+      this.listeners.forEach((listener) => {
+        listener(this.#currentResult);
+      });
+    });
+  }
 };
 
+//# sourceMappingURL=mutationObserver.js.map
+;// ./node_modules/@tanstack/react-query/build/modern/useMutation.js
+"use client";
 
-//# sourceMappingURL=fetchAuthSession.mjs.map
+// src/useMutation.ts
 
+
+
+function useMutation(options, queryClient) {
+  const client = useQueryClient(queryClient);
+  const [observer] = react.useState(
+    () => new MutationObserver(
+      client,
+      options
+    )
+  );
+  react.useEffect(() => {
+    observer.setOptions(options);
+  }, [observer, options]);
+  const result = react.useSyncExternalStore(
+    react.useCallback(
+      (onStoreChange) => observer.subscribe(notifyManager.batchCalls(onStoreChange)),
+      [observer]
+    ),
+    () => observer.getCurrentResult(),
+    () => observer.getCurrentResult()
+  );
+  const mutate = react.useCallback(
+    (variables, mutateOptions) => {
+      observer.mutate(variables, mutateOptions).catch(utils_noop);
+    },
+    [observer]
+  );
+  if (result.error && shouldThrowError(observer.options.throwOnError, [result.error])) {
+    throw result.error;
+  }
+  return { ...result, mutate, mutateAsync: result.mutate };
+}
+
+//# sourceMappingURL=useMutation.js.map
 ;// ./node_modules/@aws-amplify/core/dist/esm/utils/urlSafeEncode.mjs
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
@@ -23181,6 +24165,56 @@ async function cacheCognitoTokens(AuthenticationResult) {
 
 
 //# sourceMappingURL=cacheTokens.mjs.map
+
+;// ./node_modules/@aws-amplify/auth/dist/esm/providers/cognito/apis/internal/getCurrentUser.mjs
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+const getCurrentUser = async (amplify) => {
+    const authConfig = amplify.getConfig().Auth?.Cognito;
+    utils_assertTokenProviderConfig(authConfig);
+    const tokens = await amplify.Auth.getTokens({ forceRefresh: false });
+    assertAuthTokens(tokens);
+    const { 'cognito:username': username, sub } = tokens.idToken?.payload ?? {};
+    const authUser = {
+        username: username,
+        userId: sub,
+    };
+    const signInDetails = getSignInDetailsFromTokens(tokens);
+    if (signInDetails) {
+        authUser.signInDetails = signInDetails;
+    }
+    return authUser;
+};
+function getSignInDetailsFromTokens(tokens) {
+    return tokens?.signInDetails;
+}
+
+
+//# sourceMappingURL=getCurrentUser.mjs.map
+
+;// ./node_modules/@aws-amplify/auth/dist/esm/providers/cognito/apis/getCurrentUser.mjs
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+/**
+ * Gets the current user from the idToken.
+ *
+ * @param input -  The GetCurrentUserInput object.
+ * @returns GetCurrentUserOutput
+ * @throws - {@link InitiateAuthException} - Thrown when the service fails to refresh the tokens.
+ * @throws AuthTokenConfigException - Thrown when the token provider config is invalid.
+ */
+const getCurrentUser_getCurrentUser = async () => {
+    return getCurrentUser(Amplify_Amplify);
+};
+
+
+//# sourceMappingURL=getCurrentUser.mjs.map
 
 ;// ./node_modules/@aws-amplify/auth/dist/esm/providers/cognito/utils/dispatchSignedInHubEvent.mjs
 
@@ -25066,696 +26100,6 @@ const isSessionRevocable = (token) => !!token?.payload?.origin_jti;
 
 //# sourceMappingURL=signOut.mjs.map
 
-// EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
-var jsx_runtime = __webpack_require__(637);
-;// ./node_modules/@tanstack/react-query/build/modern/QueryClientProvider.js
-"use client";
-
-// src/QueryClientProvider.tsx
-
-
-var QueryClientContext = react.createContext(
-  void 0
-);
-var useQueryClient = (queryClient) => {
-  const client = react.useContext(QueryClientContext);
-  if (queryClient) {
-    return queryClient;
-  }
-  if (!client) {
-    throw new Error("No QueryClient set, use QueryClientProvider to set one");
-  }
-  return client;
-};
-var QueryClientProvider = ({
-  client,
-  children
-}) => {
-  react.useEffect(() => {
-    client.mount();
-    return () => {
-      client.unmount();
-    };
-  }, [client]);
-  return /* @__PURE__ */ (0,jsx_runtime.jsx)(QueryClientContext.Provider, { value: client, children });
-};
-
-//# sourceMappingURL=QueryClientProvider.js.map
-;// ./node_modules/@tanstack/query-core/build/modern/subscribable.js
-// src/subscribable.ts
-var Subscribable = class {
-  constructor() {
-    this.listeners = /* @__PURE__ */ new Set();
-    this.subscribe = this.subscribe.bind(this);
-  }
-  subscribe(listener) {
-    this.listeners.add(listener);
-    this.onSubscribe();
-    return () => {
-      this.listeners.delete(listener);
-      this.onUnsubscribe();
-    };
-  }
-  hasListeners() {
-    return this.listeners.size > 0;
-  }
-  onSubscribe() {
-  }
-  onUnsubscribe() {
-  }
-};
-
-//# sourceMappingURL=subscribable.js.map
-;// ./node_modules/@tanstack/query-core/build/modern/utils.js
-// src/utils.ts
-var isServer = typeof window === "undefined" || "Deno" in globalThis;
-function utils_noop() {
-}
-function functionalUpdate(updater, input) {
-  return typeof updater === "function" ? updater(input) : updater;
-}
-function isValidTimeout(value) {
-  return typeof value === "number" && value >= 0 && value !== Infinity;
-}
-function timeUntilStale(updatedAt, staleTime) {
-  return Math.max(updatedAt + (staleTime || 0) - Date.now(), 0);
-}
-function resolveStaleTime(staleTime, query) {
-  return typeof staleTime === "function" ? staleTime(query) : staleTime;
-}
-function resolveEnabled(enabled, query) {
-  return typeof enabled === "function" ? enabled(query) : enabled;
-}
-function matchQuery(filters, query) {
-  const {
-    type = "all",
-    exact,
-    fetchStatus,
-    predicate,
-    queryKey,
-    stale
-  } = filters;
-  if (queryKey) {
-    if (exact) {
-      if (query.queryHash !== hashQueryKeyByOptions(queryKey, query.options)) {
-        return false;
-      }
-    } else if (!partialMatchKey(query.queryKey, queryKey)) {
-      return false;
-    }
-  }
-  if (type !== "all") {
-    const isActive = query.isActive();
-    if (type === "active" && !isActive) {
-      return false;
-    }
-    if (type === "inactive" && isActive) {
-      return false;
-    }
-  }
-  if (typeof stale === "boolean" && query.isStale() !== stale) {
-    return false;
-  }
-  if (fetchStatus && fetchStatus !== query.state.fetchStatus) {
-    return false;
-  }
-  if (predicate && !predicate(query)) {
-    return false;
-  }
-  return true;
-}
-function matchMutation(filters, mutation) {
-  const { exact, status, predicate, mutationKey } = filters;
-  if (mutationKey) {
-    if (!mutation.options.mutationKey) {
-      return false;
-    }
-    if (exact) {
-      if (hashKey(mutation.options.mutationKey) !== hashKey(mutationKey)) {
-        return false;
-      }
-    } else if (!partialMatchKey(mutation.options.mutationKey, mutationKey)) {
-      return false;
-    }
-  }
-  if (status && mutation.state.status !== status) {
-    return false;
-  }
-  if (predicate && !predicate(mutation)) {
-    return false;
-  }
-  return true;
-}
-function hashQueryKeyByOptions(queryKey, options) {
-  const hashFn = options?.queryKeyHashFn || hashKey;
-  return hashFn(queryKey);
-}
-function hashKey(queryKey) {
-  return JSON.stringify(
-    queryKey,
-    (_, val) => isPlainObject(val) ? Object.keys(val).sort().reduce((result, key) => {
-      result[key] = val[key];
-      return result;
-    }, {}) : val
-  );
-}
-function partialMatchKey(a, b) {
-  if (a === b) {
-    return true;
-  }
-  if (typeof a !== typeof b) {
-    return false;
-  }
-  if (a && b && typeof a === "object" && typeof b === "object") {
-    return Object.keys(b).every((key) => partialMatchKey(a[key], b[key]));
-  }
-  return false;
-}
-function replaceEqualDeep(a, b) {
-  if (a === b) {
-    return a;
-  }
-  const array = isPlainArray(a) && isPlainArray(b);
-  if (array || isPlainObject(a) && isPlainObject(b)) {
-    const aItems = array ? a : Object.keys(a);
-    const aSize = aItems.length;
-    const bItems = array ? b : Object.keys(b);
-    const bSize = bItems.length;
-    const copy = array ? [] : {};
-    const aItemsSet = new Set(aItems);
-    let equalItems = 0;
-    for (let i = 0; i < bSize; i++) {
-      const key = array ? i : bItems[i];
-      if ((!array && aItemsSet.has(key) || array) && a[key] === void 0 && b[key] === void 0) {
-        copy[key] = void 0;
-        equalItems++;
-      } else {
-        copy[key] = replaceEqualDeep(a[key], b[key]);
-        if (copy[key] === a[key] && a[key] !== void 0) {
-          equalItems++;
-        }
-      }
-    }
-    return aSize === bSize && equalItems === aSize ? a : copy;
-  }
-  return b;
-}
-function shallowEqualObjects(a, b) {
-  if (!b || Object.keys(a).length !== Object.keys(b).length) {
-    return false;
-  }
-  for (const key in a) {
-    if (a[key] !== b[key]) {
-      return false;
-    }
-  }
-  return true;
-}
-function isPlainArray(value) {
-  return Array.isArray(value) && value.length === Object.keys(value).length;
-}
-function isPlainObject(o) {
-  if (!hasObjectPrototype(o)) {
-    return false;
-  }
-  const ctor = o.constructor;
-  if (ctor === void 0) {
-    return true;
-  }
-  const prot = ctor.prototype;
-  if (!hasObjectPrototype(prot)) {
-    return false;
-  }
-  if (!prot.hasOwnProperty("isPrototypeOf")) {
-    return false;
-  }
-  if (Object.getPrototypeOf(o) !== Object.prototype) {
-    return false;
-  }
-  return true;
-}
-function hasObjectPrototype(o) {
-  return Object.prototype.toString.call(o) === "[object Object]";
-}
-function sleep(timeout) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, timeout);
-  });
-}
-function replaceData(prevData, data, options) {
-  if (typeof options.structuralSharing === "function") {
-    return options.structuralSharing(prevData, data);
-  } else if (options.structuralSharing !== false) {
-    if (false) // removed by dead control flow
-{}
-    return replaceEqualDeep(prevData, data);
-  }
-  return data;
-}
-function keepPreviousData(previousData) {
-  return previousData;
-}
-function addToEnd(items, item, max = 0) {
-  const newItems = [...items, item];
-  return max && newItems.length > max ? newItems.slice(1) : newItems;
-}
-function addToStart(items, item, max = 0) {
-  const newItems = [item, ...items];
-  return max && newItems.length > max ? newItems.slice(0, -1) : newItems;
-}
-var skipToken = Symbol();
-function ensureQueryFn(options, fetchOptions) {
-  if (false) // removed by dead control flow
-{}
-  if (!options.queryFn && fetchOptions?.initialPromise) {
-    return () => fetchOptions.initialPromise;
-  }
-  if (!options.queryFn || options.queryFn === skipToken) {
-    return () => Promise.reject(new Error(`Missing queryFn: '${options.queryHash}'`));
-  }
-  return options.queryFn;
-}
-function shouldThrowError(throwOnError, params) {
-  if (typeof throwOnError === "function") {
-    return throwOnError(...params);
-  }
-  return !!throwOnError;
-}
-
-//# sourceMappingURL=utils.js.map
-;// ./node_modules/@tanstack/query-core/build/modern/focusManager.js
-// src/focusManager.ts
-
-
-var FocusManager = class extends Subscribable {
-  #focused;
-  #cleanup;
-  #setup;
-  constructor() {
-    super();
-    this.#setup = (onFocus) => {
-      if (!isServer && window.addEventListener) {
-        const listener = () => onFocus();
-        window.addEventListener("visibilitychange", listener, false);
-        return () => {
-          window.removeEventListener("visibilitychange", listener);
-        };
-      }
-      return;
-    };
-  }
-  onSubscribe() {
-    if (!this.#cleanup) {
-      this.setEventListener(this.#setup);
-    }
-  }
-  onUnsubscribe() {
-    if (!this.hasListeners()) {
-      this.#cleanup?.();
-      this.#cleanup = void 0;
-    }
-  }
-  setEventListener(setup) {
-    this.#setup = setup;
-    this.#cleanup?.();
-    this.#cleanup = setup((focused) => {
-      if (typeof focused === "boolean") {
-        this.setFocused(focused);
-      } else {
-        this.onFocus();
-      }
-    });
-  }
-  setFocused(focused) {
-    const changed = this.#focused !== focused;
-    if (changed) {
-      this.#focused = focused;
-      this.onFocus();
-    }
-  }
-  onFocus() {
-    const isFocused = this.isFocused();
-    this.listeners.forEach((listener) => {
-      listener(isFocused);
-    });
-  }
-  isFocused() {
-    if (typeof this.#focused === "boolean") {
-      return this.#focused;
-    }
-    return globalThis.document?.visibilityState !== "hidden";
-  }
-};
-var focusManager = new FocusManager();
-
-//# sourceMappingURL=focusManager.js.map
-;// ./node_modules/@tanstack/query-core/build/modern/notifyManager.js
-// src/notifyManager.ts
-var defaultScheduler = (cb) => setTimeout(cb, 0);
-function createNotifyManager() {
-  let queue = [];
-  let transactions = 0;
-  let notifyFn = (callback) => {
-    callback();
-  };
-  let batchNotifyFn = (callback) => {
-    callback();
-  };
-  let scheduleFn = defaultScheduler;
-  const schedule = (callback) => {
-    if (transactions) {
-      queue.push(callback);
-    } else {
-      scheduleFn(() => {
-        notifyFn(callback);
-      });
-    }
-  };
-  const flush = () => {
-    const originalQueue = queue;
-    queue = [];
-    if (originalQueue.length) {
-      scheduleFn(() => {
-        batchNotifyFn(() => {
-          originalQueue.forEach((callback) => {
-            notifyFn(callback);
-          });
-        });
-      });
-    }
-  };
-  return {
-    batch: (callback) => {
-      let result;
-      transactions++;
-      try {
-        result = callback();
-      } finally {
-        transactions--;
-        if (!transactions) {
-          flush();
-        }
-      }
-      return result;
-    },
-    /**
-     * All calls to the wrapped function will be batched.
-     */
-    batchCalls: (callback) => {
-      return (...args) => {
-        schedule(() => {
-          callback(...args);
-        });
-      };
-    },
-    schedule,
-    /**
-     * Use this method to set a custom notify function.
-     * This can be used to for example wrap notifications with `React.act` while running tests.
-     */
-    setNotifyFunction: (fn) => {
-      notifyFn = fn;
-    },
-    /**
-     * Use this method to set a custom function to batch notifications together into a single tick.
-     * By default React Query will use the batch function provided by ReactDOM or React Native.
-     */
-    setBatchNotifyFunction: (fn) => {
-      batchNotifyFn = fn;
-    },
-    setScheduler: (fn) => {
-      scheduleFn = fn;
-    }
-  };
-}
-var notifyManager = createNotifyManager();
-
-//# sourceMappingURL=notifyManager.js.map
-;// ./node_modules/@tanstack/query-core/build/modern/onlineManager.js
-// src/onlineManager.ts
-
-
-var OnlineManager = class extends Subscribable {
-  #online = true;
-  #cleanup;
-  #setup;
-  constructor() {
-    super();
-    this.#setup = (onOnline) => {
-      if (!isServer && window.addEventListener) {
-        const onlineListener = () => onOnline(true);
-        const offlineListener = () => onOnline(false);
-        window.addEventListener("online", onlineListener, false);
-        window.addEventListener("offline", offlineListener, false);
-        return () => {
-          window.removeEventListener("online", onlineListener);
-          window.removeEventListener("offline", offlineListener);
-        };
-      }
-      return;
-    };
-  }
-  onSubscribe() {
-    if (!this.#cleanup) {
-      this.setEventListener(this.#setup);
-    }
-  }
-  onUnsubscribe() {
-    if (!this.hasListeners()) {
-      this.#cleanup?.();
-      this.#cleanup = void 0;
-    }
-  }
-  setEventListener(setup) {
-    this.#setup = setup;
-    this.#cleanup?.();
-    this.#cleanup = setup(this.setOnline.bind(this));
-  }
-  setOnline(online) {
-    const changed = this.#online !== online;
-    if (changed) {
-      this.#online = online;
-      this.listeners.forEach((listener) => {
-        listener(online);
-      });
-    }
-  }
-  isOnline() {
-    return this.#online;
-  }
-};
-var onlineManager = new OnlineManager();
-
-//# sourceMappingURL=onlineManager.js.map
-;// ./node_modules/@tanstack/query-core/build/modern/thenable.js
-// src/thenable.ts
-
-function pendingThenable() {
-  let resolve;
-  let reject;
-  const thenable = new Promise((_resolve, _reject) => {
-    resolve = _resolve;
-    reject = _reject;
-  });
-  thenable.status = "pending";
-  thenable.catch(() => {
-  });
-  function finalize(data) {
-    Object.assign(thenable, data);
-    delete thenable.resolve;
-    delete thenable.reject;
-  }
-  thenable.resolve = (value) => {
-    finalize({
-      status: "fulfilled",
-      value
-    });
-    resolve(value);
-  };
-  thenable.reject = (reason) => {
-    finalize({
-      status: "rejected",
-      reason
-    });
-    reject(reason);
-  };
-  return thenable;
-}
-function tryResolveSync(promise) {
-  let data;
-  promise.then((result) => {
-    data = result;
-    return result;
-  }, noop)?.catch(noop);
-  if (data !== void 0) {
-    return { data };
-  }
-  return void 0;
-}
-
-//# sourceMappingURL=thenable.js.map
-;// ./node_modules/@tanstack/query-core/build/modern/retryer.js
-// src/retryer.ts
-
-
-
-
-function defaultRetryDelay(failureCount) {
-  return Math.min(1e3 * 2 ** failureCount, 3e4);
-}
-function canFetch(networkMode) {
-  return (networkMode ?? "online") === "online" ? onlineManager.isOnline() : true;
-}
-var CancelledError = class extends Error {
-  constructor(options) {
-    super("CancelledError");
-    this.revert = options?.revert;
-    this.silent = options?.silent;
-  }
-};
-function isCancelledError(value) {
-  return value instanceof CancelledError;
-}
-function createRetryer(config) {
-  let isRetryCancelled = false;
-  let failureCount = 0;
-  let isResolved = false;
-  let continueFn;
-  const thenable = pendingThenable();
-  const cancel = (cancelOptions) => {
-    if (!isResolved) {
-      reject(new CancelledError(cancelOptions));
-      config.abort?.();
-    }
-  };
-  const cancelRetry = () => {
-    isRetryCancelled = true;
-  };
-  const continueRetry = () => {
-    isRetryCancelled = false;
-  };
-  const canContinue = () => focusManager.isFocused() && (config.networkMode === "always" || onlineManager.isOnline()) && config.canRun();
-  const canStart = () => canFetch(config.networkMode) && config.canRun();
-  const resolve = (value) => {
-    if (!isResolved) {
-      isResolved = true;
-      config.onSuccess?.(value);
-      continueFn?.();
-      thenable.resolve(value);
-    }
-  };
-  const reject = (value) => {
-    if (!isResolved) {
-      isResolved = true;
-      config.onError?.(value);
-      continueFn?.();
-      thenable.reject(value);
-    }
-  };
-  const pause = () => {
-    return new Promise((continueResolve) => {
-      continueFn = (value) => {
-        if (isResolved || canContinue()) {
-          continueResolve(value);
-        }
-      };
-      config.onPause?.();
-    }).then(() => {
-      continueFn = void 0;
-      if (!isResolved) {
-        config.onContinue?.();
-      }
-    });
-  };
-  const run = () => {
-    if (isResolved) {
-      return;
-    }
-    let promiseOrValue;
-    const initialPromise = failureCount === 0 ? config.initialPromise : void 0;
-    try {
-      promiseOrValue = initialPromise ?? config.fn();
-    } catch (error) {
-      promiseOrValue = Promise.reject(error);
-    }
-    Promise.resolve(promiseOrValue).then(resolve).catch((error) => {
-      if (isResolved) {
-        return;
-      }
-      const retry = config.retry ?? (isServer ? 0 : 3);
-      const retryDelay = config.retryDelay ?? defaultRetryDelay;
-      const delay = typeof retryDelay === "function" ? retryDelay(failureCount, error) : retryDelay;
-      const shouldRetry = retry === true || typeof retry === "number" && failureCount < retry || typeof retry === "function" && retry(failureCount, error);
-      if (isRetryCancelled || !shouldRetry) {
-        reject(error);
-        return;
-      }
-      failureCount++;
-      config.onFail?.(failureCount, error);
-      sleep(delay).then(() => {
-        return canContinue() ? void 0 : pause();
-      }).then(() => {
-        if (isRetryCancelled) {
-          reject(error);
-        } else {
-          run();
-        }
-      });
-    });
-  };
-  return {
-    promise: thenable,
-    cancel,
-    continue: () => {
-      continueFn?.();
-      return thenable;
-    },
-    cancelRetry,
-    continueRetry,
-    canStart,
-    start: () => {
-      if (canStart()) {
-        run();
-      } else {
-        pause().then(run);
-      }
-      return thenable;
-    }
-  };
-}
-
-//# sourceMappingURL=retryer.js.map
-;// ./node_modules/@tanstack/query-core/build/modern/removable.js
-// src/removable.ts
-
-var Removable = class {
-  #gcTimeout;
-  destroy() {
-    this.clearGcTimeout();
-  }
-  scheduleGc() {
-    this.clearGcTimeout();
-    if (isValidTimeout(this.gcTime)) {
-      this.#gcTimeout = setTimeout(() => {
-        this.optionalRemove();
-      }, this.gcTime);
-    }
-  }
-  updateGcTime(newGcTime) {
-    this.gcTime = Math.max(
-      this.gcTime || 0,
-      newGcTime ?? (isServer ? Infinity : 5 * 60 * 1e3)
-    );
-  }
-  clearGcTimeout() {
-    if (this.#gcTimeout) {
-      clearTimeout(this.#gcTimeout);
-      this.#gcTimeout = void 0;
-    }
-  }
-};
-
-//# sourceMappingURL=removable.js.map
 ;// ./node_modules/@tanstack/query-core/build/modern/query.js
 // src/query.ts
 
@@ -25780,7 +26124,7 @@ var Query = class extends Removable {
     this.#cache = this.#client.getQueryCache();
     this.queryKey = config.queryKey;
     this.queryHash = config.queryHash;
-    this.#initialState = getDefaultState(this.options);
+    this.#initialState = query_getDefaultState(this.options);
     this.state = config.state ?? this.#initialState;
     this.scheduleGc();
   }
@@ -26125,7 +26469,7 @@ function fetchState(data, options) {
     }
   };
 }
-function getDefaultState(options) {
+function query_getDefaultState(options) {
   const data = typeof options.initialData === "function" ? options.initialData() : options.initialData;
   const hasData = data !== void 0;
   const initialDataUpdatedAt = hasData ? typeof options.initialDataUpdatedAt === "function" ? options.initialDataUpdatedAt() : options.initialDataUpdatedAt : 0;
@@ -26772,489 +27116,183 @@ function useBaseQuery(options, Observer, queryClient) {
 }
 
 //# sourceMappingURL=useBaseQuery.js.map
-;// ./node_modules/@tanstack/react-query/build/modern/useQuery.js
+;// ./node_modules/@tanstack/react-query/build/modern/useSuspenseQuery.js
 "use client";
 
-// src/useQuery.ts
-
-
-function useQuery(options, queryClient) {
-  return useBaseQuery(options, QueryObserver, queryClient);
-}
-
-//# sourceMappingURL=useQuery.js.map
-;// ./node_modules/@tanstack/query-core/build/modern/mutation.js
-// src/mutation.ts
+// src/useSuspenseQuery.ts
 
 
 
-var Mutation = class extends Removable {
-  #observers;
-  #mutationCache;
-  #retryer;
-  constructor(config) {
-    super();
-    this.mutationId = config.mutationId;
-    this.#mutationCache = config.mutationCache;
-    this.#observers = [];
-    this.state = config.state || mutation_getDefaultState();
-    this.setOptions(config.options);
-    this.scheduleGc();
-  }
-  setOptions(options) {
-    this.options = options;
-    this.updateGcTime(this.options.gcTime);
-  }
-  get meta() {
-    return this.options.meta;
-  }
-  addObserver(observer) {
-    if (!this.#observers.includes(observer)) {
-      this.#observers.push(observer);
-      this.clearGcTimeout();
-      this.#mutationCache.notify({
-        type: "observerAdded",
-        mutation: this,
-        observer
-      });
-    }
-  }
-  removeObserver(observer) {
-    this.#observers = this.#observers.filter((x) => x !== observer);
-    this.scheduleGc();
-    this.#mutationCache.notify({
-      type: "observerRemoved",
-      mutation: this,
-      observer
-    });
-  }
-  optionalRemove() {
-    if (!this.#observers.length) {
-      if (this.state.status === "pending") {
-        this.scheduleGc();
-      } else {
-        this.#mutationCache.remove(this);
-      }
-    }
-  }
-  continue() {
-    return this.#retryer?.continue() ?? // continuing a mutation assumes that variables are set, mutation must have been dehydrated before
-    this.execute(this.state.variables);
-  }
-  async execute(variables) {
-    const onContinue = () => {
-      this.#dispatch({ type: "continue" });
-    };
-    this.#retryer = createRetryer({
-      fn: () => {
-        if (!this.options.mutationFn) {
-          return Promise.reject(new Error("No mutationFn found"));
-        }
-        return this.options.mutationFn(variables);
-      },
-      onFail: (failureCount, error) => {
-        this.#dispatch({ type: "failed", failureCount, error });
-      },
-      onPause: () => {
-        this.#dispatch({ type: "pause" });
-      },
-      onContinue,
-      retry: this.options.retry ?? 0,
-      retryDelay: this.options.retryDelay,
-      networkMode: this.options.networkMode,
-      canRun: () => this.#mutationCache.canRun(this)
-    });
-    const restored = this.state.status === "pending";
-    const isPaused = !this.#retryer.canStart();
-    try {
-      if (restored) {
-        onContinue();
-      } else {
-        this.#dispatch({ type: "pending", variables, isPaused });
-        await this.#mutationCache.config.onMutate?.(
-          variables,
-          this
-        );
-        const context = await this.options.onMutate?.(variables);
-        if (context !== this.state.context) {
-          this.#dispatch({
-            type: "pending",
-            context,
-            variables,
-            isPaused
-          });
-        }
-      }
-      const data = await this.#retryer.start();
-      await this.#mutationCache.config.onSuccess?.(
-        data,
-        variables,
-        this.state.context,
-        this
-      );
-      await this.options.onSuccess?.(data, variables, this.state.context);
-      await this.#mutationCache.config.onSettled?.(
-        data,
-        null,
-        this.state.variables,
-        this.state.context,
-        this
-      );
-      await this.options.onSettled?.(data, null, variables, this.state.context);
-      this.#dispatch({ type: "success", data });
-      return data;
-    } catch (error) {
-      try {
-        await this.#mutationCache.config.onError?.(
-          error,
-          variables,
-          this.state.context,
-          this
-        );
-        await this.options.onError?.(
-          error,
-          variables,
-          this.state.context
-        );
-        await this.#mutationCache.config.onSettled?.(
-          void 0,
-          error,
-          this.state.variables,
-          this.state.context,
-          this
-        );
-        await this.options.onSettled?.(
-          void 0,
-          error,
-          variables,
-          this.state.context
-        );
-        throw error;
-      } finally {
-        this.#dispatch({ type: "error", error });
-      }
-    } finally {
-      this.#mutationCache.runNext(this);
-    }
-  }
-  #dispatch(action) {
-    const reducer = (state) => {
-      switch (action.type) {
-        case "failed":
-          return {
-            ...state,
-            failureCount: action.failureCount,
-            failureReason: action.error
-          };
-        case "pause":
-          return {
-            ...state,
-            isPaused: true
-          };
-        case "continue":
-          return {
-            ...state,
-            isPaused: false
-          };
-        case "pending":
-          return {
-            ...state,
-            context: action.context,
-            data: void 0,
-            failureCount: 0,
-            failureReason: null,
-            error: null,
-            isPaused: action.isPaused,
-            status: "pending",
-            variables: action.variables,
-            submittedAt: Date.now()
-          };
-        case "success":
-          return {
-            ...state,
-            data: action.data,
-            failureCount: 0,
-            failureReason: null,
-            error: null,
-            status: "success",
-            isPaused: false
-          };
-        case "error":
-          return {
-            ...state,
-            data: void 0,
-            error: action.error,
-            failureCount: state.failureCount + 1,
-            failureReason: action.error,
-            isPaused: false,
-            status: "error"
-          };
-      }
-    };
-    this.state = reducer(this.state);
-    notifyManager.batch(() => {
-      this.#observers.forEach((observer) => {
-        observer.onMutationUpdate(action);
-      });
-      this.#mutationCache.notify({
-        mutation: this,
-        type: "updated",
-        action
-      });
-    });
-  }
-};
-function mutation_getDefaultState() {
-  return {
-    context: void 0,
-    data: void 0,
-    error: null,
-    failureCount: 0,
-    failureReason: null,
-    isPaused: false,
-    status: "idle",
-    variables: void 0,
-    submittedAt: 0
-  };
-}
-
-//# sourceMappingURL=mutation.js.map
-;// ./node_modules/@tanstack/query-core/build/modern/mutationObserver.js
-// src/mutationObserver.ts
-
-
-
-
-var MutationObserver = class extends Subscribable {
-  #client;
-  #currentResult = void 0;
-  #currentMutation;
-  #mutateOptions;
-  constructor(client, options) {
-    super();
-    this.#client = client;
-    this.setOptions(options);
-    this.bindMethods();
-    this.#updateResult();
-  }
-  bindMethods() {
-    this.mutate = this.mutate.bind(this);
-    this.reset = this.reset.bind(this);
-  }
-  setOptions(options) {
-    const prevOptions = this.options;
-    this.options = this.#client.defaultMutationOptions(options);
-    if (!shallowEqualObjects(this.options, prevOptions)) {
-      this.#client.getMutationCache().notify({
-        type: "observerOptionsUpdated",
-        mutation: this.#currentMutation,
-        observer: this
-      });
-    }
-    if (prevOptions?.mutationKey && this.options.mutationKey && hashKey(prevOptions.mutationKey) !== hashKey(this.options.mutationKey)) {
-      this.reset();
-    } else if (this.#currentMutation?.state.status === "pending") {
-      this.#currentMutation.setOptions(this.options);
-    }
-  }
-  onUnsubscribe() {
-    if (!this.hasListeners()) {
-      this.#currentMutation?.removeObserver(this);
-    }
-  }
-  onMutationUpdate(action) {
-    this.#updateResult();
-    this.#notify(action);
-  }
-  getCurrentResult() {
-    return this.#currentResult;
-  }
-  reset() {
-    this.#currentMutation?.removeObserver(this);
-    this.#currentMutation = void 0;
-    this.#updateResult();
-    this.#notify();
-  }
-  mutate(variables, options) {
-    this.#mutateOptions = options;
-    this.#currentMutation?.removeObserver(this);
-    this.#currentMutation = this.#client.getMutationCache().build(this.#client, this.options);
-    this.#currentMutation.addObserver(this);
-    return this.#currentMutation.execute(variables);
-  }
-  #updateResult() {
-    const state = this.#currentMutation?.state ?? mutation_getDefaultState();
-    this.#currentResult = {
-      ...state,
-      isPending: state.status === "pending",
-      isSuccess: state.status === "success",
-      isError: state.status === "error",
-      isIdle: state.status === "idle",
-      mutate: this.mutate,
-      reset: this.reset
-    };
-  }
-  #notify(action) {
-    notifyManager.batch(() => {
-      if (this.#mutateOptions && this.hasListeners()) {
-        const variables = this.#currentResult.variables;
-        const context = this.#currentResult.context;
-        if (action?.type === "success") {
-          this.#mutateOptions.onSuccess?.(action.data, variables, context);
-          this.#mutateOptions.onSettled?.(action.data, null, variables, context);
-        } else if (action?.type === "error") {
-          this.#mutateOptions.onError?.(action.error, variables, context);
-          this.#mutateOptions.onSettled?.(
-            void 0,
-            action.error,
-            variables,
-            context
-          );
-        }
-      }
-      this.listeners.forEach((listener) => {
-        listener(this.#currentResult);
-      });
-    });
-  }
-};
-
-//# sourceMappingURL=mutationObserver.js.map
-;// ./node_modules/@tanstack/react-query/build/modern/useMutation.js
-"use client";
-
-// src/useMutation.ts
-
-
-
-function useMutation(options, queryClient) {
-  const client = useQueryClient(queryClient);
-  const [observer] = react.useState(
-    () => new MutationObserver(
-      client,
-      options
-    )
-  );
-  react.useEffect(() => {
-    observer.setOptions(options);
-  }, [observer, options]);
-  const result = react.useSyncExternalStore(
-    react.useCallback(
-      (onStoreChange) => observer.subscribe(notifyManager.batchCalls(onStoreChange)),
-      [observer]
-    ),
-    () => observer.getCurrentResult(),
-    () => observer.getCurrentResult()
-  );
-  const mutate = react.useCallback(
-    (variables, mutateOptions) => {
-      observer.mutate(variables, mutateOptions).catch(utils_noop);
+function useSuspenseQuery(options, queryClient) {
+  if (false) // removed by dead control flow
+{}
+  return useBaseQuery(
+    {
+      ...options,
+      enabled: true,
+      suspense: true,
+      throwOnError: defaultThrowOnError,
+      placeholderData: void 0
     },
-    [observer]
+    QueryObserver,
+    queryClient
   );
-  if (result.error && shouldThrowError(observer.options.throwOnError, [result.error])) {
-    throw result.error;
-  }
-  return { ...result, mutate, mutateAsync: result.mutate };
 }
 
-//# sourceMappingURL=useMutation.js.map
-;// ./src/contexts/cognito-auth-context.js
+//# sourceMappingURL=useSuspenseQuery.js.map
+;// ./node_modules/@aws-amplify/core/dist/esm/singleton/apis/internal/fetchAuthSession.mjs
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+const fetchAuthSession = (amplify, options) => {
+    return amplify.Auth.fetchAuthSession(options);
+};
+
+
+//# sourceMappingURL=fetchAuthSession.mjs.map
+
+;// ./node_modules/@aws-amplify/core/dist/esm/singleton/apis/fetchAuthSession.mjs
+
+
+
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+/**
+ * Fetch the auth session including the tokens and credentials if they are available. By default it
+ * does not refresh the auth tokens or credentials if they are loaded in storage already. You can force a refresh
+ * with `{ forceRefresh: true }` input.
+ *
+ * @param options - Options configuring the fetch behavior.
+ * @throws {@link AuthError} - Throws error when session information cannot be refreshed.
+ * @returns Promise<AuthSession>
+ */
+const fetchAuthSession_fetchAuthSession = (options) => {
+    return fetchAuthSession(Amplify_Amplify, options);
+};
+
+
+//# sourceMappingURL=fetchAuthSession.mjs.map
+
+;// ./auth.js
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { if (r) i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n;else { var o = function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); }; o("next", 0), o("throw", 1), o("return", 2); } }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 
+function getIdToken() {
+  return _getIdToken.apply(this, arguments);
+}
+function _getIdToken() {
+  _getIdToken = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
+    var _session$tokens$idTok, _session$tokens, user, session, _t;
+    return _regenerator().w(function (_context) {
+      while (1) switch (_context.n) {
+        case 0:
+          _context.p = 0;
+          _context.n = 1;
+          return getCurrentUser_getCurrentUser();
+        case 1:
+          user = _context.v;
+          if (user) {
+            _context.n = 2;
+            break;
+          }
+          return _context.a(2, null);
+        case 2:
+          _context.n = 3;
+          return fetchAuthSession_fetchAuthSession();
+        case 3:
+          session = _context.v;
+          return _context.a(2, (_session$tokens$idTok = session === null || session === void 0 || (_session$tokens = session.tokens) === null || _session$tokens === void 0 || (_session$tokens = _session$tokens.idToken) === null || _session$tokens === void 0 ? void 0 : _session$tokens.toString()) !== null && _session$tokens$idTok !== void 0 ? _session$tokens$idTok : null);
+        case 4:
+          _context.p = 4;
+          _t = _context.v;
+          return _context.a(2, null);
+      }
+    }, _callee, null, [[0, 4]]);
+  }));
+  return _getIdToken.apply(this, arguments);
+}
+;// ./src/queries/use-cognito-token-query.js
 
 
-var CognitoAuthContext = /*#__PURE__*/(0,react.createContext)();
 var AUTH_QUERY_KEY = 'auth';
-var AUTH_SESSION_KEY = 'authSession';
+var useCognitoTokenQuery = function useCognitoTokenQuery() {
+  return useSuspenseQuery({
+    queryKey: [AUTH_QUERY_KEY],
+    queryFn: getIdToken,
+    staleTime: 1000 * 60 * 50
+  });
+};
+;// ./src/contexts/cognito-auth-context.js
+function cognito_auth_context_regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return cognito_auth_context_regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (cognito_auth_context_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, cognito_auth_context_regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, cognito_auth_context_regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), cognito_auth_context_regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", cognito_auth_context_regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), cognito_auth_context_regeneratorDefine2(u), cognito_auth_context_regeneratorDefine2(u, o, "Generator"), cognito_auth_context_regeneratorDefine2(u, n, function () { return this; }), cognito_auth_context_regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (cognito_auth_context_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function cognito_auth_context_regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } cognito_auth_context_regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { if (r) i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n;else { var o = function o(r, n) { cognito_auth_context_regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); }; o("next", 0), o("throw", 1), o("return", 2); } }, cognito_auth_context_regeneratorDefine2(e, r, n, t); }
+function cognito_auth_context_asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function cognito_auth_context_asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { cognito_auth_context_asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { cognito_auth_context_asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+
+
+
+
+var AuthContext = /*#__PURE__*/(0,react.createContext)({
+  idToken: null,
+  loading: true,
+  login: function () {
+    var _login = cognito_auth_context_asyncToGenerator(/*#__PURE__*/cognito_auth_context_regenerator().m(function _callee() {
+      return cognito_auth_context_regenerator().w(function (_context) {
+        while (1) switch (_context.n) {
+          case 0:
+            return _context.a(2);
+        }
+      }, _callee);
+    }));
+    function login() {
+      return _login.apply(this, arguments);
+    }
+    return login;
+  }(),
+  logout: function () {
+    var _logout = cognito_auth_context_asyncToGenerator(/*#__PURE__*/cognito_auth_context_regenerator().m(function _callee2() {
+      return cognito_auth_context_regenerator().w(function (_context2) {
+        while (1) switch (_context2.n) {
+          case 0:
+            return _context2.a(2);
+        }
+      }, _callee2);
+    }));
+    function logout() {
+      return _logout.apply(this, arguments);
+    }
+    return logout;
+  }()
+});
 function CognitoAuthProvider(_ref) {
-  var _authSession$tokens$i, _authSession$tokens;
   var children = _ref.children;
   var queryClient = useQueryClient();
-  var _useQuery = useQuery({
-      queryKey: [AUTH_QUERY_KEY],
-      queryFn: function () {
-        var _queryFn = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
-          var _t;
-          return _regenerator().w(function (_context) {
-            while (1) switch (_context.n) {
-              case 0:
-                _context.p = 0;
-                _context.n = 1;
-                return getCurrentUser_getCurrentUser();
-              case 1:
-                return _context.a(2, _context.v);
-              case 2:
-                _context.p = 2;
-                _t = _context.v;
-                if (_t.name !== 'UserUnAuthenticatedException') {
-                  console.error(_t);
-                }
-                return _context.a(2, null);
-            }
-          }, _callee, null, [[0, 2]]);
-        }));
-        function queryFn() {
-          return _queryFn.apply(this, arguments);
-        }
-        return queryFn;
-      }(),
-      staleTime: 1000 * 60 * 5
-    }),
-    currentUser = _useQuery.data,
-    currentUserLoading = _useQuery.isLoading;
-  var isAuthenticated = !!currentUser;
-  var _useQuery2 = useQuery({
-      queryKey: [AUTH_SESSION_KEY],
-      queryFn: fetchAuthSession_fetchAuthSession,
-      enabled: isAuthenticated,
-      staleTime: 1000 * 60 * 55,
-      refetchInterval: 1000 * 60 * 55,
-      refetchOnWindowFocus: true
-    }),
-    authSession = _useQuery2.data,
-    authSessionLoading = _useQuery2.isLoading;
+  var _useCognitoTokenQuery = useCognitoTokenQuery(),
+    idToken = _useCognitoTokenQuery.data,
+    isLoading = _useCognitoTokenQuery.isLoading;
   var _useMutation = useMutation({
       mutationFn: signInWithRedirect
     }),
-    login = _useMutation.mutateAsync,
-    signInLoading = _useMutation.isLoading;
+    login = _useMutation.mutateAsync;
   var _useMutation2 = useMutation({
       mutationFn: signOut,
       onSuccess: function onSuccess() {
-        queryClient.clear();
+        return queryClient.clear();
       }
     }),
-    logout = _useMutation2.mutateAsync,
-    signOutLoading = _useMutation2.isLoading;
-  var idToken = (_authSession$tokens$i = authSession === null || authSession === void 0 || (_authSession$tokens = authSession.tokens) === null || _authSession$tokens === void 0 || (_authSession$tokens = _authSession$tokens.idToken) === null || _authSession$tokens === void 0 ? void 0 : _authSession$tokens.toString()) !== null && _authSession$tokens$i !== void 0 ? _authSession$tokens$i : null;
-  var userId = (0,react.useMemo)(function () {
-    if (!idToken) return null;
-    try {
-      return JSON.parse(atob(idToken.split('.')[1])).sub;
-    } catch (_unused) {
-      return null;
-    }
-  }, [idToken]);
-  return /*#__PURE__*/react.createElement(CognitoAuthContext.Provider, {
+    logout = _useMutation2.mutateAsync;
+  return /*#__PURE__*/react.createElement(AuthContext.Provider, {
     value: {
-      isAuthenticated: isAuthenticated,
-      loading: authSessionLoading || currentUserLoading || signOutLoading || signInLoading,
-      login: login,
-      logout: logout,
       idToken: idToken,
-      userId: userId
+      loading: isLoading,
+      login: login,
+      logout: logout
     }
   }, children);
 }
-
-// Custom hook for using auth context
-function useCognitoAuth() {
-  return (0,react.useContext)(CognitoAuthContext);
-}
+var useCognitoAuth = function useCognitoAuth() {
+  return (0,react.useContext)(AuthContext);
+};
 ;// ./node_modules/@tanstack/store/dist/esm/derived.js
 
 
@@ -32906,9 +32944,9 @@ function AppShell() {
   var auth = useCognitoAuth();
   return /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement("div", {
     className: "login-bar"
-  }, !auth.loading && !auth.isAuthenticated && /*#__PURE__*/react.createElement("button", {
+  }, !auth.loading && !auth.idToken && /*#__PURE__*/react.createElement("button", {
     onClick: auth.login
-  }, "Login with Google"), !auth.loading && auth.isAuthenticated && /*#__PURE__*/react.createElement("button", {
+  }, "Login with Google"), !auth.loading && !!auth.idToken && /*#__PURE__*/react.createElement("button", {
     onClick: auth.logout
   }, "Logout")), /*#__PURE__*/react.createElement("div", {
     className: "content"
@@ -33047,7 +33085,7 @@ var useCreateSessionMutation = function useCreateSessionMutation() {
     },
     onSuccess: function onSuccess() {
       queryClient.invalidateQueries({
-        queryKey: ['me', auth.userId]
+        queryKey: ['me', auth.idToken]
       });
     }
   });
@@ -33068,140 +33106,11 @@ var useDeleteSessionMutation = function useDeleteSessionMutation() {
     },
     onSuccess: function onSuccess() {
       queryClient.invalidateQueries({
-        queryKey: ['me', auth.userId]
+        queryKey: ['me', auth.idToken]
       });
     }
   });
 };
-;// ./src/queries/use-me-query.js
-
-
-
-var use_me_query_apiUrl = 'https://api.measuringcontest.com/me';
-var useMeQuery = function useMeQuery() {
-  var auth = useCognitoAuth();
-  return useQuery({
-    queryKey: ['me', auth.userId],
-    queryFn: function queryFn() {
-      return makeAuthenticatedRequest(use_me_query_apiUrl, auth.idToken, {
-        method: 'GET'
-      });
-    },
-    staleTime: 1000 * 60 * 50,
-    enabled: !!auth.idToken
-  });
-};
-;// ./src/routes/index.js
-
-
-
-
-
-function IndexPage() {
-  var _me$data, _me$data2;
-  var createSessionMutation = useCreateSessionMutation();
-  var deleteSessionMutation = useDeleteSessionMutation();
-  var me = useMeQuery();
-  return !me.isLoading && me.data && /*#__PURE__*/react.createElement(react.Fragment, null, !((_me$data = me.data) !== null && _me$data !== void 0 && (_me$data = _me$data.sessions) !== null && _me$data !== void 0 && _me$data.length) && /*#__PURE__*/react.createElement("button", {
-    onClick: createSessionMutation.mutate
-  }, "create session"), ((_me$data2 = me.data) === null || _me$data2 === void 0 || (_me$data2 = _me$data2.sessions) === null || _me$data2 === void 0 ? void 0 : _me$data2.length) > 0 && me.data.sessions.map(function (sessionId, i) {
-    return /*#__PURE__*/react.createElement(react.Fragment, {
-      key: i + 'delete'
-    }, /*#__PURE__*/react.createElement(Link, {
-      to: "/sessions/$sessionid",
-      params: {
-        sessionid: sessionId
-      }
-    }, sessionId), /*#__PURE__*/react.createElement("button", {
-      onClick: function onClick() {
-        deleteSessionMutation.mutate(sessionId);
-      }
-    }, "delete"));
-  }));
-}
-var routes_Route = createFileRoute("/")({
-  component: IndexPage
-});
-;// ./src/queries/use-session-query.js
-
-
-
-var use_session_query_apiUrl = 'https://api.measuringcontest.com/sessions';
-var useSessionQuery = function useSessionQuery(sessionId) {
-  var auth = useCognitoAuth();
-  return useQuery({
-    queryKey: ['session', sessionId],
-    queryFn: function queryFn() {
-      return makeAuthenticatedRequest("".concat(use_session_query_apiUrl, "/").concat(sessionId), auth.idToken, {
-        method: 'GET'
-      });
-    },
-    staleTime: 1000 * 60 * 50,
-    enabled: !!auth.idToken
-  });
-};
-;// ./src/routes/sessions.$sessionid.js
-
-
-
-
-
-function SessionPage() {
-  var _Route$useParams = sessions_$sessionid_Route.useParams(),
-    sessionId = _Route$useParams.sessionid;
-  var session = useSessionQuery(sessionId);
-  return !session.isLoading && /*#__PURE__*/react.createElement("pre", null, JSON.stringify(session.data));
-}
-var sessions_$sessionid_Route = createFileRoute("/sessions/$sessionid")({
-  component: SessionPage
-});
-;// ./src/routeTree.gen.js
-/* eslint-disable */
-
-// @ts-nocheck
-
-// noinspection JSUnusedGlobalSymbols
-
-// This file was automatically generated by TanStack Router.
-// You should NOT make any changes in this file as it will be overwritten.
-// Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
-
-
-
-
-var IndexRoute = routes_Route.update({
-  id: '/',
-  path: '/',
-  getParentRoute: function getParentRoute() {
-    return _root_Route;
-  }
-});
-var SessionsSessionidRoute = sessions_$sessionid_Route.update({
-  id: '/sessions/$sessionid',
-  path: '/sessions/$sessionid',
-  getParentRoute: function getParentRoute() {
-    return _root_Route;
-  }
-});
-var rootRouteChildren = {
-  IndexRoute: IndexRoute,
-  SessionsSessionidRoute: SessionsSessionidRoute
-};
-var routeTree = _root_Route._addFileChildren(rootRouteChildren);
-;// ./src/app-shell.js
-
-
-
-var router = createRouter({
-  routeTree: routeTree
-});
-
-// this extra layer is here under the query and auth providers so we can use authenticated routes if we want to later
-function app_shell_AppShell() {
-  return /*#__PURE__*/react.createElement(RouterProvider, {
-    router: router
-  });
-}
 ;// ./node_modules/@tanstack/query-core/build/modern/queryCache.js
 // src/queryCache.ts
 
@@ -33836,6 +33745,184 @@ var QueryClient = class {
 };
 
 //# sourceMappingURL=queryClient.js.map
+;// ./query-client.js
+
+var queryClient = new QueryClient();
+/* harmony default export */ const query_client = (queryClient);
+;// ./src/utils/preload-query.js
+
+function preloadQuery(queryOptions) {
+  return query_client.ensureQueryData(queryOptions);
+}
+;// ./src/utils/make-preload-authenticated-query.js
+function make_preload_authenticated_query_regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return make_preload_authenticated_query_regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (make_preload_authenticated_query_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, make_preload_authenticated_query_regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, make_preload_authenticated_query_regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), make_preload_authenticated_query_regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", make_preload_authenticated_query_regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), make_preload_authenticated_query_regeneratorDefine2(u), make_preload_authenticated_query_regeneratorDefine2(u, o, "Generator"), make_preload_authenticated_query_regeneratorDefine2(u, n, function () { return this; }), make_preload_authenticated_query_regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (make_preload_authenticated_query_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function make_preload_authenticated_query_regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } make_preload_authenticated_query_regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { if (r) i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n;else { var o = function o(r, n) { make_preload_authenticated_query_regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); }; o("next", 0), o("throw", 1), o("return", 2); } }, make_preload_authenticated_query_regeneratorDefine2(e, r, n, t); }
+function make_preload_authenticated_query_asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function make_preload_authenticated_query_asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { make_preload_authenticated_query_asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { make_preload_authenticated_query_asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+
+
+
+// getOptions function must have first param of idToken
+function makePreloadAuthenticatedQuery(getOptions) {
+  return /*#__PURE__*/make_preload_authenticated_query_asyncToGenerator(/*#__PURE__*/make_preload_authenticated_query_regenerator().m(function _callee() {
+    var idToken,
+      _args = arguments;
+    return make_preload_authenticated_query_regenerator().w(function (_context) {
+      while (1) switch (_context.n) {
+        case 0:
+          _context.n = 1;
+          return getIdToken();
+        case 1:
+          idToken = _context.v;
+          return _context.a(2, idToken ? preloadQuery(getOptions.apply(void 0, [idToken].concat(Array.prototype.slice.call(_args)))) : null);
+      }
+    }, _callee);
+  }));
+}
+;// ./src/queries/use-me-query.js
+
+
+
+
+var use_me_query_apiUrl = 'https://api.measuringcontest.com/me';
+var useMeQuery = function useMeQuery() {
+  var auth = useCognitoAuth();
+  return useSuspenseQuery(getOptions(auth.idToken));
+};
+function getOptions(idToken) {
+  return {
+    queryKey: ['me', idToken],
+    queryFn: function queryFn() {
+      return makeAuthenticatedRequest(use_me_query_apiUrl, idToken, {
+        method: 'GET'
+      });
+    },
+    staleTime: 1000 * 60 * 50,
+    enabled: !!idToken
+  };
+}
+useMeQuery.preload = makePreloadAuthenticatedQuery(getOptions);
+;// ./src/routes/index.js
+
+
+
+
+
+function IndexPage() {
+  var _me$data, _me$data2;
+  var createSessionMutation = useCreateSessionMutation();
+  var deleteSessionMutation = useDeleteSessionMutation();
+  var me = useMeQuery();
+  return !me.isLoading && me.data && /*#__PURE__*/react.createElement(react.Fragment, null, !((_me$data = me.data) !== null && _me$data !== void 0 && (_me$data = _me$data.sessions) !== null && _me$data !== void 0 && _me$data.length) && /*#__PURE__*/react.createElement("button", {
+    onClick: createSessionMutation.mutate
+  }, "create session"), ((_me$data2 = me.data) === null || _me$data2 === void 0 || (_me$data2 = _me$data2.sessions) === null || _me$data2 === void 0 ? void 0 : _me$data2.length) > 0 && me.data.sessions.map(function (sessionId, i) {
+    return /*#__PURE__*/react.createElement(react.Fragment, {
+      key: i + 'delete'
+    }, /*#__PURE__*/react.createElement(Link, {
+      to: "/sessions/$sessionid",
+      params: {
+        sessionid: sessionId
+      }
+    }, sessionId), /*#__PURE__*/react.createElement("button", {
+      onClick: function onClick() {
+        deleteSessionMutation.mutate(sessionId);
+      }
+    }, "delete"));
+  }));
+}
+var routes_Route = createFileRoute("/")({
+  loader: function loader() {
+    return useMeQuery.preload();
+  },
+  component: IndexPage
+});
+;// ./src/queries/use-session-query.js
+
+
+
+
+var use_session_query_apiUrl = 'https://api.measuringcontest.com/sessions';
+var useSessionQuery = function useSessionQuery(sessionId) {
+  var auth = useCognitoAuth();
+  return useSuspenseQuery(use_session_query_getOptions(auth.idToken, sessionId));
+};
+function use_session_query_getOptions(idToken, sessionId) {
+  return {
+    queryKey: ['session', sessionId],
+    queryFn: function queryFn() {
+      return makeAuthenticatedRequest("".concat(use_session_query_apiUrl, "/").concat(sessionId), idToken, {
+        method: 'GET'
+      });
+    },
+    staleTime: 1000 * 60 * 50,
+    enabled: !!idToken
+  };
+}
+useSessionQuery.preload = makePreloadAuthenticatedQuery(use_session_query_getOptions);
+;// ./src/routes/sessions.$sessionid.js
+
+
+
+function SessionPage() {
+  var _Route$useParams = sessions_$sessionid_Route.useParams(),
+    sessionId = _Route$useParams.sessionid;
+  var session = useSessionQuery(sessionId);
+  return !session.isLoading && /*#__PURE__*/react.createElement("pre", null, JSON.stringify(session.data));
+}
+var sessions_$sessionid_Route = createFileRoute("/sessions/$sessionid")({
+  loader: function loader(_ref) {
+    var params = _ref.params;
+    return useSessionQuery.preload(params.sessionid);
+  },
+  component: SessionPage
+});
+;// ./src/routeTree.gen.js
+/* eslint-disable */
+
+// @ts-nocheck
+
+// noinspection JSUnusedGlobalSymbols
+
+// This file was automatically generated by TanStack Router.
+// You should NOT make any changes in this file as it will be overwritten.
+// Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
+
+
+
+
+var IndexRoute = routes_Route.update({
+  id: '/',
+  path: '/',
+  getParentRoute: function getParentRoute() {
+    return _root_Route;
+  }
+});
+var SessionsSessionidRoute = sessions_$sessionid_Route.update({
+  id: '/sessions/$sessionid',
+  path: '/sessions/$sessionid',
+  getParentRoute: function getParentRoute() {
+    return _root_Route;
+  }
+});
+var rootRouteChildren = {
+  IndexRoute: IndexRoute,
+  SessionsSessionidRoute: SessionsSessionidRoute
+};
+var routeTree = _root_Route._addFileChildren(rootRouteChildren);
+;// ./src/app-shell.js
+
+
+
+var router = createRouter({
+  routeTree: routeTree
+});
+
+// this extra layer is here under the query and auth providers so we can use authenticated routes if we want to later
+function app_shell_AppShell() {
+  return /*#__PURE__*/react.createElement(RouterProvider, {
+    router: router
+  });
+}
 ;// ./app.js
 
 
@@ -33843,11 +33930,11 @@ var QueryClient = class {
 
 
 
+
 DefaultAmplify.configure(cognitoConfig);
-var queryClient = new QueryClient();
 function App() {
   return /*#__PURE__*/react.createElement(QueryClientProvider, {
-    client: queryClient
+    client: query_client
   }, /*#__PURE__*/react.createElement(CognitoAuthProvider, null, /*#__PURE__*/react.createElement(app_shell_AppShell, null)));
 }
 // EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
