@@ -33102,14 +33102,15 @@ function IndexPage() {
   var createSessionMutation = useCreateSessionMutation();
   var deleteSessionMutation = useDeleteSessionMutation();
   var me = useMeQuery();
-  return !me.isLoading && /*#__PURE__*/react.createElement(react.Fragment, null, !((_me$data = me.data) !== null && _me$data !== void 0 && (_me$data = _me$data.sessions) !== null && _me$data !== void 0 && _me$data.length) && /*#__PURE__*/react.createElement("button", {
+  return !me.isLoading && me.data && /*#__PURE__*/react.createElement(react.Fragment, null, !((_me$data = me.data) !== null && _me$data !== void 0 && (_me$data = _me$data.sessions) !== null && _me$data !== void 0 && _me$data.length) && /*#__PURE__*/react.createElement("button", {
     onClick: createSessionMutation.mutate
   }, "create session"), ((_me$data2 = me.data) === null || _me$data2 === void 0 || (_me$data2 = _me$data2.sessions) === null || _me$data2 === void 0 ? void 0 : _me$data2.length) > 0 && me.data.sessions.map(function (sessionId, i) {
     return /*#__PURE__*/react.createElement(react.Fragment, {
       key: i + 'delete'
-    }, /*#__PURE__*/react.createElement("a", {
-      onClick: function onClick() {
-        console.log(sessionId);
+    }, /*#__PURE__*/react.createElement(Link, {
+      to: "/sessions/$sessionid",
+      params: {
+        sessionid: sessionId
       }
     }, sessionId), /*#__PURE__*/react.createElement("button", {
       onClick: function onClick() {
@@ -33120,6 +33121,39 @@ function IndexPage() {
 }
 var routes_Route = createFileRoute("/")({
   component: IndexPage
+});
+;// ./src/queries/use-session-query.js
+
+
+
+var use_session_query_apiUrl = 'https://api.measuringcontest.com/sessions';
+var useSessionQuery = function useSessionQuery(sessionId) {
+  var auth = useCognitoAuth();
+  return useQuery({
+    queryKey: ['session', sessionId],
+    queryFn: function queryFn() {
+      return makeAuthenticatedRequest("".concat(use_session_query_apiUrl, "/").concat(sessionId), auth.idToken, {
+        method: 'GET'
+      });
+    },
+    staleTime: 1000 * 60 * 50,
+    enabled: !!auth.idToken
+  });
+};
+;// ./src/routes/sessions.$sessionid.js
+
+
+
+
+
+function SessionPage() {
+  var _Route$useParams = sessions_$sessionid_Route.useParams(),
+    sessionId = _Route$useParams.sessionid;
+  var session = useSessionQuery(sessionId);
+  return !session.isLoading && /*#__PURE__*/react.createElement("pre", null, JSON.stringify(session.data));
+}
+var sessions_$sessionid_Route = createFileRoute("/sessions/$sessionid")({
+  component: SessionPage
 });
 ;// ./src/routeTree.gen.js
 /* eslint-disable */
@@ -33134,6 +33168,7 @@ var routes_Route = createFileRoute("/")({
 
 
 
+
 var IndexRoute = routes_Route.update({
   id: '/',
   path: '/',
@@ -33141,8 +33176,16 @@ var IndexRoute = routes_Route.update({
     return _root_Route;
   }
 });
+var SessionsSessionidRoute = sessions_$sessionid_Route.update({
+  id: '/sessions/$sessionid',
+  path: '/sessions/$sessionid',
+  getParentRoute: function getParentRoute() {
+    return _root_Route;
+  }
+});
 var rootRouteChildren = {
-  IndexRoute: IndexRoute
+  IndexRoute: IndexRoute,
+  SessionsSessionidRoute: SessionsSessionidRoute
 };
 var routeTree = _root_Route._addFileChildren(rootRouteChildren);
 ;// ./src/app-shell.js

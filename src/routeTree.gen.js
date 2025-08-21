@@ -10,14 +10,21 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SessionsSessionidRouteImport } from './routes/sessions.$sessionid'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 })
+const SessionsSessionidRoute = SessionsSessionidRouteImport.update({
+  id: '/sessions/$sessionid',
+  path: '/sessions/$sessionid',
+  getParentRoute: () => rootRouteImport,
+})
 
 const rootRouteChildren = {
   IndexRoute: IndexRoute,
+  SessionsSessionidRoute: SessionsSessionidRoute,
 }
 export const routeTree = rootRouteImport._addFileChildren(rootRouteChildren)
