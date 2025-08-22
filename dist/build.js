@@ -33803,6 +33803,12 @@ function getOptions(idToken) {
 }
 useMeQuery.preload = makePreloadAuthenticatedQuery(getOptions);
 ;// ./src/routes/index.js
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
@@ -33810,12 +33816,26 @@ useMeQuery.preload = makePreloadAuthenticatedQuery(getOptions);
 
 function IndexPage() {
   var _me$data, _me$data2;
+  var _useState = (0,react.useState)(''),
+    _useState2 = _slicedToArray(_useState, 2),
+    sessionCode = _useState2[0],
+    setSessionCode = _useState2[1];
   var createSessionMutation = useCreateSessionMutation();
   var deleteSessionMutation = useDeleteSessionMutation();
   var me = useMeQuery();
-  return !me.isLoading && me.data && /*#__PURE__*/react.createElement(react.Fragment, null, !((_me$data = me.data) !== null && _me$data !== void 0 && (_me$data = _me$data.sessions) !== null && _me$data !== void 0 && _me$data.length) && /*#__PURE__*/react.createElement("button", {
+  return !me.isLoading && me.data && /*#__PURE__*/react.createElement(react.Fragment, null, !((_me$data = me.data) !== null && _me$data !== void 0 && (_me$data = _me$data.sessions) !== null && _me$data !== void 0 && _me$data.length) && /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement("button", {
     onClick: createSessionMutation.mutate
-  }, "create session"), ((_me$data2 = me.data) === null || _me$data2 === void 0 || (_me$data2 = _me$data2.sessions) === null || _me$data2 === void 0 ? void 0 : _me$data2.length) > 0 && me.data.sessions.map(function (sessionId, i) {
+  }, "create session"), /*#__PURE__*/react.createElement(Link, {
+    to: "/sessions/$sessionid",
+    params: {
+      sessionid: sessionCode
+    }
+  }, "Go To Session"), /*#__PURE__*/react.createElement("input", {
+    onChange: function onChange(e) {
+      setSessionCode(e.target.value);
+    },
+    value: sessionCode
+  })), ((_me$data2 = me.data) === null || _me$data2 === void 0 || (_me$data2 = _me$data2.sessions) === null || _me$data2 === void 0 ? void 0 : _me$data2.length) > 0 && me.data.sessions.map(function (sessionId, i) {
     return /*#__PURE__*/react.createElement(react.Fragment, {
       key: i + 'delete'
     }, /*#__PURE__*/react.createElement(Link, {
@@ -33859,7 +33879,56 @@ function use_session_query_getOptions(idToken, sessionId) {
   };
 }
 useSessionQuery.preload = makePreloadAuthenticatedQuery(use_session_query_getOptions);
+;// ./src/queries/use-join-session-mutation.js
+
+
+
+var use_join_session_mutation_apiUrl = 'https://api.measuringcontest.com/sessions';
+
+// how would we do invalidation if we passed sessionId in at call time?
+var useJoinSessionMutation = function useJoinSessionMutation(sessionId) {
+  var queryClient = useQueryClient();
+  var auth = useCognitoAuth();
+  return useMutation({
+    mutationFn: function mutationFn() {
+      return makeAuthenticatedRequest("".concat(use_join_session_mutation_apiUrl, "/").concat(sessionId, "/members"), auth.idToken, {
+        method: 'POST'
+      });
+    },
+    onSuccess: function onSuccess() {
+      queryClient.invalidateQueries({
+        queryKey: ['session', sessionId]
+      });
+    }
+  });
+};
+;// ./src/queries/use-leave-session-mutation.js
+
+
+
+var use_leave_session_mutation_apiUrl = 'https://api.measuringcontest.com/sessions';
+
+// will need to pass userId at runtime in order for creator to kick players
+var useLeaveSessionMutation = function useLeaveSessionMutation(sessionId) {
+  var queryClient = useQueryClient();
+  var auth = useCognitoAuth();
+  return useMutation({
+    mutationFn: function mutationFn() {
+      return makeAuthenticatedRequest("".concat(use_leave_session_mutation_apiUrl, "/").concat(sessionId, "/members"), auth.idToken, {
+        method: 'DELETE'
+      });
+    },
+    onSuccess: function onSuccess() {
+      queryClient.invalidateQueries({
+        queryKey: ['session', sessionId]
+      });
+    }
+  });
+};
 ;// ./src/routes/sessions.$sessionid.js
+
+
+
 
 
 
@@ -33867,12 +33936,19 @@ function SessionPage() {
   var _Route$useParams = sessions_$sessionid_Route.useParams(),
     sessionId = _Route$useParams.sessionid;
   var session = useSessionQuery(sessionId);
-  return !session.isLoading && /*#__PURE__*/react.createElement("pre", null, JSON.stringify(session.data));
+  var me = useMeQuery();
+  var joinSessionMutation = useJoinSessionMutation(sessionId);
+  var leaveSessionMutation = useLeaveSessionMutation(sessionId);
+  return !session.isLoading && !me.isLoading && /*#__PURE__*/react.createElement(react.Fragment, null, !session.data.members.includes(me.data.userId) && /*#__PURE__*/react.createElement("button", {
+    onClick: joinSessionMutation.mutate
+  }, "Join"), session.data.members.includes(me.data.userId) && /*#__PURE__*/react.createElement("button", {
+    onClick: leaveSessionMutation.mutate
+  }, "Leave"), /*#__PURE__*/react.createElement("pre", null, session.data.members));
 }
 var sessions_$sessionid_Route = createFileRoute("/sessions/$sessionid")({
   loader: function loader(_ref) {
     var params = _ref.params;
-    return useSessionQuery.preload(params.sessionid);
+    return Promise.all([useSessionQuery.preload(params.sessionid), useMeQuery.preload()]);
   },
   component: SessionPage
 });
