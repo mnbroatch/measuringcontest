@@ -13,12 +13,12 @@ export default function SessionPage () {
   const leaveSessionMutation = useLeaveSessionMutation(sessionId)
   return !session.isLoading && !me.isLoading && (
     <>
-      {!session.data.members.includes(me.data.userId) && (
+      {!session.data.members?.includes(me.data.userId) && (
         <button onClick={joinSessionMutation.mutate}>
           Join
         </button>
       )}
-      {session.data.members.includes(me.data.userId) && (
+      {session.data.members?.includes(me.data.userId) && (
         <button onClick={leaveSessionMutation.mutate}>
           Leave
         </button>
