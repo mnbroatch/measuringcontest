@@ -3,22 +3,24 @@ import { createFileRoute } from "@tanstack/react-router"
 import { useSessionQuery } from "../queries/use-session-query.js";
 import { useJoinSessionMutation } from "../queries/use-join-session-mutation.js";
 import { useLeaveSessionMutation } from "../queries/use-leave-session-mutation.js";
-import { useMeQuery } from "../queries/use-me-query.js";
+import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
 
 export default function SessionPage () {
   const { sessionid: sessionId } = Route.useParams()
   const session = useSessionQuery(sessionId)
-  const me = useMeQuery()
+  const auth = useCognitoAuth()
+  console.log('auth', auth)
+  const {userId} = auth
   const joinSessionMutation = useJoinSessionMutation(sessionId)
   const leaveSessionMutation = useLeaveSessionMutation(sessionId)
-  return !session.isLoading && !me.isLoading && (
+  return !session.isLoading && (
     <>
-      {!session.data.members?.includes(me.data.userId) && (
+      {!session.data.members?.includes(userId) && (
         <button onClick={joinSessionMutation.mutate}>
           Join
         </button>
       )}
-      {session.data.members?.includes(me.data.userId) && (
+      {session.data.members?.includes(userId) && (
         <button onClick={leaveSessionMutation.mutate}>
           Leave
         </button>
@@ -31,6 +33,6 @@ export default function SessionPage () {
 }
 
 export const Route = createFileRoute("/sessions/$sessionid")({
-  loader: ({ params }) => Promise.all([useSessionQuery.preload(params.sessionid), useMeQuery.preload()]),
+  loader: ({ params }) => useSessionQuery.preload(params.sessionid),
   component: SessionPage,
 })

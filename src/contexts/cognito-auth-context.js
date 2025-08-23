@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { signInWithRedirect, signOut } from '@aws-amplify/auth';
-import { useCognitoTokenQuery } from '../queries/use-cognito-token-query.js';
+import { useCognitoQuery } from '../queries/use-cognito-query.js';
 
 const AuthContext = createContext({
   idToken: null,
@@ -12,7 +12,7 @@ const AuthContext = createContext({
 
 export function CognitoAuthProvider({ children }) {
   const queryClient = useQueryClient();
-  const { data: idToken, isLoading } = useCognitoTokenQuery();
+  const { data: { idToken, userId }, isLoading } = useCognitoQuery();
   const { mutateAsync: login } = useMutation({ mutationFn: signInWithRedirect });
   const { mutateAsync: logout } = useMutation({
     mutationFn: signOut,
@@ -20,7 +20,7 @@ export function CognitoAuthProvider({ children }) {
   });
 
   return (
-    <AuthContext.Provider value={{ idToken, loading: isLoading, login, logout }}>
+    <AuthContext.Provider value={{ idToken, userId, loading: isLoading, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

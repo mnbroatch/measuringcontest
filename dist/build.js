@@ -27178,12 +27178,12 @@ function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { 
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 
-function getIdToken() {
-  return _getIdToken.apply(this, arguments);
+function getAuth() {
+  return _getAuth.apply(this, arguments);
 }
-function _getIdToken() {
-  _getIdToken = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
-    var _session$tokens$idTok, _session$tokens, user, session, _t;
+function _getAuth() {
+  _getAuth = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
+    var _session$tokens, user, userId, session, idToken, _t;
     return _regenerator().w(function (_context) {
       while (1) switch (_context.n) {
         case 0:
@@ -27198,11 +27198,16 @@ function _getIdToken() {
           }
           return _context.a(2, null);
         case 2:
+          userId = user.userId;
           _context.n = 3;
           return fetchAuthSession_fetchAuthSession();
         case 3:
           session = _context.v;
-          return _context.a(2, (_session$tokens$idTok = session === null || session === void 0 || (_session$tokens = session.tokens) === null || _session$tokens === void 0 || (_session$tokens = _session$tokens.idToken) === null || _session$tokens === void 0 ? void 0 : _session$tokens.toString()) !== null && _session$tokens$idTok !== void 0 ? _session$tokens$idTok : null);
+          idToken = session === null || session === void 0 || (_session$tokens = session.tokens) === null || _session$tokens === void 0 || (_session$tokens = _session$tokens.idToken) === null || _session$tokens === void 0 ? void 0 : _session$tokens.toString();
+          return _context.a(2, idToken ? {
+            userId: userId,
+            idToken: idToken
+          } : null);
         case 4:
           _context.p = 4;
           _t = _context.v;
@@ -27210,16 +27215,16 @@ function _getIdToken() {
       }
     }, _callee, null, [[0, 4]]);
   }));
-  return _getIdToken.apply(this, arguments);
+  return _getAuth.apply(this, arguments);
 }
-;// ./src/queries/use-cognito-token-query.js
+;// ./src/queries/use-cognito-query.js
 
 
 var AUTH_QUERY_KEY = 'auth';
-var useCognitoTokenQuery = function useCognitoTokenQuery() {
+var useCognitoQuery = function useCognitoQuery() {
   return useSuspenseQuery({
     queryKey: [AUTH_QUERY_KEY],
-    queryFn: getIdToken,
+    queryFn: getAuth,
     staleTime: 1000 * 60 * 50
   });
 };
@@ -27267,9 +27272,11 @@ var AuthContext = /*#__PURE__*/(0,react.createContext)({
 function CognitoAuthProvider(_ref) {
   var children = _ref.children;
   var queryClient = useQueryClient();
-  var _useCognitoTokenQuery = useCognitoTokenQuery(),
-    idToken = _useCognitoTokenQuery.data,
-    isLoading = _useCognitoTokenQuery.isLoading;
+  var _useCognitoQuery = useCognitoQuery(),
+    _useCognitoQuery$data = _useCognitoQuery.data,
+    idToken = _useCognitoQuery$data.idToken,
+    userId = _useCognitoQuery$data.userId,
+    isLoading = _useCognitoQuery.isLoading;
   var _useMutation = useMutation({
       mutationFn: signInWithRedirect
     }),
@@ -27284,6 +27291,7 @@ function CognitoAuthProvider(_ref) {
   return /*#__PURE__*/react.createElement(AuthContext.Provider, {
     value: {
       idToken: idToken,
+      userId: userId,
       loading: isLoading,
       login: login,
       logout: logout
@@ -33085,7 +33093,7 @@ var useCreateSessionMutation = function useCreateSessionMutation() {
     },
     onSuccess: function onSuccess() {
       queryClient.invalidateQueries({
-        queryKey: ['me', auth.idToken]
+        queryKey: ['my-sessions', auth.idToken]
       });
     }
   });
@@ -33106,7 +33114,7 @@ var useDeleteSessionMutation = function useDeleteSessionMutation() {
     },
     onSuccess: function onSuccess() {
       queryClient.invalidateQueries({
-        queryKey: ['me', auth.idToken]
+        queryKey: ['my-sessions', auth.idToken]
       });
     }
   });
@@ -33771,29 +33779,29 @@ function makePreloadAuthenticatedQuery(getOptions) {
       while (1) switch (_context.n) {
         case 0:
           _context.n = 1;
-          return getIdToken();
+          return getAuth();
         case 1:
-          idToken = _context.v;
+          idToken = _context.v.idToken;
           return _context.a(2, idToken ? preloadQuery(getOptions.apply(void 0, [idToken].concat(Array.prototype.slice.call(_args)))) : null);
       }
     }, _callee);
   }));
 }
-;// ./src/queries/use-me-query.js
+;// ./src/queries/use-my-sessions-query.js
 
 
 
 
-var use_me_query_apiUrl = 'https://api.measuringcontest.com/me';
-var useMeQuery = function useMeQuery() {
+var use_my_sessions_query_apiUrl = 'https://api.measuringcontest.com/sessions';
+var useMySessionsQuery = function useMySessionsQuery(sessionId) {
   var auth = useCognitoAuth();
   return useSuspenseQuery(getOptions(auth.idToken));
 };
 function getOptions(idToken) {
   return {
-    queryKey: ['me', idToken],
+    queryKey: ['my-sessions', idToken],
     queryFn: function queryFn() {
-      return makeAuthenticatedRequest(use_me_query_apiUrl, idToken, {
+      return makeAuthenticatedRequest(use_my_sessions_query_apiUrl, idToken, {
         method: 'GET'
       });
     },
@@ -33801,7 +33809,7 @@ function getOptions(idToken) {
     enabled: !!idToken
   };
 }
-useMeQuery.preload = makePreloadAuthenticatedQuery(getOptions);
+useMySessionsQuery.preload = makePreloadAuthenticatedQuery(getOptions);
 ;// ./src/routes/index.js
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -33815,15 +33823,15 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 function IndexPage() {
-  var _me$data, _me$data2;
+  var _mySessions$data, _mySessions$data2;
   var _useState = (0,react.useState)(''),
     _useState2 = _slicedToArray(_useState, 2),
     sessionCode = _useState2[0],
     setSessionCode = _useState2[1];
   var createSessionMutation = useCreateSessionMutation();
   var deleteSessionMutation = useDeleteSessionMutation();
-  var me = useMeQuery();
-  return !me.isLoading && me.data && /*#__PURE__*/react.createElement(react.Fragment, null, !((_me$data = me.data) !== null && _me$data !== void 0 && (_me$data = _me$data.sessions) !== null && _me$data !== void 0 && _me$data.length) && /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement("button", {
+  var mySessions = useMySessionsQuery();
+  return !mySessions.isLoading && mySessions.data && /*#__PURE__*/react.createElement(react.Fragment, null, !((_mySessions$data = mySessions.data) !== null && _mySessions$data !== void 0 && _mySessions$data.length) && /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement("button", {
     onClick: createSessionMutation.mutate
   }, "create session"), /*#__PURE__*/react.createElement(Link, {
     to: "/sessions/$sessionid",
@@ -33835,7 +33843,7 @@ function IndexPage() {
       setSessionCode(e.target.value);
     },
     value: sessionCode
-  })), ((_me$data2 = me.data) === null || _me$data2 === void 0 || (_me$data2 = _me$data2.sessions) === null || _me$data2 === void 0 ? void 0 : _me$data2.length) > 0 && me.data.sessions.map(function (sessionId, i) {
+  })), ((_mySessions$data2 = mySessions.data) === null || _mySessions$data2 === void 0 ? void 0 : _mySessions$data2.length) > 0 && mySessions.data.map(function (sessionId, i) {
     return /*#__PURE__*/react.createElement(react.Fragment, {
       key: i + 'delete'
     }, /*#__PURE__*/react.createElement(Link, {
@@ -33852,7 +33860,7 @@ function IndexPage() {
 }
 var routes_Route = createFileRoute("/")({
   loader: function loader() {
-    return useMeQuery.preload();
+    return useMySessionsQuery.preload();
   },
   component: IndexPage
 });
@@ -33933,22 +33941,25 @@ var useLeaveSessionMutation = function useLeaveSessionMutation(sessionId) {
 
 
 function SessionPage() {
+  var _session$data$members, _session$data$members2;
   var _Route$useParams = sessions_$sessionid_Route.useParams(),
     sessionId = _Route$useParams.sessionid;
   var session = useSessionQuery(sessionId);
-  var me = useMeQuery();
+  var auth = useCognitoAuth();
+  console.log('auth', auth);
+  var userId = auth.userId;
   var joinSessionMutation = useJoinSessionMutation(sessionId);
   var leaveSessionMutation = useLeaveSessionMutation(sessionId);
-  return !session.isLoading && !me.isLoading && /*#__PURE__*/react.createElement(react.Fragment, null, !session.data.members.includes(me.data.userId) && /*#__PURE__*/react.createElement("button", {
+  return !session.isLoading && /*#__PURE__*/react.createElement(react.Fragment, null, !((_session$data$members = session.data.members) !== null && _session$data$members !== void 0 && _session$data$members.includes(userId)) && /*#__PURE__*/react.createElement("button", {
     onClick: joinSessionMutation.mutate
-  }, "Join"), session.data.members.includes(me.data.userId) && /*#__PURE__*/react.createElement("button", {
+  }, "Join"), ((_session$data$members2 = session.data.members) === null || _session$data$members2 === void 0 ? void 0 : _session$data$members2.includes(userId)) && /*#__PURE__*/react.createElement("button", {
     onClick: leaveSessionMutation.mutate
   }, "Leave"), /*#__PURE__*/react.createElement("pre", null, session.data.members));
 }
 var sessions_$sessionid_Route = createFileRoute("/sessions/$sessionid")({
   loader: function loader(_ref) {
     var params = _ref.params;
-    return Promise.all([useSessionQuery.preload(params.sessionid), useMeQuery.preload()]);
+    return useSessionQuery.preload(params.sessionid);
   },
   component: SessionPage
 });
