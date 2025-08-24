@@ -12,7 +12,9 @@ const AuthContext = createContext({
 
 export function CognitoAuthProvider({ children }) {
   const queryClient = useQueryClient();
-  const { data: { idToken, userId }, isLoading } = useCognitoQuery();
+  const { data, isLoading } = useCognitoQuery();
+  const idToken = data?.idToken
+  const userId = data?.userId
   const { mutateAsync: login } = useMutation({ mutationFn: signInWithRedirect });
   const { mutateAsync: logout } = useMutation({
     mutationFn: signOut,

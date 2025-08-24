@@ -27273,10 +27273,10 @@ function CognitoAuthProvider(_ref) {
   var children = _ref.children;
   var queryClient = useQueryClient();
   var _useCognitoQuery = useCognitoQuery(),
-    _useCognitoQuery$data = _useCognitoQuery.data,
-    idToken = _useCognitoQuery$data.idToken,
-    userId = _useCognitoQuery$data.userId,
+    data = _useCognitoQuery.data,
     isLoading = _useCognitoQuery.isLoading;
+  var idToken = data === null || data === void 0 ? void 0 : data.idToken;
+  var userId = data === null || data === void 0 ? void 0 : data.userId;
   var _useMutation = useMutation({
       mutationFn: signInWithRedirect
     }),
@@ -33776,15 +33776,37 @@ function make_preload_authenticated_query_asyncToGenerator(n) { return function 
 // getOptions function must have first param of idToken
 function makePreloadAuthenticatedQuery(getOptions) {
   return /*#__PURE__*/make_preload_authenticated_query_asyncToGenerator(/*#__PURE__*/make_preload_authenticated_query_regenerator().m(function _callee() {
+    var _yield$getAuth;
     var idToken,
-      _args = arguments;
+      _args = arguments,
+      _t,
+      _t2,
+      _t3;
     return make_preload_authenticated_query_regenerator().w(function (_context) {
       while (1) switch (_context.n) {
         case 0:
           _context.n = 1;
           return getAuth();
         case 1:
-          idToken = _context.v.idToken;
+          _t2 = _yield$getAuth = _context.v;
+          _t = _t2 === null;
+          if (_t) {
+            _context.n = 2;
+            break;
+          }
+          _t = _yield$getAuth === void 0;
+        case 2:
+          if (!_t) {
+            _context.n = 3;
+            break;
+          }
+          _t3 = void 0;
+          _context.n = 4;
+          break;
+        case 3:
+          _t3 = _yield$getAuth.idToken;
+        case 4:
+          idToken = _t3;
           return _context.a(2, idToken ? preloadQuery(getOptions.apply(void 0, [idToken].concat(Array.prototype.slice.call(_args)))) : null);
       }
     }, _callee);

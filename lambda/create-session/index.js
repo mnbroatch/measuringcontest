@@ -60,6 +60,10 @@ async function getUserSessionCount(userId) {
   return result.Count
 }
 
+// we stringify gameRules for several reasons:
+//   - api gateway's vtl engine doesn't support mapping arbitrary nested objects
+//   - dynamo can't map objects > 32 layers deep and we want arbitrary depth
+//   - json string gets sent naturally in response and thus just works on GET
 async function createSession(sessionCode, userId, gameRules) {
   const params = {
     TableName: "measuringcontest-sessions",
@@ -70,7 +74,7 @@ async function createSession(sessionCode, userId, gameRules) {
       sessionStatus: "waiting",
       createdAt: Date.now(),
       expiresAtSeconds: Math.floor(Date.now() / 1000) + 24 * 3600,
-      gameRules,
+      gameRules: JSON.stringify(gameRules),
     },
     ConditionExpression: "attribute_not_exists(sessionCode)"
   }
