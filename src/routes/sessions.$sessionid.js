@@ -7,12 +7,11 @@ import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
 
 export default function SessionPage () {
   const { sessionid: sessionId } = Route.useParams()
+  const { userId } = useCognitoAuth()
   const session = useSessionQuery(sessionId)
-  const auth = useCognitoAuth()
-  console.log('auth', auth)
-  const {userId} = auth
   const joinSessionMutation = useJoinSessionMutation(sessionId)
   const leaveSessionMutation = useLeaveSessionMutation(sessionId)
+
   return !session.isLoading && (
     <>
       {!session.data.members?.includes(userId) && (
@@ -26,7 +25,7 @@ export default function SessionPage () {
         </button>
       )}
       <pre>
-        {session.data.members}
+        {JSON.stringify(session.data, null, 2)}
       </pre>
     </>
   )

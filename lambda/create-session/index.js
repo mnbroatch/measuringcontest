@@ -10,7 +10,23 @@ exports.handler = async (event) => {
   try {
     const userId = event.requestContext.authorizer.claims.sub
     
-    // Check current session count
+    let gameRules
+    try {
+      const body = JSON.parse(event.body)
+      gameRules = body.gameRules
+      if (!gameRules) {
+        return {
+          errorMessage: 'gameRules object is required in request body',
+          errorName: 'MISSING_OPTIONS_ERROR',
+        }
+      }
+    } catch (parseError) {
+      return {
+        errorMessage: 'Failed to parse request body: ' + parseError.message,
+        errorName: 'INVALID_REQUEST_BODY_ERROR',
+      }
+    }
+    
     const existingSessions = await getUserSessionCount(userId)
     if (existingSessions >= MAX_SESSIONS_PER_USER) {
       return {
@@ -19,7 +35,7 @@ exports.handler = async (event) => {
       }
     }
     
-    const session = await createSession(await getSessionCode(), userId)
+    const session = await createSession(await getSessionCode(), userId, gameRules)
     return { val: session }
   } catch (error) {
     return {
@@ -44,7 +60,7 @@ async function getUserSessionCount(userId) {
   return result.Count
 }
 
-async function createSession(sessionCode, userId) {
+async function createSession(sessionCode, userId, gameRules) {
   const params = {
     TableName: "measuringcontest-sessions",
     Item: {
@@ -53,13 +69,14 @@ async function createSession(sessionCode, userId) {
       members: new Set([userId]),
       sessionStatus: "waiting",
       createdAt: Date.now(),
-      expiresAtSeconds: Math.floor(Date.now() / 1000) + 24 * 3600
+      expiresAtSeconds: Math.floor(Date.now() / 1000) + 24 * 3600,
+      gameRules,
     },
     ConditionExpression: "attribute_not_exists(sessionCode)"
   }
   
   await dynamoDb.send(new PutCommand(params))
-  return { success: true, sessionCode }
+  return { success: true, sessionCode, gameRules }
 }
 
 async function getSessionCode() {

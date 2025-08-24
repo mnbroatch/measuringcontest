@@ -9,10 +9,13 @@ export const useCreateSessionMutation = () => {
   const auth = useCognitoAuth()
 
   return useMutation({
-    mutationFn: () => makeAuthenticatedRequest(
+    mutationFn: (gameRules) => makeAuthenticatedRequest(
       apiUrl,
       auth.idToken,
-      { method: 'POST' }
+      { 
+        method: 'POST',
+        body: { gameRules },
+      }
     ),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['my-sessions', auth.idToken] })

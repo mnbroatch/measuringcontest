@@ -33086,9 +33086,12 @@ var useCreateSessionMutation = function useCreateSessionMutation() {
   var queryClient = useQueryClient();
   var auth = useCognitoAuth();
   return useMutation({
-    mutationFn: function mutationFn() {
+    mutationFn: function mutationFn(gameRules) {
       return makeAuthenticatedRequest(apiUrl, auth.idToken, {
-        method: 'POST'
+        method: 'POST',
+        body: {
+          gameRules: gameRules
+        }
       });
     },
     onSuccess: function onSuccess() {
@@ -33810,6 +33813,8 @@ function getOptions(idToken) {
   };
 }
 useMySessionsQuery.preload = makePreloadAuthenticatedQuery(getOptions);
+;// ./src/tic-tac-toe.json
+const tic_tac_toe_namespaceObject = /*#__PURE__*/JSON.parse('{"playerRange":[2,2],"sharedBoard":{"grid":{"type":"grid","width":3,"height":3}},"pieces":[{"name":"playerMarker","count":"Infinity","perPlayer":true}],"winCondition":{"type":"bingo","board":["sharedBoard","grid"],"piece":{"name":"playerMarker"}},"round":{"loopUntil":false,"phases":[{"type":"sequentialPlayerTurn","actions":[{"type":"movePiece","piece":{"name":"playerMarker"},"from":"player","to":["sharedBoard","grid"],"conditions":[{"type":"doesNotContain","piece":"any"}]}]}]},"drawCondition":{"type":"blackout","board":["sharedBoard","grid"],"piece":{"name":"playerMarker"}}}');
 ;// ./src/routes/index.js
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -33822,18 +33827,30 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+
 function IndexPage() {
   var _mySessions$data, _mySessions$data2;
   var _useState = (0,react.useState)(''),
     _useState2 = _slicedToArray(_useState, 2),
     sessionCode = _useState2[0],
     setSessionCode = _useState2[1];
+  var _useState3 = (0,react.useState)(JSON.stringify(tic_tac_toe_namespaceObject, null, 2)),
+    _useState4 = _slicedToArray(_useState3, 2),
+    gameRules = _useState4[0],
+    setGameRules = _useState4[1];
+  var mySessions = useMySessionsQuery();
   var createSessionMutation = useCreateSessionMutation();
   var deleteSessionMutation = useDeleteSessionMutation();
-  var mySessions = useMySessionsQuery();
   return !mySessions.isLoading && mySessions.data && /*#__PURE__*/react.createElement(react.Fragment, null, !((_mySessions$data = mySessions.data) !== null && _mySessions$data !== void 0 && _mySessions$data.length) && /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement("button", {
-    onClick: createSessionMutation.mutate
-  }, "create session"), /*#__PURE__*/react.createElement(Link, {
+    onClick: function onClick() {
+      createSessionMutation.mutate(gameRules);
+    }
+  }, "create session"), /*#__PURE__*/react.createElement("textarea", {
+    onChange: function onChange(e) {
+      setGameRules(e.target.value);
+    },
+    value: gameRules
+  }), /*#__PURE__*/react.createElement(Link, {
     to: "/sessions/$sessionid",
     params: {
       sessionid: sessionCode
@@ -33944,17 +33961,16 @@ function SessionPage() {
   var _session$data$members, _session$data$members2;
   var _Route$useParams = sessions_$sessionid_Route.useParams(),
     sessionId = _Route$useParams.sessionid;
+  var _useCognitoAuth = useCognitoAuth(),
+    userId = _useCognitoAuth.userId;
   var session = useSessionQuery(sessionId);
-  var auth = useCognitoAuth();
-  console.log('auth', auth);
-  var userId = auth.userId;
   var joinSessionMutation = useJoinSessionMutation(sessionId);
   var leaveSessionMutation = useLeaveSessionMutation(sessionId);
   return !session.isLoading && /*#__PURE__*/react.createElement(react.Fragment, null, !((_session$data$members = session.data.members) !== null && _session$data$members !== void 0 && _session$data$members.includes(userId)) && /*#__PURE__*/react.createElement("button", {
     onClick: joinSessionMutation.mutate
   }, "Join"), ((_session$data$members2 = session.data.members) === null || _session$data$members2 === void 0 ? void 0 : _session$data$members2.includes(userId)) && /*#__PURE__*/react.createElement("button", {
     onClick: leaveSessionMutation.mutate
-  }, "Leave"), /*#__PURE__*/react.createElement("pre", null, session.data.members));
+  }, "Leave"), /*#__PURE__*/react.createElement("pre", null, JSON.stringify(session.data, null, 2)));
 }
 var sessions_$sessionid_Route = createFileRoute("/sessions/$sessionid")({
   loader: function loader(_ref) {
