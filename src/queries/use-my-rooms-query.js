@@ -3,18 +3,18 @@ import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
 import makeAuthenticatedRequest from "../utils/make-authenticated-request.js";
 import makePreloadAuthenticatedQuery from "../utils/make-preload-authenticated-query.js";
 
-const apiUrl = 'https://api.measuringcontest.com/sessions'
+const apiUrl = 'https://api.measuringcontest.com/rooms'
 
-export const useSessionQuery = (sessionId) => {
+export const useMyRoomsQuery = (roomId) => {
   const auth = useCognitoAuth()
-  return useSuspenseQuery(getOptions(auth.idToken, sessionId))
+  return useSuspenseQuery(getOptions(auth.idToken))
 }
 
-function getOptions (idToken, sessionId) {
+function getOptions (idToken) {
   return {
-    queryKey: ['session', sessionId],
+    queryKey: ['my-rooms', idToken],
     queryFn: () => makeAuthenticatedRequest(
-      `${apiUrl}/${sessionId}`,
+      apiUrl,
       idToken,
       { method: 'GET' }
     ),
@@ -23,4 +23,4 @@ function getOptions (idToken, sessionId) {
   }
 }
 
-useSessionQuery.preload = makePreloadAuthenticatedQuery(getOptions)
+useMyRoomsQuery.preload = makePreloadAuthenticatedQuery(getOptions)

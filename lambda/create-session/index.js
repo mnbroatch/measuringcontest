@@ -3,7 +3,7 @@ const { DynamoDBDocumentClient, UpdateCommand, QueryCommand, PutCommand } = requ
 const client = new DynamoDBClient()
 const dynamoDb = DynamoDBDocumentClient.from(client)
 const MAX_SESSIONS_PER_USER = 1
-const MAX_SESSIONS_ERROR_MESSAGE = 'You have reached the maximum number of sessions allowed.'
+const MAX_SESSIONS_ERROR_MESSAGE = 'You have reached the maximum number of rooms allowed.'
 const MAX_SESSIONS_ERROR_NAME = 'MAX_SESSIONS_ERROR'
 
 exports.handler = async (event) => {
@@ -27,16 +27,16 @@ exports.handler = async (event) => {
       }
     }
     
-    const existingSessions = await getUserSessionCount(userId)
-    if (existingSessions >= MAX_SESSIONS_PER_USER) {
+    const existingRooms = await getUserRoomCount(userId)
+    if (existingRooms >= MAX_SESSIONS_PER_USER) {
       return {
         errorMessage: MAX_SESSIONS_ERROR_MESSAGE,
         errorName: MAX_SESSIONS_ERROR_NAME,
       }
     }
     
-    const session = await createSession(await getSessionCode(), userId, gameRules)
-    return { val: session }
+    const room = await createRoom(await getRoomCode(), userId, gameRules)
+    return { val: room }
   } catch (error) {
     return {
       errorMessage: error.message,
@@ -45,9 +45,9 @@ exports.handler = async (event) => {
   }
 }
 
-async function getUserSessionCount(userId) {
+async function getUserRoomCount(userId) {
   const params = {
-    TableName: "measuringcontest-sessions",
+    TableName: "measuringcontest-rooms",
     IndexName: "createdBy-index",
     KeyConditionExpression: "createdBy = :userId",
     ExpressionAttributeValues: {
@@ -64,31 +64,31 @@ async function getUserSessionCount(userId) {
 //   - api gateway's vtl engine doesn't support mapping arbitrary nested objects
 //   - dynamo can't map objects > 32 layers deep and we want arbitrary depth
 //   - json string gets sent naturally in response and thus just works on GET
-async function createSession(sessionCode, userId, gameRules) {
+async function createRoom(roomCode, userId, gameRules) {
   const params = {
-    TableName: "measuringcontest-sessions",
+    TableName: "measuringcontest-rooms",
     Item: {
-      sessionCode,
+      roomCode,
       createdBy: userId,
       members: new Set([userId]),
-      sessionStatus: "waiting",
+      roomStatus: "waiting",
       createdAt: Date.now(),
       expiresAtSeconds: Math.floor(Date.now() / 1000) + 24 * 3600,
       gameRules: JSON.stringify(gameRules),
     },
-    ConditionExpression: "attribute_not_exists(sessionCode)"
+    ConditionExpression: "attribute_not_exists(roomCode)"
   }
   
   await dynamoDb.send(new PutCommand(params))
-  return { success: true, sessionCode, gameRules }
+  return { success: true, roomCode, gameRules }
 }
 
-async function getSessionCode() {
-  const sessionCounter = (await dynamoDb.send(
+async function getRoomCode() {
+  const roomCounter = (await dynamoDb.send(
     new UpdateCommand({
       TableName: "measuringcontest-global",
       Key: {
-        property: "sessioncounter",
+        property: "roomcounter",
       },
       UpdateExpression: "ADD val :inc",
       ExpressionAttributeValues: {
@@ -97,7 +97,7 @@ async function getSessionCode() {
       ReturnValues: "UPDATED_NEW",
     })
   )).Attributes.val
-  return encodeAlphaCode(scramble(sessionCounter))
+  return encodeAlphaCode(scramble(roomCounter))
 }
 
 function encodeAlphaCode(num) {

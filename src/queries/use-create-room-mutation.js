@@ -2,20 +2,23 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
 import makeAuthenticatedRequest from "../utils/make-authenticated-request.js";
 
-const apiUrl = 'https://api.measuringcontest.com/sessions'
+const apiUrl = 'https://api.measuringcontest.com/rooms'
 
-export const useDeleteSessionMutation = () => {
+export const useCreateRoomMutation = () => {
   const queryClient = useQueryClient()
   const auth = useCognitoAuth()
 
   return useMutation({
-    mutationFn: (sessionId) => makeAuthenticatedRequest(
-      `${apiUrl}/${sessionId}`,
+    mutationFn: (gameRules) => makeAuthenticatedRequest(
+      apiUrl,
       auth.idToken,
-      { method: 'DELETE' }
+      { 
+        method: 'POST',
+        body: { gameRules },
+      }
     ),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['my-sessions', auth.idToken] })
+      queryClient.invalidateQueries({ queryKey: ['my-rooms', auth.idToken] })
     },
   })
 }
