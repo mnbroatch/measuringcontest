@@ -17292,17 +17292,6 @@ exports.version = "19.1.0";
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
 /******/ 	
-/******/ 	/* webpack/runtime/make namespace object */
-/******/ 	(() => {
-/******/ 		// define __esModule on exports
-/******/ 		__webpack_require__.r = (exports) => {
-/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 			}
-/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 		};
-/******/ 	})();
-/******/ 	
 /******/ 	/* webpack/runtime/nonce */
 /******/ 	(() => {
 /******/ 		__webpack_require__.nc = undefined;
@@ -17310,10 +17299,6 @@ exports.version = "19.1.0";
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-
-// NAMESPACE OBJECT: ./node_modules/@aws-amplify/auth/dist/esm/index.mjs
-var esm_namespaceObject = {};
-__webpack_require__.r(esm_namespaceObject);
 
 // EXTERNAL MODULE: ./node_modules/react/index.js
 var react = __webpack_require__(137);
@@ -27155,51 +27140,37 @@ function useSuspenseQuery(options, queryClient) {
 }
 
 //# sourceMappingURL=useSuspenseQuery.js.map
-;// ./node_modules/@aws-amplify/auth/dist/esm/index.mjs
+;// ./node_modules/@aws-amplify/core/dist/esm/singleton/apis/internal/fetchAuthSession.mjs
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+const fetchAuthSession = (amplify, options) => {
+    return amplify.Auth.fetchAuthSession(options);
+};
+
+
+//# sourceMappingURL=fetchAuthSession.mjs.map
+
+;// ./node_modules/@aws-amplify/core/dist/esm/singleton/apis/fetchAuthSession.mjs
 
 
 
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+/**
+ * Fetch the auth session including the tokens and credentials if they are available. By default it
+ * does not refresh the auth tokens or credentials if they are loaded in storage already. You can force a refresh
+ * with `{ forceRefresh: true }` input.
+ *
+ * @param options - Options configuring the fetch behavior.
+ * @throws {@link AuthError} - Throws error when session information cannot be refreshed.
+ * @returns Promise<AuthSession>
+ */
+const fetchAuthSession_fetchAuthSession = (options) => {
+    return fetchAuthSession(Amplify_Amplify, options);
+};
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//# sourceMappingURL=index.mjs.map
+//# sourceMappingURL=fetchAuthSession.mjs.map
 
 ;// ./auth.js
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
@@ -27229,7 +27200,7 @@ function _getAuth() {
         case 2:
           userId = user.userId;
           _context.n = 3;
-          return (0,esm_namespaceObject.fetchAuthRoom)();
+          return fetchAuthSession_fetchAuthSession();
         case 3:
           room = _context.v;
           idToken = room === null || room === void 0 || (_room$tokens = room.tokens) === null || _room$tokens === void 0 || (_room$tokens = _room$tokens.idToken) === null || _room$tokens === void 0 ? void 0 : _room$tokens.toString();

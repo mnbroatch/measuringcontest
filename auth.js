@@ -1,4 +1,4 @@
-import { getCurrentUser, fetchAuthRoom } from '@aws-amplify/auth';
+import { getCurrentUser, fetchAuthSession } from '@aws-amplify/auth';
 
 export async function getAuth() {
   try {
@@ -6,7 +6,7 @@ export async function getAuth() {
     if (!user) return null;
 
     const { userId } = user
-    const room = await fetchAuthRoom();
+    const room = await fetchAuthSession();
     const idToken = room?.tokens?.idToken?.toString() 
     return idToken ? {
       userId,
