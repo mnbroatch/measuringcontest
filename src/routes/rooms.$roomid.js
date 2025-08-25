@@ -31,7 +31,7 @@ export default function SessionPage () {
   )
 }
 
-export const Route = createFileRoute("/sessions/$sessionid")({
+export const Route = createFileRoute("/rooms/$roomid")({
   loader: ({ params }) => useSessionQuery.preload(params.sessionid),
   component: SessionPage,
 })
