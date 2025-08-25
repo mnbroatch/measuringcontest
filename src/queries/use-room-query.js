@@ -5,16 +5,16 @@ import makePreloadAuthenticatedQuery from "../utils/make-preload-authenticated-q
 
 const apiUrl = 'https://api.measuringcontest.com/rooms'
 
-export const useRoomQuery = (roomId) => {
+export const useRoomQuery = (roomCode) => {
   const auth = useCognitoAuth()
-  return useSuspenseQuery(getOptions(auth.idToken, roomId))
+  return useSuspenseQuery(getOptions(auth.idToken, roomCode))
 }
 
-function getOptions (idToken, roomId) {
+function getOptions (idToken, roomCode) {
   return {
-    queryKey: ['room', roomId],
+    queryKey: ['room', roomCode],
     queryFn: () => makeAuthenticatedRequest(
-      `${apiUrl}/${roomId}`,
+      `${apiUrl}/${roomCode}`,
       idToken,
       { method: 'GET' }
     ),

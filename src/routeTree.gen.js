@@ -10,21 +10,21 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as RoomsRoomidRouteImport } from './routes/rooms.$roomid'
+import { Route as RoomsRoomcodeRouteImport } from './routes/rooms.$roomcode'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 })
-const RoomsRoomidRoute = RoomsRoomidRouteImport.update({
-  id: '/rooms/$roomid',
-  path: '/rooms/$roomid',
+const RoomsRoomcodeRoute = RoomsRoomcodeRouteImport.update({
+  id: '/rooms/$roomcode',
+  path: '/rooms/$roomcode',
   getParentRoute: () => rootRouteImport,
 })
 
 const rootRouteChildren = {
   IndexRoute: IndexRoute,
-  RoomsRoomidRoute: RoomsRoomidRoute,
+  RoomsRoomcodeRoute: RoomsRoomcodeRoute,
 }
 export const routeTree = rootRouteImport._addFileChildren(rootRouteChildren)

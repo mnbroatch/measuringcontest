@@ -20,9 +20,9 @@ export default function IndexPage () {
           </button>
           <textarea onChange={(e) => {setGameRules(e.target.value)}} value={gameRules}></textarea>
           <Link
-            to="/rooms/$roomid"
+            to="/rooms/$roomcode"
             params={{
-              roomid: roomCode,
+              roomcode: roomCode,
             }}
           >
             Go To Room
@@ -30,17 +30,17 @@ export default function IndexPage () {
           <input onChange={(e) => {setRoomCode(e.target.value)}} value={roomCode}></input>
         </>
       )}
-      {myRooms.data?.length > 0 && myRooms.data.map((roomId, i) => (
+      {myRooms.data?.length > 0 && myRooms.data.map((roomCode, i) => (
         <React.Fragment key={i+'delete'}>
           <Link
-            to="/rooms/$roomid"
+            to="/rooms/$roomcode"
             params={{
-              roomid: roomId,
+              roomcode: roomCode,
             }}
           >
-            {roomId}
+            {roomCode}
           </Link>
-          <button onClick={() => { deleteRoomMutation.mutate(roomId) }}>
+          <button onClick={() => { deleteRoomMutation.mutate(roomCode) }}>
             delete
           </button>
         </React.Fragment >

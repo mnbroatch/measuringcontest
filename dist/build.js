@@ -33139,8 +33139,8 @@ var useDeleteRoomMutation = function useDeleteRoomMutation() {
   var queryClient = useQueryClient();
   var auth = useCognitoAuth();
   return useMutation({
-    mutationFn: function mutationFn(roomId) {
-      return makeAuthenticatedRequest("".concat(use_delete_room_mutation_apiUrl, "/").concat(roomId), auth.idToken, {
+    mutationFn: function mutationFn(roomCode) {
+      return makeAuthenticatedRequest("".concat(use_delete_room_mutation_apiUrl, "/").concat(roomCode), auth.idToken, {
         method: 'DELETE'
       });
     },
@@ -33847,7 +33847,7 @@ function makePreloadAuthenticatedQuery(getOptions) {
 
 
 var use_my_rooms_query_apiUrl = 'https://api.measuringcontest.com/rooms';
-var useMyRoomsQuery = function useMyRoomsQuery(roomId) {
+var useMyRoomsQuery = function useMyRoomsQuery(roomCode) {
   var auth = useCognitoAuth();
   return useSuspenseQuery(getOptions(auth.idToken));
 };
@@ -33902,26 +33902,26 @@ function IndexPage() {
     },
     value: gameRules
   }), /*#__PURE__*/react.createElement(Link, {
-    to: "/rooms/$roomid",
+    to: "/rooms/$roomcode",
     params: {
-      roomid: roomCode
+      roomcode: roomCode
     }
   }, "Go To Room"), /*#__PURE__*/react.createElement("input", {
     onChange: function onChange(e) {
       setRoomCode(e.target.value);
     },
     value: roomCode
-  })), ((_myRooms$data2 = myRooms.data) === null || _myRooms$data2 === void 0 ? void 0 : _myRooms$data2.length) > 0 && myRooms.data.map(function (roomId, i) {
+  })), ((_myRooms$data2 = myRooms.data) === null || _myRooms$data2 === void 0 ? void 0 : _myRooms$data2.length) > 0 && myRooms.data.map(function (roomCode, i) {
     return /*#__PURE__*/react.createElement(react.Fragment, {
       key: i + 'delete'
     }, /*#__PURE__*/react.createElement(Link, {
-      to: "/rooms/$roomid",
+      to: "/rooms/$roomcode",
       params: {
-        roomid: roomId
+        roomcode: roomCode
       }
-    }, roomId), /*#__PURE__*/react.createElement("button", {
+    }, roomCode), /*#__PURE__*/react.createElement("button", {
       onClick: function onClick() {
-        deleteRoomMutation.mutate(roomId);
+        deleteRoomMutation.mutate(roomCode);
       }
     }, "delete"));
   }));
@@ -33938,15 +33938,15 @@ var routes_Route = createFileRoute("/")({
 
 
 var use_room_query_apiUrl = 'https://api.measuringcontest.com/rooms';
-var useRoomQuery = function useRoomQuery(roomId) {
+var useRoomQuery = function useRoomQuery(roomCode) {
   var auth = useCognitoAuth();
-  return useSuspenseQuery(use_room_query_getOptions(auth.idToken, roomId));
+  return useSuspenseQuery(use_room_query_getOptions(auth.idToken, roomCode));
 };
-function use_room_query_getOptions(idToken, roomId) {
+function use_room_query_getOptions(idToken, roomCode) {
   return {
-    queryKey: ['room', roomId],
+    queryKey: ['room', roomCode],
     queryFn: function queryFn() {
-      return makeAuthenticatedRequest("".concat(use_room_query_apiUrl, "/").concat(roomId), idToken, {
+      return makeAuthenticatedRequest("".concat(use_room_query_apiUrl, "/").concat(roomCode), idToken, {
         method: 'GET'
       });
     },
@@ -33961,19 +33961,19 @@ useRoomQuery.preload = makePreloadAuthenticatedQuery(use_room_query_getOptions);
 
 var use_join_room_mutation_apiUrl = 'https://api.measuringcontest.com/rooms';
 
-// how would we do invalidation if we passed roomId in at call time?
-var useJoinRoomMutation = function useJoinRoomMutation(roomId) {
+// how would we do invalidation if we passed roomCode in at call time?
+var useJoinRoomMutation = function useJoinRoomMutation(roomCode) {
   var queryClient = useQueryClient();
   var auth = useCognitoAuth();
   return useMutation({
     mutationFn: function mutationFn() {
-      return makeAuthenticatedRequest("".concat(use_join_room_mutation_apiUrl, "/").concat(roomId, "/members"), auth.idToken, {
+      return makeAuthenticatedRequest("".concat(use_join_room_mutation_apiUrl, "/").concat(roomCode, "/members"), auth.idToken, {
         method: 'POST'
       });
     },
     onSuccess: function onSuccess() {
       queryClient.invalidateQueries({
-        queryKey: ['room', roomId]
+        queryKey: ['room', roomCode]
       });
     }
   });
@@ -33985,23 +33985,23 @@ var useJoinRoomMutation = function useJoinRoomMutation(roomId) {
 var use_leave_room_mutation_apiUrl = 'https://api.measuringcontest.com/rooms';
 
 // will need to pass userId at runtime in order for creator to kick players
-var useLeaveRoomMutation = function useLeaveRoomMutation(roomId) {
+var useLeaveRoomMutation = function useLeaveRoomMutation(roomCode) {
   var queryClient = useQueryClient();
   var auth = useCognitoAuth();
   return useMutation({
     mutationFn: function mutationFn() {
-      return makeAuthenticatedRequest("".concat(use_leave_room_mutation_apiUrl, "/").concat(roomId, "/members"), auth.idToken, {
+      return makeAuthenticatedRequest("".concat(use_leave_room_mutation_apiUrl, "/").concat(roomCode, "/members"), auth.idToken, {
         method: 'DELETE'
       });
     },
     onSuccess: function onSuccess() {
       queryClient.invalidateQueries({
-        queryKey: ['room', roomId]
+        queryKey: ['room', roomCode]
       });
     }
   });
 };
-;// ./src/routes/rooms.$roomid.js
+;// ./src/routes/rooms.$roomcode.js
 
 
 
@@ -34010,23 +34010,23 @@ var useLeaveRoomMutation = function useLeaveRoomMutation(roomId) {
 
 function RoomPage() {
   var _room$data$members, _room$data$members2;
-  var _Route$useParams = rooms_$roomid_Route.useParams(),
-    roomId = _Route$useParams.roomid;
+  var _Route$useParams = rooms_$roomcode_Route.useParams(),
+    roomCode = _Route$useParams.roomcode;
   var _useCognitoAuth = useCognitoAuth(),
     userId = _useCognitoAuth.userId;
-  var room = useRoomQuery(roomId);
-  var joinRoomMutation = useJoinRoomMutation(roomId);
-  var leaveRoomMutation = useLeaveRoomMutation(roomId);
+  var room = useRoomQuery(roomCode);
+  var joinRoomMutation = useJoinRoomMutation(roomCode);
+  var leaveRoomMutation = useLeaveRoomMutation(roomCode);
   return !room.isLoading && /*#__PURE__*/react.createElement(react.Fragment, null, !((_room$data$members = room.data.members) !== null && _room$data$members !== void 0 && _room$data$members.includes(userId)) && /*#__PURE__*/react.createElement("button", {
     onClick: joinRoomMutation.mutate
   }, "Join"), ((_room$data$members2 = room.data.members) === null || _room$data$members2 === void 0 ? void 0 : _room$data$members2.includes(userId)) && /*#__PURE__*/react.createElement("button", {
     onClick: leaveRoomMutation.mutate
   }, "Leave"), /*#__PURE__*/react.createElement("pre", null, JSON.stringify(room.data, null, 2)));
 }
-var rooms_$roomid_Route = createFileRoute("/rooms/$roomid")({
+var rooms_$roomcode_Route = createFileRoute("/rooms/$roomcode")({
   loader: function loader(_ref) {
     var params = _ref.params;
-    return useRoomQuery.preload(params.roomid);
+    return useRoomQuery.preload(params.roomcode);
   },
   component: RoomPage
 });
@@ -34051,16 +34051,16 @@ var IndexRoute = routes_Route.update({
     return _root_Route;
   }
 });
-var RoomsRoomidRoute = rooms_$roomid_Route.update({
-  id: '/rooms/$roomid',
-  path: '/rooms/$roomid',
+var RoomsRoomcodeRoute = rooms_$roomcode_Route.update({
+  id: '/rooms/$roomcode',
+  path: '/rooms/$roomcode',
   getParentRoute: function getParentRoute() {
     return _root_Route;
   }
 });
 var rootRouteChildren = {
   IndexRoute: IndexRoute,
-  RoomsRoomidRoute: RoomsRoomidRoute
+  RoomsRoomcodeRoute: RoomsRoomcodeRoute
 };
 var routeTree = _root_Route._addFileChildren(rootRouteChildren);
 ;// ./src/app-shell.js

@@ -5,7 +5,7 @@ import makePreloadAuthenticatedQuery from "../utils/make-preload-authenticated-q
 
 const apiUrl = 'https://api.measuringcontest.com/rooms'
 
-export const useMyRoomsQuery = (roomId) => {
+export const useMyRoomsQuery = (roomCode) => {
   const auth = useCognitoAuth()
   return useSuspenseQuery(getOptions(auth.idToken))
 }

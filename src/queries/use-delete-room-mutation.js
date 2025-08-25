@@ -9,8 +9,8 @@ export const useDeleteRoomMutation = () => {
   const auth = useCognitoAuth()
 
   return useMutation({
-    mutationFn: (roomId) => makeAuthenticatedRequest(
-      `${apiUrl}/${roomId}`,
+    mutationFn: (roomCode) => makeAuthenticatedRequest(
+      `${apiUrl}/${roomCode}`,
       auth.idToken,
       { method: 'DELETE' }
     ),

@@ -6,11 +6,11 @@ import { useLeaveRoomMutation } from "../queries/use-leave-room-mutation.js";
 import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
 
 export default function RoomPage () {
-  const { roomid: roomId } = Route.useParams()
+  const { roomcode: roomCode } = Route.useParams()
   const { userId } = useCognitoAuth()
-  const room = useRoomQuery(roomId)
-  const joinRoomMutation = useJoinRoomMutation(roomId)
-  const leaveRoomMutation = useLeaveRoomMutation(roomId)
+  const room = useRoomQuery(roomCode)
+  const joinRoomMutation = useJoinRoomMutation(roomCode)
+  const leaveRoomMutation = useLeaveRoomMutation(roomCode)
 
   return !room.isLoading && (
     <>
@@ -31,7 +31,7 @@ export default function RoomPage () {
   )
 }
 
-export const Route = createFileRoute("/rooms/$roomid")({
-  loader: ({ params }) => useRoomQuery.preload(params.roomid),
+export const Route = createFileRoute("/rooms/$roomcode")({
+  loader: ({ params }) => useRoomQuery.preload(params.roomcode),
   component: RoomPage,
 })
