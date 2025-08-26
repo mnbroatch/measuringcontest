@@ -1,6 +1,7 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require("copy-webpack-plugin");
 const { tanstackRouter } = require('@tanstack/router-plugin/webpack')
+const path = require('path')
 
 class CacheBustPlugin {
   apply(compiler) {
@@ -26,6 +27,13 @@ class CacheBustPlugin {
 
 module.exports = {
   entry: './index.js',
+  resolve: {
+    alias: {
+      react: path.resolve(__dirname, 'node_modules/react'),
+      'react-dom': path.resolve(__dirname, 'node_modules/react-dom'),
+    },
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
+  },
   output: {
     filename: 'build.js',
     chunkFilename: '[name].js?cacheBust=[chunkhash]'
@@ -38,6 +46,7 @@ module.exports = {
       target: 'react',
       autoCodeSplitting: true,
       disableTypes: true,
+      extensions: ['ts', 'tsx', 'js', 'jsx'],
     }),
     new HtmlWebPackPlugin({
       title: 'Measuring Contest',
@@ -56,12 +65,12 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.[jt]sx?$/,
         exclude: /(node_modules)/,
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react']
+            presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript']
           }
         }
       },
