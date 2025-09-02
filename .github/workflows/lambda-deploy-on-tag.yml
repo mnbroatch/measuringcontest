@@ -59,7 +59,7 @@ jobs:
 
             aws lambda create-function \
               --function-name ${{ matrix.lambda.name }} \
-              --runtime nodejs18.x \
+              --runtime nodejs22.x \
               --role arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/${{ env.AWS_DYNAMODB_ROLE_NAME }} \
               --handler index.handler \
               --zip-file fileb://${{ matrix.lambda.zip }} \
