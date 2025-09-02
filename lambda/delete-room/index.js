@@ -1,118 +1,120 @@
 const { DynamoDBClient } = require("@aws-sdk/client-dynamodb")
-const { DynamoDBDocumentClient, UpdateCommand, QueryCommand, PutCommand } = require("@aws-sdk/lib-dynamodb")
+const { DynamoDBDocumentClient, QueryCommand, TransactWriteCommand, GetCommand } = require("@aws-sdk/lib-dynamodb")
+
 const client = new DynamoDBClient()
 const dynamoDb = DynamoDBDocumentClient.from(client)
-const MAX_SESSIONS_PER_USER = 1
-const MAX_SESSIONS_ERROR_MESSAGE = 'You have reached the maximum number of rooms allowed.'
-const MAX_SESSIONS_ERROR_NAME = 'MAX_SESSIONS_ERROR'
+
+const MISSING_ROOM_CODE_ERROR_MESSAGE = 'Room code is required.'
+const MISSING_ROOM_CODE_ERROR_NAME = 'MISSING_ROOM_CODE_ERROR'
+const ROOM_NOT_FOUND_ERROR_MESSAGE = 'Room not found.'
+const ROOM_NOT_FOUND_ERROR_NAME = 'ROOM_NOT_FOUND_ERROR'
+const UNAUTHORIZED_ERROR_MESSAGE = 'You are not authorized to delete this room.'
+const UNAUTHORIZED_ERROR_NAME = 'UNAUTHORIZED_ERROR'
 
 exports.handler = async (event) => {
   try {
     const userId = event.requestContext.authorizer.claims.sub
+    const roomCode = event.roomCode
     
-    let gameRules
-    try {
-      const body = JSON.parse(event.body)
-      gameRules = body.gameRules
-      if (!gameRules) {
-        return {
-          errorMessage: 'gameRules object is required in request body',
-          errorName: 'MISSING_OPTIONS_ERROR',
-        }
-      }
-    } catch (parseError) {
+    if (!roomCode) {
       return {
-        errorMessage: 'Failed to parse request body: ' + parseError.message,
-        errorName: 'INVALID_REQUEST_BODY_ERROR',
+        errorMessage: MISSING_ROOM_CODE_ERROR_MESSAGE,
+        errorName: MISSING_ROOM_CODE_ERROR_NAME
       }
     }
     
-    const existingRooms = await getUserRoomCount(userId)
-    if (existingRooms >= MAX_SESSIONS_PER_USER) {
+    // Get room details and verify ownership
+    const room = await getRoom(roomCode)
+    if (!room) {
       return {
-        errorMessage: MAX_SESSIONS_ERROR_MESSAGE,
-        errorName: MAX_SESSIONS_ERROR_NAME,
+        errorMessage: ROOM_NOT_FOUND_ERROR_MESSAGE,
+        errorName: ROOM_NOT_FOUND_ERROR_NAME
       }
     }
     
-    const room = await createRoom(await getRoomCode(), userId, gameRules)
-    return { val: room }
+    // Verify the user owns this room
+    if (room.createdBy !== userId) {
+      return {
+        errorMessage: UNAUTHORIZED_ERROR_MESSAGE,
+        errorName: UNAUTHORIZED_ERROR_NAME
+      }
+    }
+    
+    // Get all games for this room
+    const games = await getRoomGames(roomCode)
+    
+    // Delete room and all games in a transaction
+    await deleteRoomAndGames(roomCode, games)
+    
+    return {
+      success: true,
+      message: `Room ${roomCode} and ${games.length} associated games deleted successfully.`
+    }
+    
   } catch (error) {
+    console.error('Error deleting room:', error)
     return {
       errorMessage: error.message,
-      errorName: error.name,
+      errorName: error.name
     }
   }
 }
 
-async function getUserRoomCount(userId) {
+async function getRoom(roomCode) {
   const params = {
     TableName: "measuringcontest-rooms",
-    IndexName: "createdBy-index",
-    KeyConditionExpression: "createdBy = :userId",
+    Key: { roomCode }
+  }
+  
+  const result = await dynamoDb.send(new GetCommand(params))
+  return result.Item
+}
+
+async function getRoomGames(roomCode) {
+  const params = {
+    TableName: "measuringcontest-games",
+    KeyConditionExpression: "sessionId = :roomCode",
     ExpressionAttributeValues: {
-      ":userId": userId
-    },
-    Select: "COUNT"
+      ":roomCode": roomCode
+    }
   }
   
   const result = await dynamoDb.send(new QueryCommand(params))
-  return result.Count
+  return result.Items || []
 }
 
-// we stringify gameRules for several reasons:
-//   - api gateway's vtl engine doesn't support mapping arbitrary nested objects
-//   - dynamo can't map objects > 32 layers deep and we want arbitrary depth
-//   - json string gets sent naturally in response and thus just works on GET
-async function createRoom(roomCode, userId, gameRules) {
-  const params = {
-    TableName: "measuringcontest-rooms",
-    Item: {
-      roomCode,
-      createdBy: userId,
-      members: new Set([userId]),
-      roomStatus: "waiting",
-      createdAt: Date.now(),
-      expiresAtSeconds: Math.floor(Date.now() / 1000) + 24 * 3600,
-      gameRules: JSON.stringify(gameRules),
-    },
-    ConditionExpression: "attribute_not_exists(roomCode)"
+async function deleteRoomAndGames(roomCode, games) {
+  const transactItems = []
+  
+  // Add room deletion to transaction
+  transactItems.push({
+    Delete: {
+      TableName: "measuringcontest-rooms",
+      Key: { roomCode }
+    }
+  })
+  
+  // Add all game deletions to transaction
+  games.forEach(game => {
+    transactItems.push({
+      Delete: {
+        TableName: "measuringcontest-games",
+        Key: {
+          sessionId: game.sessionId,
+          gameId: game.gameId
+        }
+      }
+    })
+  })
+  
+  // Execute transaction (max 100 items per transaction)
+  if (transactItems.length > 100) {
+    throw new Error('Too many items to delete in a single transaction. Consider batch processing.')
   }
   
-  await dynamoDb.send(new PutCommand(params))
-  return { success: true, roomCode, gameRules }
-}
-
-async function getRoomCode() {
-  const roomCounter = (await dynamoDb.send(
-    new UpdateCommand({
-      TableName: "measuringcontest-global",
-      Key: {
-        property: "roomcounter",
-      },
-      UpdateExpression: "ADD val :inc",
-      ExpressionAttributeValues: {
-        ":inc": 1,
-      },
-      ReturnValues: "UPDATED_NEW",
-    })
-  )).Attributes.val
-  return encodeAlphaCode(scramble(roomCounter))
-}
-
-function encodeAlphaCode(num) {
-  const alphabet = "abcdefghijklmnopqrstuvwxyz";
-  let code = "";
-  for (let i = 0; i < 4; i++) {
-    code = alphabet[num % 26] + code;
-    num = Math.floor(num / 26);
+  const params = {
+    TransactItems: transactItems
   }
-  return code;
-}
-
-function scramble(n) {
-  const N = 26 ** 4 // total 4-letter codes
-  const m = 314159  // coprime with N
-  const b = 69420
-  return (m * n + b) % N
+  
+  await dynamoDb.send(new TransactWriteCommand(params))
 }

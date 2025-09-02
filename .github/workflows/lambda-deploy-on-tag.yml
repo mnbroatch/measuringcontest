@@ -26,6 +26,9 @@ jobs:
           - name: createroom
             path: lambda/create-room
             zip: createroom.zip
+          - name: deleteroom
+            path: lambda/delete-room
+            zip: deleteroom.zip
 
     steps:
       - uses: actions/checkout@v3
