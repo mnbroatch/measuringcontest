@@ -4,8 +4,6 @@ const { DynamoDBDocumentClient, QueryCommand, TransactWriteCommand, GetCommand }
 const client = new DynamoDBClient()
 const dynamoDb = DynamoDBDocumentClient.from(client)
 
-const MISSING_ROOM_CODE_ERROR_MESSAGE = 'Room code is required.'
-const MISSING_ROOM_CODE_ERROR_NAME = 'MISSING_ROOM_CODE_ERROR'
 const ROOM_NOT_FOUND_ERROR_MESSAGE = 'Room not found.'
 const ROOM_NOT_FOUND_ERROR_NAME = 'ROOM_NOT_FOUND_ERROR'
 const UNAUTHORIZED_ERROR_MESSAGE = 'You are not authorized to delete this room.'
@@ -15,13 +13,6 @@ exports.handler = async (event) => {
   try {
     const userId = event.requestContext.authorizer.claims.sub
     const roomCode = event.roomCode
-    
-    if (!roomCode) {
-      return {
-        errorMessage: MISSING_ROOM_CODE_ERROR_MESSAGE,
-        errorName: MISSING_ROOM_CODE_ERROR_NAME
-      }
-    }
     
     // Get room details and verify ownership
     const room = await getRoom(roomCode)
@@ -73,7 +64,7 @@ async function getRoom(roomCode) {
 async function getRoomGames(roomCode) {
   const params = {
     TableName: "measuringcontest-games",
-    KeyConditionExpression: "sessionId = :roomCode",
+    KeyConditionExpression: "roomCode = :roomCode",
     ExpressionAttributeValues: {
       ":roomCode": roomCode
     }
@@ -100,7 +91,7 @@ async function deleteRoomAndGames(roomCode, games) {
       Delete: {
         TableName: "measuringcontest-games",
         Key: {
-          sessionId: game.sessionId,
+          roomCode: game.roomCode,
           gameId: game.gameId
         }
       }
