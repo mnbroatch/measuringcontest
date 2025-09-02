@@ -23,9 +23,9 @@ jobs:
     strategy:
       matrix:
         lambda:
-          - name: createsession
-            path: lambda/create-session
-            zip: createsession.zip
+          - name: createroom
+            path: lambda/create-room
+            zip: createroom.zip
 
     steps:
       - uses: actions/checkout@v3
