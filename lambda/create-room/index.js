@@ -10,23 +10,6 @@ exports.handler = async (event) => {
   try {
     const userId = event.requestContext.authorizer.claims.sub
     
-    let gameRules
-    try {
-      const body = JSON.parse(event.body)
-      gameRules = body.gameRules
-      if (!gameRules) {
-        return {
-          errorMessage: 'gameRules object is required in request body',
-          errorName: 'MISSING_OPTIONS_ERROR',
-        }
-      }
-    } catch (parseError) {
-      return {
-        errorMessage: 'Failed to parse request body: ' + parseError.message,
-        errorName: 'INVALID_REQUEST_BODY_ERROR',
-      }
-    }
-    
     const existingRooms = await getUserRoomCount(userId)
     if (existingRooms >= MAX_SESSIONS_PER_USER) {
       return {
@@ -35,7 +18,7 @@ exports.handler = async (event) => {
       }
     }
     
-    const room = await createRoom(await getRoomCode(), userId, gameRules)
+    const room = await createRoom(await getRoomCode(), userId)
     return { val: room }
   } catch (error) {
     return {
@@ -60,11 +43,7 @@ async function getUserRoomCount(userId) {
   return result.Count
 }
 
-// we stringify gameRules for several reasons:
-//   - api gateway's vtl engine doesn't support mapping arbitrary nested objects
-//   - dynamo can't map objects > 32 layers deep and we want arbitrary depth
-//   - json string gets sent naturally in response and thus just works on GET
-async function createRoom(roomCode, userId, gameRules) {
+async function createRoom(roomCode, userId) {
   const params = {
     TableName: "measuringcontest-rooms",
     Item: {
@@ -75,13 +54,12 @@ async function createRoom(roomCode, userId, gameRules) {
       roomStatus: "waiting",
       createdAt: Date.now(),
       expiresAtSeconds: Math.floor(Date.now() / 1000) + 24 * 3600,
-      gameRules: JSON.stringify(gameRules),
     },
     ConditionExpression: "attribute_not_exists(roomCode)"
   }
   
   await dynamoDb.send(new PutCommand(params))
-  return { success: true, roomCode, gameRules }
+  return { success: true, roomCode }
 }
 
 async function getRoomCode() {
