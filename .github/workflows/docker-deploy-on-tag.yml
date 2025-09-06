@@ -2,6 +2,8 @@ name: Build and Push Docker Image to ECR
 
 on:
   push:
+    paths:
+      - 'server/**'
     tags:
       - 'v*'
   release:
@@ -16,6 +18,7 @@ env:
   ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
   AWS_ACCOUNT_ID: ${{ vars.AWS_ACCOUNT_ID }}
   AWS_EC2_SYNC_ROLE_NAME: ${{ vars.AWS_EC2_SYNC_ROLE_NAME }}
+  EC2_INSTANCE_ID: ${{ vars.EC2_INSTANCE_ID }}
 
 jobs:
   build-and-push:
@@ -31,7 +34,6 @@ jobs:
           role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/${{ env.AWS_EC2_SYNC_ROLE_NAME }}
           aws-region: ${{ env.AWS_REGION }}
 
-
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
@@ -43,12 +45,12 @@ jobs:
           IMAGE_TAG=${GITHUB_SHA::7}
 
           # If this is a release, use the release tag
-          if [ -n "${GITHUB_REF##refs/tags/}" ] && [[ $GITHUB_REF == refs/tags/* ]]; then
+          if [[ $GITHUB_REF == refs/tags/* ]]; then
             IMAGE_TAG=${GITHUB_REF#refs/tags/}
           fi
 
           # If this is the main branch, also push 'latest'
-          if [ "${GITHUB_REF##refs/heads/}" == "main" ]; then
+          if [[ "${GITHUB_REF}" == "refs/heads/main" ]]; then
             echo "LATEST_TAG=latest" >> $GITHUB_ENV
           fi
 
@@ -65,23 +67,28 @@ jobs:
             docker tag $ECR_REPOSITORY:${IMAGE_TAG} ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:latest
           fi
 
-      - name: Push Docker image to ECR
+      - name: Push Docker image to ECR (skip if tag already exists)
         run: |
-          docker push ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:${IMAGE_TAG}
+          set -e
+          if aws ecr describe-images \
+               --repository-name $ECR_REPOSITORY \
+               --image-ids imageTag=$IMAGE_TAG \
+               --region $AWS_REGION >/dev/null 2>&1; then
+            echo "Image tag $IMAGE_TAG already exists in ECR, skipping push."
+          else
+            echo "Pushing new image $IMAGE_TAG..."
+            docker push ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:${IMAGE_TAG}
+          fi
+
           if [ -n "$LATEST_TAG" ]; then
+            echo "Pushing 'latest'..."
             docker push ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:latest
           fi
 
       - name: Trigger deployment on EC2
         run: |
-          INSTANCE_ID=$(aws ec2 describe-instances \
-            --filters "Name=tag:Name,Values=BoardgameStack-BoardgameServer" \
-            --query "Reservations[0].Instances[0].InstanceId" \
-            --output text \
-            --region $AWS_REGION)
-
           aws ssm send-command \
             --document-name "AWS-RunShellScript" \
-            --targets "Key=instanceIds,Values=$INSTANCE_ID" \
+            --targets "Key=instanceIds,Values=${{ env.EC2_INSTANCE_ID }}" \
             --parameters 'commands=["/home/ec2-user/deploy.sh"]' \
             --region $AWS_REGION
