@@ -29,6 +29,12 @@ jobs:
           - name: deleteroom
             path: lambda/delete-room
             zip: deleteroom.zip
+          - name: creategame
+            path: lambda/create-game
+            zip: creategame.zip
+          - name: deletegame
+            path: lambda/delete-game
+            zip: deletegame.zip
 
     steps:
       - uses: actions/checkout@v3
@@ -39,8 +45,12 @@ jobs:
           role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/${{ env.AWS_LAMBDA_SYNC_ROLE_NAME }}
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: Install Node.js dependencies
-        run: npm install
+      - name: Install Lambda dependencies
+        run: |
+          cd ${{ matrix.lambda.path }}
+          if [ -f package.json ]; then 
+            npm install --production
+          fi
 
       - name: Zip Lambda function
         run: |

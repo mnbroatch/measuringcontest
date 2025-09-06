@@ -1,6 +1,7 @@
 const { DynamoDBClient } = require("@aws-sdk/client-dynamodb")
 const { DynamoDBDocumentClient, TransactWriteCommand, GetCommand } = require("@aws-sdk/lib-dynamodb")
 const { randomUUID } = require('crypto')
+const { makeMove } = require('board-game-engine-temp')
 
 const client = new DynamoDBClient()
 const dynamoDb = DynamoDBDocumentClient.from(client)
@@ -13,7 +14,16 @@ const UNAUTHORIZED_ERROR_NAME = 'UNAUTHORIZED_ERROR'
 exports.handler = async (event) => {
   try {
     const userId = event.requestContext.authorizer.claims.sub
-    const roomCode = event.pathParameters.roomCode
+    const roomCode = event.pathParameters.sessionCode
+    const requestBody = JSON.parse(event.body || '{}')
+    const gameRules = requestBody.gameRules
+    
+    if (!gameRules) {
+      return {
+        errorMessage: 'Game rules are required.',
+        errorName: 'MISSING_GAME_RULES_ERROR'
+      }
+    }
     
     // Get room details and verify it exists
     const room = await getRoom(roomCode)
@@ -25,7 +35,7 @@ exports.handler = async (event) => {
     }
     
     // Verify the user is a member of the room
-    if (room.createdBy !== userId) // Only room creator
+    if (room.createdBy !== userId) { // Only room creator
       return {
         errorMessage: UNAUTHORIZED_ERROR_MESSAGE,
         errorName: UNAUTHORIZED_ERROR_NAME
@@ -35,8 +45,11 @@ exports.handler = async (event) => {
     // Generate a unique game ID
     const gameId = generateGameId()
     
+    // Process game rules to create initial state
+    const initialState = makeMove(gameRules)
+    
     // Create game and update room in a transaction
-    await createGameAndUpdateRoom(roomCode, gameId, userId)
+    await createGameAndUpdateRoom(roomCode, gameId, userId, initialState)
     
     return {
       success: true,
@@ -64,14 +77,10 @@ async function getRoom(roomCode) {
 }
 
 function generateGameId() {
-  // Using UUID for uniqueness, but you could use other approaches:
-  // - randomUUID().slice(0, 8) for shorter IDs
-  // - Custom alphanumeric generator
-  // - Timestamp + random suffix
   return randomUUID()
 }
 
-async function createGameAndUpdateRoom(roomCode, gameId, userId) {
+async function createGameAndUpdateRoom(roomCode, gameId, userId, initialState) {
   const transactItems = [
     {
       // Create new game
@@ -81,9 +90,7 @@ async function createGameAndUpdateRoom(roomCode, gameId, userId) {
           roomCode: roomCode,
           gameId: gameId,
           createdBy: userId,
-          gameStatus: "waiting",
-          players: new Set([userId]),
-          scores: {},
+          gameState: JSON.stringify(initialState), // Store as JSON string
           createdAt: Date.now(),
           // Add any other initial game properties you need
         },
@@ -110,4 +117,3 @@ async function createGameAndUpdateRoom(roomCode, gameId, userId) {
   }
   
   await dynamoDb.send(new TransactWriteCommand(params))
-}

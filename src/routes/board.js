@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router"
 import React from 'react'
-import BoardGameApp from "../../../board-game-engine/app.tsx";
+import BoardGameApp from "board-game-engine-temp";
+// import BoardGameApp from "../../../board-game-engine/app.tsx";
 
 export default function BoardGamePage () {
   return <BoardGameApp />

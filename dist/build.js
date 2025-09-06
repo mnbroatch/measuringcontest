@@ -336,6 +336,29 @@ module.exports = getRawTag;
 
 /***/ }),
 
+/***/ 451:
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _measuringcontest_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7870);
+/* harmony import */ var _measuringcontest_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_measuringcontest_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _measuringcontest_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(15);
+/* harmony import */ var _measuringcontest_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_measuringcontest_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _measuringcontest_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_measuringcontest_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `.layout{text-align:center}.layout__shared-board{display:inline-flex;align-items:center;border:4px solid #000;padding:5px;margin:4px}.board--grid{border:2px solid #000;padding:3px}.grid__row{display:flex}.grid__space{border:1px solid #000;height:50px;margin:1px;padding:1px;width:50px}.piece--blah{box-sizing:border-box;font-size:.6em;height:100%;margin-left:3px}.piece--blah--selected,.piece--blah--selected:focus{border:2px solid red;outline:none}.board--stack{display:inline-block}.board--grid{display:inline-block}`, ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
 /***/ 471:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -4799,6 +4822,42 @@ var freeSelf = typeof self == 'object' && self && self.Object === Object && self
 var root = freeGlobal || freeSelf || Function('return this')();
 
 module.exports = root;
+
+
+/***/ }),
+
+/***/ 6931:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseClone = __webpack_require__(7963);
+
+/** Used to compose bitmasks for cloning. */
+var CLONE_DEEP_FLAG = 1,
+    CLONE_SYMBOLS_FLAG = 4;
+
+/**
+ * This method is like `_.clone` except that it recursively clones `value`.
+ *
+ * @static
+ * @memberOf _
+ * @since 1.0.0
+ * @category Lang
+ * @param {*} value The value to recursively clone.
+ * @returns {*} Returns the deep cloned value.
+ * @see _.clone
+ * @example
+ *
+ * var objects = [{ 'a': 1 }, { 'b': 2 }];
+ *
+ * var deep = _.cloneDeep(objects);
+ * console.log(deep[0] === objects[0]);
+ * // => false
+ */
+function cloneDeep(value) {
+  return baseClone(value, CLONE_DEEP_FLAG | CLONE_SYMBOLS_FLAG);
+}
+
+module.exports = cloneDeep;
 
 
 /***/ }),
@@ -38452,49 +38511,73 @@ var _root_Route = createRootRoute({
 });
 if (false) // removed by dead control flow
 {}
-;// ../board-game-engine/src/hooks/use-force-update.js
-function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-
-function useForceUpdate() {
-  var _useState = (0,react.useState)(false),
-    _useState2 = _slicedToArray(_useState, 2),
-    setValue = _useState2[1];
-  return function () {
-    return setValue(function (value) {
-      return !value;
-    });
-  };
-}
 // EXTERNAL MODULE: ../board-game-engine/node_modules/lodash/get.js
-var lodash_get = __webpack_require__(8104);
-var get_default = /*#__PURE__*/__webpack_require__.n(lodash_get);
-;// ../board-game-engine/src/engine/board/board.js
+var get = __webpack_require__(8104);
+var get_default = /*#__PURE__*/__webpack_require__.n(get);
+;// ../board-game-engine/src/engine/serializable.js
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function serializable_ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? serializable_ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : serializable_ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
 function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
 function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-var Board = /*#__PURE__*/function () {
-  function Board(boardRule) {
-    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    _classCallCheck(this, Board);
+var Serializable = /*#__PURE__*/function () {
+  function Serializable() {
+    _classCallCheck(this, Serializable);
+    // arguments must be simple objects, duck type gamestate object out
+    this.args = Array.prototype.slice.call(arguments).filter(function (arg) {
+      return !arg || arg.status === undefined;
+    });
     this.id = "".concat(Math.random());
-    this.rule = boardRule;
-    if (this.player) {
-      this.player = options.player;
-    }
   }
-  return _createClass(Board, [{
+  return _createClass(Serializable, [{
+    key: "toJSON",
+    value: function toJSON() {
+      var obj = _objectSpread(_objectSpread({}, this), {}, {
+        constructorName: this.constructor.name
+      });
+      delete obj.game;
+      return obj;
+    }
+  }]);
+}();
+
+;// ../board-game-engine/src/engine/board/board.js
+function board_typeof(o) { "@babel/helpers - typeof"; return board_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, board_typeof(o); }
+function board_classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function board_defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, board_toPropertyKey(o.key), o); } }
+function board_createClass(e, r, t) { return r && board_defineProperties(e.prototype, r), t && board_defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function board_toPropertyKey(t) { var i = board_toPrimitive(t, "string"); return "symbol" == board_typeof(i) ? i : i + ""; }
+function board_toPrimitive(t, r) { if ("object" != board_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != board_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function _possibleConstructorReturn(t, e) { if (e && ("object" == board_typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return _assertThisInitialized(t); }
+function _assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
+function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
+function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
+
+var Board = /*#__PURE__*/function (_Serializable) {
+  function Board(boardRule) {
+    var _this;
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    board_classCallCheck(this, Board);
+    _this = _callSuper(this, Board, [boardRule, options]);
+    _this.rule = boardRule;
+    if (_this.player) {
+      _this.player = options.player;
+    }
+    return _this;
+  }
+  _inherits(Board, _Serializable);
+  return board_createClass(Board, [{
     key: "placePiece",
     value: function placePiece(target, piece) {}
   }]);
-}();
+}(Serializable);
 
 ;// ../board-game-engine/src/engine/space/space.ts
 function space_typeof(o) { "@babel/helpers - typeof"; return space_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, space_typeof(o); }
@@ -38503,13 +38586,25 @@ function space_defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var
 function space_createClass(e, r, t) { return r && space_defineProperties(e.prototype, r), t && space_defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
 function space_toPropertyKey(t) { var i = space_toPrimitive(t, "string"); return "symbol" == space_typeof(i) ? i : i + ""; }
 function space_toPrimitive(t, r) { if ("object" != space_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != space_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-var Space = /*#__PURE__*/function () {
+function space_callSuper(t, o, e) { return o = space_getPrototypeOf(o), space_possibleConstructorReturn(t, space_isNativeReflectConstruct() ? Reflect.construct(o, e || [], space_getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function space_possibleConstructorReturn(t, e) { if (e && ("object" == space_typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return space_assertThisInitialized(t); }
+function space_assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function space_isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (space_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function space_getPrototypeOf(t) { return space_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, space_getPrototypeOf(t); }
+function space_inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && space_setPrototypeOf(t, e); }
+function space_setPrototypeOf(t, e) { return space_setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, space_setPrototypeOf(t, e); }
+
+var Space = /*#__PURE__*/function (_Serializable) {
   function Space(coordinates) {
+    var _this;
     var startingPieces = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
     space_classCallCheck(this, Space);
-    this.coordinates = coordinates;
-    this.pieces = startingPieces;
+    _this = space_callSuper(this, Space, [coordinates, startingPieces]);
+    _this.coordinates = coordinates;
+    _this.pieces = startingPieces;
+    return _this;
   }
+  space_inherits(Space, _Serializable);
   return space_createClass(Space, [{
     key: "placePiece",
     value: function placePiece(piece) {
@@ -38518,32 +38613,28 @@ var Space = /*#__PURE__*/function () {
   }, {
     key: "isEmpty",
     value: function isEmpty() {
-      return this.pieces.length !== 0;
+      return this.pieces.length === 0;
     }
   }]);
-}();
+}(Serializable);
 
 ;// ../board-game-engine/src/engine/board/grid.js
 function grid_typeof(o) { "@babel/helpers - typeof"; return grid_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, grid_typeof(o); }
-function grid_slicedToArray(r, e) { return grid_arrayWithHoles(r) || grid_iterableToArrayLimit(r, e) || grid_unsupportedIterableToArray(r, e) || grid_nonIterableRest(); }
-function grid_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function grid_iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function grid_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = grid_unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
-function grid_unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return grid_arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? grid_arrayLikeToArray(r, a) : void 0; } }
-function grid_arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function grid_classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
 function grid_defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, grid_toPropertyKey(o.key), o); } }
 function grid_createClass(e, r, t) { return r && grid_defineProperties(e.prototype, r), t && grid_defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
 function grid_toPropertyKey(t) { var i = grid_toPrimitive(t, "string"); return "symbol" == grid_typeof(i) ? i : i + ""; }
 function grid_toPrimitive(t, r) { if ("object" != grid_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != grid_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
-function _possibleConstructorReturn(t, e) { if (e && ("object" == grid_typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return _assertThisInitialized(t); }
-function _assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
-function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
-function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
-function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
-function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
+function grid_callSuper(t, o, e) { return o = grid_getPrototypeOf(o), grid_possibleConstructorReturn(t, grid_isNativeReflectConstruct() ? Reflect.construct(o, e || [], grid_getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function grid_possibleConstructorReturn(t, e) { if (e && ("object" == grid_typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return grid_assertThisInitialized(t); }
+function grid_assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function grid_isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (grid_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function grid_getPrototypeOf(t) { return grid_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, grid_getPrototypeOf(t); }
+function grid_inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && grid_setPrototypeOf(t, e); }
+function grid_setPrototypeOf(t, e) { return grid_setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, grid_setPrototypeOf(t, e); }
 
 
 
@@ -38553,11 +38644,11 @@ var Grid = /*#__PURE__*/function (_Board) {
   function Grid(boardRule, options) {
     var _this;
     grid_classCallCheck(this, Grid);
-    _this = _callSuper(this, Grid, [boardRule, options]);
+    _this = grid_callSuper(this, Grid, [boardRule, options]);
     _this.grid = makeGrid(boardRule);
     return _this;
   }
-  _inherits(Grid, _Board);
+  grid_inherits(Grid, _Board);
   return grid_createClass(Grid, [{
     key: "getEmptySpaces",
     value: function getEmptySpaces() {
@@ -38592,7 +38683,7 @@ var Grid = /*#__PURE__*/function (_Board) {
   }, {
     key: "getSpace",
     value: function getSpace(target) {
-      return lodash_get(this.grid, target);
+      return get(this.grid, target);
     }
   }, {
     key: "getPieces",
@@ -38603,21 +38694,6 @@ var Grid = /*#__PURE__*/function (_Board) {
     key: "placePiece",
     value: function placePiece(target, piece) {
       this.getSpace(target).placePiece(piece);
-    }
-  }, {
-    key: "getTargetAfterRotation",
-    value: function getTargetAfterRotation(_ref) {
-      var _ref2 = grid_slicedToArray(_ref, 2),
-        targetX = _ref2[0],
-        targetY = _ref2[1];
-      var rotation = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : INITIAL_ROTATION;
-      if (rotation === FLIPPED_ROTATION) {
-        var gridLength = this.grid.length;
-        var gridWidth = this.grid[targetY].length;
-        return [gridLength - targetX - 1, gridWidth - targetY - 1];
-      } else {
-        return [targetX, targetY];
-      }
     }
   }]);
 }(Board);
@@ -38641,71 +38717,6 @@ function makeGrid(boardRule) {
 // EXTERNAL MODULE: ../board-game-engine/node_modules/lodash/matches.js
 var matches = __webpack_require__(8429);
 var matches_default = /*#__PURE__*/__webpack_require__.n(matches);
-// EXTERNAL MODULE: ../board-game-engine/node_modules/lodash/merge.js
-var merge = __webpack_require__(1832);
-var merge_default = /*#__PURE__*/__webpack_require__.n(merge);
-;// ../board-game-engine/src/engine/board/stack.js
-function stack_typeof(o) { "@babel/helpers - typeof"; return stack_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, stack_typeof(o); }
-function stack_classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
-function stack_defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, stack_toPropertyKey(o.key), o); } }
-function stack_createClass(e, r, t) { return r && stack_defineProperties(e.prototype, r), t && stack_defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
-function stack_toPropertyKey(t) { var i = stack_toPrimitive(t, "string"); return "symbol" == stack_typeof(i) ? i : i + ""; }
-function stack_toPrimitive(t, r) { if ("object" != stack_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != stack_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-function stack_callSuper(t, o, e) { return o = stack_getPrototypeOf(o), stack_possibleConstructorReturn(t, stack_isNativeReflectConstruct() ? Reflect.construct(o, e || [], stack_getPrototypeOf(t).constructor) : o.apply(t, e)); }
-function stack_possibleConstructorReturn(t, e) { if (e && ("object" == stack_typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return stack_assertThisInitialized(t); }
-function stack_assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
-function stack_isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (stack_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
-function stack_getPrototypeOf(t) { return stack_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, stack_getPrototypeOf(t); }
-function stack_inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && stack_setPrototypeOf(t, e); }
-function stack_setPrototypeOf(t, e) { return stack_setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, stack_setPrototypeOf(t, e); }
-
-var Stack = /*#__PURE__*/function (_Board) {
-  function Stack(boardRule, options) {
-    var _this;
-    stack_classCallCheck(this, Stack);
-    _this = stack_callSuper(this, Stack, [boardRule, options]);
-    _this.stack = [];
-    return _this;
-  }
-  stack_inherits(Stack, _Board);
-  return stack_createClass(Stack, [{
-    key: "placePiece",
-    value: function placePiece(target, piece) {
-      if (target) {
-        // insert by index?
-      } else {
-        this.stack.push(piece);
-      }
-    }
-  }]);
-}(Board);
-
-;// ../board-game-engine/src/engine/board/board-factory.js
-
-
-function boardFactory(boardRule, options) {
-  if (boardRule.type === "grid") {
-    return new Grid(boardRule, options);
-  } else if (boardRule.type === "stack") {
-    return new Stack(boardRule, options);
-  } else {
-    console.log("missing board type:", boardRule);
-  }
-}
-;// ../board-game-engine/src/engine/player/player.ts
-function player_typeof(o) { "@babel/helpers - typeof"; return player_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, player_typeof(o); }
-function player_defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, player_toPropertyKey(o.key), o); } }
-function player_createClass(e, r, t) { return r && player_defineProperties(e.prototype, r), t && player_defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
-function player_toPropertyKey(t) { var i = player_toPrimitive(t, "string"); return "symbol" == player_typeof(i) ? i : i + ""; }
-function player_toPrimitive(t, r) { if ("object" != player_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != player_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-function player_classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
-var Player = /*#__PURE__*/player_createClass(function Player(rule, index) {
-  player_classCallCheck(this, Player);
-  this.rule = rule;
-  this.id = "".concat(Math.random());
-  this.index = index;
-});
-/* harmony default export */ const player = (Player);
 ;// ../board-game-engine/src/engine/condition/condition.js
 function condition_typeof(o) { "@babel/helpers - typeof"; return condition_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, condition_typeof(o); }
 function condition_classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
@@ -38713,18 +38724,79 @@ function condition_defineProperties(e, r) { for (var t = 0; t < r.length; t++) {
 function condition_createClass(e, r, t) { return r && condition_defineProperties(e.prototype, r), t && condition_defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
 function condition_toPropertyKey(t) { var i = condition_toPrimitive(t, "string"); return "symbol" == condition_typeof(i) ? i : i + ""; }
 function condition_toPrimitive(t, r) { if ("object" != condition_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != condition_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-var Condition = /*#__PURE__*/function () {
+function condition_callSuper(t, o, e) { return o = condition_getPrototypeOf(o), condition_possibleConstructorReturn(t, condition_isNativeReflectConstruct() ? Reflect.construct(o, e || [], condition_getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function condition_possibleConstructorReturn(t, e) { if (e && ("object" == condition_typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return condition_assertThisInitialized(t); }
+function condition_assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function condition_isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (condition_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function condition_getPrototypeOf(t) { return condition_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, condition_getPrototypeOf(t); }
+function condition_inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && condition_setPrototypeOf(t, e); }
+function condition_setPrototypeOf(t, e) { return condition_setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, condition_setPrototypeOf(t, e); }
+
+var Condition = /*#__PURE__*/function (_Serializable) {
   function Condition(rules, game) {
+    var _this;
     condition_classCallCheck(this, Condition);
-    this.rules = rules;
-    this.game = game;
+    _this = condition_callSuper(this, Condition, [rules, game]);
+    _this.rules = rules;
+    _this.game = game;
+    return _this;
   }
+  condition_inherits(Condition, _Serializable);
   return condition_createClass(Condition, [{
     key: "isMet",
     value: function isMet(actionPayload) {}
   }]);
-}();
+}(Serializable);
 
+;// ../board-game-engine/src/engine/utils/resolve-board.ts
+function resolve_board_createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = resolve_board_unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
+function resolve_board_unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return resolve_board_arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? resolve_board_arrayLikeToArray(r, a) : void 0; } }
+function resolve_board_arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function resolve_board_typeof(o) { "@babel/helpers - typeof"; return resolve_board_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, resolve_board_typeof(o); }
+
+function resolveBoard(board, gameState) {
+  // Case 1: if board is an array treat it as a path
+  if (Array.isArray(board)) {
+    return get_default()(gameState, board);
+  }
+  function search(node) {
+    if (!node || resolve_board_typeof(node) !== "object") return null;
+    if (node.id === board.id) return node;
+    if (node.grid && Array.isArray(node.grid)) {
+      var _iterator = resolve_board_createForOfIteratorHelper(node.grid),
+        _step;
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var row = _step.value;
+          var _iterator2 = resolve_board_createForOfIteratorHelper(row),
+            _step2;
+          try {
+            for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+              var cell = _step2.value;
+              var found = search(cell);
+              if (found) return found;
+            }
+          } catch (err) {
+            _iterator2.e(err);
+          } finally {
+            _iterator2.f();
+          }
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+    }
+    for (var _i = 0, _Object$values = Object.values(node); _i < _Object$values.length; _i++) {
+      var value = _Object$values[_i];
+      var _found = search(value);
+      if (_found) return _found;
+    }
+    return null;
+  }
+  return search(gameState);
+}
 ;// ../board-game-engine/src/engine/condition/does-not-contain-condition.js
 function does_not_contain_condition_typeof(o) { "@babel/helpers - typeof"; return does_not_contain_condition_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, does_not_contain_condition_typeof(o); }
 function does_not_contain_condition_classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
@@ -38741,6 +38813,7 @@ function does_not_contain_condition_inherits(t, e) { if ("function" != typeof e 
 function does_not_contain_condition_setPrototypeOf(t, e) { return does_not_contain_condition_setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, does_not_contain_condition_setPrototypeOf(t, e); }
 
 
+
 var DoesNotContainCondition = /*#__PURE__*/function (_Condition) {
   function DoesNotContainCondition() {
     does_not_contain_condition_classCallCheck(this, DoesNotContainCondition);
@@ -38750,10 +38823,7 @@ var DoesNotContainCondition = /*#__PURE__*/function (_Condition) {
   return does_not_contain_condition_createClass(DoesNotContainCondition, [{
     key: "isMet",
     value: function isMet(actionPayload) {
-      var board = this.game.get(actionPayload.board);
-      if (!board) {
-        console.log("111actionPayload", actionPayload);
-      }
+      var board = resolveBoard(actionPayload.board, this.game);
       var pieces = board.getPieces(actionPayload.target);
       return !pieces.filter(this.filterPieces.bind(this)).length;
     }
@@ -38817,6 +38887,7 @@ function bingo_condition_getPrototypeOf(t) { return bingo_condition_getPrototype
 function bingo_condition_inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && bingo_condition_setPrototypeOf(t, e); }
 function bingo_condition_setPrototypeOf(t, e) { return bingo_condition_setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, bingo_condition_setPrototypeOf(t, e); }
 
+
 var BingoCondition = /*#__PURE__*/function (_Condition) {
   function BingoCondition() {
     bingo_condition_classCallCheck(this, BingoCondition);
@@ -38826,7 +38897,7 @@ var BingoCondition = /*#__PURE__*/function (_Condition) {
   return bingo_condition_createClass(BingoCondition, [{
     key: "isMet",
     value: function isMet() {
-      var grid = this.game.get(this.rules.board).grid;
+      var grid = resolveBoard(this.rules.boardPath, this.game).grid;
 
       // TODO: handle rectangles in addition to squares
       var size = grid.length;
@@ -38889,6 +38960,7 @@ function blackout_condition_getPrototypeOf(t) { return blackout_condition_getPro
 function blackout_condition_inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && blackout_condition_setPrototypeOf(t, e); }
 function blackout_condition_setPrototypeOf(t, e) { return blackout_condition_setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, blackout_condition_setPrototypeOf(t, e); }
 
+
 var BlackoutCondition = /*#__PURE__*/function (_Condition) {
   function BlackoutCondition() {
     blackout_condition_classCallCheck(this, BlackoutCondition);
@@ -38898,7 +38970,7 @@ var BlackoutCondition = /*#__PURE__*/function (_Condition) {
   return blackout_condition_createClass(BlackoutCondition, [{
     key: "isMet",
     value: function isMet() {
-      var grid = this.game.get(this.rules.board).grid;
+      var grid = resolveBoard(this.rules.boardPath, this.game).grid;
       return grid.every(function (row) {
         return row.every(function (space) {
           return !space.isEmpty();
@@ -39030,16 +39102,74 @@ var IsValidPlayerCondition = /*#__PURE__*/function (_Condition) {
   return is_valid_player_condition_createClass(IsValidPlayerCondition, [{
     key: "isMet",
     value: function isMet(actionPayload) {
-      return this.game.currentRound.currentPlayer.id === actionPayload.playerId;
+      return this.game.players[this.game.currentRound.currentPlayerIndex].id === actionPayload.playerId;
     }
   }]);
 }(Condition);
 
+;// ../board-game-engine/src/engine/utils/resolve-piece.ts
+function resolve_piece_typeof(o) { "@babel/helpers - typeof"; return resolve_piece_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, resolve_piece_typeof(o); }
+function resolve_piece_createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = resolve_piece_unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || resolve_piece_unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function resolve_piece_unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return resolve_piece_arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? resolve_piece_arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return resolve_piece_arrayLikeToArray(r); }
+function resolve_piece_arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function resolvePiece(piece, gameState) {
+  // todo: should not be specific to grids
+  if (piece !== null && piece !== void 0 && piece.id) {
+    var queue = [gameState.sharedBoard, gameState.personalBoards];
+    while (queue.length) {
+      var node = queue.pop();
+      if (!node) continue;
+      if (Array.isArray(node)) {
+        queue.push.apply(queue, _toConsumableArray(node));
+      } else if (node.grid) {
+        var _iterator = resolve_piece_createForOfIteratorHelper(node.grid),
+          _step;
+        try {
+          for (_iterator.s(); !(_step = _iterator.n()).done;) {
+            var row = _step.value;
+            queue.push.apply(queue, _toConsumableArray(row));
+          }
+        } catch (err) {
+          _iterator.e(err);
+        } finally {
+          _iterator.f();
+        }
+      } else if (node.coordinates && node.pieces) {
+        var found = node.pieces.find(function (p) {
+          return p.id === piece.id;
+        });
+        if (found) return found;
+      } else if (resolve_piece_typeof(node) === "object") {
+        queue.push.apply(queue, _toConsumableArray(Object.values(node)));
+      }
+    }
+    return null; // piece.id was given but not found
+  }
+  var pieceGroup;
+  if (!piece) {
+    pieceGroup = gameState.pieces.find(function (p) {
+      return p.name === 'playerMarker' && (!p.player || p.player.id === gameState.players[gameState.currentRound.currentPlayerIndex].id);
+    });
+  } else {
+    pieceGroup = gameState.pieces.find(function (p) {
+      var _piece$player;
+      return p.name === piece.name && (!p.player || p.player.id === ((_piece$player = piece.player) === null || _piece$player === void 0 ? void 0 : _piece$player.id));
+    });
+  }
+  if (!pieceGroup) {
+    throw new Error("No piece group found for ".concat(piece.name));
+  }
+  return pieceGroup.getOne();
+}
 ;// ../board-game-engine/src/engine/condition/piece-matches-condition.js
 function piece_matches_condition_typeof(o) { "@babel/helpers - typeof"; return piece_matches_condition_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, piece_matches_condition_typeof(o); }
 function piece_matches_condition_ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? piece_matches_condition_ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : piece_matches_condition_ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function _defineProperty(e, r, t) { return (r = piece_matches_condition_toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function piece_matches_condition_objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? piece_matches_condition_ownKeys(Object(t), !0).forEach(function (r) { piece_matches_condition_defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : piece_matches_condition_ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function piece_matches_condition_defineProperty(e, r, t) { return (r = piece_matches_condition_toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function piece_matches_condition_classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
 function piece_matches_condition_defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, piece_matches_condition_toPropertyKey(o.key), o); } }
 function piece_matches_condition_createClass(e, r, t) { return r && piece_matches_condition_defineProperties(e.prototype, r), t && piece_matches_condition_defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
@@ -39054,6 +39184,7 @@ function piece_matches_condition_inherits(t, e) { if ("function" != typeof e && 
 function piece_matches_condition_setPrototypeOf(t, e) { return piece_matches_condition_setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, piece_matches_condition_setPrototypeOf(t, e); }
 
 
+
 var PieceMatchesCondition = /*#__PURE__*/function (_Condition) {
   function PieceMatchesCondition() {
     piece_matches_condition_classCallCheck(this, PieceMatchesCondition);
@@ -39064,25 +39195,14 @@ var PieceMatchesCondition = /*#__PURE__*/function (_Condition) {
     key: "isMet",
     value: function isMet(actionPayload) {
       var _this$rules$actionRul, _this$rules$actionRul2;
-      var piece = this.game.getPiece(actionPayload.piece);
-      var board = this.game.getBoardPathContaining(piece);
+      var piece = resolvePiece(actionPayload.piece, this.game);
       if ((_this$rules$actionRul = this.rules.actionRule) !== null && _this$rules$actionRul !== void 0 && _this$rules$actionRul.piece && !piece) {
         console.error("no piece found");
         return false;
       }
       if ((_this$rules$actionRul2 = this.rules.actionRule) !== null && _this$rules$actionRul2 !== void 0 && _this$rules$actionRul2.piece) {
-        var matcher = _objectSpread({}, this.rules.actionRule.piece);
-
-        // probably going to want to move this
-        if (this.rules.actionRule.piece.board) {
-          matcher.board = this.game.normalizePath(this.rules.actionRule.piece.board, {
-            player: this.game.currentRound.currentPlayer
-          });
-        }
-        var toMatch = _objectSpread(_objectSpread({}, piece.rule), {}, {
-          board: board
-        });
-        return matches(matcher)(toMatch);
+        var matcher = piece_matches_condition_objectSpread({}, this.rules.actionRule.piece);
+        return matches(matcher)(piece.rule);
       }
       return true;
     }
@@ -39122,36 +39242,48 @@ function conditionFactory(conditionRule, game) {
 }
 ;// ../board-game-engine/src/engine/action/action.js
 function action_typeof(o) { "@babel/helpers - typeof"; return action_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, action_typeof(o); }
-function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || action_unsupportedIterableToArray(r) || _nonIterableSpread(); }
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function action_toConsumableArray(r) { return action_arrayWithoutHoles(r) || action_iterableToArray(r) || action_unsupportedIterableToArray(r) || action_nonIterableSpread(); }
+function action_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function action_unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return action_arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? action_arrayLikeToArray(r, a) : void 0; } }
-function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
-function _arrayWithoutHoles(r) { if (Array.isArray(r)) return action_arrayLikeToArray(r); }
+function action_iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function action_arrayWithoutHoles(r) { if (Array.isArray(r)) return action_arrayLikeToArray(r); }
 function action_arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function action_classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
 function action_defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, action_toPropertyKey(o.key), o); } }
 function action_createClass(e, r, t) { return r && action_defineProperties(e.prototype, r), t && action_defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
 function action_toPropertyKey(t) { var i = action_toPrimitive(t, "string"); return "symbol" == action_typeof(i) ? i : i + ""; }
 function action_toPrimitive(t, r) { if ("object" != action_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != action_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function action_callSuper(t, o, e) { return o = action_getPrototypeOf(o), action_possibleConstructorReturn(t, action_isNativeReflectConstruct() ? Reflect.construct(o, e || [], action_getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function action_possibleConstructorReturn(t, e) { if (e && ("object" == action_typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return action_assertThisInitialized(t); }
+function action_assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function action_isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (action_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function action_getPrototypeOf(t) { return action_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, action_getPrototypeOf(t); }
+function action_inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && action_setPrototypeOf(t, e); }
+function action_setPrototypeOf(t, e) { return action_setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, action_setPrototypeOf(t, e); }
 
-var Action = /*#__PURE__*/function () {
+
+var Action = /*#__PURE__*/function (_Serializable) {
   function Action(rules, game) {
+    var _this;
     action_classCallCheck(this, Action);
-    this.game = game;
-    this.rules = rules;
+    _this = action_callSuper(this, Action, [rules, game]);
+    _this.game = game;
+    _this.rules = rules;
     var invariantConditionRules = [{
       type: "actionTypeMatches",
-      actionRule: this.rules
+      actionRule: _this.rules
     }, {
       type: "pieceMatches",
-      actionRule: this.rules
+      actionRule: _this.rules
     }, {
       type: "isValidPlayer"
     }];
-    this.conditions = [].concat(invariantConditionRules, _toConsumableArray(this.rules.conditions || [])).map(function (conditionRule) {
+    _this.conditions = [].concat(invariantConditionRules, action_toConsumableArray(_this.rules.conditions || [])).map(function (conditionRule) {
       return conditionFactory(conditionRule, game);
     });
+    return _this;
   }
+  action_inherits(Action, _Serializable);
   return action_createClass(Action, [{
     key: "assertIsValid",
     value: function assertIsValid(actionPayload) {
@@ -39169,8 +39301,92 @@ var Action = /*#__PURE__*/function () {
     key: "do",
     value: function _do() {}
   }]);
-}();
+}(Serializable);
 
+// EXTERNAL MODULE: ../board-game-engine/node_modules/lodash/cloneDeep.js
+var cloneDeep = __webpack_require__(6931);
+var cloneDeep_default = /*#__PURE__*/__webpack_require__.n(cloneDeep);
+// EXTERNAL MODULE: ../board-game-engine/node_modules/lodash/merge.js
+var lodash_merge = __webpack_require__(1832);
+;// ../board-game-engine/src/engine/board/stack.js
+function stack_typeof(o) { "@babel/helpers - typeof"; return stack_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, stack_typeof(o); }
+function stack_classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function stack_defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, stack_toPropertyKey(o.key), o); } }
+function stack_createClass(e, r, t) { return r && stack_defineProperties(e.prototype, r), t && stack_defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function stack_toPropertyKey(t) { var i = stack_toPrimitive(t, "string"); return "symbol" == stack_typeof(i) ? i : i + ""; }
+function stack_toPrimitive(t, r) { if ("object" != stack_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != stack_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function stack_callSuper(t, o, e) { return o = stack_getPrototypeOf(o), stack_possibleConstructorReturn(t, stack_isNativeReflectConstruct() ? Reflect.construct(o, e || [], stack_getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function stack_possibleConstructorReturn(t, e) { if (e && ("object" == stack_typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return stack_assertThisInitialized(t); }
+function stack_assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function stack_isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (stack_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function stack_getPrototypeOf(t) { return stack_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, stack_getPrototypeOf(t); }
+function stack_inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && stack_setPrototypeOf(t, e); }
+function stack_setPrototypeOf(t, e) { return stack_setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, stack_setPrototypeOf(t, e); }
+
+var Stack = /*#__PURE__*/function (_Board) {
+  function Stack(boardRule, options) {
+    var _this;
+    stack_classCallCheck(this, Stack);
+    _this = stack_callSuper(this, Stack, [boardRule, options]);
+    _this.stack = [];
+    return _this;
+  }
+  stack_inherits(Stack, _Board);
+  return stack_createClass(Stack, [{
+    key: "placePiece",
+    value: function placePiece(target, piece) {
+      if (target) {
+        // insert by index?
+      } else {
+        this.stack.push(piece);
+      }
+    }
+  }]);
+}(Board);
+
+;// ../board-game-engine/src/engine/board/board-factory.js
+
+
+function boardFactory(boardRule, options) {
+  if (boardRule.type === "grid") {
+    return new Grid(boardRule, options);
+  } else if (boardRule.type === "stack") {
+    return new Stack(boardRule, options);
+  } else {
+    console.log("missing board type:", boardRule);
+  }
+}
+;// ../board-game-engine/src/engine/player/player.ts
+function player_typeof(o) { "@babel/helpers - typeof"; return player_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, player_typeof(o); }
+function player_defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, player_toPropertyKey(o.key), o); } }
+function player_createClass(e, r, t) { return r && player_defineProperties(e.prototype, r), t && player_defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function player_toPropertyKey(t) { var i = player_toPrimitive(t, "string"); return "symbol" == player_typeof(i) ? i : i + ""; }
+function player_toPrimitive(t, r) { if ("object" != player_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != player_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function player_classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function player_callSuper(t, o, e) { return o = player_getPrototypeOf(o), player_possibleConstructorReturn(t, player_isNativeReflectConstruct() ? Reflect.construct(o, e || [], player_getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function player_possibleConstructorReturn(t, e) { if (e && ("object" == player_typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return player_assertThisInitialized(t); }
+function player_assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function player_isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (player_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function player_getPrototypeOf(t) { return player_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, player_getPrototypeOf(t); }
+function player_inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && player_setPrototypeOf(t, e); }
+function player_setPrototypeOf(t, e) { return player_setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, player_setPrototypeOf(t, e); }
+
+var Player = /*#__PURE__*/function (_Serializable) {
+  function Player(rule, index, id) {
+    var _this;
+    player_classCallCheck(this, Player);
+    _this = player_callSuper(this, Player, [rule, index, id]);
+    _this.rule = rule;
+    _this.index = index;
+    if (id) {
+      _this.id = id;
+    }
+    return _this;
+  }
+  player_inherits(Player, _Serializable);
+  return player_createClass(Player);
+}(Serializable);
+/* harmony default export */ const player = (Player);
 ;// ../board-game-engine/src/engine/action/move-piece-action.js
 function move_piece_action_typeof(o) { "@babel/helpers - typeof"; return move_piece_action_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, move_piece_action_typeof(o); }
 function move_piece_action_classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
@@ -39186,6 +39402,8 @@ function move_piece_action_getPrototypeOf(t) { return move_piece_action_getProto
 function move_piece_action_inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && move_piece_action_setPrototypeOf(t, e); }
 function move_piece_action_setPrototypeOf(t, e) { return move_piece_action_setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, move_piece_action_setPrototypeOf(t, e); }
 
+
+
 var MovePieceAction = /*#__PURE__*/function (_Action) {
   function MovePieceAction() {
     move_piece_action_classCallCheck(this, MovePieceAction);
@@ -39195,33 +39413,9 @@ var MovePieceAction = /*#__PURE__*/function (_Action) {
   return move_piece_action_createClass(MovePieceAction, [{
     key: "do",
     value: function _do(actionPayload) {
-      var piece = this.targetPiece(actionPayload);
-      var board = this.game.get(actionPayload.board, {
-        player: actionPayload.player
-      });
-      var target = this.rules.playerPerspective ? board.getTargetAfterRotation(actionPayload.target, this.getRotation(actionPayload.player)) : actionPayload.target;
-      board.placePiece(target, piece);
-    }
-  }, {
-    key: "getRotation",
-    value: function getRotation(player) {
-      return player && this.game.options.playerCount === 2 && player.index === 1 ? 180 : 0;
-    }
-
-    // move this?
-    // add invariant condition for taking from a depleted pile
-  }, {
-    key: "targetPiece",
-    value: function targetPiece(actionPayload) {
-      var matcher = {
-        name: actionPayload.piece.name
-      };
-      if (actionPayload.piece.player) {
-        matcher.player = {
-          id: actionPayload.piece.player.id
-        };
-      }
-      return this.game.getPiece(matcher);
+      var piece = resolvePiece(actionPayload.piece, this.game);
+      var board = resolveBoard(actionPayload.board, this.game);
+      board.placePiece(actionPayload.target, piece);
     }
   }]);
 }(Action);
@@ -39331,20 +39525,31 @@ function round_defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var
 function round_createClass(e, r, t) { return r && round_defineProperties(e.prototype, r), t && round_defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
 function round_toPropertyKey(t) { var i = round_toPrimitive(t, "string"); return "symbol" == round_typeof(i) ? i : i + ""; }
 function round_toPrimitive(t, r) { if ("object" != round_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != round_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function round_callSuper(t, o, e) { return o = round_getPrototypeOf(o), round_possibleConstructorReturn(t, round_isNativeReflectConstruct() ? Reflect.construct(o, e || [], round_getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function round_possibleConstructorReturn(t, e) { if (e && ("object" == round_typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return round_assertThisInitialized(t); }
+function round_assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function round_isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (round_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function round_getPrototypeOf(t) { return round_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, round_getPrototypeOf(t); }
+function round_inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && round_setPrototypeOf(t, e); }
+function round_setPrototypeOf(t, e) { return round_setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, round_setPrototypeOf(t, e); }
+
 
 var DEBUG = true;
-var Round = /*#__PURE__*/function () {
+var Round = /*#__PURE__*/function (_Serializable) {
   function Round(rules, game) {
-    var _rules$actions,
-      _this = this;
+    var _rules$actions;
+    var _this;
     round_classCallCheck(this, Round);
-    this.rules = rules;
-    this.game = game;
-    this.history = [];
-    this.actions = (_rules$actions = rules.actions) === null || _rules$actions === void 0 ? void 0 : _rules$actions.map(function (actionRule) {
+    _this = round_callSuper(this, Round, [rules, game]);
+    _this.rules = rules;
+    _this.game = game;
+    _this.history = [];
+    _this.actions = (_rules$actions = rules.actions) === null || _rules$actions === void 0 ? void 0 : _rules$actions.map(function (actionRule) {
       return actionFactory(actionRule, _this.game);
     });
+    return _this;
   }
+  round_inherits(Round, _Serializable);
   return round_createClass(Round, [{
     key: "getCorrectAction",
     value: function getCorrectAction(actionPayload) {
@@ -39385,7 +39590,7 @@ var Round = /*#__PURE__*/function () {
     key: "afterDoAction",
     value: function afterDoAction() {}
   }]);
-}();
+}(Serializable);
 
 ;// ../board-game-engine/src/engine/round/sequential-player-turn.js
 function sequential_player_turn_typeof(o) { "@babel/helpers - typeof"; return sequential_player_turn_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, sequential_player_turn_typeof(o); }
@@ -39403,19 +39608,18 @@ function sequential_player_turn_inherits(t, e) { if ("function" != typeof e && n
 function sequential_player_turn_setPrototypeOf(t, e) { return sequential_player_turn_setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, sequential_player_turn_setPrototypeOf(t, e); }
 
 var SequentialPlayerTurn = /*#__PURE__*/function (_Round) {
-  function SequentialPlayerTurn(rules, game, options) {
-    var _this$game$currentRou;
+  function SequentialPlayerTurn(rules, game) {
     var _this;
     sequential_player_turn_classCallCheck(this, SequentialPlayerTurn);
     _this = sequential_player_turn_callSuper(this, SequentialPlayerTurn, [rules, game]);
-    _this.currentPlayer = ((_this$game$currentRou = _this.game.currentRound) === null || _this$game$currentRou === void 0 ? void 0 : _this$game$currentRou.currentPlayer) || _this.game.players[0];
+    _this.currentPlayerIndex = 0;
     return _this;
   }
   sequential_player_turn_inherits(SequentialPlayerTurn, _Round);
   return sequential_player_turn_createClass(SequentialPlayerTurn, [{
     key: "afterDoAction",
     value: function afterDoAction() {
-      this.currentPlayer = this.game.players[(this.game.players.indexOf(this.currentPlayer) + 1) % this.game.players.length];
+      this.currentPlayerIndex = (this.currentPlayerIndex + 1) % this.game.players.length;
     }
   }, {
     key: "isOver",
@@ -39444,15 +39648,26 @@ function piece_defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var
 function piece_createClass(e, r, t) { return r && piece_defineProperties(e.prototype, r), t && piece_defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
 function piece_toPropertyKey(t) { var i = piece_toPrimitive(t, "string"); return "symbol" == piece_typeof(i) ? i : i + ""; }
 function piece_toPrimitive(t, r) { if ("object" != piece_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != piece_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-var Piece = /*#__PURE__*/function () {
+function piece_callSuper(t, o, e) { return o = piece_getPrototypeOf(o), piece_possibleConstructorReturn(t, piece_isNativeReflectConstruct() ? Reflect.construct(o, e || [], piece_getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function piece_possibleConstructorReturn(t, e) { if (e && ("object" == piece_typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return piece_assertThisInitialized(t); }
+function piece_assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function piece_isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (piece_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function piece_getPrototypeOf(t) { return piece_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, piece_getPrototypeOf(t); }
+function piece_inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && piece_setPrototypeOf(t, e); }
+function piece_setPrototypeOf(t, e) { return piece_setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, piece_setPrototypeOf(t, e); }
+
+var Piece = /*#__PURE__*/function (_Serializable) {
   function Piece(pieceRule, options) {
+    var _this;
     piece_classCallCheck(this, Piece);
-    this.id = "".concat(Math.random());
-    this.rule = pieceRule;
+    _this = piece_callSuper(this, Piece, [pieceRule, options]);
+    _this.rule = pieceRule;
     if (options.player !== undefined) {
-      this.player = options.player;
+      _this.player = options.player;
     }
+    return _this;
   }
+  piece_inherits(Piece, _Serializable);
   return piece_createClass(Piece, [{
     key: "doesRuleMatch",
     value: function doesRuleMatch(matcher) {
@@ -39462,60 +39677,69 @@ var Piece = /*#__PURE__*/function () {
       return true;
     }
   }]);
-}();
+}(Serializable);
 
 ;// ../board-game-engine/src/engine/piece/piece-factory.js
 
 function pieceFactory(pieceRule, options) {
   return new Piece(pieceRule, options);
 }
-;// ../board-game-engine/src/engine/piece/piece-group.js
-function piece_group_typeof(o) { "@babel/helpers - typeof"; return piece_group_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, piece_group_typeof(o); }
-function piece_group_ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function piece_group_objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? piece_group_ownKeys(Object(t), !0).forEach(function (r) { piece_group_defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : piece_group_ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function piece_group_defineProperty(e, r, t) { return (r = piece_group_toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
-function piece_group_toConsumableArray(r) { return piece_group_arrayWithoutHoles(r) || piece_group_iterableToArray(r) || piece_group_unsupportedIterableToArray(r) || piece_group_nonIterableSpread(); }
-function piece_group_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function piece_group_iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
-function piece_group_arrayWithoutHoles(r) { if (Array.isArray(r)) return piece_group_arrayLikeToArray(r); }
-function piece_group_slicedToArray(r, e) { return piece_group_arrayWithHoles(r) || piece_group_iterableToArrayLimit(r, e) || piece_group_unsupportedIterableToArray(r, e) || piece_group_nonIterableRest(); }
-function piece_group_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function piece_group_unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return piece_group_arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? piece_group_arrayLikeToArray(r, a) : void 0; } }
-function piece_group_arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-function piece_group_iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function piece_group_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-function piece_group_classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
-function piece_group_defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, piece_group_toPropertyKey(o.key), o); } }
-function piece_group_createClass(e, r, t) { return r && piece_group_defineProperties(e.prototype, r), t && piece_group_defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
-function piece_group_toPropertyKey(t) { var i = piece_group_toPrimitive(t, "string"); return "symbol" == piece_group_typeof(i) ? i : i + ""; }
-function piece_group_toPrimitive(t, r) { if ("object" != piece_group_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != piece_group_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+;// ../board-game-engine/src/engine/piece/pile.js
+function pile_typeof(o) { "@babel/helpers - typeof"; return pile_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, pile_typeof(o); }
+function pile_ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function pile_objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? pile_ownKeys(Object(t), !0).forEach(function (r) { pile_defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : pile_ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function pile_defineProperty(e, r, t) { return (r = pile_toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function pile_toConsumableArray(r) { return pile_arrayWithoutHoles(r) || pile_iterableToArray(r) || pile_unsupportedIterableToArray(r) || pile_nonIterableSpread(); }
+function pile_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function pile_iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function pile_arrayWithoutHoles(r) { if (Array.isArray(r)) return pile_arrayLikeToArray(r); }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || pile_unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function pile_unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return pile_arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? pile_arrayLikeToArray(r, a) : void 0; } }
+function pile_arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function pile_classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function pile_defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, pile_toPropertyKey(o.key), o); } }
+function pile_createClass(e, r, t) { return r && pile_defineProperties(e.prototype, r), t && pile_defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function pile_toPropertyKey(t) { var i = pile_toPrimitive(t, "string"); return "symbol" == pile_typeof(i) ? i : i + ""; }
+function pile_toPrimitive(t, r) { if ("object" != pile_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != pile_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function pile_callSuper(t, o, e) { return o = pile_getPrototypeOf(o), pile_possibleConstructorReturn(t, pile_isNativeReflectConstruct() ? Reflect.construct(o, e || [], pile_getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function pile_possibleConstructorReturn(t, e) { if (e && ("object" == pile_typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return pile_assertThisInitialized(t); }
+function pile_assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function pile_isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (pile_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function pile_getPrototypeOf(t) { return pile_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, pile_getPrototypeOf(t); }
+function pile_inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && pile_setPrototypeOf(t, e); }
+function pile_setPrototypeOf(t, e) { return pile_setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, pile_setPrototypeOf(t, e); }
+
 
 
 // all this extra complication is to support arbitrary (infinite) piles of pieces
-var Pile = /*#__PURE__*/function () {
+var Pile = /*#__PURE__*/function (_Serializable) {
   function Pile(pieceRule) {
-    var _this = this;
+    var _this;
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    piece_group_classCallCheck(this, Pile);
-    this.pieceRule = pieceRule;
-    this.name = pieceRule.name;
+    pile_classCallCheck(this, Pile);
+    _this = pile_callSuper(this, Pile, [pieceRule, options]);
+    _this.pieceRule = pieceRule;
+    _this.name = pieceRule.name;
     if (options.player) {
-      this.player = options.player;
+      _this.player = options.player;
     }
-    this.options = options;
-    this.pool = (pieceRule.variants ? Object.entries(pieceRule.variants) : []).reduce(function (acc, _ref) {
-      var _ref2 = piece_group_slicedToArray(_ref, 2),
+    _this.options = options;
+    _this.pool = (pieceRule.variants ? Object.entries(pieceRule.variants) : []).reduce(function (acc, _ref) {
+      var _ref2 = _slicedToArray(_ref, 2),
         variantId = _ref2[0],
         variant = _ref2[1];
       var count = variant.count || 1;
-      return [].concat(piece_group_toConsumableArray(acc), piece_group_toConsumableArray(Array.from(Array(count)).map(function (_) {
-        return pieceFactory(piece_group_objectSpread(piece_group_objectSpread({}, piece_group_objectSpread(piece_group_objectSpread({}, pieceRule), {}, {
+      return [].concat(pile_toConsumableArray(acc), pile_toConsumableArray(Array.from(Array(count)).map(function (_) {
+        return pieceFactory(pile_objectSpread(pile_objectSpread({}, pile_objectSpread(pile_objectSpread({}, pieceRule), {}, {
           variantId: variantId
         })), variant), _this.options);
       })));
     }, []);
     if (pieceRule.shuffled) {
-      this.pool = this.pool.map(function (value) {
+      _this.pool = _this.pool.map(function (value) {
         return {
           value: value,
           sort: Math.random()
@@ -39527,12 +39751,11 @@ var Pile = /*#__PURE__*/function () {
         return value;
       });
     }
-    this.count = this.pool.length || +pieceRule.count;
-    if (typeof this.count === "undefined") {
-      throw new Error("Piece has no count: ", pieceRule.id);
-    }
+    _this.count = _this.pool.length || pieceRule.count;
+    return _this;
   }
-  return piece_group_createClass(Pile, [{
+  pile_inherits(Pile, _Serializable);
+  return pile_createClass(Pile, [{
     key: "getOne",
     value: function getOne() {
       return this.getMultiple(1)[0];
@@ -39542,12 +39765,14 @@ var Pile = /*#__PURE__*/function () {
     value: function getMultiple(count) {
       var _this2 = this;
       var toReturn = [];
-      if (this.count >= count) {
-        this.count -= count;
+      if (this.count === undefined || this.count >= count) {
+        if (this.count) {
+          this.count -= count;
+        }
         var remainder = count - this.pool.length;
-        toReturn.push.apply(toReturn, piece_group_toConsumableArray(this.pool.splice(0, count)));
+        toReturn.push.apply(toReturn, pile_toConsumableArray(this.pool.splice(0, count)));
         if (remainder > 0) {
-          toReturn.push.apply(toReturn, piece_group_toConsumableArray(Array.from(new Array(remainder)).map(function () {
+          toReturn.push.apply(toReturn, pile_toConsumableArray(Array.from(new Array(remainder)).map(function () {
             return pieceFactory(_this2.pieceRule, _this2.options);
           })));
         }
@@ -39557,12 +39782,14 @@ var Pile = /*#__PURE__*/function () {
   }, {
     key: "put",
     value: function put(piece) {
-      this.count += 1;
+      if (this.count !== undefined) {
+        this.count += 1;
+      }
       this.pool.push(piece);
     }
   }]);
-}();
-/* harmony default export */ const piece_group = (Pile);
+}(Serializable);
+/* harmony default export */ const pile = (Pile);
 ;// ../board-game-engine/src/util/find-value-path.js
 function find_value_path_toConsumableArray(r) { return find_value_path_arrayWithoutHoles(r) || find_value_path_iterableToArray(r) || find_value_path_unsupportedIterableToArray(r) || find_value_path_nonIterableSpread(); }
 function find_value_path_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -39596,12 +39823,89 @@ function findValuePath(obj, compare) {
   }
   return results;
 }
+;// ../board-game-engine/src/engine/board/board-group.js
+function board_group_typeof(o) { "@babel/helpers - typeof"; return board_group_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, board_group_typeof(o); }
+function board_group_defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, board_group_toPropertyKey(o.key), o); } }
+function board_group_createClass(e, r, t) { return r && board_group_defineProperties(e.prototype, r), t && board_group_defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function board_group_toPropertyKey(t) { var i = board_group_toPrimitive(t, "string"); return "symbol" == board_group_typeof(i) ? i : i + ""; }
+function board_group_toPrimitive(t, r) { if ("object" != board_group_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != board_group_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function board_group_classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function board_group_assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function board_group_inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && board_group_setPrototypeOf(t, e); }
+function board_group_setPrototypeOf(t, e) { return board_group_setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, board_group_setPrototypeOf(t, e); }
+
+var BoardGroup = /*#__PURE__*/function (_Board) {
+  function BoardGroup(boardRule, options) {
+    var _this;
+    board_group_classCallCheck(this, BoardGroup);
+    _this.sections = boardRule.sections.map(function () {
+      return Board.factory(boardRule, options);
+    });
+    return board_group_assertThisInitialized(_this);
+  }
+  board_group_inherits(BoardGroup, _Board);
+  return board_group_createClass(BoardGroup);
+}(Board);
+
+;// ../board-game-engine/src/registry.ts
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var registry = {
+  "Action": Action,
+  "MovePieceAction": MovePieceAction,
+  "SelectPieceAction": SelectPieceAction,
+  "SwapAction": SwapAction,
+  "BoardGroup": BoardGroup,
+  "Board": Board,
+  "Grid": Grid,
+  "Stack": Stack,
+  "ActionTypeMatchesCondition": ActionTypeMatchesCondition,
+  "BingoCondition": BingoCondition,
+  "BlackoutCondition": BlackoutCondition,
+  "Condition": Condition,
+  "ContainsCondition": ContainsCondition,
+  "DoesNotContainCondition": DoesNotContainCondition,
+  "IsValidPlayerCondition": IsValidPlayerCondition,
+  "PieceMatchesCondition": PieceMatchesCondition,
+  "RelativeMoveCondition": RelativeMoveCondition,
+  "SomeCondition": SomeCondition,
+  "Piece": Piece,
+  "Pile": pile,
+  "Player": player,
+  "Round": Round,
+  "SequentialPlayerTurn": SequentialPlayerTurn,
+  "Serializable": Serializable,
+  "Space": Space
+};
 ;// ../board-game-engine/src/engine/game/game.ts
-function game_typeof(o) { "@babel/helpers - typeof"; return game_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, game_typeof(o); }
-function _regeneratorValues(e) { if (null != e) { var t = e["function" == typeof Symbol && Symbol.iterator || "@@iterator"], r = 0; if (t) return t.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) return { next: function next() { return e && r >= e.length && (e = void 0), { value: e && e[r++], done: !e }; } }; } throw new TypeError(game_typeof(e) + " is not iterable"); }
-function game_regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return game_regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (game_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, game_regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, game_regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), game_regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", game_regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), game_regeneratorDefine2(u), game_regeneratorDefine2(u, o, "Generator"), game_regeneratorDefine2(u, n, function () { return this; }), game_regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (game_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
-function game_regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } game_regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { if (r) i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n;else { var o = function o(r, n) { game_regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); }; o("next", 0), o("throw", 1), o("return", 2); } }, game_regeneratorDefine2(e, r, n, t); }
+function _construct(t, e, r) { if (game_isNativeReflectConstruct()) return Reflect.construct.apply(null, arguments); var o = [null]; o.push.apply(o, e); var p = new (t.bind.apply(t, o))(); return r && game_setPrototypeOf(p, r.prototype), p; }
+function game_setPrototypeOf(t, e) { return game_setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, game_setPrototypeOf(t, e); }
+function game_isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (game_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
 function game_createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = game_unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
+function game_typeof(o) { "@babel/helpers - typeof"; return game_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, game_typeof(o); }
 function game_toConsumableArray(r) { return game_arrayWithoutHoles(r) || game_iterableToArray(r) || game_unsupportedIterableToArray(r) || game_nonIterableSpread(); }
 function game_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function game_iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
@@ -39609,17 +39913,14 @@ function game_arrayWithoutHoles(r) { if (Array.isArray(r)) return game_arrayLike
 function game_ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function game_objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? game_ownKeys(Object(t), !0).forEach(function (r) { game_defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : game_ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function game_defineProperty(e, r, t) { return (r = game_toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function game_toPropertyKey(t) { var i = game_toPrimitive(t, "string"); return "symbol" == game_typeof(i) ? i : i + ""; }
+function game_toPrimitive(t, r) { if ("object" != game_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != game_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function game_slicedToArray(r, e) { return game_arrayWithHoles(r) || game_iterableToArrayLimit(r, e) || game_unsupportedIterableToArray(r, e) || game_nonIterableRest(); }
 function game_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function game_unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return game_arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? game_arrayLikeToArray(r, a) : void 0; } }
 function game_arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function game_iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function game_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-function game_classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
-function game_defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, game_toPropertyKey(o.key), o); } }
-function game_createClass(e, r, t) { return r && game_defineProperties(e.prototype, r), t && game_defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
-function game_toPropertyKey(t) { var i = game_toPrimitive(t, "string"); return "symbol" == game_typeof(i) ? i : i + ""; }
-function game_toPrimitive(t, r) { if ("object" != game_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != game_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
 
 
@@ -39630,304 +39931,295 @@ function game_toPrimitive(t, r) { if ("object" != game_typeof(t) || !t) return t
 
 
 
-var Game = /*#__PURE__*/function () {
-  function Game(rules, options) {
-    game_classCallCheck(this, Game);
-    this.rules = expandRules(rules, options);
-    this.options = expandOptions(options);
-    this.initialize();
-    this.generator = this.createRoundGenerator(this.rules.round);
-    this.advance();
-    this.context = {};
+
+function initializeState(state, rules) {
+  var _rules$initialPlaceme;
+  expandRules(rules);
+  state.sharedBoard = Object.entries(rules.sharedBoard).reduce(function (acc, _ref) {
+    var _ref2 = game_slicedToArray(_ref, 2),
+      id = _ref2[0],
+      board = _ref2[1];
+    return game_objectSpread(game_objectSpread({}, acc), {}, game_defineProperty({}, id, boardFactory(game_objectSpread(game_objectSpread({}, board), {}, {
+      path: ["sharedBoard", id]
+    }))));
+  }, {});
+  state.personalBoards = state.players.reduce(function (acc, player) {
+    return game_objectSpread(game_objectSpread({}, acc), {}, game_defineProperty({}, player.id, Object.entries(rules.personalBoard || []).reduce(function (acc, _ref3) {
+      var _ref4 = game_slicedToArray(_ref3, 2),
+        id = _ref4[0],
+        board = _ref4[1];
+      return game_objectSpread(game_objectSpread({}, acc), {}, game_defineProperty({}, id, boardFactory(game_objectSpread(game_objectSpread({}, board), {}, {
+        path: ["sharedBoard", id]
+      }), {
+        player: player
+      })));
+    }, {})));
+  }, {});
+  state.pieces = rules.pieces.reduce(function (acc, pieceRule) {
+    if (pieceRule.perPlayer) {
+      return [].concat(game_toConsumableArray(acc), game_toConsumableArray(state.players.map(function (player) {
+        return new pile(pieceRule, {
+          player: player
+        });
+      })));
+    } else {
+      return [].concat(game_toConsumableArray(acc), [new pile(pieceRule)]);
+    }
+  }, []);
+
+  // Apply initial placements
+  (_rules$initialPlaceme = rules.initialPlacements) === null || _rules$initialPlaceme === void 0 || _rules$initialPlaceme.forEach(function (placement) {
+    if (placement.perPlayer) {
+      state.players.forEach(function (player) {
+        doInitialPlacement(placement, player, {
+          sharedBoard: state.sharedBoard,
+          personalBoards: state.personalBoards,
+          pieces: state.pieces
+        });
+      });
+    } else {
+      doInitialPlacement(placement, null, {
+        sharedBoard: state.sharedBoard,
+        personalBoards: state.personalBoards,
+        pieces: state.pieces
+      });
+    }
+  });
+  var currentRoundRule = rules.round.phases ? rules.round.phases[0] : rules.round;
+  state.currentRound = roundFactory(currentRoundRule, state);
+  state.status = 'active';
+  return state;
+}
+function checkWinner(state, rules) {
+  return state.players.find(function (player) {
+    var winCondition = game_objectSpread(game_objectSpread({}, rules.winCondition), {}, {
+      piece: game_objectSpread(game_objectSpread({}, rules.winCondition.piece), {}, {
+        player: player
+      })
+    });
+    var condition = conditionFactory(winCondition, state);
+    return condition.isMet();
+  }) || null;
+}
+function checkDraw(state, rules) {
+  return !!(rules.drawCondition && conditionFactory(rules.drawCondition, state).isMet());
+}
+function expandActionPayload(move, state, rules) {
+  var player = state.players.find(function (p) {
+    return p.id === move.playerId;
+  });
+  if (!player && move.type !== 'join' && move.type !== 'start') {
+    throw new Error("Invalid player ID");
+  }
+  var pieceRule = rules.pieces.find(function (piece) {
+    var _move$piece;
+    return piece.name === ((_move$piece = move.piece) === null || _move$piece === void 0 ? void 0 : _move$piece.name);
+  });
+  var expandedMove = cloneDeep_default()(move);
+  if (pieceRule !== null && pieceRule !== void 0 && pieceRule.perPlayer && !expandedMove.player) {
+    expandedMove.piece.player = {
+      id: player.id
+    };
+  }
+  if (!expandedMove.board) {
+    expandedMove.board = getBoardPathContaining(expandedMove.piece, state);
+  }
+  expandedMove.board = normalizePath(expandedMove.board, {
+    player: player
+  });
+  return expandedMove;
+}
+function handlePlayerJoin(state, rules, move) {
+  if (state.players.length < rules.playerCountRange[1]) {
+    state.players.push(new player(rules.player, state.players.length, move.playerId));
+  } else {
+    throw new Error('game is full!');
+  }
+}
+function handleStartGame(state, rules) {
+  if (state.players.length >= rules.playerCountRange[0]) {
+    initializeState(state, rules);
+  } else {
+    throw new Error('not enough players');
+  }
+}
+function makeMove(rules, _state, move) {
+  if (!_state) {
+    return {
+      context: {},
+      winner: null,
+      status: 'waiting',
+      players: []
+    };
+  }
+  var state = deserialize(_state);
+  if (state.status === 'done') {
+    throw new Error("Game is over!");
+  }
+  if (move === undefined) {
+    return state;
+  } else if ((move === null || move === void 0 ? void 0 : move.type) === 'join') {
+    handlePlayerJoin(state, rules, move);
+    return makeSerializable(state);
+  } else if (move.type === 'start') {
+    handleStartGame(state, rules);
+    return makeSerializable(state);
   }
 
-  // TODO: DRY this up
-  return game_createClass(Game, [{
-    key: "initialize",
-    value: function initialize() {
-      var _this = this,
-        _this$rules$initialPl;
-      this.sharedBoard = Object.entries(this.rules.sharedBoard).reduce(function (acc, _ref) {
-        var _ref2 = game_slicedToArray(_ref, 2),
-          id = _ref2[0],
-          board = _ref2[1];
-        var path = ["sharedBoard", id];
-        return game_objectSpread(game_objectSpread({}, acc), {}, game_defineProperty({}, id, boardFactory(game_objectSpread(game_objectSpread({}, board), {}, {
-          path: path
-        }), _this.options)));
-      }, {});
-      this.players = Array.from(Array(this.options.playerCount)).map(function (_, i) {
-        return new player(_this.rules.player, i);
-      });
-      this.personalBoards = this.players.reduce(function (acc, player) {
-        return game_objectSpread(game_objectSpread({}, acc), {}, game_defineProperty({}, player.id, Object.entries(_this.rules.personalBoard || []).reduce(function (acc, _ref3) {
-          var _ref4 = game_slicedToArray(_ref3, 2),
-            id = _ref4[0],
-            board = _ref4[1];
-          var path = ["sharedBoard", id];
-          return game_objectSpread(game_objectSpread({}, acc), {}, game_defineProperty({}, id, boardFactory(game_objectSpread(game_objectSpread({}, board), {}, {
-            path: path
-          }), game_objectSpread(game_objectSpread({}, _this.options), {}, {
-            player: player
-          }))));
-        }, {})));
-      }, {});
-      this.pieces = this.rules.pieces.reduce(function (acc, pieceRule) {
-        if (pieceRule.perPlayer) {
-          return [].concat(game_toConsumableArray(acc), game_toConsumableArray(_this.players.map(function (player) {
-            return new piece_group(pieceRule, {
-              player: player
-            });
-          })));
-        } else {
-          return [].concat(game_toConsumableArray(acc), [new piece_group(pieceRule)]);
-        }
-      }, []);
-      (_this$rules$initialPl = this.rules.initialPlacements) === null || _this$rules$initialPl === void 0 || _this$rules$initialPl.forEach(function (placement) {
-        if (placement.perPlayer) {
-          _this.players.forEach(function (player) {
-            // player specifies both the piece owner (if relevant) and personalBoard
-            _this.doInitialPlacement(placement, player);
-          });
-        } else {
-          _this.doInitialPlacement(placement);
-        }
-      });
-    }
-  }, {
-    key: "doInitialPlacement",
-    value: function doInitialPlacement(placement, player) {
-      var _this2 = this;
-      var actionRule = {
-        type: "movePiece"
-      };
-      if (placement.playerPerspective) {
-        actionRule.playerPerspective = placement.playerPerspective;
-      }
-      var actionPayload = {
-        piece: placement.piece,
-        board: placement.board
-      };
-      if (placement.targets) {
-        placement.targets.forEach(function (target) {
-          actionFactory(actionRule, _this2)["do"](_this2.expandActionPayload(game_objectSpread(game_objectSpread({}, actionPayload), {}, {
-            target: target
-          }), player));
-        });
-      } else {
-        Array.from(new Array(placement.count)).forEach(function () {
-          actionFactory(actionRule, _this2)["do"](_this2.expandActionPayload(actionPayload, player));
-        });
-      }
-    }
-  }, {
-    key: "doAction",
-    value: function doAction(actionPayload) {
-      if (this.gameOver) {
-        throw new Error("game is over!");
-      }
-      var player = this.players.find(function (player) {
-        return player.id === actionPayload.playerId;
-      });
-      this.currentRound.doAction(this.expandActionPayload(actionPayload, player));
-      this.advance();
-    }
-  }, {
-    key: "advance",
-    value: function advance() {
-      var next = this.generator.next();
-      if (next.done) {
-        this.generator = this.createRoundGenerator(this.rules.round);
-        next = this.generator.next();
-      }
-      this.currentRound = next.value;
-      var winner = this.getWinner();
-      var isDraw = this.isDraw();
-      if (winner) {
-        this.winner = winner;
-      }
-      if (winner || isDraw) {
-        this.gameOver = true;
-      }
-    }
-  }, {
-    key: "getWinner",
-    value: function getWinner() {
-      var _this3 = this;
-      // probably ought to do this expansion at game start, with separate
-      // runtime-only expansion and compile-time-possible expansions
-      return this.players.find(function (player) {
-        var winCondition = game_objectSpread(game_objectSpread({}, _this3.rules.winCondition), {}, {
-          piece: game_objectSpread(game_objectSpread({}, _this3.rules.winCondition.piece), {}, {
-            player: player
-          })
-        });
-        var condition = conditionFactory(winCondition, _this3);
-        return condition.isMet();
-      });
-    }
-  }, {
-    key: "isDraw",
-    value: function isDraw() {
-      return !!(this.rules.drawCondition && conditionFactory(this.rules.drawCondition, this).isMet());
-    }
-  }, {
-    key: "createRoundGenerator",
-    value: /*#__PURE__*/game_regenerator().m(function createRoundGenerator(roundRule) {
-      var round, _iterator, _step, phaseRule, _t;
-      return game_regenerator().w(function (_context) {
-        while (1) switch (_context.n) {
-          case 0:
-            round = roundFactory(roundRule, this);
-            if (roundRule.phases) {
-              _context.n = 4;
-              break;
-            }
-          case 1:
-            _context.n = 2;
-            return round;
-          case 2:
-            if (!round.isOver()) {
-              _context.n = 1;
-              break;
-            }
-          case 3:
-            _context.n = 11;
-            break;
-          case 4:
-            _iterator = game_createForOfIteratorHelper(roundRule.phases);
-            _context.p = 5;
-            _iterator.s();
-          case 6:
-            if ((_step = _iterator.n()).done) {
-              _context.n = 8;
-              break;
-            }
-            phaseRule = _step.value;
-            return _context.d(_regeneratorValues(this.createRoundGenerator(phaseRule)), 7);
-          case 7:
-            _context.n = 6;
-            break;
-          case 8:
-            _context.n = 10;
-            break;
-          case 9:
-            _context.p = 9;
-            _t = _context.v;
-            _iterator.e(_t);
-          case 10:
-            _context.p = 10;
-            _iterator.f();
-            return _context.f(10);
-          case 11:
-            return _context.a(2);
-        }
-      }, createRoundGenerator, this, [[5, 9, 10, 11]]);
-    })
-  }, {
-    key: "get",
-    value: function get(path) {
-      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      return get_default()(this, this.normalizePath(path, options));
-    }
-  }, {
-    key: "expandActionPayload",
-    value: function expandActionPayload(actionPayload, player) {
-      var _actionPayload$piece, _actionPayload$piece2, _actionPayload$piece3;
-      var pieceName = ((_actionPayload$piece = actionPayload.piece) === null || _actionPayload$piece === void 0 ? void 0 : _actionPayload$piece.name) || "playerMarker";
-      var pieceRule = this.rules.pieces.find(function (piece) {
-        return piece.name === pieceName;
-      });
-      var piece;
-      if ((_actionPayload$piece2 = actionPayload.piece) !== null && _actionPayload$piece2 !== void 0 && _actionPayload$piece2.id) {
-        piece = {
-          id: actionPayload.piece.id
-        };
-      } else if ((_actionPayload$piece3 = actionPayload.piece) !== null && _actionPayload$piece3 !== void 0 && _actionPayload$piece3.name) {
-        piece = actionPayload.piece;
-      } else {
-        piece = {
-          name: "playerMarker"
-        };
-      }
-      var defaultActionPayload = {
-        type: "movePiece",
-        player: player
-      };
-      actionPayload.piece = piece;
-      if (pieceRule.perPlayer && !actionPayload.player) {
-        actionPayload.piece.player = {
-          id: player.id
-        };
-      }
-      if (!actionPayload.board) {
-        actionPayload.board = this.getBoardPathContaining(actionPayload.piece);
-      }
-      var merged = merge_default()({}, defaultActionPayload, actionPayload);
-      merged.board = this.normalizePath(actionPayload.board, {
-        player: player
-      });
-      return merged;
-    }
-  }, {
-    key: "getPiecePaths",
-    value: function getPiecePaths(matcher, options) {
-      var _this4 = this;
-      var placesPiecesCanBe = {
-        personalBoards: this.personalBoards,
-        sharedBoard: this.sharedBoard,
-        pieces: this.pieces
-      };
-      return Array.from(findValuePath(placesPiecesCanBe, matches_default()(matcher))).filter(function (a) {
-        return a[a.length - 1] !== "rule";
-      }).sort(function (a) {
-        return a[0] === "pieces" ? 1 : -1;
-      }).map(function (path) {
-        return _this4.normalizePath(path, options);
-      });
-    }
-  }, {
-    key: "getPieces",
-    value: function getPieces(pieceMatcher, options) {
-      var _this5 = this;
-      return this.getPiecePaths(pieceMatcher, options).map(function (path) {
-        return _this5.get(path);
-      });
-    }
-  }, {
-    key: "getPiece",
-    value: function getPiece(pieceMatcher) {
-      var match = this.getPieces(pieceMatcher)[0];
-      return match instanceof piece_group ? match.getOne() : match;
-    }
-  }, {
-    key: "getBoardPathContaining",
-    value: function getBoardPathContaining(piece, options) {
-      return this.getPiecePaths(piece, options)[0];
-    }
-  }, {
-    key: "getBoardContaining",
-    value: function getBoardContaining(piece) {
-      var path = this.getBoardPathContaining(piece);
-      return path ? this.get(path.slice(0, path.length - 1)) : null;
-    }
-  }, {
-    key: "normalizePath",
-    value: function normalizePath(path) {
-      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      return path[0] === "personalBoard" ? ["personalBoards", options.player.id].concat(game_toConsumableArray(path.slice(1))) : path;
-    }
-  }]);
-}(); // todo. will allow smaller rulesets
+  // Expand the move payload with defaults and normalizations
+  var expandedMove = expandActionPayload(move, state, rules);
+  var round = state.currentRound;
+  round.doAction(expandedMove);
+  // Check if round is over and advance if needed
+  if (round.isOver(state)) {
+    if (rules.round.phases) {
+      // Get current phase rule
+      var currentPhaseRule = rules.round.phases[state.currentRound.currentPhaseIndex];
 
-function expandRules(rules) {
-  return rules;
+      // Create round for current phase
+      var phaseRound = roundFactory(currentPhaseRule, state);
+
+      // If this phase is over, move to next phase
+      if (phaseRound.isOver(state)) {
+        state.currentRound.currentPhaseIndex++;
+
+        // If we've completed all phases, start new round
+        if (state.currentRound.currentPhaseIndex >= rules.round.phases.length) {
+          state.currentRound.currentPhaseIndex = 0;
+          state.currentRound.currentRoundIndex++;
+        }
+      }
+    } else {
+      // No phases, just increment round
+      state.currentRound.currentRoundIndex++;
+    }
+  }
+
+  // Check win/draw conditions
+  var winner = checkWinner(state, rules);
+  var isDraw = checkDraw(state, rules);
+  if (winner || isDraw) {
+    state.status = 'done';
+    state.winner = winner;
+  }
+  return makeSerializable(state);
+}
+function doInitialPlacement(placement, player, state) {
+  var actionRule = placement.action;
+  var actionPayload = placement.payload || {};
+  if (player) {
+    actionPayload.player = player;
+  }
+  Array.from(new Array(placement.count || 1)).forEach(function () {
+    var action = actionFactory(actionRule, state);
+    action["do"](expandActionPayload(actionPayload, state, rules));
+  });
+}
+function getBoardPathContaining(piece, state, options) {
+  return getPiecePaths(piece, state, options)[0];
+}
+function normalizePath(path) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  return path[0] === "personalBoard" && options.player ? ["personalBoards", options.player.id.toString()].concat(game_toConsumableArray(path.slice(1))) : path;
+}
+function getPiecePaths(matcher, state, options) {
+  var placesPiecesCanBe = {
+    personalBoards: state.personalBoards,
+    sharedBoard: state.sharedBoard,
+    pieces: state.pieces
+  };
+  return Array.from(findValuePath(placesPiecesCanBe, matches_default()(matcher))).filter(function (a) {
+    return a[a.length - 1] !== "rule";
+  }).sort(function (a) {
+    return a[0] === "pieces" ? 1 : -1;
+  }).map(function (path) {
+    return normalizePath(path, options);
+  });
 }
 function expandOptions(options) {
   var defaultOptions = {
     playerCount: 2
   };
-  return merge_default()({}, defaultOptions, options);
+  return merge({}, defaultOptions, options);
+}
+
+// mutates rules
+function expandRules(rules) {
+  addPathToRules(rules);
+}
+
+// mutates rules
+function addPathToRules(rules) {
+  var CHILD_KEYS = ['phases', 'rounds'];
+  function annotate(node, pathSegs) {
+    if (!node || game_typeof(node) !== 'object') return;
+
+    // lodash.get path string, e.g. "round.phases.0.rounds.2"
+    node.path = pathSegs.join('.');
+
+    // recurse into either "phases" or "rounds" arrays if present
+    var _iterator = game_createForOfIteratorHelper(CHILD_KEYS),
+      _step;
+    try {
+      var _loop = function _loop() {
+        var key = _step.value;
+        var kids = node[key];
+        if (Array.isArray(kids)) {
+          kids.forEach(function (child, idx) {
+            annotate(child, pathSegs.concat(key, idx));
+          });
+        }
+      };
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        _loop();
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+  }
+
+  // Top-level: support either "round" (object) or "rounds" (array), or both.
+  if (rules.round && game_typeof(rules.round) === 'object') {
+    annotate(rules.round, ['round']);
+  }
+  if (Array.isArray(rules.rounds)) {
+    rules.rounds.forEach(function (r, i) {
+      return annotate(r, ['rounds', i]);
+    });
+  }
+}
+function makeSerializable(state) {
+  // see Serializable toJSON for stringification behavior
+  return JSON.parse(JSON.stringify(state, function (key, value) {
+    return value;
+  }));
+}
+function deserialize(state) {
+  var newState = {};
+  var instanceMap = new Map();
+  var deserialized = JSON.parse(JSON.stringify(state), function (key, value) {
+    if (value !== null && value !== void 0 && value.constructorName) {
+      // don't create multiple instances for objects with same ID, use canonical instance
+      var existingInstance = instanceMap.get(value.id);
+      if (existingInstance) {
+        console.log('existingInstance', existingInstance);
+        return existingInstance;
+      } else {
+        // by convention, state is last arg to classes that need it
+        // it is filtered out of serialization-safe args because it's circular
+        var obj = _construct(registry[value.constructorName], game_toConsumableArray(value.args).concat([newState]));
+        Object.assign(obj, value); // re-populate instance properties
+        instanceMap.set(obj.id, obj);
+        return obj;
+      }
+    } else {
+      return value;
+    }
+  });
+  // re-establish circular reference
+  return Object.assign(newState, deserialized);
 }
 ;// ../board-game-engine/src/engine/index.ts
 
@@ -39946,23 +40238,46 @@ function use_game_iterableToArrayLimit(r, l) { var t = null == r ? null : "undef
 function use_game_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
-
 function useGame(gameRules) {
-  var forceUpdate = useForceUpdate();
+  var baseGame = (0,react.useMemo)(function () {
+    return makeGame(gameRules);
+  }, [gameRules]);
   var _useState = (0,react.useState)(function () {
-      return new Game(gameRules);
+      return baseGame;
     }),
     _useState2 = use_game_slicedToArray(_useState, 2),
     game = _useState2[0],
     setGame = _useState2[1];
+  var prevGameRulesRef = (0,react.useRef)(gameRules);
+  if (prevGameRulesRef.current !== gameRules) {
+    prevGameRulesRef.current = gameRules;
+    if (game !== baseGame) {
+      setGame(baseGame);
+    }
+  }
   var doAction = function doAction(action) {
-    game.doAction(action);
-    forceUpdate();
+    // weird parsing is temp to test serialization
+    setGame(function (currentGame) {
+      return makeMove(gameRules, JSON.parse(JSON.stringify(currentGame)), action);
+    });
   };
-  (0,react.useEffect)(function () {
-    setGame(new Game(gameRules));
-  }, [gameRules]);
   return [game, doAction];
+}
+function makeGame(gameRules) {
+  var baseGame = makeMove(gameRules);
+  baseGame = makeMove(gameRules, baseGame, {
+    playerId: 1,
+    type: 'join'
+  });
+  baseGame = makeMove(gameRules, baseGame, {
+    playerId: 2,
+    type: 'join'
+  });
+  baseGame = makeMove(gameRules, baseGame, {
+    type: 'start'
+  });
+  console.log('baseGame', baseGame);
+  return baseGame;
 }
 ;// ../board-game-engine/src/context/game-context.js
 
@@ -40045,12 +40360,10 @@ function stack_Stack(_ref) {
 
 
 
-
-
 function board_Board(props) {
-  if (props.board instanceof Grid) {
+  if (props.board.constructorName === 'Grid') {
     return /*#__PURE__*/react.createElement(grid, props);
-  } else if (props.board instanceof Stack) {
+  } else if (props.board.constructorName === 'Stack') {
     return /*#__PURE__*/react.createElement(stack_Stack, props);
   } else {
     return null;
@@ -40123,7 +40436,7 @@ function Layout(_ref) {
   })));
 }
 ;// ../board-game-engine/src/tic-tac-toe-verbose.json
-const tic_tac_toe_verbose_namespaceObject = /*#__PURE__*/JSON.parse('{"sharedBoard":{"grid":{"type":"grid","width":3,"height":3}},"pieces":[{"name":"playerMarker","count":"Infinity","perPlayer":true}],"winCondition":{"type":"bingo","board":["sharedBoard","grid"],"piece":{"name":"playerMarker"}},"round":{"loopUntil":false,"phases":[{"type":"sequentialPlayerTurn","actions":[{"type":"movePiece","piece":{"name":"playerMarker"},"from":"player","to":["sharedBoard","grid"],"conditions":[{"type":"doesNotContain","piece":"any"}]}]}]},"drawCondition":{"type":"blackout","board":["sharedBoard","grid"],"piece":{"name":"playerMarker"}}}');
+const tic_tac_toe_verbose_namespaceObject = /*#__PURE__*/JSON.parse('{"playerCountRange":[2,2],"sharedBoard":{"grid":{"type":"grid","width":3,"height":3}},"pieces":[{"name":"playerMarker","perPlayer":true}],"winCondition":{"type":"bingo","boardPath":["sharedBoard","grid"],"piece":{"name":"playerMarker"}},"round":{"loopUntil":false,"phases":[{"type":"sequentialPlayerTurn","actions":[{"type":"movePiece","piece":{"name":"playerMarker"},"from":"player","to":["sharedBoard","grid"],"conditions":[{"type":"doesNotContain","piece":"any"}]}]}]},"drawCondition":{"type":"blackout","boardPath":["sharedBoard","grid"],"piece":{"name":"playerMarker"}}}');
 ;// ../board-game-engine/app.tsx
 function app_slicedToArray(r, e) { return app_arrayWithHoles(r) || app_iterableToArrayLimit(r, e) || app_unsupportedIterableToArray(r, e) || app_nonIterableRest(); }
 function app_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -40142,28 +40455,30 @@ var App = function App() {
     _useGame2 = app_slicedToArray(_useGame, 2),
     game = _useGame2[0],
     doAction = _useGame2[1];
+  var _useState = (0,react.useState)(null),
+    _useState2 = app_slicedToArray(_useState, 2),
+    selectedPiece = _useState2[0],
+    setSelectedPiece = _useState2[1];
   var onPieceClick = function onPieceClick(piece) {
-    console.log("piece", piece);
-    doAction({
-      type: "selectPiece",
-      playerId: game.currentRound.currentPlayer.id,
-      piece: {
-        name: piece.rule.name,
-        id: piece.id
-      }
-    });
+    // todo: multiselect
+    if (!selectedPiece) {
+      setSelectedPiece(piece);
+    } else {
+      setSelectedPiece(null);
+    }
   };
   var onSpaceClick = function onSpaceClick(cell, board) {
-    var currentPlayer = game.currentRound.currentPlayer;
+    var currentPlayerIndex = game.currentRound.currentPlayerIndex;
+    var currentPlayer = game.players[currentPlayerIndex];
     var actionPayload = {
       playerId: currentPlayer.id,
-      type: "movePiece",
-      board: board.rule.path,
+      type: 'movePiece',
+      board: board,
       target: cell.coordinates
     };
-    if (game.context.selectedPiece) {
+    if (selectedPiece) {
       actionPayload.piece = {
-        name: game.context.selectedPiece.name
+        name: selectedPiece.name
       };
     }
     doAction(actionPayload);
@@ -41349,7 +41664,39 @@ var update = injectStylesIntoStyleTag_default()(cjs_js_styles/* default */.A, op
 
        /* harmony default export */ const styles = (cjs_js_styles/* default */.A && cjs_js_styles/* default */.A.locals ? cjs_js_styles/* default */.A.locals : undefined);
 
+// EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!../board-game-engine/styles.css
+var cjs_js_board_game_engine_styles = __webpack_require__(451);
+;// ../board-game-engine/styles.css
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var styles_options = {};
+
+styles_options.styleTagTransform = (styleTagTransform_default());
+styles_options.setAttributes = (setAttributesWithoutAttributes_default());
+
+      styles_options.insert = insertBySelector_default().bind(null, "head");
+    
+styles_options.domAPI = (styleDomAPI_default());
+styles_options.insertStyleElement = (insertStyleElement_default());
+
+var styles_update = injectStylesIntoStyleTag_default()(cjs_js_board_game_engine_styles/* default */.A, styles_options);
+
+
+
+
+       /* harmony default export */ const board_game_engine_styles = (cjs_js_board_game_engine_styles/* default */.A && cjs_js_board_game_engine_styles/* default */.A.locals ? cjs_js_board_game_engine_styles/* default */.A.locals : undefined);
+
 ;// ./index.js
+
 
 
 

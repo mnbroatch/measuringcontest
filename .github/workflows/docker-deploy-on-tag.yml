@@ -1,0 +1,66 @@
+name: Build and Push Docker Image to ECR
+
+on:
+  push:
+    tags:
+      - 'v*'
+  release:
+    types: [published]
+
+env:
+  AWS_REGION: us-east-1          # change to your AWS region
+  ECR_REPOSITORY: my-repo        # your ECR repo name
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::123456789012:role/GitHubActionsECRPushRole
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Determine image tags
+        id: image-tags
+        run: |
+          # Default tag is the commit SHA
+          IMAGE_TAG=${GITHUB_SHA::7}
+
+          # If this is a release, use the release tag
+          if [ -n "${GITHUB_REF##refs/tags/}" ] && [[ $GITHUB_REF == refs/tags/* ]]; then
+            IMAGE_TAG=${GITHUB_REF#refs/tags/}
+          fi
+
+          # If this is the main branch, also push 'latest'
+          if [ "${GITHUB_REF##refs/heads/}" == "main" ]; then
+            echo "LATEST_TAG=latest" >> $GITHUB_ENV
+          fi
+
+          echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
+
+      - name: Build Docker image
+        run: |
+          docker build -t $ECR_REPOSITORY:${IMAGE_TAG} ./server
+
+      - name: Tag Docker image for ECR
+        run: |
+          docker tag $ECR_REPOSITORY:${IMAGE_TAG} ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:${IMAGE_TAG}
+          if [ -n "$LATEST_TAG" ]; then
+            docker tag $ECR_REPOSITORY:${IMAGE_TAG} ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:latest
+          fi
+
+      - name: Push Docker image to ECR
+        run: |
+          docker push ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:${IMAGE_TAG}
+          if [ -n "$LATEST_TAG" ]; then
+            docker push ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:latest
+          fi
