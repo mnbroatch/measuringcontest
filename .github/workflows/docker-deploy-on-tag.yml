@@ -71,3 +71,17 @@ jobs:
           if [ -n "$LATEST_TAG" ]; then
             docker push ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:latest
           fi
+
+      - name: Trigger deployment on EC2
+        run: |
+          INSTANCE_ID=$(aws ec2 describe-instances \
+            --filters "Name=tag:Name,Values=BoardgameStack-BoardgameServer" \
+            --query "Reservations[0].Instances[0].InstanceId" \
+            --output text \
+            --region $AWS_REGION)
+
+          aws ssm send-command \
+            --document-name "AWS-RunShellScript" \
+            --targets "Key=instanceIds,Values=$INSTANCE_ID" \
+            --parameters 'commands=["/home/ec2-user/deploy.sh"]' \
+            --region $AWS_REGION
