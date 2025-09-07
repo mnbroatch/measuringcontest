@@ -67,23 +67,14 @@ jobs:
             docker tag $ECR_REPOSITORY:${IMAGE_TAG} ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:latest
           fi
 
-      - name: Push Docker image to ECR (skip if tag already exists)
+      - name: Push Docker image to ECR
         run: |
-          set -e
-          if aws ecr describe-images \
-               --repository-name $ECR_REPOSITORY \
-               --image-ids imageTag=$IMAGE_TAG \
-               --region $AWS_REGION >/dev/null 2>&1; then
-            echo "Image tag $IMAGE_TAG already exists in ECR, skipping push."
-          else
-            echo "Pushing new image $IMAGE_TAG..."
-            docker push ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:${IMAGE_TAG}
-          fi
-
-          if [ -n "$LATEST_TAG" ]; then
-            echo "Pushing 'latest'..."
-            docker push ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:latest
-          fi
+          echo "Pushing new image tag $IMAGE_TAG..."
+          docker push ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:${IMAGE_TAG}
+          
+          echo "Also tagging and pushing 'latest'..."
+          docker tag ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:${IMAGE_TAG} ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:latest
+          docker push ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:latest
 
       - name: Trigger deployment on EC2
         run: |
