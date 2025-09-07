@@ -1,17 +1,19 @@
 # Use a small Node.js base image
 FROM node:20-alpine
 
-# Create app directory inside container
+# Set working directory
 WORKDIR /app
 
-# Copy package files and install dependencies
+# Copy only package files first to leverage caching
 COPY package*.json ./
+
+# Install dependencies
 RUN npm install --production
 
-# Copy app source code
-COPY . .
+# Copy only source code (avoid other files like .git, node_modules)
+COPY server/ ./  # adjust path if your source is inside `server/`
 
-# Expose port 8000
+# Expose port
 EXPOSE 8000
 
 # Run the app
