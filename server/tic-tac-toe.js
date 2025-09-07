@@ -1,40 +1,66 @@
-import pkg from 'boardgame.io/dist/cjs/core.js';
-console.log('pkg', pkg)
-import { Game } from 'boardgame.io/dist/cjs/core.js';
+function IsVictory(cells) {
+  const positions = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
 
-export const TicTacToe = Game({
-  setup: () => ({ cells: Array(9).fill(null) }),
+  const isRowComplete = (row) => {
+    const symbols = row.map((i) => cells[i]);
+    return symbols.every((i) => i !== null && i === symbols[0]);
+  };
+
+  return positions.map(isRowComplete).some((i) => i === true);
+}
+
+const TicTacToe = {
+  name: 'tic-tac-toe',
+
+  setup: () => ({
+    cells: new Array(9).fill(null),
+  }),
 
   moves: {
-    clickCell: (G, ctx, id) => {
-      if (G.cells[id] === null) {
-        G.cells[id] = ctx.currentPlayer;
+    clickCell({ G, playerID }, id) {
+      const cells = [...G.cells];
+
+      if (cells[id] === null) {
+        cells[id] = playerID;
+        return { ...G, cells };
       }
     },
   },
 
-  endIf: (G, ctx) => {
-    const winner = calculateWinner(G.cells);
-    if (winner) {
-      return { winner };
+  turn: {
+    minMoves: 1,
+    maxMoves: 1,
+  },
+
+  endIf: ({ G, ctx }) => {
+    if (IsVictory(G.cells)) {
+      return { winner: ctx.currentPlayer };
     }
-    if (G.cells.every(cell => cell !== null)) {
+    if (G.cells.filter((c) => c === null).length == 0) {
       return { draw: true };
     }
   },
-});
 
-function calculateWinner(cells) {
-  const lines = [
-    [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
-    [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
-    [0, 4, 8], [2, 4, 6],           // Diagonals
-  ];
-  for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
-    if (cells[a] && cells[a] === cells[b] && cells[a] === cells[c]) {
-      return cells[a];
-    }
-  }
-  return null;
-}
+  ai: {
+    enumerate: (G) => {
+      let r = [];
+      for (let i = 0; i < 9; i++) {
+        if (G.cells[i] === null) {
+          r.push({ move: 'clickCell', args: [i] });
+        }
+      }
+      return r;
+    },
+  },
+};
+
+export default TicTacToe;
