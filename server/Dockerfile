@@ -11,7 +11,7 @@ COPY package*.json ./
 RUN npm install --production
 
 # Copy only source code (avoid other files like .git, node_modules)
-COPY server/ ./  # adjust path if your source is inside `server/`
+COPY ./ ./
 
 # Expose port
 EXPOSE 8000
