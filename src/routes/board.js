@@ -1,6 +1,6 @@
-import React, { useMemo, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { createFileRoute } from "@tanstack/react-router"
-import { Client } from 'boardgame.io/client';
+import { Client, LobbyClient } from 'boardgame.io/client';
 import { SocketIO } from 'boardgame.io/multiplayer'
 import TicTacToe from '../../server/tic-tac-toe';
 import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
@@ -9,12 +9,13 @@ const game = TicTacToe
 
 export default function BoardGamePage () {
   const auth = useCognitoAuth()
+  console.log('auth.userId', auth.userId)
   const [client, setClient] = useState(null)
   useEffect(() => {
     if (!client && auth.userId) {
       const newClient = new Client({
         game,
-        matchID: '2',
+        matchID: '4',
         multiplayer: SocketIO({ server: 'localhost:8000' }),
         playerID: auth.userId
       })
