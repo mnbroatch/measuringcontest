@@ -1,5 +1,6 @@
 import React from 'react'
 import { createFileRoute } from "@tanstack/react-router"
+import { LobbyClient } from 'boardgame.io/client';
 import { useRoomQuery } from "../queries/use-room-query.js";
 import { useJoinRoomMutation } from "../queries/use-join-room-mutation.js";
 import { useLeaveRoomMutation } from "../queries/use-leave-room-mutation.js";
