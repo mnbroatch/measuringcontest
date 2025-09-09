@@ -3,11 +3,9 @@ import { createFileRoute, Link } from "@tanstack/react-router"
 import { useCreateRoomMutation } from "../queries/use-create-room-mutation.js";
 import { useDeleteRoomMutation } from "../queries/use-delete-room-mutation.js";
 import { useMyRoomsQuery } from "../queries/use-my-rooms-query.js";
-import ticTacToe from "../tic-tac-toe.json";
 
 export default function IndexPage () {
   const [roomCode, setRoomCode] = useState('')
-  const [gameRules, setGameRules] = useState(JSON.stringify(ticTacToe, null, 2))
   const myRooms = useMyRoomsQuery()
   const createRoomMutation = useCreateRoomMutation()
   const deleteRoomMutation = useDeleteRoomMutation()
@@ -26,10 +24,9 @@ export default function IndexPage () {
       </Link>
       {!myRooms.data?.length && (
         <>
-          <button onClick={() => { createRoomMutation.mutate(gameRules) }}>
+          <button onClick={() => { createRoomMutation.mutate() }}>
             create room
           </button>
-          <textarea onChange={(e) => {setGameRules(e.target.value)}} value={gameRules}></textarea>
           <Link
             to="/rooms/$roomcode"
             params={{

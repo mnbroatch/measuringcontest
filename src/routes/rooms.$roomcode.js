@@ -1,17 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { createFileRoute } from "@tanstack/react-router"
 import { LobbyClient } from 'boardgame.io/client';
 import { useRoomQuery } from "../queries/use-room-query.js";
 import { useJoinRoomMutation } from "../queries/use-join-room-mutation.js";
 import { useLeaveRoomMutation } from "../queries/use-leave-room-mutation.js";
+import { useCreateGameMutation } from "../queries/use-create-game-mutation.js";
 import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
+import ticTacToe from "../tic-tac-toe.json";
 
 export default function RoomPage () {
   const { roomcode: roomCode } = Route.useParams()
+  const [gameRules, setGameRules] = useState(JSON.stringify(ticTacToe, null, 2))
   const { userId } = useCognitoAuth()
   const room = useRoomQuery(roomCode)
   const joinRoomMutation = useJoinRoomMutation(roomCode)
   const leaveRoomMutation = useLeaveRoomMutation(roomCode)
+  const createGameMutation = useCreateGameMutation(roomCode)
 
   return !room.isLoading && (
     <>
@@ -20,13 +24,18 @@ export default function RoomPage () {
           Join
         </button>
       )}
+      <textarea onChange={(e) => {setGameRules(e.target.value)}} value={gameRules}></textarea>
+      {userId && room.data.createdBy === userId && (
+        <button onClick={() => { createGameMutation.mutate(gameRules) }}>
+          Create Game
+        </button>
+      )}
       {room.data.members?.includes(userId) && (
         <button onClick={leaveRoomMutation.mutate}>
           Leave
         </button>
       )}
       <pre>
-        {JSON.stringify(room.data, null, 2)}
       </pre>
     </>
   )

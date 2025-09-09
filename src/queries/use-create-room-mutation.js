@@ -9,13 +9,10 @@ export const useCreateRoomMutation = () => {
   const auth = useCognitoAuth()
 
   return useMutation({
-    mutationFn: (gameRules) => makeAuthenticatedRequest(
+    mutationFn: () => makeAuthenticatedRequest(
       apiUrl,
       auth.idToken,
-      { 
-        method: 'POST',
-        body: { gameRules },
-      }
+      { method: 'POST' }
     ),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['my-rooms', auth.idToken] })

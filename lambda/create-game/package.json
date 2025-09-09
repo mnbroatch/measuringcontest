@@ -1,7 +1,0 @@
-{
-  "name": "create-game-lambda",
-  "version": "1.0.0",
-  "dependencies": {
-    "board-game-engine-temp": "^1.0.0"
-  }
-}

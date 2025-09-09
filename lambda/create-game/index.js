@@ -1,13 +1,12 @@
-
-import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { DynamoDBDocumentClient, TransactWriteCommand, GetCommand } from "@aws-sdk/lib-dynamodb";
+const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
+const { DynamoDBDocumentClient, TransactWriteCommand, GetCommand } = require("@aws-sdk/lib-dynamodb");
 
 const client = new DynamoDBClient({});
 const ddb = DynamoDBDocumentClient.from(client);
 
 const BOARDGAME_SERVER_URL = 'https://gameserver.measuringconstest.com';
 
-export const handler = async (event) => {
+exports.handler = async (event) => {
   const { sessionCode } = event.pathParameters;
   const { sub } = event.requestContext.authorizer.claims;
   const body = JSON.parse(event.body || "{}");

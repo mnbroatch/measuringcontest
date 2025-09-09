@@ -4,7 +4,7 @@ import makeAuthenticatedRequest from "../utils/make-authenticated-request.js";
 
 const apiUrl = 'https://api.measuringcontest.com'
 
-export const useCreateRoomMutation = (roomCode) => {
+export const useCreateGameMutation = (roomCode) => {
   const queryClient = useQueryClient()
   const auth = useCognitoAuth()
 
