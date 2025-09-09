@@ -50,7 +50,6 @@ async function createRoom(roomCode, userId) {
       roomCode,
       createdBy: userId,
       members: new Set([userId]),
-      games: new Set([]),
       roomStatus: "waiting",
       createdAt: Date.now(),
       expiresAtSeconds: Math.floor(Date.now() / 1000) + 24 * 3600,

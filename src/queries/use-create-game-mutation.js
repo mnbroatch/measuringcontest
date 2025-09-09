@@ -1,0 +1,24 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
+import makeAuthenticatedRequest from "../utils/make-authenticated-request.js";
+
+const apiUrl = 'https://api.measuringcontest.com'
+
+export const useCreateRoomMutation = (roomCode) => {
+  const queryClient = useQueryClient()
+  const auth = useCognitoAuth()
+
+  return useMutation({
+    mutationFn: (gameRules) => makeAuthenticatedRequest(
+      `${apiUrl}/rooms/${roomCode}/games`,
+      auth.idToken,
+      { 
+        method: 'POST',
+        body: { gameRules, gameName: 'tic-tac-toe' },
+      }
+    ),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['room', roomCode] })
+    },
+  })
+}
