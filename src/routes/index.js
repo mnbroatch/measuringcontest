@@ -58,6 +58,8 @@ export default function IndexPage () {
 }
 
 export const Route = createFileRoute("/")({
-  loader: () => useMyRoomsQuery.preload(),
+  loader: () => {
+    return useMyRoomsQuery.preload()
+  },
   component: IndexPage
 })

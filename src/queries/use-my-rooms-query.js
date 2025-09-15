@@ -19,7 +19,6 @@ function getOptions (idToken) {
       { method: 'GET' }
     ),
     staleTime: 1000 * 60 * 50,
-    enabled: !!idToken,
   }
 }
 
