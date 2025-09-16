@@ -32,13 +32,19 @@ exports.handler = async (event) => {
   // Generate game ID
   const gameId = `game-${Math.random().toString(36).slice(2, 10)}`;
 
-  // Create boardgame.io game
-  const createResp = await fetch(`${BOARDGAME_SERVER_URL}/games/${body.gameName}/create`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ numPlayers: body.numPlayers || 2 }),
-  });
-
+  let createResp
+  try {
+    const testResp = await fetch('https://httpbin.org/get');
+    console.log('Test fetch successful:', testResp.ok);
+    // Create boardgame.io game
+    createResp = await fetch(`${BOARDGAME_SERVER_URL}/games/${body.gameName}/create`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ numPlayers: body.numPlayers || 2 }),
+    });
+  } catch (e) {
+    return e
+  }
   const createData = await createResp.json();
   if (!createResp.ok) {
     throw new Error(`Boardgame server error: ${JSON.stringify(createData)}`);
