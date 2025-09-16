@@ -30,7 +30,7 @@ exports.handler = async (event) => {
   }
 
   // Generate game ID
-  const gameID = `game-${Math.random().toString(36).slice(2, 10)}`;
+  const gameId = `game-${Math.random().toString(36).slice(2, 10)}`;
 
   // Create boardgame.io game
   const createResp = await fetch(`${BOARDGAME_SERVER_URL}/games/${body.gameName}/create`, {
@@ -52,7 +52,7 @@ exports.handler = async (event) => {
         Key: { roomCode },
         UpdateExpression: "ADD games :g",
         ExpressionAttributeValues: {
-          ":g": new Set([gameID]), // string set
+          ":g": new Set([gameId]), // string set
         },
       },
     },
@@ -60,15 +60,15 @@ exports.handler = async (event) => {
       Put: {
         TableName: "measuringcontest-games",
         Item: {
-          roomCode // Partition key
-          gameID,                // Sort key
+          roomCode,
+          gameId,
           createdAt: Date.now(),
           createdBy: sub,
           gameName: body.gameName,
           gameRules: JSON.stringify(body.gameRules),
           gameState: null,
         },
-        ConditionExpression: "attribute_not_exists(gameID)",
+        ConditionExpression: "attribute_not_exists(gameId)",
       },
     },
   ];
@@ -77,7 +77,7 @@ exports.handler = async (event) => {
 
   // Return object directly for mapping template
   return {
-    gameID,
+    gameId,
     boardgameIO: createData,
   };
 };
