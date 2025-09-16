@@ -1,8 +1,9 @@
 import React from 'react'
-import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
 import { createRootRoute, Outlet } from '@tanstack/react-router'
+import { useCognitoQuery } from '../queries/use-cognito-query.js';
+import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
 
-export default function AppShell () {
+export default function Root () {
   const auth = useCognitoAuth()
 
   return (
@@ -27,5 +28,19 @@ export default function AppShell () {
 }
 
 export const Route = createRootRoute({
-  component: AppShell
+  beforeLoad: async ({ location }) => {
+    const publicPaths = ['/login']
+    const isPublicRoute = publicPaths.some(path => location.pathname === path)
+    
+    if (!isPublicRoute) {
+      const auth = await useCognitoQuery.preload()
+      if (!auth?.idToken) {
+        throw redirect({
+          to: '/login',
+          search: { redirect: location.href }
+        })
+      }
+    }
+  },
+  component: Root
 })

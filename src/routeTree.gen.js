@@ -9,10 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as BoardRouteImport } from './routes/board'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RoomsRoomcodeRouteImport } from './routes/rooms.$roomcode'
 
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+})
 const BoardRoute = BoardRouteImport.update({
   id: '/board',
   path: '/board',
@@ -32,6 +38,7 @@ const RoomsRoomcodeRoute = RoomsRoomcodeRouteImport.update({
 const rootRouteChildren = {
   IndexRoute: IndexRoute,
   BoardRoute: BoardRoute,
+  LoginRoute: LoginRoute,
   RoomsRoomcodeRoute: RoomsRoomcodeRoute,
 }
 export const routeTree = rootRouteImport._addFileChildren(rootRouteChildren)

@@ -7,7 +7,7 @@ const ddb = DynamoDBDocumentClient.from(client);
 const BOARDGAME_SERVER_URL = 'https://gameserver.measuringconstest.com';
 
 exports.handler = async (event) => {
-  const { sessionCode } = event.pathParameters;
+  const { sessionCode: roomCode } = event.pathParameters;
   const { sub } = event.requestContext.authorizer.claims;
   const body = JSON.parse(event.body || "{}");
 
@@ -15,7 +15,7 @@ exports.handler = async (event) => {
   const roomResp = await ddb.send(
     new GetCommand({
       TableName: "measuringcontest-rooms",
-      Key: { sessionCode },
+      Key: { roomCode },
     })
   );
 
@@ -49,7 +49,7 @@ exports.handler = async (event) => {
     {
       Update: {
         TableName: "measuringcontest-rooms",
-        Key: { sessionCode },
+        Key: { roomCode },
         UpdateExpression: "ADD games :g",
         ExpressionAttributeValues: {
           ":g": new Set([gameID]), // string set
@@ -60,7 +60,7 @@ exports.handler = async (event) => {
       Put: {
         TableName: "measuringcontest-games",
         Item: {
-          roomCode: sessionCode, // Partition key
+          roomCode // Partition key
           gameID,                // Sort key
           createdAt: Date.now(),
           createdBy: sub,
