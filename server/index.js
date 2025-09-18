@@ -1,7 +1,7 @@
-const { SSMClient, GetParameterCommand } = require("@aws-sdk/client-ssm");
-const { Server } = require('boardgame.io/server'); // Fixed import
+import { SSMClient, GetParameterCommand } from "@aws-sdk/client-ssm";
+import { Server } from 'boardgame.io/dist/cjs/server.js';
 import TicTacToe from './tic-tac-toe.js';
-const jwt = require('jsonwebtoken'); // Missing import
+import jwt from 'jsonwebtoken'
 
 const ssmClient = new SSMClient({ region: 'us-east-1' });
 
@@ -52,20 +52,16 @@ server.app.use(async (ctx, next) => {
 
 // Intercept game creation to store allowed players
 server.router.post('/games/:name/create', async (ctx, next) => {
-  const { allowedPlayers } = ctx.request.body;
-  
-  if (allowedPlayers && Array.isArray(allowedPlayers)) {
-    // Server derives numPlayers from allowedPlayers length
-    ctx.request.body.numPlayers = allowedPlayers.length;
-  }
-  
+  // ctx.request.body is populated by boardgame.io already
+  const body = ctx.request.body || {};
+  const allowedPlayers = Array.isArray(body.allowedPlayers) ? body.allowedPlayers : [];
+
   // Let boardgame.io create the game first
   await next();
-  
+
   const gameID = ctx.response.body.gameID;
-  
-  if (allowedPlayers && Array.isArray(allowedPlayers)) {
-    // Store allowed players in memory
+
+  if (allowedPlayers.length) {
     gamePermissions.set(gameID, new Set(allowedPlayers));
     console.log(`Game ${gameID} created with allowed players:`, allowedPlayers);
   }
@@ -74,23 +70,18 @@ server.router.post('/games/:name/create', async (ctx, next) => {
 // Block unauthorized join attempts
 server.router.post('/games/:name/:id/join', async (ctx, next) => {
   const gameID = ctx.params.id;
-  const { playerName } = ctx.request.body;
-  
+  const body = ctx.request.body || {};
+  const playerName = body.playerName;
+
   const allowedPlayers = gamePermissions.get(gameID);
-  
-  if (!allowedPlayers) {
-    console.log(`No player restrictions for game ${gameID}`);
-    await next();
-    return;
-  }
-  
-  if (!allowedPlayers.has(playerName)) {
+
+  if (allowedPlayers && !allowedPlayers.has(playerName)) {
     ctx.status = 403;
     ctx.body = { error: `Player "${playerName}" is not authorized to join this game` };
     console.log(`Blocked unauthorized join attempt: ${playerName} -> game ${gameID}`);
     return;
   }
-  
+
   console.log(`Authorized join: ${playerName} -> game ${gameID}`);
   await next();
 });
