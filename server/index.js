@@ -12,13 +12,19 @@ const gamePermissions = new Map();
 // Cache JWT secret
 let cachedJwtSecret = null;
 async function getJwtSecret() {
-  if (cachedJwtSecret) return cachedJwtSecret;
+  if (cachedJwtSecret) {
+    const x = cachedJwtSecret.split('').slice(0, 4).join()
+    console.log('x', x)
+    return cachedJwtSecret;
+  }
 
   const response = await ssmClient.send(new GetParameterCommand({
     Name: "/measuringcontest/boardgame-jwt-secret",
     WithDecryption: true,
   }));
   cachedJwtSecret = response.Parameter.Value;
+    const x = cachedJwtSecret.split('').slice(0, 4).join()
+    console.log('x', x)
   return cachedJwtSecret;
 }
 

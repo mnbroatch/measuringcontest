@@ -18,6 +18,8 @@ let cachedJwtSecret = null;
 
 async function getJwtSecret() {
   if (cachedJwtSecret) {
+    const x = cachedJwtSecret.split('').slice(0, 4).join()
+    console.log('x', x)
     return cachedJwtSecret;
   }
   
@@ -27,6 +29,8 @@ async function getJwtSecret() {
   }));
   
   cachedJwtSecret = response.Parameter.Value;
+    const x = cachedJwtSecret.split('').slice(0, 4).join()
+    console.log('x', x)
   return cachedJwtSecret;
 }
 
