@@ -67,20 +67,21 @@ exports.handler = async (event) => {
     { expiresIn: '1h' }
   );
 
-  // Create boardgame.io game with members list
-  const createResp = await fetch(`${BOARDGAME_SERVER_URL}/games/${body.gameName}/create`, {
-    method: "POST",
-    headers: { 
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`
-    },
-    body: JSON.stringify({ 
-      allowedPlayers: Array.from(room.members)
-    }),
-  });
-  const createData = await createResp.json();
-  if (!createResp.ok) {
-    throw new Error(`Boardgame server error: ${JSON.stringify(createData)}`);
+  try {
+    // Create boardgame.io game with members list
+    const createResp = await fetch(`${BOARDGAME_SERVER_URL}/games/${body.gameName}/create`, {
+      method: "POST",
+      headers: { 
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({ 
+        allowedPlayers: Array.from(room.members)
+      }),
+    });
+    const createData = await createResp.json();
+  } catch (e) {
+    console.log(e)
   }
 
   const gameId = createData.matchID;
