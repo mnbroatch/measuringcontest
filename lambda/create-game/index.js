@@ -1,10 +1,34 @@
 const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
-const { DynamoDBDocumentClient, TransactWriteCommand, GetCommand } = require("@aws-sdk/lib-dynamodb");
+const { DynamoDBDocumentClient, UpdateCommand, GetCommand } = require("@aws-sdk/lib-dynamodb");
+const { SSMClient, GetParameterCommand } = require("@aws-sdk/client-ssm");
+const jwt = require('jsonwebtoken');
 
 const client = new DynamoDBClient({});
 const ddb = DynamoDBDocumentClient.from(client);
+const ssmClient = new SSMClient({});
+const BOARDGAME_SERVER_URL = 'https://gameserver.measuringconstest.com';
 
-const BOARDGAME_SERVER_URL = 'https://gameserver.measuringcontest.com';
+const GAME_STATUS = {
+  WAITING: 'waiting',
+  ACTIVE: 'active',
+}
+
+// Cache the JWT secret to avoid repeated SSM calls
+let cachedJwtSecret = null;
+
+async function getJwtSecret() {
+  if (cachedJwtSecret) {
+    return cachedJwtSecret;
+  }
+  
+  const response = await ssmClient.send(new GetParameterCommand({
+    Name: "/measuringcontest/boardgame-jwt-secret",
+    WithDecryption: true // Important for SecureString parameters
+  }));
+  
+  cachedJwtSecret = response.Parameter.Value;
+  return cachedJwtSecret;
+}
 
 exports.handler = async (event) => {
   const { sessionCode: roomCode } = event.pathParameters;
@@ -24,58 +48,60 @@ exports.handler = async (event) => {
   }
 
   const room = roomResp.Item;
-
   if (room.createdBy !== sub) {
     throw new Error("Unauthorized"); // mapping template -> 403
   }
 
-  // Generate game ID
-  const gameId = `game-${Math.random().toString(36).slice(2, 10)}`;
+  // Get JWT secret from Parameter Store
+  const jwtSecret = await getJwtSecret();
 
+  // Create JWT for server authentication
+  const token = jwt.sign(
+    { 
+      source: 'lambda',
+      roomCode: roomCode,
+      userId: sub,
+      iat: Math.floor(Date.now() / 1000)
+    }, 
+    jwtSecret, 
+    { expiresIn: '1h' }
+  );
+
+  // Create boardgame.io game with members list
   const createResp = await fetch(`${BOARDGAME_SERVER_URL}/games/${body.gameName}/create`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ numPlayers: body.numPlayers || 2 }),
+    headers: { 
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    },
+    body: JSON.stringify({ 
+      allowedPlayers: Array.from(room.members)
+    }),
   });
   const createData = await createResp.json();
   if (!createResp.ok) {
     throw new Error(`Boardgame server error: ${JSON.stringify(createData)}`);
   }
 
-  // DynamoDB transaction
-  const transactItems = [
-    {
-      Update: {
-        TableName: "measuringcontest-rooms",
-        Key: { roomCode },
-        UpdateExpression: "ADD games :g",
-        ExpressionAttributeValues: {
-          ":g": new Set([gameId]), // string set
-        },
-      },
-    },
-    {
-      Put: {
-        TableName: "measuringcontest-games",
-        Item: {
-          roomCode,
-          gameId,
-          createdAt: Date.now(),
-          createdBy: sub,
-          gameName: body.gameName,
-          gameRules: JSON.stringify(body.gameRules),
-          gameState: null,
-        },
-        ConditionExpression: "attribute_not_exists(gameId)",
-      },
-    },
-  ];
+  const gameId = createData.matchID;
 
-  await ddb.send(new TransactWriteCommand({ TransactItems: transactItems }));
+  // Update room with game info
+  await ddb.send(new UpdateCommand({
+    TableName: "measuringcontest-rooms",
+    Key: { roomCode },
+    UpdateExpression: "SET gameId = :gameId, roomStatus = :status, players = members, gameCreatedAt = :gameCreatedAt, gameName = :gameName, gameRules = :gameRules",
+    ExpressionAttributeValues: {
+      ":gameId": gameId,
+      ":status": GAME_STATUS.ACTIVE,
+      ":gameCreatedAt": Date.now(),
+      ":gameName": body.gameName,
+      ":gameRules": JSON.stringify(body.gameRules),
+      ":waitingStatus": GAME_STATUS.WAITING
+    },
+    ConditionExpression: "attribute_exists(roomCode) AND roomStatus = :waitingStatus"
+  }));
 
-  // Return object directly for mapping template
   return {
     gameId,
-    boardgameIO: createData,
   };
 };

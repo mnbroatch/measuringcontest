@@ -10,11 +10,13 @@ export const useCreateGameMutation = (roomCode) => {
 
   return useMutation({
     mutationFn: (gameRules) => makeAuthenticatedRequest(
+      // `http://localhost:8000/games/ic-tac-toe/create`,
       `${apiUrl}/rooms/${roomCode}/games`,
       auth.idToken,
       { 
         method: 'POST',
         body: { gameRules, gameName: 'tic-tac-toe' },
+        // body: { numPlayers: 2 },
       }
     ),
     onSuccess: () => {
