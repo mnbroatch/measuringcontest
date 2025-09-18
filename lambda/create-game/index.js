@@ -1,4 +1,4 @@
-jonst { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
+const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
 const { DynamoDBDocumentClient, UpdateCommand, GetCommand } = require("@aws-sdk/lib-dynamodb");
 const { SSMClient, GetParameterCommand } = require("@aws-sdk/client-ssm");
 const jwt = require('jsonwebtoken');
