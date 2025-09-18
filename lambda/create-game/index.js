@@ -67,6 +67,7 @@ exports.handler = async (event) => {
     { expiresIn: '1h' }
   );
 
+  let createData 
   try {
     // Create boardgame.io game with members list
     const createResp = await fetch(`${BOARDGAME_SERVER_URL}/games/${body.gameName}/create`, {
@@ -79,7 +80,7 @@ exports.handler = async (event) => {
         allowedPlayers: Array.from(room.members)
       }),
     });
-    const createData = await createResp.json();
+    createData = await createResp.json();
   } catch (e) {
     console.log(e)
   }
