@@ -69,6 +69,7 @@ exports.handler = async (event) => {
 
   let createData 
 try {
+  console.log(`${BOARDGAME_SERVER_URL}/games/${body.gameName}/create`)
   const createResp = await fetch(`${BOARDGAME_SERVER_URL}/games/${body.gameName}/create`, {
     method: "POST",
     headers: { 
