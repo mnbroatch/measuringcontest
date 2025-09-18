@@ -1,4 +1,4 @@
-const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
+jonst { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
 const { DynamoDBDocumentClient, UpdateCommand, GetCommand } = require("@aws-sdk/lib-dynamodb");
 const { SSMClient, GetParameterCommand } = require("@aws-sdk/client-ssm");
 const jwt = require('jsonwebtoken');
@@ -68,22 +68,36 @@ exports.handler = async (event) => {
   );
 
   let createData 
-  try {
-    // Create boardgame.io game with members list
-    const createResp = await fetch(`${BOARDGAME_SERVER_URL}/games/${body.gameName}/create`, {
-      method: "POST",
-      headers: { 
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      },
-      body: JSON.stringify({ 
-        allowedPlayers: Array.from(room.members)
-      }),
-    });
-    createData = await createResp.json();
-  } catch (e) {
-    return e.message
+try {
+  const createResp = await fetch(`${BOARDGAME_SERVER_URL}/games/${body.gameName}/create`, {
+    method: "POST",
+    headers: { 
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    },
+    body: JSON.stringify({ 
+      allowedPlayers: Array.from(room.members)
+    }),
+  });
+
+  if (!createResp.ok) {
+    const text = await createResp.text(); // read body even on error
+    throw new Error(`Boardgame server responded ${createResp.status} ${createResp.statusText}: ${text}`);
   }
+
+  createData = await createResp.json();
+} catch (e) {
+  console.error("Fetch error details:", e); // CloudWatch gets full error
+  return {
+    error: e.message,
+    stack: e.stack,
+    cause: e.cause
+  };
+}
+
+
+
+
 
   const gameId = createData.matchID;
 
