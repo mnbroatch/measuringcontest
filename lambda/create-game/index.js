@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const client = new DynamoDBClient({});
 const ddb = DynamoDBDocumentClient.from(client);
 const ssmClient = new SSMClient({});
-const BOARDGAME_SERVER_URL = 'https://gameserver.measuringconstest.com';
+const BOARDGAME_SERVER_URL = 'https://gameserver.measuringcontest.com';
 
 const GAME_STATUS = {
   WAITING: 'waiting',
