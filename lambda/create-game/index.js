@@ -82,7 +82,7 @@ exports.handler = async (event) => {
     });
     createData = await createResp.json();
   } catch (e) {
-    return e
+    return e.message
   }
 
   const gameId = createData.matchID;
