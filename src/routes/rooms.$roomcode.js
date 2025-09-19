@@ -6,6 +6,7 @@ import { useJoinRoomMutation } from "../queries/use-join-room-mutation.js";
 import { useLeaveRoomMutation } from "../queries/use-leave-room-mutation.js";
 import { useCreateGameMutation } from "../queries/use-create-game-mutation.js";
 import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
+import { useGameserverConnection } from "../hooks/use-gameserver-connection.js";
 import ticTacToe from "../tic-tac-toe.json";
 
 export default function RoomPage () {
@@ -16,6 +17,7 @@ export default function RoomPage () {
   const joinRoomMutation = useJoinRoomMutation(roomCode)
   const leaveRoomMutation = useLeaveRoomMutation(roomCode)
   const createGameMutation = useCreateGameMutation(roomCode)
+  const client = useGameserverConnection()
 
   return !room.isLoading && (
     <>
@@ -35,8 +37,7 @@ export default function RoomPage () {
           Leave
         </button>
       )}
-      <pre>
-      </pre>
+      <client.board />
     </>
   )
 }
