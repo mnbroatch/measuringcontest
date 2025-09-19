@@ -3,7 +3,7 @@ import { Server } from 'boardgame.io/dist/cjs/server.js';
 import TicTacToe from './tic-tac-toe.js';
 import jwt from 'jsonwebtoken';
 
-const ssmClient = new SSMClient({ region: 'us-east-1' });
+const ssmClient = new SSMClient({ region: 'us-west-1' });
 const BOARDGAME_PORT = 8000;
 
 // In-memory map: gameId -> Set of allowed custom playerIds
@@ -13,8 +13,6 @@ const gamePermissions = new Map();
 let cachedJwtSecret = null;
 async function getJwtSecret() {
   if (cachedJwtSecret) {
-    const x = cachedJwtSecret.split('').slice(0, 4).join()
-    console.log('x', x)
     return cachedJwtSecret;
   }
 
@@ -23,8 +21,6 @@ async function getJwtSecret() {
     WithDecryption: true,
   }));
   cachedJwtSecret = response.Parameter.Value;
-    const x = cachedJwtSecret.split('').slice(0, 4).join()
-    console.log('x', x)
   return cachedJwtSecret;
 }
 
