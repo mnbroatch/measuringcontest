@@ -25,18 +25,15 @@ async function getJwtSecret() {
 
 const server = Server({
   games: [TicTacToe],
-  auth: async (credentials, { matchID, playerID }) => {
+  authenticateCredentials: async (credentials, playerMetadata) => {
+    if (!credentials) return false; // No spectators
+    
     try {
       const secret = await getJwtSecret();
-
-      if (!credentials && !playerID) {
-        return true // spectator
-      }
-
       const decoded = jwt.verify(credentials, secret);
 
-      return decoded.gameId === matchID
-        && decoded.boardgamePlayerID === playerID
+      return decoded.gameId === playerMetadata.matchID
+        && decoded.boardgamePlayerID === playerMetadata.id;
     } catch (err) {
       return false;
     }

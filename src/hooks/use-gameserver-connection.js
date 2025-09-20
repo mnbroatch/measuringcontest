@@ -4,41 +4,28 @@ import { Client } from 'boardgame.io/client'
 import { SocketIO } from 'boardgame.io/multiplayer'
 import { useCognitoAuth } from "../contexts/cognito-auth-context.js"
 import { useRoomQuery } from "../queries/use-room-query.js"
+import { useJoinGameMutation } from "../queries/use-join-game-mutation.js";
 import gameFactory from '../game-factory.js'
 
 const SERVER_URL = 'https://gameserver.measuringcontest.com'
 
 export const useGameserverConnection = () => {
   const { roomcode: roomCode } = useParams({})
-  const { userId, getAccessToken } = useCognitoAuth()
+  const { userId } = useCognitoAuth()
   const room = useRoomQuery(roomCode).data
   const gameId = room?.gameId
-  const gameName = room?.gameName
   const gameRules = room?.gameRules
   const game = gameFactory(gameRules)
   const [_, forceUpdate] = useReducer(x => !x, false)
   const clientRef = useRef(null)
+  const joinGameMutation = useJoinGameMutation(roomCode, gameId)
   
   useEffect(() => {
     if (!gameId || !userId || !room) return
     
     const joinAndConnect = async () => {
       try {
-        // Call your join Lambda first
-        const accessToken = await getAccessToken()
-        const joinResp = await fetch(`/api/rooms/${roomCode}/join`, {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${accessToken}`,
-            'Content-Type': 'application/json'
-          }
-        })
-        
-        if (!joinResp.ok) {
-          throw new Error(`Join failed: ${joinResp.statusText}`)
-        }
-        
-        const { boardgamePlayerID, clientToken } = await joinResp.json()
+        const { boardgamePlayerID, clientToken } = await joinGameMutation.mutateAsync()
         
         // Now create the client with the proper credentials
         const client = Client({
