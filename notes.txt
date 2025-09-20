@@ -1,11 +1,1 @@
-Host creates lobby
-people use room code to join lobby
-host creates game? Options:
-  - host creates game immediately with people in lobby
-    - game registers people in lobby so that websockets only allow correct person
-    - people join automatically once their client sees
-      - they are in lobby
-      - game has started
-    - means that you can't start small game in big lobby
-      - probably OK
-    - need special treatment for people joining or trying to join lobby during game
+change players to array instead of set, player auth middleware converts to string index (bgio playerID)

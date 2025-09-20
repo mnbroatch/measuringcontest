@@ -37,7 +37,11 @@ export default function RoomPage () {
           Leave
         </button>
       )}
-      <client.board />
+      {client && (
+        <pre>
+          {JSON.stringify(client.getState(), null, 2)}
+        </pre>
+      )}
     </>
   )
 }

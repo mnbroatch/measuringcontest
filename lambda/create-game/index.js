@@ -18,8 +18,6 @@ let cachedJwtSecret = null;
 
 async function getJwtSecret() {
   if (cachedJwtSecret) {
-    const x = cachedJwtSecret.split('').slice(0, 4).join()
-    console.log('x', x)
     return cachedJwtSecret;
   }
   
@@ -29,8 +27,6 @@ async function getJwtSecret() {
   }));
   
   cachedJwtSecret = response.Parameter.Value;
-    const x = cachedJwtSecret.split('').slice(0, 4).join()
-    console.log('x', x)
   return cachedJwtSecret;
 }
 
@@ -60,20 +56,8 @@ exports.handler = async (event) => {
   const jwtSecret = await getJwtSecret();
 
   // Create JWT for server authentication
-  const token = jwt.sign(
-    { 
-      source: 'lambda',
-      roomCode: roomCode,
-      userId: sub,
-      iat: Math.floor(Date.now() / 1000)
-    }, 
-    jwtSecret, 
-    { expiresIn: '1h' }
-  );
+  const token = jwt.sign({}, jwtSecret, { expiresIn: '1h' });
 
-  let createData 
-try {
-  console.log(`${BOARDGAME_SERVER_URL}/games/${body.gameName}/create`)
   const createResp = await fetch(`${BOARDGAME_SERVER_URL}/games/${body.gameName}/create`, {
     method: "POST",
     headers: { 
@@ -90,20 +74,7 @@ try {
     throw new Error(`Boardgame server responded ${createResp.status} ${createResp.statusText}: ${text}`);
   }
 
-  createData = await createResp.json();
-} catch (e) {
-  console.error("Fetch error details:", e); // CloudWatch gets full error
-  return {
-    error: e.message,
-    stack: e.stack,
-    cause: e.cause
-  };
-}
-
-
-
-
-
+  const createData = await createResp.json();
   const gameId = createData.matchID;
 
   // Update room with game info

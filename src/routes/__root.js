@@ -1,5 +1,5 @@
 import React from 'react'
-import { createRootRoute, Outlet } from '@tanstack/react-router'
+import { createRootRoute, Outlet, redirect } from '@tanstack/react-router'
 import { useCognitoQuery } from '../queries/use-cognito-query.js';
 import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
 
