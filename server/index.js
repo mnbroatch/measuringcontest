@@ -34,6 +34,7 @@ const server = Server({
   },
   
   authenticateCredentials: async (credentials, playerMetadata) => {
+    console.log('playerMetadata', playerMetadata)
     if (!credentials || !playerMetadata.credentials) return false;
     
     try {
