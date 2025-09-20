@@ -35,6 +35,9 @@ jobs:
           - name: deletegame
             path: lambda/delete-game
             zip: deletegame.zip
+          - name: joingame
+            path: lambda/join-game
+            zip: joingame.zip
 
     steps:
       - uses: actions/checkout@v3
