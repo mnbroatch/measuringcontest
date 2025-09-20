@@ -81,7 +81,7 @@ exports.handler = async (event) => {
         "Authorization": `Bearer ${serverToken}`
       },
       body: JSON.stringify({ 
-        playerId: sub  // Your canonical player ID
+        playerName: sub
       }),
     });
     
