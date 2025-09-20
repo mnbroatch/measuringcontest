@@ -26,7 +26,7 @@ export const useGameserverConnection = () => {
       try {
         // Call your join Lambda first
         const accessToken = await getAccessToken()
-        const joinResp = await fetch(`/api/sessions/${roomCode}/join`, {
+        const joinResp = await fetch(`/api/rooms/${roomCode}/join`, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${accessToken}`,
