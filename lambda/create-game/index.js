@@ -81,13 +81,14 @@ exports.handler = async (event) => {
   await ddb.send(new UpdateCommand({
     TableName: "measuringcontest-rooms",
     Key: { roomCode },
-    UpdateExpression: "SET gameId = :gameId, roomStatus = :status, players = members, gameCreatedAt = :gameCreatedAt, gameName = :gameName, gameRules = :gameRules",
+    UpdateExpression: "SET gameId = :gameId, roomStatus = :status, players = :emptyPlayers, gameCreatedAt = :gameCreatedAt, gameName = :gameName, gameRules = :gameRules",
     ExpressionAttributeValues: {
       ":gameId": gameId,
       ":status": GAME_STATUS.ACTIVE,
       ":gameCreatedAt": Date.now(),
       ":gameName": body.gameName,
       ":gameRules": JSON.stringify(body.gameRules),
+      ":emptyPlayers": {}, // Start with empty players object
       ":waitingStatus": GAME_STATUS.WAITING
     },
     ConditionExpression: "attribute_exists(roomCode) AND roomStatus = :waitingStatus"

@@ -1,5 +1,5 @@
 const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
-const { DynamoDBDocumentClient, GetCommand } = require("@aws-sdk/lib-dynamodb");
+const { DynamoDBDocumentClient, GetCommand, UpdateCommand } = require("@aws-sdk/lib-dynamodb");
 const { SSMClient, GetParameterCommand } = require("@aws-sdk/client-ssm");
 const jwt = require('jsonwebtoken');
 
@@ -40,9 +40,26 @@ exports.handler = async (event) => {
   }
   
   const room = roomResp.Item;
+
+  const jwtSecret = await getJwtSecret();
+  
+  const existingPlayer = room.players?.[sub];
+  if (existingPlayer) {
+    // Return existing join data
+    const clientToken = jwt.sign({ 
+      gameId: room.gameId, 
+      boardgamePlayerID: existingPlayer.boardgamePlayerID 
+    }, jwtSecret, { expiresIn: '30d' });
+    
+    return {
+      gameId: room.gameId,
+      boardgamePlayerID: existingPlayer.boardgamePlayerID,
+      clientToken: clientToken
+    };
+  }
   
   // Check if user is allowed to join this room
-  if (!room.players || !room.players.includes(sub)) {
+  if (!room.members || !room.members.includes(sub)) {
     throw new Error("Not a member of this room"); // mapping template -> 403
   }
   
@@ -50,9 +67,6 @@ exports.handler = async (event) => {
   if (!room.gameId || room.roomStatus !== 'active') {
     throw new Error("No active game in this room"); // mapping template -> 400
   }
-  
-  // Get JWT secret from Parameter Store
-  const jwtSecret = await getJwtSecret();
   
   // Create JWT for server authentication (Lambda -> boardgame.io server)
   const serverToken = jwt.sign({}, jwtSecret, { expiresIn: '1h' });
@@ -87,8 +101,22 @@ exports.handler = async (event) => {
   }
   
   const boardgamePlayerID = joinData.playerID;
-  
-  // Create client JWT (client -> boardgame.io server via WebSocket)
+
+  await ddb.send(new UpdateCommand({
+    TableName: "measuringcontest-rooms",
+    Key: { roomCode },
+    UpdateExpression: "SET players.#userId = :playerData",
+    ExpressionAttributeNames: {
+      "#userId": sub
+    },
+    ExpressionAttributeValues: {
+      ":playerData": {
+        boardgamePlayerID,
+        joinedAt: Date.now()
+      }
+    }
+  }));
+
   const clientToken = jwt.sign(
     {
       gameId: room.gameId,
