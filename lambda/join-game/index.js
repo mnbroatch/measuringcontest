@@ -59,7 +59,7 @@ exports.handler = async (event) => {
   }
   
   // Check if user is allowed to join this room
-  if (!room.members || !room.members.includes(sub)) {
+  if (!room.members || !room.members.has(sub)) {
     throw new Error("Not a member of this room"); // mapping template -> 403
   }
   
