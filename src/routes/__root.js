@@ -8,6 +8,7 @@ export default function Root () {
 
   return (
     <>
+      {auth?.userId}
       <div className="login-bar">
         {!auth.loading && !auth.idToken && (
           <button onClick={auth.login}>
