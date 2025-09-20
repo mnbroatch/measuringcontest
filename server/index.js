@@ -1,6 +1,6 @@
 import { Readable } from "stream";
 import { SSMClient, GetParameterCommand } from "@aws-sdk/client-ssm";
-import { Server } from 'boardgame.io/dist/cjs/server.js';
+import { Server, Origins } from 'boardgame.io/dist/cjs/server.js';
 import TicTacToe from './tic-tac-toe.js';
 import jwt from 'jsonwebtoken';
 
@@ -23,6 +23,7 @@ async function getJwtSecret() {
 
 const server = Server({
   games: [TicTacToe],
+  origins: [/.*/],
   
   generateCredentials: async (ctx) => {
     console.log('ctx', ctx)
