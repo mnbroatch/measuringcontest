@@ -30,12 +30,14 @@ const server = Server({
       const jwtSecret = await getJwtSecret();
       const decoded = jwt.verify(credentials, jwtSecret);
 
+      console.log('---------')
       console.log('decoded', decoded)
-      console.log('credentials', credentials)
       console.log('playerMetadata', playerMetadata)
+      console.log('decoded.gameId && decoded.playerId && decoded.gameId === playerMetadata.data.gameId && decoded.playerId === playerMetadata.data.playerId', decoded.gameId && decoded.playerId && decoded.gameId === playerMetadata.data.gameId && decoded.playerId === playerMetadata.data.playerId)
+      console.log('---------')
       
       return decoded.gameId && decoded.playerId
-        && decoded.gameId === playerMetadata.gameId && decoded.playerId === playerMetadata.playerId;
+        && decoded.gameId === playerMetadata.data.gameId && decoded.playerId === playerMetadata.data.playerId;
     } catch (error) {
       return false;
     }

@@ -84,8 +84,7 @@ exports.handler = async (event) => {
       },
       body: JSON.stringify({ 
         playerName: sub,
-        gameId: room.gameId,
-        data: {  // Add metadata here
+        data: {
           gameId: room.gameId,
           playerId: sub
         }
