@@ -34,7 +34,8 @@ const server = Server({
       console.log('credentials', credentials)
       console.log('playerMetadata', playerMetadata)
       
-      return decoded.gameId && decoded.boardgamePlayerID;
+      return decoded.gameId && decoded.playerId
+        && decoded.gameId === playerMetadata.gameId && decoded.playerId === playerMetadata.playerId;
     } catch (error) {
       return false;
     }

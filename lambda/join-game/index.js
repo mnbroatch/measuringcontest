@@ -9,6 +9,7 @@ const ssmClient = new SSMClient({});
 const BOARDGAME_SERVER_URL = 'https://gameserver.measuringcontest.com';
 
 let cachedJwtSecret = null;
+
 async function getJwtSecret() {
   if (cachedJwtSecret) {
     return cachedJwtSecret;
@@ -36,19 +37,18 @@ exports.handler = async (event) => {
   );
   
   if (!roomResp.Item) {
-    throw new Error("Room not found"); // mapping template can map to 404
+    throw new Error("Room not found");
   }
   
   const room = roomResp.Item;
-
   const jwtSecret = await getJwtSecret();
   
   const existingPlayer = room.players?.[sub];
   if (existingPlayer) {
-    // Return existing join data
+    // Return existing join data with simplified JWT
     const clientToken = jwt.sign({ 
       gameId: room.gameId, 
-      boardgamePlayerID: existingPlayer.boardgamePlayerID 
+      playerId: sub  // Use canonical player ID instead of boardgame player ID
     }, jwtSecret, { expiresIn: '30d' });
     
     return {
@@ -60,29 +60,35 @@ exports.handler = async (event) => {
   
   // Check if user is allowed to join this room
   if (!room.members || !room.members.has(sub)) {
-    throw new Error("Not a member of this room"); // mapping template -> 403
+    throw new Error("Not a member of this room");
   }
   
   // Check if game exists and is active
   if (!room.gameId || room.roomStatus !== 'active') {
-    throw new Error("No active game in this room"); // mapping template -> 400
+    throw new Error("No active game in this room");
   }
   
-  // Create JWT for server authentication (Lambda -> boardgame.io server)
-  const serverToken = jwt.sign({}, jwtSecret, { expiresIn: '1h' });
+  // Create single JWT that includes both server auth and player data
+  const token = jwt.sign({
+    gameId: room.gameId,
+    playerId: sub
+  }, jwtSecret, { expiresIn: '30d' });
   
   let joinData;
   try {
-    console.log(`${BOARDGAME_SERVER_URL}/games/${room.gameName}/${room.gameId}/join`);
     const joinResp = await fetch(`${BOARDGAME_SERVER_URL}/games/${room.gameName}/${room.gameId}/join`, {
       method: "POST",
       headers: { 
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${serverToken}`
+        "Authorization": `Bearer ${token}`  // Use the same token
       },
       body: JSON.stringify({ 
         playerName: sub,
-        gameId: room.gameId
+        gameId: room.gameId,
+        data: {  // Add metadata here
+          gameId: room.gameId,
+          playerId: sub
+        }
       }),
     });
     
@@ -102,7 +108,8 @@ exports.handler = async (event) => {
   }
   
   const boardgamePlayerID = joinData.playerID;
-
+  
+  // Store player data in DynamoDB
   await ddb.send(new UpdateCommand({
     TableName: "measuringcontest-rooms",
     Key: { roomCode },
@@ -117,19 +124,10 @@ exports.handler = async (event) => {
       }
     }
   }));
-
-  const clientToken = jwt.sign(
-    {
-      gameId: room.gameId,
-      boardgamePlayerID: boardgamePlayerID
-    },
-    jwtSecret,
-    { expiresIn: '365d' }
-  );
   
   return {
     gameId: room.gameId,
     boardgamePlayerID: boardgamePlayerID,
-    clientToken: clientToken
+    clientToken: token
   };
 };
