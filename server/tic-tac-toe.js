@@ -20,27 +20,22 @@ function IsVictory(cells) {
 
 const TicTacToe = {
   name: 'tic-tac-toe',
-
   setup: () => ({
     cells: new Array(9).fill(null),
   }),
-
   moves: {
-    clickCell({ G, playerID }, id) {
+    clickCell(G, ctx, id) {
       const cells = [...G.cells];
-
       if (cells[id] === null) {
-        cells[id] = playerID;
+        cells[id] = ctx.currentPlayer; // '0' or '1'
         return { ...G, cells };
       }
     },
   },
-
   turn: {
     minMoves: 1,
     maxMoves: 1,
   },
-
   endIf: ({ G, ctx }) => {
     if (IsVictory(G.cells)) {
       return { winner: ctx.currentPlayer };
@@ -49,7 +44,6 @@ const TicTacToe = {
       return { draw: true };
     }
   },
-
   ai: {
     enumerate: (G) => {
       let r = [];

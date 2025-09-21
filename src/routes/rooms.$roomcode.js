@@ -42,6 +42,16 @@ export default function RoomPage () {
           {JSON.stringify(client.getState(), null, 2)}
         </pre>
       )}
+      {client && (
+        <button onClick={() => {
+
+
+    console.log('Client state before move:', client);
+          client.moves.clickCell(1)
+        }}>
+          Do 1
+        </button>
+      )}
     </>
   )
 }

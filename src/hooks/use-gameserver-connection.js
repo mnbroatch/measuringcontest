@@ -25,7 +25,10 @@ export const useGameserverConnection = () => {
     
     const joinAndConnect = async () => {
       try {
-        const { boardgamePlayerID, clientToken } = await joinGameMutation.mutateAsync()
+        const blah = await joinGameMutation.mutateAsync()
+        const { boardgamePlayerID, clientToken } = blah
+        console.log('blah', blah)
+        console.log('boardgamePlayerID', boardgamePlayerID)
         
         // Now create the client with the proper credentials
         const client = Client({
@@ -50,8 +53,9 @@ export const useGameserverConnection = () => {
         client.multiplayer.socket?.on('disconnect', forceUpdate)
         client.multiplayer.socket?.on('connect_error', forceUpdate)
         
-        clientRef.current = client
         client.start()
+        clientRef.current = client
+        console.log('client', client)
         
       } catch (error) {
         console.error('Failed to join game:', error)
