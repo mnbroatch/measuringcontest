@@ -18,6 +18,7 @@ export default function RoomPage () {
   const leaveRoomMutation = useLeaveRoomMutation(roomCode)
   const createGameMutation = useCreateGameMutation(roomCode)
   const client = useGameserverConnection()
+  console.log('2client', client)
 
   return !room.isLoading && (
     <>
@@ -44,10 +45,23 @@ export default function RoomPage () {
       )}
       {client && (
         <button onClick={() => {
+  console.log('=== DEBUG MOVE ===');
+  console.log('client exists:', !!client);
+  console.log('client.getState():', client?.getState());
+  console.log('client.playerID:', client?.playerID);
+  console.log('client.matchID:', client?.matchID);
+  console.log('socket connected:', client?.multiplayer?.socket?.connected);
+  
+  const state = client?.getState();
+  if (state) {
+    console.log('state.G:', state.G);
+    console.log('state.ctx:', state.ctx);
+    console.log('state._stateID:', state._stateID);
+  }
+  
+  client.moves.clickCell(1);
 
 
-    console.log('Client state before move:', client);
-          client.moves.clickCell(1)
         }}>
           Do 1
         </button>
