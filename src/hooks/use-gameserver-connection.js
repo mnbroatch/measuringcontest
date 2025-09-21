@@ -25,10 +25,7 @@ export const useGameserverConnection = () => {
     
     const joinAndConnect = async () => {
       try {
-        const blah = await joinGameMutation.mutateAsync()
-        const { boardgamePlayerID, clientToken } = blah
-        console.log('blah', blah)
-        console.log('boardgamePlayerID', boardgamePlayerID)
+        const { boardgamePlayerID, clientToken } = await joinGameMutation.mutateAsync()
         
         // Now create the client with the proper credentials
         const client = Client({

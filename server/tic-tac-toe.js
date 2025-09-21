@@ -20,14 +20,15 @@ function IsVictory(cells) {
 
 const TicTacToe = {
   name: 'tic-tac-toe',
-  setup: () => ({
-    cells: new Array(9).fill(null),
-  }),
+  setup: () => {
+    const initialState = { cells: new Array(9).fill(null) };
+    return initialState;
+  },
   moves: {
-    clickCell(G, ctx, id) {
+    clickCell({ G, ctx }, id) {
       const cells = [...G.cells];
       if (cells[id] === null) {
-        cells[id] = ctx.currentPlayer; // '0' or '1'
+        cells[id] = ctx.currentPlayer;
         return { ...G, cells };
       }
     },
