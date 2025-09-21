@@ -25,31 +25,20 @@ const server = Server({
   games: [TicTacToe],
   origins: [/.*/],
   
-  generateCredentials: async (ctx) => {
-    console.log('ctx', ctx)
-    const body = ctx.request.body;
-    return {
-      gameId: body.gameId,
-      canonicalUserId: body.playerName
-    };
-  },
-  
   authenticateCredentials: async (credentials, playerMetadata) => {
-    console.log('playerMetadata', playerMetadata)
-    if (!credentials || !playerMetadata.credentials) return false;
-    
     try {
-      const secret = await getJwtSecret();
-      const decoded = jwt.verify(credentials, secret);
-      const stored = playerMetadata.credentials;
+      const jwtSecret = await getJwtSecret();
+      const decoded = jwt.verify(credentials, jwtSecret);
+
+      console.log('decoded', decoded)
+      console.log('credentials', credentials)
+      console.log('playerMetadata', playerMetadata)
       
-      // Validate both gameId and playerID match
-      return decoded.gameId === stored.gameId && 
-             decoded.boardgamePlayerID === playerMetadata.id;
-    } catch (err) {
+      return decoded.gameId && decoded.boardgamePlayerID;
+    } catch (error) {
       return false;
     }
-  }
+  },
 });
 
 // REST API JWT middleware (unchanged)
