@@ -22,8 +22,8 @@ async function getJwtSecret() {
 }
 
 const server = Server({
-  // games: [],
-  games: [TicTacToe],
+  games: [],
+  // games: [TicTacToe],
   origins: [/.*/],
   
   authenticateCredentials: async (credentials, playerMetadata) => {

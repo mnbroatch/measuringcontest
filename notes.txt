@@ -1,1 +1,10 @@
-change players to array instead of set, player auth middleware converts to string index (bgio playerID)
+todo:
+delete game from server on room delete
+"finish game" logic
+
+
+(really just add separate spectator route?)
+hide game if not joined room
+handle auto join if going from room not joined to room joined
+
+
