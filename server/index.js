@@ -77,8 +77,8 @@ server.app.use(async (ctx, next) => {
       const processedGame = ProcessGameConfig(newGameDef);
       server.games.push(processedGame);
 
-      // Add socket namespace
-      server.transport.init(server.app, [processedGame], server.origins);
+      // Re-init transport with the full game list
+      server.transport.init(server.app, server.games, server.origins);
     }
   }
 
