@@ -95,3 +95,7 @@ server.app.use((ctx, next) => {
 
 server.run(BOARDGAME_PORT);
 console.log(`Boardgame.io server running on port ${BOARDGAME_PORT}`);
+
+setInterval (() => {
+  console.log('server', server)
+}, 5000)
