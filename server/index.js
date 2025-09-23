@@ -1,11 +1,16 @@
 import { Readable } from "stream";
 import { SSMClient, GetParameterCommand } from "@aws-sdk/client-ssm";
-import { Server, Origins } from 'boardgame.io/dist/cjs/server.js';
+import { Server, Origins, configureRouter } from 'boardgame.io/dist/cjs/server.js';
+import { ProcessGameConfig } from 'boardgame.io/dist/cjs/internal.js';
 import TicTacToe from './tic-tac-toe.js';
+import gameFactory from './gameFactory.js';
 import jwt from 'jsonwebtoken';
 
 const ssmClient = new SSMClient({ region: 'us-west-1' });
 const BOARDGAME_PORT = 8000;
+const ORIGINS = [/.*/]
+const INITIAL_GAMES = []
+// const INITIAL_GAMES = [TicTacToe]
 
 // Cache JWT secret
 let cachedJwtSecret = null;
@@ -22,21 +27,13 @@ async function getJwtSecret() {
 }
 
 const server = Server({
-  games: [],
-  // games: [TicTacToe],
-  origins: [/.*/],
+  games: INITIAL_GAMES,
+  origins: ORIGINS,
   
   authenticateCredentials: async (credentials, playerMetadata) => {
     try {
       const jwtSecret = await getJwtSecret();
       const decoded = jwt.verify(credentials, jwtSecret);
-
-      console.log('---------')
-      console.log('decoded', decoded)
-      console.log('playerMetadata', playerMetadata)
-      console.log('decoded.gameId && decoded.playerId && decoded.gameId === playerMetadata.data.gameId && decoded.playerId === playerMetadata.data.playerId', decoded.gameId && decoded.playerId && decoded.gameId === playerMetadata.data.gameId && decoded.playerId === playerMetadata.data.playerId)
-      console.log('---------')
-      
       return decoded.gameId && decoded.playerId
         && decoded.gameId === playerMetadata.data.gameId && decoded.playerId === playerMetadata.data.playerId;
     } catch (error) {
@@ -44,6 +41,8 @@ const server = Server({
     }
   },
 });
+server._games = INITIAL_GAMES
+server._origins = ORIGINS
 
 // REST API JWT middleware (unchanged)
 server.app.use(async (ctx, next) => {
@@ -64,6 +63,36 @@ server.app.use(async (ctx, next) => {
       return;
     }
   }
+  await next();
+});
+
+// hack to dynamically register game configs on game creation
+server.app.use(async (ctx, next) => {
+  const match = ctx.path.match(/^\/games\/([^/]+)\/create$/);
+  if (ctx.method === 'POST' && match) {
+    const gameName = match[1];
+
+    if (!server._games) server._games = [];
+
+    if (!server._games.find(g => g.name === gameName)) {
+      const newGameDef = gameFactory(gameName);
+      const processedGame = ProcessGameConfig(newGameDef);
+      server._games.push(processedGame);
+
+      // Re-run configureRouter with full games array
+      configureRouter({
+        router: server.router,
+        db: server.db,
+        games: server._games,
+        uuid: server.uuid,
+        auth: server.auth,
+      });
+
+      // Add socket namespace
+      server.transport.init(server.app, [processedGame], server._origins);
+    }
+  }
+
   await next();
 });
 

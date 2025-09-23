@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "parcel index.html --open",
+    "postinstall": "node patch-bgio.cjs",
     "serve": "node ./index.js"
   },
   "dependencies": {
