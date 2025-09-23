@@ -1,10 +1,10 @@
 import { Readable } from "stream";
+import jwt from 'jsonwebtoken';
 import { SSMClient, GetParameterCommand } from "@aws-sdk/client-ssm";
-import { Server, Origins, configureRouter } from 'boardgame.io/dist/cjs/server.js';
 import { ProcessGameConfig } from 'boardgame.io/dist/cjs/internal.js';
+import makeServer from './guts.js';
 import TicTacToe from './tic-tac-toe.js';
 import gameFactory from './game-factory.js';
-import jwt from 'jsonwebtoken';
 
 const ssmClient = new SSMClient({ region: 'us-west-1' });
 const BOARDGAME_PORT = 8000;
@@ -26,7 +26,7 @@ async function getJwtSecret() {
   return cachedJwtSecret;
 }
 
-const server = Server({
+const server = makeServer({
   games: INITIAL_GAMES,
   origins: ORIGINS,
   
@@ -41,8 +41,6 @@ const server = Server({
     }
   },
 });
-server._games = INITIAL_GAMES
-server._origins = ORIGINS
 
 // REST API JWT middleware (unchanged)
 server.app.use(async (ctx, next) => {
@@ -72,24 +70,15 @@ server.app.use(async (ctx, next) => {
   if (ctx.method === 'POST' && match) {
     const gameName = match[1];
 
-    if (!server._games) server._games = [];
+    if (!server.games) server.games = [];
 
-    if (!server._games.find(g => g.name === gameName)) {
+    if (!server.games.find(g => g.name === gameName)) {
       const newGameDef = gameFactory(gameName);
       const processedGame = ProcessGameConfig(newGameDef);
-      server._games.push(processedGame);
-
-      // Re-run configureRouter with full games array
-      configureRouter({
-        router: server.router,
-        db: server.db,
-        games: server._games,
-        uuid: server.uuid,
-        auth: server.auth,
-      });
+      server.games.push(processedGame);
 
       // Add socket namespace
-      server.transport.init(server.app, [processedGame], server._origins);
+      server.transport.init(server.app, [processedGame], server.origins);
     }
   }
 

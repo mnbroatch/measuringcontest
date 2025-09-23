@@ -10,5 +10,10 @@ const serverFile = path.join(
 
 fs.appendFileSync(
   serverFile,
-  "\nexports.configureRouter = configureRouter;"
+  `
+exports.configureRouter = configureRouter;
+exports.createServerRunConfig = createServerRunConfig;
+exports.configureApp = configureApp;
+exports.getPortFromServer = getPortFromServer;
+`
 );
