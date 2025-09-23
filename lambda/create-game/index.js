@@ -56,7 +56,7 @@ exports.handler = async (event) => {
   const jwtSecret = await getJwtSecret();
 
   // Create JWT for server authentication
-  const token = jwt.sign({}, jwtSecret, { expiresIn: '1h' });
+  const token = jwt.sign({ purpose: 'gameserver-api' }, jwtSecret, { expiresIn: '1h' });
 
   const createResp = await fetch(`${BOARDGAME_SERVER_URL}/games/${body.gameName}/create`, {
     method: "POST",

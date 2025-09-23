@@ -32,9 +32,6 @@ jobs:
           - name: creategame
             path: lambda/create-game
             zip: creategame.zip
-          - name: deletegame
-            path: lambda/delete-game
-            zip: deletegame.zip
           - name: joingame
             path: lambda/join-game
             zip: joingame.zip

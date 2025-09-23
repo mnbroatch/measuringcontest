@@ -43,18 +43,18 @@ exports.handler = async (event) => {
   const room = roomResp.Item;
   const jwtSecret = await getJwtSecret();
   
+  const clientToken = jwt.sign({
+    gameId: room.gameId,
+    playerId: sub,
+    purpose: 'gameserver-api'
+  }, jwtSecret, { expiresIn: '30d' });
+
   const existingPlayer = room.players?.[sub];
   if (existingPlayer) {
-    // Return existing join data with simplified JWT
-    const clientToken = jwt.sign({ 
-      gameId: room.gameId, 
-      playerId: sub  // Use canonical player ID instead of boardgame player ID
-    }, jwtSecret, { expiresIn: '30d' });
-    
     return {
       gameId: room.gameId,
       boardgamePlayerID: existingPlayer.boardgamePlayerID,
-      clientToken: clientToken
+      clientToken
     };
   }
   
@@ -69,9 +69,10 @@ exports.handler = async (event) => {
   }
   
   // Create single JWT that includes both server auth and player data
-  const token = jwt.sign({
+  const serverToken = jwt.sign({
     gameId: room.gameId,
-    playerId: sub
+    playerId: sub,
+    purpose: 'gameserver-api'
   }, jwtSecret, { expiresIn: '30d' });
   
   let joinData;
@@ -80,7 +81,7 @@ exports.handler = async (event) => {
       method: "POST",
       headers: { 
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`  // Use the same token
+        "Authorization": `Bearer ${serverToken}`
       },
       body: JSON.stringify({ 
         playerName: sub,
@@ -127,6 +128,6 @@ exports.handler = async (event) => {
   return {
     gameId: room.gameId,
     boardgamePlayerID: boardgamePlayerID,
-    clientToken: token
+    clientToken
   };
 };
