@@ -46,7 +46,7 @@ export default function makeServer (serverOptions) {
   const { db, uuid, auth } = server
 
   server.games = (serverOptions.games || []).map(game => ProcessGameConfig(game))
-  server.origins = (serverOptions.origins || []).map(game => ProcessGameConfig(game))
+  server.origins = serverOptions.origins
   const newApp = new Koa();
   newApp.context.db = server.db;
   newApp.context.auth = server.auth;
