@@ -39,7 +39,8 @@ module.exports = {
     chunkFilename: '[name].js?cacheBust=[chunkhash]'
   },
   optimization: {
-    minimize: false
+    minimize: false,
+    concatenateModules: false, 
   },
   plugins: [
     tanstackRouter({

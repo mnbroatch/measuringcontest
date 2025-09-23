@@ -3,7 +3,7 @@ import { SSMClient, GetParameterCommand } from "@aws-sdk/client-ssm";
 import { Server, Origins, configureRouter } from 'boardgame.io/dist/cjs/server.js';
 import { ProcessGameConfig } from 'boardgame.io/dist/cjs/internal.js';
 import TicTacToe from './tic-tac-toe.js';
-import gameFactory from './gameFactory.js';
+import gameFactory from './game-factory.js';
 import jwt from 'jsonwebtoken';
 
 const ssmClient = new SSMClient({ region: 'us-west-1' });
