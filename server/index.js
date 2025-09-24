@@ -42,6 +42,19 @@ const server = makeServer({
   },
 });
 
+    const gameName = 'tic-tac-toe';
+
+    if (!server.games) server.games = [];
+
+    if (!server.games.find(g => g.name === gameName)) {
+      const newGameDef = gameFactory(gameName);
+      const processedGame = ProcessGameConfig(newGameDef);
+      server.games.push(processedGame);
+
+      // Re-init transport with the full game list
+      server.transport.init(server.app, server.games, server.origins);
+    }
+
 // REST API JWT middleware (unchanged)
 server.app.use(async (ctx, next) => {
   if (ctx.method !== 'GET' && ctx.path.startsWith('/games/')) {
@@ -69,17 +82,18 @@ server.app.use(async (ctx, next) => {
   const match = ctx.path.match(/^\/games\/([^/]+)\/create$/);
   if (ctx.method === 'POST' && match) {
     const gameName = match[1];
+    console.log('gameName', gameName)
 
-    if (!server.games) server.games = [];
+//     if (!server.games) server.games = [];
 
-    if (!server.games.find(g => g.name === gameName)) {
-      const newGameDef = gameFactory(gameName);
-      const processedGame = ProcessGameConfig(newGameDef);
-      server.games.push(processedGame);
+//     if (!server.games.find(g => g.name === gameName)) {
+//       const newGameDef = gameFactory(gameName);
+//       const processedGame = ProcessGameConfig(newGameDef);
+//       server.games.push(processedGame);
 
-      // Re-init transport with the full game list
-      server.transport.init(server.app, server.games, server.origins);
-    }
+//       // Re-init transport with the full game list
+//       server.transport.init(server.app, server.games, server.origins);
+//     }
   }
 
   await next();
@@ -96,6 +110,6 @@ server.app.use((ctx, next) => {
 server.run(BOARDGAME_PORT);
 console.log(`Boardgame.io server running on port ${BOARDGAME_PORT}`);
 
-setInterval (() => {
-  console.log('server', server)
-}, 5000)
+// setInterval (() => {
+//   console.log('server', server)
+// }, 5000)
