@@ -1,7 +1,7 @@
 // ripped and stretched from the internals of bgio
 import Koa from 'koa';
 import Router from '@koa/router';
-import { Server, configureRouter, createServerRunConfig, configureApp, getPortFromServer } from 'boardgame.io/dist/cjs/server.js';
+import { Server, configureRouter, createServerRunConfig, configureApp, getPortFromServer, Master, TransportAPI } from 'boardgame.io/dist/cjs/server.js';
 import { ProcessGameConfig } from 'boardgame.io/dist/cjs/internal.js';
 
 
@@ -50,12 +50,51 @@ export default function makeServer (serverOptions) {
   const newApp = new Koa();
   newApp.context.db = server.db;
   newApp.context.auth = server.auth;
+  newApp
   const newRouter = new Router();
   configureRouter({ router: newRouter, db, games: server.games, uuid, auth });
   server.app = newApp
   server.router = newRouter
   server.run = (portOrConfig, callback) => newRun(server, portOrConfig, callback)
-
+  server.transport.addGameSocketListeners = addGameSocketListeners
   return server
 }
 
+function addGameSocketListeners(app, games, origins = []) {
+  nsp.on('connection', (socket) => {
+      socket.on('update', async (...args) => {
+          const [action, stateID, matchID, playerID] = args;
+          const master = new Master(game, app.context.db, TransportAPI(matchID, socket, filterPlayerView, this.pubSub), app.context.auth);
+          const matchQueue = this.getMatchQueue(matchID);
+          await matchQueue.add(() => master.onUpdate(action, stateID, matchID, playerID));
+      });
+      socket.on('sync', async (...args) => {
+          const [matchID, playerID, credentials] = args;
+          socket.join(matchID);
+          this.removeClient(socket.id);
+          const requestingClient = { socket, matchID, playerID, credentials };
+          const transport = TransportAPI(matchID, socket, filterPlayerView, this.pubSub);
+          const master = new Master(game, app.context.db, transport, app.context.auth);
+          const syncResponse = await master.onSync(...args);
+          if (syncResponse && syncResponse.error === 'unauthorized') {
+              return;
+          }
+          this.addClient(requestingClient, game);
+          await master.onConnectionChange(matchID, playerID, credentials, true);
+      });
+      socket.on('disconnect', async () => {
+          const client = this.clientInfo.get(socket.id);
+          this.removeClient(socket.id);
+          if (client) {
+              const { matchID, playerID, credentials } = client;
+              const master = new Master(game, app.context.db, TransportAPI(matchID, socket, filterPlayerView, this.pubSub), app.context.auth);
+              await master.onConnectionChange(matchID, playerID, credentials, false);
+          }
+      });
+      socket.on('chat', async (...args) => {
+          const [matchID] = args;
+          const master = new Master(game, app.context.db, TransportAPI(matchID, socket, filterPlayerView, this.pubSub), app.context.auth);
+          master.onChatMessage(...args);
+      });
+  });
+}

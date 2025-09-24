@@ -142,7 +142,7 @@ setTimeout(() => {
       server.games.push(processedGame);
 
       // Re-init transport with the full game list
-      server.transport.init(server.app, server.games, server.origins);
+      server.transport.addGameSocketListeners(server.app, server.games, server.origins);
     }
 }, 5000)
 console.log(`Boardgame.io server running on port ${BOARDGAME_PORT}`);
