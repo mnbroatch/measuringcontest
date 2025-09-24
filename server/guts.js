@@ -72,7 +72,7 @@ function addGameSocketListeners(app, game) {
   nsp.on('connection', (socket) => {
       socket.on('update', async (...args) => {
           const [action, stateID, matchID, playerID] = args;
-          const master = new Master(game, app.context.db, new TransportAPI(matchID, socket, filterPlayerView, this.pubSub), app.context.auth);
+          const master = new Master(game, app.context.db, new TransportAPI(game, socket, filterPlayerView, this.pubSub), app.context.auth);
           const matchQueue = this.getMatchQueue(matchID);
           await matchQueue.add(() => master.onUpdate(action, stateID, matchID, playerID));
       });
@@ -81,7 +81,7 @@ function addGameSocketListeners(app, game) {
           socket.join(matchID);
           this.removeClient(socket.id);
           const requestingClient = { socket, matchID, playerID, credentials };
-          const transport = new TransportAPI(matchID, socket, filterPlayerView, this.pubSub);
+          const transport = new TransportAPI(game, socket, filterPlayerView, this.pubSub);
           const master = new Master(game, app.context.db, transport, app.context.auth);
           const syncResponse = await master.onSync(...args);
           if (syncResponse && syncResponse.error === 'unauthorized') {
@@ -95,13 +95,13 @@ function addGameSocketListeners(app, game) {
           this.removeClient(socket.id);
           if (client) {
               const { matchID, playerID, credentials } = client;
-              const master = new Master(game, app.context.db, new TransportAPI(matchID, socket, filterPlayerView, this.pubSub), app.context.auth);
+              const master = new Master(game, app.context.db, new TransportAPI(game, socket, filterPlayerView, this.pubSub), app.context.auth);
               await master.onConnectionChange(matchID, playerID, credentials, false);
           }
       });
       socket.on('chat', async (...args) => {
           const [matchID] = args;
-          const master = new Master(game, app.context.db, new TransportAPI(matchID, socket, filterPlayerView, this.pubSub), app.context.auth);
+          const master = new Master(game, app.context.db, new TransportAPI(game, socket, filterPlayerView, this.pubSub), app.context.auth);
           master.onChatMessage(...args);
       });
   });
