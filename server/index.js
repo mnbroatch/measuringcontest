@@ -66,26 +66,54 @@ server.app.use(async (ctx, next) => {
 });
 
 // hack to dynamically register game configs on game creation
+// server.app.use(async (ctx, next) => {
+//   const match = ctx.path.match(/^\/games\/([^/]+)\/create$/);
+//   if (ctx.method === 'POST' && match) {
+//     const gameName = match[1];
+//     console.log('gameName', gameName)
+
+// //     if (!server.games) server.games = [];
+
+// //     if (!server.games.find(g => g.name === gameName)) {
+// //       const newGameDef = gameFactory(gameName);
+// //       const processedGame = ProcessGameConfig(newGameDef);
+// //       server.games.push(processedGame);
+
+// //       // Re-init transport with the full game list
+// //       server.transport.init(server.app, server.games, server.origins);
+// //     }
+//   }
+
+//   await next();
+// });
 server.app.use(async (ctx, next) => {
   const match = ctx.path.match(/^\/games\/([^/]+)\/create$/);
   if (ctx.method === 'POST' && match) {
     const gameName = match[1];
-    console.log('gameName', gameName)
-
-//     if (!server.games) server.games = [];
-
-//     if (!server.games.find(g => g.name === gameName)) {
-//       const newGameDef = gameFactory(gameName);
-//       const processedGame = ProcessGameConfig(newGameDef);
-//       server.games.push(processedGame);
-
-//       // Re-init transport with the full game list
-//       server.transport.init(server.app, server.games, server.origins);
-//     }
+    console.log('Middleware: gameName', gameName);
+    
+    if (!server.games) server.games = [];
+    console.log('Middleware: games before', server.games.map(g => g.name));
+    
+    if (!server.games.find(g => g.name === gameName)) {
+      console.log('Middleware: adding new game');
+      const newGameDef = gameFactory(gameName);
+      const processedGame = ProcessGameConfig(newGameDef);
+      server.games.push(processedGame);
+      console.log('Middleware: games after push', server.games.map(g => g.name));
+      
+      // Re-init transport with the full game list
+      console.log('Middleware: calling transport.init');
+      server.transport.init(server.app, server.games, server.origins);
+      console.log('Middleware: transport.init completed');
+    } else {
+      console.log('Middleware: game already exists');
+    }
   }
-
   await next();
 });
+
+
 
 server.app.use((ctx, next) => {
   if (ctx.path === '/health') {
@@ -96,18 +124,18 @@ server.app.use((ctx, next) => {
 });
 
 server.run(BOARDGAME_PORT);
-    const gameName = 'tic-tac-toe';
+    // const gameName = 'tic-tac-toe';
 
-    if (!server.games) server.games = [];
+    // if (!server.games) server.games = [];
 
-    if (!server.games.find(g => g.name === gameName)) {
-      const newGameDef = gameFactory(gameName);
-      const processedGame = ProcessGameConfig(newGameDef);
-      server.games.push(processedGame);
+    // if (!server.games.find(g => g.name === gameName)) {
+    //   const newGameDef = gameFactory(gameName);
+    //   const processedGame = ProcessGameConfig(newGameDef);
+    //   server.games.push(processedGame);
 
-      // Re-init transport with the full game list
-      server.transport.init(server.app, server.games, server.origins);
-    }
+    //   // Re-init transport with the full game list
+    //   server.transport.init(server.app, server.games, server.origins);
+    // }
 console.log(`Boardgame.io server running on port ${BOARDGAME_PORT}`);
 
 // setInterval (() => {
