@@ -1,4 +1,3 @@
-import TicTacToe from '../server/tic-tac-toe'
 export default function gameFactory (rules, name) {
   return {
     name,
@@ -28,8 +27,7 @@ export default function gameFactory (rules, name) {
       }
     }
   };
-
-export default TicTacToe;
+}
 
 function IsVictory(cells) {
   const positions = [
