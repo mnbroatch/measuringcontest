@@ -42,7 +42,6 @@ const server = makeServer({
   },
 });
 
-
 // REST API JWT middleware (unchanged)
 server.app.use(async (ctx, next) => {
   if (ctx.method !== 'GET' && ctx.path.startsWith('/games/')) {
@@ -86,39 +85,39 @@ server.app.use(async (ctx, next) => {
 
 //   await next();
 // });
-server.app.use(async (ctx, next) => {
-  const match = ctx.path.match(/^\/games\/([^/]+)\/create$/);
-  if (ctx.method === 'POST' && match) {
-    const gameName = match[1];
+// server.app.use(async (ctx, next) => {
+//   const match = ctx.path.match(/^\/games\/([^/]+)\/create$/);
+//   if (ctx.method === 'POST' && match) {
+//     const gameName = match[1];
     
-    if (!server.games) server.games = [];
+//     if (!server.games) server.games = [];
     
-    if (!server.games.find(g => g.name === gameName)) {
-      const newGameDef = gameFactory(gameName);
-      const processedGame = ProcessGameConfig(newGameDef);
-      server.games.push(processedGame);
-// Before transport.init()
-console.log('Before init:');
-console.log('IO exists:', !!server.app.context.io);
-console.log('IO socket exists:', !!server.app.context.io?.socket);
-console.log('Namespaces:', [...(server.app.context.io?.socket?._nsps?.keys() || [])]);
+//     if (!server.games.find(g => g.name === gameName)) {
+//       const newGameDef = gameFactory(gameName);
+//       const processedGame = ProcessGameConfig(newGameDef);
+//       server.games.push(processedGame);
+// // Before transport.init()
+// console.log('Before init:');
+// console.log('IO exists:', !!server.app.context.io);
+// console.log('IO socket exists:', !!server.app.context.io?.socket);
+// console.log('Namespaces:', [...(server.app.context.io?.socket?._nsps?.keys() || [])]);
 
-// After transport.init()
-server.transport.init(server.app, server.games, server.origins);
-console.log('After init:');
-console.log('IO exists:', !!server.app.context.io);
-console.log('IO socket exists:', !!server.app.context.io?.socket);
-console.log('Namespaces:', [...(server.app.context.io?.socket?._nsps?.keys() || [])]);
+// // After transport.init()
+// server.transport.init(server.app, server.games, server.origins);
+// console.log('After init:');
+// console.log('IO exists:', !!server.app.context.io);
+// console.log('IO socket exists:', !!server.app.context.io?.socket);
+// console.log('Namespaces:', [...(server.app.context.io?.socket?._nsps?.keys() || [])]);
 
-// Check the Engine.IO layer
-console.log('Engine.IO exists:', !!server.app.context.io?.socket?.engine);
-console.log('Engine.IO WebSocket server:', !!server.app.context.io?.socket?.eio?.ws);
-    } else {
-      console.log('Middleware: game already exists');
-    }
-  }
-  await next();
-});
+// // Check the Engine.IO layer
+// console.log('Engine.IO exists:', !!server.app.context.io?.socket?.engine);
+// console.log('Engine.IO WebSocket server:', !!server.app.context.io?.socket?.eio?.ws);
+//     } else {
+//       console.log('Middleware: game already exists');
+//     }
+//   }
+//   await next();
+// });
 
 
 
@@ -142,7 +141,7 @@ setTimeout(() => {
       server.games.push(processedGame);
 
       // Re-init transport with the full game list
-      server.transport.addGameSocketListeners(server.app, server.games, server.origins);
+      server.transport.addGameSocketListeners(server.app, processedGame);
     }
 }, 5000)
 console.log(`Boardgame.io server running on port ${BOARDGAME_PORT}`);

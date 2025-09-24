@@ -2,18 +2,20 @@
 import Koa from 'koa';
 import Router from '@koa/router';
 import { Server, configureRouter, createServerRunConfig, configureApp, getPortFromServer, Master, TransportAPI } from 'boardgame.io/dist/cjs/server.js';
-import { ProcessGameConfig } from 'boardgame.io/dist/cjs/internal.js';
+import { ProcessGameConfig, getFilterPlayerView } from 'boardgame.io/dist/cjs/internal.js';
 
 
 // just exists so we're not reliant on closure from constructor for router, games
 async function newRun (server, portOrConfig, callback) {
   const { games, db, app, router, uuid, auth, origins, apiOrigins = origins } = server
+
   await db.connect();
 
   const serverRunConfig = createServerRunConfig(portOrConfig, callback);
   const lobbyConfig = serverRunConfig.lobbyConfig;
   let apiServer;
   if (!lobbyConfig || !lobbyConfig.apiPort) {
+
     configureApp(app, router, apiOrigins);
   } else {
     // Run API in a separate Koa app.
@@ -50,7 +52,9 @@ export default function makeServer (serverOptions) {
   const newApp = new Koa();
   newApp.context.db = server.db;
   newApp.context.auth = server.auth;
-  newApp
+
+  server.transport.init(newApp, server.games, server.origins);
+
   const newRouter = new Router();
   configureRouter({ router: newRouter, db, games: server.games, uuid, auth });
   server.app = newApp
@@ -60,7 +64,11 @@ export default function makeServer (serverOptions) {
   return server
 }
 
-function addGameSocketListeners(app, games, origins = []) {
+// MAYBE there's a way to mutate ioOptions on server.transport such that
+// re-calling server.transport.init() works instead of this?
+function addGameSocketListeners(app, game) {
+  const nsp = app._io.of(game.name);
+  const filterPlayerView = getFilterPlayerView(game);
   nsp.on('connection', (socket) => {
       socket.on('update', async (...args) => {
           const [action, stateID, matchID, playerID] = args;
