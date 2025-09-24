@@ -18,6 +18,6 @@ exports.configureApp = configureApp
 exports.getPortFromServer = getPortFromServer
 exports.getPortFromServer = getPortFromServer
 exports.Master = Master
-exports.TransportAPI = Master
+exports.TransportAPI = TransportAPI
 `
 );
