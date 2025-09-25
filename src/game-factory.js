@@ -1,10 +1,32 @@
+import filter from "lodash/filter";
+
 export default function gameFactory (rules, name) {
+  const game = {}
+
+  game.setup = () => {
+    const initialState = {};
+
+    if (rules.initialSharedBoard) {
+      initialState.sharedBoard = new Board
+      rules.initialSharedBoard.forEach((board) => {
+        initialState.sharedBoard.push(...expandPieces(filter(rules.entities, board)))
+      })
+    }
+
+    return initialState;
+  }
+  
+
+
+
+
+
+
+  return game
+
+
   return {
     name,
-    setup: () => {
-      const initialState = { cells: new Array(9).fill(null) };
-      return initialState;
-    },
     moves: {
       clickCell({ G, ctx }, id) {
         const cells = [...G.cells];
@@ -47,4 +69,8 @@ function IsVictory(cells) {
   };
 
   return positions.map(isRowComplete).some((i) => i === true);
+}
+
+function expandPieces (pieces) {
+  return pieces
 }

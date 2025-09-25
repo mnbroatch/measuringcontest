@@ -1,25 +1,25 @@
 {
   "playerRange": [2,2],
-  "sharedBoard": {
-    "grid": {
-      "type": "grid",
+  "entities": [
+    {
+      "id": "mainGrid",
+      "type": "Grid",
       "width": 3,
       "height": 3
-    }
-  },
-  "pieces": [
+    },
     {
-      "name": "playerMarker",
+      "id": "playerMarker",
       "count": "Infinity",
       "perPlayer": true
     }
   ],
+  "initialSharedBoard": [
+    { "id": "mainGrid" }
+  ],
   "winCondition": {
     "type": "bingo",
     "board": ["sharedBoard", "grid"],
-    "piece": {
-      "name": "playerMarker"
-    }
+    "piece": { "id": "playerMarker" }
   },
   "round": {
     "loopUntil": false,
@@ -29,9 +29,7 @@
         "actions": [
           {
             "type": "movePiece",
-            "piece": {
-              "name": "playerMarker"
-            },
+            "piece": { "id": "playerMarker" },
             "from": "player",
             "to": ["sharedBoard", "grid"],
             "conditions": [
