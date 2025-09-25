@@ -1,0 +1,40 @@
+{
+  "name": "board-game-engine",
+  "version": "0.0.2",
+  "description": "wip board game engine",
+  "main": "dist/board-game-engine.js",
+  "scripts": {
+    "test": "jest --coverage --verbose false",
+    "lint": "eslint .",
+    "build": "webpack",
+    "prepublish": "npm run build"
+  },
+  "author": "Matthew Broatch",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/preset-env": "^7.16.7",
+    "@babel/preset-typescript": "^7.27.1",
+    "babel-jest": "^27.4.4",
+    "babel-loader": "",
+    "babel-plugin-add-module-exports": "^1.0.4",
+    "core-js": "^3.20.2",
+    "eslint": "",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.3.0",
+    "jest": "^27.4.3",
+    "standard": "^16.0.4",
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1"
+  },
+  "dependencies": {
+    "wackson": "^1.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mnbroatch/board-game-engine.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mnbroatch/board-game-engine/issues"
+  },
+  "homepage": "https://github.com/mnbroatch/board-game-engine#readme"
+}
