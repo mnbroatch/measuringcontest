@@ -2,52 +2,61 @@
   "playerRange": [2,2],
   "entities": [
     {
-      "id": "mainGrid",
+      "name": "mainGrid",
       "type": "Grid",
       "width": 3,
       "height": 3
     },
     {
-      "id": "playerMarker",
-      "count": "Infinity",
-      "perPlayer": true
+      "name": "playerMarker",
+      "type": "Pile",
+      "player": "0"
+    },
+    {
+      "name": "playerMarker",
+      "type": "Pile",
+      "player": "1"
     }
   ],
   "initialSharedBoard": [
-    { "id": "mainGrid" }
+    { "name": "mainGrid" }
   ],
-  "winCondition": {
-    "type": "bingo",
-    "board": ["sharedBoard", "grid"],
-    "piece": { "id": "playerMarker" }
-  },
-  "round": {
-    "loopUntil": false,
-    "phases": [
+  "endIf": {
+    "oneOf": [
       {
-        "type": "sequentialPlayerTurn",
-        "actions": [
+        "target": ["sharedBoard", "mainGrid"],
+        "type": "spacesPattern",
+        "spacesPattern": "bingo",
+        "spaceConditions": [
           {
-            "type": "movePiece",
-            "piece": { "id": "playerMarker" },
-            "from": "player",
-            "to": ["sharedBoard", "grid"],
-            "conditions": [
-              {
-                "type": "doesNotContain",
-                "piece": "any"
-              }
-            ]
+            "type": "contains",
+            "piece": {
+              "name": "playerMarker",
+              "same": [ "player" ]
+            }
           }
-        ]
+        ],
+        "result": {
+          "winner": {
+            "localPath": ["matches", 0, "spaces", 0, "pieces", 0, "name"]
+          }
+      },
+      {
+        "target": ["sharedBoard", "mainGrid"],
+        "type": "spacesPattern",
+        "spacesPattern": "blackout",
+        "spaceConditions": [{"type": "contains"}],
+        "result": { "draw": true }
       }
     ]
   },
-  "drawCondition": {
-    "type": "blackout",
-    "board": ["sharedBoard", "grid"],
-    "piece": {
-      "name": "playerMarker"
+  "moves": {
+    "placePlayerMarker": {
+      "type": "movePiece",
+      "piece": { "name": "playerMarker" },
+      "from": "Pile",
+      "to": ["sharedBoard", "mainGrid"],
+      "spaceConditions": [{"type": "doesNotContain"}]
     }
   }
 }

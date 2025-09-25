@@ -1,4 +1,7 @@
 import filter from "lodash/filter";
+import { serialize, deserialize } from "wackson";
+import entityFactory from "./entity-factory.js";
+import moveFactory from "./move-factory.js";
 
 export default function gameFactory (rules, name) {
   const game = {}
@@ -7,20 +10,39 @@ export default function gameFactory (rules, name) {
     const initialState = {};
 
     if (rules.initialSharedBoard) {
-      initialState.sharedBoard = new Board
-      rules.initialSharedBoard.forEach((board) => {
-        initialState.sharedBoard.push(...expandPieces(filter(rules.entities, board)))
-      })
+      const initialSharedBoardDefinitions =
+        rules.initialSharedBoard.reduce((acc, boardMatcher) => [
+          ...acc,
+          ...expandEntities(filter(rules.entities, boardMatcher))
+        ], [])
+      initialState.sharedBoard = initialSharedBoardDefinitions.map(entityFactory)
     }
 
-    return initialState;
+    return serialize(initialState);
   }
+
+  if (rules.moves) {
+    rules.moves = rules.moves.map(moveFactory)
+  }
+
+  // is this already a default? if so delete. if not, put in expanded json
+  if (!rules.turn) {
+    rules.turn = {
+      minMoves: 1,
+      maxMoves: 1,
+    }
+  }
+
+  if (rules.endIf) {
+    
+  }
+  
   
 
 
 
 
-
+  console.log('game', game)
 
   return game
 
@@ -71,6 +93,6 @@ function IsVictory(cells) {
   return positions.map(isRowComplete).some((i) => i === true);
 }
 
-function expandPieces (pieces) {
+function expandEntities (pieces) {
   return pieces
 }
