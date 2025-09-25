@@ -10,10 +10,11 @@
   },
   "dependencies": {
     "@aws-sdk/client-ssm": "^3.891.0",
+    "@koa/router": "^10.1.1",
     "boardgame.io": "0.50.2",
     "jsonwebtoken": "^9.0.2",
     "koa-body": "^5.0.0",
-    "@koa/router": "^10.1.1"
+    "wackson": "^1.1.1"
   },
   "devDependencies": {
     "parcel-bundler": "^1.12.5"
