@@ -1,7 +1,6 @@
 import filter from "lodash/filter";
 import { serialize, deserialize } from "wackson";
 import entityFactory from "./entity-factory.js";
-import moveFactory from "./move-factory.js";
 
 export default function gameFactory (rules, name) {
   const game = {}
@@ -9,11 +8,15 @@ export default function gameFactory (rules, name) {
   game.setup = () => {
     const initialState = {};
 
+    if (rules.entities) {
+      const entityDefinitions = expandEntityDefinitions(rules.entities)
+    }
+
     if (rules.initialSharedBoard) {
       const initialSharedBoardDefinitions =
         rules.initialSharedBoard.reduce((acc, boardMatcher) => [
           ...acc,
-          ...expandEntities(filter(rules.entities, boardMatcher))
+          ...filter(rules.entities, boardMatcher)
         ], [])
       initialState.sharedBoard = initialSharedBoardDefinitions.map(entityFactory)
     }
@@ -22,7 +25,10 @@ export default function gameFactory (rules, name) {
   }
 
   if (rules.moves) {
-    rules.moves = rules.moves.map(moveFactory)
+    rules.moves = Object.entries().reduce((acc, [name, moveDefinition]) => ({
+      ...acc,
+      [name]: entityFactory(moveDefinition)
+    }), {})
   }
 
   // is this already a default? if so delete. if not, put in expanded json
@@ -93,6 +99,8 @@ function IsVictory(cells) {
   return positions.map(isRowComplete).some((i) => i === true);
 }
 
-function expandEntities (pieces) {
-  return pieces
+function expandEntityDefinitions (entities) {
+  return entities.reduce((acc, entity) => {
+    if ()
+  }, [])
 }

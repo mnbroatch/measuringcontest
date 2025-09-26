@@ -1,11 +1,11 @@
-import Cls5 from "./spaces/spaces.js";
-import Cls6 from "./spaces/grid.js";
-import Cls18 from "./piece/piece.ts";
-import Cls19 from "./piece/pile.js";
+import Spaces from "./spaces/spaces.js";
+import Grid from "./spaces/grid.js";
+import Piece from "./piece/piece.ts";
+import Bank from "./piece/bank.js";
 
 export const registry = {
-  "Spaces": Cls5,
-  "Grid": Cls6,
-  "Piece": Cls18,
-  "Pile": Cls19,
+  Spaces,
+  Grid,
+  Piece,
+  Bank,
 };

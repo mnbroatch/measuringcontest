@@ -19,12 +19,8 @@ export default function conditionFactory(conditionRule, game) {
     return new BlackoutCondition(conditionRule, game);
   } else if (conditionRule.type === "some") {
     return new SomeCondition(conditionRule, game);
-  } else if (conditionRule.type === "relativeMove") {
-    return new RelativeMoveCondition(conditionRule, game);
-  } else if (conditionRule.type === "actionTypeMatches") {
-    return new ActionTypeMatchesCondition(conditionRule, game);
-  } else if (conditionRule.type === "isValidPlayer") {
-    return new IsValidPlayerCondition(conditionRule, game);
+  // } else if (conditionRule.type === "relativeMove") {
+  //   return new RelativeMoveCondition(conditionRule, game);
   } else if (conditionRule.type === "pieceMatches") {
     return new PieceMatchesCondition(conditionRule, game);
   }

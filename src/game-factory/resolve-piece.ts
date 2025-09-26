@@ -1,4 +1,4 @@
-import Pile from "../piece/pile.js";
+import Bank from "../piece/bank.js";
 
 export default function resolvePiece(piece, gameState) {
   // todo: should not be specific to grids

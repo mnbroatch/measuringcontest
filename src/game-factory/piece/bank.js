@@ -1,38 +1,35 @@
-import pieceFactory from './piece-factory.js'
+import entityFactory from '../entity-factory.js'
 
-// all this extra complication is to support arbitrary (infinite) piles of pieces
-class Pile {
-  constructor (pieceRule, options = {}) {
-    this.pieceRule = pieceRule
-    this.name = pieceRule.name
+// all this extra complication is to support arbitrary (infinite) piles of entities
+class Bank {
+  constructor (entityRule, options = {}) {
+    this.entityRule = entityRule
+    this.name = entityRule.name
     this.id = `${Math.random()}`
     if (options.player) {
       this.player = options.player
     }
     this.options = options
     this.pool = (
-      pieceRule.variants ? Object.entries(pieceRule.variants) : []
+      entityRule.variants ? Object.entries(entityRule.variants) : []
     ).reduce((acc, [variantId, variant]) => {
       const count = variant.count || 1
       return [
         ...acc,
         ...Array.from(Array(count)).map((_) =>
-          pieceFactory(
-            { ...{ ...pieceRule, variantId }, ...variant },
-            this.options
-          )
+          entityFactory({ ...{ ...entityRule, variantId }, ...variant })
         )
       ]
     }, [])
 
-    if (pieceRule.shuffled) {
+    if (entityRule.shuffled) {
       this.pool = this.pool
         .map((value) => ({ value, sort: Math.random() }))
         .sort((a, b) => a.sort - b.sort)
         .map(({ value }) => value)
     }
 
-    this.count = this.pool.length || pieceRule.count
+    this.count = this.pool.length || entityRule.count
   }
 
   getOne () {
@@ -51,7 +48,7 @@ class Pile {
       if (remainder > 0) {
         toReturn.push(
           ...Array.from(new Array(remainder)).map(() =>
-            pieceFactory(this.pieceRule, this.options)
+            entityFactory(this.entityRule, this.options)
           )
         )
       }
@@ -59,12 +56,12 @@ class Pile {
     return toReturn
   }
 
-  put (piece) {
+  put (entity) {
     if (this.count !== undefined) {
       this.count += 1
     }
-    this.pool.push(piece)
+    this.pool.push(entity)
   }
 }
 
-export default Pile
+export default Bank

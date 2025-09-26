@@ -5,27 +5,35 @@
       "name": "mainGrid",
       "type": "Grid",
       "width": 3,
-      "height": 3
+      "height": 3,
+      "count": 1
     },
     {
       "name": "playerMarker",
-      "type": "Pile",
-      "player": "0"
-    },
-    {
-      "name": "playerMarker",
-      "type": "Pile",
-      "player": "1"
+      "perPlayer": true,
+      "count": "Infinity"
     }
   ],
-  "initialSharedBoard": [
-    { "name": "mainGrid" }
-  ],
+  "initialSharedBoard": [ { "name": "mainGrid" } ],
+  "moves": {
+    "placePlayerMarker": {
+      "type": "PlacePiece",
+      "piece": {
+        "name": "playerMarker",
+        "player": "current"
+      },
+      "destination": {
+        "path": ["sharedBoard", "mainGrid"],
+        "conditions": [{"type": "doesNotContain"}]
+      }
+    }
+  },
   "endIf": {
-    "oneOf": [
+    "type": "some",
+    "conditions": [
       {
-        "target": ["sharedBoard", "mainGrid"],
         "type": "spacesPattern",
+        "target": ["sharedBoard", "mainGrid"],
         "spacesPattern": "bingo",
         "spaceConditions": [
           {
@@ -40,23 +48,15 @@
           "winner": {
             "localPath": ["matches", 0, "spaces", 0, "pieces", 0, "name"]
           }
+        }
       },
       {
-        "target": ["sharedBoard", "mainGrid"],
         "type": "spacesPattern",
+        "target": ["sharedBoard", "mainGrid"],
         "spacesPattern": "blackout",
         "spaceConditions": [{"type": "contains"}],
         "result": { "draw": true }
       }
     ]
-  },
-  "moves": {
-    "placePlayerMarker": {
-      "type": "movePiece",
-      "piece": { "name": "playerMarker" },
-      "from": "Pile",
-      "to": ["sharedBoard", "mainGrid"],
-      "spaceConditions": [{"type": "doesNotContain"}]
-    }
   }
 }
