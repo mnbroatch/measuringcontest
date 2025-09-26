@@ -23,18 +23,17 @@
         "player": "current"
       },
       "destination": {
-        "path": ["sharedBoard", "mainGrid"],
+        "location": { "name": "mainGrid" },
         "conditions": [{"type": "doesNotContain"}]
       }
     }
   },
-  "endIf": {
-    "type": "some",
-    "conditions": [
-      {
-        "type": "spacesPattern",
-        "target": ["sharedBoard", "mainGrid"],
-        "spacesPattern": "bingo",
+  "endIf": [
+    {
+      "conditions": [{
+        "type": "boardPattern",
+        "board": { "name": "mainGrid" },
+        "pattern": "bingo",
         "spaceConditions": [
           {
             "type": "contains",
@@ -43,20 +42,22 @@
               "same": [ "player" ]
             }
           }
-        ],
-        "result": {
-          "winner": {
-            "localPath": ["matches", 0, "spaces", 0, "pieces", 0, "name"]
-          }
+        ]
+      }],
+      "result": {
+        "winner": {
+          "conditionResult": [0, "same", "player"]
         }
-      },
-      {
+      }
+    },
+    {
+      "conditions": [{
         "type": "spacesPattern",
         "target": ["sharedBoard", "mainGrid"],
         "spacesPattern": "blackout",
-        "spaceConditions": [{"type": "contains"}],
-        "result": { "draw": true }
-      }
-    ]
-  }
+        "spaceConditions": [{"type": "contains"}]
+      }],
+      "result": { "draw": true }
+    }
+  ]
 }

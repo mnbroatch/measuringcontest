@@ -7,4 +7,11 @@ delete game from server on room delete
 hide game if not joined room
 handle auto join if going from room not joined to room joined
 
+perPlayer: true just gets transformed at creation time to variants: { '0': { player: '0' }, '1': { player: '1' } }
+variants get turned into their own bespoke entity with their own bank
+{
+  name: "thing-variantname"
+  metadata: { parentName: 'thing', variantName: 'variantname' }
+}
+
 

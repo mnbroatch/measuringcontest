@@ -1,34 +1,40 @@
 import filter from "lodash/filter";
 import { serialize, deserialize } from "wackson";
 import entityFactory from "./entity-factory.js";
+import Bank from "./piece/bank.js";
 
 export default function gameFactory (rules, name) {
   const game = {}
 
-  game.setup = () => {
+  game.setup = ({ ctx }) => {
     const initialState = {};
 
     if (rules.entities) {
-      const entityDefinitions = expandEntityDefinitions(rules.entities)
+      const entityDefinitions = expandEntityDefinitions(rules.entities, ctx)
+      game.bank = new Bank(entityDefinitions)
     }
 
+    // todo: nested boards
     if (rules.initialSharedBoard) {
       const initialSharedBoardDefinitions =
         rules.initialSharedBoard.reduce((acc, boardMatcher) => [
           ...acc,
           ...filter(rules.entities, boardMatcher)
         ], [])
-      initialState.sharedBoard = initialSharedBoardDefinitions.map(entityFactory)
+
+      initialState.sharedBoard =
+        initialSharedBoardDefinitions.map(b => game.bank.getOne(b))
     }
 
     return serialize(initialState);
   }
 
   if (rules.moves) {
-    rules.moves = Object.entries().reduce((acc, [name, moveDefinition]) => ({
-      ...acc,
-      [name]: entityFactory(moveDefinition)
-    }), {})
+    game.moves =
+      Object.entries(rules.moves).reduce((acc, [name, moveDefinition]) => ({
+        ...acc,
+        [name]: entityFactory(moveDefinition)
+      }), {})
   }
 
   // is this already a default? if so delete. if not, put in expanded json
@@ -99,8 +105,35 @@ function IsVictory(cells) {
   return positions.map(isRowComplete).some((i) => i === true);
 }
 
-function expandEntityDefinitions (entities) {
+// create a new entity for each variant
+function expandEntityDefinitions (entities, ctx) {
   return entities.reduce((acc, entity) => {
-    if ()
+    const entityCopy = { ...entity }
+
+    // perPlayer flag multiplies number of variants
+    if (entityCopy.perPlayer) {
+      if (entityCopy.variants) {
+        entityCopy.variants = (new Array(ctx.numPlayers)).reduce((accu, _, i) => [
+          ...accu,
+          ...entityCopy.variants.map(variant => ({ ...variant, player: `${i}` }))
+        ], [])
+      }
+    }
+
+    // variants becomes new entitites
+    if (entityCopy.variants) {
+      return [
+        ...acc,
+        ...entityCopy.variants.map(variant => ({
+          ...entityCopy,
+          ...variant,
+        }))
+      ]
+    } else {
+      return [
+        ...acc,
+        entityCopy
+      ]
+    }
   }, [])
 }
