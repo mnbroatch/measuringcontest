@@ -1,22 +1,15 @@
-import type Piece from "../piece/piece";
-
-type Coordinates = [number, number];
-
 export default class Space {
-  coordinates: Coordinates;
-  pieces: Piece[];
-
-  constructor(coordinates: Coordinates, startingPieces: Piece[] = []) {
+  constructor(coordinates, startingPieces) {
     this.coordinates = coordinates;
     this.pieces = startingPieces;
     this.id = `${Math.random()}`
   }
 
-  placePiece(piece: Piece): void {
+  placePiece(piece) {
     this.pieces.push(piece);
   }
 
-  isEmpty(): boolean {
+  isEmpty() {
     return this.pieces.length === 0;
   }
 }
