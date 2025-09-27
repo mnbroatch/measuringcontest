@@ -15,7 +15,7 @@ export default class PlaceEntity extends Move {
 
     const spaceConditionMappings = rule.destination.conditions.map(rule => ({
       rule,
-      mappings: { space: payload => payload.destination }
+      mappings: { space: payload => payload.entities.destination }
     }))
 
     this.conditionMappings = [
@@ -29,7 +29,7 @@ export default class PlaceEntity extends Move {
     if (entityRuleCopy.player === 'Current') {
       entityRuleCopy.player = ctx.currentPlayer
     }
-    console.log('destination', destination)
+    console.log('entityRuleCopy', entityRuleCopy)
     destination.placeEntity(G.bank.getOne(entityRuleCopy))
   }
 }

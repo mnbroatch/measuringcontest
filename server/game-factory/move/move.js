@@ -6,7 +6,6 @@ import conditionFactory from '../condition/condition-factory.js'
 export default class Move {
   constructor (rule) {
     this.rule = rule
-    this.id = `${Math.random()}`
   }
 
   // maybe?
@@ -39,7 +38,8 @@ export default class Move {
     ) => {
       const G = deserialize(JSON.stringify(serializableG), registry)
       const bgioArguments = { G, ...restBgioArguments }
-      const payload = deserialize(JSON.stringify(serializablePayload), registry)
+      const payload = revivePayload(serializablePayload)
+
 
       if (!this.isValid(bgioArguments, payload)) {
         return INVALID_MOVE
@@ -51,4 +51,15 @@ export default class Move {
     compatibleMove.isValid = this.isValid
     return compatibleMove
   }
+}
+
+
+function revivePayload (serializablePayload) {
+  const payload = deserialize(JSON.stringify(serializablePayload), registry)
+  payload.entities =
+    Object.entries(payload.entities).reduce((acc, [key, entityId]) => ({
+      ...acc,
+      [key]: G.bank.locate(entityId)
+    }), {})
+  return payload
 }
