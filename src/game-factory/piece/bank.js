@@ -19,6 +19,7 @@ class Bank {
   }
 
   getSlot (matcher) {
+    console.log('this.slots', this.slots)
     return this.slots.find(s => isMatch(s.entityRule, matcher))
   }
 }
