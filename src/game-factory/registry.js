@@ -1,5 +1,5 @@
 import Spaces from "./spaces/spaces.js";
-import Space from "./space/space.ts";
+import Space from "./space/space.js";
 import Grid from "./spaces/grid.js";
 import Bank from "./bank/bank.js";
 import BankSlot from "./bank/bank-slot.js";

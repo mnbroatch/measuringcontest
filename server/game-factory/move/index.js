@@ -1,9 +1,9 @@
-import MovePiece from './move-piece.js'
-import PlacePiece from './place-piece.js'
+import MoveEntity from './move-entity.js'
+import PlaceEntity from './place-entity.js'
 
 const moveIndex = {
-  MovePiece,
-  PlacePiece,
+  MoveEntity,
+  PlaceEntity,
 }
 
 export default moveIndex

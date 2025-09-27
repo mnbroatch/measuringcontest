@@ -1,8 +1,9 @@
+import Entity from "../entity.js";
 import Space from "../space/space.js";
 
-export default class Spaces {
-  constructor (rule, options = {}) {
-    this.rule = rule
+export default class Spaces extends Entity {
+  constructor (...args) {
+    super(...args)
     this.spaces = this.makeSpaces();
   }
 
@@ -18,11 +19,11 @@ export default class Spaces {
     return this.spaces[index]
   }
 
-  getPieces(index) {
-    return this.getSpace(index).pieces;
+  getEntities(index) {
+    return this.getSpace(index).entities;
   }
 
-  placeEntity(index, piece) {
-    this.getSpace(index).placeEntity(piece);
+  placeEntity(index, entity) {
+    this.getSpace(index).placeEntity(entity);
   }
 }

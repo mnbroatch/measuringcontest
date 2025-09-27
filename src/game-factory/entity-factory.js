@@ -1,4 +1,4 @@
-import Piece from './piece/piece.ts'
+import Entity from './entity.js'
 import { registry } from './registry.js'
 
 export default function makeEntityFactory (definition) {

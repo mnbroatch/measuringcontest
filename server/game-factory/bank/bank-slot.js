@@ -1,4 +1,4 @@
-// lazily create pieces as needed, and also function as an index of pieces created
+// lazily create entities as needed, and also function as an index of entities created
 class BankSlot {
   constructor (entityRule, entityFactory) {
     this.entityFactory = entityFactory

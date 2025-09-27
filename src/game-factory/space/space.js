@@ -6,11 +6,11 @@ export default class Space extends Entity {
     this.entities = []
   }
 
-  placeEntity(entity: Entity) {
+  placeEntity(entity) {
     this.entities.push(entity);
   }
 
-  isEmpty(): boolean {
+  isEmpty() {
     return this.entities.length === 0;
   }
 }

@@ -29,6 +29,7 @@ export default class PlaceEntity extends Move {
     if (entityRuleCopy.player === 'Current') {
       entityRuleCopy.player = ctx.currentPlayer
     }
+    console.log('destination', destination)
     destination.placeEntity(G.bank.getOne(entityRuleCopy))
   }
 }

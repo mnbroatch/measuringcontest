@@ -1,15 +1,16 @@
-export default class Space {
-  constructor(coordinates, startingPieces = []) {
-    this.coordinates = coordinates;
-    this.pieces = startingPieces;
-    this.id = `${Math.random()}`
+import Entity from "../entity.js";
+
+export default class Space extends Entity {
+  constructor (...args) {
+    super(...args)
+    this.entities = []
   }
 
-  placeEntity(piece) {
-    this.pieces.push(piece);
+  placeEntity(entity) {
+    this.entities.push(entity);
   }
 
   isEmpty() {
-    return this.pieces.length === 0;
+    return this.entities.length === 0;
   }
 }

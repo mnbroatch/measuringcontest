@@ -1,5 +1,5 @@
 import Entity from "../entity.js";
-import Space from "../space/space.ts";
+import Space from "../space/space.js";
 
 export default class Spaces extends Entity {
   constructor (...args) {
