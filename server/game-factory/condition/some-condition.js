@@ -1,3 +1,4 @@
+import Condition from "./condition.js";
 import conditionFactory from '../condition/condition-factory.js'
 
 export default class SomeCondition extends Condition {
