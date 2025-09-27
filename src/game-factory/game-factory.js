@@ -4,10 +4,9 @@ import moveFactory from "./move/move-factory.js";
 import Bank from "./piece/bank.js";
 
 export default function gameFactory (rules, name) {
-  const game = {}
+  const game = { name }
 
   game.setup = ({ ctx }) => {
-    console.log('123', 123)
     const initialState = {};
     if (rules.entities) {
       const entityDefinitions = expandEntityDefinitions(rules.entities, ctx)
@@ -26,7 +25,6 @@ export default function gameFactory (rules, name) {
       initialState.sharedBoard =
         initialSharedBoardDefinitions.map(b => game.bank.getOne(b))
     }
-console.log('JSON.parse(serialize(initialState))', JSON.parse(serialize(initialState)))
     return JSON.parse(serialize(initialState));
   }
 
