@@ -44,19 +44,9 @@ export default function gameFactory (rules, name) {
     }
   }
 
-
-  return game
-
   if (rules.endIf) {
     
   }
-  
-  
-
-
-
-
-  console.log('game', game)
 
   return game
 }
@@ -81,9 +71,12 @@ function expandEntityDefinitions (entities, ctx) {
 
     // variants becomes new entitites
     if (entityCopy.variants) {
+      const variants = entityCopy.variants
+      delete entityCopy.variants
+
       return [
         ...acc,
-        ...entityCopy.variants.map(variant => ({
+        ...variants.map(variant => ({
           ...entityCopy,
           ...variant,
         }))

@@ -5,6 +5,7 @@ import { ProcessGameConfig } from 'boardgame.io/dist/cjs/internal.js';
 import makeServer from './guts.js';
 import tictactoe from './tic-tac-toe.json' with { type: 'json' };
 import gameFactory from './game-factory/game-factory.js';
+// console.log('gameFactory(tictactoe, `asdasd`)', gameFactory(tictactoe, `asdasd`).setup({ ctx: { numPlayers: 3 }}))
 
 const ssmClient = new SSMClient({ region: 'us-west-1' });
 const BOARDGAME_PORT = 8000;
