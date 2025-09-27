@@ -18,7 +18,7 @@ export const useGameserverConnection = () => {
   const gameName = room?.gameName
   const gameRules = room?.gameRules
   // const game = gameFactory(gameRules, gameName)
-  const game = gameFactory(tictactoe, 'tictactoe')
+  const game = gameFactory(tictactoe, 'tic-tac-toe')
   const [_, forceUpdate] = useReducer(x => !x, false)
   const clientRef = useRef(null)
   const joinGameMutation = useJoinGameMutation(roomCode, gameId)

@@ -11,7 +11,7 @@ class Bank {
   }
 
   getOne (matcher) {
-    return this.getSlot(matcher).getOne(count)
+    return this.getSlot(matcher).getOne()
   }
 
   getMultiple (matcher, count) {

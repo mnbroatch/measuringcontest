@@ -2,17 +2,11 @@ import chunk from "lodash/chunk.js";
 import Spaces from "../spaces/spaces.js";
 
 export default class Grid extends Spaces {
-  constructor(rule) {
-    super(rule);
-    this.width = boardRule.width
-    this.height = boardRule.height
-  }
-
   getSpacesCount () {
-    return this.width * this.height
+    return this.rule.width * this.rule.height
   }
 
   getRows () {
-    return chunk(this.spaces, this.width)
+    return chunk(this.spaces, this.rule.width)
   }
 }
