@@ -4,7 +4,6 @@ import Grid from "./spaces/grid.js";
 import Bank from "./bank/bank.js";
 import BankSlot from "./bank/bank-slot.js";
 import Entity from "./entity.js";
-import EntityFactory from "./entity-factory.js";
 
 export const registry = {
   Spaces,
@@ -13,5 +12,4 @@ export const registry = {
   Bank,
   BankSlot,
   Entity,
-  EntityFactory,
 };

@@ -1,12 +1,25 @@
 import isMatch from 'lodash/isMatch.js'
+import { registry } from './registry.js'
 import BankSlot from './bank-slot.js'
-import EntityFactory from '../entity-factory.js'
 
 class Bank {
   constructor (entityRules) {
-    const entityFactory = new EntityFactory()
+    this.currentEntityId = 0
     this.tracker = {}
-    this.slots = entityRules.map(rule => new BankSlot(rule, entityFactory))
+    this.slots = entityRules.map(rule => new BankSlot(rule, this))
+  }
+
+  createEntity (definition) {
+    const entity = (new (registry[definition.type || 'Entity']))(
+      {
+        bank: this,
+        fromBank: true
+      },
+      definition,
+      this.currentEntityId++
+    )
+    this.track(entity)
+    return entity
   }
 
   track (entity) {
@@ -19,13 +32,11 @@ class Bank {
 
   getOne (matcher) {
     const entity = this.getSlot(matcher).getOne()
-    this.track(entity)
     return entity
   }
 
   getMultiple (matcher, count) {
     const entities = this.getSlot(matcher).getMultiple(count)
-    entities.forEach((entity) => { this.track(entity) })
     return entities
   }
 

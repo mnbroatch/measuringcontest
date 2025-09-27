@@ -1,7 +1,7 @@
 // lazily create entities as needed, and also function as an index of entities created
 class BankSlot {
-  constructor (entityRule, entityFactory) {
-    this.entityFactory = entityFactory
+  constructor (entityRule, bank) {
+    this.bank = bank
     this.entityRule = entityRule
     this.pool = []
     this.remaining = +entityRule.count || 1
@@ -23,7 +23,7 @@ class BankSlot {
       if (remainder > 0) {
         toReturn.push(
           ...Array.from(new Array(remainder)).map(() =>
-            this.entityFactory.createEntity(this.entityRule)
+            this.bank.createEntity(this.entityRule)
           )
         )
       }
