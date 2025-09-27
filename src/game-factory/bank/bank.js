@@ -10,7 +10,7 @@ class Bank {
   }
 
   createEntity (definition) {
-    const entity = (new (registry[definition.type || 'Entity']))(
+    const entity = new (registry[definition.type || 'Entity'])(
       {
         bank: this,
         fromBank: true
