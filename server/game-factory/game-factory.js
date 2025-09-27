@@ -44,9 +44,19 @@ export default function gameFactory (rules, name) {
     }
   }
 
+
+  return game
+
   if (rules.endIf) {
     
   }
+  
+  
+
+
+
+
+  console.log('game', game)
 
   return game
 }
