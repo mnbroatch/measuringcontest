@@ -1,6 +1,7 @@
 import filter from "lodash/filter";
 import { serialize, deserialize } from "wackson";
 import entityFactory from "./entity-factory.js";
+import moveFactory from "./move/move-factory.js";
 import Bank from "./piece/bank.js";
 
 export default function gameFactory (rules, name) {
@@ -33,7 +34,7 @@ export default function gameFactory (rules, name) {
     game.moves =
       Object.entries(rules.moves).reduce((acc, [name, moveDefinition]) => ({
         ...acc,
-        [name]: entityFactory(moveDefinition)
+        [name]: moveFactory(moveDefinition)
       }), {})
   }
 

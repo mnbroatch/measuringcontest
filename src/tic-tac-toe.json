@@ -14,7 +14,7 @@
       "count": "Infinity"
     }
   ],
-  "initialSharedBoard": [ { "name": "mainGrid" } ],
+  "initialSharedBoard": [{"name": "mainGrid"}],
   "moves": {
     "placePlayerMarker": {
       "type": "PlacePiece",
