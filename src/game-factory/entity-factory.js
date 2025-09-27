@@ -1,7 +1,7 @@
 import Entity from './entity.js'
 import { registry } from './registry.js'
 
-export default function makeEntityFactory (definition) {
+export default function makeEntityFactory () {
   let id = 0
-  return () => new (registry[definition.type || 'Entity'])(definition, id++)
+  return (definition) => new (registry[definition.type || 'Entity'])(definition, id++)
 }
