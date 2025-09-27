@@ -67,11 +67,14 @@ function expandEntityDefinitions (entities, ctx) {
 
     // perPlayer flag multiplies number of variants
     if (entityCopy.perPlayer) {
+      delete entityCopy.perPlayer
       if (entityCopy.variants) {
-        entityCopy.variants = (new Array(ctx.numPlayers)).reduce((accu, _, i) => [
+        entityCopy.variants = (new Array(ctx.numPlayers)).fill().reduce((accu, _, i) => [
           ...accu,
           ...entityCopy.variants.map(variant => ({ ...variant, player: `${i}` }))
         ], [])
+      } else {
+        entityCopy.variants = (new Array(ctx.numPlayers)).fill().map((_, i) => ({ player: `${i}` }))
       }
     }
 

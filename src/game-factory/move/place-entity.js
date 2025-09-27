@@ -1,19 +1,19 @@
 import Move from "./move.js";
 
 export default class PlaceEntity extends Move {
-  constructor (moveRule) {
-    super (moveRule)
+  constructor (rule) {
+    super (rule)
 
     const invariantConditionMappings = [
       {
         rule: {
           type: 'bankHasEnough',
-          entity: moveRule.entity
+          entity: rule.entity
         }
       },
     ]
 
-    const spaceConditionMappings = moveRule.destination.conditions.map(rule => ({
+    const spaceConditionMappings = rule.destination.conditions.map(rule => ({
       rule,
       mappings: { space: payload => payload.destination }
     }))
@@ -24,11 +24,12 @@ export default class PlaceEntity extends Move {
     ]
   }
 
-  do(G, ctx, { destination }) {
-    const entityRuleCopy = {...entityRule}
+  do({ G, ctx }, { destination }) {
+    const entityRuleCopy = {...this.rule.entity}
     if (entityRuleCopy.player === 'Current') {
       entityRuleCopy.player = ctx.currentPlayer
     }
+    console.log('entityRuleCopy', entityRuleCopy)
     destination.placeEntity(G.bank.getOne(entityRuleCopy))
   }
 }
