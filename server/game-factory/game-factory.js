@@ -1,4 +1,4 @@
-import filter from "lodash/filter";
+import filter from "lodash/filter.js";
 import { serialize, deserialize } from "wackson";
 import moveFactory from "./move/move-factory.js";
 import Bank from "./piece/bank.js";

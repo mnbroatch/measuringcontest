@@ -1,4 +1,4 @@
-import chunk from "lodash/chunk";
+import chunk from "lodash/chunk.js";
 import Spaces from "../spaces/spaces.js";
 
 export default class Grid extends Spaces {

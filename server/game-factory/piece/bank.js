@@ -1,4 +1,4 @@
-import isMatch from 'lodash/isMatch'
+import isMatch from 'lodash/isMatch.js'
 import BankSlot from './bank-slot.js'
 
 class Bank {
