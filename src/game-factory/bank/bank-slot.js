@@ -23,7 +23,7 @@ class BankSlot {
       if (remainder > 0) {
         toReturn.push(
           ...Array.from(new Array(remainder)).map(() =>
-            this.entityFactory(this.entityRule)
+            this.entityFactory.createEntity(this.entityRule)
           )
         )
       }

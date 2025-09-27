@@ -1,10 +1,10 @@
 import isMatch from 'lodash/isMatch.js'
 import BankSlot from './bank-slot.js'
-import makeEntityFactory from '../entity-factory.js'
+import EntityFactory from '../entity-factory.js'
 
 class Bank {
   constructor (entityRules) {
-    const entityFactory = makeEntityFactory()
+    const entityFactory = new EntityFactory()
     this.tracker = {}
     this.slots = entityRules.map(rule => new BankSlot(rule, entityFactory))
   }
