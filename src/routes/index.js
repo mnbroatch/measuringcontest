@@ -14,14 +14,6 @@ export default function IndexPage () {
       <Link to="/">
         home
       </Link>
-      <Link
-        to="/board"
-        params={{
-          roomcode: roomCode,
-        }}
-      >
-        board
-      </Link>
       {!myRooms.data?.length && (
         <>
           <button onClick={() => { createRoomMutation.mutate() }}>

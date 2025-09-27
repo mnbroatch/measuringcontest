@@ -1,0 +1,62 @@
+{
+  "playerRange": [2,2],
+  "entities": [
+    {
+      "name": "mainGrid",
+      "type": "Grid",
+      "width": 3,
+      "height": 3,
+      "count": 1
+    },
+    {
+      "name": "playerMarker",
+      "perPlayer": true,
+      "count": "Infinity"
+    }
+  ],
+  "initialSharedBoard": [{"name": "mainGrid"}],
+  "moves": {
+    "placePlayerMarker": {
+      "type": "PlaceEntity",
+      "entity": {
+        "name": "playerMarker",
+        "player": "Current"
+      },
+      "destination": {
+        "conditions": [{"type": "DoesNotContain"}]
+      }
+    }
+  },
+  "endIf": [
+    {
+      "conditions": [{
+        "type": "BoardPattern",
+        "board": { "name": "mainGrid" },
+        "pattern": "Bingo",
+        "spaceConditions": [
+          {
+            "type": "Contains",
+            "piece": {
+              "name": "playerMarker",
+              "same": [ "player" ]
+            }
+          }
+        ]
+      }],
+      "result": {
+        "winner": {
+          "conditionResult": [0, "same", "player"]
+        }
+      }
+    },
+    {
+      "conditions": [{
+        "type": "BoardPattern",
+        "target": ["sharedBoard", "mainGrid"],
+        "pattern": "Blackout",
+        "spaceConditions": [{"type": "Contains"}]
+      }],
+      "result": { "draw": true }
+    }
+  ]
+}
