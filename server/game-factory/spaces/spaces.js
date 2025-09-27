@@ -1,4 +1,4 @@
-import Space from "../space/space.ts";
+import Space from "../space/space.js";
 
 export default class Spaces {
   constructor (rule, options = {}) {
