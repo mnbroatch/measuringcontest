@@ -1,14 +1,14 @@
 import Entity from "../entity.js";
 
 export default class Spaces extends Entity {
-  constructor (rule, id, options) {
-    super(rule, id, options)
-    this.spaces = this.makeSpaces(options.entityFactory);
+  constructor (options, ...rest) {
+    super(options, ...rest)
+    this.spaces = this.makeSpaces(options.bank);
   }
 
-  makeSpaces (entityFactory) {
+  makeSpaces (bank) {
     return Array(this.getSpacesCount()).fill()
-      .map((_, i) => entityFactory.createEntity({ type: 'space', index: `${i}` }))
+      .map(() => bank.createEntity({ type: 'space' }))
   }
 
   getEmptySpaces() {
