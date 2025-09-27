@@ -8,8 +8,9 @@ export default function gameFactory (rules, name) {
 
   game.setup = ({ ctx }) => {
     const initialState = {};
+    let entityDefinitions
     if (rules.entities) {
-      const entityDefinitions = expandEntityDefinitions(rules.entities, ctx)
+      entityDefinitions = expandEntityDefinitions(rules.entities, ctx)
       initialState.bank = new Bank(entityDefinitions)
     }
 
@@ -18,7 +19,7 @@ export default function gameFactory (rules, name) {
       const initialSharedBoardDefinitions =
         rules.initialSharedBoard.reduce((acc, boardMatcher) => [
           ...acc,
-          ...filter(rules.entities, boardMatcher)
+          ...filter(entityDefinitions, boardMatcher)
         ], [])
 
       initialState.sharedBoard =
