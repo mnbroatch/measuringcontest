@@ -7,22 +7,6 @@ export default class Move {
   constructor (rule) {
     this.rule = rule
     this.id = `${Math.random()}`
-    this.conditionMappings = [
-      {
-        rule: { type: 'doesNotContain' },
-        mappings: { space: payload => payload.destination }
-      },
-      {
-        rule: {
-          type: 'bankHasEnough',
-          piece: {
-            name: "playerMarker",
-            player: "current"
-          }
-        },
-        mappings: { entity: () => rule.entity }
-      },
-    ]
   }
 
   // maybe?

@@ -20,22 +20,22 @@
       "type": "PlaceEntity",
       "entity": {
         "name": "playerMarker",
-        "player": "current"
+        "player": "Current"
       },
       "destination": {
-        "conditions": [{"type": "doesNotContain"}]
+        "conditions": [{"type": "DoesNotContain"}]
       }
     }
   },
   "endIf": [
     {
       "conditions": [{
-        "type": "boardPattern",
+        "type": "BoardPattern",
         "board": { "name": "mainGrid" },
-        "pattern": "bingo",
+        "pattern": "Bingo",
         "spaceConditions": [
           {
-            "type": "contains",
+            "type": "Contains",
             "piece": {
               "name": "playerMarker",
               "same": [ "player" ]
@@ -51,10 +51,10 @@
     },
     {
       "conditions": [{
-        "type": "spacesPattern",
+        "type": "BoardPattern",
         "target": ["sharedBoard", "mainGrid"],
-        "spacesPattern": "blackout",
-        "spaceConditions": [{"type": "contains"}]
+        "pattern": "Blackout",
+        "spaceConditions": [{"type": "Contains"}]
       }],
       "result": { "draw": true }
     }
