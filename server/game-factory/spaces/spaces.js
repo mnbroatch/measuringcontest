@@ -7,7 +7,7 @@ export default class Spaces {
   }
 
   makeSpaces () {
-    return Array(this.getSpacesCount()).map((_, i) => new Space(i))
+    return Array(this.getSpacesCount()).fill().map((_, i) => new Space(i))
   }
 
   getEmptySpaces() {

@@ -4,11 +4,10 @@ export default class Spaces {
   constructor (rule, options = {}) {
     this.rule = rule
     this.spaces = this.makeSpaces();
-    console.log('this.spaces', this.spaces)
   }
 
   makeSpaces () {
-    return Array(this.getSpacesCount()).map((_, i) => new Space(i))
+    return Array(this.getSpacesCount()).fill().map((_, i) => new Space(i))
   }
 
   getEmptySpaces() {
