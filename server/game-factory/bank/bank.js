@@ -1,5 +1,5 @@
 import isMatch from 'lodash/isMatch.js'
-import { registry } from './registry.js'
+import { registry } from '../registry.js'
 import BankSlot from './bank-slot.js'
 
 class Bank {
