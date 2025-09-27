@@ -22,7 +22,7 @@ export default class Spaces {
     return this.getSpace(index).pieces;
   }
 
-  placePiece(index, piece) {
-    this.getSpace(index).placePiece(piece);
+  placeEntity(index, piece) {
+    this.getSpace(index).placeEntity(piece);
   }
 }

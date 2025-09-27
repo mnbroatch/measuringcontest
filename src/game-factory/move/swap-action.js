@@ -9,6 +9,6 @@ export default class SwapAction extends Action {
         .pieces.find((piece) => piece.name === actionPayload.piece.name)
         .getOne();
     }
-    this.game.get(actionPayload.board).placePiece(actionPayload.target, piece);
+    this.game.get(actionPayload.board).placeEntity(actionPayload.target, piece);
   }
 }

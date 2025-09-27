@@ -6,7 +6,7 @@ export default class Stack extends Board {
     this.stack = [];
   }
 
-  placePiece(target, piece) {
+  placeEntity(target, piece) {
     if (target) {
       // insert by index?
     } else {

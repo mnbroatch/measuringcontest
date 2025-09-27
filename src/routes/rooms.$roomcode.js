@@ -17,6 +17,7 @@ export default function RoomPage () {
   const leaveRoomMutation = useLeaveRoomMutation(roomCode)
   const createGameMutation = useCreateGameMutation(roomCode)
   const { G, moves } = useGame()
+  console.log('G', G)
 
   return !room.isLoading && (
     <>

@@ -8,12 +8,11 @@ export default class Space {
 
   constructor(coordinates: Coordinates, startingPieces: Piece[] = []) {
     this.coordinates = coordinates;
-    console.log('startingPieces', startingPieces)
     this.pieces = startingPieces;
     this.id = `${Math.random()}`
   }
 
-  placePiece(piece: Piece): void {
+  placeEntity(piece: Piece): void {
     this.pieces.push(piece);
   }
 

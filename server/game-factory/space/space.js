@@ -5,7 +5,7 @@ export default class Space {
     this.id = `${Math.random()}`
   }
 
-  placePiece(piece) {
+  placeEntity(piece) {
     this.pieces.push(piece);
   }
 
