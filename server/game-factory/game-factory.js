@@ -1,7 +1,13 @@
 import filter from "lodash/filter.js";
-import { serialize, deserialize } from "wackson";
+import { serialize } from "wackson";
 import moveFactory from "./move/move-factory.js";
 import Bank from "./bank/bank.js";
+
+// Things we always want, don't need to configure, and
+// want to treat as first-class citizens
+const invariantEntities = [
+  { type: "space" }
+]
 
 export default function gameFactory (rules, name) {
   const game = { name }
@@ -10,7 +16,10 @@ export default function gameFactory (rules, name) {
     const initialState = {};
     let entityDefinitions
     if (rules.entities) {
-      entityDefinitions = expandEntityDefinitions(rules.entities, ctx)
+      entityDefinitions = [
+        ...invariantEntities,
+        ...expandEntityDefinitions(rules.entities, ctx),
+      ]
       initialState.bank = new Bank(entityDefinitions)
     }
 
@@ -44,19 +53,9 @@ export default function gameFactory (rules, name) {
     }
   }
 
-
-  return game
-
   if (rules.endIf) {
     
   }
-  
-  
-
-
-
-
-  console.log('game', game)
 
   return game
 }

@@ -6,6 +6,6 @@ export default class EntityFactory {
   }
 
   createEntity(definition) {
-    return new (registry[definition.type || 'Entity'])(definition, this.id++)
+    return new (registry[definition.type || 'Entity'])(definition, this.id++, { fromFactory: true })
   }
 }
