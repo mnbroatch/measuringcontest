@@ -35,11 +35,11 @@ export default class Move {
         G: serializableG,
         ...restBgioArguments
       },
-      serializedPayload
+      serializablePayload
     ) => {
       const G = deserialize(JSON.stringify(serializableG), registry)
       const bgioArguments = { G, ...restBgioArguments }
-      const payload = deserialize(serializedPayload, registry)
+      const payload = deserialize(JSON.stringify(serializablePayload), registry)
 
       if (!this.isValid(bgioArguments, payload)) {
         return INVALID_MOVE

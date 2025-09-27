@@ -45,8 +45,6 @@ export const useGameserverConnection = () => {
           debug: process.env.NODE_ENV === 'development'
         })
 
-        console.log('client.master', client.master)
-        
         client.subscribe(() => {
           forceUpdate()
         })
@@ -57,7 +55,6 @@ export const useGameserverConnection = () => {
         
         client.start()
         clientRef.current = client
-        console.log('client', client)
         
       } catch (error) {
         console.error('Failed to join game:', error)

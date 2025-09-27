@@ -21,7 +21,6 @@ export default function gameFactory (rules, name) {
           ...filter(rules.entities, boardMatcher)
         ], [])
 
-      console.log('456', 456)
       initialState.sharedBoard =
         initialSharedBoardDefinitions.map(b => initialState.bank.getOne(b))
     }
@@ -44,7 +43,6 @@ export default function gameFactory (rules, name) {
     }
   }
 
-  console.log('game', game)
 
   return game
 

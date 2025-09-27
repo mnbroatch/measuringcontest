@@ -4,6 +4,7 @@ export default class Spaces {
   constructor (rule, options = {}) {
     this.rule = rule
     this.spaces = this.makeSpaces();
+    console.log('this.spaces', this.spaces)
   }
 
   makeSpaces () {
@@ -11,7 +12,7 @@ export default class Spaces {
   }
 
   getEmptySpaces() {
-    const emptySpaces = this.spaces.filter(space => space.isEmpty())
+    return this.spaces.filter(space => space.isEmpty())
   }
 
   getSpace(index) {

@@ -11,7 +11,7 @@ export default class Spaces {
   }
 
   getEmptySpaces() {
-    const emptySpaces = this.spaces.filter(space => space.isEmpty())
+    return this.spaces.filter(space => space.isEmpty())
   }
 
   getSpace(index) {
