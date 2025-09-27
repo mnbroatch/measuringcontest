@@ -13,10 +13,10 @@ export default class Move {
   isPartialValid (payload) {
   }
 
-  isValid (_, payload) {
+  isValid (bgioArguments, payload) {
     const conditions = (this.conditionMappings || []).map(conditionFactory)
     const unmetConditions = conditions.filter(
-      (condition) => !condition.isMet(payload)
+      (condition) => !condition.isMet(bgioArguments, payload)
     )
     if (unmetConditions.length) {
       console.log('==================')

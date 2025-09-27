@@ -13,11 +13,10 @@ export default class Move {
   isPartialValid (payload) {
   }
 
-  isValid (_, payload) {
-
+  isValid (bgioArguments, payload) {
     const conditions = (this.conditionMappings || []).map(conditionFactory)
     const unmetConditions = conditions.filter(
-      (condition) => !condition.isMet(payload)
+      (condition) => !condition.isMet(bgioArguments, payload)
     )
     if (unmetConditions.length) {
       console.log('==================')
@@ -40,7 +39,7 @@ export default class Move {
     ) => {
       const G = deserialize(JSON.stringify(serializableG), registry)
       const bgioArguments = { G, ...restBgioArguments }
-      const payload = deserialize(serializablePayload, registry)
+      const payload = deserialize(JSON.stringify(serializablePayload), registry)
 
       if (!this.isValid(bgioArguments, payload)) {
         return INVALID_MOVE

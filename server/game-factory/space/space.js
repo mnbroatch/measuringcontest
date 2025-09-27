@@ -1,5 +1,5 @@
 export default class Space {
-  constructor(coordinates, startingPieces) {
+  constructor(coordinates, startingPieces = []) {
     this.coordinates = coordinates;
     this.pieces = startingPieces;
     this.id = `${Math.random()}`
