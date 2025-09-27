@@ -4,7 +4,7 @@ class BankSlot {
     this.entityFactory = entityFactory
     this.entityRule = entityRule
     this.pool = []
-    this.count = entityRule.count
+    this.remaining = +entityRule.count || 1
   }
 
   getOne () {
@@ -13,9 +13,9 @@ class BankSlot {
 
   getMultiple (count) {
     const toReturn = []
-    if (this.count === undefined || this.count >= count) {
-      if (this.count) {
-        this.count -= count
+    if (this.remaining >= count) {
+      if (this.remaining) {
+        this.remaining -= count
       }
       const remainder = count - this.pool.length
       toReturn.push(...this.pool.splice(0, count))
@@ -33,8 +33,8 @@ class BankSlot {
 
   put (entity) {
     entity.state = {}
-    if (this.count !== undefined) {
-      this.count += 1
+    if (this.remaining !== undefined) {
+      this.remaining += 1
     }
     this.pool.push(entity)
   }

@@ -6,7 +6,6 @@ import conditionFactory from '../condition/condition-factory.js'
 export default class Move {
   constructor (rule) {
     this.rule = rule
-    this.id = `${Math.random()}`
   }
 
   // maybe?
