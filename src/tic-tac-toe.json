@@ -17,13 +17,12 @@
   "initialSharedBoard": [{"name": "mainGrid"}],
   "moves": {
     "placePlayerMarker": {
-      "type": "PlacePiece",
-      "piece": {
+      "type": "PlaceEntity",
+      "entity": {
         "name": "playerMarker",
         "player": "current"
       },
       "destination": {
-        "location": { "name": "mainGrid" },
         "conditions": [{"type": "doesNotContain"}]
       }
     }

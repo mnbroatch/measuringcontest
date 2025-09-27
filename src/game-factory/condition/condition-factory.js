@@ -8,20 +8,21 @@ import ActionTypeMatchesCondition from "./action-type-matches-condition.js";
 import IsValidPlayerCondition from "./is-valid-player-condition.js";
 import PieceMatchesCondition from "./piece-matches-condition.js";
 
-export default function conditionFactory(conditionRule) {
-  if (conditionRule.type === "contains") {
-    return new ContainsCondition(conditionRule);
-  } else if (conditionRule.type === "doesNotContain") {
-    return new DoesNotContainCondition(conditionRule);
-  } else if (conditionRule.type === "bingo") {
-    return new BingoCondition(conditionRule);
-  } else if (conditionRule.type === "blackout") {
-    return new BlackoutCondition(conditionRule);
-  } else if (conditionRule.type === "some") {
-    return new SomeCondition(conditionRule);
+export default function conditionFactory({ rule, mappings }) {
+  // if (conditionRule.type === "contains") {
+  //   return new ContainsCondition(rule, mappings);
+  // } else
+  if (conditionRule.type === "doesNotContain") {
+    return new DoesNotContainCondition(rule, mappings);
+  // } else if (conditionRule.type === "bingo") {
+    // return new BingoCondition(rule, mappings);
+  // } else if (conditionRule.type === "blackout") {
+    // return new BlackoutCondition(rule, mappings);
+  // } else if (conditionRule.type === "some") {
+    // return new SomeCondition(rule, mappings);
   // } else if (conditionRule.type === "relativeMove") {
-  //   return new RelativeMoveCondition(conditionRule);
-  } else if (conditionRule.type === "pieceMatches") {
-    return new PieceMatchesCondition(conditionRule);
+  //   return new RelativeMoveCondition(rule, mappings);
+  } else if (conditionRule.type === "PieceMatches") {
+    return new PieceMatchesCondition(rule, mappings);
   }
 }

@@ -1,9 +1,17 @@
 export default class Condition {
-  constructor (rules, game) {
+  constructor (rule, mappings) {
     this.id = `${Math.random()}`
-    this.rules = rules;
-    this.game = game;
+    this.rule = rule;
+    this.mappings = mappings;
   }
 
-  isMet(actionPayload) {}
+  resolveMappings (payload) {
+    return Object.entries((this.mappings || []))
+      .reduce((acc, [property, mapping]) => ({
+        ...acc,
+        [property]: mapping(payload)
+      }), {})
+  }
+
+  isMet() {}
 }
