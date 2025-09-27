@@ -14,8 +14,8 @@ export default class Move {
   }
 
   isValid (_, payload) {
-    const conditions = (this.conditionMappings || [])
-      .map(({ rule, mappings }) => conditionFactory(rule, mappings))
+
+    const conditions = (this.conditionMappings || []).map(conditionFactory)
     const unmetConditions = conditions.filter(
       (condition) => !condition.isMet(payload)
     )

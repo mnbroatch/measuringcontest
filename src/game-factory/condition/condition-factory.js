@@ -9,20 +9,20 @@ import DoesNotContainCondition from "./does-not-contain-condition.js";
 import EntityMatchesCondition from "./entity-matches-condition.js";
 
 export default function conditionFactory({ rule, mappings }) {
-  // if (conditionRule.type === "contains") {
+  // if (rule.type === "contains") {
   //   return new ContainsCondition(rule, mappings);
   // } else
-  if (conditionRule.type === "DoesNotContain") {
+  if (rule.type === "DoesNotContain") {
     return new DoesNotContainCondition(rule, mappings);
-  // } else if (conditionRule.type === "bingo") {
+  // } else if (rule.type === "bingo") {
     // return new BingoCondition(rule, mappings);
-  // } else if (conditionRule.type === "blackout") {
+  // } else if (rule.type === "blackout") {
     // return new BlackoutCondition(rule, mappings);
-  // } else if (conditionRule.type === "some") {
+  // } else if (rule.type === "some") {
     // return new SomeCondition(rule, mappings);
-  // } else if (conditionRule.type === "relativeMove") {
+  // } else if (rule.type === "relativeMove") {
   //   return new RelativeMoveCondition(rule, mappings);
-  } else if (conditionRule.type === "EntityMatches") {
+  } else if (rule.type === "EntityMatches") {
     return new EntityMatchesCondition(rule, mappings);
   }
 }

@@ -11,7 +11,7 @@ export default function gameFactory (rules, name) {
     const initialState = {};
     if (rules.entities) {
       const entityDefinitions = expandEntityDefinitions(rules.entities, ctx)
-      game.bank = new Bank(entityDefinitions)
+      initialState.bank = new Bank(entityDefinitions)
     }
 
     // todo: nested boards
@@ -24,7 +24,7 @@ export default function gameFactory (rules, name) {
 
       console.log('456', 456)
       initialState.sharedBoard =
-        initialSharedBoardDefinitions.map(b => game.bank.getOne(b))
+        initialSharedBoardDefinitions.map(b => initialState.bank.getOne(b))
     }
 console.log('JSON.parse(serialize(initialState))', JSON.parse(serialize(initialState)))
     return JSON.parse(serialize(initialState));

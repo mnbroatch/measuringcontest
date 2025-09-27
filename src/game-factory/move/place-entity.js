@@ -19,7 +19,7 @@ export default class PlaceEntity extends Move {
     }))
 
     this.conditionMappings = [
-      ...invariantConditionMappings,
+      // ...invariantConditionMappings,
       ...spaceConditionMappings,
     ]
   }
