@@ -1,4 +1,4 @@
-import isMatch from 'lodash/isMatch.js'
+import isMatch from 'lodash/isMatch'
 import BankSlot from './bank-slot.js'
 import makeEntityFactory from '../entity-factory.js'
 

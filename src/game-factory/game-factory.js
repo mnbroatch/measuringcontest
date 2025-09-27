@@ -1,7 +1,7 @@
 import filter from "lodash/filter";
 import { serialize, deserialize } from "wackson";
 import moveFactory from "./move/move-factory.js";
-import Bank from "./piece/bank.js";
+import Bank from "./bank/bank.js";
 
 export default function gameFactory (rules, name) {
   const game = { name }

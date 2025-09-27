@@ -1,5 +1,5 @@
 import PlaceEntity from "./place-entity.js";
-// import MovePiece from "./move-piece.js";
+// import MoveEntity from "./move-entity.js";
 // import Swap from "./swap.js";
 
 export default function moveFactory(moveRule) {

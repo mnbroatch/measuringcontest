@@ -42,8 +42,8 @@ export default class BingoCondition extends Condition {
 
   checkLine(line) {
     return line.every((space) =>
-      space.pieces.some((piece) => {
-        return piece.doesRuleMatch(this.rules.piece);
+      space.entities.some((entity) => {
+        return entity.doesRuleMatch(this.rules.entity);
       }),
     );
   }

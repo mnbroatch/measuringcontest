@@ -1,11 +1,9 @@
-import entityFactory from '../entity-factory.js'
-
-// lazily create pieces as needed, and also function as an index of pieces created
+// lazily create entities as needed, and also function as an index of entities created
 class BankSlot {
-  constructor (entityRule) {
+  constructor (entityRule, entityFactory) {
+    this.entityFactory = entityFactory
     this.entityRule = entityRule
     this.pool = []
-    this.tracker = []
     this.count = entityRule.count
   }
 
@@ -25,12 +23,11 @@ class BankSlot {
       if (remainder > 0) {
         toReturn.push(
           ...Array.from(new Array(remainder)).map(() =>
-            entityFactory(this.entityRule, this.options)
+            this.entityFactory(this.entityRule)
           )
         )
       }
     }
-    this.tracker.push(...toReturn)
     return toReturn
   }
 
@@ -40,10 +37,6 @@ class BankSlot {
       this.count += 1
     }
     this.pool.push(entity)
-    this.tracker = this.tracker.filter(e => e !== entity)
-  }
-
-  find () {
   }
 }
 

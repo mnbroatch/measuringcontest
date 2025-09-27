@@ -1,22 +1,16 @@
-import type Piece from "../piece/piece";
+import Entity from "../entity.js";
 
-type Coordinates = [number, number];
-
-export default class Space {
-  coordinates: Coordinates;
-  pieces: Piece[];
-
-  constructor(coordinates: Coordinates, startingPieces: Piece[] = []) {
-    this.coordinates = coordinates;
-    this.pieces = startingPieces;
-    this.id = `${Math.random()}`
+export default class Space extends Entity {
+  constructor (...args) {
+    super(...args)
+    this.entities = []
   }
 
-  placeEntity(piece: Piece): void {
-    this.pieces.push(piece);
+  placeEntity(entity: Entity) {
+    this.entities.push(entity);
   }
 
   isEmpty(): boolean {
-    return this.pieces.length === 0;
+    return this.entities.length === 0;
   }
 }
