@@ -4,7 +4,7 @@ import moveFactory from "./move/move-factory.js";
 import Bank from "./piece/bank.js";
 
 export default function gameFactory (rules, name) {
-  const game = {}
+  const game = { name }
 
   game.setup = ({ ctx }) => {
     console.log('123', 123)

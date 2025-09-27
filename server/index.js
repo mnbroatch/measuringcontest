@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import { SSMClient, GetParameterCommand } from "@aws-sdk/client-ssm";
 import { ProcessGameConfig } from 'boardgame.io/dist/cjs/internal.js';
 import makeServer from './guts.js';
-import config from './tic-tac-toe.json' with { type: 'json' };
+import tictactoe from './tic-tac-toe.json' with { type: 'json' };
 import gameFactory from './game-factory/game-factory.js';
 
 const ssmClient = new SSMClient({ region: 'us-west-1' });
@@ -73,7 +73,7 @@ server.app.use(async (ctx, next) => {
     if (!server.games) server.games = [];
 
     if (!server.games.find(g => g.name === gameName)) {
-      const newGameDef = gameFactory(tictactoe, 'tictactoe');
+      const newGameDef = gameFactory(tictactoe, 'tic-tac-toe');
       // const newGameDef = gameFactory(ctx.body.gameRules, gameName);
       const processedGame = ProcessGameConfig(newGameDef);
       server.games.push(processedGame);
