@@ -1,14 +1,5 @@
-import type { PieceRule, PieceRuleMatcher } from "../../types";
-import type Player from "../player/player";
-
-interface Options {
-  player?: Player;
-}
-
 export default class Piece {
-  rule: PieceRule;
-  player: Player;
-  constructor(pieceRule: PieceRule, options: Options) {
+  constructor(pieceRule, options) {
     this.rule = pieceRule;
     this.id = `${Math.random()}`
     if (options.player !== undefined) {
@@ -16,7 +7,7 @@ export default class Piece {
     }
   }
 
-  doesRuleMatch(matcher: PieceRuleMatcher): boolean {
+  doesRuleMatch(matcher) {
     if (matcher.player !== undefined) {
       return matcher.player === this.player;
     }
