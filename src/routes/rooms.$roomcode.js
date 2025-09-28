@@ -44,16 +44,21 @@ export default function RoomPage () {
         </pre>
       )}
       {G && (
-        <button onClick={() => { moves?.placePlayerMarker(makePayload(G)) }}>
+        <button onClick={() => { moves?.placePlayerMarker(makePayload(G, 1)) }}>
           Do 1
+        </button>
+      )}
+      {G && (
+        <button onClick={() => { moves?.placePlayerMarker(makePayload(G, 2)) }}>
+          Do 2
         </button>
       )}
     </>
   )
 }
 
-function makePayload (G) {
-  return { entities: { destination: G.sharedBoard[0].spaces[1] } }
+function makePayload (G, n) {
+  return { entities: { destination: G.sharedBoard[0].spaces[n] } }
 }
 
 export const Route = createFileRoute("/rooms/$roomcode")({

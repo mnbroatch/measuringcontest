@@ -45,13 +45,13 @@ export default function gameFactory (rules, name) {
       }), {})
   }
 
-  // is this already a default? if so delete. if not, put in expanded json
-  if (!rules.turn) {
-    game.turn = {
-      minMoves: 1,
-      maxMoves: 1,
-    }
-  }
+  // // is this already a default? if so delete. if not, put in expanded json
+  // if (!rules.turn) {
+  //   game.turn = {
+  //     minMoves: 1,
+  //     maxMoves: 1,
+  //   }
+  // }
 
   if (rules.endIf) {
     
