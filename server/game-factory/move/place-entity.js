@@ -24,12 +24,11 @@ export default class PlaceEntity extends Move {
     ]
   }
 
-  do({ G, ctx }, { destination }) {
+  do({ G, ctx }, { entities: { destination } }) {
     const entityRuleCopy = {...this.rule.entity}
     if (entityRuleCopy.player === 'Current') {
       entityRuleCopy.player = ctx.currentPlayer
     }
-    console.log('entityRuleCopy', entityRuleCopy)
     destination.placeEntity(G.bank.getOne(entityRuleCopy))
   }
 }
