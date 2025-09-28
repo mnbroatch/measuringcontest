@@ -13,10 +13,13 @@ export default class Move {
   }
 
   isValid (bgioArguments, payload) {
-    const conditions = (this.conditionMappings || []).map(conditionFactory)
-    const unmetConditions = conditions.filter(
-      (condition) => !condition.isMet(bgioArguments, payload)
-    )
+    const unmetConditions = []
+    this.conditionMappings.forEach(({ rule }) => {
+      const condition = conditionFactory(rule)
+      if (!condition.isMet(bgioArguments, mapping(payload))) {
+        unmetConditions.push(condition)
+      }
+    })
     if (unmetConditions.length) {
       console.log('==================')
       console.log('unmetConditions', unmetConditions)

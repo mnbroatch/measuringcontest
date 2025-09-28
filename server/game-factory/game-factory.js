@@ -1,6 +1,7 @@
 import filter from "lodash/filter.js";
 import { serialize } from "wackson";
 import moveFactory from "./move/move-factory.js";
+import conditionFactory from "./condition/condition-factory.js";
 import Bank from "./bank/bank.js";
 
 // Things we always want, don't need to configure, and
@@ -45,16 +46,50 @@ export default function gameFactory (rules, name) {
       }), {})
   }
 
-  // // is this already a default? if so delete. if not, put in expanded json
-  // if (!rules.turn) {
-  //   game.turn = {
-  //     minMoves: 1,
-  //     maxMoves: 1,
+  // is this already a default? if so delete. if not, put in expanded json
+  if (!rules.turn) {
+    game.turn = rules.turn
+  }
+
+  // "endIf": [
+  //   {
+  //     "conditions": [{
+  //       "target": { "name": "mainGrid" },
+  //       "type": "BoardPattern",
+  //       "pattern": "line",
+  //       "length": 3,
+  //       "spaceConditions": [
+  //         {
+  //           "type": "Contains",
+  //           "piece": {
+  //             "name": "playerMarker",
+  //             "same": [ "player" ]
+  //           }
+  //         }
+  //       ]
+  //     }],
+  //     "result": {
+  //       "winner": {
+  //         "conditionResult": [0, "same", "player"]
+  //       }
+  //     }
+  //   },
+  //   {
+  //     "conditions": [{
+  //       "type": "BoardPattern",
+  //       "target": ["sharedBoard", "mainGrid"],
+  //       "pattern": "Blackout",
+  //       "spaceConditions": [{"type": "Contains"}]
+  //     }],
+  //     "result": { "draw": true }
   //   }
-  // }
+  // ]
 
   if (rules.endIf) {
-    
+    game.endIf = () => {
+      rules.endIf.conditions.map(conditionFactory)
+        
+    }
   }
 
   return game

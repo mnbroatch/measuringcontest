@@ -1,4 +1,6 @@
-import isMatch from 'lodash/isMatch.js'
+import find from 'lodash/find.js'
+import matchesProperty from 'lodash/matchesProperty.js'
+import matches from 'lodash/matches.js'
 import { registry } from '../registry.js'
 import BankSlot from './bank-slot.js'
 
@@ -30,6 +32,10 @@ class Bank {
     return this.tracker[entityId]
   }
 
+  findAll (matcher) {
+    return find(Object.values(tracker), matches(matcher))
+  }
+
   getOne (matcher) {
     const entity = this.getSlot(matcher).getOne()
     return entity
@@ -41,12 +47,12 @@ class Bank {
   }
 
   getSlot (matcher) {
-    return this.slots.find(s => isMatch(s.entityRule, matcher))
+    return find(this.slots, matchesProperty('entityRule', matcher))
   }
 
   put (entity) {
     this.getSlot(entity.rule).put(entity)
-    delete this.tracker[entityId]
+    delete this.tracker[entity.entityId]
   }
 }
 

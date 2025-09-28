@@ -1,5 +1,5 @@
 import Condition from "../condition/condition.js";
-import resolveBoard from "../utils/resolve-board.js";
+import resolveBoard from "../utils/resolve-board.ts";
 
 export default class BlackoutCondition extends Condition {
   isMet() {
