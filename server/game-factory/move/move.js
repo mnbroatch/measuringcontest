@@ -38,7 +38,7 @@ export default class Move {
     ) => {
       const G = deserialize(JSON.stringify(serializableG), registry)
       const bgioArguments = { G, ...restBgioArguments }
-      const payload = revivePayload(serializablePayload)
+      const payload = revivePayload(serializablePayload, G)
 
 
       if (!this.isValid(bgioArguments, payload)) {
@@ -54,7 +54,7 @@ export default class Move {
 }
 
 
-function revivePayload (serializablePayload) {
+function revivePayload (serializablePayload, G) {
   const payload = deserialize(JSON.stringify(serializablePayload), registry)
   payload.entities =
     Object.entries(payload.entities).reduce((acc, [key, entityId]) => ({

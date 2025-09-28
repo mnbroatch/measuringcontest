@@ -4,14 +4,14 @@ export default class PlaceEntity extends Move {
   constructor (rule) {
     super (rule)
 
-    const invariantConditionMappings = [
-      {
-        rule: {
-          type: 'bankHasEnough',
-          entity: rule.entity
-        }
-      },
-    ]
+    // const invariantConditionMappings = [
+    //   {
+    //     rule: {
+    //       type: 'bankHasEnough',
+    //       entity: rule.entity
+    //     }
+    //   },
+    // ]
 
     const spaceConditionMappings = rule.destination.conditions.map(rule => ({
       rule,

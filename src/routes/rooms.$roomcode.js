@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { serialize } from 'wackson'
 import { createFileRoute } from "@tanstack/react-router"
 import { useRoomQuery } from "../queries/use-room-query.js";
 import { useJoinRoomMutation } from "../queries/use-join-room-mutation.js";
@@ -39,7 +40,7 @@ export default function RoomPage () {
       )}
       {G && (
         <pre>
-          {JSON.stringify(G, null, 2)}
+          {serialize(G, { space: 2 })}
         </pre>
       )}
       {G && (
