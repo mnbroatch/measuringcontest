@@ -17,7 +17,9 @@ export default function RoomPage () {
   const joinRoomMutation = useJoinRoomMutation(roomCode)
   const leaveRoomMutation = useLeaveRoomMutation(roomCode)
   const createGameMutation = useCreateGameMutation(roomCode)
-  const { G, moves } = useGame()
+  const { G, moves, client } = useGame()
+  console.log('client.events.endTurn', )
+  console.log('moves', moves)
   console.log('G', G)
 
   return !room.isLoading && (
@@ -40,7 +42,7 @@ export default function RoomPage () {
       )}
       {G && (
         <pre>
-          {serialize(G, { space: 2 })}
+          {JSON.stringify(G.sharedBoard, null, 2)}
         </pre>
       )}
       {G && (
@@ -48,9 +50,25 @@ export default function RoomPage () {
           Do 1
         </button>
       )}
+
       {G && (
         <button onClick={() => { moves?.placePlayerMarker(makePayload(G, 2)) }}>
           Do 2
+        </button>
+      )}
+      {G && (
+        <button onClick={() => { client?.events.endTurn() }}>
+          end turn
+        </button>
+      )}
+      {G && (
+        <button onClick={() => { client?.events.endTurn({ next: '0'}) }}>
+          end turn +
+        </button>
+      )}
+      {G && (
+        <button onClick={() => { client?.events.endTurn({ next: '1'}) }}>
+          end turn ++
         </button>
       )}
     </>
