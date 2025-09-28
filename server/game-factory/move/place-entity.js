@@ -13,9 +13,11 @@ export default class PlaceEntity extends Move {
     //   },
     // ]
 
+    // bring back pieceMatches for if rule.destination had more properties?
+    // not that I really know what properties a space has but keep pattern in mind
     const spaceConditionMappings = rule.destination.conditions.map(rule => ({
       rule,
-      mappings: { space: payload => payload.entities.destination }
+      mappings: { target: payload => payload.entities.destination }
     }))
 
     this.conditionMappings = [

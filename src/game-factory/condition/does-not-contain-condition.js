@@ -3,7 +3,7 @@ import Condition from "../condition/condition.js";
 
 export default class DoesNotContainCondition extends Condition {
   isMet(_, payload) {
-    const { space } = this.resolveMappings(payload)
-    return !space.entities.filter(matches(this.rule.entity)).length;
+    const { target } = payload
+    return !target.entities.filter(matches(this.rule.entity)).length;
   }
 }
