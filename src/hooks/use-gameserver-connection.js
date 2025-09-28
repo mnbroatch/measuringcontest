@@ -6,7 +6,7 @@ import { useCognitoAuth } from "../contexts/cognito-auth-context.js"
 import { useRoomQuery } from "../queries/use-room-query.js"
 import { useJoinGameMutation } from "../queries/use-join-game-mutation.js";
 import gameFactory from '../game-factory/game-factory.js'
-import tictactoe from '../tic-tac-toe.json'
+import tictactoe from '../../server/tic-tac-toe.json'
 
 const SERVER_URL = 'https://gameserver.measuringcontest.com'
 

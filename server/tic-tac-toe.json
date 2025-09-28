@@ -27,12 +27,17 @@
       }
     }
   },
+  "turn": {
+    "minMoves": 1,
+    "maxMoves": 1
+  },
   "endIf": [
     {
       "conditions": [{
+        "target": { "name": "mainGrid" },
         "type": "BoardPattern",
-        "board": { "name": "mainGrid" },
-        "pattern": "Bingo",
+        "pattern": "line",
+        "length": 3,
         "spaceConditions": [
           {
             "type": "Contains",

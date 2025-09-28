@@ -7,7 +7,7 @@ import { useLeaveRoomMutation } from "../queries/use-leave-room-mutation.js";
 import { useCreateGameMutation } from "../queries/use-create-game-mutation.js";
 import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
 import useGame from "../hooks/use-game.js";
-import ticTacToe from "../tic-tac-toe.json";
+import ticTacToe from "../../server/tic-tac-toe.json";
 
 export default function RoomPage () {
   const { roomcode: roomCode } = Route.useParams()
