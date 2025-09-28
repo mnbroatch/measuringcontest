@@ -14,9 +14,9 @@ export default class Move {
 
   isValid (bgioArguments, payload) {
     const unmetConditions = []
-    this.conditionMappings.forEach(({ rule }) => {
+    this.conditionMappings.forEach(({ rule, mappings }) => {
       const condition = conditionFactory(rule)
-      if (!condition.isMet(bgioArguments, mapping(payload))) {
+      if (!condition.isMet(bgioArguments, this.resolveMappings(payload, mappings))) {
         unmetConditions.push(condition)
       }
     })
@@ -27,8 +27,6 @@ export default class Move {
     }
     return !unmetConditions.length
   }
-
-  do () {}
 
   // arguments and G must be serializable for bgio to work
   createBoardgameIOCompatibleMove () {
@@ -54,6 +52,16 @@ export default class Move {
     compatibleMove.isValid = this.isValid
     return compatibleMove
   }
+
+  resolveMappings (payload, mappings) {
+    return Object.entries((mappings || []))
+      .reduce((acc, [property, mapping]) => ({
+        ...acc,
+        [property]: mapping(payload)
+      }), {})
+  }
+
+  do () {}
 }
 
 

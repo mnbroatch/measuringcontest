@@ -15,7 +15,7 @@ export default class PlaceEntity extends Move {
 
     const spaceConditionMappings = rule.destination.conditions.map(rule => ({
       rule,
-      mappings: { space: payload => payload.entities.destination }
+      mappings: { target: payload => payload.entities.destination }
     }))
 
     this.conditionMappings = [
