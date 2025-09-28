@@ -1,21 +1,29 @@
 import Condition from "../condition/condition.js";
 
 export default class BoardPattern extends Condition {
-  isMet(bgioArguments, payload) {
-    const { G } = bgioArguments
-    const boards = G.bank.findAll(payload)
-    return boards.some(board => {
-      checkBoard(bgioArguments, board)
+  isMet(bgioArguments, { target }) {
+    // in a perfect world we would check for this sort of thing at game creation
+    if (target.type !== 'Grid') {
+      throw new Error ('BoardPattern only implemented for Grid')
+    }
+
+    const matches = []
+    target.spaces.forEach((space) => {
+      this.checkForPattern(bgioArguments, space, target)
     })
+
+    const { G } = bgioArguments
+
+    return !!matches.length && { matches }
   }
 
-  checkBoard () {}
+  checkForPattern () {}
 
-  checkSpace (bgioArguments, space, spaceConditionRules) {
+  checkSpace (bgioArguments, space) {
     const spaceConditionMappings = rule.destination.conditions.map(rule => ({
       rule,
       mappings: { target: payload => payload.entities.destination }
     }))
-    return spaceConditions.every(
+    // return spaceConditionMappings.every(condition
   }
 }
