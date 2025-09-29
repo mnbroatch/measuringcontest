@@ -35,8 +35,7 @@
     {
       "conditions": [{
         "target": { "name": "mainGrid" },
-        "type": "BoardPattern",
-        "pattern": "line",
+        "type": "ContainsLine",
         "length": 3,
         "spaceConditions": [
           {
