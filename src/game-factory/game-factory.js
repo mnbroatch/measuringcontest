@@ -87,8 +87,8 @@ export default function gameFactory (rules, name) {
 
   if (rules.endIf) {
     game.endIf = () => {
-      const blah = conditionFactory(rules.endIf[0])
-      console.log('blah.isMet()', blah.isMet())
+      const blah = conditionFactory(rules.endIf[0].conditions[0])
+      console.log('123blah.isMet()', blah?.isMet())
     }
   }
 
