@@ -1,6 +1,5 @@
 import find from 'lodash/find.js'
 import matchesProperty from 'lodash/matchesProperty.js'
-import matches from 'lodash/matches.js'
 import { registry } from '../registry.js'
 import BankSlot from './bank-slot.js'
 
@@ -33,7 +32,7 @@ class Bank {
   }
 
   findAll (matcher) {
-    return find(Object.values(tracker), matches(matcher))
+    return find(Object.values(this.tracker), matchesProperty('rule', matcher))
   }
 
   getOne (matcher) {
