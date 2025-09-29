@@ -8,6 +8,7 @@ import { useCreateGameMutation } from "../queries/use-create-game-mutation.js";
 import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
 import useGame from "../hooks/use-game.js";
 import ticTacToe from "../../server/tic-tac-toe.json";
+import conditionFactory from '../game-factory/condition/condition-factory.js'
 
 export default function RoomPage () {
   const { roomcode: roomCode } = Route.useParams()
@@ -21,6 +22,28 @@ export default function RoomPage () {
   console.log('client.events.endTurn', )
   console.log('moves', moves)
   console.log('G', G)
+
+  if (G) {
+    const blah = conditionFactory(
+      {
+        "target": { "name": "mainGrid" },
+        "type": "ContainsLine",
+        "length": 3,
+        "spaceConditions": [
+          {
+            "type": "Contains",
+            "piece": {
+              "same": [ "player" ]
+            }
+          }
+        ]
+      }
+    )
+
+    const target = G.bank.findAll({ type: 'Grid' })
+    console.log('target', target)
+    console.log('blah.isMet({G}, { target })', blah.isMet({G}, { target }))
+  }
 
   return !room.isLoading && (
     <>

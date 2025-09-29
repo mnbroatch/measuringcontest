@@ -36,16 +36,21 @@
       "conditions": [{
         "target": { "name": "mainGrid" },
         "type": "ContainsLine",
+        "count": 2,
         "length": 3,
-        "spaceConditions": [
-          {
-            "type": "Contains",
-            "piece": {
-              "name": "playerMarker",
-              "same": [ "player" ]
+        "space": {
+          "spaceConditions": [
+            {
+              "type": "Contains",
+              "entity": {
+                "conditions": [{
+                  "type": "same",
+                  "properties": ["player"]
+                }]
+              }
             }
-          }
-        ]
+          ]
+        }
       }],
       "result": {
         "winner": {

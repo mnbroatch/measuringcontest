@@ -7,6 +7,7 @@ import DoesNotContainCondition from "./does-not-contain-condition.js";
 // import ActionTypeMatchesCondition from "./action-type-matches-condition.js";
 // import IsValidPlayerCondition from "./is-valid-player-condition.js";
 import EntityMatchesCondition from "./entity-matches-condition.js";
+import ContainsLine from "./contains-line.js";
 
 export default function conditionFactory(rule) {
   // if (rule.type === "contains") {
@@ -22,6 +23,8 @@ export default function conditionFactory(rule) {
     // return new SomeCondition(rule);
   // } else if (rule.type === "relativeMove") {
   //   return new RelativeMoveCondition(rule);
+  } else if (rule.type === "ContainsLine") {
+    return new ContainsLine(rule);
   } else if (rule.type === "EntityMatches") {
     return new EntityMatchesCondition(rule);
   }

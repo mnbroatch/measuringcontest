@@ -1,13 +1,13 @@
-import BoardPattern from "../condition/board-pattern.js";
+import SpacesCondition from "../condition/spaces-condition.js";
 
-export default class ContainsLine extends BoardPattern {
+export default class ContainsLine extends SpacesCondition {
   checkForPattern (bgioArguments, space, target) {
     if (!this.checkSpace(bgioArguments, space)) {
       return false
     }
     const { length } = this.rule
     const coordinates = this.getCoordinates(space.rule.index)
-    const matches = []
+    const matches = [];
     [
       'right',
       'downRight',

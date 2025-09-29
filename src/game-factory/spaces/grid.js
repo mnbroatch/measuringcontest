@@ -1,6 +1,5 @@
 import chunk from "lodash/chunk.js";
 import Spaces from "../spaces/spaces.js";
-import { areCredentialsAuthentic } from "boardgame.io/dist/types/src/server/auth.js";
 
 export default class Grid extends Spaces {
   getSpacesCount () {
