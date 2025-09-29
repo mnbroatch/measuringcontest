@@ -23,7 +23,10 @@
         "player": "Current"
       },
       "destination": {
-        "conditions": [{"type": "DoesNotContain"}]
+        "conditions": [{
+          "type": "Not",
+          "conditions": [{"type": "Contains"}]
+        }]
       }
     }
   },
@@ -38,19 +41,13 @@
         "type": "ContainsLine",
         "count": 2,
         "length": 3,
-        "space": {
-          "spaceConditions": [
-            {
-              "type": "Contains",
-              "entity": {
-                "conditions": [{
-                  "type": "same",
-                  "properties": ["player"]
-                }]
-              }
-            }
-          ]
-        }
+        "spacesConditions": [{
+          "type": "ContainsSame",
+          "properties": ["player"]
+        }],
+        "spaceConditions": [
+          { "type": "Contains" }
+        ]
       }],
       "result": {
         "winner": {
