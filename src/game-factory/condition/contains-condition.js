@@ -1,9 +1,10 @@
-import matches from "lodash/matches.js";
+import _matches from "lodash/matches.js";
 import Condition from "../condition/condition.js";
 
 export default class ContainsCondition extends Condition {
-  isMet(_, payload) {
+  isConditionMet(_, payload) {
     const { target } = payload
-    return target.entities.filter(matches(this.rule.entity)).length;
+    const matches = target.entities.filter(_matches(this.rule.entity));
+    return { matches, conditionIsMet: !!matches.length }
   }
 }

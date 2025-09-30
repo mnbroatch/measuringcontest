@@ -2,8 +2,9 @@ import Condition from "./condition.js";
 import conditionFactory from "./condition-factory.js";
 
 export default class SpaceGroupCondition extends Condition {
-  isMet(bgioArguments, { target, count = 1 }) {
-    return this.findMatches(bgioArguments, target).matches.length >= count
+  isConditionMet(bgioArguments, { target, count = 1 }) {
+    const matches = this.findMatches(bgioArguments, target).matches
+    return { matches, conditionIsMet: matches.length >= count }
   }
 
   findMatches (bgioArguments, target) {
