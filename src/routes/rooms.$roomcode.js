@@ -23,28 +23,6 @@ export default function RoomPage () {
   console.log('moves', moves)
   console.log('G', G)
 
-  if (G) {
-    const blah = conditionFactory(
-      {
-        "target": { "name": "mainGrid" },
-        "type": "ContainsLine",
-        "length": 3,
-        "spaceConditions": [
-          {
-            "type": "Contains",
-            "piece": {
-              "same": [ "player" ]
-            }
-          }
-        ]
-      }
-    )
-
-    const target = G.bank.findAll({ type: 'Grid' })
-    console.log('target', target)
-    console.log('blah.isMet({G}, { target })', blah.isMet({G}, { target }))
-  }
-
   return !room.isLoading && (
     <>
       {!room.data.members?.includes(userId) && (
