@@ -85,9 +85,9 @@ export default function gameFactory (rules, name) {
   // ]
 
   if (rules.endIf) {
-    game.endIf = () => {
+    game.endIf = (bgioArguments) => {
       const blah = conditionFactory(rules.endIf[0].conditions[0])
-      console.log('1234blah.isMet()', blah?.isMet())
+      console.log('1234blah.isMet()', blah?.isMet(bgioArguments))
     }
   }
 
