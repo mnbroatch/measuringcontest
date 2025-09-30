@@ -16,7 +16,7 @@ export default class Condition {
         ...G.bank.findAll(target)
       ], [])
     }
-    return this.checkCondition(bgioArguments, conditionPayload).conditionIsMet
+    return this.checkCondition(bgioArguments, conditionPayload)
   }
 
   isMet(...args) {
