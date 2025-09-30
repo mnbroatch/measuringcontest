@@ -41,9 +41,9 @@ export default class SpaceGroupCondition extends Condition {
 }
 
 // performance optimization
-function getRelevantSpaces (rule, patternSoFar) {
+function getRelevantSpaces (rule, space, patternSoFar) {
   const transitiveConditions = [ 'Same' ]
   return transitiveConditions.includes(rule.type)
-    ? patternSoFar.slice(-1)
-    : patternSoFar
+    ? [...patternSoFar.slice(-1), space]
+    : [...patternSoFar, space]
 }
