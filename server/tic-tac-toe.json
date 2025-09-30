@@ -50,9 +50,7 @@
         ]
       }],
       "result": {
-        "winner": {
-          "conditionResult": [0, "same", "player"]
-        }
+        "winner": [ "conditionResults", 0, "matches", 0, 0, "entities", 0, "rule", "player" ]
       }
     },
     {

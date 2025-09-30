@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import get from 'lodash/get.js'
 import { serialize } from 'wackson'
 import { createFileRoute } from "@tanstack/react-router"
 import { useRoomQuery } from "../queries/use-room-query.js";
@@ -19,11 +20,6 @@ export default function RoomPage () {
   const leaveRoomMutation = useLeaveRoomMutation(roomCode)
   const createGameMutation = useCreateGameMutation(roomCode)
   const { G, moves, client } = useGame()
-
-  if (G) {
-      const blah = conditionFactory(ticTacToe.endIf[0].conditions[0])
-      console.log('1234blah.isMet()', blah?.isMet({G}))
-  }
 
   return !room.isLoading && (
     <>
@@ -48,27 +44,11 @@ export default function RoomPage () {
           {JSON.stringify(G.sharedBoard, null, 2)}
         </pre>
       )}
-      {G && (
-        <button onClick={() => { moves?.placePlayerMarker(makePayload(G, 0)) }}>
-          Do 0
+      {G && G.sharedBoard[0].spaces.map((space, i) =>  (
+        <button key={i} onClick={() => { moves?.placePlayerMarker(makePayload(G, i)) }}>
+          Do {i}
         </button>
-      )}
-      {G && (
-        <button onClick={() => { moves?.placePlayerMarker(makePayload(G, 1)) }}>
-          Do 1
-        </button>
-      )}
-
-      {G && (
-        <button onClick={() => { moves?.placePlayerMarker(makePayload(G, 2)) }}>
-          Do 2
-        </button>
-      )}
-      {G && (
-        <button onClick={() => { moves?.placePlayerMarker(makePayload(G, 3)) }}>
-          Do 3
-        </button>
-      )}
+      ))}
       {G && (
         <button onClick={() => { client?.events.endTurn() }}>
           end turn
