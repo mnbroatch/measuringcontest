@@ -1,7 +1,8 @@
 import filter from "lodash/filter.js";
-import { serialize } from "wackson";
+import { serialize, deserialize } from "wackson";
 import moveFactory from "./move/move-factory.js";
 import conditionFactory from "./condition/condition-factory.js";
+import { registry } from "./registry.js";
 import Bank from "./bank/bank.js";
 
 // Things we always want, don't need to configure, and
@@ -85,7 +86,8 @@ export default function gameFactory (rules, name) {
   // ]
 
   if (rules.endIf) {
-    game.endIf = (bgioArguments) => {
+    game.endIf = ({ G, ...restBgioArguments }) => {
+      const bgioArguments = { G: deserialize(G, registry), ...restBgioArguments }
       const blah = conditionFactory(rules.endIf[0].conditions[0])
       console.log('1234blah.isMet()', blah?.isMet(bgioArguments))
     }
