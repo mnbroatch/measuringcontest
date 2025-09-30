@@ -3,7 +3,7 @@ import conditionFactory from "./condition-factory.js";
 import Condition from "./condition.js";
 
 export default class ContainsSame extends Condition {
-  isConditionMet (bgioArguments, { targets }) {
+  checkCondition (bgioArguments, { targets }) {
     const [ first, ...restEntities ] = targets;
     const conditionIsMet = first.entities.some(entity => {
       const condition = conditionFactory({

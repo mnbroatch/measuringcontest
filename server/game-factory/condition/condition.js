@@ -3,7 +3,7 @@ export default class Condition {
     this.rule = rule;
   }
 
-  isMet(bgioArguments, payload = {}) {
+  check (bgioArguments, payload = {}) {
     const { G } = bgioArguments
     const conditionPayload = {...payload}
     // probably standardize these more, always use targets?
@@ -16,6 +16,10 @@ export default class Condition {
         ...G.bank.findAll(target)
       ], [])
     }
-    return this.isConditionMet(bgioArguments, conditionPayload).conditionIsMet
+    return this.checkCondition(bgioArguments, conditionPayload).conditionIsMet
+  }
+
+  isMet(...args) {
+    return this.check(...args).conditionIsMet
   }
 }

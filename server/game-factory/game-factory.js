@@ -51,43 +51,12 @@ export default function gameFactory (rules, name) {
     game.turn = rules.turn
   }
 
-  // "endIf": [
-  //   {
-  //     "conditions": [{
-  //       "target": { "name": "mainGrid" },
-  //       "type": "BoardPattern",
-  //       "pattern": "line",
-  //       "length": 3,
-  //       "spaceConditions": [
-  //         {
-  //           "type": "Contains",
-  //           "piece": {
-  //             "name": "playerMarker",
-  //             "same": [ "player" ]
-  //           }
-  //         }
-  //       ]
-  //     }],
-  //     "result": {
-  //       "winner": {
-  //         "conditionResult": [0, "same", "player"]
-  //       }
-  //     }
-  //   },
-  //   {
-  //     "conditions": [{
-  //       "type": "BoardPattern",
-  //       "target": ["sharedBoard", "mainGrid"],
-  //       "pattern": "Blackout",
-  //       "spaceConditions": [{"type": "Contains"}]
-  //     }],
-  //     "result": { "draw": true }
-  //   }
-  // ]
-
   if (rules.endIf) {
     game.endIf = ({ G, ...restBgioArguments }) => {
-      const bgioArguments = { G: deserialize(G, registry), ...restBgioArguments }
+      const bgioArguments = {
+        G: deserialize(JSON.stringify(G), registry),
+        ...restBgioArguments
+      }
       const blah = conditionFactory(rules.endIf[0].conditions[0])
       console.log('1234blah.isMet()', blah?.isMet(bgioArguments))
     }
@@ -105,12 +74,14 @@ function expandEntityDefinitions (entities, ctx) {
     if (entityCopy.perPlayer) {
       delete entityCopy.perPlayer
       if (entityCopy.variants) {
-        entityCopy.variants = (new Array(ctx.numPlayers)).fill().reduce((accu, _, i) => [
-          ...accu,
-          ...entityCopy.variants.map(variant => ({ ...variant, player: `${i}` }))
-        ], [])
+        entityCopy.variants =
+          (new Array(ctx.numPlayers)).fill().reduce((accu, _, i) => [
+            ...accu,
+            ...entityCopy.variants.map(variant => ({ ...variant, player: `${i}` }))
+          ], [])
       } else {
-        entityCopy.variants = (new Array(ctx.numPlayers)).fill().map((_, i) => ({ player: `${i}` }))
+        entityCopy.variants =
+          (new Array(ctx.numPlayers)).fill().map((_, i) => ({ player: `${i}` }))
       }
     }
 
