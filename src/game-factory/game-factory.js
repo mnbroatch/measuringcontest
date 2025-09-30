@@ -46,7 +46,6 @@ export default function gameFactory (rules, name) {
       }), {})
   }
 
-  // is this already a default? if so delete. if not, put in expanded json
   if (!rules.turn) {
     game.turn = rules.turn
   }
