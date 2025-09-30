@@ -21,6 +21,18 @@ export default function RoomPage () {
   const createGameMutation = useCreateGameMutation(roomCode)
   const { G, moves, client } = useGame()
 
+  if (G) {
+    const matchingWinConditionResult = getMatchingWinConditionResult(G, ticTacToe.endIf)
+    if (matchingWinConditionResult) {
+      const resultRule = matchingWinConditionResult.winCondition.result
+      const result = {...resultRule}
+      if (resultRule.winner) {
+        result.winner = get(matchingWinConditionResult, result.winner)
+      }
+      console.log('result', result)
+    }
+  }
+
   return !room.isLoading && (
     <>
       {!room.data.members?.includes(userId) && (
@@ -76,3 +88,25 @@ export const Route = createFileRoute("/rooms/$roomcode")({
   loader: ({ params }) => useRoomQuery.preload(params.roomcode),
   component: RoomPage,
 })
+
+function getMatchingWinConditionResult(G, winConditions) {
+  for (const winCondition of winConditions) {
+    const conditionResults = [];
+
+    for (const cond of winCondition.conditions) {
+      const conditionResult = conditionFactory(cond).check({ G });
+
+      if (conditionResult.conditionIsMet) {
+        conditionResults.push(conditionResult);
+      } else {
+        break;
+      }
+    }
+
+    if (conditionResults.length === winCondition.conditions.length) {
+      return { winCondition, conditionResults };
+    }
+  }
+
+  return null;
+}

@@ -53,7 +53,7 @@ export default function gameFactory (rules, name) {
 
   if (rules.endIf) {
     game.endIf = ({ G, ...restBgioArguments }) => {
-      const matchingWinConditionResult = getMatchingWinConditionResult(G, ticTacToe.endIf.slice(0, 1))
+      const matchingWinConditionResult = getMatchingWinConditionResult(G, rules.endIf.slice(0, 1))
       if (matchingWinConditionResult) {
         const resultRule = matchingWinConditionResult.winCondition.result
         const result = {...resultRule}
