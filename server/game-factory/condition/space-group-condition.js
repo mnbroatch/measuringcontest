@@ -17,7 +17,7 @@ export default class SpaceGroupCondition extends Condition {
     return { matches }
   }
 
-  checkSpace (bgioArguments, space, patternSoFar) {
+  checkSpace (bgioArguments, space, patternSoFar = []) {
     const spaceMeetsConditions = this.rule.spaceConditions
       .every(rule =>
         conditionFactory(rule)
@@ -29,7 +29,7 @@ export default class SpaceGroupCondition extends Condition {
           return conditionFactory(rule)
             .isMet(
               bgioArguments,
-              { targets: [ ...getRelevantSpaces(rule, patternSoFar), space ] }
+              { targets: [ ...getRelevantSpaces(rule, space, patternSoFar), space ] }
             )
         })
     } else {
