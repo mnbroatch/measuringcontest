@@ -16,6 +16,8 @@ export default class SpaceGroupCondition extends Condition {
     return { matches }
   }
 
+  // patternSoFar is for checking dependent conditions like
+  // "do these pieces all have the same player"
   checkSpace (bgioArguments, space, patternSoFar = []) {
     const spaceMeetsConditions = this.rule.spaceConditions
       .every(rule =>

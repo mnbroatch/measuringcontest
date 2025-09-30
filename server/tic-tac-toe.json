@@ -57,7 +57,7 @@
       "conditions": [{
         "type": "BoardPattern",
         "target": ["sharedBoard", "mainGrid"],
-        "pattern": "Blackout",
+        "pattern": "All",
         "spaceConditions": [{"type": "Contains"}]
       }],
       "result": { "draw": true }
