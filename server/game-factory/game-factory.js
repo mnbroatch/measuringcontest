@@ -53,7 +53,11 @@ export default function gameFactory (rules, name) {
 
   if (rules.endIf) {
     game.endIf = ({ G, ...restBgioArguments }) => {
-      const matchingWinConditionResult = getMatchingWinConditionResult(G, rules.endIf.slice(0, 1))
+      const bgioArguments = {
+        G: deserialize(JSON.stringify(G), registry),
+        ...restBgioArguments
+      }
+      const matchingWinConditionResult = getMatchingWinConditionResult(bgioArguments, rules.endIf.slice(0, 1))
       if (matchingWinConditionResult) {
         const resultRule = matchingWinConditionResult.winCondition.result
         const result = {...resultRule}
@@ -109,12 +113,12 @@ function expandEntityDefinitions (entities, ctx) {
   }, [])
 }
 
-function getMatchingWinConditionResult(G, winConditions) {
+function getMatchingWinConditionResult(bgioArguments, winConditions) {
   for (const winCondition of winConditions) {
     const conditionResults = [];
 
     for (const cond of winCondition.conditions) {
-      const conditionResult = conditionFactory(cond).check({ G });
+      const conditionResult = conditionFactory(cond).check(bgioArguments);
 
       if (conditionResult.conditionIsMet) {
         conditionResults.push(conditionResult);
