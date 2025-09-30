@@ -2,10 +2,8 @@ import SpaceGroupCondition from "../condition/space-group-condition.js";
 
 export default class ContainsLine extends SpaceGroupCondition {
   checkForPattern(bgioArguments, space, target) {
-    let result = false;
-
     if (!this.checkSpace(bgioArguments, space)) {
-      return false;
+      return { matches: [] };
     }
 
     const { length } = this.rule;
@@ -43,10 +41,6 @@ export default class ContainsLine extends SpaceGroupCondition {
       }
     }
 
-    if (matches.length > 0) {
-      result = { matches };
-    }
-
-    return result;
+    return { matches };
   }
 }

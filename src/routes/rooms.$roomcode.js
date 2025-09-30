@@ -19,9 +19,11 @@ export default function RoomPage () {
   const leaveRoomMutation = useLeaveRoomMutation(roomCode)
   const createGameMutation = useCreateGameMutation(roomCode)
   const { G, moves, client } = useGame()
-  console.log('client.events.endTurn', )
-  console.log('moves', moves)
-  console.log('G', G)
+
+  if (G) {
+      const blah = conditionFactory(ticTacToe.endIf[0].conditions[0])
+      console.log('1234blah.isMet()', blah?.isMet({G}))
+  }
 
   return !room.isLoading && (
     <>
@@ -47,6 +49,11 @@ export default function RoomPage () {
         </pre>
       )}
       {G && (
+        <button onClick={() => { moves?.placePlayerMarker(makePayload(G, 0)) }}>
+          Do 0
+        </button>
+      )}
+      {G && (
         <button onClick={() => { moves?.placePlayerMarker(makePayload(G, 1)) }}>
           Do 1
         </button>
@@ -55,6 +62,11 @@ export default function RoomPage () {
       {G && (
         <button onClick={() => { moves?.placePlayerMarker(makePayload(G, 2)) }}>
           Do 2
+        </button>
+      )}
+      {G && (
+        <button onClick={() => { moves?.placePlayerMarker(makePayload(G, 3)) }}>
+          Do 3
         </button>
       )}
       {G && (

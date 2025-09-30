@@ -3,16 +3,15 @@ import conditionFactory from "./condition-factory.js";
 
 export default class SpaceGroupCondition extends Condition {
   checkCondition(bgioArguments, { target, count = 1 }) {
-    console.log('arguments', arguments)
     const matches = this.findMatches(bgioArguments, target).matches
     return { matches, conditionIsMet: matches.length >= count }
   }
 
   findMatches (bgioArguments, target) {
-    const matches = []
-    target.spaces.forEach((space) => {
-      this.checkForPattern(bgioArguments, space, target)
-    })
+    const matches = target.spaces.reduce((acc, space) => [
+      ...acc,
+      ...this.checkForPattern(bgioArguments, space, target).matches
+    ], [])
 
     return { matches }
   }
