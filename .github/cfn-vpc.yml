@@ -1,0 +1,213 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 3 tier, 2 AZ VPC
+
+Parameters:
+  AvailabilityZone1:
+    Description: First Availability Zone
+    Type: AWS::EC2::AvailabilityZone::Name
+  AvailabilityZone2:
+    Description: Second Availability Zone
+    Type: AWS::EC2::AvailabilityZone::Name
+
+Resources:
+  MyVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 47.47.0.0/18
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: Name
+          Value: !Sub VPC-${AWS::Region}
+
+  VPCIPv6CidrBlock:
+    Type: AWS::EC2::VPCCidrBlock
+    Properties:
+      VpcId: !Ref MyVPC
+      AmazonProvidedIpv6CidrBlock: true
+
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: !Sub IGW-${AWS::Region}
+
+  AttachIGW:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref MyVPC
+      InternetGatewayId: !Ref InternetGateway
+
+  # Public Route Table for Web subnets
+  PublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref MyVPC
+      Tags:
+        - Key: Name
+          Value: !Sub PublicRouteTable-${AWS::Region}
+
+  PublicRouteIPv4:
+    Type: AWS::EC2::Route
+    DependsOn: AttachIGW
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+
+  PublicRouteIPv6:
+    Type: AWS::EC2::Route
+    DependsOn: AttachIGW
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      DestinationIpv6CidrBlock: ::/0
+      GatewayId: !Ref InternetGateway
+
+  # Private route tables (one per AZ) - for future use
+  PrivateRouteTableAZ1:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref MyVPC
+      Tags:
+        - Key: Name
+          Value: !Sub PrivateRouteTable-AZ1-${AWS::Region}
+
+  PrivateRouteTableAZ2:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref MyVPC
+      Tags:
+        - Key: Name
+          Value: !Sub PrivateRouteTable-AZ2-${AWS::Region}
+
+  # Subnets with IPv6
+  AZ1WebSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref MyVPC
+      CidrBlock: 47.47.0.0/22
+      Ipv6CidrBlock: 2600:1f1c:f26:5400::/64
+      AvailabilityZone: !Ref AvailabilityZone1
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::Region}-AZ1-Web-Subnet
+
+  AZ1AppSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref MyVPC
+      CidrBlock: 47.47.4.0/22
+      Ipv6CidrBlock: 2600:1f1c:f26:5401::/64
+      AvailabilityZone: !Ref AvailabilityZone1
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::Region}-AZ1-App-Subnet
+
+  AZ1DBSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref MyVPC
+      CidrBlock: 47.47.8.0/22
+      Ipv6CidrBlock: 2600:1f1c:f26:5402::/64
+      AvailabilityZone: !Ref AvailabilityZone1
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::Region}-AZ1-DB-Subnet
+
+  AZ2WebSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref MyVPC
+      CidrBlock: 47.47.16.0/22
+      Ipv6CidrBlock: 2600:1f1c:f26:5403::/64
+      AvailabilityZone: !Ref AvailabilityZone2
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::Region}-AZ2-Web-Subnet
+
+  AZ2AppSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref MyVPC
+      CidrBlock: 47.47.20.0/22
+      Ipv6CidrBlock: 2600:1f1c:f26:5404::/64
+      AvailabilityZone: !Ref AvailabilityZone2
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::Region}-AZ2-App-Subnet
+
+  AZ2DBSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref MyVPC
+      CidrBlock: 47.47.24.0/22
+      Ipv6CidrBlock: 2600:1f1c:f26:5405::/64
+      AvailabilityZone: !Ref AvailabilityZone2
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::Region}-AZ2-DB-Subnet
+
+  # Route table associations
+  AZ1WebSubnetRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref AZ1WebSubnet
+      RouteTableId: !Ref PublicRouteTable
+
+  AZ2WebSubnetRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref AZ2WebSubnet
+      RouteTableId: !Ref PublicRouteTable
+
+  AZ1AppSubnetRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref AZ1AppSubnet
+      RouteTableId: !Ref PrivateRouteTableAZ1
+
+  AZ1DBSubnetRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref AZ1DBSubnet
+      RouteTableId: !Ref PrivateRouteTableAZ1
+
+  AZ2AppSubnetRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref AZ2AppSubnet
+      RouteTableId: !Ref PrivateRouteTableAZ2
+
+  AZ2DBSubnetRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref AZ2DBSubnet
+      RouteTableId: !Ref PrivateRouteTableAZ2
+
+Outputs:
+  VpcId:
+    Description: The VPC ID
+    Value: !Ref MyVPC
+    Export:
+      Name: !Sub ${AWS::StackName}-VpcId
+
+  PublicSubnets:
+    Description: Public Subnet IDs (comma-delimited) 
+    Value: !Join [ ",", [ !Ref AZ1WebSubnet, !Ref AZ2WebSubnet ] ]
+    Export:
+      Name: !Sub ${AWS::StackName}-PublicSubnets
+
+  PrivateAppSubnets:
+    Description: Private App Subnet IDs (comma-delimited)
+    Value: !Join [ ",", [ !Ref AZ1AppSubnet, !Ref AZ2AppSubnet ] ]
+    Export:
+      Name: !Sub ${AWS::StackName}-PrivateAppSubnets
+
+  PrivateDBSubnets:
+    Description: Private DB Subnet IDs (comma-delimited)
+    Value: !Join [ ",", [ !Ref AZ1DBSubnet, !Ref AZ2DBSubnet ] ]
+    Export:
+      Name: !Sub ${AWS::StackName}-PrivateDBSubnets

@@ -1,0 +1,215 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Single boardgame.io server with direct IPv6 connection
+
+Parameters:
+  EC2InstanceType:
+    Type: String
+    Default: t2.micro
+    Description: EC2 instance type for boardgame.io server
+  VpcStackName:
+    Type: String
+    Description: Name of the VPC stack that exports VpcId and PublicSubnets
+  LatestAmiId:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Default: /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-6.1-x86_64
+    Description: SSM parameter path for the latest Amazon Linux 2023 AMI
+
+Resources:
+  # --- IAM Role for EC2 ---
+  EC2Role:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ec2.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+        - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
+      Policies:
+        - PolicyName: SSMParameterAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - ssm:GetParameter
+                  - ssm:GetParameters
+                  - ssm:GetParametersByPath
+                Resource: !Sub "arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/boardgame/*"
+
+  EC2InstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Roles: 
+        - !Ref EC2Role
+
+  # --- Security Group ---
+  BoardgameSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security group for boardgame.io server with public SSM access
+      VpcId:
+        Fn::ImportValue:
+          Fn::Sub: "${VpcStackName}-VpcId"
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 8000
+          ToPort: 8000
+          CidrIpv6: ::/0
+          Description: Boardgame.io public access over IPv6
+      SecurityGroupEgress:
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIpv6: ::/0
+          Description: HTTPS for AWS API access (SSM, ECR)
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIpv6: ::/0
+          Description: HTTP for package downloads
+
+  # --- EC2 Instance ---
+  BoardgameInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: !Ref LatestAmiId
+      InstanceType: !Ref EC2InstanceType
+      IamInstanceProfile: !Ref EC2InstanceProfile
+      SecurityGroupIds:
+        - !Ref BoardgameSecurityGroup
+      SubnetId: !Select
+        - 0
+        - !Split
+          - ","
+          - Fn::ImportValue:
+              Fn::Sub: "${VpcStackName}-PublicSubnets"
+      Ipv6Addresses:
+        - Ipv6Address: 2600:1f1c:f26:5400::123  # static IPv6 from your subnet
+      Tags:
+        - Key: Name
+          Value: !Sub "${AWS::StackName}-BoardgameServer"
+        - Key: Application
+          Value: Boardgame.io
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          set -e
+          dnf update -y
+          dnf install -y docker unzip
+          systemctl enable docker
+          systemctl start docker
+          usermod -aG docker ec2-user
+
+          if ! command -v aws &> /dev/null; then
+              curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+              unzip awscliv2.zip
+              ./aws/install
+              rm -rf awscliv2.zip aws/
+          fi
+
+          cat > /home/ec2-user/deploy.sh << 'EOF'
+          #!/bin/bash
+          set -euo pipefail
+
+          IMAGE="${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/board-game-server"
+          TAG=$(aws ssm get-parameter --name "/boardgame/image-tag" --query "Parameter.Value" --output text --region ${AWS::Region} 2>/dev/null || echo "latest")
+          FULL_IMAGE="$IMAGE:$TAG"
+
+          echo "Deploying boardgame.io with image: $FULL_IMAGE"
+
+          aws ecr get-login-password --region ${AWS::Region} \
+            | docker login --username AWS --password-stdin ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com
+
+          docker pull "$FULL_IMAGE"
+
+          NEW_DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' "$FULL_IMAGE" | cut -d'@' -f2)
+
+          if docker ps --filter "name=boardgame-container" --format '{{.ID}}' | grep -q .; then
+              RUNNING_IMAGE=$(docker inspect --format='{{.Image}}' boardgame-container)
+              RUNNING_DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' "$RUNNING_IMAGE" | cut -d'@' -f2 || true)
+
+              if [ "$NEW_DIGEST" = "$RUNNING_DIGEST" ]; then
+                  echo "Already running the latest image ($NEW_DIGEST). No restart needed."
+                  exit 0
+              fi
+
+              echo "New image detected ($NEW_DIGEST). Restarting container..."
+              docker stop boardgame-container
+              docker rm boardgame-container
+          fi
+
+          echo "Starting new container..."
+          docker run -d \
+            --name boardgame-container \
+            --restart unless-stopped \
+            -p 8000:8000 \
+            "$FULL_IMAGE"
+
+          echo "Deployment complete (digest $NEW_DIGEST)"
+
+          echo "Cleaning up old images..."
+          docker image prune -af --filter "until=1h" || true
+          EOF
+
+          chmod +x /home/ec2-user/deploy.sh
+          chown ec2-user:ec2-user /home/ec2-user/deploy.sh
+
+          /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource BoardgameInstance --region ${AWS::Region}
+
+  BoardgameEcrRepository:
+    Type: AWS::ECR::Repository
+    Properties:
+      RepositoryName: board-game-server
+      ImageScanningConfiguration:
+        ScanOnPush: true
+      ImageTagMutability: IMMUTABLE_WITH_EXCLUSION
+      ImageTagMutabilityExclusionFilters:
+        - ImageTagMutabilityExclusionFilterType: WILDCARD
+          ImageTagMutabilityExclusionFilterValue: latest
+      LifecyclePolicy:
+        LifecyclePolicyText: |
+          {
+            "rules": [
+              {
+                "rulePriority": 1,
+                "description": "Expire untagged images older than 30 days",
+                "selection": {
+                  "tagStatus": "untagged",
+                  "countType": "sinceImagePushed",
+                  "countUnit": "days",
+                  "countNumber": 30
+                },
+                "action": {
+                  "type": "expire"
+                }
+              }
+            ]
+          }
+
+Outputs:
+  InstanceId:
+    Description: EC2 Instance ID
+    Value: !Ref BoardgameInstance
+    Export:
+      Name: !Sub "${AWS::StackName}-InstanceId"
+  SecurityGroupId:
+    Value: !Ref BoardgameSecurityGroup
+    Export:
+      Name: !Sub "${AWS::StackName}-SG"
+  GameServerURL:
+    Description: Public URL for your boardgame.io server
+    Value: !Sub "http://[2600:1f1c:f26:5400::123]:8000"
+  DeploymentCommand:
+    Description: Command to deploy from GitHub Actions
+    Value: !Sub |
+      aws ssm send-command --document-name "AWS-RunShellScript" --targets "Key=InstanceIds,Values=${BoardgameInstance}" --parameters "commands=['/home/ec2-user/deploy.sh']" --region ${AWS::Region}
+  RepositoryUri:
+    Description: URI of the ECR repository
+    Value: !GetAtt BoardgameEcrRepository.RepositoryUri
+    Export:
+      Name: BoardgameEcrRepositoryUri
