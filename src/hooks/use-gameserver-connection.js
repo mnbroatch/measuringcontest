@@ -67,5 +67,8 @@ export const useGameserverConnection = () => {
     }
   }, [gameId, userId, roomCode])
   
-  return clientRef.current
+  return {
+    client: clientRef.current,
+    game
+  }
 }

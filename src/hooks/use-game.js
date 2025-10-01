@@ -3,16 +3,29 @@ import { useGameserverConnection } from "./use-gameserver-connection.js";
 import { registry } from "../game-factory/registry.js";
 
 export default function useGame () {
-  const client = useGameserverConnection()
-  const state = client?.getState()
+  const { client, game } = useGameserverConnection()
+  const clientState = client?.getState()
+
+  let state
+  if (clientState) {
+    state = {
+      ...clientState,
+      G: deserialize(JSON.stringify(clientState.G), registry),
+    }
+  }
+  const gameover = state?.ctx?.gameover?.winner
+
   return {
     client,
-    G: state && deserialize(JSON.stringify(state.G), registry),
-    moves: client &&
-      Object.entries(client.moves).reduce((acc, [moveName, move]) => ({
+    state,
+    gameover,
+    game,
+    moves: client && !gameover
+      ? Object.entries(client.moves).reduce((acc, [moveName, move]) => ({
         ...acc,
         [moveName]: (payload) => { move(preparePayload(payload)) }
       }), {})
+      : []
   }
 }
 

@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import get from 'lodash/get.js'
-import { serialize } from 'wackson'
 import { createFileRoute } from "@tanstack/react-router"
+import { serialize } from 'wackson';
 import { useRoomQuery } from "../queries/use-room-query.js";
 import { useJoinRoomMutation } from "../queries/use-join-room-mutation.js";
 import { useLeaveRoomMutation } from "../queries/use-leave-room-mutation.js";
@@ -19,20 +18,15 @@ export default function RoomPage () {
   const joinRoomMutation = useJoinRoomMutation(roomCode)
   const leaveRoomMutation = useLeaveRoomMutation(roomCode)
   const createGameMutation = useCreateGameMutation(roomCode)
-  const { G, moves, client } = useGame()
+  const { state, moves, client, game, gameover } = useGame()
 
-  if (G) {
-    const matchingWinConditionResult = getMatchingWinConditionResult(G, ticTacToe.endIf.slice(-1))
-    console.log('matchingWinConditionResult ', matchingWinConditionResult )
-    if (matchingWinConditionResult) {
-      const resultRule = matchingWinConditionResult.winCondition.result
-      const result = {...resultRule}
-      if (resultRule.winner) {
-        result.winner = get(matchingWinConditionResult, result.winner)
-      }
-      console.log('result', result)
-    }
+  if (state) {
+    console.log('state.G', state.G)
+    console.log('game.endIf(state)', game.endIf({ ...state, G: JSON.parse(serialize(state.G)) }))
   }
+  console.log('gameover', gameover)
+
+  const G = state?.G
 
   return !room.isLoading && (
     <>

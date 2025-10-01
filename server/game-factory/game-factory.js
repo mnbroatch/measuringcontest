@@ -58,7 +58,7 @@ export default function gameFactory (rules, name) {
         G: deserialize(JSON.stringify(G), registry),
         ...restBgioArguments
       }
-      const matchingWinConditionResult = getMatchingWinConditionResult(bgioArguments, rules.endIf.slice(0, 1))
+      const matchingWinConditionResult = getMatchingWinConditionResult(bgioArguments, rules.endIf)
       if (matchingWinConditionResult) {
         const resultRule = matchingWinConditionResult.winCondition.result
         const result = {...resultRule}
