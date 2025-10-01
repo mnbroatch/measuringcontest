@@ -22,7 +22,8 @@ export default function RoomPage () {
   const { G, moves, client } = useGame()
 
   if (G) {
-    const matchingWinConditionResult = getMatchingWinConditionResult(G, ticTacToe.endIf)
+    const matchingWinConditionResult = getMatchingWinConditionResult(G, ticTacToe.endIf.slice(-1))
+    console.log('matchingWinConditionResult ', matchingWinConditionResult )
     if (matchingWinConditionResult) {
       const resultRule = matchingWinConditionResult.winCondition.result
       const result = {...resultRule}

@@ -1,4 +1,5 @@
-import NotCondition from "./not-condition.js";
+import Not from "./not-condition.js";
+import All from "./all-condition.js";
 import ContainsCondition from "./contains-condition.js";
 import ContainsSameCondition from "./contains-same-condition.js";
 import ContainsLine from "./contains-line-condition.js";
@@ -10,7 +11,9 @@ export default function conditionFactory(rule) {
   if (rule.type === "Contains") {
     return new ContainsCondition(rule);
   } else if (rule.type === "Not") {
-    return new NotCondition(rule);
+    return new Not(rule);
+  } else if (rule.type === "All") {
+    return new All(rule);
   } else if (rule.type === "ContainsSame") {
     return new ContainsSameCondition(rule);
   // } else if (rule.type === "bingo") {

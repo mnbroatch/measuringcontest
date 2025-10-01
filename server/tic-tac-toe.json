@@ -55,9 +55,8 @@
     },
     {
       "conditions": [{
-        "type": "BoardPattern",
-        "target": ["sharedBoard", "mainGrid"],
-        "pattern": "All",
+        "type": "All",
+        "target": { "name": "mainGrid" },
         "spaceConditions": [{"type": "Contains"}]
       }],
       "result": { "draw": true }

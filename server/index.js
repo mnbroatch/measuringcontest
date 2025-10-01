@@ -74,8 +74,11 @@ server.app.use(async (ctx, next) => {
     if (!server.games) server.games = [];
 
     if (!server.games.find(g => g.name === gameName)) {
-      const newGameDef = gameFactory(tictactoe, 'tic-tac-toe');
-      // const newGameDef = gameFactory(ctx.body.gameRules, gameName);
+      const gameRules = ctx.body?.gameRules
+      console.log('123123', 123123)
+      console.log('gameRules', gameRules)
+      console.log('gameName', gameName)
+      const newGameDef = gameFactory(ctx.body.gameRules, gameName);
       const processedGame = ProcessGameConfig(newGameDef);
       server.games.push(processedGame);
 

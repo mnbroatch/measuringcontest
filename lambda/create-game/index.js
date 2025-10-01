@@ -33,7 +33,7 @@ async function getJwtSecret() {
 exports.handler = async (event) => {
   const { sessionCode: roomCode } = event.pathParameters;
   const { sub } = event.requestContext.authorizer.claims;
-  const body = JSON.parse(event.body || "{}");
+  const body = JSON.parse(event.body);
 
   // Fetch the room
   const roomResp = await ddb.send(
@@ -65,7 +65,8 @@ exports.handler = async (event) => {
       "Authorization": `Bearer ${token}`
     },
     body: JSON.stringify({ 
-      allowedPlayers: Array.from(room.members)
+      allowedPlayers: Array.from(room.members),
+      gameRules: body.gameRules
     }),
   });
 
