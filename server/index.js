@@ -80,22 +80,19 @@ server.app.use(async (ctx, next) => {
     // Parse it manually
     const parsedBody = JSON.parse(rawBody);
     
-    // Do your processing with the parsed body
+    // Do your processing
     if (!server.games) server.games = [];
     if (!server.games.find(g => g.name === gameName)) {
       const gameRules = parsedBody?.gameRules;
-      console.log('123123', 123123);
-      console.log('gameRules', gameRules);
-      console.log('gameName', gameName);
-      const newGameDef = gameFactory(gameRules, gameName);
+      const newGameDef = gameFactory(JSON.parse(gameRules), gameName);
       const processedGame = ProcessGameConfig(newGameDef);
       server.games.push(processedGame);
       server.transport.addGameSocketListeners(server.app, processedGame);
     }
     
-    // Recreate the stream for downstream to read
-    const { Readable } = require('stream');
+    // Recreate the stream with headers preserved
     const newStream = Readable.from([rawBody]);
+    newStream.headers = ctx.req.headers; // Preserve headers
     ctx.req = newStream;
   }
   await next();
