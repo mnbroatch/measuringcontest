@@ -1,25 +1,22 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
-import makeAuthenticatedRequest from "../utils/make-authenticated-request.js";
-import makePreloadAuthenticatedQuery from "../utils/make-preload-authenticated-query.js";
+import makeRequest from '../utils/make-request'
+import preloadQuery from "../utils/preload-query.js";
 
 const apiUrl = 'https://api.measuringcontest.com/rooms'
 
 export const useRoomQuery = (roomCode) => {
-  const auth = useCognitoAuth()
-  return useSuspenseQuery(getOptions(auth.idToken, roomCode))
+  return useSuspenseQuery(getOptions(roomCode))
 }
 
-function getOptions (idToken, roomCode) {
+function getOptions (roomCode) {
   return {
     queryKey: ['room', roomCode],
-    queryFn: () => makeAuthenticatedRequest(
+    queryFn: () => makeRequest(
       `${apiUrl}/${roomCode}`,
-      idToken,
       { method: 'GET' }
     ),
     staleTime: 1000 * 60 * 50,
   }
 }
 
-useRoomQuery.preload = makePreloadAuthenticatedQuery(getOptions)
+useRoomQuery.preload = () => { preloadQuery(getOptions) }

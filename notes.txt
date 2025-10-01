@@ -1,4 +1,5 @@
 todo:
+delete game
 delete game from server on room delete
 "finish game" logic
   - handle game being deleted and api giving blank (currently corrupt) json

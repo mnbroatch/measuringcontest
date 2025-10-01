@@ -7,7 +7,7 @@ import { useCreateGameMutation } from "../queries/use-create-game-mutation.js";
 import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
 import ticTacToe from "../../server/tic-tac-toe.json";
 
-export default function RoomPage () {
+export default function GamePage () {
   const { roomcode: roomCode } = Route.useParams()
   const navigate = useNavigate()
   const [gameRules, setGameRules] = useState(JSON.stringify(ticTacToe, null, 2))
@@ -101,7 +101,7 @@ export default function RoomPage () {
   )
 }
 
-export const Route = createFileRoute("/rooms/$roomcode")({
+export const Route = createFileRoute("/rooms/$roomcode/games/$gameid")({
   loader: ({ params }) => useRoomQuery.preload(params.roomcode),
-  component: RoomPage,
+  component: GamePage,
 })
