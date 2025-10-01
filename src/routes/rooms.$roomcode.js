@@ -25,6 +25,16 @@ export default function RoomPage () {
     console.log('game.endIf(state)', game.endIf({ ...state, G: JSON.parse(serialize(state.G)) }))
   }
   console.log('gameover', gameover)
+  console.log('moves', moves)
+  let moveRules
+  if (moves) {
+    // console.log('moves.placePlayerMarker', moves.placePlayerMarker.moveInstance.rule)
+    moveRules = Object.entries(moves).reduce((acc, [moveName, move]) => ({
+      ...acc,
+      [moveName]: move.moveInstance.rule
+    }), {})
+  }
+  console.log('moveRules', moveRules)
 
   const G = state?.G
 

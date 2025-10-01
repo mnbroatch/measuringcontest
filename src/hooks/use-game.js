@@ -7,25 +7,32 @@ export default function useGame () {
   const clientState = client?.getState()
 
   let state
+  let moves
+  let gameover
   if (clientState) {
     state = {
       ...clientState,
       G: deserialize(JSON.stringify(clientState.G), registry),
     }
+    gameover = state?.ctx?.gameover
+    moves = client && !gameover
+      ? Object.entries(client.moves).reduce((acc, [moveName, m]) => {
+        const move = function (payload) { m(preparePayload(payload)) }
+        move.moveInstance = game.moves[moveName].moveInstance
+        return {
+          ...acc,
+          [moveName]: move
+        }
+      }, {})
+      : []
   }
-  const gameover = state?.ctx?.gameover
 
   return {
     client,
     state,
     gameover,
     game,
-    moves: client && !gameover
-      ? Object.entries(client.moves).reduce((acc, [moveName, move]) => ({
-        ...acc,
-        [moveName]: (payload) => { move(preparePayload(payload)) }
-      }), {})
-      : []
+    moves,
   }
 }
 

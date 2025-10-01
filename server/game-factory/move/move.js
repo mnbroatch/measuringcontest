@@ -49,7 +49,8 @@ export default class Move {
         return JSON.parse(serialize(G))
       }
     }
-    compatibleMove.isValid = this.isValid
+
+    compatibleMove.moveInstance = this
     return compatibleMove
   }
 
