@@ -9,11 +9,12 @@ export default class SpaceGroupCondition extends Condition {
   }
 
   findMatches (bgioArguments, target) {
-    const matches = target.spaces.reduce((acc, space) => [
-      ...acc,
-      ...this.checkForPattern(bgioArguments, space, target).matches
-    ], [])
-
+    const matches = []
+    
+    for (let i = 0; i < target.spaces.length; i++) {
+      const space = target.spaces[i]
+      matches.push(...this.checkForPattern(bgioArguments, space, target, matches).matches)
+    }
     return { matches }
   }
 
@@ -39,7 +40,7 @@ export default class SpaceGroupCondition extends Condition {
     }
   }
 
-  checkForPattern() {}
+  checkForPattern(bgioArguments, space, target) {}
 }
 
 // performance optimization

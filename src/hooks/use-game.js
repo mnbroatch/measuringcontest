@@ -1,6 +1,6 @@
 import { serialize, deserialize } from "wackson";
 import { useGameserverConnection } from "./use-gameserver-connection.js";
-import { registry } from "../game-factory/registry.js";
+import { registry } from "../../server/game-factory/registry.js";
 
 export default function useGame () {
   const { client, game } = useGameserverConnection()

@@ -8,7 +8,7 @@ import { useCreateGameMutation } from "../queries/use-create-game-mutation.js";
 import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
 import useGame from "../hooks/use-game.js";
 import ticTacToe from "../../server/tic-tac-toe.json";
-import conditionFactory from '../game-factory/condition/condition-factory.js'
+import conditionFactory from '../../server/game-factory/condition/condition-factory.js'
 
 export default function RoomPage () {
   const { roomcode: roomCode } = Route.useParams()

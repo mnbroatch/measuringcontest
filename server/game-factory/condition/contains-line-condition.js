@@ -1,7 +1,7 @@
 import SpaceGroupCondition from "../condition/space-group-condition.js";
 
 export default class ContainsLine extends SpaceGroupCondition {
-  checkForPattern(bgioArguments, space, target) {
+  checkForPattern(bgioArguments, space, target, matchesSoFar) {
     if (!this.checkSpace(bgioArguments, space)) {
       return { matches: [] };
     }
@@ -15,28 +15,35 @@ export default class ContainsLine extends SpaceGroupCondition {
       const direction = directions[d];
       const matchingSpaces = [space];
 
-      // backward iteration: furthest step first
-      for (let step = length - 1; step >= 1; step--) {
+      // prevent overlapping lines in same direction
+      if (matchesSoFar.some(match =>
+        match.direction === direction && match.spaces.includes(space)
+      )) {
+        continue
+      }
+
+      // backward iteration disqualifies out-of-bounds instantly
+      for (let i = length - 1; i >= 1; i--) {
         const newCoordinates = target.getNewCoordinatesInDirection(
           coordinates,
           direction,
-          step
+          i
         );
 
         if (!newCoordinates) {
-          break; // no space in this direction
+          break;
         }
 
         const newIndex = target.getIndex(newCoordinates);
         const newSpace = target.spaces[newIndex];
 
         if (this.checkSpace(bgioArguments, newSpace, matchingSpaces)) {
-          matchingSpaces.push(newSpace);
+          matchingSpaces.splice(i, 0, newSpace);
           if (matchingSpaces.length === length) {
-            matches.push(matchingSpaces);
+            matches.push({ direction, spaces: matchingSpaces });
           }
         } else {
-          break; // stop extending in this direction
+          break;
         }
       }
     }

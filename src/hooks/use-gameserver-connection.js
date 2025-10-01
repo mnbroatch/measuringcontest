@@ -5,7 +5,7 @@ import { SocketIO } from 'boardgame.io/multiplayer'
 import { useCognitoAuth } from "../contexts/cognito-auth-context.js"
 import { useRoomQuery } from "../queries/use-room-query.js"
 import { useJoinGameMutation } from "../queries/use-join-game-mutation.js";
-import gameFactory from '../game-factory/game-factory.js'
+import gameFactory from '../../server/game-factory/game-factory.js'
 
 const SERVER_URL = 'https://gameserver.measuringcontest.com'
 
