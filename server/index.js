@@ -1,11 +1,11 @@
 import { Readable } from "stream";
 import jwt from 'jsonwebtoken';
 import { SSMClient, GetParameterCommand } from "@aws-sdk/client-ssm";
+import getRawBody from 'raw-body'
 import { ProcessGameConfig } from 'boardgame.io/dist/cjs/internal.js';
 import makeServer from './guts.js';
 import tictactoe from './tic-tac-toe.json' with { type: 'json' };
 import gameFactory from './game-factory/game-factory.js';
-// console.log('gameFactory(tictactoe, `asdasd`)', gameFactory(tictactoe, `asdasd`).setup({ ctx: { numPlayers: 3 }}))
 
 const ssmClient = new SSMClient({ region: 'us-west-1' });
 const BOARDGAME_PORT = 8000;
@@ -70,22 +70,34 @@ server.app.use(async (ctx, next) => {
   const match = ctx.path.match(/^\/games\/([^/]+)\/create$/);
   if (ctx.method === 'POST' && match) {
     const gameName = match[1];
-
+    
+    // Read and buffer the raw body
+    const rawBody = await getRawBody(ctx.req, {
+      length: ctx.request.length,
+      encoding: 'utf8'
+    });
+    
+    // Parse it manually
+    const parsedBody = JSON.parse(rawBody);
+    
+    // Do your processing with the parsed body
     if (!server.games) server.games = [];
-
     if (!server.games.find(g => g.name === gameName)) {
-      const gameRules = ctx.body?.gameRules
-      console.log('123123', 123123)
-      console.log('gameRules', gameRules)
-      console.log('gameName', gameName)
-      const newGameDef = gameFactory(ctx.body.gameRules, gameName);
+      const gameRules = parsedBody?.gameRules;
+      console.log('123123', 123123);
+      console.log('gameRules', gameRules);
+      console.log('gameName', gameName);
+      const newGameDef = gameFactory(gameRules, gameName);
       const processedGame = ProcessGameConfig(newGameDef);
       server.games.push(processedGame);
-
       server.transport.addGameSocketListeners(server.app, processedGame);
     }
+    
+    // Recreate the stream for downstream to read
+    const { Readable } = require('stream');
+    const newStream = Readable.from([rawBody]);
+    ctx.req = newStream;
   }
-
   await next();
 });
 
