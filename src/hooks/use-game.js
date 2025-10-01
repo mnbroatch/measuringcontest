@@ -13,7 +13,7 @@ export default function useGame () {
       G: deserialize(JSON.stringify(clientState.G), registry),
     }
   }
-  const gameover = state?.ctx?.gameover?.winner
+  const gameover = state?.ctx?.gameover
 
   return {
     client,

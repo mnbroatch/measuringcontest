@@ -21,7 +21,7 @@ export default function RoomPage () {
   const { state, moves, client, game, gameover } = useGame()
 
   if (state) {
-    console.log('state.G', state.G)
+    console.log('game.endIf.toString()', game.endIf.toString())
     console.log('game.endIf(state)', game.endIf({ ...state, G: JSON.parse(serialize(state.G)) }))
   }
   console.log('gameover', gameover)
