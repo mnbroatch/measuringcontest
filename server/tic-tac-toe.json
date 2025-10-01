@@ -39,7 +39,6 @@
       "conditions": [{
         "target": { "name": "mainGrid" },
         "type": "ContainsLine",
-        "count": 2,
         "length": 3,
         "spacesConditions": [{
           "type": "ContainsSame",
@@ -50,7 +49,7 @@
         ]
       }],
       "result": {
-        "winner": [ "conditionResults", 0, "matches", 0, 0, "entities", 0, "rule", "player" ]
+        "winner": [ "conditionResults", 0, "matches", 0, "spaces", 0, "entities", 0, "rule", "player" ]
       }
     },
     {
