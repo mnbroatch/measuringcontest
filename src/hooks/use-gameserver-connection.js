@@ -6,7 +6,6 @@ import { useCognitoAuth } from "../contexts/cognito-auth-context.js"
 import { useRoomQuery } from "../queries/use-room-query.js"
 import { useJoinGameMutation } from "../queries/use-join-game-mutation.js";
 import gameFactory from '../game-factory/game-factory.js'
-import tictactoe from '../../server/tic-tac-toe.json'
 
 const SERVER_URL = 'https://gameserver.measuringcontest.com'
 
@@ -17,10 +16,7 @@ export const useGameserverConnection = () => {
   const gameId = room?.gameId
   const gameName = room?.gameName
   const gameRules = room?.gameRules
-  console.log('gameName', gameName)
-  console.log('gameRules', gameRules)
   const game = gameRules && gameFactory(JSON.parse(gameRules), gameName)
-  // const game = gameFactory(tictactoe, 'tic-tac-toe')
   const [_, forceUpdate] = useReducer(x => !x, false)
   const clientRef = useRef(null)
   const joinGameMutation = useJoinGameMutation(roomCode, gameId)

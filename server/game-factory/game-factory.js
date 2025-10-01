@@ -1,4 +1,5 @@
 import filter from "lodash/filter.js";
+import get from "lodash/get.js";
 import { serialize, deserialize } from "wackson";
 import moveFactory from "./move/move-factory.js";
 import conditionFactory from "./condition/condition-factory.js";

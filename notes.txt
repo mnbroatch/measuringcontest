@@ -1,6 +1,7 @@
 todo:
 delete game from server on room delete
 "finish game" logic
+check for handling of weird characters in game name, esp. quotes
 
 
 (really just add separate spectator route?)
