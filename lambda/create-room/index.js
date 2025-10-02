@@ -63,8 +63,7 @@ exports.handler = async (event) => {
 
     const createData = await createResp.json();
     const roomGameId = createData.matchID;
-    const room = await createRoom(roomCode, userId, roomGameId)
-    return { val: room }
+    return await createRoom(roomCode, userId, roomGameId)
   } catch (error) {
     return {
       errorMessage: error.message,
@@ -95,16 +94,19 @@ async function createRoom(roomCode, userId, roomGameId) {
       roomCode,
       roomGameId,
       createdBy: userId,
-      members: new Set([userId]),
-      roomStatus: "waiting",
+      members: {
+        [userId]: {
+          joinedAt: Date.now()
+        }
+      },
       createdAt: Date.now(),
       expiresAtSeconds: Math.floor(Date.now() / 1000) + 24 * 3600,
     },
     ConditionExpression: "attribute_not_exists(roomCode)"
-  }
-  
-  await dynamoDb.send(new PutCommand(params))
-  return { success: true, roomCode }
+  };
+
+  await dynamoDb.send(new PutCommand(params));
+  return roomCode
 }
 
 async function getRoomCode() {

@@ -41,45 +41,33 @@ exports.handler = async (event) => {
   }
   
   const room = roomResp.Item;
+  const roomGameId = room.roomGameId
   const jwtSecret = await getJwtSecret();
   
   const clientToken = jwt.sign({
-    gameId: room.gameId,
+    gameId: roomGameId,
     playerId: sub,
     purpose: 'gameserver-app'
   }, jwtSecret, { expiresIn: '30d' });
 
-  const existingPlayer = room.players?.[sub];
+  const existingPlayer = room.members && room.members[sub];
   if (existingPlayer) {
     return {
-      gameId: room.gameId,
-      boardgamePlayerID: existingPlayer.boardgamePlayerID,
+      roomGameId,
       clientToken
     };
   }
   
-  // Check if user is allowed to join this room
-  if (!room.members || !room.members.has(sub)) {
-    throw new Error("Not a member of this room");
-  }
-  
-  if (room.gameName !== 'bgestagingroom') {
-    // Check if game exists and is active
-    if (!room.gameId || room.roomStatus !== 'active') {
-      throw new Error("No active game in this room");
-    }
-  }
-  
   // Create single JWT that includes both server auth and player data
   const serverToken = jwt.sign({
-    gameId: room.gameId,
+    gameId: roomGameId,
     playerId: sub,
     purpose: 'gameserver-api'
   }, jwtSecret, { expiresIn: '30d' });
   
   let joinData;
   try {
-    const joinResp = await fetch(`${BOARDGAME_SERVER_URL}/games/${room.gameName}/${room.gameId}/join`, {
+    const joinResp = await fetch(`${BOARDGAME_SERVER_URL}/games/bgestagingroom/${roomGameId}/join`, {
       method: "POST",
       headers: { 
         "Content-Type": "application/json",
@@ -88,7 +76,7 @@ exports.handler = async (event) => {
       body: JSON.stringify({ 
         playerName: sub,
         data: {
-          gameId: room.gameId,
+          gameId: roomGameId,
           playerId: sub
         }
       }),
@@ -111,16 +99,15 @@ exports.handler = async (event) => {
   
   const boardgamePlayerID = joinData.playerID;
   
-  // Store player data in DynamoDB
   await ddb.send(new UpdateCommand({
     TableName: "measuringcontest-rooms",
     Key: { roomCode },
-    UpdateExpression: "SET players.#userId = :playerData",
+    UpdateExpression: "SET members.#userId = :memberData",
     ExpressionAttributeNames: {
       "#userId": sub
     },
     ExpressionAttributeValues: {
-      ":playerData": {
+      ":memberData": {
         boardgamePlayerID,
         joinedAt: Date.now()
       }
@@ -128,8 +115,8 @@ exports.handler = async (event) => {
   }));
   
   return {
-    gameId: room.gameId,
-    boardgamePlayerID: boardgamePlayerID,
+    gameId: roomGameId,
+    boardgamePlayerID,
     clientToken
   };
 };

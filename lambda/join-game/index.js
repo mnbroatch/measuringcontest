@@ -45,6 +45,7 @@ exports.handler = async (event) => {
   
   const clientToken = jwt.sign({
     gameId: room.gameId,
+    roomGameId: room.roomGameId,
     playerId: sub,
     purpose: 'gameserver-app'
   }, jwtSecret, { expiresIn: '30d' });
@@ -63,16 +64,14 @@ exports.handler = async (event) => {
     throw new Error("Not a member of this room");
   }
   
-  if (room.gameName !== 'bgestagingroom') {
-    // Check if game exists and is active
-    if (!room.gameId || room.roomStatus !== 'active') {
-      throw new Error("No active game in this room");
-    }
+  if (!room.gameId) {
+    throw new Error("No game in this room");
   }
   
   // Create single JWT that includes both server auth and player data
   const serverToken = jwt.sign({
     gameId: room.gameId,
+    roomGameId: room.roomGameId,
     playerId: sub,
     purpose: 'gameserver-api'
   }, jwtSecret, { expiresIn: '30d' });
