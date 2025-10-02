@@ -25,7 +25,7 @@ async function getJwtSecret() {
 }
 
 exports.handler = async (event) => {
-  const { sessionCode: roomCode } = event.pathParameters;
+  const { sessionCode: roomCode, gameId } = event.pathParameters;
   const { sub } = event.requestContext.authorizer.claims;
   
   // Fetch the room
@@ -45,6 +45,7 @@ exports.handler = async (event) => {
   
   const clientToken = jwt.sign({
     gameId: room.gameId,
+    lobbyGameId: room.lobbyGameId,
     playerId: sub,
     purpose: 'gameserver-app'
   }, jwtSecret, { expiresIn: '30d' });
@@ -63,16 +64,15 @@ exports.handler = async (event) => {
     throw new Error("Not a member of this room");
   }
   
-  if (room.gameName !== 'bgestaginglobby') {
-    // Check if game exists and is active
-    if (!room.gameId || room.roomStatus !== 'active') {
-      throw new Error("No active game in this room");
-    }
+  // Check if game exists and is active
+  if (!room.gameId || room.gameId !== gameId || room.roomStatus !== 'active') {
+    throw new Error("No active game in this room");
   }
   
   // Create single JWT that includes both server auth and player data
   const serverToken = jwt.sign({
     gameId: room.gameId,
+    lobbyGameId: room.lobbyGameId,
     playerId: sub,
     purpose: 'gameserver-api'
   }, jwtSecret, { expiresIn: '30d' });
