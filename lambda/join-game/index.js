@@ -60,7 +60,7 @@ exports.handler = async (event) => {
   }
   
   // Check if user is allowed to join this room
-  if (!room.members || !room.members.has(sub)) {
+  if (!room.members || !(sub in room.members)) {
     throw new Error("Not a member of this room");
   }
   

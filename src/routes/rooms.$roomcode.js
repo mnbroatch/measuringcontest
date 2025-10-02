@@ -20,7 +20,7 @@ export default function RoomPage () {
   const game = useGame()
   console.log('game', game)
 
-  const iAmInRoom = room.data.members.includes(userId)
+  const iAmInRoom = room.data.members && userId in room.data.members
   const iAmInGame = room.data.players && userId in room.data.players
   useEffect(() => {
     if (userId && !iAmInRoom) {
