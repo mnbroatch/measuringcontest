@@ -9,14 +9,32 @@ import gameFactory from '../../server/game-factory/game-factory.js'
 
 const SERVER_URL = 'https://gameserver.measuringcontest.com'
 
+const LobbyGame = {
+  name: 'bgestaginglobby',
+  setup: () => ({
+    players: [],
+    gameRules: '',
+    gameName: '',
+  }),
+  moves: {
+    join: (G, ctx, userId) => {
+      console.log('ctx arg', ctx)
+      console.log('setup userId', userId)
+      G.players.push({ id: ctx.playerID, userId });
+    },
+  },
+};
+
 export const useGameserverConnection = () => {
   const { roomcode: roomCode } = useParams({})
+
   const { userId } = useCognitoAuth()
   const room = useRoomQuery(roomCode).data
-  const gameId = room?.gameId
-  const gameName = room?.gameName
+  const gameId = room?.gameId || room?.lobbyGameId
+  const gameName = room?.gameName || 'bgestaginglobby'
   const gameRules = room?.gameRules
-  const game = gameRules && gameFactory(JSON.parse(gameRules), gameName)
+
+  const game = (gameRules && gameFactory(JSON.parse(gameRules), gameName)) || LobbyGame
   const [_, forceUpdate] = useReducer(x => !x, false)
   const clientRef = useRef(null)
   const joinGameMutation = useJoinGameMutation(roomCode, gameId)

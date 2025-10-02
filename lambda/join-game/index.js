@@ -63,9 +63,11 @@ exports.handler = async (event) => {
     throw new Error("Not a member of this room");
   }
   
-  // Check if game exists and is active
-  if (!room.gameId || room.roomStatus !== 'active') {
-    throw new Error("No active game in this room");
+  if (room.gameName !== 'bgestaginglobby') {
+    // Check if game exists and is active
+    if (!room.gameId || room.roomStatus !== 'active') {
+      throw new Error("No active game in this room");
+    }
   }
   
   // Create single JWT that includes both server auth and player data

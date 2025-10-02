@@ -101,7 +101,7 @@ export default function GamePage () {
   )
 }
 
-export const Route = createFileRoute("/rooms/$roomcode/games/$gameid")({
+export const Route = createFileRoute("/rooms/$roomcode/games/$gameid/play")({
   loader: ({ params }) => useRoomQuery.preload(params.roomcode),
   component: GamePage,
 })

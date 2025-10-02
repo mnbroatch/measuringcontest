@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
+import useGame from "../hooks/use-game.js";
 import { useRoomQuery } from "../queries/use-room-query.js";
 import { useJoinRoomMutation } from "../queries/use-join-room-mutation.js";
 import { useLeaveRoomMutation } from "../queries/use-leave-room-mutation.js";
@@ -16,6 +17,8 @@ export default function RoomPage () {
   const joinRoomMutation = useJoinRoomMutation(roomCode)
   const leaveRoomMutation = useLeaveRoomMutation(roomCode)
   const createGameMutation = useCreateGameMutation(roomCode)
+  const game = useGame()
+  console.log('game', game)
 
   const iAmInRoom = room.data.members.includes(userId)
   const iAmInGame = room.data.players && userId in room.data.players
