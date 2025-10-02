@@ -5,6 +5,10 @@ on:
     tags:
       - 'v*'
 
+concurrency:
+  group: lambda-deployment
+  cancel-in-progress: true  # Cancel old, run new
+
 permissions:
   id-token: write
   contents: read
