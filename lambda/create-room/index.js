@@ -45,7 +45,7 @@ exports.handler = async (event) => {
     const jwtSecret = await getJwtSecret();
     const serverToken = jwt.sign({ purpose: 'gameserver-api' }, jwtSecret, { expiresIn: '1h' });
     
-    const createResp = await fetch(`${BOARDGAME_SERVER_URL}/games/bgestaginglobby/create`, {
+    const createResp = await fetch(`${BOARDGAME_SERVER_URL}/games/bgestagingroom/create`, {
       method: "POST",
       headers: { 
         "Content-Type": "application/json",
@@ -62,8 +62,8 @@ exports.handler = async (event) => {
     }
 
     const createData = await createResp.json();
-    const lobbyGameId = createData.matchID;
-    const room = await createRoom(roomCode, userId, lobbyGameId)
+    const roomGameId = createData.matchID;
+    const room = await createRoom(roomCode, userId, roomGameId)
     return { val: room }
   } catch (error) {
     return {
@@ -88,12 +88,12 @@ async function getUserRoomCount(userId) {
   return result.Count
 }
 
-async function createRoom(roomCode, userId, lobbyGameId) {
+async function createRoom(roomCode, userId, roomGameId) {
   const params = {
     TableName: "measuringcontest-rooms",
     Item: {
       roomCode,
-      lobbyGameId,
+      roomGameId,
       createdBy: userId,
       members: new Set([userId]),
       roomStatus: "waiting",

@@ -39,6 +39,9 @@ jobs:
           - name: joingame
             path: lambda/join-game
             zip: joingame.zip
+          - name: joinroom
+            path: lambda/join-room
+            zip: joinroom.zip
 
     steps:
       - uses: actions/checkout@v3

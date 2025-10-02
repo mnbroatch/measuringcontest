@@ -9,8 +9,8 @@ import gameFactory from '../../server/game-factory/game-factory.js'
 
 const SERVER_URL = 'https://gameserver.measuringcontest.com'
 
-const LobbyGame = {
-  name: 'bgestaginglobby',
+const RoomGame = {
+  name: 'bgestagingroom',
   setup: () => ({
     players: [],
     gameRules: '',
@@ -30,11 +30,11 @@ export const useGameserverConnection = () => {
 
   const { userId } = useCognitoAuth()
   const room = useRoomQuery(roomCode).data
-  const gameId = room?.gameId || room?.lobbyGameId
-  const gameName = room?.gameName || 'bgestaginglobby'
+  const gameId = room?.gameId || room?.roomGameId
+  const gameName = room?.gameName || 'bgestagingroom'
   const gameRules = room?.gameRules
 
-  const game = (gameRules && gameFactory(JSON.parse(gameRules), gameName)) || LobbyGame
+  const game = (gameRules && gameFactory(JSON.parse(gameRules), gameName)) || RoomGame
   const [_, forceUpdate] = useReducer(x => !x, false)
   const clientRef = useRef(null)
   const joinGameMutation = useJoinGameMutation(roomCode, gameId)

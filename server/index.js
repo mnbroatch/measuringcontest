@@ -9,8 +9,8 @@ import gameFactory from './game-factory/game-factory.js';
 
 const ssmClient = new SSMClient({ region: 'us-west-1' });
 
-const LobbyGame = {
-  name: 'bgestaginglobby',
+const RoomGame = {
+  name: 'bgestagingroom',
   setup: () => ({
     players: [],
     gameRules: '',
@@ -24,7 +24,7 @@ const LobbyGame = {
     },
   },
 };
-const INITIAL_GAMES = [LobbyGame]
+const INITIAL_GAMES = [RoomGame]
 const BOARDGAME_PORT = 8000;
 const ORIGINS = [/.*/]
 
