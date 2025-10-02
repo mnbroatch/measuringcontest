@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: Single boardgame.io server with direct IPv6 connection
+Description: Single boardgame.io server with direct IPv6 connection and Route53 AAAA record
 
 Parameters:
   EC2InstanceType:
@@ -15,17 +15,10 @@ Parameters:
     Description: SSM parameter path for the latest Amazon Linux 2023 AMI
   HostedZoneId:
     Type: String
-    Description: Route53 Hosted Zone ID (leave empty to skip DNS)
-    Default: ""
+    Description: Route53 Hosted Zone ID (e.g., Z1234567890ABC)
   DomainName:
     Type: String
-    Description: Domain name for the game server (e.g. game.example.com) (leave empty to skip DNS)
-    Default: ""
-
-Conditions:
-  CreateDNSRecord: !And
-    - !Not [!Equals [!Ref HostedZoneId, ""]]
-    - !Not [!Equals [!Ref DomainName, ""]]
+    Description: Full domain name for the AAAA record (e.g., game.example.com)
 
 Resources:
   # --- IAM Role for EC2 ---
@@ -59,6 +52,88 @@ Resources:
     Properties:
       Roles: 
         - !Ref EC2Role
+
+  # --- Lambda Role for Getting IPv6 Address ---
+  GetIPv6LambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: DescribeInstances
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - ec2:DescribeInstances
+                Resource: '*'
+
+  # --- Lambda Function to Retrieve IPv6 Address ---
+  GetIPv6Function:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub "${AWS::StackName}-GetIPv6Address"
+      Runtime: python3.11
+      Handler: index.handler
+      Role: !GetAtt GetIPv6LambdaRole.Arn
+      Timeout: 30
+      Code:
+        ZipFile: |
+          import boto3
+          import cfnresponse
+          import time
+          
+          def handler(event, context):
+              print(f"Received event: {event}")
+              try:
+                  if event['RequestType'] == 'Delete':
+                      cfnresponse.send(event, context, cfnresponse.SUCCESS, {})
+                      return
+                  
+                  instance_id = event['ResourceProperties']['InstanceId']
+                  ec2 = boto3.client('ec2')
+                  
+                  # Retry logic in case the instance isn't fully ready
+                  max_retries = 10
+                  for attempt in range(max_retries):
+                      response = ec2.describe_instances(InstanceIds=[instance_id])
+                      
+                      if not response['Reservations'] or not response['Reservations'][0]['Instances']:
+                          raise Exception(f"Instance {instance_id} not found")
+                      
+                      instance = response['Reservations'][0]['Instances'][0]
+                      
+                      # Get the first IPv6 address
+                      ipv6_address = None
+                      if 'NetworkInterfaces' in instance and instance['NetworkInterfaces']:
+                          for ni in instance['NetworkInterfaces']:
+                              if 'Ipv6Addresses' in ni and ni['Ipv6Addresses']:
+                                  ipv6_address = ni['Ipv6Addresses'][0]['Ipv6Address']
+                                  break
+                      
+                      if ipv6_address:
+                          print(f"Found IPv6 address: {ipv6_address}")
+                          response_data = {'Ipv6Address': ipv6_address}
+                          cfnresponse.send(event, context, cfnresponse.SUCCESS, response_data)
+                          return
+                      
+                      if attempt < max_retries - 1:
+                          print(f"IPv6 address not yet available, retrying in 5 seconds... (attempt {attempt + 1}/{max_retries})")
+                          time.sleep(5)
+                  
+                  raise Exception("No IPv6 address found for instance after retries")
+                  
+              except Exception as e:
+                  print(f"Error: {str(e)}")
+                  cfnresponse.send(event, context, cfnresponse.FAILED, {}, str(e))
 
   # --- Security Group ---
   BoardgameSecurityGroup:
@@ -183,6 +258,26 @@ Resources:
 
           /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource BoardgameInstance --region ${AWS::Region}
 
+  # --- Custom Resource to Get IPv6 Address ---
+  InstanceIPv6Address:
+    Type: Custom::GetIPv6
+    DependsOn: BoardgameInstance
+    Properties:
+      ServiceToken: !GetAtt GetIPv6Function.Arn
+      InstanceId: !Ref BoardgameInstance
+
+  # --- Route53 AAAA Record ---
+  BoardgameAAAARecord:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneId: !Ref HostedZoneId
+      Name: !Ref DomainName
+      Type: AAAA
+      TTL: 300
+      ResourceRecords:
+        - !GetAtt InstanceIPv6Address.Ipv6Address
+
+  # --- ECR Repository ---
   BoardgameEcrRepository:
     Type: AWS::ECR::Repository
     Properties:
@@ -213,18 +308,6 @@ Resources:
             ]
           }
 
-  # --- Route53 DNS Record (Optional) ---
-  GameServerDNSRecord:
-    Type: AWS::Route53::RecordSet
-    Condition: CreateDNSRecord
-    Properties:
-      HostedZoneId: !Ref HostedZoneId
-      Name: !Ref DomainName
-      Type: AAAA
-      TTL: 300
-      ResourceRecords:
-        - !Select [0, !GetAtt BoardgameInstance.Ipv6Addresses]
-
 Outputs:
   InstanceId:
     Description: EC2 Instance ID
@@ -235,11 +318,17 @@ Outputs:
     Value: !Ref BoardgameSecurityGroup
     Export:
       Name: !Sub "${AWS::StackName}-SG"
-  GameServerURL:
-    Description: Public URL for your boardgame.io server
-    Value: !Sub 
-      - "http://[${IPv6}]:8000"
-      - IPv6: !Select [0, !GetAtt BoardgameInstance.Ipv6Addresses]
+  IPv6Address:
+    Description: Instance IPv6 Address
+    Value: !GetAtt InstanceIPv6Address.Ipv6Address
+    Export:
+      Name: !Sub "${AWS::StackName}-IPv6Address"
+  GameServerIPv6URL:
+    Description: Direct IPv6 URL for your boardgame.io server
+    Value: !Sub "http://[${InstanceIPv6Address.Ipv6Address}]:8000"
+  GameServerDomainURL:
+    Description: Domain URL for your boardgame.io server
+    Value: !Sub "http://${DomainName}:8000"
   DeploymentCommand:
     Description: Command to deploy from GitHub Actions
     Value: !Sub |
