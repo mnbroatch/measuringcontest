@@ -8,10 +8,25 @@ import tictactoe from './tic-tac-toe.json' with { type: 'json' };
 import gameFactory from './game-factory/game-factory.js';
 
 const ssmClient = new SSMClient({ region: 'us-west-1' });
+
+const LobbyGame = {
+  name: 'bgestaginglobby',
+  setup: () => ({
+    players: [],
+    gameRules: '',
+    gameName: '',
+  }),
+  moves: {
+    join: (G, ctx, userId) => {
+      console.log('ctx arg', ctx)
+      console.log('setup userId', userId)
+      G.players.push({ id: ctx.playerID, userId });
+    },
+  },
+};
+const INITIAL_GAMES = [LobbyGame]
 const BOARDGAME_PORT = 8000;
 const ORIGINS = [/.*/]
-const INITIAL_GAMES = []
-// const INITIAL_GAMES = [TicTacToe]
 
 // Cache JWT secret
 let cachedJwtSecret = null;

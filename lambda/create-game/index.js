@@ -4,10 +4,10 @@ const { SSMClient, GetParameterCommand } = require("@aws-sdk/client-ssm");
 const jwt = require('jsonwebtoken');
 
 const client = new DynamoDBClient({});
-const ddb = DynamoDBDocumentClient.from(client);
+const dynamoDb = DynamoDBDocumentClient.from(client);
 const ssmClient = new SSMClient({});
-const BOARDGAME_SERVER_URL = 'https://gameserver.measuringcontest.com';
 
+const BOARDGAME_SERVER_URL = 'https://gameserver.measuringcontest.com';
 const GAME_STATUS = {
   WAITING: 'waiting',
   ACTIVE: 'active',
@@ -15,7 +15,6 @@ const GAME_STATUS = {
 
 // Cache the JWT secret to avoid repeated SSM calls
 let cachedJwtSecret = null;
-
 async function getJwtSecret() {
   if (cachedJwtSecret) {
     return cachedJwtSecret;
@@ -36,7 +35,7 @@ exports.handler = async (event) => {
   const body = JSON.parse(event.body);
 
   // Fetch the room
-  const roomResp = await ddb.send(
+  const roomResp = await dynamoDb.send(
     new GetCommand({
       TableName: "measuringcontest-rooms",
       Key: { roomCode },
@@ -56,16 +55,15 @@ exports.handler = async (event) => {
   const jwtSecret = await getJwtSecret();
 
   // Create JWT for server authentication
-  const token = jwt.sign({ purpose: 'gameserver-api' }, jwtSecret, { expiresIn: '1h' });
+  const serverToken = jwt.sign({ purpose: 'gameserver-api' }, jwtSecret, { expiresIn: '1h' });
 
   const createResp = await fetch(`${BOARDGAME_SERVER_URL}/games/${body.gameName}/create`, {
     method: "POST",
     headers: { 
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`
+      "Authorization": `Bearer ${serverToken}`
     },
     body: JSON.stringify({ 
-      allowedPlayers: Array.from(room.members),
       gameRules: body.gameRules
     }),
   });
@@ -79,7 +77,7 @@ exports.handler = async (event) => {
   const gameId = createData.matchID;
 
   // Update room with game info
-  await ddb.send(new UpdateCommand({
+  await dynamoDb.send(new UpdateCommand({
     TableName: "measuringcontest-rooms",
     Key: { roomCode },
     UpdateExpression: "SET gameId = :gameId, roomStatus = :status, players = :emptyPlayers, gameCreatedAt = :gameCreatedAt, gameName = :gameName, gameRules = :gameRules",

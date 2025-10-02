@@ -46,7 +46,7 @@ exports.handler = async (event) => {
   const clientToken = jwt.sign({
     gameId: room.gameId,
     playerId: sub,
-    purpose: 'gameserver-api'
+    purpose: 'gameserver-app'
   }, jwtSecret, { expiresIn: '30d' });
 
   const existingPlayer = room.players?.[sub];
