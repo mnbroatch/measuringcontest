@@ -80,6 +80,6 @@ jobs:
         run: |
           aws ssm send-command \
             --document-name "AWS-RunShellScript" \
-            --targets "Key=instanceIds,Values=${{ env.EC2_INSTANCE_ID }}" \
-            --parameters 'commands=["/home/ec2-user/deploy.sh"]' \
-            --region $AWS_REGION
+            --targets "Key=tag:Application,Values=Boardgame.io" \
+            --parameters "commands=['/home/ec2-user/deploy.sh']" \
+            --region ${AWS_REGION}

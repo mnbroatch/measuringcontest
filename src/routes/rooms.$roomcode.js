@@ -18,7 +18,7 @@ export default function RoomPage () {
   const createGameMutation = useCreateGameMutation(roomCode)
 
   const iAmInRoom = room.data.members.includes(userId)
-  const iAmInGame = userId in room.data.players
+  const iAmInGame = room.data.players && userId in room.data.players
   useEffect(() => {
     if (userId && !iAmInRoom) {
       joinRoomMutation.mutate()
