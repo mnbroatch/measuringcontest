@@ -13,6 +13,19 @@ Parameters:
     Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
     Default: /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-6.1-x86_64
     Description: SSM parameter path for the latest Amazon Linux 2023 AMI
+  HostedZoneId:
+    Type: String
+    Description: Route53 Hosted Zone ID (leave empty to skip DNS)
+    Default: ""
+  DomainName:
+    Type: String
+    Description: Domain name for the game server (e.g. game.example.com) (leave empty to skip DNS)
+    Default: ""
+
+Conditions:
+  CreateDNSRecord: !And
+    - !Not [!Equals [!Ref HostedZoneId, ""]]
+    - !Not [!Equals [!Ref DomainName, ""]]
 
 Resources:
   # --- IAM Role for EC2 ---
@@ -65,13 +78,23 @@ Resources:
         - IpProtocol: tcp
           FromPort: 443
           ToPort: 443
+          CidrIp: 0.0.0.0/0
+          Description: HTTPS IPv4 for AWS API access (SSM, ECR)
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+          Description: HTTP IPv4 for package downloads
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
           CidrIpv6: ::/0
-          Description: HTTPS for AWS API access (SSM, ECR)
+          Description: HTTPS IPv6 for AWS API access
         - IpProtocol: tcp
           FromPort: 80
           ToPort: 80
           CidrIpv6: ::/0
-          Description: HTTP for package downloads
+          Description: HTTP IPv6 for package downloads
 
   # --- EC2 Instance ---
   BoardgameInstance:
@@ -88,8 +111,7 @@ Resources:
           - ","
           - Fn::ImportValue:
               Fn::Sub: "${VpcStackName}-PublicSubnets"
-      Ipv6Addresses:
-        - Ipv6Address: 2600:1f1c:f26:5400::123  # static IPv6 from your subnet
+      Ipv6AddressCount: 1
       Tags:
         - Key: Name
           Value: !Sub "${AWS::StackName}-BoardgameServer"
@@ -191,6 +213,18 @@ Resources:
             ]
           }
 
+  # --- Route53 DNS Record (Optional) ---
+  GameServerDNSRecord:
+    Type: AWS::Route53::RecordSet
+    Condition: CreateDNSRecord
+    Properties:
+      HostedZoneId: !Ref HostedZoneId
+      Name: !Ref DomainName
+      Type: AAAA
+      TTL: 300
+      ResourceRecords:
+        - !Select [0, !GetAtt BoardgameInstance.Ipv6Addresses]
+
 Outputs:
   InstanceId:
     Description: EC2 Instance ID
@@ -203,7 +237,9 @@ Outputs:
       Name: !Sub "${AWS::StackName}-SG"
   GameServerURL:
     Description: Public URL for your boardgame.io server
-    Value: !Sub "http://[2600:1f1c:f26:5400::123]:8000"
+    Value: !Sub 
+      - "http://[${IPv6}]:8000"
+      - IPv6: !Select [0, !GetAtt BoardgameInstance.Ipv6Addresses]
   DeploymentCommand:
     Description: Command to deploy from GitHub Actions
     Value: !Sub |
