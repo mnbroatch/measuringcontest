@@ -1,3 +1,4 @@
+const crypto = require('crypto')
 const jwt = require('jsonwebtoken');
 const stableHash = require('stable-hash').default;
 const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
@@ -190,7 +191,7 @@ exports.handler = async (event) => {
       ":gameCreatedAt": Date.now(),
       ":gameName": body.gameName,
       ":gameRules": JSON.stringify(body.gameRules),
-      ":rulesHash": stableHash(body.gameRules),
+      ":rulesHash": crypto.createHash('sha256').update(stableHash(body.gameRules)).digest('hex'),
       ":players": {
         ...players,
         [sub]: {
