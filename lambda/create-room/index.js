@@ -64,7 +64,28 @@ exports.handler = async (event) => {
     const createData = await createResp.json();
     const roomGameId = createData.matchID;
 
-    const joinResp = await fetch(`${BOARDGAME_SERVER_URL}/games/bgestagingroom/${roomGameId}/join`, {
+    const joinResp0 = await fetch(`${BOARDGAME_SERVER_URL}/games/bgestagingroom/${roomGameId}/join`, {
+      method: "POST",
+      headers: { 
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${serverToken}`
+      },
+      body: JSON.stringify({ 
+        playerName: 'System',
+        playerID: '0',
+        data: {
+          gameId: roomGameId,
+          playerId: 'System',
+        }
+      }),
+    });
+
+    if (!joinResp0.ok) {
+      const text = await joinResp0.text();
+      throw new Error(`Boardgame server responded ${joinResp0.status} ${joinResp0.statusText}: ${text}`);
+    }
+
+    const joinResp1 = await fetch(`${BOARDGAME_SERVER_URL}/games/bgestagingroom/${roomGameId}/join`, {
       method: "POST",
       headers: { 
         "Content-Type": "application/json",
@@ -80,9 +101,9 @@ exports.handler = async (event) => {
       }),
     });
 
-    if (!joinResp.ok) {
-      const text = await joinResp.text();
-      throw new Error(`Boardgame server responded ${joinResp.status} ${joinResp.statusText}: ${text}`);
+    if (!joinResp1.ok) {
+      const text = await joinResp1.text();
+      throw new Error(`Boardgame server responded ${joinResp1.status} ${joinResp1.statusText}: ${text}`);
     }
 
 

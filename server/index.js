@@ -26,9 +26,11 @@ const RoomGame = {
         G.players[playerID] = { name };
       }
     },
-    gameCreated: ({G}, newGameId) => {
-      G.gameId = newGameId;
-      G.status = 'started';
+    gameCreated: ({G, playerID}, newGameId) => {
+      if (playerID === '0') {
+        G.gameId = newGameId;
+        G.status = 'started';
+      }
     },
   },
 };

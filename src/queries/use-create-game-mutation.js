@@ -9,8 +9,7 @@ export const useCreateGameMutation = (roomCode) => {
   const auth = useCognitoAuth()
 
   return useMutation({
-    mutationFn: (gameRules, gameName = blah, players) => makeAuthenticatedRequest(
-      // `http://localhost:8000/games/ic-tac-toe/create`,
+    mutationFn: (gameRules, gameName, players) => makeAuthenticatedRequest(
       `${apiUrl}/rooms/${roomCode}/games`,
       auth.idToken,
       { 

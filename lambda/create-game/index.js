@@ -29,9 +29,11 @@ const RoomGame = {
         G.players[playerID] = { name };
       }
     },
-    gameCreated: ({G}, newGameId) => {
-      G.gameId = newGameId;
-      G.status = 'started';
+    gameCreated: ({G, playerID}, newGameId) => {
+      if (playerID === '0') {
+        G.gameId = newGameId;
+        G.status = 'started';
+      }
     },
   },
 };
@@ -125,7 +127,7 @@ exports.handler = async (event) => {
 
   const clientToken = jwt.sign({
     gameId: room.roomGameId,
-    playerId: '0',
+    playerId: 'System',
     purpose: 'gameserver-app'
   }, jwtSecret, { expiresIn: '30d' });
 

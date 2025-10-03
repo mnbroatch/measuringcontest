@@ -18,6 +18,7 @@ export default function RoomPage () {
   console.log('game', game.state?.G?.players)
 
   const [gameRules, setGameRules] = useState(JSON.stringify(ticTacToe, null, 2))
+  const [gameName, setGameName] = useState('')
 
   const iAmInRoom = room.data.members && userId in room.data.members
   const iAmInGame = room.data.players && userId in room.data.players
@@ -86,6 +87,11 @@ export default function RoomPage () {
       {userId && room.data.createdBy === userId && !room.data.gameId && (
         <div>
           <div>
+            <input
+              onChange={(e) => {setGameName(e.target.value)}}
+              value={gameName}
+            >
+            </input>
             <textarea
               onChange={(e) => {setGameRules(e.target.value)}}
               value={gameRules}
@@ -96,7 +102,7 @@ export default function RoomPage () {
             >
             </textarea>
           </div>
-          <button onClick={() => { createGameMutation.mutate(gameRules) }}>
+          <button onClick={() => { createGameMutation.mutate(gameRules, gameName, game.state?.G?.players) }}>
             Create Game
           </button>
         </div>
