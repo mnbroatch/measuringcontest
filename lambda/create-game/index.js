@@ -25,8 +25,19 @@ const RoomGame = {
   },
   moves: {
     join: ({G, playerID}, name) => {
-      if (!(playerID in G.players)) {
+      if (G.status === 'waiting') {
         G.players[playerID] = { name };
+      }
+    },
+    leave: ({G, playerID}) => {
+      if (playerID !== '1') {
+        delete G.players[playerID]
+      }
+    },
+    setGameMeta: ({G, playerID}, { gameRules, gameName }) => {
+      if (playerID === '1') {
+        G.gameRules = gameRules
+        G.gameName = gameName
       }
     },
     gameCreated: ({G, playerID}, newGameId) => {

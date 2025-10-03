@@ -1,7 +1,9 @@
 import { useEffect } from 'react'
 import { useParams } from '@tanstack/react-router';
+import { useQueryClient } from '@tanstack/react-query'
 import { ActivePlayers } from 'boardgame.io/core';
 import { serialize, deserialize } from "wackson";
+import usePrevious from "../hooks/use-previous.js";
 import { useJoinRoomMutation } from "../queries/use-join-room-mutation.js";
 import { useRoomQuery } from "../queries/use-room-query.js"
 import { useGameserverConnection } from "./use-gameserver-connection.js";
@@ -20,8 +22,19 @@ const RoomGame = {
   },
   moves: {
     join: ({G, playerID}, name) => {
-      if (!(playerID in G.players)) {
+      if (G.status === 'waiting') {
         G.players[playerID] = { name };
+      }
+    },
+    leave: ({G, playerID}) => {
+      if (playerID !== '1') {
+        delete G.players[playerID]
+      }
+    },
+    setGameMeta: ({G, playerID}, { gameRules, gameName }) => {
+      if (playerID === '1') {
+        G.gameRules = gameRules
+        G.gameName = gameName
       }
     },
     gameCreated: ({G, playerID}, newGameId) => {
@@ -33,8 +46,9 @@ const RoomGame = {
   },
 };
 
-export default function useGameConnection () {
+export default function useRoomConnection () {
   const { roomcode: roomCode } = useParams({})
+  const queryClient = useQueryClient()
   const room = useRoomQuery(roomCode).data
   const roomGameId = room?.roomGameId
 
@@ -46,6 +60,13 @@ export default function useGameConnection () {
 
   const client = useGameserverConnection({ gameId: roomGameId, game, boardgamePlayerID, clientToken })
   const clientState = client?.getState()
+  const status = clientState?.G.status
+  const gameId = clientState?.G.gameId
+  const prevStatus = usePrevious(status)
+
+  if (prevStatus === 'waiting' && status === 'started' && gameId !== room.gameId) {
+    queryClient.invalidateQueries({ queryKey: ['room', roomCode] })
+  }
 
   useEffect (() => {
     if (roomCode && roomGameId) {
