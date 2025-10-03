@@ -94,11 +94,7 @@ async function createRoom(roomCode, userId, roomGameId) {
       roomCode,
       roomGameId,
       createdBy: userId,
-      members: {
-        [userId]: {
-          joinedAt: Date.now()
-        }
-      },
+      members: {},
       createdAt: Date.now(),
       expiresAtSeconds: Math.floor(Date.now() / 1000) + 24 * 3600,
     },
