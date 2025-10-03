@@ -1,10 +1,8 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useParams, useNavigate } from '@tanstack/react-router';
 import { useQueryClient } from '@tanstack/react-query'
 import { ActivePlayers } from 'boardgame.io/core';
 import { serialize, deserialize } from "wackson";
-import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
-import usePrevious from "../hooks/use-previous.js";
 import { useJoinRoomMutation } from "../queries/use-join-room-mutation.js";
 import { useRoomQuery } from "../queries/use-room-query.js"
 import { useGameserverConnection } from "./use-gameserver-connection.js";
@@ -50,10 +48,16 @@ const RoomGame = {
 export default function useRoomConnection () {
   const navigate = useNavigate()
   const { roomcode: roomCode } = useParams({})
-  const { userId } = useCognitoAuth()
   const queryClient = useQueryClient()
   const room = useRoomQuery(roomCode).data
   const roomGameId = room?.roomGameId
+
+  useEffect(() => {
+    console.log('COMPONENT MOUNTED')
+    return () => {
+      console.log('COMPONENT UNMOUNTED')
+    }
+  }, [])
 
   const joinRoomMutation = useJoinRoomMutation(roomCode)
   const boardgamePlayerID = joinRoomMutation.data?.boardgamePlayerID
@@ -66,21 +70,30 @@ export default function useRoomConnection () {
   const status = clientState?.G.status
   const gameId = clientState?.G.gameId
   const players = clientState?.G.players
-  const prevStatus = usePrevious(status)
 
-  if (prevStatus === 'waiting' && status === 'started' && gameId !== room.gameId) {
-    if (userId in players) {
-      navigate({
-        to: '/rooms/$roomcode/games/$gameid/play',
-        params: {
-          roomcode: roomCode,
-          gameid,
-        },
-      })
-    } else {
-      queryClient.invalidateQueries({ queryKey: ['room', roomCode] })
+  const prevStatusRef = useRef(status)
+
+    console.log('1111', status)
+  useEffect(() => {
+    console.log('3333', prevStatusRef.current)
+    console.log('4444', status)
+    
+    if (prevStatusRef.current === 'waiting' && status === 'started') {
+      if (boardgamePlayerID in players) {
+        navigate({
+          to: '/rooms/$roomcode/games/$gameid/play',
+          params: {
+            roomcode: roomCode,
+            gameid: gameId,
+          },
+        })
+      } else {
+        queryClient.invalidateQueries({ queryKey: ['room', roomCode] })
+      }
     }
-  }
+    
+    prevStatusRef.current = status // Update AFTER checking
+  }, [status])
 
   useEffect (() => {
     if (roomCode && roomGameId) {
