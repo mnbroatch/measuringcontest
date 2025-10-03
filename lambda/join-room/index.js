@@ -115,7 +115,6 @@ exports.handler = async (event) => {
   }));
   
   return {
-    gameId: roomGameId,
     boardgamePlayerID,
     clientToken
   };

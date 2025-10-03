@@ -13,6 +13,7 @@ const RoomGame = {
   name: 'bgestagingroom',
   setup: () => ({
     players: {},
+    status: 'waiting',
     gameRules: '',
     gameName: '',
   }),
@@ -24,6 +25,10 @@ const RoomGame = {
       if (!(playerID in G.players)) {
         G.players[playerID] = { name };
       }
+    },
+    gameCreated: ({G}, newGameId) => {
+      G.gameId = newGameId;
+      G.status = 'started';
     },
   },
 };

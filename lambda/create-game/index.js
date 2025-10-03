@@ -15,7 +15,7 @@ const BOARDGAME_SERVER_URL = 'https://gameserver.measuringcontest.com';
 const RoomGame = {
   name: 'bgestagingroom',
   setup: () => ({
-    players: [],
+    players: {},
     status: 'waiting',
     gameRules: '',
     gameName: '',

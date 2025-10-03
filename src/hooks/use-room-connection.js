@@ -10,7 +10,8 @@ import { registry } from "../../server/game-factory/registry.js";
 const RoomGame = {
   name: 'bgestagingroom',
   setup: () => ({
-    players: [],
+    players: {},
+    status: 'waiting',
     gameRules: '',
     gameName: '',
   }),
@@ -22,6 +23,10 @@ const RoomGame = {
       if (!(playerID in G.players)) {
         G.players[playerID] = { name };
       }
+    },
+    gameCreated: ({G}, newGameId) => {
+      G.gameId = newGameId;
+      G.status = 'started';
     },
   },
 };
