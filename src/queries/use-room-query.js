@@ -19,4 +19,4 @@ function getOptions (roomCode) {
   }
 }
 
-useRoomQuery.preload = () => { preloadQuery(getOptions) }
+useRoomQuery.preload = (roomCode) => { preloadQuery(getOptions(roomCode)) }

@@ -15,6 +15,7 @@ export default function RoomPage () {
   const leaveRoomMutation = useLeaveRoomMutation(roomCode)
   const createGameMutation = useCreateGameMutation(roomCode)
   const game = useRoomConnection()
+  console.log('game', game.state?.G?.players)
 
   const [gameRules, setGameRules] = useState(JSON.stringify(ticTacToe, null, 2))
 

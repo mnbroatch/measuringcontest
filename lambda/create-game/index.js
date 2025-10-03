@@ -8,10 +8,6 @@ const dynamoDb = DynamoDBDocumentClient.from(client);
 const ssmClient = new SSMClient({});
 
 const BOARDGAME_SERVER_URL = 'https://gameserver.measuringcontest.com';
-const GAME_STATUS = {
-  WAITING: 'waiting',
-  ACTIVE: 'active',
-}
 
 // Cache the JWT secret to avoid repeated SSM calls
 let cachedJwtSecret = null;
@@ -64,7 +60,7 @@ exports.handler = async (event) => {
       "Authorization": `Bearer ${serverToken}`
     },
     body: JSON.stringify({ 
-      gameRules: body.gameRules
+      gameRules: body.gameRules,
     }),
   });
 
@@ -86,7 +82,7 @@ exports.handler = async (event) => {
       ":gameCreatedAt": Date.now(),
       ":gameName": body.gameName,
       ":gameRules": JSON.stringify(body.gameRules),
-      ":emptyPlayers": {}, // Start with empty players object
+      ":emptyPlayers": body.players,
     },
     ConditionExpression: "attribute_exists(roomCode) AND attribute_not_exists(gameId)"
   }));

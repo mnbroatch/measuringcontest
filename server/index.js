@@ -12,7 +12,7 @@ const ssmClient = new SSMClient({ region: 'us-west-1' });
 const RoomGame = {
   name: 'bgestagingroom',
   setup: () => ({
-    players: [],
+    players: {},
     gameRules: '',
     gameName: '',
   }),
@@ -21,8 +21,8 @@ const RoomGame = {
   },
   moves: {
     join: ({G, playerID}, name) => {
-      if (!G.players.some(player => player.id === playerID)) {
-        G.players.push({ id: playerID, name });
+      if (!(playerID in G.players)) {
+        G.players[playerID] = { name };
       }
     },
   },
