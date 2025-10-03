@@ -21,9 +21,9 @@ const RoomGame = {
   },
   moves: {
     join: ({G, ctx}, name) => {
-      if (!G.players.some(player => player.playerID === ctx.playerID)) {
+      // if (!G.players.some(player => player.playerID === ctx.playerID)) {
         G.players.push({ id: ctx.playerID, name });
-      }
+      // }
     },
   },
 };

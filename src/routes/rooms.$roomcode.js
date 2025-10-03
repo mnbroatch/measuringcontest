@@ -15,7 +15,6 @@ export default function RoomPage () {
   const leaveRoomMutation = useLeaveRoomMutation(roomCode)
   const createGameMutation = useCreateGameMutation(roomCode)
   const game = useRoomConnection()
-  console.log('game', game)
 
   const [gameRules, setGameRules] = useState(JSON.stringify(ticTacToe, null, 2))
 
@@ -35,6 +34,13 @@ export default function RoomPage () {
           Leave Room
         </button>
       </div>
+          <button
+            onClick={() => {
+              game.client.moves.join(Math.random())
+            }}
+          >
+            blah
+          </button>
       {room.data.gameId && (
         <div>
           <h3>

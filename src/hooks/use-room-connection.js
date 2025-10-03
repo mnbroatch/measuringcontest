@@ -9,6 +9,7 @@ import { registry } from "../../server/game-factory/registry.js";
 
 const RoomGame = {
   name: 'bgestagingroom',
+  numPlayers: 32,
   setup: () => ({
     players: [],
     gameRules: '',
@@ -21,9 +22,9 @@ const RoomGame = {
     join: ({G, ctx}, name) => {
       console.log('ctx', ctx)
       console.log('ctx.playerID', ctx.playerID)
-      if (!G.players.some(player => player.id === ctx.playerID)) {
+      // if (!G.players.some(player => player.id === ctx.playerID)) {
         G.players.push({ id: ctx.playerID, name });
-      }
+      // }
     },
   },
 };
