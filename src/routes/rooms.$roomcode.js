@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
-import useGame from "../hooks/use-game.js";
+import useRoomConnection from "../hooks/use-room-connection.js";
 import { useRoomQuery } from "../queries/use-room-query.js";
-import { useJoinRoomMutation } from "../queries/use-join-room-mutation.js";
 import { useLeaveRoomMutation } from "../queries/use-leave-room-mutation.js";
 import { useCreateGameMutation } from "../queries/use-create-game-mutation.js";
 import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
@@ -11,22 +10,17 @@ import ticTacToe from "../../server/tic-tac-toe.json";
 export default function RoomPage () {
   const { roomcode: roomCode } = Route.useParams()
   const navigate = useNavigate()
-  const [gameRules, setGameRules] = useState(JSON.stringify(ticTacToe, null, 2))
   const { userId } = useCognitoAuth()
   const room = useRoomQuery(roomCode)
-  const joinRoomMutation = useJoinRoomMutation(roomCode)
   const leaveRoomMutation = useLeaveRoomMutation(roomCode)
   const createGameMutation = useCreateGameMutation(roomCode)
-  const game = useGame()
-  console.log('game', game)
+  const game = useRoomConnection()
 
-  const iAmInRoom = room.data.members.includes(userId)
+  const [gameRules, setGameRules] = useState(JSON.stringify(ticTacToe, null, 2))
+  const [gameName, setGameName] = useState('')
+
+  const iAmInRoom = room.data.members && userId in room.data.members
   const iAmInGame = room.data.players && userId in room.data.players
-  useEffect(() => {
-    if (userId && !iAmInRoom) {
-      joinRoomMutation.mutate()
-    }
-  }, [userId])
 
   return !room.isLoading && iAmInRoom && (
     <>
@@ -41,6 +35,13 @@ export default function RoomPage () {
           Leave Room
         </button>
       </div>
+          <button
+            onClick={() => {
+              game.client.moves.join(Math.random())
+            }}
+          >
+            blah
+          </button>
       {room.data.gameId && (
         <div>
           <h3>
@@ -85,6 +86,11 @@ export default function RoomPage () {
       {userId && room.data.createdBy === userId && !room.data.gameId && (
         <div>
           <div>
+            <input
+              onChange={(e) => {setGameName(e.target.value)}}
+              value={gameName}
+            >
+            </input>
             <textarea
               onChange={(e) => {setGameRules(e.target.value)}}
               value={gameRules}
@@ -95,7 +101,9 @@ export default function RoomPage () {
             >
             </textarea>
           </div>
-          <button onClick={() => { createGameMutation.mutate(gameRules) }}>
+          <button onClick={() => {
+            createGameMutation.mutate({ gameRules, gameName, players: game.state?.G?.players })
+          }}>
             Create Game
           </button>
         </div>

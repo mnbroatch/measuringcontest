@@ -45,7 +45,7 @@ exports.handler = async (event) => {
     const jwtSecret = await getJwtSecret();
     const serverToken = jwt.sign({ purpose: 'gameserver-api' }, jwtSecret, { expiresIn: '1h' });
     
-    const createResp = await fetch(`${BOARDGAME_SERVER_URL}/games/bgestaginglobby/create`, {
+    const createResp = await fetch(`${BOARDGAME_SERVER_URL}/games/bgestagingroom/create`, {
       method: "POST",
       headers: { 
         "Content-Type": "application/json",
@@ -62,9 +62,54 @@ exports.handler = async (event) => {
     }
 
     const createData = await createResp.json();
-    const lobbyGameId = createData.matchID;
-    const room = await createRoom(roomCode, userId, lobbyGameId)
-    return { val: room }
+    const roomGameId = createData.matchID;
+
+    const joinResp0 = await fetch(`${BOARDGAME_SERVER_URL}/games/bgestagingroom/${roomGameId}/join`, {
+      method: "POST",
+      headers: { 
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${serverToken}`
+      },
+      body: JSON.stringify({ 
+        playerName: 'System',
+        playerID: '0',
+        data: {
+          gameId: roomGameId,
+          playerId: 'System',
+        }
+      }),
+    });
+
+    if (!joinResp0.ok) {
+      const text = await joinResp0.text();
+      throw new Error(`Boardgame server responded ${joinResp0.status} ${joinResp0.statusText}: ${text}`);
+    }
+
+    const joinResp1 = await fetch(`${BOARDGAME_SERVER_URL}/games/bgestagingroom/${roomGameId}/join`, {
+      method: "POST",
+      headers: { 
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${serverToken}`
+      },
+      body: JSON.stringify({ 
+        playerName: 'Room Creator',
+        playerID: '1',
+        data: {
+          gameId: roomGameId,
+          playerId: userId,
+        }
+      }),
+    });
+
+    if (!joinResp1.ok) {
+      const text = await joinResp1.text();
+      throw new Error(`Boardgame server responded ${joinResp1.status} ${joinResp1.statusText}: ${text}`);
+    }
+
+
+
+
+    return await createRoom(roomCode, userId, roomGameId)
   } catch (error) {
     return {
       errorMessage: error.message,
@@ -88,23 +133,27 @@ async function getUserRoomCount(userId) {
   return result.Count
 }
 
-async function createRoom(roomCode, userId, lobbyGameId) {
+async function createRoom(roomCode, userId, roomGameId) {
   const params = {
     TableName: "measuringcontest-rooms",
     Item: {
       roomCode,
-      lobbyGameId,
+      roomGameId,
       createdBy: userId,
-      members: new Set([userId]),
-      roomStatus: "waiting",
+      members: {
+        [userId]: {
+          boardgamePlayerID: '1',
+          joinedAt: Date.now(),
+        }
+      },
       createdAt: Date.now(),
       expiresAtSeconds: Math.floor(Date.now() / 1000) + 24 * 3600,
     },
     ConditionExpression: "attribute_not_exists(roomCode)"
-  }
-  
-  await dynamoDb.send(new PutCommand(params))
-  return { success: true, roomCode }
+  };
+
+  await dynamoDb.send(new PutCommand(params));
+  return roomCode
 }
 
 async function getRoomCode() {

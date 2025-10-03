@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
 import { useRoomQuery } from "../queries/use-room-query.js";
+import useGameConnection from "../hooks/use-game-connection.js";
 import { useJoinRoomMutation } from "../queries/use-join-room-mutation.js";
 import { useLeaveRoomMutation } from "../queries/use-leave-room-mutation.js";
 import { useCreateGameMutation } from "../queries/use-create-game-mutation.js";
@@ -17,8 +18,8 @@ export default function GamePage () {
   const leaveRoomMutation = useLeaveRoomMutation(roomCode)
   const createGameMutation = useCreateGameMutation(roomCode)
 
-  const iAmInRoom = room.data.members.includes(userId)
-  const iAmInGame = userId in room.data.players
+  const iAmInRoom = room.data.members && userId in room.data.members
+  const iAmInGame = room.data.players && userId in room.data.players
   useEffect(() => {
     if (userId && !iAmInRoom) {
       joinRoomMutation.mutate()

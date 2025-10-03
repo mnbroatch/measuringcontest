@@ -6,6 +6,8 @@ delete game from server on room delete
 "finish game" logic
   - handle game being deleted and api giving blank (currently corrupt) json
 check for handling of weird characters in game name, esp. quotes
+useles apigw url path paramter configs?
+can't have creator leave game
 
 
 (really just add separate spectator route?)

@@ -2,29 +2,40 @@ import { Readable } from "stream";
 import jwt from 'jsonwebtoken';
 import { SSMClient, GetParameterCommand } from "@aws-sdk/client-ssm";
 import getRawBody from 'raw-body'
+import { ActivePlayers } from 'boardgame.io/dist/cjs/core.js';
 import { ProcessGameConfig } from 'boardgame.io/dist/cjs/internal.js';
 import makeServer from './guts.js';
-import tictactoe from './tic-tac-toe.json' with { type: 'json' };
 import gameFactory from './game-factory/game-factory.js';
 
 const ssmClient = new SSMClient({ region: 'us-west-1' });
 
-const LobbyGame = {
-  name: 'bgestaginglobby',
+const RoomGame = {
+  name: 'bgestagingroom',
   setup: () => ({
-    players: [],
+    players: {},
+    status: 'waiting',
     gameRules: '',
     gameName: '',
   }),
+  turn: {
+    activePlayers: ActivePlayers.ALL,
+  },
   moves: {
-    join: (G, ctx, userId) => {
-      console.log('ctx arg', ctx)
-      console.log('setup userId', userId)
-      G.players.push({ id: ctx.playerID, userId });
+    join: ({G, playerID}, name) => {
+      if (!(playerID in G.players)) {
+        G.players[playerID] = { name };
+      }
+    },
+    gameCreated: ({G, playerID}, newGameId) => {
+      if (playerID === '0') {
+        G.gameId = newGameId;
+        G.status = 'started';
+      }
     },
   },
 };
-const INITIAL_GAMES = [LobbyGame]
+
+const INITIAL_GAMES = [RoomGame]
 const BOARDGAME_PORT = 8000;
 const ORIGINS = [/.*/]
 

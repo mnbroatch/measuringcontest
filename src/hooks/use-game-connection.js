@@ -1,10 +1,33 @@
+import { useEffect, useMemo } from 'react'
+import { useParams } from '@tanstack/react-router';
 import { serialize, deserialize } from "wackson";
+import { useJoinGameMutation } from "../queries/use-join-game-mutation.js";
+import { useRoomQuery } from "../queries/use-room-query.js"
 import { useGameserverConnection } from "./use-gameserver-connection.js";
+import gameFactory from '../../server/game-factory/game-factory.js'
 import { registry } from "../../server/game-factory/registry.js";
 
-export default function useGame () {
-  const { client, game } = useGameserverConnection()
+export default function useGameConnection () {
+  const { roomcode: roomCode } = useParams({})
+  const room = useRoomQuery(roomCode).data
+  const gameId = room?.gameId
+  const gameName = room?.gameName
+  const gameRules = room?.gameRules
+
+  const joinGameMutation = useJoinGameMutation(roomCode, gameId)
+  const boardgamePlayerID = joinGameMutation.data?.boardgamePlayerID
+  const clientToken = joinGameMutation.data?.clientToken
+
+  const game = useMemo(() => gameRules && gameFactory(JSON.parse(gameRules), gameName), [gameRules, gameName])
+
+  const client = useGameserverConnection({ gameId, game, boardgamePlayerID, clientToken })
   const clientState = client?.getState()
+
+  useEffect (() => {
+    if (roomCode && gameId) {
+      joinGameMutation.mutate()
+    }
+  }, [roomCode, gameId])
 
   let state
   let moves
