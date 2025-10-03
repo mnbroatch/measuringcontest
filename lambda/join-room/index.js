@@ -53,7 +53,7 @@ exports.handler = async (event) => {
   const existingPlayer = room.members && room.members[sub];
   if (existingPlayer) {
     return {
-      roomGameId,
+      ...existingPlayer,
       clientToken
     };
   }
