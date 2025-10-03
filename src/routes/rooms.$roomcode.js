@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
-import useGame from "../hooks/use-game.js";
+import useRoomConnection from "../hooks/use-room-connection.js";
 import { useRoomQuery } from "../queries/use-room-query.js";
-import { useJoinRoomMutation } from "../queries/use-join-room-mutation.js";
 import { useLeaveRoomMutation } from "../queries/use-leave-room-mutation.js";
 import { useCreateGameMutation } from "../queries/use-create-game-mutation.js";
 import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
@@ -11,22 +10,17 @@ import ticTacToe from "../../server/tic-tac-toe.json";
 export default function RoomPage () {
   const { roomcode: roomCode } = Route.useParams()
   const navigate = useNavigate()
-  const [gameRules, setGameRules] = useState(JSON.stringify(ticTacToe, null, 2))
   const { userId } = useCognitoAuth()
   const room = useRoomQuery(roomCode)
-  const joinRoomMutation = useJoinRoomMutation(roomCode)
   const leaveRoomMutation = useLeaveRoomMutation(roomCode)
   const createGameMutation = useCreateGameMutation(roomCode)
-  const game = useGame()
+  const game = useRoomConnection()
   console.log('game', game)
+
+  const [gameRules, setGameRules] = useState(JSON.stringify(ticTacToe, null, 2))
 
   const iAmInRoom = room.data.members && userId in room.data.members
   const iAmInGame = room.data.players && userId in room.data.players
-  useEffect(() => {
-    if (userId && !iAmInRoom) {
-      joinRoomMutation.mutate()
-    }
-  }, [userId])
 
   return !room.isLoading && iAmInRoom && (
     <>

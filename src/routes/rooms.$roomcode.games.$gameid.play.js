@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
 import { useRoomQuery } from "../queries/use-room-query.js";
+import useGameConnection from "../hooks/use-game-connection.js";
 import { useJoinRoomMutation } from "../queries/use-join-room-mutation.js";
 import { useLeaveRoomMutation } from "../queries/use-leave-room-mutation.js";
 import { useCreateGameMutation } from "../queries/use-create-game-mutation.js";

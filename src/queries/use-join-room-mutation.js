@@ -4,7 +4,6 @@ import makeAuthenticatedRequest from "../utils/make-authenticated-request.js";
 
 const apiUrl = 'https://api.measuringcontest.com/rooms'
 
-// how would we do invalidation if we passed roomCode in at call time?
 export const useJoinRoomMutation = (roomCode) => {
   const queryClient = useQueryClient()
   const auth = useCognitoAuth()
