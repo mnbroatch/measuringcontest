@@ -14,7 +14,8 @@ const RoomGame = {
     gameName: '',
   }),
   moves: {
-    join: (G, ctx, userId) => {
+    join: ({G, ctx}, userId) => {
+      console.log('ctx', ctx)
       G.players.push({ id: ctx.playerID, userId });
     },
   },
