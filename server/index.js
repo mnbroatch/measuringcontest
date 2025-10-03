@@ -20,13 +20,14 @@ const RoomGame = {
     activePlayers: ActivePlayers.ALL,
   },
   moves: {
-    join: ({G, ctx}, name) => {
-      // if (!G.players.some(player => player.playerID === ctx.playerID)) {
-        G.players.push({ id: ctx.playerID, name });
-      // }
+    join: ({G, playerID}, name) => {
+      if (!G.players.some(player => player.id === playerID)) {
+        G.players.push({ id: playerID, name });
+      }
     },
   },
 };
+
 const INITIAL_GAMES = [RoomGame]
 const BOARDGAME_PORT = 8000;
 const ORIGINS = [/.*/]
