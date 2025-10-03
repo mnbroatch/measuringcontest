@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const stableHash = require('stable-hash');
 const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
 const { DynamoDBDocumentClient, UpdateCommand, GetCommand } = require("@aws-sdk/lib-dynamodb");
 const { SSMClient, GetParameterCommand } = require("@aws-sdk/client-ssm");
@@ -105,7 +106,7 @@ exports.handler = async (event) => {
   // Create JWT for server authentication
   const serverToken = jwt.sign({ purpose: 'gameserver-api' }, jwtSecret, { expiresIn: '1h' });
 
-  const createResp = await fetch(`${BOARDGAME_SERVER_URL}/games/${body.gameName}/create`, {
+  const createResp = await fetch(`${BOARDGAME_SERVER_URL}/games/${body.rulesHash}/create`, {
     method: "POST",
     headers: { 
       "Content-Type": "application/json",
@@ -126,7 +127,7 @@ exports.handler = async (event) => {
 
   const player = players[sub]
 
-  const joinResp = await fetch(`${BOARDGAME_SERVER_URL}/games/${body.gameName}/${gameId}/join`, {
+  const joinResp = await fetch(`${BOARDGAME_SERVER_URL}/games/${body.rulesHash}/${gameId}/join`, {
     method: "POST",
     headers: { 
       "Content-Type": "application/json",
@@ -183,12 +184,13 @@ exports.handler = async (event) => {
   await dynamoDb.send(new UpdateCommand({
     TableName: "measuringcontest-rooms",
     Key: { roomCode },
-    UpdateExpression: "SET gameId = :gameId, players = :players, gameCreatedAt = :gameCreatedAt, gameName = :gameName, gameRules = :gameRules",
+    UpdateExpression: "SET gameId = :gameId, players = :players, gameCreatedAt = :gameCreatedAt, gameName = :gameName, gameRules = :gameRules, rulesHash = :rulesHash",
     ExpressionAttributeValues: {
       ":gameId": gameId,
       ":gameCreatedAt": Date.now(),
       ":gameName": body.gameName,
       ":gameRules": JSON.stringify(body.gameRules),
+      ":rulesHash": stableHash(body.gameRules),
       ":players": {
         ...players,
         [sub]: {
@@ -203,7 +205,6 @@ exports.handler = async (event) => {
 
   await clientInitializationPromise
 
-  console.log('client.moves', client?.moves)
   client.moves.gameCreated(gameId); // ?? Add this
 
   client.stop();

@@ -1,5 +1,9 @@
 todo:
+currently, first ruleset for gamename is used. should use ruleset hash
+  - does gamename actually do anything for us?
+validate numPlayers against rule def
 check: did I actually authenticate against using client token for gameserver rest API or did I hallucinate that?
+  - in other words, is REST API actually only available from gateway?
 test whether authentication prevents unauthenticated people from joining (and not just acting)
 delete game
 delete game from server on room delete

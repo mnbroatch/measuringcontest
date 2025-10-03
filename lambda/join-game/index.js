@@ -77,7 +77,7 @@ exports.handler = async (event) => {
   
   let joinData;
   try {
-    const joinResp = await fetch(`${BOARDGAME_SERVER_URL}/games/${room.gameName}/${room.gameId}/join`, {
+    const joinResp = await fetch(`${BOARDGAME_SERVER_URL}/games/${room.rulesHash}/${room.gameId}/join`, {
       method: "POST",
       headers: { 
         "Content-Type": "application/json",

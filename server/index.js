@@ -106,7 +106,7 @@ server.app.use(async (ctx, next) => {
 server.app.use(async (ctx, next) => {
   const match = ctx.path.match(/^\/games\/([^/]+)\/create$/);
   if (ctx.method === 'POST' && match) {
-    const gameName = match[1];
+    const nameOrRulesHash = match[1];
     
     // Read and buffer the raw body
     const rawBody = await getRawBody(ctx.req, {
@@ -119,9 +119,9 @@ server.app.use(async (ctx, next) => {
     
     // Do your processing
     if (!server.games) server.games = [];
-    if (!server.games.find(g => g.name === gameName)) {
+    if (!server.games.find(g => g.name === nameOrRulesHash)) {
       const gameRules = parsedBody?.gameRules;
-      const newGameDef = gameFactory(JSON.parse(gameRules), gameName);
+      const newGameDef = gameFactory(JSON.parse(gameRules), nameOrRulesHash);
       const processedGame = ProcessGameConfig(newGameDef);
       server.games.push(processedGame);
       server.transport.addGameSocketListeners(server.app, processedGame);

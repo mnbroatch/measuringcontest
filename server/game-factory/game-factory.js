@@ -12,8 +12,8 @@ const invariantEntities = [
   { type: "space" }
 ]
 
-export default function gameFactory (rules, name) {
-  const game = { name }
+export default function gameFactory (rules, rulesHash) {
+  const game = { name: rulesHash }
 
   game.setup = ({ ctx }) => {
     const initialState = {};

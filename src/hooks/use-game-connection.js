@@ -11,14 +11,14 @@ export default function useGameConnection () {
   const { roomcode: roomCode } = useParams({})
   const room = useRoomQuery(roomCode).data
   const gameId = room?.gameId
-  const gameName = room?.gameName
+  const rulesHash = room?.rulesHash
   const gameRules = room?.gameRules
 
   const joinGameMutation = useJoinGameMutation(roomCode, gameId)
   const boardgamePlayerID = joinGameMutation.data?.boardgamePlayerID
   const clientToken = joinGameMutation.data?.clientToken
 
-  const game = useMemo(() => gameRules && gameFactory(JSON.parse(gameRules), gameName), [gameRules, gameName])
+  const game = useMemo(() => gameRules && gameFactory(JSON.parse(gameRules), rulesHash), [gameRules, rulesHash])
 
   const client = useGameserverConnection({ gameId, game, boardgamePlayerID, clientToken })
   const clientState = client?.getState()
