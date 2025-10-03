@@ -63,6 +63,31 @@ exports.handler = async (event) => {
 
     const createData = await createResp.json();
     const roomGameId = createData.matchID;
+
+    const joinResp = await fetch(`${BOARDGAME_SERVER_URL}/games/bgestagingroom/${roomGameId}/join`, {
+      method: "POST",
+      headers: { 
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${serverToken}`
+      },
+      body: JSON.stringify({ 
+        playerName: 'Room Creator',
+        playerID: '0',
+        data: {
+          gameId: roomGameId,
+          playerId: userId,
+        }
+      }),
+    });
+
+    if (!joinResp.ok) {
+      const text = await joinResp.text();
+      throw new Error(`Boardgame server responded ${joinResp.status} ${joinResp.statusText}: ${text}`);
+    }
+
+
+
+
     return await createRoom(roomCode, userId, roomGameId)
   } catch (error) {
     return {
@@ -94,7 +119,12 @@ async function createRoom(roomCode, userId, roomGameId) {
       roomCode,
       roomGameId,
       createdBy: userId,
-      members: {},
+      members: {
+        [userId]: {
+          boardgamePlayerID: '0',
+          joinedAt: Date.now(),
+        }
+      },
       createdAt: Date.now(),
       expiresAtSeconds: Math.floor(Date.now() / 1000) + 24 * 3600,
     },

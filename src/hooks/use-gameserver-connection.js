@@ -32,11 +32,6 @@ export const useGameserverConnection = ({ gameId, game, boardgamePlayerID, clien
         client.subscribe(() => {
           forceUpdate()
         })
-        console.log('client.multiplayer', client.multiplayer)
-        console.log('client.multiplayer.socket', client.multiplayer.socket)
-        client.multiplayer.socket?.on('connect', forceUpdate)
-        client.multiplayer.socket?.on('disconnect', forceUpdate)
-        client.multiplayer.socket?.on('connect_error', forceUpdate)
         
         client.start()
         clientRef.current = client

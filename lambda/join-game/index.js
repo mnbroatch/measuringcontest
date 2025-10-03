@@ -50,18 +50,17 @@ exports.handler = async (event) => {
     purpose: 'gameserver-app'
   }, jwtSecret, { expiresIn: '30d' });
 
-  const existingPlayer = room.players?.[sub];
-  if (existingPlayer) {
-    return {
-      gameId: room.gameId,
-      boardgamePlayerID: existingPlayer.boardgamePlayerID,
-      clientToken
-    };
+  const player = room.players?.[sub];
+  if (!player) {
+    throw new Error("Not a registered player");
   }
   
-  // Check if user is allowed to join this room
-  if (!room.members || !(sub in room.members)) {
-    throw new Error("Not a member of this room");
+  if (player.joinedAt) {
+    return {
+      gameId: room.gameId,
+      boardgamePlayerID: player.boardgamePlayerID,
+      clientToken
+    };
   }
   
   if (!room.gameId) {
@@ -85,7 +84,7 @@ exports.handler = async (event) => {
         "Authorization": `Bearer ${serverToken}`
       },
       body: JSON.stringify({ 
-        playerName: sub,
+        playerName: player.name,
         data: {
           gameId: room.gameId,
           playerId: sub
@@ -120,6 +119,7 @@ exports.handler = async (event) => {
     },
     ExpressionAttributeValues: {
       ":playerData": {
+        ...player,
         boardgamePlayerID,
         joinedAt: Date.now()
       }

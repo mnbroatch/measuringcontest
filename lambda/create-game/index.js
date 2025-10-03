@@ -1,13 +1,40 @@
+const jwt = require('jsonwebtoken');
 const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
 const { DynamoDBDocumentClient, UpdateCommand, GetCommand } = require("@aws-sdk/lib-dynamodb");
 const { SSMClient, GetParameterCommand } = require("@aws-sdk/client-ssm");
-const jwt = require('jsonwebtoken');
+const { Client } = require('boardgame.io/client')
+const { SocketIO } = require('boardgame.io/multiplayer')
+const { ActivePlayers } = require('boardgame.io/core')
 
 const client = new DynamoDBClient({});
 const dynamoDb = DynamoDBDocumentClient.from(client);
 const ssmClient = new SSMClient({});
 
 const BOARDGAME_SERVER_URL = 'https://gameserver.measuringcontest.com';
+
+const RoomGame = {
+  name: 'bgestagingroom',
+  setup: () => ({
+    players: [],
+    status: 'waiting',
+    gameRules: '',
+    gameName: '',
+  }),
+  turn: {
+    activePlayers: ActivePlayers.ALL,
+  },
+  moves: {
+    join: ({G, playerID}, name) => {
+      if (!(playerID in G.players)) {
+        G.players[playerID] = { name };
+      }
+    },
+    gameCreated: ({G}, newGameId) => {
+      G.gameId = newGameId;
+      G.status = 'started';
+    },
+  },
+};
 
 // Cache the JWT secret to avoid repeated SSM calls
 let cachedJwtSecret = null;
@@ -72,20 +99,82 @@ exports.handler = async (event) => {
   const createData = await createResp.json();
   const gameId = createData.matchID;
 
+  const player = body.players[sub]
+
+  const joinResp = await fetch(`${BOARDGAME_SERVER_URL}/games/${body.gameName}/${gameId}/join`, {
+    method: "POST",
+    headers: { 
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${serverToken}`
+    },
+    body: JSON.stringify({ 
+      playerName: player.name,
+      playerID: '0',
+      data: {
+        ...player,
+        gameId,
+        playerId: sub
+      }
+    }),
+  });
+
+  if (!joinResp.ok) {
+    const text = await joinResp.text();
+    throw new Error(`Boardgame server responded ${joinResp.status} ${joinResp.statusText}: ${text}`);
+  }
+
+  const clientToken = jwt.sign({
+    gameId: room.roomGameId,
+    playerId: '0',
+    purpose: 'gameserver-app'
+  }, jwtSecret, { expiresIn: '30d' });
+
+  let client
+  const clientInitializationPromise = new Promise(resolve => {
+    client = Client({
+      game: RoomGame,
+      multiplayer: SocketIO({ 
+        server: BOARDGAME_SERVER_URL,
+        socketOpts: {
+          transports: ['websocket', 'polling']
+        }
+      }),
+      matchID: room.roomGameId,
+      playerID: '0',
+      credentials: clientToken,
+    })
+
+    client.start();
+
+    client.subscribe((state) => {
+      if (state !== null) { // Wait for actual state
+        console.log('state in subscribe', state)
+        resolve()
+      }
+    })
+  })
+
   // Update room with game info
   await dynamoDb.send(new UpdateCommand({
     TableName: "measuringcontest-rooms",
     Key: { roomCode },
-    UpdateExpression: "SET gameId = :gameId, players = :emptyPlayers, gameCreatedAt = :gameCreatedAt, gameName = :gameName, gameRules = :gameRules",
+    UpdateExpression: "SET gameId = :gameId, players = :players, gameCreatedAt = :gameCreatedAt, gameName = :gameName, gameRules = :gameRules",
     ExpressionAttributeValues: {
       ":gameId": gameId,
       ":gameCreatedAt": Date.now(),
       ":gameName": body.gameName,
       ":gameRules": JSON.stringify(body.gameRules),
-      ":emptyPlayers": body.players,
+      ":players": body.players,
     },
     ConditionExpression: "attribute_exists(roomCode) AND attribute_not_exists(gameId)"
   }));
+
+  await clientInitializationPromise
+
+  console.log('client.moves', client?.moves)
+  client.moves.gameCreated(gameId); // ?? Add this
+
+  client.stop();
 
   return {
     gameId,
