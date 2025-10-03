@@ -76,6 +76,10 @@ exports.handler = async (event) => {
     throw new Error("Unauthorized"); // mapping template -> 403
   }
 
+  if (!(sub in body.players)) {
+    throw new Error("Game creator must be in game"); // mapping template -> 403
+  }
+
   // Get JWT secret from Parameter Store
   const jwtSecret = await getJwtSecret();
 
@@ -166,7 +170,14 @@ exports.handler = async (event) => {
       ":gameCreatedAt": Date.now(),
       ":gameName": body.gameName,
       ":gameRules": JSON.stringify(body.gameRules),
-      ":players": body.players,
+      ":players": {
+        ...body.players,
+        [sub]: {
+          ...body.players[sub],
+          boardgamePlayerID: '0',
+          joinedAt: Date.now(),
+        }
+      },
     },
     ConditionExpression: "attribute_exists(roomCode) AND attribute_not_exists(gameId)"
   }));

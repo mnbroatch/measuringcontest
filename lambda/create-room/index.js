@@ -93,7 +93,7 @@ exports.handler = async (event) => {
       },
       body: JSON.stringify({ 
         playerName: 'Room Creator',
-        playerID: '0',
+        playerID: '1',
         data: {
           gameId: roomGameId,
           playerId: userId,
@@ -142,7 +142,7 @@ async function createRoom(roomCode, userId, roomGameId) {
       createdBy: userId,
       members: {
         [userId]: {
-          boardgamePlayerID: '0',
+          boardgamePlayerID: '1',
           joinedAt: Date.now(),
         }
       },
