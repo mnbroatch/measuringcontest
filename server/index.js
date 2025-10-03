@@ -4,7 +4,6 @@ import { SSMClient, GetParameterCommand } from "@aws-sdk/client-ssm";
 import getRawBody from 'raw-body'
 import { ProcessGameConfig } from 'boardgame.io/dist/cjs/internal.js';
 import makeServer from './guts.js';
-import tictactoe from './tic-tac-toe.json' with { type: 'json' };
 import gameFactory from './game-factory/game-factory.js';
 
 const ssmClient = new SSMClient({ region: 'us-west-1' });
@@ -17,10 +16,8 @@ const RoomGame = {
     gameName: '',
   }),
   moves: {
-    join: ({G, ctx}, userId) => {
-      console.log('ctx arg', ctx)
-      console.log('setup userId', userId)
-      G.players.push({ id: ctx.playerID, userId });
+    join: ({G, ctx}, name) => {
+      G.players.push({ id: ctx.playerID, name });
     },
   },
 };
