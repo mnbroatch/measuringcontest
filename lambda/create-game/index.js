@@ -67,6 +67,7 @@ exports.handler = async (event) => {
     })
   );
 
+  const room = roomResp.Item;
   const players = Object.entries(body.players).reduce((acc, [boardgamePlayerID, { name }]) => {
     const [sub] = Object.entries(room.members).find(([_, member]) => member.boardgamePlayerID === boardgamePlayerID)
     return {
@@ -75,11 +76,10 @@ exports.handler = async (event) => {
     }
   }, {})
 
-  if (!roomResp.Item) {
+  if (!room) {
     throw new Error("Room not found"); // mapping template can map to 404
   }
 
-  const room = roomResp.Item;
   if (room.createdBy !== sub) {
     throw new Error("Unauthorized"); // mapping template -> 403
   }
