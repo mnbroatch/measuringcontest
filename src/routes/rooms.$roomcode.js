@@ -15,7 +15,6 @@ export default function RoomPage () {
   const leaveRoomMutation = useLeaveRoomMutation(roomCode)
   const createGameMutation = useCreateGameMutation(roomCode)
   const game = useRoomConnection()
-  console.log('game', game.state?.G?.players)
 
   const [gameRules, setGameRules] = useState(JSON.stringify(ticTacToe, null, 2))
   const [gameName, setGameName] = useState('')
@@ -102,7 +101,9 @@ export default function RoomPage () {
             >
             </textarea>
           </div>
-          <button onClick={() => { createGameMutation.mutate(gameRules, gameName, game.state?.G?.players) }}>
+          <button onClick={() => {
+            createGameMutation.mutate({ gameRules, gameName, players: game.state?.G?.players })
+          }}>
             Create Game
           </button>
         </div>

@@ -9,7 +9,7 @@ export const useCreateGameMutation = (roomCode) => {
   const auth = useCognitoAuth()
 
   return useMutation({
-    mutationFn: (gameRules, gameName, players) => makeAuthenticatedRequest(
+    mutationFn: ({ gameRules, gameName, players }) => makeAuthenticatedRequest(
       `${apiUrl}/rooms/${roomCode}/games`,
       auth.idToken,
       { 

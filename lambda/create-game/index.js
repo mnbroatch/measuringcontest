@@ -67,6 +67,14 @@ exports.handler = async (event) => {
     })
   );
 
+  const players = Object.entries(body.players).reduce((acc, [boardgamePlayerID, { name }]) => {
+    const [sub] = Object.entries(room.members).find(([_, member]) => member.boardgamePlayerID === boardgamePlayerID)
+    return {
+      ...acc,
+      [sub]: { name }
+    }
+  }, {})
+
   if (!roomResp.Item) {
     throw new Error("Room not found"); // mapping template can map to 404
   }
@@ -76,7 +84,7 @@ exports.handler = async (event) => {
     throw new Error("Unauthorized"); // mapping template -> 403
   }
 
-  if (!(sub in body.players)) {
+  if (!(sub in players)) {
     throw new Error("Game creator must be in game"); // mapping template -> 403
   }
 
@@ -105,7 +113,7 @@ exports.handler = async (event) => {
   const createData = await createResp.json();
   const gameId = createData.matchID;
 
-  const player = body.players[sub]
+  const player = players[sub]
 
   const joinResp = await fetch(`${BOARDGAME_SERVER_URL}/games/${body.gameName}/${gameId}/join`, {
     method: "POST",
@@ -171,9 +179,9 @@ exports.handler = async (event) => {
       ":gameName": body.gameName,
       ":gameRules": JSON.stringify(body.gameRules),
       ":players": {
-        ...body.players,
+        ...players,
         [sub]: {
-          ...body.players[sub],
+          ...players[sub],
           boardgamePlayerID: '0',
           joinedAt: Date.now(),
         }
