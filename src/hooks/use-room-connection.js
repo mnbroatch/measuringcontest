@@ -13,9 +13,12 @@ const RoomGame = {
     gameRules: '',
     gameName: '',
   }),
+  turn: { activePlayers: {} },
   moves: {
     join: ({G, ctx}, name) => {
-      G.players.push({ id: ctx.playerID, name });
+      if (!G.players.some(player => player.playerID === ctx.playerID)) {
+        G.players.push({ id: ctx.playerID, name });
+      }
     },
   },
 };
