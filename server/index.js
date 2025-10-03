@@ -2,6 +2,7 @@ import { Readable } from "stream";
 import jwt from 'jsonwebtoken';
 import { SSMClient, GetParameterCommand } from "@aws-sdk/client-ssm";
 import getRawBody from 'raw-body'
+import { ActivePlayers } from 'boardgame.io/dist/cjs/core.js';
 import { ProcessGameConfig } from 'boardgame.io/dist/cjs/internal.js';
 import makeServer from './guts.js';
 import gameFactory from './game-factory/game-factory.js';
@@ -15,7 +16,9 @@ const RoomGame = {
     gameRules: '',
     gameName: '',
   }),
-  turn: { activePlayers: {} },
+  turn: {
+    activePlayers: ActivePlayers.ALL,
+  },
   moves: {
     join: ({G, ctx}, name) => {
       if (!G.players.some(player => player.playerID === ctx.playerID)) {

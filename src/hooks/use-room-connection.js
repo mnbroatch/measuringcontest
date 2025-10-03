@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useParams } from '@tanstack/react-router';
+import { ActivePlayers } from 'boardgame.io/core';
 import { serialize, deserialize } from "wackson";
 import { useJoinRoomMutation } from "../queries/use-join-room-mutation.js";
 import { useRoomQuery } from "../queries/use-room-query.js"
@@ -13,10 +14,14 @@ const RoomGame = {
     gameRules: '',
     gameName: '',
   }),
-  turn: { activePlayers: {} },
+  turn: {
+    activePlayers: ActivePlayers.ALL,
+  },
   moves: {
     join: ({G, ctx}, name) => {
-      if (!G.players.some(player => player.playerID === ctx.playerID)) {
+      console.log('ctx', ctx)
+      console.log('ctx.playerID', ctx.playerID)
+      if (!G.players.some(player => player.id === ctx.playerID)) {
         G.players.push({ id: ctx.playerID, name });
       }
     },
