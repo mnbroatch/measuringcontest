@@ -1,8 +1,9 @@
 import { useEffect } from 'react'
-import { useParams } from '@tanstack/react-router';
+import { useParams, useNavigate } from '@tanstack/react-router';
 import { useQueryClient } from '@tanstack/react-query'
 import { ActivePlayers } from 'boardgame.io/core';
 import { serialize, deserialize } from "wackson";
+import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
 import usePrevious from "../hooks/use-previous.js";
 import { useJoinRoomMutation } from "../queries/use-join-room-mutation.js";
 import { useRoomQuery } from "../queries/use-room-query.js"
@@ -47,7 +48,9 @@ const RoomGame = {
 };
 
 export default function useRoomConnection () {
+  const navigate = useNavigate()
   const { roomcode: roomCode } = useParams({})
+  const { userId } = useCognitoAuth()
   const queryClient = useQueryClient()
   const room = useRoomQuery(roomCode).data
   const roomGameId = room?.roomGameId
@@ -62,10 +65,21 @@ export default function useRoomConnection () {
   const clientState = client?.getState()
   const status = clientState?.G.status
   const gameId = clientState?.G.gameId
+  const players = clientState?.G.players
   const prevStatus = usePrevious(status)
 
   if (prevStatus === 'waiting' && status === 'started' && gameId !== room.gameId) {
-    queryClient.invalidateQueries({ queryKey: ['room', roomCode] })
+    if (userId in players) {
+      navigate({
+        to: '/rooms/$roomcode/games/$gameid/play',
+        params: {
+          roomcode: roomCode,
+          gameid,
+        },
+      })
+    } else {
+      queryClient.invalidateQueries({ queryKey: ['room', roomCode] })
+    }
   }
 
   useEffect (() => {

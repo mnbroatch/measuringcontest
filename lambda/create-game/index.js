@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const stableHash = require('stable-hash');
+const stableHash = require('stable-hash').default;
 const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
 const { DynamoDBDocumentClient, UpdateCommand, GetCommand } = require("@aws-sdk/lib-dynamodb");
 const { SSMClient, GetParameterCommand } = require("@aws-sdk/client-ssm");
