@@ -1,4 +1,5 @@
 import { useEffect, useReducer, useRef } from 'react'
+import { flushSync } from 'react-dom'
 import { Client } from 'boardgame.io/client'
 import { SocketIO } from 'boardgame.io/multiplayer'
 import { useCognitoAuth } from "../contexts/cognito-auth-context.js"
@@ -30,7 +31,11 @@ export const useGameserverConnection = ({ gameId, game, boardgamePlayerID, clien
         })
 
         client.subscribe(() => {
-          forceUpdate()
+          setTimeout(() => {
+            flushSync(() => {
+              forceUpdate()
+            })
+          }, 0)
         })
         
         client.start()

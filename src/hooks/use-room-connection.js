@@ -11,7 +11,7 @@ import { registry } from "../../server/game-factory/registry.js";
 const RoomGame = {
   name: 'bgestagingroom',
   setup: () => ({
-    players: {},
+    players: { '0': { name: 'Room Creator' } },
     status: 'waiting',
     gameRules: '',
     gameName: '',
@@ -52,13 +52,6 @@ export default function useRoomConnection () {
   const room = useRoomQuery(roomCode).data
   const roomGameId = room?.roomGameId
 
-  useEffect(() => {
-    console.log('COMPONENT MOUNTED')
-    return () => {
-      console.log('COMPONENT UNMOUNTED')
-    }
-  }, [])
-
   const joinRoomMutation = useJoinRoomMutation(roomCode)
   const boardgamePlayerID = joinRoomMutation.data?.boardgamePlayerID
   const clientToken = joinRoomMutation.data?.clientToken
@@ -73,11 +66,7 @@ export default function useRoomConnection () {
 
   const prevStatusRef = useRef(status)
 
-    console.log('1111', status)
   useEffect(() => {
-    console.log('3333', prevStatusRef.current)
-    console.log('4444', status)
-    
     if (prevStatusRef.current === 'waiting' && status === 'started') {
       if (boardgamePlayerID in players) {
         navigate({
@@ -92,7 +81,7 @@ export default function useRoomConnection () {
       }
     }
     
-    prevStatusRef.current = status // Update AFTER checking
+    prevStatusRef.current = status
   }, [status])
 
   useEffect (() => {

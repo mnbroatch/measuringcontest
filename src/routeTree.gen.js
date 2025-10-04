@@ -12,7 +12,6 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RoomsRoomcodeRouteImport } from './routes/rooms.$roomcode'
-import { Route as RoomsRoomcodeGamesGameidPlayRouteImport } from './routes/rooms.$roomcode.games.$gameid.play'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -29,24 +28,10 @@ const RoomsRoomcodeRoute = RoomsRoomcodeRouteImport.update({
   path: '/rooms/$roomcode',
   getParentRoute: () => rootRouteImport,
 })
-const RoomsRoomcodeGamesGameidPlayRoute =
-  RoomsRoomcodeGamesGameidPlayRouteImport.update({
-    id: '/games/$gameid/play',
-    path: '/games/$gameid/play',
-    getParentRoute: () => RoomsRoomcodeRoute,
-  })
-
-const RoomsRoomcodeRouteChildren = {
-  RoomsRoomcodeGamesGameidPlayRoute: RoomsRoomcodeGamesGameidPlayRoute,
-}
-
-const RoomsRoomcodeRouteWithChildren = RoomsRoomcodeRoute._addFileChildren(
-  RoomsRoomcodeRouteChildren,
-)
 
 const rootRouteChildren = {
   IndexRoute: IndexRoute,
   LoginRoute: LoginRoute,
-  RoomsRoomcodeRoute: RoomsRoomcodeRouteWithChildren,
+  RoomsRoomcodeRoute: RoomsRoomcodeRoute,
 }
 export const routeTree = rootRouteImport._addFileChildren(rootRouteChildren)

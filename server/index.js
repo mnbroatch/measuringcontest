@@ -12,7 +12,7 @@ const ssmClient = new SSMClient({ region: 'us-west-1' });
 const RoomGame = {
   name: 'bgestagingroom',
   setup: () => ({
-    players: {},
+    players: { '0': 'Room Creator' },
     status: 'waiting',
     gameRules: '',
     gameName: '',
