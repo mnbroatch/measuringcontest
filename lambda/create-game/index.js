@@ -103,11 +103,11 @@ exports.handler = async (event) => {
 
   // Get JWT secret from Parameter Store
   const jwtSecret = await getJwtSecret();
+  const rulesHash = crypto.createHash('sha256').update(stableHash(body.gameRules)).digest('hex')
 
   // Create JWT for server authentication
   const serverToken = jwt.sign({ purpose: 'gameserver-api' }, jwtSecret, { expiresIn: '1h' });
-
-  const createResp = await fetch(`${BOARDGAME_SERVER_URL}/games/${body.rulesHash}/create`, {
+  const createResp = await fetch(`${BOARDGAME_SERVER_URL}/games/${rulesHash}/create`, {
     method: "POST",
     headers: { 
       "Content-Type": "application/json",
@@ -128,7 +128,7 @@ exports.handler = async (event) => {
 
   const player = players[sub]
 
-  const joinResp = await fetch(`${BOARDGAME_SERVER_URL}/games/${body.rulesHash}/${gameId}/join`, {
+  const joinResp = await fetch(`${BOARDGAME_SERVER_URL}/games/${rulesHash}/${gameId}/join`, {
     method: "POST",
     headers: { 
       "Content-Type": "application/json",
@@ -191,7 +191,7 @@ exports.handler = async (event) => {
       ":gameCreatedAt": Date.now(),
       ":gameName": body.gameName,
       ":gameRules": JSON.stringify(body.gameRules),
-      ":rulesHash": crypto.createHash('sha256').update(stableHash(body.gameRules)).digest('hex'),
+      ":rulesHash": rulesHash,
       ":players": {
         ...players,
         [sub]: {
