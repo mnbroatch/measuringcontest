@@ -22,7 +22,6 @@ export default function RoomPage () {
   const iAmInGame = room.data.players && userId in room.data.players
   const iAmRoomCreator = userId && room.data.createdBy === userId 
   const status = roomConnection.state?.G.status
-  console.log('gameConnection', gameConnection)
 
   return !room.isLoading && iAmInRoom && (
     <>
@@ -44,13 +43,13 @@ export default function RoomPage () {
           roomConnection={roomConnection}
         />
       )}
-      {status === 'started' && gameConnection && iAmInGame && (
+      {status === 'started' && gameConnection.state && iAmInGame && (
         <PlayGame
           room={room}
           gameConnection={gameConnection}
         />
       )}
-      {status === 'started' && gameConnection && !iAmInGame && (
+      {status === 'started' && gameConnection.state && !iAmInGame && (
         <WatchGame
           room={room}
           gameConnection={gameConnection}

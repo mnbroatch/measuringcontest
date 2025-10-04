@@ -4,8 +4,7 @@
       "name": "mainGrid",
       "type": "Grid",
       "width": 3,
-      "height": 3,
-      "count": 1
+      "height": 3
     },
     {
       "name": "playerMarker",
