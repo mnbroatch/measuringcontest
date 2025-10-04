@@ -48,7 +48,7 @@ export default function gameFactory (rules, rulesHash) {
       }), {})
   }
 
-  if (!rules.turn) {
+  if (rules.turn) {
     game.turn = rules.turn
   }
 
