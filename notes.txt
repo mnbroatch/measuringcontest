@@ -37,3 +37,15 @@ basic idea:
 - we will need a UI-side sense of a move type having "stages"
   - "now we are selecting a piece"
   - multi-select will probably be its own headache
+
+
+not sure why I wanted this but I might later
+
+  let moveRules
+  if (moves) {
+    // console.log('moves.placePlayerMarker', moves.placePlayerMarker.moveInstance.rule)
+    moveRules = Object.entries(moves).reduce((acc, [moveName, move]) => ({
+      ...acc,
+      [moveName]: move.moveInstance.rule
+    }), {})
+  }
