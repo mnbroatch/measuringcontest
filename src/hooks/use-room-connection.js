@@ -11,7 +11,7 @@ import { registry } from "../../server/game-factory/registry.js";
 const RoomGame = {
   name: 'bgestagingroom',
   setup: () => ({
-    players: { '0': { name: 'Room Creator' } },
+    players: { '1': { name: 'Room Creator' } },
     status: 'waiting',
     gameRules: '',
     gameName: '',

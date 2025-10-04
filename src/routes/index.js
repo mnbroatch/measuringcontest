@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { createFileRoute, Link, redirect } from "@tanstack/react-router"
+import { createFileRoute, Link } from "@tanstack/react-router"
 import { useCreateRoomMutation } from "../queries/use-create-room-mutation.js";
 import { useDeleteRoomMutation } from "../queries/use-delete-room-mutation.js";
 import { useMyRoomsQuery } from "../queries/use-my-rooms-query.js";
