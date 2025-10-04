@@ -16,11 +16,6 @@ export default class Condition {
         ...G.bank.findAll(target)
       ], [])
     }
-    if (this.rule.type === "ContainsLine") {
-    console.log('1111111', 1111111)
-    console.log('this.rule', this.rule)
-    console.log('this.checkCondition(bgioArguments, conditionPayload)', this.checkCondition(bgioArguments, conditionPayload))
-    }
     return this.checkCondition(bgioArguments, conditionPayload)
   }
 

@@ -61,26 +61,13 @@ export default function useRoomConnection () {
   const client = useGameserverConnection({ gameId: roomGameId, game, boardgamePlayerID, clientToken })
   const clientState = client?.getState()
   const status = clientState?.G.status
-  const gameId = clientState?.G.gameId
-  const players = clientState?.G.players
 
   const prevStatusRef = useRef(status)
 
   useEffect(() => {
     if (prevStatusRef.current === 'waiting' && status === 'started') {
-      if (boardgamePlayerID in players) {
-        navigate({
-          to: '/rooms/$roomcode/games/$gameid/play',
-          params: {
-            roomcode: roomCode,
-            gameid: gameId,
-          },
-        })
-      } else {
-        queryClient.invalidateQueries({ queryKey: ['room', roomCode] })
-      }
+      queryClient.invalidateQueries({ queryKey: ['room', roomCode] })
     }
-    
     prevStatusRef.current = status
   }, [status])
 

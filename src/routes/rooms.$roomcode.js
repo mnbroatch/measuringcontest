@@ -1,6 +1,7 @@
 import React from 'react'
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
 import useRoomConnection from "../hooks/use-room-connection.js";
+import useGameConnection from "../hooks/use-game-connection.js";
 import { useRoomQuery } from "../queries/use-room-query.js";
 import { useLeaveRoomMutation } from "../queries/use-leave-room-mutation.js";
 import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
@@ -15,11 +16,13 @@ export default function RoomPage () {
   const room = useRoomQuery(roomCode)
   const leaveRoomMutation = useLeaveRoomMutation(roomCode)
   const roomConnection = useRoomConnection()
+  const gameConnection = useGameConnection()
 
   const iAmInRoom = room.data.members && userId in room.data.members
   const iAmInGame = room.data.players && userId in room.data.players
   const iAmRoomCreator = userId && room.data.createdBy === userId 
   const status = roomConnection.state?.G.status
+  console.log('gameConnection', gameConnection)
 
   return !room.isLoading && iAmInRoom && (
     <>
@@ -41,16 +44,16 @@ export default function RoomPage () {
           roomConnection={roomConnection}
         />
       )}
-      {status === 'started' && iAmInGame && (
+      {status === 'started' && gameConnection && iAmInGame && (
         <PlayGame
           room={room}
-          roomConnection={roomConnection}
+          gameConnection={gameConnection}
         />
       )}
-      {status === 'started' && !iAmInGame && (
+      {status === 'started' && gameConnection && !iAmInGame && (
         <WatchGame
           room={room}
-          roomConnection={roomConnection}
+          gameConnection={gameConnection}
         />
       )}
     </>

@@ -12,6 +12,9 @@ export const useGameserverConnection = ({ gameId, game, boardgamePlayerID, clien
   const clientRef = useRef(null)
 
   useEffect(() => {
+    console.log('-----')
+    console.log('userId', userId)
+    console.log('gameId', gameId)
     if (!gameId || !userId) return
     
     const joinAndConnect = async () => {
