@@ -1,4 +1,5 @@
 todo:
+validate rules json before game creation
 currently, first ruleset for gamename is used. should use ruleset hash
   - does gamename actually do anything for us?
 validate numPlayers against rule def

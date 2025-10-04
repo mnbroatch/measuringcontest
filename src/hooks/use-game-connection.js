@@ -20,7 +20,7 @@ export default function useGameConnection () {
 
   const game = useMemo(() => gameRules && gameFactory(JSON.parse(gameRules), rulesHash), [gameRules, rulesHash])
 
-  const client = useGameserverConnection({ gameId, game, boardgamePlayerID, clientToken })
+  const { client } = useGameserverConnection({ gameId, game, boardgamePlayerID, clientToken })
   const clientState = client?.getState()
 
   useEffect (() => {
