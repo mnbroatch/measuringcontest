@@ -1,8 +1,10 @@
 import React from 'react';
+import { useGame } from "../../contexts/game-context.js";
 
 export default function Grid ({ entity }) {
   const { rule, spaces } = entity;
   const { width, height, name } = rule;
+  const { dispatch } = useGame()
   
   return (
     <div

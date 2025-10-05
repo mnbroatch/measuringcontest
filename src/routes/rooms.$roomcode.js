@@ -35,7 +35,7 @@ export default function RoomPage () {
 
   const isLoading = room.isLoading
     || !roomConnection.state
-    || (!gameConnection.state && room.data.gameId)
+    || (status === 'started' && !gameConnection.state)
 
   return !isLoading && iAmInRoom && (
     <>

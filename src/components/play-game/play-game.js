@@ -1,7 +1,9 @@
 import React from 'react'
 import Game from "../game/game.js";
+import { GameProvider } from "../../contexts/game-context.js";
 
 export default function PlayGame ({ gameConnection }) {
+  console.log('gameConnection.state', gameConnection.state)
   return <>
     {gameConnection.state.G.sharedBoard[0].spaces.map((space, i) =>  (
       <button key={i} onClick={() => { gameConnection.moves?.placePlayerMarker(makePayload(gameConnection.state.G, i)) }}>
@@ -9,7 +11,10 @@ export default function PlayGame ({ gameConnection }) {
       </button>
     ))}
 
-    <Game state={gameConnection.state.G} />
+    
+    <GameProvider moves={gameConnection.moves}>
+      <Game state={gameConnection.state.G} />
+    </GameProvider>
   </>
 }
 

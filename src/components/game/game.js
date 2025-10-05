@@ -2,7 +2,6 @@ import React from 'react'
 import Entity from '../entity/entity.js'
 
 export default function Game ({ state }) {
-  console.log('state', state)
   return (
     <>
       <div className="shared-board">
