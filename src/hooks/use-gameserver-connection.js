@@ -6,15 +6,22 @@ import { useCognitoAuth } from "../contexts/cognito-auth-context.js"
 
 const SERVER_URL = 'https://gameserver.measuringcontest.com'
 
-export const useGameserverConnection = ({ gameId, game, boardgamePlayerID, clientToken }) => {
+export const useGameserverConnection = ({
+  gameId,
+  game,
+  boardgamePlayerID,
+  clientToken,
+  debug = true,
+  enabled = true
+}) => {
   const { userId } = useCognitoAuth()
   const [_, forceUpdate] = useReducer(x => !x, false)
   const clientRef = useRef(null)
 
   useEffect(() => {
-    if (!gameId || !userId) return
-    
-    const joinAndConnect = async () => {
+    if (!gameId || !userId || !enabled) return
+
+    const connect = async () => {
       try {
         const client = Client({
           game,
@@ -26,8 +33,8 @@ export const useGameserverConnection = ({ gameId, game, boardgamePlayerID, clien
           }),
           matchID: gameId,
           playerID: boardgamePlayerID,
-          credentials: clientToken, // JWT for boardgame.io auth
-          debug: process.env.NODE_ENV === 'development'
+          credentials: clientToken,
+          debug,
         })
 
         client.subscribe(() => {
@@ -37,7 +44,7 @@ export const useGameserverConnection = ({ gameId, game, boardgamePlayerID, clien
             })
           }, 0)
         })
-        
+
         client.start()
         clientRef.current = client
         
@@ -45,14 +52,14 @@ export const useGameserverConnection = ({ gameId, game, boardgamePlayerID, clien
         console.error('Failed to join game:', error)
       }
     }
-    
-    joinAndConnect()
-    
+
+    connect()
+
     return () => {
       clientRef.current?.stop()
       clientRef.current = null
     }
-  }, [gameId, userId, boardgamePlayerID, clientToken, game])
-  
+  }, [gameId, userId, boardgamePlayerID, clientToken, game, enabled])
+
   return clientRef.current
 }

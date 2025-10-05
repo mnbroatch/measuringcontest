@@ -63,7 +63,14 @@ export default function useRoomConnection () {
 
   const game = RoomGame
 
-  const client = useGameserverConnection({ gameId: roomGameId, game, boardgamePlayerID, clientToken })
+  const client = useGameserverConnection({
+    gameId: roomGameId,
+    game,
+    boardgamePlayerID,
+    clientToken,
+    debug: false,
+    enabled: !!joinRoomMutation.isSuccess
+  })
   const clientState = client?.getState()
   const status = clientState?.G.status
 
