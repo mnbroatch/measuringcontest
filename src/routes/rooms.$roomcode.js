@@ -17,11 +17,13 @@ export default function RoomPage () {
   const leaveRoomMutation = useLeaveRoomMutation(roomCode)
   const roomConnection = useRoomConnection()
   const gameConnection = useGameConnection()
+  console.log('roomConnection', roomConnection)
 
   const iAmInRoom = room.data.members && userId in room.data.members
-  const iAmInGame = room.data.players && userId in room.data.players
   const iAmRoomCreator = userId && room.data.createdBy === userId 
   const status = roomConnection.state?.G.status
+  const players = roomConnection.state?.G.players
+  const iAmInGame = players && roomConnection.client?.playerID in players
 
   return !room.isLoading && iAmInRoom && (
     <>
@@ -36,9 +38,10 @@ export default function RoomPage () {
           Leave Room
         </button>
       </div>
-      {status === 'waiting' && (
+      {status === 'waiting' && roomConnection.state && (
         <GameStaging
           iAmRoomCreator={iAmRoomCreator}
+          iAmInGame={iAmInGame}
           room={room}
           roomConnection={roomConnection}
         />

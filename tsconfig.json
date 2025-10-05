@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
     "allowJs": true,
-    "checkJs": true
+    "checkJs": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "jsx": "react"
   }
 }
