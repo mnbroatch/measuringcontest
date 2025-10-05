@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { useParams, useNavigate } from '@tanstack/react-router';
+import { useParams } from '@tanstack/react-router';
 import { useQueryClient } from '@tanstack/react-query'
 import { ActivePlayers } from 'boardgame.io/core';
 import { serialize, deserialize } from "wackson";
@@ -26,27 +26,32 @@ const RoomGame = {
       }
     },
     leave: ({G, playerID}) => {
-      if (playerID !== '1') {
+      if (playerID !== '1' && G.status === 'waiting') {
         delete G.players[playerID]
       }
     },
     setGameMeta: ({G, playerID}, { gameRules, gameName }) => {
-      if (playerID === '1') {
+      if (playerID === '1' && G.status === 'waiting') {
         G.gameRules = gameRules
         G.gameName = gameName
       }
     },
     gameCreated: ({G, playerID}, newGameId) => {
-      if (playerID === '0') {
+      if (playerID === '0' && G.status === 'waiting') {
         G.gameId = newGameId;
         G.status = 'started';
+      }
+    },
+    gameDeleted: ({G, playerID}) => {
+      if (playerID === '0') {
+        delete G.gameId;
+        G.status = 'waiting';
       }
     },
   },
 };
 
 export default function useRoomConnection () {
-  const navigate = useNavigate()
   const { roomcode: roomCode } = useParams({})
   const queryClient = useQueryClient()
   const room = useRoomQuery(roomCode).data

@@ -27,20 +27,26 @@ const RoomGame = {
       }
     },
     leave: ({G, playerID}) => {
-      if (playerID !== '1') {
+      if (playerID !== '1' && G.status === 'waiting') {
         delete G.players[playerID]
       }
     },
     setGameMeta: ({G, playerID}, { gameRules, gameName }) => {
-      if (playerID === '1') {
+      if (playerID === '1' && G.status === 'waiting') {
         G.gameRules = gameRules
         G.gameName = gameName
       }
     },
     gameCreated: ({G, playerID}, newGameId) => {
-      if (playerID === '0') {
+      if (playerID === '0' && G.status === 'waiting') {
         G.gameId = newGameId;
         G.status = 'started';
+      }
+    },
+    gameDeleted: ({G, playerID}) => {
+      if (playerID === '0') {
+        delete G.gameId;
+        G.status = 'waiting';
       }
     },
   },
