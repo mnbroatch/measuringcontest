@@ -4,38 +4,40 @@ const GameContext = createContext({
   dispatch: () => {},
 });
 
-const clicksMap = {
+const stepsMap = {
   PlaceEntity: [
-    { }
+    (moveRule, action) => {
+      console.log('moveRule, action', moveRule, action)
+    }
   ]
 }
 
 function handleClick (action, state) {
-  action.moveRules.filter(move => checkMove(move, action))
+  action.moveRules.filter(moveRule => checkMove(moveRule, action, state))
 }
 
-function checkMove (move, action) {
+function checkMove (moveRule, action, state) {
+  const checkFn = stepsMap[moveRule.type][state.completedSteps.length]
+  return checkFn(moveRule, action)
 }
 
 export function GameProvider ({ G, moves, children }) {
 
   const [currentMove, disp] = useReducer((state, action) => {
     const { type: actionType, moves, moveRules } = action
-    console.log('moves', moves)
-    console.log('moveRules', moveRules)
     switch (actionType) {
-      case 'click':
+      case 'step':
         handleClick(action, state)
     }
     return state
-  }, { clickable: [] })
+  }, { clickable: [], completedSteps: [] })
 
   const dispatch = useCallback((action) => {
     let moveRules
     if (moves) {
       moveRules = Object.entries(moves).map(([moveName, move]) => ({
         ...move.moveInstance.rule,
-        steps: clicksMap[move.moveInstance.rule.type],
+        steps: stepsMap[move.moveInstance.rule.type],
         moveName
       }))
     }

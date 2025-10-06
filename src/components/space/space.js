@@ -7,7 +7,7 @@ export default function Space ({ space }) {
   
   return (
 
-    <a className="space" onClick={() => dispatch({ type: 'click', target: space })}>
+    <a className="space" onClick={() => dispatch({ type: 'step', target: space })}>
       {space.entities.map((entity, i) => <Entity key={i} entity={entity} />)}
     </a>
   );
