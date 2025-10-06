@@ -11,41 +11,41 @@ const clicksMap = {
 }
 
 function handleClick (action, state) {
-  action.moves.filter(move => checkMove(move, action))
+  action.moveRules.filter(move => checkMove(move, action))
 }
 
 function checkMove (move, action) {
-  action,
-  move,
 }
 
 export function GameProvider ({ G, moves, children }) {
-  let moveRules
-  if (moves) {
-    moveRules = Object.entries(moves).map(([moveName, move]) => ({
-      ...move.moveInstance.rule,
-      steps: clicksMap[move.moveInstance.rule.type],
-      moveName
-    }))
-  }
-  console.log('moveRules', moveRules)
-
 
   const [currentMove, disp] = useReducer((state, action) => {
-    const { type: actionType, moves } = action
+    const { type: actionType, moves, moveRules } = action
+    console.log('moves', moves)
+    console.log('moveRules', moveRules)
     switch (actionType) {
       case 'click':
         handleClick(action, state)
     }
-  }, {})
+    return state
+  }, { clickable: [] })
 
   const dispatch = useCallback((action) => {
-    disp({ ...action, moves })
+    let moveRules
+    if (moves) {
+      moveRules = Object.entries(moves).map(([moveName, move]) => ({
+        ...move.moveInstance.rule,
+        steps: clicksMap[move.moveInstance.rule.type],
+        moveName
+      }))
+    }
+
+    disp({ ...action, moves, moveRules })
   }, [moves, disp])
 
 
   return (
-    <GameContext.Provider value={{ dispatch }}>
+    <GameContext.Provider value={{ dispatch, currentMove }}>
       {children}
     </GameContext.Provider>
   );

@@ -22,6 +22,11 @@
   position: relative;
 }
 
+.grid__cell .space {
+  height: 100%;
+  width: 100%;
+}
+
 .roomGame {
   border: 1px solid grey;
   border-radius: 8px;

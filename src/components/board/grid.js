@@ -1,9 +1,9 @@
 import React from 'react';
-import Space from "../space/space.js";
+import Entity from "../entity/entity.js";
 
-export default function Grid ({ entity }) {
-  const { rule, spaces } = entity;
-  const { width, height, name } = rule;
+export default function Grid ({ grid }) {
+  const { rule, spaces } = grid;
+  const { width, height } = rule;
   
   return (
     <div
@@ -15,17 +15,12 @@ export default function Grid ({ entity }) {
       }}
     >
       {spaces.map((space, index) => {
-        const row = Math.floor(index / width);
-        const col = index % width;
-        
         return (
           <div
             key={index}
             className="grid__cell"
-            data-space-id={space.entityId}
-            data-index={space.rule.index}
           >
-            <Space space={space} />
+            <Entity entity={space} />
           </div>
         );
       })}

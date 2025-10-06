@@ -1,16 +1,14 @@
 import React from 'react';
 import { useGame } from "../../contexts/game-context.js";
+import Entity from '../entity/entity.js'
 
-export default function Grid ({ space }) {
+export default function Space ({ space }) {
   const { dispatch } = useGame()
   
   return (
-    <a onClick={}>
-      {space.entities.length > 0 && (
-        <div style={{ fontSize: '14px', fontWeight: 'bold', marginTop: '4px' }}>
-          {space.entities.length} piece{space.entities.length !== 1 ? 's' : ''}
-        </div>
-      )}
+
+    <a className="space" onClick={() => dispatch({ type: 'click', target: space })}>
+      {space.entities.map((entity, i) => <Entity key={i} entity={entity} />)}
     </a>
   );
 }
