@@ -1,7 +1,7 @@
 import chunk from "lodash/chunk.js";
-import Spaces from "../spaces/spaces.js";
+import SpaceGroup from "../space-group/space-group.js";
 
-export default class Grid extends Spaces {
+export default class Grid extends SpaceGroup {
   getSpacesCount () {
     return this.rule.width * this.rule.height
   }

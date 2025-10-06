@@ -41,7 +41,7 @@
         "target": { "name": "mainGrid" },
         "type": "ContainsLine",
         "length": 3,
-        "spacesConditions": [{
+        "conditions": [{
           "type": "ContainsSame",
           "properties": ["player"]
         }],
@@ -55,7 +55,7 @@
     },
     {
       "conditions": [{
-        "type": "All",
+        "type": "EverySpace",
         "target": { "name": "mainGrid" },
         "spaceConditions": [{"type": "Contains"}]
       }],

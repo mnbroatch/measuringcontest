@@ -3,6 +3,7 @@ import filter from 'lodash/filter.js'
 import matchesProperty from 'lodash/matchesProperty.js'
 import { registry } from '../registry.js'
 import BankSlot from './bank-slot.js'
+import conditionFactory from "../condition/condition-factory.js";
 
 class Bank {
   constructor (entityRules) {
@@ -32,8 +33,12 @@ class Bank {
     return this.tracker[entityId]
   }
 
-  findAll (matcher) {
-    return filter(Object.values(this.tracker), matchesProperty('rule', matcher))
+  findAll ({ target, conditions = [] }) {
+    return filter(
+      Object.values(this.tracker),
+      (entity) => matchesProperty('rule', target)(entity)
+        && conditions.every(condition => conditionFactory(condition).isMet(entity))
+    )
   }
 
   getOne (matcher) {
