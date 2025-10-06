@@ -3,16 +3,8 @@ import Game from "../game/game.js";
 import { GameProvider } from "../../contexts/game-context.js";
 
 export default function PlayGame ({ gameConnection }) {
-  console.log('gameConnection.state', gameConnection.state)
   return <>
-    {gameConnection.state.G.sharedBoard[0].spaces.map((space, i) =>  (
-      <button key={i} onClick={() => { gameConnection.moves?.placePlayerMarker(makePayload(gameConnection.state.G, i)) }}>
-        Do {i}
-      </button>
-    ))}
-
-    
-    <GameProvider moves={gameConnection.moves}>
+    <GameProvider moves={gameConnection.moves} G={gameConnection.state.G}>
       <Game state={gameConnection.state.G} />
     </GameProvider>
   </>

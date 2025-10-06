@@ -1,10 +1,9 @@
 import React from 'react';
-import { useGame } from "../../contexts/game-context.js";
+import Space from "../space/space.js";
 
 export default function Grid ({ entity }) {
   const { rule, spaces } = entity;
   const { width, height, name } = rule;
-  const { dispatch } = useGame()
   
   return (
     <div
@@ -21,19 +20,12 @@ export default function Grid ({ entity }) {
         
         return (
           <div
-            key={space.entityId}
+            key={index}
             className="grid__cell"
             data-space-id={space.entityId}
             data-index={space.rule.index}
           >
-            <div style={{ fontSize: '10px', opacity: 0.5 }}>
-              ({row},{col})
-            </div>
-            {space.entities.length > 0 && (
-              <div style={{ fontSize: '14px', fontWeight: 'bold', marginTop: '4px' }}>
-                {space.entities.length} piece{space.entities.length !== 1 ? 's' : ''}
-              </div>
-            )}
+            <Space space={space} />
           </div>
         );
       })}

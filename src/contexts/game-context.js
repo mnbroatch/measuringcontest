@@ -1,33 +1,47 @@
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext, useReducer, useCallback } from 'react';
 
 const GameContext = createContext({
-  dispatch: async () => {},
+  dispatch: () => {},
 });
 
-const stepsMap = {
+const clicksMap = {
   PlaceEntity: [
-    {
-      type: "ClickSpace",
-
-    }
+    { }
   ]
 }
 
-export function GameProvider ({ moves, children }) {
+function handleClick (action, state) {
+  action.moves.filter(move => checkMove(move, action))
+}
+
+function checkMove (move, action) {
+  action,
+  move,
+}
+
+export function GameProvider ({ G, moves, children }) {
   let moveRules
   if (moves) {
     moveRules = Object.entries(moves).map(([moveName, move]) => ({
       ...move.moveInstance.rule,
-      steps: stepsMap[move.moveInstance.rule.type],
+      steps: clicksMap[move.moveInstance.rule.type],
       moveName
     }))
   }
   console.log('moveRules', moveRules)
 
 
-  const [currentMove, dispatch] = useReducer((state, action) => {
-    
+  const [currentMove, disp] = useReducer((state, action) => {
+    const { type: actionType, moves } = action
+    switch (actionType) {
+      case 'click':
+        handleClick(action, state)
+    }
   }, {})
+
+  const dispatch = useCallback((action) => {
+    disp({ ...action, moves })
+  }, [moves, disp])
 
 
   return (
