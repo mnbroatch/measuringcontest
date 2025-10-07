@@ -27,7 +27,7 @@ export default class SpaceGroupCondition extends Condition {
         .isMet(bgioArguments, { target: space })
       )
     if (spaceMeetsConditions && this.rule.conditions) {
-      return this.rule.conditions
+      return this.rule.spaceGroupConditions
         .every(rule => {
           return conditionFactory(rule)
             .isMet(
