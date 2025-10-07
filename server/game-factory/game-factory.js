@@ -48,9 +48,9 @@ export default function gameFactory (rules, rulesHash) {
       }), {})
   }
 
-  if (rules.turn) {
-    game.turn = rules.turn
-  }
+  // if (rules.turn) {
+  //   game.turn = rules.turn
+  // }
 
   if (rules.endIf) {
     game.endIf = ({ G, ...restBgioArguments }) => {

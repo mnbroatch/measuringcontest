@@ -25,7 +25,7 @@ export const useGameserverConnection = ({
       try {
         const client = Client({
           game,
-          multiplayer: SocketIO({ 
+          multiplayer: SocketIO({
             server: SERVER_URL,
             socketOpts: {
               transports: ['websocket', 'polling']

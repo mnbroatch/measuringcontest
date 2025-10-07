@@ -38,7 +38,7 @@
   "endIf": [
     {
       "conditions": [{
-        "matches": { "name": "mainGrid" },
+        "target": { "name": "mainGrid" },
         "type": "ContainsLine",
         "length": 3,
         "spaceGroupConditions": [{
@@ -56,7 +56,7 @@
     {
       "conditions": [{
         "type": "EverySpace",
-        "matches": { "name": "mainGrid" },
+        "target": { "name": "mainGrid" },
         "spaceConditions": [{"type": "Contains"}]
       }],
       "result": { "draw": true }
