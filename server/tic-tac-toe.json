@@ -27,7 +27,7 @@
         "player": "Current"
       },
       "destination": {
-        "target": { "type": "Space" },
+        "matches": { "type": "Space" },
         "conditions": [{
           "type": "Not",
           "conditions": [{"type": "Contains"}]
@@ -38,7 +38,7 @@
   "endIf": [
     {
       "conditions": [{
-        "target": { "name": "mainGrid" },
+        "matches": { "name": "mainGrid" },
         "type": "ContainsLine",
         "length": 3,
         "spaceGroupConditions": [{
@@ -56,7 +56,7 @@
     {
       "conditions": [{
         "type": "EverySpace",
-        "target": { "name": "mainGrid" },
+        "matches": { "name": "mainGrid" },
         "spaceConditions": [{"type": "Contains"}]
       }],
       "result": { "draw": true }

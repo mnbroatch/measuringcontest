@@ -7,17 +7,28 @@ export default class Condition {
     const { G } = bgioArguments
     const conditionPayload = {...payload}
 
-    // if target is unspecified, assume anything matching rule is target(s)
-    console.log('this.rule', this.rule)
-    if (this.rule.target && !payload.target) {
-      conditionPayload.target = G.bank.findAll(this.rule)[0]
+    // override specific rules with different targets
+    // aka "can place here if this other space is not empty"
+    if (this.rule.target) {
+      if (conditionPayload.target) {
+        conditionPayload.originalTarget = conditionPayload.target
+      }
+      conditionPayload.target = G.bank.findAll(
+        {
+          ...this.rule,
+          matches: this.rule.target
+        })[0]
     }
-    if (this.rule.targets && !payload.targets) {
+    if (this.rule.targets) {
+      if (conditionPayload.targets) {
+        conditionPayload.originalTargets = conditionPayload.targets
+      }
       conditionPayload.targets = this.rule.targets.reduce((acc, target) => [
         ...acc,
-        ...G.bank.findAll({ target })
+        ...G.bank.findAll({ matches: target })
       ], [])
     }
+
     return this.checkCondition(bgioArguments, conditionPayload)
   }
 
