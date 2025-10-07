@@ -4,8 +4,8 @@ import Grid from '../board/grid.js'
 import Space from "../space/space.js";
 
 export default function Entity ({ entity }) {
-  const { currentMove } = useGame()
-  const isClickable = currentMove.clickable.includes(entity)
+  const { allClickable } = useGame()
+  const isClickable = allClickable.has(entity)
   switch (entity.rule.type) {
     case 'Grid':
       return <Grid grid={entity} isClickable={isClickable} />

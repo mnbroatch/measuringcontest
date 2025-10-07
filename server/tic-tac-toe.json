@@ -27,7 +27,7 @@
         "player": "Current"
       },
       "destination": {
-        "target": { "name": "mainGrid" },
+        "target": { "type": "Space" },
         "conditions": [{
           "type": "Not",
           "conditions": [{"type": "Contains"}]

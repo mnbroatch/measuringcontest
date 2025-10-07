@@ -33,11 +33,11 @@ class Bank {
     return this.tracker[entityId]
   }
 
-  findAll ({ target, conditions = [] }) {
+  findAll ({ target, conditions = [] }, bgioArguments = {}) {
     return filter(
       Object.values(this.tracker),
       (entity) => matchesProperty('rule', target)(entity)
-        && conditions.every(condition => conditionFactory(condition).isMet(entity))
+        && conditions.every(condition => conditionFactory(condition).isMet(bgioArguments, entity))
     )
   }
 

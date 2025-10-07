@@ -1,15 +1,21 @@
-import React, { createContext, useContext, useReducer, useCallback } from 'react';
+import React, { createContext, useContext, useReducer, useEffect } from 'react';
 
 const GameContext = createContext({
   dispatch: () => {},
 });
 
-const stepsMap = {
-  PlaceEntity: [
-    (moveRule, action) => {
-      console.log('moveRule, action', moveRule, action)
+const clicksMap = {
+  placePlayerMarker: [
+    (moveRule, G) => {
+      console.log('moveRule.destination', moveRule.destination)
+      const x = G.bank.findAll(moveRule.destination)
+      return x
     }
   ]
+}
+
+function getClickable (moveRule, stepIndex, G) {
+  return clicksMap[moveRule.type][stepIndex](moveRule, G)
 }
 
 function handleClick (action, state) {
@@ -17,47 +23,63 @@ function handleClick (action, state) {
 }
 
 function checkMove (moveRule, action, state) {
-  const checkFn = stepsMap[moveRule.type][state.completedSteps.length]
+  const checkFn = clicksMap[moveRule.type][state.completedSteps.length]
   return checkFn(moveRule, action)
 }
 
 export function GameProvider ({ G, moves, children }) {
 
-  const [currentMove, disp] = useReducer((state, action) => {
-    const { type: actionType, moves, moveRules } = action
+  const [currentMoveState, disp] = useReducer((state, action) => {
+    const { eliminatedMoves, stepIndex, targets } = state
+    const { type: actionType, clickableByPossibleMove } = action
+
     switch (actionType) {
-      case 'step':
-        handleClick(action, state)
+      case 'click':
+        const { target } = action
+        const newEliminatedMoves = Object.entries(clickableByPossibleMove)
+          .reduce((acc, [moveName, { clickable, finishedOnThisStep }]) => {
+            return !finishedOnThisStep && clickable.has(target)
+              ? acc
+              : [...acc, moveName]
+          }, [...eliminatedMoves])
+        if (newEliminatedMoves.length === Object.keys(moves).length) {
+          console.error('invalid move with target of rule: ', target?.rule)
+          return state
+        } else {
+          return { eliminatedMoves: newEliminatedMoves, stepIndex: stepIndex + 1, targets: [...targets, target] }
+        }
     }
+
     return state
-  }, { clickable: [], completedSteps: [] })
+  }, { eliminatedMoves: [], stepIndex: 0, targets: [] })
 
-  const dispatch = useCallback((action) => {
-    let moveRules
-    if (moves) {
-      moveRules = Object.entries(moves).map(([moveName, move]) => ({
-        ...move.moveInstance.rule,
-        steps: stepsMap[move.moveInstance.rule.type],
-        moveName
-      }))
-    }
+  const possibleMoveRules = Object.entries(moves)
+    .filter(([moveName]) => !currentMoveState.eliminatedMoves.includes(moveName))
+    .map(([moveName, move]) => ({
+      ...move.moveInstance.rule,
+      steps: clicksMap[move.moveInstance.rule.type],
+      moveName
+    }))
+  const clickableByPossibleMove = {}
+  const allClickable = new Set()
+  possibleMoveRules.forEach((moveRule) => {
+    const moveSteps = clicksMap[moveRule.moveName]
+    const lastStep = moveSteps?.[currentMoveState.stepIndex - 1]
+    const currentStep = moveSteps?.[currentMoveState.stepIndex]
+    const finishedOnThisStep = moveSteps && !!lastStep && !currentStep
+    const clickable = new Set(currentStep?.(moveRule, G) || [])
+    clickableByPossibleMove[moveRule.moveName] = { finishedOnThisStep, clickable }
+    clickable.forEach((entity) => { allClickable.add(entity) })
+  })
 
-    const clickable = new Set()
-    G.bank.tracker.forEach((entity) => {
-      moveRules.some(moveRule => 
-    })
+  const dispatch = (action) => { disp({ ...action, clickableByPossibleMove }) }
 
-    disp({ ...action, moves, moveRules, clickable })
-  }, [moves, disp, G])
-
-
-
-
-
-
+  useEffect(() => {
+    console.log('targets', currentMoveState.targets)
+  }, [currentMoveState.targets])
 
   return (
-    <GameContext.Provider value={{ dispatch, currentMove }}>
+    <GameContext.Provider value={{ dispatch, allClickable }}>
       {children}
     </GameContext.Provider>
   );
