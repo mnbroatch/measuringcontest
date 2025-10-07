@@ -11,5 +11,13 @@ export default function Entity ({ entity }) {
       return <Grid grid={entity} isClickable={isClickable} />
     case 'Space':
       return <Space space={entity} isClickable={isClickable} />
+    default:
+      return <div
+        className={[
+          'entity',
+          entity.rule.player && `player-${entity.rule.player}`,
+          allClickable.has(entity) && 'space--clickable'
+        ].filter(Boolean).join(' ')}
+      ></div>
   }
 }

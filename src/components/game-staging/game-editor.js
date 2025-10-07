@@ -5,8 +5,8 @@ import connectFour from "../../../server/connect-four.json";
 
 export default function GameEditor ({ roomCode, initialGameName, initialGameRules, players, saveGame }) {
   const [gameRules, setGameRules] = useState(
-    initialGameRules || JSON.stringify(ticTacToe, null, 2)
-    // initialGameRules || JSON.stringify(connectFour, null, 2)
+    // initialGameRules || JSON.stringify(ticTacToe, null, 2)
+    initialGameRules || JSON.stringify(connectFour, null, 2)
   )
   const [gameName, setGameName] = useState(initialGameName)
 

@@ -27,18 +27,11 @@
         "player": "Current"
       },
       "destination": {
-        "target": { "type": "Space" },
-        "conditions": [
-          {
-            "type": "Not",
-            "conditions": [{"type": "Contains"}]
-          },
-          {
-            "type": "Not",
-            "target": { "type": "Space" },
-            "conditions": [{"type": "Contains"}]
-          }
-        ]
+        "matches": { "type": "Space" },
+        "conditions": [{
+          "type": "Not",
+          "conditions": [{"type": "Contains"}]
+        }]
       }
     }
   },

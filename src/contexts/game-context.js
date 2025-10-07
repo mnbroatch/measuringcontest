@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer, useEffect } from 'react';
+import React, { createContext, useContext, useReducer, useLayoutEffect } from 'react';
 
 const GameContext = createContext({
   dispatch: () => {},
@@ -6,10 +6,7 @@ const GameContext = createContext({
 
 const clicksMap = {
   placePlayerMarker: [
-    (moveRule, G) => {
-      const x = G.bank.findAll(moveRule.destination)
-      return x
-    }
+    (moveRule, G) => G.bank.findAll(moveRule.destination)
   ]
 }
 
@@ -74,10 +71,14 @@ export function GameProvider ({ G, moves, children, isSpectator }) {
       clickable.forEach((entity) => { allClickable.add(entity) })
     })
   }
+  console.log('currentMoveState', currentMoveState)
 
   const dispatch = (action) => { disp({ ...action, possibleMoveMeta }) }
 
-  useEffect(() => {
+  // useLayoutEffect clears move after we get into "last step complete"
+  // state where nothing is clickable and before browser paint,
+  // so we don't see a flash of temporary nonclickableness
+  useLayoutEffect(() => {
     if (!isSpectator) {
       const possibleMoveNames = Object.keys(possibleMoveMeta)
       if (possibleMoveNames.length === 1) {
@@ -90,6 +91,8 @@ export function GameProvider ({ G, moves, children, isSpectator }) {
       }
     }
   }, [currentMoveState.targets])
+
+  console.log('allClickable', allClickable)
 
   return (
     <GameContext.Provider value={{ dispatch, allClickable }}>
