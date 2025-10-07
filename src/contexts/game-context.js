@@ -42,8 +42,18 @@ export function GameProvider ({ G, moves, children }) {
       }))
     }
 
-    disp({ ...action, moves, moveRules })
-  }, [moves, disp])
+    const clickable = new Set()
+    G.bank.tracker.forEach((entity) => {
+      moveRules.some(moveRule => 
+    })
+
+    disp({ ...action, moves, moveRules, clickable })
+  }, [moves, disp, G])
+
+
+
+
+
 
 
   return (
