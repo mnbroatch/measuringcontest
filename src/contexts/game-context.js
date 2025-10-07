@@ -7,7 +7,6 @@ const GameContext = createContext({
 const clicksMap = {
   placePlayerMarker: [
     (moveRule, G) => {
-      console.log('moveRule.destination', moveRule.destination)
       const x = G.bank.findAll(moveRule.destination)
       return x
     }
@@ -27,18 +26,18 @@ function checkMove (moveRule, action, state) {
   return checkFn(moveRule, action)
 }
 
-export function GameProvider ({ G, moves, children }) {
-
+export function GameProvider ({ G, moves, children, isSpectator }) {
+  const initialState = { eliminatedMoves: [], stepIndex: 0, targets: [] }
   const [currentMoveState, disp] = useReducer((state, action) => {
     const { eliminatedMoves, stepIndex, targets } = state
-    const { type: actionType, clickableByPossibleMove } = action
+    const { type: actionType, possibleMoveMeta } = action
 
     switch (actionType) {
       case 'click':
         const { target } = action
-        const newEliminatedMoves = Object.entries(clickableByPossibleMove)
-          .reduce((acc, [moveName, { clickable, finishedOnThisStep }]) => {
-            return !finishedOnThisStep && clickable.has(target)
+        const newEliminatedMoves = Object.entries(possibleMoveMeta)
+          .reduce((acc, [moveName, { clickable, finishedOnLastStep }]) => {
+            return !finishedOnLastStep && clickable.has(target)
               ? acc
               : [...acc, moveName]
           }, [...eliminatedMoves])
@@ -48,34 +47,48 @@ export function GameProvider ({ G, moves, children }) {
         } else {
           return { eliminatedMoves: newEliminatedMoves, stepIndex: stepIndex + 1, targets: [...targets, target] }
         }
+      case 'clear':
+        return initialState
     }
 
     return state
-  }, { eliminatedMoves: [], stepIndex: 0, targets: [] })
+  }, initialState)
 
-  const possibleMoveRules = Object.entries(moves)
-    .filter(([moveName]) => !currentMoveState.eliminatedMoves.includes(moveName))
-    .map(([moveName, move]) => ({
-      ...move.moveInstance.rule,
-      steps: clicksMap[move.moveInstance.rule.type],
-      moveName
-    }))
-  const clickableByPossibleMove = {}
+  const possibleMoveMeta = {}
   const allClickable = new Set()
-  possibleMoveRules.forEach((moveRule) => {
-    const moveSteps = clicksMap[moveRule.moveName]
-    const lastStep = moveSteps?.[currentMoveState.stepIndex - 1]
-    const currentStep = moveSteps?.[currentMoveState.stepIndex]
-    const finishedOnThisStep = moveSteps && !!lastStep && !currentStep
-    const clickable = new Set(currentStep?.(moveRule, G) || [])
-    clickableByPossibleMove[moveRule.moveName] = { finishedOnThisStep, clickable }
-    clickable.forEach((entity) => { allClickable.add(entity) })
-  })
+  if (!isSpectator) {
+    const possibleMoveRules = Object.entries(moves)
+      .filter(([moveName]) => !currentMoveState.eliminatedMoves.includes(moveName))
+      .map(([moveName, move]) => ({
+        ...move.moveInstance.rule,
+        steps: clicksMap[move.moveInstance.rule.type],
+        moveName
+      }))
+    possibleMoveRules.forEach((moveRule) => {
+      const moveSteps = clicksMap[moveRule.moveName]
+      const lastStep = moveSteps?.[currentMoveState.stepIndex - 1]
+      const currentStep = moveSteps?.[currentMoveState.stepIndex]
+      const finishedOnLastStep = moveSteps && !!lastStep && !currentStep
+      const clickable = new Set(currentStep?.(moveRule, G) || [])
+      possibleMoveMeta[moveRule.moveName] = { finishedOnLastStep, clickable }
+      clickable.forEach((entity) => { allClickable.add(entity) })
+    })
+  }
 
-  const dispatch = (action) => { disp({ ...action, clickableByPossibleMove }) }
+  const dispatch = (action) => { disp({ ...action, possibleMoveMeta }) }
 
   useEffect(() => {
-    console.log('targets', currentMoveState.targets)
+    if (!isSpectator) {
+      const possibleMoveNames = Object.keys(possibleMoveMeta)
+      if (possibleMoveNames.length === 1) {
+        const moveName = possibleMoveNames[0]
+        if (possibleMoveMeta[moveName].finishedOnLastStep) {
+          const move = moves[moveName]
+          move(createPayload(moveName, currentMoveState.targets))
+          dispatch({ type: 'clear' })
+        }
+      }
+    }
   }, [currentMoveState.targets])
 
   return (
@@ -83,6 +96,13 @@ export function GameProvider ({ G, moves, children }) {
       {children}
     </GameContext.Provider>
   );
+}
+
+function createPayload (moveName, targets) {
+  switch (moveName) {
+    case 'placePlayerMarker':
+      return { entities: { destination: targets[0] } }
+  }
 }
 
 export const useGame = () => useContext(GameContext);

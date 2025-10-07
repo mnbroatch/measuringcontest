@@ -37,7 +37,7 @@ class Bank {
     return filter(
       Object.values(this.tracker),
       (entity) => matchesProperty('rule', target)(entity)
-        && conditions.every(condition => conditionFactory(condition).isMet(bgioArguments, entity))
+        && conditions.every(condition => conditionFactory(condition).isMet(bgioArguments, { target: entity }))
     )
   }
 
