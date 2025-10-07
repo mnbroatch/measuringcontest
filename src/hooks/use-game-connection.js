@@ -38,12 +38,14 @@ export default function useGameConnection () {
   let state
   let moves
   let gameover
-  if (clientState) {
+  if (game && clientState) {
     state = {
       ...clientState,
       G: deserialize(JSON.stringify(clientState.G), registry),
     }
     gameover = state?.ctx?.gameover
+    console.log('client', client)
+    console.log('game', game)
     moves = client && !gameover
       ? Object.entries(client.moves).reduce((acc, [moveName, m]) => {
         const move = function (payload) { m(preparePayload(payload)) }

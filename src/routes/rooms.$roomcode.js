@@ -5,6 +5,7 @@ import useGameConnection from "../hooks/use-game-connection.js";
 import { useRoomQuery } from "../queries/use-room-query.js";
 import { useLeaveRoomMutation } from "../queries/use-leave-room-mutation.js";
 import { useCreateGameMutation } from "../queries/use-create-game-mutation.js";
+import { useDeleteGameMutation } from "../queries/use-delete-game-mutation.js";
 import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
 import PlayGame from "../components/play-game/play-game.js";
 import WatchGame from "../components/watch-game/watch-game.js";
@@ -17,7 +18,6 @@ export default function RoomPage () {
   const navigate = useNavigate()
   const { userId } = useCognitoAuth()
   const leaveRoomMutation = useLeaveRoomMutation(roomCode)
-  const createGameMutation = useCreateGameMutation(roomCode)
 
   const room = useRoomQuery(roomCode)
   const iAmInRoom = room.data.members && userId in room.data.members
@@ -29,9 +29,12 @@ export default function RoomPage () {
   const playerID = roomConnection.client?.playerID
   const gameRules = roomConnection.state?.G.gameRules
   const gameName = roomConnection.state?.G.gameName
+  const gameId = roomConnection.state?.G.gameId
   const iAmInGame = players && roomConnection.client?.playerID in players
 
   const [name, setName] = useState(players?.[playerID]?.name)
+  const createGameMutation = useCreateGameMutation(roomCode)
+  const deleteGameMutation = useDeleteGameMutation(roomCode, gameId)
 
   const isLoading = room.isLoading
     || !roomConnection.state
@@ -103,6 +106,11 @@ export default function RoomPage () {
       )}
       {status === 'started' && !iAmInGame && (
         <WatchGame gameConnection={gameConnection} />
+      )}
+      {status === 'started' && iAmRoomCreator && (
+        <button onClick={() => { deleteGameMutation.mutate() }}>
+          Delete Game
+        </button>
       )}
     </>
   )

@@ -9,7 +9,7 @@ export const useDeleteGameMutation = (roomCode, gameId) => {
   const auth = useCognitoAuth()
 
   return useMutation({
-    mutationFn: ({ gameRules, gameName, players }) => makeAuthenticatedRequest(
+    mutationFn: () => makeAuthenticatedRequest(
       `${apiUrl}/rooms/${roomCode}/games/${gameId}`,
       auth.idToken,
       { method: 'DELETE' }
