@@ -1,0 +1,72 @@
+{
+  "entities": [
+    {
+      "name": "mainGrid",
+      "type": "Grid",
+      "width": 7,
+      "height": 6
+    },
+    {
+      "name": "playerMarker",
+      "perPlayer": true,
+      "count": "Infinity"
+    }
+  ],
+  "initialSharedBoard": [{"name": "mainGrid"}],
+  "minPlayers": 2,
+  "maxPlayers": 2,
+  "turn": {
+    "minMoves": 1,
+    "maxMoves": 1
+  },
+  "moves": {
+    "placePlayerMarker": {
+      "type": "PlaceEntity",
+      "entity": {
+        "name": "playerMarker",
+        "player": "Current"
+      },
+      "destination": {
+        "target": { "type": "Space" },
+        "conditions": [
+          {
+            "type": "Not",
+            "conditions": [{"type": "Contains"}]
+          },
+          {
+            "type": "Not",
+            "target": { "type": "Space" },
+            "conditions": [{"type": "Contains"}]
+          }
+        ]
+      }
+    }
+  },
+  "endIf": [
+    {
+      "conditions": [{
+        "target": { "name": "mainGrid" },
+        "type": "ContainsLine",
+        "length": 4,
+        "spaceGroupConditions": [{
+          "type": "ContainsSame",
+          "properties": ["player"]
+        }],
+        "spaceConditions": [
+          { "type": "Contains" }
+        ]
+      }],
+      "result": {
+        "winner": [ "conditionResults", 0, "matches", 0, "spaces", 0, "entities", 0, "rule", "player" ]
+      }
+    },
+    {
+      "conditions": [{
+        "type": "EverySpace",
+        "target": { "name": "mainGrid" },
+        "spaceConditions": [{"type": "Contains"}]
+      }],
+      "result": { "draw": true }
+    }
+  ]
+}

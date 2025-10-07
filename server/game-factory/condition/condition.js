@@ -8,6 +8,7 @@ export default class Condition {
     const conditionPayload = {...payload}
 
     // if target is unspecified, assume anything matching rule is target(s)
+    console.log('this.rule', this.rule)
     if (this.rule.target && !payload.target) {
       conditionPayload.target = G.bank.findAll(this.rule)[0]
     }
