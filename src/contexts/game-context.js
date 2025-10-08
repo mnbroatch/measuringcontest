@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer, useLayoutEffect } from 'react';
+import React, { createContext, useContext, useReducer, useLayoutEffect, useRef } from 'react';
 
 const GameContext = createContext({
   dispatch: () => {},
@@ -6,16 +6,16 @@ const GameContext = createContext({
 
 const clicksMap = {
   placePlayerMarker: [
-    (moveRule, bgioState) => bgioState.G.bank.findAll(moveRule.destination, bgioState)
+    (moveRule, bgioState) => bgioState.G.bank.findAll(moveRule.destination, bgioState),
   ]
 }
 
-export function GameProvider ({ bgioState, moves, children, isSpectator }) {
+export function GameProvider ({ gameConnection, children, isSpectator }) {
+  const { state: bgioState, moves } = gameConnection
   const initialState = { eliminatedMoves: [], stepIndex: 0, targets: [] }
   const [currentMoveState, disp] = useReducer((state, action) => {
     const { eliminatedMoves, stepIndex, targets } = state
     const { type: actionType, possibleMoveMeta } = action
-
     switch (actionType) {
       case 'click':
         const { target } = action
@@ -34,12 +34,17 @@ export function GameProvider ({ bgioState, moves, children, isSpectator }) {
       case 'clear':
         return initialState
     }
-
     return state
   }, initialState)
-
+  
+  // Track whether we're waiting for server response or processing a click
+  const pendingServerMove = useRef(false)
+  const processingClick = useRef(false)
+  const frozenClickable = useRef(new Set())
+  
   const possibleMoveMeta = {}
   const allClickable = new Set()
+  
   if (!isSpectator) {
     const possibleMoveRules = Object.entries(moves)
       .filter(([moveName]) => !currentMoveState.eliminatedMoves.includes(moveName))
@@ -58,28 +63,53 @@ export function GameProvider ({ bgioState, moves, children, isSpectator }) {
       clickable.forEach((entity) => { allClickable.add(entity) })
     })
   }
-
-  const dispatch = (action) => { disp({ ...action, possibleMoveMeta }) }
-
+  
+  const possibleMoveNames = Object.keys(possibleMoveMeta)
+  const firstMoveName = possibleMoveNames[0]
+  const finishedOnLastStep = possibleMoveNames.length === 1 && possibleMoveMeta[firstMoveName]?.finishedOnLastStep
+  
+  // Use frozen clickable if we're waiting for server or processing a click
+  const clickableToUse = (pendingServerMove.current || processingClick.current) 
+    ? frozenClickable.current 
+    : allClickable
+  
+  const dispatch = (action) => {
+    if (action.type === 'click') {
+      // Freeze clickable state before processing click
+      frozenClickable.current = new Set(allClickable)
+      processingClick.current = true
+    }
+    disp({ ...action, possibleMoveMeta })
+  }
+  
   // useLayoutEffect clears move after we get into "last step complete"
   // state where nothing is clickable and before browser paint,
   // so we don't see a flash of temporary nonclickableness
   useLayoutEffect(() => {
-    if (!isSpectator) {
-      const possibleMoveNames = Object.keys(possibleMoveMeta)
-      if (possibleMoveNames.length === 1) {
-        const moveName = possibleMoveNames[0]
-        if (possibleMoveMeta[moveName].finishedOnLastStep) {
-          const move = moves[moveName]
-          move(createPayload(moveName, currentMoveState.targets))
-          dispatch({ type: 'clear' })
-        }
-      }
+    if (finishedOnLastStep) {
+      // Keep frozen state, mark as pending server response
+      pendingServerMove.current = true
+      processingClick.current = false
+      
+      const move = moves[firstMoveName]
+      move(createPayload(firstMoveName, currentMoveState.targets))
+      dispatch({ type: 'clear' })
+    } else if (processingClick.current) {
+      // Click processed, update frozen state to new clickable
+      frozenClickable.current = new Set(allClickable)
+      processingClick.current = false
     }
-  }, [currentMoveState.targets])
-
+  }, [finishedOnLastStep, currentMoveState.stepIndex])
+  
+  // Reset pending flag when bgioState changes (server responded)
+  useLayoutEffect(() => {
+    if (pendingServerMove.current) {
+      pendingServerMove.current = false
+    }
+  }, [bgioState])
+  
   return (
-    <GameContext.Provider value={{ dispatch, allClickable }}>
+    <GameContext.Provider value={{ dispatch, allClickable: clickableToUse, currentMoveTargets: currentMoveState.targets }}>
       {children}
     </GameContext.Provider>
   );

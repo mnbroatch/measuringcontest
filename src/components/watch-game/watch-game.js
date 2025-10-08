@@ -5,8 +5,7 @@ import { GameProvider } from "../../contexts/game-context.js";
 export default function WatchGame ({ gameConnection }) {
   return (
     <GameProvider
-      moves={gameConnection.moves}
-      bgioState={gameConnection.state}
+      gameConnection={gameConnection}
       isSpectator
     >
       <Game bgioState={gameConnection.state} />

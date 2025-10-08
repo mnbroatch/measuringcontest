@@ -22,16 +22,20 @@ function calculateOptimalCols(numSquares) {
 }
 
 export default function Space ({ space }) {
-  const { dispatch, allClickable } = useGame()
+  const { dispatch, allClickable, currentMoveTargets } = useGame()
 
   const columns = calculateOptimalCols(space.entities.length)
 
+  const clickable = [...allClickable].map(e => e.entityId).includes(space.entityId)
+  console.log('currentMoveTargets', currentMoveTargets)
+  const targeted = currentMoveTargets?.map(e => e.entityId).includes(space.entityId)
 
   return (
     <a
       className={[
         'space',
-        allClickable.has(space) && 'space--clickable'
+        clickable && 'space--clickable',
+        targeted && 'space--targeted'
       ].filter(Boolean).join(' ')}
       onClick={() => dispatch({ type: 'click', target: space })}
     >

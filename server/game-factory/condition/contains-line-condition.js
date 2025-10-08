@@ -49,7 +49,6 @@ export default class ContainsLine extends SpaceGroupCondition {
         }
       }
     }
-    console.log('matches', matches)
 
     return { matches };
   }

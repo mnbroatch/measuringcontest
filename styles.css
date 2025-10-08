@@ -35,6 +35,10 @@
   background-color: lightgreen;
 }
 
+.space--targeted {
+  background-color: grey;
+}
+
 .space__entity-grid {
   box-sizing: border-box;
   gap: 3%;
