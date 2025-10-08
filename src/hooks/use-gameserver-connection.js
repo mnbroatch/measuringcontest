@@ -11,9 +11,10 @@ export const useGameserverConnection = ({
   game,
   boardgamePlayerID,
   clientToken,
+  numPlayers,
   debug = true,
   singlePlayer = false,
-  enabled = true
+  enabled = true,
 }) => {
   const { userId } = useCognitoAuth()
   const [_, forceUpdate] = useReducer(x => !x, false)
@@ -24,19 +25,22 @@ export const useGameserverConnection = ({
 
     const connect = async () => {
       try {
-        const client = Client({
-          game,
-          multiplayer: singlePlayer ? false : SocketIO({
-            server: SERVER_URL,
-            socketOpts: {
-              transports: ['websocket', 'polling']
+        const clientOptions = singlePlayer
+          ? { game, numPlayers }
+          : {
+              game,
+              multiplayer: singlePlayer ? undefined : SocketIO({
+                server: SERVER_URL,
+                socketOpts: {
+                  transports: ['websocket', 'polling']
+                }
+              }),
+              matchID: gameId,
+              playerID: boardgamePlayerID,
+              credentials: clientToken,
+              debug,
             }
-          }),
-          matchID: gameId,
-          playerID: boardgamePlayerID,
-          credentials: clientToken,
-          debug,
-        })
+        const client = Client(clientOptions)
 
         client.subscribe(() => {
           // wrapping forceUpdate means we don't batch updates

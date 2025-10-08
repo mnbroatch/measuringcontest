@@ -4,13 +4,13 @@ import { useGameserverConnection } from "./use-gameserver-connection.js";
 import gameFactory from '../../server/game-factory/game-factory.js'
 import { registry } from "../../server/game-factory/registry.js";
 
-export default function useSinglePlayerGame (gameRules) {
-  console.log('gameRules', gameRules)
+export default function useSinglePlayerGame (gameRules, numPlayers) {
   const game = useMemo(() => gameRules && gameFactory(JSON.parse(gameRules), 'WIP'), [gameRules])
 
   const client = useGameserverConnection({
     game,
-    singlePlayer: true
+    singlePlayer: true,
+    numPlayers,
   })
 
   const clientState = client?.getState()

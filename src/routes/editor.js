@@ -6,17 +6,30 @@ import PlayGame from "../components/play-game/play-game.js";
 import GameStatus from "../components/game-status/game-status.js";
 
 export default function Editor () {
+  const [numPlayers, setNumPlayers] = useState(2)
   const [gameRules, setGameRules] = useState(null)
   const [savedGameRules, setSavedGameRules] = useState(null)
-  const gameConnection = useSinglePlayerGame(savedGameRules)
-  console.log('gameConnection.state ', gameConnection.state )
+  const gameConnection = useSinglePlayerGame(savedGameRules, numPlayers)
   return (
     <>
       <GameEditor
         saveGame={({ gameRules }) => setGameRules(gameRules)}
       />
-      <button onClick={() => { setSavedGameRules(gameRules) }}>
-        Test Game
+      <button
+        onClick={() => {
+          setSavedGameRules(gameRules)
+        }}
+      >
+        Test Game with 
+        <input
+          onClick={(e) => {e.stopPropagation()}}
+          onChange={(e) => {
+            setNumPlayers(+e.target.value)}
+          }
+          value={numPlayers}
+        >
+        </input>
+        players
       </button>
       {gameConnection.state && (
         <>

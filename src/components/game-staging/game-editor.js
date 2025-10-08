@@ -37,15 +37,17 @@ export default function GameEditor ({ initialGameName, initialGameRules, saveGam
         >
         </textarea>
 
-        <label>
-          Game Name:
-          <input
-            onClick={(e) => {e.stopPropagation()}}
-            onChange={(e) => {setGameName(e.target.value)}}
-            value={gameName}
-          >
-          </input>
-        </label>
+        <div>
+          <label>
+            Game Name:
+            <input
+              onClick={(e) => {e.stopPropagation()}}
+              onChange={(e) => {setGameName(e.target.value)}}
+              value={gameName}
+            >
+            </input>
+          </label>
+        </div>
       </div>
     </div>
   )
