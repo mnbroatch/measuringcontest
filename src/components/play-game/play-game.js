@@ -4,7 +4,7 @@ import { GameProvider } from "../../contexts/game-context.js";
 
 export default function PlayGame ({ gameConnection }) {
   return (
-    <GameProvider moves={gameConnection.moves} G={gameConnection.state.G}>
+    <GameProvider moves={gameConnection.moves} bgioState={gameConnection.state}>
       <Game state={gameConnection.state.G} />
     </GameProvider>
   )

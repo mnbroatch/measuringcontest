@@ -1,6 +1,7 @@
 import Not from "./not-condition.js";
 import EverySpaceCondition from "./every-space-condition.js";
 import ContainsCondition from "./contains-condition.js";
+import IsEmptyCondition from "./is-empty-condition.js";
 import ContainsSameCondition from "./contains-same-condition.js";
 import ContainsLine from "./contains-line-condition.js";
 // import BingoCondition from "./bingo-condition.js";
@@ -10,6 +11,8 @@ import ContainsLine from "./contains-line-condition.js";
 export default function conditionFactory(rule) {
   if (rule.type === "Contains") {
     return new ContainsCondition(rule);
+  } else if (rule.type === "IsEmpty") {
+    return new IsEmptyCondition(rule);
   } else if (rule.type === "Not") {
     return new Not(rule);
   } else if (rule.type === "EverySpace") {

@@ -23,17 +23,8 @@ export default class Grid extends SpaceGroup {
     return y * width + x
   }
 
-  getNewCoordinatesInDirection ([x, y], direction, distance = 1) {
-    const newCoordinates = {
-      up: () => [x, y - distance],
-      upRight: () => [x + distance, y - distance],
-      right: () => [x + distance, y],
-      downRight: () => [x + distance, y + distance],
-      down: () => [x, y + distance],
-      downLeft: () => [x - distance, y + distance],
-      left: () => [x - distance, y],
-      upLeft: () => [x - distance, y - distance],
-    }[direction]()
+  getRelativeCoordinates ([oldX, oldY], [relativeX, relativeY]) {
+    const newCoordinates = [oldX + relativeX, oldY + relativeY]
     return this.areCoordinatesValid(newCoordinates)
       ? newCoordinates
       : null

@@ -28,10 +28,22 @@
       },
       "destination": {
         "matches": { "type": "Space" },
-        "conditions": [{
-          "type": "Not",
-          "conditions": [{"type": "Contains"}]
-        }]
+        "conditions": [
+          {
+            "type": "Not",
+            "conditions": [{"type": "Contains"}]
+          },
+          {
+            "target": {
+              "targetingType": "Relative",
+              "location": [0, 1]
+            },
+            "type": "Not",
+            "conditions": [{
+              "type": "IsEmpty"
+            }]
+          }
+        ]
       }
     }
   },

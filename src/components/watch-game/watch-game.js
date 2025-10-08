@@ -6,7 +6,7 @@ export default function WatchGame ({ gameConnection }) {
   return (
     <GameProvider
       moves={gameConnection.moves}
-      G={gameConnection.state.G}
+      bgioState={gameConnection.state}
       isSpectator
     >
       <Game state={gameConnection.state.G} />

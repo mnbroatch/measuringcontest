@@ -2,6 +2,7 @@ const { DynamoDBClient } = require("@aws-sdk/client-dynamodb")
 const { DynamoDBDocumentClient, UpdateCommand, QueryCommand, PutCommand } = require("@aws-sdk/lib-dynamodb")
 const { SSMClient, GetParameterCommand } = require("@aws-sdk/client-ssm");
 const jwt = require('jsonwebtoken');
+const profanity = require('./profanity.json');
 
 const client = new DynamoDBClient()
 const dynamoDb = DynamoDBDocumentClient.from(client)
@@ -41,7 +42,10 @@ exports.handler = async (event) => {
       }
     }
 
-    const roomCode = await getRoomCode()
+    let roomCode
+    do {
+      roomCode = await getRoomCode()
+    } while (profanity.includes(roomCode))
     const jwtSecret = await getJwtSecret();
     const serverToken = jwt.sign({ purpose: 'gameserver-api' }, jwtSecret, { expiresIn: '1h' });
     

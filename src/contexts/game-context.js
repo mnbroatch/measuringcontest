@@ -6,24 +6,11 @@ const GameContext = createContext({
 
 const clicksMap = {
   placePlayerMarker: [
-    (moveRule, G) => G.bank.findAll(moveRule.destination)
+    (moveRule, bgioState) => bgioState.G.bank.findAll(moveRule.destination, bgioState)
   ]
 }
 
-function getClickable (moveRule, stepIndex, G) {
-  return clicksMap[moveRule.type][stepIndex](moveRule, G)
-}
-
-function handleClick (action, state) {
-  action.moveRules.filter(moveRule => checkMove(moveRule, action, state))
-}
-
-function checkMove (moveRule, action, state) {
-  const checkFn = clicksMap[moveRule.type][state.completedSteps.length]
-  return checkFn(moveRule, action)
-}
-
-export function GameProvider ({ G, moves, children, isSpectator }) {
+export function GameProvider ({ bgioState, moves, children, isSpectator }) {
   const initialState = { eliminatedMoves: [], stepIndex: 0, targets: [] }
   const [currentMoveState, disp] = useReducer((state, action) => {
     const { eliminatedMoves, stepIndex, targets } = state
@@ -66,12 +53,11 @@ export function GameProvider ({ G, moves, children, isSpectator }) {
       const lastStep = moveSteps?.[currentMoveState.stepIndex - 1]
       const currentStep = moveSteps?.[currentMoveState.stepIndex]
       const finishedOnLastStep = moveSteps && !!lastStep && !currentStep
-      const clickable = new Set(currentStep?.(moveRule, G) || [])
+      const clickable = new Set(currentStep?.(moveRule, bgioState) || [])
       possibleMoveMeta[moveRule.moveName] = { finishedOnLastStep, clickable }
       clickable.forEach((entity) => { allClickable.add(entity) })
     })
   }
-  console.log('currentMoveState', currentMoveState)
 
   const dispatch = (action) => { disp({ ...action, possibleMoveMeta }) }
 
@@ -91,8 +77,6 @@ export function GameProvider ({ G, moves, children, isSpectator }) {
       }
     }
   }, [currentMoveState.targets])
-
-  console.log('allClickable', allClickable)
 
   return (
     <GameContext.Provider value={{ dispatch, allClickable }}>

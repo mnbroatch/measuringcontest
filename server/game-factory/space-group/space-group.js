@@ -1,7 +1,7 @@
 import Entity from "../entity.js";
 import conditionFactory from '../condition/condition-factory.js'
 
-export default class Spaces extends Entity {
+export default class SpaceGroup extends Entity {
   constructor (options, ...rest) {
     super(options, ...rest)
     this.spaces = this.makeSpaces(options.bank);

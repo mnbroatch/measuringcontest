@@ -41,6 +41,13 @@ class Bank {
     )
   }
 
+  findParent (entity) {
+    return find(this.tracker, ent =>
+      ent.entities?.includes(entity)
+        || ent.spaces?.includes(entity)
+    )
+  }
+ 
   getOne (matcher) {
     const entity = this.getSlot(matcher).getOne()
     return entity

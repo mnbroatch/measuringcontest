@@ -1,5 +1,8 @@
 import SpaceGroupCondition from "../condition/space-group-condition.js";
 
+// right, downRight, down, downLeft
+const relativeCoordinates = [[1, 0], [1, 1], [0, 1], [-1, 1]];
+
 export default class ContainsLine extends SpaceGroupCondition {
   checkForPattern(bgioArguments, space, target, matchesSoFar) {
     if (!this.checkSpace(bgioArguments, space)) {
@@ -9,25 +12,23 @@ export default class ContainsLine extends SpaceGroupCondition {
     const { length } = this.rule;
     const coordinates = target.getCoordinates(space.rule.index);
     const matches = [];
-    const directions = ['right', 'downRight', 'down', 'downLeft'];
 
-    for (let d = 0; d < directions.length; d++) {
-      const direction = directions[d];
+    for (let d = 0; d < relativeCoordinates.length; d++) {
+      const relativeCoordinate = relativeCoordinates[d];
       const matchingSpaces = [space];
 
-      // prevent overlapping lines in same direction
+      // prevent overlapping lines in same relativeCoordinate
       if (matchesSoFar.some(match =>
-        match.direction === direction && match.spaces.includes(space)
+        match.relativeCoordinate === relativeCoordinate && match.spaces.includes(space)
       )) {
         continue
       }
 
       // backward iteration disqualifies out-of-bounds instantly
-      for (let i = length - 1; i >= 1; i--) {
-        const newCoordinates = target.getNewCoordinatesInDirection(
+      for (let d = length - 1; d >= 1; d--) {
+        const newCoordinates = target.getRelativeCoordinates(
           coordinates,
-          direction,
-          i
+          [relativeCoordinate[0] * d, relativeCoordinate[0] * d]
         );
 
         if (!newCoordinates) {
@@ -38,9 +39,10 @@ export default class ContainsLine extends SpaceGroupCondition {
         const newSpace = target.spaces[newIndex];
 
         if (this.checkSpace(bgioArguments, newSpace, matchingSpaces)) {
-          matchingSpaces.splice(i, 0, newSpace);
+          // insert at right place between pre-checked d=0 and d=farthest
+          matchingSpaces.splice(d, 0, newSpace);
           if (matchingSpaces.length === length) {
-            matches.push({ direction, spaces: matchingSpaces });
+            matches.push({ relativeCoordinate, spaces: matchingSpaces });
           }
         } else {
           break;
