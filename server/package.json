@@ -15,7 +15,7 @@
     "jsonwebtoken": "^9.0.2",
     "koa-body": "^5.0.0",
     "lodash": "^4.17.21",
-    "wackson": "^1.1.4"
+    "wackson": "^1.1.6"
   },
   "devDependencies": {
     "parcel-bundler": "^1.12.5"

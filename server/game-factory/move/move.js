@@ -46,7 +46,7 @@ export default class Move {
         return INVALID_MOVE
       } else {
         this.do(bgioArguments, payload)
-        return JSON.parse(serialize(G))
+        return JSON.parse(serialize(G, { deduplicateInstances: false }))
       }
     }
 

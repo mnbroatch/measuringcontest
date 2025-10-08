@@ -53,5 +53,5 @@ function preparePayload (payload) {
       ...acc,
       [key]: entity.entityId
     }), {})
-  return JSON.parse(serialize(payloadCopy))
+  return JSON.parse(serialize(payloadCopy, { deduplicateInstances: false }))
 }

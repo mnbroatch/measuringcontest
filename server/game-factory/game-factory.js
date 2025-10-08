@@ -37,7 +37,7 @@ export default function gameFactory (rules, rulesHash) {
       initialState.sharedBoard =
         initialSharedBoardDefinitions.map(b => initialState.bank.getOne(b))
     }
-    return JSON.parse(serialize(initialState));
+    return JSON.parse(serialize(initialState, { deduplicateInstances: false }));
   }
 
   if (rules.moves) {
