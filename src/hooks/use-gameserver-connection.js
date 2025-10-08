@@ -12,6 +12,7 @@ export const useGameserverConnection = ({
   boardgamePlayerID,
   clientToken,
   debug = true,
+  singlePlayer = false,
   enabled = true
 }) => {
   const { userId } = useCognitoAuth()
@@ -19,13 +20,13 @@ export const useGameserverConnection = ({
   const clientRef = useRef(null)
 
   useEffect(() => {
-    if (!gameId || !userId || !enabled) return
+    if (!game || !singlePlayer && (!gameId || !userId || !enabled)) return
 
     const connect = async () => {
       try {
         const client = Client({
           game,
-          multiplayer: SocketIO({
+          multiplayer: singlePlayer ? false : SocketIO({
             server: SERVER_URL,
             socketOpts: {
               transports: ['websocket', 'polling']

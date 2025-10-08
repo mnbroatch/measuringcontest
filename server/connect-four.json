@@ -4,7 +4,7 @@
       "name": "mainGrid",
       "type": "Grid",
       "width": 7,
-      "height": 4
+      "height": 6
     },
     {
       "name": "playerMarker",
@@ -39,9 +39,7 @@
               "location": [0, 1]
             },
             "type": "Not",
-            "conditions": [{
-              "type": "IsEmpty"
-            }]
+            "conditions": [{ "type": "IsEmpty" }]
           }
         ]
       }

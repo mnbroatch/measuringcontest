@@ -10,12 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as EditorRouteImport } from './routes/editor'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RoomsRoomcodeRouteImport } from './routes/rooms.$roomcode'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+})
+const EditorRoute = EditorRouteImport.update({
+  id: '/editor',
+  path: '/editor',
   getParentRoute: () => rootRouteImport,
 })
 const IndexRoute = IndexRouteImport.update({
@@ -31,6 +37,7 @@ const RoomsRoomcodeRoute = RoomsRoomcodeRouteImport.update({
 
 const rootRouteChildren = {
   IndexRoute: IndexRoute,
+  EditorRoute: EditorRoute,
   LoginRoute: LoginRoute,
   RoomsRoomcodeRoute: RoomsRoomcodeRoute,
 }
