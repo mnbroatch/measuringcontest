@@ -9,7 +9,7 @@ export default function WatchGame ({ gameConnection }) {
       bgioState={gameConnection.state}
       isSpectator
     >
-      <Game state={gameConnection.state.G} />
+      <Game bgioState={gameConnection.state} />
     </GameProvider>
   )
 }

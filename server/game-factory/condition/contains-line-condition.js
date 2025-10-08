@@ -28,7 +28,7 @@ export default class ContainsLine extends SpaceGroupCondition {
       for (let d = length - 1; d >= 1; d--) {
         const newCoordinates = target.getRelativeCoordinates(
           coordinates,
-          [relativeCoordinate[0] * d, relativeCoordinate[0] * d]
+          [relativeCoordinate[0] * d, relativeCoordinate[1] * d]
         );
 
         if (!newCoordinates) {
@@ -49,6 +49,7 @@ export default class ContainsLine extends SpaceGroupCondition {
         }
       }
     }
+    console.log('matches', matches)
 
     return { matches };
   }

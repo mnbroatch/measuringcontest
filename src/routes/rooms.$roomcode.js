@@ -85,10 +85,8 @@ export default function RoomPage () {
       {status === 'waiting' && iAmRoomCreator && (
         <>
           <GameEditor
-            roomCode={roomCode}
             initialGameRules={gameRules}
             initialGameName={gameName}
-            players={players}
             saveGame={roomConnection.client.moves.setGameMeta}
           />
           <button onClick={() => {
