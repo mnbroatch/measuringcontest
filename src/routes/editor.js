@@ -9,7 +9,7 @@ export default function Editor () {
   const [gameRules, setGameRules] = useState(null)
   const [savedGameRules, setSavedGameRules] = useState(null)
   const gameConnection = useSinglePlayerGame(savedGameRules)
-  
+  console.log('gameConnection.state ', gameConnection.state )
   return (
     <>
       <GameEditor

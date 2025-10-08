@@ -27,7 +27,6 @@ export default function Space ({ space }) {
   const columns = calculateOptimalCols(space.entities.length)
 
   const clickable = [...allClickable].map(e => e.entityId).includes(space.entityId)
-  console.log('currentMoveTargets', currentMoveTargets)
   const targeted = currentMoveTargets?.map(e => e.entityId).includes(space.entityId)
 
   return (

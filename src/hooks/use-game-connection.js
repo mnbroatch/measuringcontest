@@ -42,6 +42,7 @@ export default function useGameConnection () {
     state = {
       ...clientState,
       G: deserialize(JSON.stringify(clientState.G), registry),
+      originalG: clientState.G,
     }
     gameover = state?.ctx?.gameover
     moves = client && !gameover
@@ -65,7 +66,7 @@ export default function useGameConnection () {
   }
 }
 
-function preparePayload (payload) {
+export function preparePayload (payload) {
   const payloadCopy = { ...payload }
   payloadCopy.entities =
     Object.entries(payloadCopy.entities).reduce((acc, [key, entity]) => ({

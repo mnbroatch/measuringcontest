@@ -22,6 +22,7 @@ export default function useSinglePlayerGame (gameRules) {
     state = {
       ...clientState,
       G: deserialize(JSON.stringify(clientState.G), registry),
+      originalG: clientState.G,
     }
     gameover = state?.ctx?.gameover
     moves = client && !gameover

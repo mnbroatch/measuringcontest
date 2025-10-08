@@ -39,6 +39,8 @@ export const useGameserverConnection = ({
         })
 
         client.subscribe(() => {
+          // wrapping forceUpdate means we don't batch updates
+          // and skip certain transitional states
           setTimeout(() => {
             flushSync(() => {
               forceUpdate()
