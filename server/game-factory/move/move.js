@@ -38,18 +38,10 @@ export default class Move {
       serializablePayload
     ) => {
       const G = deserialize(JSON.stringify(serializableG), registry)
-      const bgioArguments = { G, ...restBgioArguments }
       const payload = revivePayload(serializablePayload, G)
-
-
-      if (!this.isValid(bgioArguments, payload)) {
-        return INVALID_MOVE
-      } else {
-        this.do(bgioArguments, payload)
-        return JSON.parse(serialize(G, { deduplicateInstances: false }))
-      }
+      this.doMove({ G, ...restBgioArguments }, payload)
+      return JSON.parse(serialize(G, { deduplicateInstances: false }))
     }
-
     compatibleMove.moveInstance = this
     return compatibleMove
   }
@@ -62,9 +54,15 @@ export default class Move {
       }), {})
   }
 
-  do () {}
+  doMove (bgioArguments, payload) {
+    if (!this.isValid(bgioArguments, payload)) {
+      return INVALID_MOVE
+    } else {
+      this.do(bgioArguments, payload)
+      return G
+    }
+  }
 }
-
 
 function revivePayload (serializablePayload, G) {
   const payload = deserialize(JSON.stringify(serializablePayload), registry)

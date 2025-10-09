@@ -9,13 +9,18 @@ import Bank from "./bank/bank.js";
 // Things we always want, don't need to configure, and
 // want to treat as first-class citizens
 const invariantEntities = [
-  { type: "space" }
+  { type: "space" },
+  {
+    type: "space",
+    name: 'sharedBoard'
+  }
 ]
 
 export default function gameFactory (rules, rulesHash) {
   const game = { name: rulesHash }
 
-  game.setup = ({ ctx }) => {
+  game.setup = (bgioArguments) => {
+    const { ctx } = bgioArguments
     const initialState = {};
     let entityDefinitions
     if (rules.entities) {
@@ -26,12 +31,24 @@ export default function gameFactory (rules, rulesHash) {
       initialState.bank = new Bank(entityDefinitions)
     }
 
-    // todo: nested boards
-    if (rules.initialSharedBoard) {
+    initialState.sharedBoard = initialState.bank.getOne({ name: "sharedBoard" })
+
+    if (rules.initialPlacements) {
+      rules.initialPlacements.forEach(placement => {
+        const placementRule = {
+          ...placement,
+          type: 'PlaceEntity',
+        }
+        moveFactory(placementRule).moveInstance.do({
+          ...bgioArguments,
+          G: initialState
+        });
+      })
+
       const initialSharedBoardDefinitions =
         rules.initialSharedBoard.reduce((acc, boardMatcher) => [
           ...acc,
-          ...filter(entityDefinitions, boardMatcher)
+          ...
         ], [])
 
       initialState.sharedBoard =
@@ -44,7 +61,7 @@ export default function gameFactory (rules, rulesHash) {
     game.moves =
       Object.entries(rules.moves).reduce((acc, [name, moveDefinition]) => ({
         ...acc,
-        [name]: moveFactory(moveDefinition)
+        [name]: eroveFactory(moveDefinition)
       }), {})
   }
 

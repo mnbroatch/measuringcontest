@@ -3,19 +3,21 @@
     {
       "name": "mainGrid",
       "type": "Grid",
-      "width": 3,
-      "height": 3
+      "width": 8,
+      "height": 8
     },
     {
-      "name": "playerMarker",
-      "perPlayer": true,
+      "name": "disc",
+      "sides": [
+        { "name": "white" },
+        { "name": "black" }
+      ],
       "count": "Infinity"
     }
   ],
   "initialPlacements": [
     {
-      "entity": { "name": "mainGrid" },
-      "destination": { "name": "sharedBoard" }
+      entit
     }
   ],
   "minPlayers": 2,
@@ -27,18 +29,16 @@
   "moves": {
     "placePlayerMarker": {
       "type": "PlaceEntity",
-      "arguments": {
-        "entity": {
-          "name": "playerMarker",
-          "player": "Current"
-        },
-        "destination": {
-          "matches": { "type": "Space" },
-          "conditions": [{
-            "type": "Not",
-            "conditions": [{"type": "Contains"}]
-          }]
-        }
+      "entity": {
+        "name": "playerMarker",
+        "player": "Current"
+      },
+      "destination": {
+        "matches": { "type": "Space" },
+        "conditions": [{
+          "type": "Not",
+          "conditions": [{"type": "Contains"}]
+        }]
       }
     }
   },
