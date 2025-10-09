@@ -33,9 +33,9 @@ class Bank {
     return this.tracker[entityId]
   }
 
-  findAll (rule, bgioArguments = {}) {
+  findAll (bgioArguments, rule) {
     const { matches, conditions = [] } = rule
-    const matcher = resolveMatcher(matches)
+    const matcher = resolveMatcher(bgioArguments, matches)
     return filter(
       Object.values(this.tracker),
       (entity) => matchesProperty('rule', matcher)(entity)
@@ -43,8 +43,8 @@ class Bank {
     )
   }
 
-  findOne (rule, bgioArguments) {
-    return this.findAll(rule, bgioArguments)[0]
+  findOne (bgioArguments, rule) {
+    return this.findAll(bgioArguments, rule)[0]
   }
 
   findParent (entity) {
@@ -54,27 +54,27 @@ class Bank {
     )
   }
  
-  getOne (matcher, bgioArguments) {
-    const entity = this.getSlot(resolveMatcher(matcher, bgioArguments)).getOne()
+  getOne (bgioArguments, matcher) {
+    const entity = this.getSlot(bgioArguments, resolveMatcher(bgioArguments, matcher)).getOne()
     return entity
   }
 
-  getMultiple (matcher, count, bgioArguments) {
-    const entities = this.getSlot(resolveMatcher(matcher, bgioArguments)).getMultiple(count)
+  getMultiple (bgioArguments, matcher, count) {
+    const entities = this.getSlot(bgioArguments, resolveMatcher(bgioArguments, matcher)).getMultiple(count)
     return entities
   }
 
-  getSlot (matcher, bgioArguments) {
-    return find(this.slots, matchesProperty('entityRule', resolveMatcher(matcher, bgioArguments)))
+  getSlot (bgioArguments, matcher) {
+    return find(this.slots, matchesProperty('entityRule', resolveMatcher(bgioArguments, matcher)))
   }
 
-  put (entity) {
-    this.getSlot(entity.rule).put(entity)
+  return (bgioArguments, entity) {
+    this.getSlot(bgioArguments, resolveMatcher(bgioArguments, entity.rule)).return(entity)
     delete this.tracker[entity.entityId]
   }
 }
 
-function resolveMatcher (matcher, bgioArguments) {
+function resolveMatcher (bgioArguments, matcher) {
   const resolvedMatcher = { ...matcher }
   if (matcher.player === 'Current') {
     resolvedMatcher.player = bgioArguments.ctx.currentPlayer

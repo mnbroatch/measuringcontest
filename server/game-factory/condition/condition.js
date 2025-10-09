@@ -30,11 +30,13 @@ export default class Condition {
         conditionPayload.target =
           newCoordinates && parent.spaces[parent.getIndex(newCoordinates)]
       } else {
-        conditionPayload.target = G.bank.findAll(
+        conditionPayload.target = G.bank.findOne(
+          bgioArguments,
           {
             ...this.rule,
             matches: this.rule.target
-          })[0]
+          }
+        )
       }
     }
     if (this.rule.targets) {
@@ -43,7 +45,7 @@ export default class Condition {
       }
       conditionPayload.targets = this.rule.targets.reduce((acc, target) => [
         ...acc,
-        ...G.bank.findAll({ matches: target })
+        ...G.bank.findAll(bgioArguments, { matches: target })
       ], [])
     }
 

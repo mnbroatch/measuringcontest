@@ -14,6 +14,7 @@ check for handling of weird characters in game name, esp. quotes
 useles apigw url path paramter configs?
 can't have creator leave game
 grid is janky with background color used as cell border
+editor test game reset after game end doesn't show candidate moves
 
 
 (really just add separate spectator route?)

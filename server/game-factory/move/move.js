@@ -58,9 +58,9 @@ export default class Move {
           console.error(`non-automatic move rule didn't get argument: ${argName} in ${JSON.stringify(this.rule)}`)
         }
         if (argRule.location === 'bank') {
-          argument = bgioArguments.G.bank.getOne(argRule.matches, bgioArguments)
+          argument = bgioArguments.G.bank.getOne(bgioArguments, argRule.matches)
         } else {
-          argument = bgioArguments.G.bank.findOne(argRule, bgioArguments)
+          argument = bgioArguments.G.bank.findOne(bgioArguments, argRule)
         }
       }
       return {...acc, [argName]: argument}

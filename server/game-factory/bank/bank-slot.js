@@ -31,7 +31,7 @@ class BankSlot {
     return toReturn
   }
 
-  put (entity) {
+  return (entity) {
     entity.state = {}
     if (this.remaining !== undefined) {
       this.remaining += 1

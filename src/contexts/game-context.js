@@ -8,7 +8,7 @@ const GameContext = createContext({
 // TODO: make this based on move type instead of move name, using automatic: true as a hint
 const clicksMap = {
   placePlayerMarker: [
-    (moveRule, bgioState) => bgioState.G.bank.findAll(moveRule.arguments.destination, bgioState)
+    (moveRule, bgioState) => bgioState.G.bank.findAll(bgioState, moveRule.arguments.destination)
   ]
 }
 
