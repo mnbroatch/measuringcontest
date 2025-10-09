@@ -11,9 +11,6 @@ export default function IndexPage () {
   const deleteRoomMutation = useDeleteRoomMutation()
   return !myRooms.isLoading && myRooms.data && (
     <>
-      <Link to="/">
-        home
-      </Link>
       {!myRooms.data?.length && (
         <>
           <button onClick={() => { createRoomMutation.mutate() }}>

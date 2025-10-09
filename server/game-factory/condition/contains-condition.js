@@ -7,7 +7,7 @@ export default class ContainsCondition extends Condition {
     if (!target) {
       return { matches: [], conditionIsMet: false }
     } else {
-      const matches = target.entities.filter(_matches(this.rule.entity));
+      const matches = target.entities.filter(e => _matches(this.rule.entity)(e.rule));
       return { matches, conditionIsMet: !!matches.length }
     }
   }

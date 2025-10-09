@@ -2,7 +2,7 @@ export default class Condition {
   constructor (rule) {
     this.rule = rule;
   }
-
+  
   check (bgioArguments, payload = {}) {
     const { G } = bgioArguments
     const conditionPayload = {...payload}

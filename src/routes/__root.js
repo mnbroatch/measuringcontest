@@ -1,5 +1,5 @@
 import React from 'react'
-import { createRootRoute, Outlet, redirect } from '@tanstack/react-router'
+import { createRootRoute, Outlet, Link, redirect } from '@tanstack/react-router'
 import { useCognitoQuery } from '../queries/use-cognito-query.js';
 import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
 
@@ -8,6 +8,12 @@ export default function Root () {
 
   return (
     <>
+      <Link style={{ paddingRight: '5px' }} to="/">
+        home
+      </Link>
+      <Link style={{ paddingRight: '5px' }} to="/editor">
+        editor
+      </Link>
       {auth?.userId}
       <div className="login-bar">
         {!auth.loading && !auth.idToken && (

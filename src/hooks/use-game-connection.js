@@ -57,6 +57,17 @@ export default function useGameConnection () {
       : []
   }
 
+  function isGDesynced(G) {
+    if (!G) return false
+    const trackerEntity = Object.values(G.bank.tracker).find(e => e.entityId === 1)
+    const gridEntity = G.sharedBoard[0].spaces.find(e => e.entityId === 1)
+    console.log('trackerEntity', trackerEntity)
+    console.log('gridEntity', gridEntity)
+    console.log('trackerEntity === gridEntity', trackerEntity === gridEntity)
+    return trackerEntity === gridEntity
+  }
+  isGDesynced(state?.G)
+
   return {
     client,
     state,
