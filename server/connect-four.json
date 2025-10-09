@@ -12,7 +12,7 @@
       "count": "Infinity"
     }
   ],
-  "initialSharedBoard": [{"name": "mainGrid"}],
+  "sharedBoard": [{"name": "mainGrid"}],
   "minPlayers": 2,
   "maxPlayers": 2,
   "turn": {
@@ -21,27 +21,33 @@
   },
   "moves": {
     "placePlayerMarker": {
-      "type": "PlaceEntity",
-      "entity": {
-        "name": "playerMarker",
-        "player": "Current"
-      },
-      "destination": {
-        "matches": { "type": "Space" },
-        "conditions": [
-          {
-            "type": "Not",
-            "conditions": [{"type": "Contains"}]
-          },
-          {
-            "target": {
-              "targetingType": "Relative",
-              "location": [0, 1]
-            },
-            "type": "Not",
-            "conditions": [{ "type": "IsEmpty" }]
+      "type": "MoveEntity",
+      "arguments": {
+        "entity": {
+          "automatic": true,
+          "location": "bank", 
+          "matches": {
+            "name": "playerMarker",
+            "player": "Current"
           }
-        ]
+        },
+        "destination": {
+          "matches": { "type": "Space" },
+          "conditions": [
+            {
+              "type": "Not",
+              "conditions": [{"type": "Contains"}]
+            },
+            {
+              "target": {
+                "targetingType": "Relative",
+                "location": [0, 1]
+              },
+              "type": "Not",
+              "conditions": [{ "type": "IsEmpty" }]
+            }
+          ]
+        }
       }
     }
   },

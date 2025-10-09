@@ -12,9 +12,7 @@
       "count": "Infinity"
     }
   ],
-  "sharedBoard": [
-    { "name": "mainGrid" }
-  ],
+  "sharedBoard": [{ "name": "mainGrid" }],
   "minPlayers": 2,
   "maxPlayers": 2,
   "turn": {
