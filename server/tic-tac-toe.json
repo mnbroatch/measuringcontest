@@ -12,11 +12,8 @@
       "count": "Infinity"
     }
   ],
-  "initialPlacements": [
-    {
-      "entity": { "name": "mainGrid" },
-      "destination": { "name": "sharedBoard" }
-    }
+  "sharedBoard": [
+    { "name": "mainGrid" }
   ],
   "minPlayers": 2,
   "maxPlayers": 2,
@@ -26,11 +23,15 @@
   },
   "moves": {
     "placePlayerMarker": {
-      "type": "PlaceEntity",
+      "type": "MoveEntity",
       "arguments": {
         "entity": {
-          "name": "playerMarker",
-          "player": "Current"
+          "automatic": true,
+          "location": "bank", 
+          "matches": {
+            "name": "playerMarker",
+            "player": "Current"
+          }
         },
         "destination": {
           "matches": { "type": "Space" },

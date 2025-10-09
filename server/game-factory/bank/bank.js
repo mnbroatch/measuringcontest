@@ -33,12 +33,18 @@ class Bank {
     return this.tracker[entityId]
   }
 
-  findAll ({ matches, conditions = [] }, bgioArguments = {}) {
+  findAll (rule, bgioArguments = {}) {
+    const { matches, conditions = [] } = rule
+    const matcher = resolveMatcher(matches)
     return filter(
       Object.values(this.tracker),
-      (entity) => matchesProperty('rule', matches)(entity)
+      (entity) => matchesProperty('rule', matcher)(entity)
         && conditions.every(condition => conditionFactory(condition).isMet(bgioArguments, { target: entity }))
     )
+  }
+
+  findOne (rule, bgioArguments) {
+    return this.findAll(rule, bgioArguments)[0]
   }
 
   findParent (entity) {
@@ -48,24 +54,32 @@ class Bank {
     )
   }
  
-  getOne (matcher) {
-    const entity = this.getSlot(matcher).getOne()
+  getOne (matcher, bgioArguments) {
+    const entity = this.getSlot(resolveMatcher(matcher, bgioArguments)).getOne()
     return entity
   }
 
-  getMultiple (matcher, count) {
-    const entities = this.getSlot(matcher).getMultiple(count)
+  getMultiple (matcher, count, bgioArguments) {
+    const entities = this.getSlot(resolveMatcher(matcher, bgioArguments)).getMultiple(count)
     return entities
   }
 
-  getSlot (matcher) {
-    return find(this.slots, matchesProperty('entityRule', matcher))
+  getSlot (matcher, bgioArguments) {
+    return find(this.slots, matchesProperty('entityRule', resolveMatcher(matcher, bgioArguments)))
   }
 
   put (entity) {
     this.getSlot(entity.rule).put(entity)
     delete this.tracker[entity.entityId]
   }
+}
+
+function resolveMatcher (matcher, bgioArguments) {
+  const resolvedMatcher = { ...matcher }
+  if (matcher.player === 'Current') {
+    resolvedMatcher.player = bgioArguments.ctx.currentPlayer
+  }
+  return resolvedMatcher
 }
 
 export default Bank

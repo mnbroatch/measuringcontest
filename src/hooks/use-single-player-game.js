@@ -3,6 +3,7 @@ import { serialize, deserialize } from "wackson";
 import { useGameserverConnection } from "./use-gameserver-connection.js";
 import gameFactory from '../../server/game-factory/game-factory.js'
 import { registry } from "../../server/game-factory/registry.js";
+import preparePayload from "../../server/game-factory/utils/prepare-payload.js";
 
 export default function useSinglePlayerGame (gameRules, numPlayers) {
   const game = useMemo(() => gameRules && gameFactory(JSON.parse(gameRules), 'WIP'), [gameRules])
@@ -44,14 +45,4 @@ export default function useSinglePlayerGame (gameRules, numPlayers) {
     game,
     moves,
   }
-}
-
-function preparePayload (payload) {
-  const payloadCopy = { ...payload }
-  payloadCopy.entities =
-    Object.entries(payloadCopy.entities).reduce((acc, [key, entity]) => ({
-      ...acc,
-      [key]: entity.entityId
-    }), {})
-  return JSON.parse(serialize(payloadCopy, { deduplicateInstances: false }))
 }

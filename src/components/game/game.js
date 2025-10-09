@@ -11,7 +11,7 @@ export default function Game ({ bgioState }) {
   return (
     <>
       <div className="shared-board">
-        {G.sharedBoard.map((entity, i) => <Entity key={i} entity={entity} />)}
+        {G.sharedBoard.entities.map((entity, i) => <Entity key={i} entity={entity} />)}
       </div>
     </>
   )

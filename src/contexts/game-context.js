@@ -1,13 +1,14 @@
 import React, { createContext, useContext, useReducer, useLayoutEffect } from 'react';
-import { preparePayload } from "../hooks/use-game-connection.js";
+import preparePayload from "../../server/game-factory/utils/prepare-payload.js";
 
 const GameContext = createContext({
   dispatch: () => {},
 });
 
+// TODO: make this based on move type instead of move name, using automatic: true as a hint
 const clicksMap = {
   placePlayerMarker: [
-    (moveRule, bgioState) => bgioState.G.bank.findAll(moveRule.destination, bgioState)
+    (moveRule, bgioState) => bgioState.G.bank.findAll(moveRule.arguments.destination, bgioState)
   ]
 }
 
@@ -100,7 +101,7 @@ export function GameProvider ({ gameConnection, children, isSpectator }) {
 function createPayload (moveName, targets) {
   switch (moveName) {
     case 'placePlayerMarker':
-      return { entities: { destination: targets[0] } }
+      return { arguments: { destination: targets[0] } }
   }
 }
 
@@ -113,7 +114,7 @@ function getWinnerAfterMove (gameConnection, move, movePayload) {
   const pureMove = move.moveInstance.createBoardgameIOCompatibleMove()
   const newG = pureMove(originalGState, preparePayload(movePayload))
 
-  return gameConnection.game.endIf({
+  return gameConnection.game.endIf?.({
     ...gameConnection.state,
     G: newG
   })

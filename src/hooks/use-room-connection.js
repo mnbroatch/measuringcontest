@@ -7,6 +7,7 @@ import { useJoinRoomMutation } from "../queries/use-join-room-mutation.js";
 import { useRoomQuery } from "../queries/use-room-query.js"
 import { useGameserverConnection } from "./use-gameserver-connection.js";
 import { registry } from "../../server/game-factory/registry.js";
+import preparePayload from "../../server/game-factory/utils/prepare-payload.js";
 
 const RoomGame = {
   name: 'bgestagingroom',
@@ -117,14 +118,4 @@ export default function useRoomConnection () {
     game,
     moves,
   }
-}
-
-function preparePayload (payload) {
-  const payloadCopy = { ...payload }
-  payloadCopy.entities =
-    Object.entries(payloadCopy.entities).reduce((acc, [key, entity]) => ({
-      ...acc,
-      [key]: entity.entityId
-    }), {})
-  return JSON.parse(serialize(payloadCopy, { deduplicateInstances: false }))
 }

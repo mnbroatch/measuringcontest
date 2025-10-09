@@ -8,10 +8,6 @@ export default class Move {
     this.rule = rule
   }
 
-  // maybe?
-  isPartialValid (payload) {
-  }
-
   isValid (bgioArguments, payload) {
     const unmetConditions = []
     this.conditionMappings.forEach(({ rule, mappings }) => {
@@ -54,20 +50,43 @@ export default class Move {
       }), {})
   }
 
+  resolveArguments (bgioArguments, payload) {
+    return Object.entries(this.rule.arguments).reduce((acc, [argName, argRule]) => {
+      let argument = payload?.arguments[argName]
+      if (!argument) {
+        if (!argRule.automatic) {
+          console.error(`non-automatic move rule didn't get argument: ${argName} in ${JSON.stringify(this.rule)}`)
+        }
+        if (argRule.location === 'bank') {
+          argument = bgioArguments.G.bank.getOne(argRule.matches, bgioArguments)
+        } else {
+          argument = bgioArguments.G.bank.findOne(argRule, bgioArguments)
+        }
+      }
+      return {...acc, [argName]: argument}
+    }, {})
+  }
+
+
   doMove (bgioArguments, payload) {
-    if (!this.isValid(bgioArguments, payload)) {
+    const resolvedPayload = {
+      ...payload,
+      arguments: this.resolveArguments(bgioArguments, payload)
+    }
+
+    if (!this.isValid(bgioArguments, resolvedPayload)) {
       return INVALID_MOVE
     } else {
-      this.do(bgioArguments, payload)
-      return G
+      this.do(bgioArguments, resolvedPayload)
+      return bgioArguments.G
     }
   }
 }
 
 function revivePayload (serializablePayload, G) {
   const payload = deserialize(JSON.stringify(serializablePayload), registry)
-  payload.entities =
-    Object.entries(payload.entities).reduce((acc, [key, entityId]) => ({
+  payload.arguments =
+    Object.entries(payload.arguments).reduce((acc, [key, entityId]) => ({
       ...acc,
       [key]: G.bank.locate(entityId)
     }), {})

@@ -1,59 +1,29 @@
-import filter from "lodash/filter.js";
 import get from "lodash/get.js";
 import { serialize, deserialize } from "wackson";
 import moveFactory from "./move/move-factory.js";
 import conditionFactory from "./condition/condition-factory.js";
 import { registry } from "./registry.js";
 import Bank from "./bank/bank.js";
+import expandGameRules from "./expand-game-rules.js";
 
-// Things we always want, don't need to configure, and
-// want to treat as first-class citizens
-const invariantEntities = [
-  { type: "space" },
-  {
-    type: "space",
-    name: 'sharedBoard'
-  }
-]
-
-export default function gameFactory (rules, rulesHash) {
+export default function gameFactory (gameRules, rulesHash) {
   const game = { name: rulesHash }
+  const rules = expandGameRules(gameRules)
 
   game.setup = (bgioArguments) => {
     const { ctx } = bgioArguments
     const initialState = {};
-    let entityDefinitions
-    if (rules.entities) {
-      entityDefinitions = [
-        ...invariantEntities,
-        ...expandEntityDefinitions(rules.entities, ctx),
-      ]
-      initialState.bank = new Bank(entityDefinitions)
-    }
 
+    const entityDefinitions = expandEntityDefinitions(rules.entities, ctx)
+    initialState.bank = new Bank(entityDefinitions)
     initialState.sharedBoard = initialState.bank.getOne({ name: "sharedBoard" })
 
-    if (rules.initialPlacements) {
-      rules.initialPlacements.forEach(placement => {
-        const placementRule = {
-          ...placement,
-          type: 'PlaceEntity',
-        }
-        moveFactory(placementRule).moveInstance.do({
-          ...bgioArguments,
-          G: initialState
-        });
-      })
-
-      const initialSharedBoardDefinitions =
-        rules.initialSharedBoard.reduce((acc, boardMatcher) => [
-          ...acc,
-          ...
-        ], [])
-
-      initialState.sharedBoard =
-        initialSharedBoardDefinitions.map(b => initialState.bank.getOne(b))
-    }
+    rules.initialMoves?.forEach(moveRule => {
+      moveFactory(moveRule).moveInstance.doMove({
+        ...bgioArguments,
+        G: initialState
+      });
+    })
     return JSON.parse(serialize(initialState, { deduplicateInstances: false }));
   }
 
@@ -61,7 +31,7 @@ export default function gameFactory (rules, rulesHash) {
     game.moves =
       Object.entries(rules.moves).reduce((acc, [name, moveDefinition]) => ({
         ...acc,
-        [name]: eroveFactory(moveDefinition)
+        [name]: moveFactory(moveDefinition)
       }), {})
   }
 
