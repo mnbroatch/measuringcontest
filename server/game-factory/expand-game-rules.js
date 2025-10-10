@@ -50,6 +50,7 @@ export default function expandGameRules (gameRules) {
 
   expandEntities(rules)
   expandInitialPlacements(rules)
+  console.log('rules', rules)
 
   return rules
 }
