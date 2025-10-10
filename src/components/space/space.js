@@ -23,11 +23,12 @@ function calculateOptimalCols(numSquares) {
 
 export default function Space ({ space }) {
   const { dispatch, allClickable, currentMoveTargets } = useGame()
+  const { entities, entityId } = space.attributes
 
-  const columns = calculateOptimalCols(space.entities.length)
+  const columns = calculateOptimalCols(entities.length)
 
-  const clickable = [...allClickable].map(e => e.entityId).includes(space.entityId)
-  const targeted = currentMoveTargets?.map(e => e.entityId).includes(space.entityId)
+  const clickable = [...allClickable].map(e => e.entityId).includes(entityId)
+  const targeted = currentMoveTargets?.map(e => e.entityId).includes(entityId)
 
   return (
     <a
@@ -49,7 +50,7 @@ export default function Space ({ space }) {
             placeItems: 'center',
           }}
         >
-          {Array.from({ length: space.entities.length }, (_, i) => (
+          {Array.from({ length: entities.length }, (_, i) => (
             <div
               className="space__entity-grid__cell"
               style={{
@@ -58,7 +59,7 @@ export default function Space ({ space }) {
               }}
               key={i}
             >
-              <Entity entity={space.entities[i]} />
+              <Entity entity={entities[i]} />
             </div>
           ))}
         </div>

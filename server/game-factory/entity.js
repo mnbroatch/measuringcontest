@@ -18,4 +18,12 @@ export default class Entity {
       Object.assign(this.state, this.rule.state)
     }
   }
+
+  get attributes () {
+    return {
+      ...this,
+      ...this.rule,
+      ...this.state
+    }
+  }
 }

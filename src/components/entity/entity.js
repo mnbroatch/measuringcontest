@@ -6,7 +6,9 @@ import Space from "../space/space.js";
 export default function Entity ({ entity }) {
   const { allClickable } = useGame()
   const isClickable = allClickable.has(entity)
-  switch (entity.rule.type) {
+  const attributes = entity.attributes
+
+  switch (attributes.type) {
     case 'Grid':
       return <Grid grid={entity} isClickable={isClickable} />
     case 'Space':
@@ -15,7 +17,7 @@ export default function Entity ({ entity }) {
       return <div
         className={[
           'entity',
-          entity.rule.player && `player-${entity.rule.player}`,
+          attributes.player && `player-${attributes.player}`,
           allClickable.has(entity) && 'space--clickable'
         ].filter(Boolean).join(' ')}
       ></div>

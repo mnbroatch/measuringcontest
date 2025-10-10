@@ -7,11 +7,11 @@ class BankSlot {
     this.remaining = +rule.count || 1
   }
 
-  getOne () {
-    return this.getMultiple(1)[0]
+  getOne (options) {
+    return this.getMultiple(1, options)[0]
   }
 
-  getMultiple (count) {
+  getMultiple (count, options) {
     const toReturn = []
     if (this.remaining >= count) {
       if (this.remaining) {
@@ -27,6 +27,11 @@ class BankSlot {
           )
         )
       }
+    }
+    if (options.state) {
+      toReturn.forEach(entity => {
+        entity.state = { ...entity.state, ...options.state }
+      })
     }
     return toReturn
   }

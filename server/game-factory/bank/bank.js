@@ -54,12 +54,13 @@ class Bank {
     )
   }
  
+  // consider separating state from matcher
   getOne (bgioArguments, matcher) {
     const slot = this.getSlot(bgioArguments, matcher)
     if (!slot) {
       console.error(`No matching slot for ${JSON.stringify(matcher)}`)
     }
-    return slot.getOne()
+    return slot.getOne({ state: matcher.state })
   }
 
   getMultiple (bgioArguments, matcher, count) {
@@ -67,7 +68,7 @@ class Bank {
     if (!slot) {
       console.error(`No matching slot for ${JSON.stringify(matcher)}`)
     }
-    return slot.getMultiple(count)
+    return slot.getMultiple(count, { state: matcher.state })
   }
 
   getSlot (bgioArguments, matcher) {

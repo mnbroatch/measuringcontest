@@ -2,9 +2,7 @@ import React from 'react';
 import Entity from "../entity/entity.js";
 
 export default function Grid ({ grid }) {
-  const { rule, spaces } = grid;
-  const { width, height } = rule;
-  
+  const { width, height, spaces } = grid.attributes;
   return (
     <div
       className="grid"

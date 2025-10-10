@@ -33,10 +33,7 @@
         },
         "destination": {
           "matcher": { "type": "Space" },
-          "conditions": [{
-            "type": "Not",
-            "conditions": [{"type": "Contains"}]
-          }]
+          "conditions": [{ "type": "IsEmpty" }]
         }
       }
     }
@@ -51,9 +48,7 @@
           "type": "ContainsSame",
           "properties": ["player"]
         }],
-        "spaceConditions": [
-          { "type": "Contains" }
-        ]
+        "spaceConditions": [{"type": "Contains"}]
       }],
       "result": {
         "winner": [ "conditionResults", 0, "matches", 0, "spaces", 0, "entities", 0, "rule", "player" ]
