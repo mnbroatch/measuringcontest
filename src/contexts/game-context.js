@@ -5,7 +5,7 @@ const GameContext = createContext({
   dispatch: () => {},
 });
 
-// TODO: make this based on move type instead of move name, using automatic: true as a hint
+// TODO: make this based on move type instead of move name, using automatic: true as a hint for which entities don't require a step
 const clicksMap = {
   placePlayerMarker: [
     (moveRule, bgioState) => bgioState.G.bank.findAll(bgioState, moveRule.arguments.destination)

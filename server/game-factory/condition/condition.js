@@ -16,13 +16,13 @@ export default class Condition {
       }
       if (this.rule.target.targetingType === 'Relative') {
         let parent = G.bank.findParent(conditionPayload.target)
-        // we always want the SpaceGroup, whether target is Space or Entity
-        while (parent.rule.type !== 'Grid') {
-          parent = G.bank.findParent(parent)
-          if (!parent) {
-            throw new Error(`couldnt find Grid parent of entity with rule ${conditionPayload.target.rule}`)
-          }
-        }
+        // // we always want the SpaceGroup, whether target is Space or Entity
+        // while (parent.rule.type !== 'Grid') {
+        //   parent = G.bank.findParent(parent)
+        //   if (!parent) {
+        //     throw new Error(`couldnt find Grid parent of entity with rule ${conditionPayload.target.rule}`)
+        //   }
+        // }
         const oldCoordinates =
           parent.getCoordinates(conditionPayload.target.rule.index)
         const newCoordinates =
@@ -47,6 +47,11 @@ export default class Condition {
         ...acc,
         ...G.bank.findAll(bgioArguments, { matcher: target })
       ], [])
+    }
+
+    // nonexistent relative spaces for instance fulfill no conditions ever
+    if (!conditionPayload.target && !conditionPayload.targets?.length) {
+      return { conditionIsMet: false }
     }
 
     return this.checkCondition(bgioArguments, conditionPayload)

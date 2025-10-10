@@ -34,14 +34,22 @@
         "destination": {
           "matcher": { "type": "Space" },
           "conditions": [
-            {"type": "IsEmpty"},
             {
-              "target": {
-                "targetingType": "Relative",
-                "location": [0, 1]
-              },
               "type": "Not",
-              "conditions": [{ "type": "IsEmpty" }]
+              "conditions": [{"type": "Contains"}]
+            },
+            {
+              "type": "Not",
+              "conditions": [
+                {
+                  "target": {
+                    "targetingType": "Relative",
+                    "location": [0, 1]
+                  },
+                  "type": "Not",
+                  "conditions": [{"type": "Contains"}]
+                }
+              ]
             }
           ]
         }

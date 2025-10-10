@@ -1,9 +1,9 @@
 import Not from "./not-condition.js";
 import EverySpaceCondition from "./every-space-condition.js";
 import ContainsCondition from "./contains-condition.js";
-import IsEmptyCondition from "./is-empty-condition.js";
 import ContainsSameCondition from "./contains-same-condition.js";
 import ContainsLine from "./contains-line-condition.js";
+import InLine from "./in-line-condition.js";
 // import BingoCondition from "./bingo-condition.js";
 // import SomeCondition from "./some-condition.js";
 // import RelativeMoveCondition from "./relative-move-condition.js";
@@ -11,14 +11,14 @@ import ContainsLine from "./contains-line-condition.js";
 export default function conditionFactory(rule) {
   if (rule.type === "Contains") {
     return new ContainsCondition(rule);
-  } else if (rule.type === "IsEmpty") {
-    return new IsEmptyCondition(rule);
   } else if (rule.type === "Not") {
     return new Not(rule);
   } else if (rule.type === "EverySpace") {
     return new EverySpaceCondition(rule);
   } else if (rule.type === "ContainsSame") {
     return new ContainsSameCondition(rule);
+  } else if (rule.type === "InLine") {
+    return new InLine(rule);
   // } else if (rule.type === "bingo") {
     // return new BingoCondition(rule);
   // } else if (rule.type === "some") {
