@@ -4,21 +4,21 @@ import SpaceGroupCondition from "../condition/space-group-condition.js";
 const relativeCoordinates = [[1, 0], [1, 1], [0, 1], [-1, 1]];
 
 export default class ContainsLine extends SpaceGroupCondition {
-  checkForPattern(bgioArguments, space, target, matchesSoFar) {
+  checkForPattern(bgioArguments, space, target, previouslyFoundMatches) {
     if (!this.checkSpace(bgioArguments, space)) {
       return { matches: [] };
     }
 
     const { length } = this.rule;
     const coordinates = target.getCoordinates(space.rule.index);
-    const matches = [];
+    const matchesForThisSpace = [];
 
     for (let d = 0; d < relativeCoordinates.length; d++) {
       const relativeCoordinate = relativeCoordinates[d];
       const matchingSpaces = [space];
 
       // prevent overlapping lines in same relativeCoordinate
-      if (matchesSoFar.some(match =>
+      if (previouslyFoundMatches.some(match =>
         match.relativeCoordinate === relativeCoordinate && match.spaces.includes(space)
       )) {
         continue
@@ -42,7 +42,7 @@ export default class ContainsLine extends SpaceGroupCondition {
           // insert at right place between pre-checked d=0 and d=farthest
           matchingSpaces.splice(d, 0, newSpace);
           if (matchingSpaces.length === length) {
-            matches.push({ relativeCoordinate, spaces: matchingSpaces });
+            matchesForThisSpace.push({ relativeCoordinate, spaces: matchingSpaces });
           }
         } else {
           break;
@@ -50,6 +50,6 @@ export default class ContainsLine extends SpaceGroupCondition {
       }
     }
 
-    return { matches };
+    return { matches: matchesForThisSpace };
   }
 }

@@ -29,12 +29,12 @@ function expandInitialPlacements (rules) {
       type: 'MoveEntity',
       arguments: {
         entity: {
-          matches: placementMatchers.entity,
+          matcher: placementMatchers.entity,
           automatic: true,
           location: 'bank'
         },
         destination: {
-          matches: placementMatchers.destination,
+          matcher: placementMatchers.destination,
           automatic: true
         },
       }

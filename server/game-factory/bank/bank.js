@@ -35,10 +35,10 @@ class Bank {
   }
 
   findAll (bgioArguments, rule) {
-    const { matches, conditions = [] } = rule
+    const { matcher, conditions = [] } = rule
     return filter(
       Object.values(this.tracker),
-      (entity) => entityMatches(bgioArguments, matches, entity)
+      (entity) => entityMatches(bgioArguments, matcher, entity)
         && conditions.every(condition => conditionFactory(condition).isMet(bgioArguments, { target: entity }))
     )
   }

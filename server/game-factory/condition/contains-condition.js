@@ -8,7 +8,7 @@ export default class ContainsCondition extends Condition {
     if (!target) {
       return { matches: [], conditionIsMet: false }
     } else {
-      const matches = target.entities.filter(entity => entityMatches(bgioArguments, this.rule.matches, entity))
+      const matches = target.entities.filter(entity => entityMatches(bgioArguments, this.rule.matcher, entity))
       return { matches, conditionIsMet: !!matches.length }
     }
   }

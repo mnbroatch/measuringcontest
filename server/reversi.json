@@ -22,28 +22,36 @@
     {
       "entity": {
         "name": "disc",
-        "side": "white"
+        "state": {
+          "side": "white"
+        }
       },
       "destination": { "index": 27 }
     },
     {
       "entity": {
         "name": "disc",
-        "side": "white"
+        "state": {
+          "side": "white"
+        }
       },
       "destination": { "index": 36 }
     },
     {
       "entity": {
         "name": "disc",
-        "side": "black"
+        "state": {
+          "side": "black"
+        }
       },
       "destination": { "index": 28 }
     },
     {
       "entity": {
         "name": "disc",
-        "side": "black"
+        "state": {
+          "side": "black"
+        }
       },
       "destination": { "index": 35 }
     }
@@ -61,13 +69,13 @@
         "entity": {
           "automatic": true,
           "location": "bank", 
-          "matches": {
+          "matcher": {
             "name": "playerMarker",
             "player": "Current"
           }
         },
         "destination": {
-          "matches": { "type": "Space" },
+          "matcher": { "type": "Space" },
           "conditions": [{
             "type": "Not",
             "conditions": [{"type": "Contains"}]

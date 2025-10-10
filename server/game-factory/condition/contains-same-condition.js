@@ -12,7 +12,7 @@ export default class ContainsSame extends Condition {
     const conditionIsMet = first.entities.some(entity => {
       const condition = conditionFactory({
         type: "Contains",
-        entity: pick(entity.rule, this.rule.properties)
+        matcher: pick(entity.rule, this.rule.properties)
       })
       return restEntities.every(ent => condition.isMet(bgioArguments, { target: ent }))
     })

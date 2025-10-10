@@ -34,7 +34,7 @@ export default class Condition {
           bgioArguments,
           {
             ...this.rule,
-            matches: this.rule.target
+            matcher: this.rule.target
           }
         )
       }
@@ -45,7 +45,7 @@ export default class Condition {
       }
       conditionPayload.targets = this.rule.targets.reduce((acc, target) => [
         ...acc,
-        ...G.bank.findAll(bgioArguments, { matches: target })
+        ...G.bank.findAll(bgioArguments, { matcher: target })
       ], [])
     }
 

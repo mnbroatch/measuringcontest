@@ -26,13 +26,13 @@
         "entity": {
           "automatic": true,
           "location": "bank", 
-          "matches": {
+          "matcher": {
             "name": "playerMarker",
             "player": "Current"
           }
         },
         "destination": {
-          "matches": { "type": "Space" },
+          "matcher": { "type": "Space" },
           "conditions": [
             {
               "type": "Not",

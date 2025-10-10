@@ -28,13 +28,10 @@ export default class SpaceGroupCondition extends Condition {
       )
     if (spaceMeetsConditions && this.rule.spaceGroupConditions) {
       return this.rule.spaceGroupConditions
-        .every(rule => {
-          return conditionFactory(rule)
-            .isMet(
-              bgioArguments,
-              { targets: [ ...getRelevantSpaces(rule, space, patternSoFar), space ] }
-            )
-        })
+        .every(rule => conditionFactory(rule).isMet(
+          bgioArguments,
+          { targets: [ ...getRelevantSpaces(rule, space, patternSoFar) ] }
+        ))
     } else {
       return spaceMeetsConditions
     }
