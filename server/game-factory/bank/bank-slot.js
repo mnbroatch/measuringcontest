@@ -1,10 +1,10 @@
 // lazily create entities as needed, and also function as an index of entities created
 class BankSlot {
-  constructor (entityRule, bank) {
+  constructor (rule, bank) {
     this.bank = bank
-    this.entityRule = entityRule
+    this.rule = rule
     this.pool = []
-    this.remaining = +entityRule.count || 1
+    this.remaining = +rule.count || 1
   }
 
   getOne () {
@@ -23,7 +23,7 @@ class BankSlot {
       if (remainder > 0) {
         toReturn.push(
           ...Array.from(new Array(remainder)).map(() =>
-            this.bank.createEntity(this.entityRule)
+            this.bank.createEntity(this.rule)
           )
         )
       }
@@ -31,7 +31,7 @@ class BankSlot {
     return toReturn
   }
 
-  return (entity) {
+  returnToBank (entity) {
     entity.state = {}
     if (this.remaining !== undefined) {
       this.remaining += 1

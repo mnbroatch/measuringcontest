@@ -1,13 +1,15 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import debounce from 'lodash/debounce'
 import ticTacToe from "../../../server/tic-tac-toe.json";
+import ticTacToeTwo from "../../../server/tic-tac-toe-two.json";
 import connectFour from "../../../server/connect-four.json";
 // import reversi from "../../../server/reversi.json";
 
 export default function GameEditor ({ initialGameName, initialGameRules, saveGame }) {
   const [gameRules, setGameRules] = useState(
+    initialGameRules || JSON.stringify(ticTacToeTwo, null, 2)
     // initialGameRules || JSON.stringify(ticTacToe, null, 2)
-    initialGameRules || JSON.stringify(connectFour, null, 2)
+    // initialGameRules || JSON.stringify(connectFour, null, 2)
     // initialGameRules || JSON.stringify(reversi, null, 2)
   )
   const [gameName, setGameName] = useState(initialGameName)

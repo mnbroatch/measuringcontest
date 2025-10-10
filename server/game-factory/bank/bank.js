@@ -1,6 +1,6 @@
 import find from 'lodash/find.js'
 import filter from 'lodash/filter.js'
-import matchesProperty from 'lodash/matchesProperty.js'
+import entityMatches from '../utils/entity-matches.js'
 import { registry } from '../registry.js'
 import BankSlot from './bank-slot.js'
 import conditionFactory from "../condition/condition-factory.js";
@@ -12,11 +12,12 @@ class Bank {
     this.slots = entityRules.map(rule => new BankSlot(rule, this))
   }
 
-  createEntity (definition) {
+  createEntity (definition, options) {
     const entity = new (registry[definition.type || 'Entity'])(
       {
         bank: this,
-        fromBank: true
+        fromBank: true,
+        ...options
       },
       definition,
       this.currentEntityId++
@@ -35,10 +36,9 @@ class Bank {
 
   findAll (bgioArguments, rule) {
     const { matches, conditions = [] } = rule
-    const matcher = resolveMatcher(bgioArguments, matches)
     return filter(
       Object.values(this.tracker),
-      (entity) => matchesProperty('rule', matcher)(entity)
+      (entity) => entityMatches(bgioArguments, matches, entity)
         && conditions.every(condition => conditionFactory(condition).isMet(bgioArguments, { target: entity }))
     )
   }
@@ -55,31 +55,29 @@ class Bank {
   }
  
   getOne (bgioArguments, matcher) {
-    const entity = this.getSlot(bgioArguments, resolveMatcher(bgioArguments, matcher)).getOne()
-    return entity
+    const slot = this.getSlot(bgioArguments, matcher)
+    if (!slot) {
+      console.error(`No matching slot for ${JSON.stringify(matcher)}`)
+    }
+    return slot.getOne()
   }
 
   getMultiple (bgioArguments, matcher, count) {
-    const entities = this.getSlot(bgioArguments, resolveMatcher(bgioArguments, matcher)).getMultiple(count)
-    return entities
+    const slot = this.getSlot(bgioArguments, matcher)
+    if (!slot) {
+      console.error(`No matching slot for ${JSON.stringify(matcher)}`)
+    }
+    return slot.getMultiple(count)
   }
 
   getSlot (bgioArguments, matcher) {
-    return find(this.slots, matchesProperty('entityRule', resolveMatcher(bgioArguments, matcher)))
+    return this.slots.find(slot => entityMatches(bgioArguments, matcher, slot))
   }
 
-  return (bgioArguments, entity) {
-    this.getSlot(bgioArguments, resolveMatcher(bgioArguments, entity.rule)).return(entity)
+  returnToBank (bgioArguments, entity) {
+    this.getSlot(bgioArguments, entity.rule).returnToBank(entity)
     delete this.tracker[entity.entityId]
   }
-}
-
-function resolveMatcher (bgioArguments, matcher) {
-  const resolvedMatcher = { ...matcher }
-  if (matcher.player === 'Current') {
-    resolvedMatcher.player = bgioArguments.ctx.currentPlayer
-  }
-  return resolvedMatcher
 }
 
 export default Bank

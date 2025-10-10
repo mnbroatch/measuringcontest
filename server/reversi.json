@@ -8,16 +8,44 @@
     },
     {
       "name": "disc",
-      "sides": [
-        { "name": "white" },
-        { "name": "black" }
-      ],
+      "state": {
+        "side": [
+          { "side": "white" },
+          { "side": "black" }
+        ]
+      },
       "count": "Infinity"
     }
   ],
+  "sharedBoard": [{ "name": "mainGrid" }],
   "initialPlacements": [
     {
-      entit
+      "entity": {
+        "name": "disc",
+        "side": "white"
+      },
+      "destination": { "index": 27 }
+    },
+    {
+      "entity": {
+        "name": "disc",
+        "side": "white"
+      },
+      "destination": { "index": 36 }
+    },
+    {
+      "entity": {
+        "name": "disc",
+        "side": "black"
+      },
+      "destination": { "index": 28 }
+    },
+    {
+      "entity": {
+        "name": "disc",
+        "side": "black"
+      },
+      "destination": { "index": 35 }
     }
   ],
   "minPlayers": 2,
@@ -28,17 +56,23 @@
   },
   "moves": {
     "placePlayerMarker": {
-      "type": "PlaceEntity",
-      "entity": {
-        "name": "playerMarker",
-        "player": "Current"
-      },
-      "destination": {
-        "matches": { "type": "Space" },
-        "conditions": [{
-          "type": "Not",
-          "conditions": [{"type": "Contains"}]
-        }]
+      "type": "MoveEntity",
+      "arguments": {
+        "entity": {
+          "automatic": true,
+          "location": "bank", 
+          "matches": {
+            "name": "playerMarker",
+            "player": "Current"
+          }
+        },
+        "destination": {
+          "matches": { "type": "Space" },
+          "conditions": [{
+            "type": "Not",
+            "conditions": [{"type": "Contains"}]
+          }]
+        }
       }
     }
   },

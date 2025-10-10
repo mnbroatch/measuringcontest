@@ -1,13 +1,14 @@
 import _matches from "lodash/matches.js";
 import Condition from "../condition/condition.js";
+import entityMatches from "../utils/entity-matches.js";
 
 export default class ContainsCondition extends Condition {
-  checkCondition(_, payload) {
+  checkCondition(bgioArguments, payload) {
     const { target } = payload
     if (!target) {
       return { matches: [], conditionIsMet: false }
     } else {
-      const matches = target.entities.filter(e => _matches(this.rule.entity)(e.rule));
+      const matches = target.entities.filter(entity => entityMatches(bgioArguments, this.rule.matches, entity))
       return { matches, conditionIsMet: !!matches.length }
     }
   }

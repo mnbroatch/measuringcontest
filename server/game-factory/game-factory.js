@@ -16,6 +16,7 @@ export default function gameFactory (gameRules, rulesHash) {
 
     const entityDefinitions = expandEntityDefinitions(rules.entities, ctx)
     initialState.bank = new Bank(entityDefinitions)
+    console.log('initialState', initialState)
     initialState.sharedBoard = initialState.bank.getOne(bgioArguments, { name: "sharedBoard" })
 
     rules.initialMoves?.forEach(moveRule => {
