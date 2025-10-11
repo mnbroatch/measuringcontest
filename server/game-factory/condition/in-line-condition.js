@@ -111,41 +111,45 @@ function tryMatchSequence(bgioArguments, lineSpaces, startIndex, sequencePattern
     // Determine the target counts
     let min, max;
     if (count !== undefined) {
-      // Exact count
       min = max = count;
     } else {
-      // Range
       min = minCount || 1;
       max = maxCount || Infinity;
     }
     
     let matchedCount = 0;
+    const chunkMatches = []; // Track matches for this chunk
     
     // Greedy: try to match as many as possible up to max
     while (matchedCount < max && spaceIndex < lineSpaces.length) {
       const space = lineSpaces[spaceIndex];
       
-      if (checkConditions(bgioArguments, space, conditions)) {
+      if (checkConditions(bgioArguments, space, conditions, chunkMatches)) {
+        chunkMatches.push(space);
         matchedSpaces.push(space);
         matchedCount++;
         spaceIndex++;
       } else {
-        // Can't match more
         break;
       }
     }
     
     // Check if we met the minimum requirement
     if (matchedCount < min) {
-      return null; // Sequence failed
+      return null;
     }
   }
   
   return matchedSpaces;
 }
 
-function checkConditions(bgioArguments, space, conditions) {
-  return conditions.every(condition => 
-    conditionFactory(condition).isMet(bgioArguments, space)
-  );
+function checkConditions(bgioArguments, space, conditions, chunkMatches = []) {
+  return conditions.every(condition => {
+    // Pass chunkMatches as context for ContainsSame
+    const conditionInstance = conditionFactory(condition);
+    return conditionInstance.isMet(bgioArguments, { 
+      target: space,
+      targets: [space, ...chunkMatches]
+    });
+  });
 }

@@ -16,6 +16,7 @@ export default class ContainsSame extends Condition {
       })
       return restEntities.every(ent => condition.isMet(bgioArguments, { target: ent }))
     })
+    console.log('targets', targets)
     return { conditionIsMet }
   }
 }

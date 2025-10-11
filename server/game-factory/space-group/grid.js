@@ -23,6 +23,10 @@ export default class Grid extends SpaceGroup {
     return y * width + x
   }
 
+  getSpace (coordinates) {
+    return this.spaces[this.getIndex(coordinates)]
+  }
+
   getRelativeCoordinates ([oldX, oldY], [relativeX, relativeY]) {
     const newCoordinates = [oldX + relativeX, oldY + relativeY]
     return this.areCoordinatesValid(newCoordinates)
