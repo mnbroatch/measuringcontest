@@ -1,4 +1,4 @@
-import SpaceGroupCondition from "../condition/space-group-condition.js";
+import SpaceGroupCondition from "./space-group-condition.js";
 
 // right, downRight, down, downLeft
 const relativeCoordinates = [[1, 0], [1, 1], [0, 1], [-1, 1]];

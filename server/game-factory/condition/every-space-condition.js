@@ -1,4 +1,4 @@
-import SpaceGroupCondition from "../condition/space-group-condition.js";
+import SpaceGroupCondition from "./space-group-condition.js";
 
 export default class EverySpace extends SpaceGroupCondition {
   checkForPattern(bgioArguments, space) {

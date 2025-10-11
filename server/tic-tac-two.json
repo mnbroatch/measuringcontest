@@ -36,11 +36,7 @@
           "conditions": [
             {
               "type": "Not",
-              "conditions": [{"type": "Contains"}]
-            },
-            {
-              "type": "Not",
-              "conditions": [
+              "conditions": [{
                 "type": "InLine",
                 "sequence": [
                   {
@@ -50,39 +46,12 @@
                       "properties": ["player"]
                     }]
                   }
-                }
-              ]
+                ]
+              }]
             }
           ]
         }
       }
     }
-  },
-  "endIf": [
-    {
-      "conditions": [{
-        "target": { "name": "mainGrid" },
-        "type": "ContainsLine",
-        "length": 3,
-        "spaceGroupConditions": [{
-          "type": "ContainsSame",
-          "properties": ["player"]
-        }],
-        "spaceConditions": [
-          { "type": "Contains" }
-        ]
-      }],
-      "result": {
-        "winner": [ "conditionResults", 0, "matches", 0, "spaces", 0, "entities", 0, "rule", "player" ]
-      }
-    },
-    {
-      "conditions": [{
-        "type": "EverySpace",
-        "target": { "name": "mainGrid" },
-        "spaceConditions": [{"type": "Contains"}]
-      }],
-      "result": { "draw": true }
-    }
-  ]
+  }
 }

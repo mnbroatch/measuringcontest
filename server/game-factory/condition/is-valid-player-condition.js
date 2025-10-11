@@ -1,4 +1,4 @@
-import Condition from "../condition/condition.js";
+import Condition from "./condition.js";
 
 export default class IsValidPlayerCondition extends Condition {
   isMet(actionPayload) {

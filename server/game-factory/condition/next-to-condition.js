@@ -1,5 +1,5 @@
 import _matches from "lodash/matches.js";
-import Condition from "../condition/condition.js";
+import Condition from "./condition.js";
 
 export default class NextToCondition extends Condition {
   checkCondition(bgioArguments, payload) {

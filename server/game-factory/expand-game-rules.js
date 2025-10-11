@@ -5,7 +5,7 @@ import cloneDeep from "lodash/cloneDeep.js";
 const invariantEntities = [
   { type: "Space" },
   {
-    type: "Space",
+    type: "SharedBoard",
     name: 'sharedBoard'
   }
 ]
