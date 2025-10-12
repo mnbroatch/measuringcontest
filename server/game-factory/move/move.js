@@ -61,7 +61,6 @@ export default class Move {
           argument = bgioArguments.G.bank.getOne(bgioArguments, argRule.matcher)
         } else {
           argument = bgioArguments.G.bank.findOne(bgioArguments, argRule)
-          console.log('argument', argument)
         }
       }
       return {...acc, [argName]: argument}

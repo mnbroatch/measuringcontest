@@ -32,11 +32,16 @@
           }
         },
         "destination": {
-          "matcher": { "type": "Space" },
-          "conditions": [{
-            "type": "Not",
-            "conditions": [{"type": "Contains"}]
-          }]
+          "conditions": [
+            {
+              "type": "Is",
+              "matcher": { "type": "Space" }
+            },
+            {
+              "type": "Not",
+              "conditions": [{"type": "Contains"}]
+            }
+          ]
         }
       }
     }
@@ -44,7 +49,12 @@
   "endIf": [
     {
       "conditions": [{
-        "target": { "name": "mainGrid" },
+        "target": {
+          "conditions": [{
+            "type": "Is",
+            "matcher": { "name": "mainGrid" }
+          }]
+        },
         "type": "ContainsLine",
         "length": 3,
         "spaceGroupConditions": [{
@@ -60,7 +70,12 @@
     {
       "conditions": [{
         "type": "EverySpace",
-        "target": { "name": "mainGrid" },
+        "target": {
+          "conditions": [{
+            "type": "Is",
+            "matcher": { "name": "mainGrid" }
+          }]
+        },
         "spaceConditions": [{"type": "Contains"}]
       }],
       "result": { "draw": true }

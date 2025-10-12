@@ -61,3 +61,7 @@
 .entity.player-1 {
   background-color: lightblue;
 }
+
+.debug-panel .pane {
+  width: 420px !important;
+}

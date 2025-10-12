@@ -32,7 +32,7 @@ export default class SpaceGroupCondition extends Condition {
       return checkConditions(
         bgioArguments,
         { conditions: this.rule.spaceGroupConditions },
-        { targets: [ ...getRelevantSpaces(rule, space, patternSoFar) ] },
+        { targets: [ ...getRelevantSpaces(this.rule, space, patternSoFar) ] },
         context
       ).conditionsAreMet
     } else {
