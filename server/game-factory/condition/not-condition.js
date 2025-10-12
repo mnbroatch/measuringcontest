@@ -1,9 +1,16 @@
 import Condition from "./condition.js";
-import conditionFactory from "./condition-factory.js";
+import checkConditions from "../utils/check-conditions.js";
 
 export default class NotCondition extends Condition {
-  checkCondition(...args) {
-    const conditionIsMet = !this.rule.conditions.every(conditionRule => conditionFactory(conditionRule).isMet(...args))
-    return { conditionIsMet }
+  checkCondition(bgioArguments, payload, context) {
+    console.log('this.rule', this.rule)
+    console.log('payload', payload)
+    const { conditionsAreMet } = checkConditions(
+      bgioArguments,
+      this.rule,
+      payload,
+      context
+    )
+    return { conditionIsMet: !conditionsAreMet }
   }
 }

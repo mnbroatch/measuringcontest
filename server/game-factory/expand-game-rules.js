@@ -1,5 +1,9 @@
 import cloneDeep from "lodash/cloneDeep.js";
 
+// for later when we implement deep replacement
+// { type: 'IsEmpty' } = { type: 'not', conditions: [{ type: 'Contains' }], 
+// { matcher: {...blah} } => conditions.push({type: "Is", matcher: {...blah} })
+
 // Things we always want, don't need to configure, and
 // want to treat as first-class citizens
 const invariantEntities = [
@@ -29,13 +33,13 @@ function expandInitialPlacements (rules) {
       type: 'MoveEntity',
       arguments: {
         entity: {
-          matcher: placementMatchers.entity,
           automatic: true,
-          location: 'bank'
+          location: 'bank',
+          matcher: placementMatchers.entity
         },
         destination: {
-          matcher: placementMatchers.destination,
-          automatic: true
+          automatic: true,
+          matcher: placementMatchers.destination
         },
       }
     }))

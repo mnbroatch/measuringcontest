@@ -1,6 +1,6 @@
 import _matches from "lodash/matches.js";
 import Condition from "./condition.js";
-import conditionFactory from "./condition-factory.js";
+import checkConditions from "../utils/check-conditions.js";
 
 const directions = [[1, 0], [1, 1], [0, 1], [-1, 1]];
 
@@ -124,7 +124,7 @@ function tryMatchSequence(bgioArguments, lineSpaces, startIndex, sequencePattern
     while (matchedCount < max && spaceIndex < lineSpaces.length) {
       const space = lineSpaces[spaceIndex];
       
-      if (checkConditions(bgioArguments, space, conditions, chunkMatches)) {
+      if (checkSpaceConditions(bgioArguments, space, conditions, chunkMatches)) {
         chunkMatches.push(space);
         matchedSpaces.push(space);
         matchedCount++;
@@ -143,13 +143,13 @@ function tryMatchSequence(bgioArguments, lineSpaces, startIndex, sequencePattern
   return matchedSpaces;
 }
 
-function checkConditions(bgioArguments, space, conditions, chunkMatches = []) {
-  return conditions.every(condition => {
-    // Pass chunkMatches as context for ContainsSame
-    const conditionInstance = conditionFactory(condition);
-    return conditionInstance.isMet(bgioArguments, { 
+function checkSpaceConditions(bgioArguments, space, conditions, chunkMatches = []) {
+  return checkConditions(
+    bgioArguments,
+    { conditions },
+    {
       target: space,
-      targets: [space, ...chunkMatches]
-    });
-  });
+      targets: [space, ...chunkMatches] // for ContainsSame, other group conditions
+    }
+  )
 }

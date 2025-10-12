@@ -3,7 +3,7 @@ export default class Condition {
     this.rule = rule;
   }
   
-  check (bgioArguments, payload = {}) {
+  check (bgioArguments, payload = {}, context) {
     const { G } = bgioArguments
     const conditionPayload = {...payload}
 
@@ -32,10 +32,7 @@ export default class Condition {
       } else {
         conditionPayload.target = G.bank.findOne(
           bgioArguments,
-          {
-            ...this.rule,
-            matcher: this.rule.target
-          }
+          this.rule.target
         )
       }
     }
@@ -45,7 +42,7 @@ export default class Condition {
       }
       conditionPayload.targets = this.rule.targets.reduce((acc, target) => [
         ...acc,
-        ...G.bank.findAll(bgioArguments, { matcher: target })
+        ...G.bank.findAll(bgioArguments, target)
       ], [])
     }
 
@@ -54,7 +51,7 @@ export default class Condition {
       return { conditionIsMet: false }
     }
 
-    return this.checkCondition(bgioArguments, conditionPayload)
+    return this.checkCondition(bgioArguments, conditionPayload, context)
   }
 
   isMet(...args) {

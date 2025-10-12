@@ -1,5 +1,4 @@
 import Entity from "../entity.js";
-import conditionFactory from '../condition/condition-factory.js'
 
 export default class SpaceGroup extends Entity {
   constructor (options, ...rest) {
@@ -10,13 +9,6 @@ export default class SpaceGroup extends Entity {
   makeSpaces (bank) {
     return Array(this.getSpacesCount()).fill()
       .map((_, i) => bank.createEntity({ type: 'Space', index: i }))
-  }
-
-  getMatchingSpaces (conditions) {
-    return this.spaces
-      .filter(space =>
-        conditions.every(condition => conditionFactory(condition).isMet(space))
-      )
   }
 
   getEmptySpaces() {

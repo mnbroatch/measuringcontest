@@ -1,9 +1,9 @@
 import find from 'lodash/find.js'
 import filter from 'lodash/filter.js'
 import entityMatches from '../utils/entity-matches.js'
+import checkConditions from '../utils/check-conditions.js'
 import { registry } from '../registry.js'
 import BankSlot from './bank-slot.js'
-import conditionFactory from "../condition/condition-factory.js";
 
 class Bank {
   constructor (entityRules) {
@@ -35,11 +35,13 @@ class Bank {
   }
 
   findAll (bgioArguments, rule) {
-    const { matcher, conditions = [] } = rule
     return filter(
       Object.values(this.tracker),
-      (entity) => entityMatches(bgioArguments, matcher, entity)
-        && conditions.every(condition => conditionFactory(condition).isMet(bgioArguments, { target: entity }))
+      (entity) => checkConditions(
+        bgioArguments,
+        rule,
+        { target: entity }
+      ).conditionsAreMet
     )
   }
 

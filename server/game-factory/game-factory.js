@@ -1,7 +1,7 @@
 import get from "lodash/get.js";
 import { serialize, deserialize } from "wackson";
 import moveFactory from "./move/move-factory.js";
-import conditionFactory from "./condition/condition-factory.js";
+import checkConditions from "./utils/check-conditions.js";
 import { registry } from "./registry.js";
 import Bank from "./bank/bank.js";
 import expandGameRules from "./expand-game-rules.js";
@@ -16,7 +16,10 @@ export default function gameFactory (gameRules, rulesHash) {
 
     const entityDefinitions = expandEntityDefinitions(rules.entities, ctx)
     initialState.bank = new Bank(entityDefinitions)
-    initialState.sharedBoard = initialState.bank.getOne(bgioArguments, { name: "sharedBoard" })
+    initialState.sharedBoard = initialState.bank.getOne(
+      bgioArguments,
+      { name: "sharedBoard" }
+    )
 
     rules.initialMoves?.forEach(moveRule => {
       moveFactory(moveRule).moveInstance.doMove({
@@ -45,12 +48,12 @@ export default function gameFactory (gameRules, rulesHash) {
         G: deserialize(JSON.stringify(G), registry),
         ...restBgioArguments
       }
-      const matchingWinConditionResult = getMatchingWinConditionResult(bgioArguments, rules.endIf)
-      if (matchingWinConditionResult) {
-        const resultRule = matchingWinConditionResult.winCondition.result
+      const matchingWinScenarioResult = getMatchingWinScenarioResult(bgioArguments, rules.endIf)
+      if (matchingWinScenarioResult) {
+        const resultRule = matchingWinScenarioResult.winScenario.result
         const result = {...resultRule}
         if (resultRule.winner) {
-          result.winner = get(matchingWinConditionResult, result.winner)
+          result.winner = get(matchingWinScenarioResult, result.winner)
         }
         return result
       }
@@ -101,22 +104,11 @@ function expandEntityDefinitions (entities, ctx) {
   }, [])
 }
 
-function getMatchingWinConditionResult(bgioArguments, winConditions) {
-  for (const winCondition of winConditions) {
-    const conditionResults = [];
-
-    for (const cond of winCondition.conditions) {
-      const conditionResult = conditionFactory(cond).check(bgioArguments);
-
-      if (conditionResult.conditionIsMet) {
-        conditionResults.push(conditionResult);
-      } else {
-        break;
-      }
-    }
-
-    if (conditionResults.length === winCondition.conditions.length) {
-      return { winCondition, conditionResults };
+function getMatchingWinScenarioResult(bgioArguments, winScenarios) {
+  for (const winScenario of winScenarios) {
+    const conditionResults = checkConditions(bgioArguments, winScenario)
+    if (conditionResults.conditionsAreMet) {
+      return { winScenario, conditionResults }
     }
   }
 

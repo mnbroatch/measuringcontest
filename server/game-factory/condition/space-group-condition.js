@@ -1,5 +1,5 @@
 import Condition from "./condition.js";
-import conditionFactory from "./condition-factory.js";
+import checkConditions from '../utils/check-conditions.js'
 
 export default class SpaceGroupCondition extends Condition {
   checkCondition(bgioArguments, { target }) {
@@ -20,18 +20,21 @@ export default class SpaceGroupCondition extends Condition {
 
   // patternSoFar is for checking dependent conditions like
   // "do these pieces all have the same player"
-  checkSpace (bgioArguments, space, patternSoFar = []) {
-    const spaceMeetsConditions = this.rule.spaceConditions
-      .every(rule =>
-        conditionFactory(rule)
-        .isMet(bgioArguments, { target: space })
-      )
+  checkSpace (bgioArguments, space, patternSoFar = [], context) {
+    const spaceMeetsConditions = checkConditions(
+      bgioArguments,
+      { conditions: this.rule.spaceConditions },
+      { target: space },
+      context
+    ).conditionsAreMet
+
     if (spaceMeetsConditions && this.rule.spaceGroupConditions) {
-      return this.rule.spaceGroupConditions
-        .every(rule => conditionFactory(rule).isMet(
-          bgioArguments,
-          { targets: [ ...getRelevantSpaces(rule, space, patternSoFar) ] }
-        ))
+      return checkConditions(
+        bgioArguments,
+        { conditions: this.rule.spaceGroupConditions },
+        { targets: [ ...getRelevantSpaces(rule, space, patternSoFar) ] },
+        context
+      ).conditionsAreMet
     } else {
       return spaceMeetsConditions
     }

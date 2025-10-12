@@ -32,26 +32,53 @@
           }
         },
         "destination": {
-          "matcher": { "type": "Space" },
           "conditions": [
             {
+              "type": "Is",
+              "matcher": { "type": "Space" }
+            },
+            {
               "type": "Not",
-              "conditions": [{
-                "type": "InLine",
-                "sequence": [
-                  {
-                    "count": 3,
-                    "conditions": [{
-                      "type": "ContainsSame",
-                      "properties": ["player"]
-                    }]
-                  }
-                ]
-              }]
+              "conditions": [{"type": "Contains"}]
             }
           ]
         }
       }
     }
-  }
+  },
+  "endIf": [
+    {
+      "conditions": [{
+        "target": {
+          "conditions": [{
+            "type": "Is",
+            "matcher": { "name": "mainGrid" }
+          }]
+        },
+        "type": "ContainsLine",
+        "length": 3,
+        "spaceGroupConditions": [{
+          "type": "ContainsSame",
+          "properties": ["player"]
+        }],
+        "spaceConditions": [{"type": "Contains"}]
+      }],
+      "result": {
+        "winner": [ "conditionResults", 0, "matches", 0, "spaces", 0, "entities", 0, "rule", "player" ]
+      }
+    },
+    {
+      "conditions": [{
+        "type": "EverySpace",
+        "target": {
+          "conditions": [{
+            "type": "Is",
+            "matcher": { "name": "mainGrid" }
+          }]
+        },
+        "spaceConditions": [{"type": "Contains"}]
+      }],
+      "result": { "draw": true }
+    }
+  ]
 }
