@@ -18,10 +18,10 @@ export default class WouldCondition extends Condition {
     if (payload.targets) {
       simulatedPayload.targets = payload.targets.map(t => simulatedG.bank.locate(t.entityId))
     }
-    context.move.moveInstance.doMove(
+    context.move.doMove(
       newBgioArguments,
       createPayload(
-        context.moveName,
+        context.move.rule.name,
         simulatedPayload.targets ?? [simulatedPayload.target]
       ),
       context,

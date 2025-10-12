@@ -8,11 +8,12 @@ export default class Move {
     this.rule = rule
   }
 
-  isValid (bgioArguments, payload) {
+  isValid (bgioArguments, payload, context) {
     const unmetConditions = []
     this.conditionMappings.forEach(({ rule, mappings }) => {
       const condition = conditionFactory(rule)
-      if (!condition.isMet(bgioArguments, this.resolveMappings(payload, mappings))) {
+      console.log('context', context)
+      if (!condition.isMet(bgioArguments, this.resolveMappings(payload, mappings), context)) {
         unmetConditions.push(condition)
       }
     })
@@ -31,11 +32,11 @@ export default class Move {
         G: serializableG,
         ...restBgioArguments
       },
-      serializablePayload,
-      context
+      serializablePayload
     ) => {
       const G = deserialize(JSON.stringify(serializableG), registry)
       const payload = revivePayload(serializablePayload, G)
+      const context = { move: this }
       this.doMove({ G, ...restBgioArguments }, payload, context)
       return JSON.parse(serialize(G, { deduplicateInstances: false }))
     }
@@ -76,7 +77,7 @@ export default class Move {
     }
 
     // is SkipCheck wokring/necesary?
-    if (!skipCheck && !this.isValid(bgioArguments, resolvedPayload)) {
+    if (!skipCheck && !this.isValid(bgioArguments, resolvedPayload, context)) {
       return INVALID_MOVE
     } else {
       this.do(bgioArguments, resolvedPayload)

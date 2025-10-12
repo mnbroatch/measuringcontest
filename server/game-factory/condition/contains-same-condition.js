@@ -4,7 +4,7 @@ import Condition from "./condition.js";
 
 export default class ContainsSame extends Condition {
   checkCondition (bgioArguments, { targets }) {
-    if (targets.length === 1) {
+    if (targets.length === 1 && targets[0].entities?.length) {
       return { conditionIsMet: true }
     }
 
@@ -21,6 +21,7 @@ export default class ContainsSame extends Condition {
         return condition.isMet(bgioArguments, { target: ent })
       })
     })
+
     return { conditionIsMet }
   }
 }

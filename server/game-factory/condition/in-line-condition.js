@@ -37,8 +37,6 @@ export function gridContainsSequence(bgioArguments, grid, sequencePattern) {
       matches.push(...lineMatches);
     }
   }
-  console.log('matches', matches)
-  
   return { matches, conditionIsMet: !!matches.length };
 }
 
@@ -148,12 +146,13 @@ function tryMatchSequence(bgioArguments, lineSpaces, startIndex, sequencePattern
 }
 
 function checkSpaceConditions(bgioArguments, space, conditions, chunkMatches = []) {
-  return checkConditions(
+  const result = checkConditions(
     bgioArguments,
     { conditions },
     {
       target: space,
       targets: [space, ...chunkMatches] // for ContainsSame, other group conditions
     }
-  ).conditionsAreMet
+  )
+  return result.conditionsAreMet
 }

@@ -71,7 +71,7 @@ export function GameProvider ({ gameConnection, children, isSpectator }) {
       const clickable = new Set(currentStep?.(
         bgioState,
         moveRule,
-        { move: moves[moveRule.moveName], moveName: moveRule.moveName }
+        { move: moves[moveRule.moveName].moveInstance }
       ) || [])
       possibleMoveMeta[moveRule.moveName] = { finishedOnLastStep, clickable }
       clickable.forEach((entity) => { allClickable.add(entity) })

@@ -34,7 +34,7 @@ export default function gameFactory (gameRules, rulesHash) {
     game.moves =
       Object.entries(rules.moves).reduce((acc, [name, moveDefinition]) => ({
         ...acc,
-        [name]: moveFactory(moveDefinition)
+        [name]: moveFactory({ ...moveDefinition, name })
       }), {})
   }
 
