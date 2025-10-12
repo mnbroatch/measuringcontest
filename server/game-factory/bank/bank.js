@@ -34,19 +34,20 @@ class Bank {
     return this.tracker[entityId]
   }
 
-  findAll (bgioArguments, rule) {
+  findAll (bgioArguments, rule, context) {
     return filter(
       Object.values(this.tracker),
       (entity) => checkConditions(
         bgioArguments,
         rule,
-        { target: entity }
+        { target: entity },
+        context
       ).conditionsAreMet
     )
   }
 
-  findOne (bgioArguments, rule) {
-    return this.findAll(bgioArguments, rule)[0]
+  findOne (bgioArguments, rule, context) {
+    return this.findAll(bgioArguments, rule, context)[0]
   }
 
   findParent (entity) {

@@ -50,20 +50,25 @@
     "maxMoves": 1
   },
   "moves": {
-    "placePlayerMarker": {
+    "placeDisc": {
       "type": "MoveEntity",
       "arguments": {
         "entity": {
           "automatic": true,
           "location": "bank", 
           "matcher": {
-            "name": "playerMarker",
+            "name": "disc"
+          },
+          "state": {
             "player": "Current"
           }
         },
         "destination": {
-          "matcher": { "type": "Space" },
           "conditions": [
+            {
+              "type": "Is",
+              "matcher": { "type": "Space" }
+            },
             {
               "type": "Would",
               "conditions": [{
@@ -72,9 +77,12 @@
                   {
                     "conditions": [{
                       "type": "Contains",
-                      "matcher": {
-                        "player": "Current"
-                      }
+                      "conditions": [{
+                        "type": "Is",
+                        "matcher": {
+                          "player": "Current"
+                        }
+                      }]
                     }]
                   },
                   {
@@ -84,9 +92,12 @@
                         "type": "Not",
                         "conditions": [{
                           "type": "Contains",
-                          "matcher": {
-                            "player": "Current"
-                          }
+                          "conditions": [{
+                            "type": "Is",
+                            "matcher": {
+                              "player": "Current"
+                            }
+                          }]
                         }]
                       },
                       {
@@ -98,9 +109,12 @@
                   {
                     "conditions": [{
                       "type": "Contains",
-                      "matcher": {
-                        "player": "Current"
-                      }
+                      "conditions": [{
+                        "type": "Is",
+                        "matcher": {
+                          "player": "Current"
+                        }
+                      }]
                     }]
                   }
                 ]
@@ -114,8 +128,13 @@
   "endIf": [
     {
       "conditions": [{
+        "target": {
+          "conditions": [{
+            "type": "Is",
+            "matcher": { "name": "mainGrid" }
+          }]
+        },
         "type": "EverySpace",
-        "target": { "name": "mainGrid" },
         "spaceConditions": [{"type": "Contains"}]
       }],
       "result": { "draw": true }

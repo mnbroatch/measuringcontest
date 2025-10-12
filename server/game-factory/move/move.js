@@ -31,11 +31,12 @@ export default class Move {
         G: serializableG,
         ...restBgioArguments
       },
-      serializablePayload
+      serializablePayload,
+      context
     ) => {
       const G = deserialize(JSON.stringify(serializableG), registry)
       const payload = revivePayload(serializablePayload, G)
-      this.doMove({ G, ...restBgioArguments }, payload)
+      this.doMove({ G, ...restBgioArguments }, payload, context)
       return JSON.parse(serialize(G, { deduplicateInstances: false }))
     }
     compatibleMove.moveInstance = this
@@ -50,17 +51,17 @@ export default class Move {
       }), {})
   }
 
-  resolveArguments (bgioArguments, payload) {
+  resolveArguments (bgioArguments, payload, context) {
     return Object.entries(this.rule.arguments).reduce((acc, [argName, argRule]) => {
-      let argument = payload?.arguments[argName]
+      let argument = payload?.arguments?.[argName]
       if (!argument) {
         if (!argRule.automatic) {
           console.error(`non-automatic move rule didn't get argument: ${argName} in ${JSON.stringify(this.rule)}`)
         }
         if (argRule.location === 'bank') {
-          argument = bgioArguments.G.bank.getOne(bgioArguments, argRule.matcher)
+          argument = bgioArguments.G.bank.getOne(bgioArguments, argRule.matcher, context)
         } else {
-          argument = bgioArguments.G.bank.findOne(bgioArguments, argRule)
+          argument = bgioArguments.G.bank.findOne(bgioArguments, argRule, context)
         }
       }
       return {...acc, [argName]: argument}
@@ -68,13 +69,14 @@ export default class Move {
   }
 
 
-  doMove (bgioArguments, payload) {
+  doMove (bgioArguments, payload, context, skipCheck = false) {
     const resolvedPayload = {
       ...payload,
-      arguments: this.resolveArguments(bgioArguments, payload)
+      arguments: this.resolveArguments(bgioArguments, payload, context)
     }
 
-    if (!this.isValid(bgioArguments, resolvedPayload)) {
+    // is SkipCheck wokring/necesary?
+    if (!skipCheck && !this.isValid(bgioArguments, resolvedPayload)) {
       return INVALID_MOVE
     } else {
       this.do(bgioArguments, resolvedPayload)

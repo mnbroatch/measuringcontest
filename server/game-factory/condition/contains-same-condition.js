@@ -17,7 +17,9 @@ export default class ContainsSame extends Condition {
           matcher: pick(entity.rule, this.rule.properties)
         }]
       })
-      return restEntities.every(ent => condition.isMet(bgioArguments, { target: ent }))
+      return restEntities.every(ent => {
+        return condition.isMet(bgioArguments, { target: ent })
+      })
     })
     return { conditionIsMet }
   }

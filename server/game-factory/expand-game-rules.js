@@ -39,7 +39,10 @@ function expandInitialPlacements (rules) {
         },
         destination: {
           automatic: true,
-          matcher: placementMatchers.destination
+          conditions: [{
+            type: 'Is',
+            matcher: placementMatchers.destination
+          }]
         },
       }
     }))

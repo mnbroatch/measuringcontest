@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useReducer, useLayoutEffect } from 'react';
 import preparePayload from "../../server/game-factory/utils/prepare-payload.js";
+import createPayload from "../../server/game-factory/utils/create-payload.js";
 
 const GameContext = createContext({
   dispatch: () => {},
@@ -8,7 +9,12 @@ const GameContext = createContext({
 // TODO: make this based on move type instead of move name, using automatic: true as a hint for which entities don't require a step
 const clicksMap = {
   placePlayerMarker: [
-    (moveRule, bgioState) => bgioState.G.bank.findAll(bgioState, moveRule.arguments.destination)
+    (bgioState, moveRule, context) => bgioState.G.bank.findAll(bgioState, moveRule.arguments.destination, context)
+  ],
+  placeDisc: [
+    (bgioState, moveRule, context) => {
+      return bgioState.G.bank.findAll(bgioState, moveRule.arguments.destination, context)
+    }
   ]
 }
 
@@ -54,7 +60,7 @@ export function GameProvider ({ gameConnection, children, isSpectator }) {
       .filter(([moveName]) => !currentMoveState.eliminatedMoves.includes(moveName))
       .map(([moveName, move]) => ({
         ...move.moveInstance.rule,
-        steps: clicksMap[move.moveInstance.rule.type],
+        steps: clicksMap[move.moveInstance.rule.type], // is this unused?
         moveName
       }))
     possibleMoveRules.forEach((moveRule) => {
@@ -62,7 +68,11 @@ export function GameProvider ({ gameConnection, children, isSpectator }) {
       const lastStep = moveSteps?.[currentMoveState.stepIndex - 1]
       const currentStep = moveSteps?.[currentMoveState.stepIndex]
       const finishedOnLastStep = moveSteps && !!lastStep && !currentStep
-      const clickable = new Set(currentStep?.(moveRule, bgioState) || [])
+      const clickable = new Set(currentStep?.(
+        bgioState,
+        moveRule,
+        { move: moves[moveRule.moveName], moveName: moveRule.moveName }
+      ) || [])
       possibleMoveMeta[moveRule.moveName] = { finishedOnLastStep, clickable }
       clickable.forEach((entity) => { allClickable.add(entity) })
     })
@@ -96,13 +106,6 @@ export function GameProvider ({ gameConnection, children, isSpectator }) {
       {children}
     </GameContext.Provider>
   );
-}
-
-function createPayload (moveName, targets) {
-  switch (moveName) {
-    case 'placePlayerMarker':
-      return { arguments: { destination: targets[0] } }
-  }
 }
 
 function getWinnerAfterMove (gameConnection, move, movePayload) {

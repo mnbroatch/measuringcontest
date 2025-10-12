@@ -33,10 +33,11 @@ export function gridContainsSequence(bgioArguments, grid, sequencePattern) {
     
     for (const [startX, startY] of lines) {
       const lineSpaces = getLineSpaces(grid, startX, startY, dx, dy);
-      const lineMatches = findSequencesInLine(bgioArguments, lineSpaces, sequencePattern, sequenceLength);
+      const lineMatches = findSequencesInLine(bgioArguments, lineSpaces, sequencePattern);
       matches.push(...lineMatches);
     }
   }
+  console.log('matches', matches)
   
   return { matches, conditionIsMet: !!matches.length };
 }
@@ -108,25 +109,26 @@ function tryMatchSequence(bgioArguments, lineSpaces, startIndex, sequencePattern
   for (const chunk of sequencePattern) {
     const { count, minCount, maxCount, conditions } = chunk;
     
-    // Determine the target counts
     let min, max;
     if (count !== undefined) {
       min = max = count;
-    } else {
-      min = minCount || 1;
+    } else if (minCount !== undefined || maxCount !== undefined) {
+      min = minCount || 0;
       max = maxCount || Infinity;
+    } else {
+      min = max = 1;
     }
     
     let matchedCount = 0;
-    const chunkMatches = []; // Track matches for this chunk
+    const chunkMatches = [];
     
     // Greedy: try to match as many as possible up to max
     while (matchedCount < max && spaceIndex < lineSpaces.length) {
       const space = lineSpaces[spaceIndex];
       
+      // Pass all previously matched spaces in this chunk
       if (checkSpaceConditions(bgioArguments, space, conditions, chunkMatches)) {
         chunkMatches.push(space);
-        matchedSpaces.push(space);
         matchedCount++;
         spaceIndex++;
       } else {
@@ -138,6 +140,8 @@ function tryMatchSequence(bgioArguments, lineSpaces, startIndex, sequencePattern
     if (matchedCount < min) {
       return null;
     }
+    
+    matchedSpaces.push(...chunkMatches);
   }
   
   return matchedSpaces;
@@ -151,5 +155,5 @@ function checkSpaceConditions(bgioArguments, space, conditions, chunkMatches = [
       target: space,
       targets: [space, ...chunkMatches] // for ContainsSame, other group conditions
     }
-  )
+  ).conditionsAreMet
 }

@@ -1,21 +1,40 @@
+import { serialize, deserialize } from 'wackson'
+import { registry } from '../registry.js'
 import Condition from "./condition.js";
 import checkConditions from "../utils/check-conditions.js";
+import createPayload from "../utils/create-payload.js";
 
 export default class WouldCondition extends Condition {
   checkCondition(bgioArguments, payload, context) {
-    const originalGState = {
-      ...bgioArguments,
-      G: bgioArguments.originalG
-    }
-
-    const pureMove = context.move.moveInstance.createBoardgameIOCompatibleMove()
-    const gAfterMove = pureMove(originalGState, preparePayload(movePayload))
+    const simulatedG = deserialize(serialize(bgioArguments.G), registry)
     const newBgioArguments = {
       ...bgioArguments,
-      G: gAfterMove,
+      G: simulatedG,
     }
+    const simulatedPayload = { ...payload }
+    if (payload.target) {
+      simulatedPayload.target = simulatedG.bank.locate(payload.target.entityId)
+    }
+    if (payload.targets) {
+      simulatedPayload.targets = payload.targets.map(t => simulatedG.bank.locate(t.entityId))
+    }
+    context.move.moveInstance.doMove(
+      newBgioArguments,
+      createPayload(
+        context.moveName,
+        simulatedPayload.targets ?? [simulatedPayload.target]
+      ),
+      context,
+      true
+    )
 
-    const conditionIsMet = checkConditions(bgioArguments, this.rule, payload, context).conditionsAreMet
-    return { conditionIsMet }
+    return {
+      conditionIsMet: checkConditions(
+        newBgioArguments,
+        this.rule,
+        simulatedPayload,
+        context
+      ).conditionsAreMet
+    }
   }
 }
