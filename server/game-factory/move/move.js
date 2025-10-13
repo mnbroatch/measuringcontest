@@ -12,7 +12,6 @@ export default class Move {
     const unmetConditions = []
     this.conditionMappings.forEach(({ rule, mappings }) => {
       const condition = conditionFactory(rule)
-      console.log('context', context)
       if (!condition.isMet(bgioArguments, this.resolveMappings(payload, mappings), context)) {
         unmetConditions.push(condition)
       }
@@ -60,7 +59,7 @@ export default class Move {
           console.error(`non-automatic move rule didn't get argument: ${argName} in ${JSON.stringify(this.rule)}`)
         }
         if (argRule.location === 'bank') {
-          argument = bgioArguments.G.bank.getOne(bgioArguments, argRule.matcher, context)
+          argument = bgioArguments.G.bank.getOne(bgioArguments, argRule)
         } else {
           argument = bgioArguments.G.bank.findOne(bgioArguments, argRule, context)
         }

@@ -1,3 +1,5 @@
+import resolveProperties from '../utils/resolve-properties.js'
+
 // lazily create entities as needed, and also function as an index of entities created
 class BankSlot {
   constructor (rule, bank) {
@@ -7,11 +9,11 @@ class BankSlot {
     this.remaining = +rule.count || 1
   }
 
-  getOne (options) {
-    return this.getMultiple(1, options)[0]
+  getOne (bgioArguments, options) {
+    return this.getMultiple(bgioArguments, 1, options)[0]
   }
 
-  getMultiple (count, options) {
+  getMultiple (bgioArguments, count, options) {
     const toReturn = []
     if (this.remaining >= count) {
       if (this.remaining) {
@@ -30,7 +32,7 @@ class BankSlot {
     }
     if (options.state) {
       toReturn.forEach(entity => {
-        entity.state = { ...entity.state, ...options.state }
+        entity.state = { ...entity.state, ...resolveProperties(bgioArguments, options.state) }
       })
     }
     return toReturn

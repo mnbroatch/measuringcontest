@@ -4,6 +4,7 @@ import ticTacToe from "../../../server/tic-tac-toe.json";
 import ticTacTwo from "../../../server/tic-tac-two.json";
 import connectFour from "../../../server/connect-four.json";
 import reversi from "../../../server/reversi.json";
+import reversi2 from "../../../server/reversi2.json";
 
 export default function GameEditor ({ initialGameName, initialGameRules, saveGame }) {
   const [gameRules, setGameRules] = useState(
@@ -11,6 +12,7 @@ export default function GameEditor ({ initialGameName, initialGameRules, saveGam
     // initialGameRules || JSON.stringify(ticTacToe, null, 2)
     // initialGameRules || JSON.stringify(connectFour, null, 2)
     initialGameRules || JSON.stringify(reversi, null, 2)
+    // initialGameRules || JSON.stringify(reversi2, null, 2)
   )
   const [gameName, setGameName] = useState(initialGameName)
 

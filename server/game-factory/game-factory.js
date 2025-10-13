@@ -18,7 +18,7 @@ export default function gameFactory (gameRules, rulesHash) {
     initialState.bank = new Bank(entityDefinitions)
     initialState.sharedBoard = initialState.bank.getOne(
       bgioArguments,
-      { name: "sharedBoard" }
+      { matcher: { name: "sharedBoard" } }
     )
 
     rules.initialMoves?.forEach(moveRule => {

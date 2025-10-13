@@ -11,6 +11,7 @@ export default class SpaceGroupCondition extends Condition {
   findMatches (bgioArguments, target) {
     const matches = []
     
+    console.log('target', target)
     for (let i = 0; i < target.spaces.length; i++) {
       const space = target.spaces[i]
       matches.push(...this.checkForPattern(bgioArguments, space, target, matches).matches)

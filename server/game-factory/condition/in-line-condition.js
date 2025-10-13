@@ -8,6 +8,7 @@ export default class InLineCondition extends Condition {
   checkCondition(bgioArguments, payload) {
     const { G } = bgioArguments;
     const { target } = payload;
+    console.log('target', target)
     const parent = G.bank.findParent(payload.target);
     
     // Find all sequences in the grid
@@ -17,7 +18,7 @@ export default class InLineCondition extends Condition {
     const matches = allMatches.filter(sequence => 
       sequence.some(space => space === target)
     );
-    
+
     return { matches, conditionIsMet: !!matches.length };
   }
 }
@@ -83,16 +84,13 @@ function findSequencesInLine(bgioArguments, lineSpaces, sequencePattern) {
   
   let startIndex = 0;
   
-  // Keep matching until we run out of space
   while (startIndex <= lineSpaces.length - minSequenceLength) {
     const matchedSpaces = tryMatchSequence(bgioArguments, lineSpaces, startIndex, sequencePattern);
     
     if (matchedSpaces) {
       matches.push(matchedSpaces);
-      // Skip past this match to avoid overlaps
-      startIndex += matchedSpaces.length;
+      startIndex++; // Changed from startIndex += matchedSpaces.length
     } else {
-      // No match at this position, try next position
       startIndex++;
     }
   }
@@ -146,13 +144,12 @@ function tryMatchSequence(bgioArguments, lineSpaces, startIndex, sequencePattern
 }
 
 function checkSpaceConditions(bgioArguments, space, conditions, chunkMatches = []) {
-  const result = checkConditions(
+  return  checkConditions(
     bgioArguments,
     { conditions },
     {
       target: space,
       targets: [space, ...chunkMatches] // for ContainsSame, other group conditions
     }
-  )
-  return result.conditionsAreMet
+  ).conditionsAreMet
 }

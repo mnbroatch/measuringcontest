@@ -38,7 +38,7 @@
               "matcher": { "type": "Space" }
             },
             {
-              "type": "Not",
+              "type": "Would",
               "conditions": [{"type": "Contains"}]
             }
           ]

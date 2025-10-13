@@ -9,7 +9,9 @@ const GameContext = createContext({
 // TODO: make this based on move type instead of move name, using automatic: true as a hint for which entities don't require a step
 const clicksMap = {
   placePlayerMarker: [
-    (bgioState, moveRule, context) => bgioState.G.bank.findAll(bgioState, moveRule.arguments.destination, context)
+    (bgioState, moveRule, context) => {
+      return bgioState.G.bank.findAll(bgioState, moveRule.arguments.destination, context)
+    }
   ],
   placeDisc: [
     (bgioState, moveRule, context) => {

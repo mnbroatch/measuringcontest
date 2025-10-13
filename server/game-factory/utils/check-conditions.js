@@ -14,7 +14,7 @@ export default function checkConditions (bgioArguments, { conditions = [] }, pay
       results.push(result);
     }
   }
-  
+
   return {
     results,
     failedAt,

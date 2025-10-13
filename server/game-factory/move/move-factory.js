@@ -8,5 +8,9 @@ export default function moveFactory(moveRule) {
   // } else if (moveRule.type === "swap") {
   //   move = new Swap(moveRule);
   }
-  return move.createBoardgameIOCompatibleMove()
+  const compatibleMove = function (...args) {
+    const results = move.createBoardgameIOCompatibleMove()(...args)
+    console.log('results', results)
+    return 
+  }
 }

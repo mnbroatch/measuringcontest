@@ -29,23 +29,29 @@ function expandInitialPlacements (rules) {
   }
 
   if (rules.initialPlacements) {
-    const initialPlacementMoves = rules.initialPlacements.map(placementMatchers => ({
-      type: 'MoveEntity',
-      arguments: {
-        entity: {
-          automatic: true,
-          location: 'bank',
-          matcher: placementMatchers.entity
-        },
-        destination: {
-          automatic: true,
-          conditions: [{
-            type: 'Is',
-            matcher: placementMatchers.destination
-          }]
-        },
+    const initialPlacementMoves = rules.initialPlacements.map(placementMatchers =>  {
+      // probably going to need to separate this even in the shorthand. maybe
+      // combine, then search entity rule and extract state variables instead?
+      const { state, ...matcher } = placementMatchers.entity
+      return {
+        type: 'MoveEntity',
+        arguments: {
+          entity: {
+            automatic: true,
+            location: 'bank',
+            matcher,
+            state
+          },
+          destination: {
+            automatic: true,
+            conditions: [{
+              type: 'Is',
+              matcher: placementMatchers.destination
+            }]
+          },
+        }
       }
-    }))
+    })
     if (!rules.initialMoves) rules.initialMoves = []
     rules.initialMoves.unshift(...initialPlacementMoves)
     delete rules.initialPlacements

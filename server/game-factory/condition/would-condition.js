@@ -18,6 +18,7 @@ export default class WouldCondition extends Condition {
     if (payload.targets) {
       simulatedPayload.targets = payload.targets.map(t => simulatedG.bank.locate(t.entityId))
     }
+
     context.move.doMove(
       newBgioArguments,
       createPayload(
@@ -28,13 +29,14 @@ export default class WouldCondition extends Condition {
       true
     )
 
-    return {
-      conditionIsMet: checkConditions(
+    const results = checkConditions(
         newBgioArguments,
         this.rule,
         simulatedPayload,
         context
-      ).conditionsAreMet
+      )
+    return {
+      conditionIsMet: results.conditionsAreMet
     }
   }
 }

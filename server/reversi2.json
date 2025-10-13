@@ -70,23 +70,13 @@
               "matcher": { "type": "Space" }
             },
             {
-              "type": "Not",
-              "conditions": [{ "type": "Contains" }]
-            },
-            {
               "type": "Would",
               "conditions": [{
                 "type": "InLine",
                 "sequence": [
                   {
                     "conditions": [{
-                      "type": "Contains",
-                      "conditions": [{
-                        "type": "Is",
-                        "matcher": {
-                          "player": "Current"
-                        }
-                      }]
+                      "type": "Contains"
                     }]
                   },
                   {
@@ -112,13 +102,7 @@
                   },
                   {
                     "conditions": [{
-                      "type": "Contains",
-                      "conditions": [{
-                        "type": "Is",
-                        "matcher": {
-                          "player": "Current"
-                        }
-                      }]
+                      "type": "Contains"
                     }]
                   }
                 ]
@@ -126,37 +110,22 @@
             }
           ]
         }
-      },
-      "blah": [{
-        "type": "ForEach",
-        "targets": {
-          "type": "ContextPath",
-          "path": ["conditionResults", 2, "matches"]
-        },
-        "move": {
-          "type": "ForEach"
-        }
-      }],
-      "then": [{
-        "type": "MoveEntity",
-        "arguments": {
-          "entity": {
-            "automatic": true,
-            "location": "bank", 
-            "matcher": {
-              "name": "playerMarker",
-              "player": "Current"
-            }
-          },
-          "destination": {
-            "automatic": true,
-            "matcher": {
-              "index": 1
-            }
-          }
-        }
-      }]
+      }
     }
   },
-  "endIf": []
+  "endIf": [
+    {
+      "conditions": [{
+        "target": {
+          "conditions": [{
+            "type": "Is",
+            "matcher": { "name": "mainGrid" }
+          }]
+        },
+        "type": "EverySpace",
+        "spaceConditions": [{"type": "Contains"}]
+      }],
+      "result": { "draw": true }
+    }
+  ]
 }

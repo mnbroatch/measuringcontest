@@ -1,13 +1,11 @@
 import matches from 'lodash/matches.js'
+import resolveProperties from '../utils/resolve-properties.js'
 
 function resolveMatcher (bgioArguments, matcher) {
   const resolvedMatcher = { ...matcher }
   delete resolvedMatcher.state
   delete resolvedMatcher.stateGroups
-  if (resolvedMatcher.player === 'Current') {
-    resolvedMatcher.player = bgioArguments.ctx.currentPlayer
-  }
-  return resolvedMatcher
+  return resolveProperties(bgioArguments, resolvedMatcher)
 }
 
 function getEntityMatcher (entity) {
