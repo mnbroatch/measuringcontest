@@ -1,7 +1,5 @@
-import { serialize, deserialize } from 'wackson'
 import { INVALID_MOVE } from 'boardgame.io/dist/cjs/core.js';
-import { registry } from '../registry.js'
-import conditionFactory from '../condition/condition-factory.js'
+import checkConditions from "../utils/check-conditions.js";
 
 export default class Move {
   constructor (rule) {
@@ -9,46 +7,26 @@ export default class Move {
   }
 
   isValid (bgioArguments, payload, context) {
-    const unmetConditions = []
-    this.conditionMappings.forEach(({ rule, mappings }) => {
-      const condition = conditionFactory(rule)
-      if (!condition.isMet(bgioArguments, this.resolveMappings(payload, mappings), context)) {
-        unmetConditions.push(condition)
-      }
-    })
-    if (unmetConditions.length) {
-      console.log('==================')
-      console.log('unmetConditions', unmetConditions)
-      console.log('payload', payload)
-    }
-    return !unmetConditions.length
+    const conditionResults = this.checkConditionGroups(
+      bgioArguments,
+      payload,
+      context
+    )
+    console.log('conditionResults', conditionResults)
+    return Object.values(conditionResults).every(r => r.conditionsAreMet)
   }
 
-  // arguments and G must be serializable for bgio to work
-  createBoardgameIOCompatibleMove () {
-    const compatibleMove = (
-      {
-        G: serializableG,
-        ...restBgioArguments
-      },
-      serializablePayload
-    ) => {
-      const G = deserialize(JSON.stringify(serializableG), registry)
-      const payload = revivePayload(serializablePayload, G)
-      const context = { move: this }
-      this.doMove({ G, ...restBgioArguments }, payload, context)
-      return JSON.parse(serialize(G, { deduplicateInstances: false }))
-    }
-    compatibleMove.moveInstance = this
-    return compatibleMove
-  }
-
-  resolveMappings (payload, mappings) {
-    return Object.entries((mappings || []))
-      .reduce((acc, [property, mapping]) => ({
-        ...acc,
-        [property]: mapping(payload)
-      }), {})
+  checkConditionGroups (bgioArguments, payload, context) {
+    return Object.entries(this.conditionMappings)
+    .reduce((acc, [groupName, { conditions, getPayload }]) => ({
+      ...acc,
+      [groupName]: checkConditions(
+        bgioArguments,
+        { conditions },
+        getPayload(payload),
+        context
+      )
+    }) , {})
   }
 
   resolveArguments (bgioArguments, payload, context) {
@@ -79,18 +57,8 @@ export default class Move {
     if (!skipCheck && !this.isValid(bgioArguments, resolvedPayload, context)) {
       return INVALID_MOVE
     } else {
-      this.do(bgioArguments, resolvedPayload)
-      return bgioArguments.G
+      return this.do(bgioArguments, resolvedPayload)
     }
   }
 }
 
-function revivePayload (serializablePayload, G) {
-  const payload = deserialize(JSON.stringify(serializablePayload), registry)
-  payload.arguments =
-    Object.entries(payload.arguments).reduce((acc, [key, entityId]) => ({
-      ...acc,
-      [key]: G.bank.locate(entityId)
-    }), {})
-  return payload
-}

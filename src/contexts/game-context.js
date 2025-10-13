@@ -1,12 +1,15 @@
 import React, { createContext, useContext, useReducer, useLayoutEffect } from 'react';
+import { serialize } from 'wackson'
 import preparePayload from "../../server/game-factory/utils/prepare-payload.js";
 import createPayload from "../../server/game-factory/utils/create-payload.js";
+import simulateMove from "../../server/game-factory/utils/simulate-move.js";
 
 const GameContext = createContext({
   dispatch: () => {},
 });
 
 // TODO: make this based on move type instead of move name, using automatic: true as a hint for which entities don't require a step
+// maybe build partial payload instead of targets array and check with isValid or similar
 const clicksMap = {
   placePlayerMarker: [
     (bgioState, moveRule, context) => {
@@ -48,7 +51,7 @@ export function GameProvider ({ gameConnection, children, isSpectator }) {
         // flash of "available" (but not really) moves
         return {
           ...initialState,
-          winnerAfterMove: getWinnerAfterMove(gameConnection, action.move, action.movePayload),
+          winnerAfterMove: getWinnerAfterMove(gameConnection, action.move.moveInstance, action.movePayload),
         }
     }
 
@@ -73,7 +76,7 @@ export function GameProvider ({ gameConnection, children, isSpectator }) {
       const clickable = new Set(currentStep?.(
         bgioState,
         moveRule,
-        { move: moves[moveRule.moveName].moveInstance }
+        { moveInstance: moves[moveRule.moveName].moveInstance }
       ) || [])
       possibleMoveMeta[moveRule.moveName] = { finishedOnLastStep, clickable }
       clickable.forEach((entity) => { allClickable.add(entity) })
@@ -110,18 +113,17 @@ export function GameProvider ({ gameConnection, children, isSpectator }) {
   );
 }
 
-function getWinnerAfterMove (gameConnection, move, movePayload) {
-  const originalGState = {
-    ...gameConnection.state,
-    G: gameConnection.state.originalG
-  }
+function getWinnerAfterMove (gameConnection, moveInstance, movePayload) {
 
-  const pureMove = move.moveInstance.createBoardgameIOCompatibleMove()
-  const newG = pureMove(originalGState, preparePayload(movePayload))
+  const { simulatedG } = simulateMove(
+    gameConnection.state,
+    preparePayload(movePayload),
+    { moveInstance }
+  )
 
   return gameConnection.game.endIf?.({
     ...gameConnection.state,
-    G: newG
+    G: JSON.parse(serialize(simulatedG))
   })
 }
 

@@ -4,24 +4,22 @@ export default class MoveEntity extends Move {
   constructor (rule) {
     super (rule)
 
-    // const invariantConditionMappings = [
-    //   {
-    //     rule: {
-    //       type: 'bankHasEnough',
-    //       entity: rule.entity
-    //     }
-    //   },
-    // ]
-
-    const spaceConditionMappings = rule.arguments.destination.conditions?.map(rule => ({
-      rule,
-      mappings: { target: payload => payload.arguments.destination }
-    })) || []
-
-    this.conditionMappings = [
-      // ...invariantConditionMappings,
-      ...spaceConditionMappings,
-    ]
+    this.conditionMappings = {
+      move: {
+        conditions: rule.conditions,
+        getPayload: payload => payload
+      },
+      ...Object.entries(rule.arguments).reduce((acc, [argName, argRule]) => ({
+        ...acc,
+        [argName]: {
+          conditions: argRule.conditions,
+          getPayload: payload => ({
+            ...payload,
+            target: payload.arguments[argName]
+          })
+        }
+      }), {})
+    }
   }
 
   do(_, { arguments: { destination, entity } }) {

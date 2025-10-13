@@ -30,6 +30,18 @@ function expandInitialPlacements (rules) {
 
   if (rules.initialPlacements) {
     const initialPlacementMoves = rules.initialPlacements.map(placementMatchers =>  {
+
+    // put somewhere
+    // const invariantConditionMappings = [
+    //   {
+    //     rule: {
+    //       type: 'bankHasEnough',
+    //       entity: rule.entity
+    //     }
+    //   },
+    // ]
+
+
       // probably going to need to separate this even in the shorthand. maybe
       // combine, then search entity rule and extract state variables instead?
       const { state, ...matcher } = placementMatchers.entity

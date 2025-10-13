@@ -8,7 +8,6 @@ export default class InLineCondition extends Condition {
   checkCondition(bgioArguments, payload) {
     const { G } = bgioArguments;
     const { target } = payload;
-    console.log('target', target)
     const parent = G.bank.findParent(payload.target);
     
     // Find all sequences in the grid
