@@ -142,17 +142,23 @@
         "arguments": {
           "entity": {
             "automatic": true,
-            "location": "bank", 
+            "location": "bank",
             "matcher": {
-              "name": "playerMarker",
+              "name": "disc"
+            },
+            "state": {
               "player": "Current"
             }
           },
           "destination": {
             "automatic": true,
-            "matcher": {
-              "index": 1
-            }
+            "conditions": [{
+              "type": "Is",
+              "matcher": {
+                "type": "Space",
+                "index": 1
+              }
+            }]
           }
         }
       }]

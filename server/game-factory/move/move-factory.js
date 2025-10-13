@@ -4,12 +4,7 @@ import MoveEntity from "./move-entity.js";
 // import Swap from "./swap.js";
 
 export default function moveFactory(moveRule) {
-  let moveInstance
-  if (moveRule.type === "MoveEntity") {
-    moveInstance = new MoveEntity(moveRule);
-  // } else if (moveRule.type === "swap") {
-  //   moveInstance = new Swap(moveRule);
-  }
+  const moveInstance = getMoveInstance(moveRule)
 
   // accepts serialized G and payload, returns serialized
   const compatibleMove = function (
@@ -21,13 +16,18 @@ export default function moveFactory(moveRule) {
   ) {
     const G = deserialize(JSON.stringify(serializableG), registry)
     const payload = revivePayload(serializablePayload, G)
+    const bgioArguments = { G, ...restBgioArguments }
     const context = { moveInstance }
-    const results = moveInstance.doMove({ G, ...restBgioArguments }, payload, context)
+    const moveResult = moveInstance.doMove(bgioArguments, payload, context)
 
-    console.log('results', results)
+    context.moveResults = [moveResult]
 
-    
-
+    if (moveRule.then) {
+      for (let automaticMoveRule of moveRule.then) {
+        const result = getMoveInstance(automaticMoveRule).doMove(bgioArguments, {}, context)
+        context.moveResults.push(result)
+      }
+    }
 
     return JSON.parse(serialize(G, { deduplicateInstances: false }))
   }
@@ -43,4 +43,11 @@ function revivePayload (serializablePayload, G) {
       [key]: G.bank.locate(entityId)
     }), {})
   return payload
+}
+
+function getMoveInstance (moveRule) {
+  switch (moveRule.type) {
+    case 'MoveEntity':
+      return new MoveEntity(moveRule);
+  }
 }
