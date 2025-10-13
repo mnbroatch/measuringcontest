@@ -142,21 +142,14 @@
         "arguments": {
           "entity": {
             "automatic": true,
-            "location": "bank",
-            "matcher": {
-              "name": "disc"
-            },
-            "state": {
-              "player": "Current"
-            }
+            "contextPath": ["moveConditionResults", 0, "conditionResults", "destination", "results", 2, "results", 0, "matches", 0, 0]
           },
           "destination": {
             "automatic": true,
             "conditions": [{
               "type": "Is",
               "matcher": {
-                "type": "Space",
-                "index": 1
+                "index": 0
               }
             }]
           }

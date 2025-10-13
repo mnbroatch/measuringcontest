@@ -21,6 +21,7 @@ export default class WouldCondition extends Condition {
     )
 
     return {
+      results: results.results,
       conditionIsMet: results.conditionsAreMet
     }
   }

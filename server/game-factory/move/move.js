@@ -1,3 +1,4 @@
+import get from "lodash/get.js";
 import { INVALID_MOVE } from 'boardgame.io/dist/cjs/core.js';
 import checkConditions from "../utils/check-conditions.js";
 
@@ -38,6 +39,11 @@ export default class Move {
         }
         if (argRule.location === 'bank') {
           argument = bgioArguments.G.bank.getOne(bgioArguments, argRule)
+        } else if (argRule.contextPath) {
+          argument = get(context, argRule.contextPath)
+          console.log('argRule.contextPath', argRule.contextPath)
+          console.log('context', context)
+          console.log('argument', argument)
         } else {
           argument = bgioArguments.G.bank.findOne(bgioArguments, argRule, context)
         }
@@ -53,12 +59,18 @@ export default class Move {
       arguments: this.resolveArguments(bgioArguments, payload, context)
     }
 
-    // is SkipCheck wokring/necesary?
-    if (!skipCheck && !this.isValid(bgioArguments, resolvedPayload, context)) {
+    let conditionResults
+    if (!skipCheck) {
+      conditionResults = this.checkConditionGroups(bgioArguments, resolvedPayload, context)
+    }
+
+    if (!skipCheck && !Object.values(conditionResults).every(r => r.conditionsAreMet)) {
       return INVALID_MOVE
     } else {
-      return this.do(bgioArguments, resolvedPayload)
+      this.do(bgioArguments, resolvedPayload)
     }
+
+    return { conditionResults }
   }
 }
 

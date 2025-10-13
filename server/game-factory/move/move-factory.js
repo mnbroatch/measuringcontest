@@ -18,14 +18,15 @@ export default function moveFactory(moveRule) {
     const payload = revivePayload(serializablePayload, G)
     const bgioArguments = { G, ...restBgioArguments }
     const context = { moveInstance }
-    const moveResult = moveInstance.doMove(bgioArguments, payload, context)
+    const moveConditionResults = moveInstance.doMove(bgioArguments, payload, context)
 
-    context.moveResults = [moveResult]
+    context.moveConditionResults = [moveConditionResults]
 
     if (moveRule.then) {
       for (let automaticMoveRule of moveRule.then) {
+        console.log('context', context)
         const result = getMoveInstance(automaticMoveRule).doMove(bgioArguments, {}, context)
-        context.moveResults.push(result)
+        context.moveConditionResults.push(result)
       }
     }
 

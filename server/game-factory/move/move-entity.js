@@ -23,8 +23,6 @@ export default class MoveEntity extends Move {
   }
 
   do(_, { arguments: { destination, entity } }) {
-    console.log('destination', destination)
-    console.log('entity', entity)
     destination.placeEntity(entity)
   }
 }
