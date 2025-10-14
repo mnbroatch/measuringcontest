@@ -1,10 +1,27 @@
-import get from "lodash/get.js";
 import { INVALID_MOVE } from 'boardgame.io/dist/cjs/core.js';
 import checkConditions from "../utils/check-conditions.js";
+import get from "../utils/get.js";
 
 export default class Move {
   constructor (rule) {
     this.rule = rule
+
+    this.conditionMappings = {
+      move: {
+        conditions: rule.conditions,
+        getPayload: payload => payload
+      },
+      ...Object.entries(rule.arguments ?? {}).reduce((acc, [argName, argRule]) => ({
+        ...acc,
+        [argName]: {
+          conditions: argRule.conditions,
+          getPayload: payload => ({
+            ...payload,
+            target: payload.arguments[argName]
+          })
+        }
+      }), {})
+    }
   }
 
   isValid (bgioArguments, payload, context) {
@@ -13,7 +30,6 @@ export default class Move {
       payload,
       context
     )
-    console.log('conditionResults', conditionResults)
     return Object.values(conditionResults).every(r => r.conditionsAreMet)
   }
 
@@ -31,7 +47,7 @@ export default class Move {
   }
 
   resolveArguments (bgioArguments, payload, context) {
-    return Object.entries(this.rule.arguments).reduce((acc, [argName, argRule]) => {
+    return Object.entries(this.rule.arguments ?? {}).reduce((acc, [argName, argRule]) => {
       let argument = payload?.arguments?.[argName]
       if (!argument) {
         if (!argRule.automatic) {
@@ -40,10 +56,8 @@ export default class Move {
         if (argRule.location === 'bank') {
           argument = bgioArguments.G.bank.getOne(bgioArguments, argRule)
         } else if (argRule.contextPath) {
-          argument = get(context, argRule.contextPath)
-          console.log('argRule.contextPath', argRule.contextPath)
           console.log('context', context)
-          console.log('argument', argument)
+          argument = get(context, argRule.contextPath)
         } else {
           argument = bgioArguments.G.bank.findOne(bgioArguments, argRule, context)
         }

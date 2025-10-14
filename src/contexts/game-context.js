@@ -95,7 +95,7 @@ export function GameProvider ({ gameConnection, children, isSpectator }) {
         const moveName = possibleMoveNames[0]
         if (possibleMoveMeta[moveName].finishedOnLastStep) {
           const move = moves[moveName]
-          const movePayload = createPayload(moveName, currentMoveState.targets)
+          const movePayload = createPayload(move.moveInstance.rule.type, currentMoveState.targets)
           move(movePayload)
           dispatch({ type: 'moveMade', movePayload, move })
         }

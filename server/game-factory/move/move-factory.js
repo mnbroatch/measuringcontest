@@ -1,6 +1,8 @@
 import { serialize, deserialize } from 'wackson'
 import { registry } from '../registry.js'
 import MoveEntity from "./move-entity.js";
+import SetState from "./set-state.js";
+import ForEach from "./for-each.js";
 // import Swap from "./swap.js";
 
 export default function moveFactory(moveRule) {
@@ -24,9 +26,9 @@ export default function moveFactory(moveRule) {
 
     if (moveRule.then) {
       for (let automaticMoveRule of moveRule.then) {
-        console.log('context', context)
         const result = getMoveInstance(automaticMoveRule).doMove(bgioArguments, {}, context)
         context.moveConditionResults.push(result)
+          context
       }
     }
 
@@ -46,9 +48,13 @@ function revivePayload (serializablePayload, G) {
   return payload
 }
 
-function getMoveInstance (moveRule) {
+export function getMoveInstance (moveRule) {
   switch (moveRule.type) {
     case 'MoveEntity':
       return new MoveEntity(moveRule);
+    case 'SetState':
+      return new SetState(moveRule);
+    case 'ForEach':
+      return new ForEach(moveRule);
   }
 }

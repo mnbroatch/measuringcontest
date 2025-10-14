@@ -36,7 +36,7 @@
 }
 
 .space--clickable {
-  background-color: lightgreen;
+  background-color: rgba(144, 238, 144, .4);
 }
 
 .space--targeted {

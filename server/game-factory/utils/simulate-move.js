@@ -19,7 +19,7 @@ export default function simulateMove (bgioArguments, payload, context) {
   context.moveInstance.doMove(
     newBgioArguments,
     createPayload(
-      context.moveInstance.rule.name,
+      context.moveInstance.rule.type,
       simulatedPayload.targets ?? [simulatedPayload.target]
     ),
     context,
