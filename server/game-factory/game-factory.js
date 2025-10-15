@@ -127,7 +127,9 @@ function expandEntityDefinitions (entities, ctx) {
 
 function getMatchingWinScenarioResult(bgioArguments, winScenarios) {
   for (const winScenario of winScenarios) {
+    console.log('winScenario', winScenario)
     const conditionResults = checkConditions(bgioArguments, winScenario)
+    console.log('conditionResults', conditionResults)
     if (conditionResults.conditionsAreMet) {
       return { winScenario, conditionResults }
     }

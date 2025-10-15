@@ -151,14 +151,13 @@
   "endIf": [
     {
       "conditions": [{
-        "type": "EverySpace",
-        "target": {
-          "conditions": [{
-            "type": "Is",
-            "matcher": { "name": "mainGrid" }
-          }]
-        },
-        "spaceConditions": [{"type": "Contains"}]
+        "type": "Evaluate",
+        "expression": "passCount == 2",
+        "arguments": {
+          "passCount": {
+            "gamePath": ["meta", "passCount"]
+          }
+        }
       }],
       "result": { "draw": true }
     }

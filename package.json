@@ -43,6 +43,7 @@
     "aws-amplify": "^6.15.3",
     "board-game-engine-temp": "^1.0.0",
     "boardgame.io": "^0.50.2",
+    "expr-eval": "^2.0.2",
     "prop-types": "^15.8.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

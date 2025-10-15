@@ -11,6 +11,8 @@ export default function resolveArguments (bgioArguments, moveRule, payload, cont
         argument = bgioArguments.G.bank.getOne(bgioArguments, argRule)
       } else if (argRule.contextPath) {
         argument = get(context, argRule.contextPath)
+      } else if (argRule.gamePath) {
+        argument = get(bgioArguments.G, argRule.gamePath)
       } else {
         argument = bgioArguments.G.bank.findOne(bgioArguments, argRule, context)
       }

@@ -46,9 +46,14 @@ export default class Condition {
       ], [])
     }
 
-    // nonexistent relative spaces for instance fulfill no conditions ever
-    if (!conditionPayload.target && !conditionPayload.targets?.length) {
-      return { conditionIsMet: false }
+
+    // I don't love having this exception here; will we need more?
+    // Need a better system for move args => condition target in general
+    if (this.rule.type !== 'Evaluate') {
+      // nonexistent relative spaces for instance fulfill no conditions ever
+      if (!conditionPayload.target && !conditionPayload.targets?.length) {
+        return { conditionIsMet: false }
+      }
     }
 
     return this.checkCondition(bgioArguments, conditionPayload, context)

@@ -6,7 +6,7 @@ import ForEach from "./for-each.js";
 import Pass from "./pass.js";
 // import Swap from "./swap.js";
 
-export default function moveFactory(moveRule, server) {
+export default function moveFactory(moveRule) {
   const moveInstance = getMoveInstance(moveRule)
 
   // accepts serialized G and payload, returns serialized
@@ -17,7 +17,6 @@ export default function moveFactory(moveRule, server) {
     },
     serializablePayload,
   ) {
-      console.log('server', server)
     const G = deserialize(JSON.stringify(serializableG), registry)
     const payload = revivePayload(serializablePayload, G)
     const bgioArguments = { G, ...restBgioArguments }
