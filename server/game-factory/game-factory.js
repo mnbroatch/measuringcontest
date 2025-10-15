@@ -6,7 +6,7 @@ import { registry } from "./registry.js";
 import Bank from "./bank/bank.js";
 import expandGameRules from "./expand-game-rules.js";
 
-export default function gameFactory (gameRules, rulesHash, game) {
+export default function gameFactory (gameRules, rulesHash, server) {
   const game = { name: rulesHash }
   const rules = expandGameRules(gameRules)
 
@@ -34,7 +34,7 @@ export default function gameFactory (gameRules, rulesHash, game) {
     game.moves =
       Object.entries(rules.moves).reduce((acc, [name, moveDefinition]) => ({
         ...acc,
-        [name]: moveFactory({ ...moveDefinition, name }, game)
+        [name]: moveFactory({ ...moveDefinition, name }, server)
       }), {})
   }
 
