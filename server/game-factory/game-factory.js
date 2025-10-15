@@ -2,6 +2,7 @@ import get from "lodash/get.js";
 import { serialize, deserialize } from "wackson";
 import moveFactory from "./move/move-factory.js";
 import checkConditions from "./utils/check-conditions.js";
+import areThereValidMoves from "./utils/any-valid-moves.js";
 import { registry } from "./registry.js";
 import Bank from "./bank/bank.js";
 import expandGameRules from "./expand-game-rules.js";
@@ -12,7 +13,11 @@ export default function gameFactory (gameRules, rulesHash, server) {
 
   game.setup = (bgioArguments) => {
     const { ctx } = bgioArguments
-    const initialState = {};
+    const initialState = {
+      meta: {
+        passCount: 0,
+      }
+    };
 
     const entityDefinitions = expandEntityDefinitions(rules.entities, ctx)
     initialState.bank = new Bank(entityDefinitions)
@@ -40,6 +45,22 @@ export default function gameFactory (gameRules, rulesHash, server) {
 
   if (rules.turn) {
     game.turn = rules.turn
+    game.turn.onBegin = ({ G, events, ctx, ...restBgioArguments }) => {
+      const bgioArguments = {
+        G: deserialize(JSON.stringify(G), registry),
+        ctx,
+        events,
+        ...restBgioArguments
+      }
+      if (rules.turn.passIfNoMoves && G.meta.passCount < ctx.numPlayers) {
+        if (!areThereValidMoves(bgioArguments, game.moves)) {
+          G.meta.passCount++
+          events.pass()
+        } else {
+          G.meta.passCount = 0
+        }
+      }
+    }
   }
 
   if (rules.endIf) {

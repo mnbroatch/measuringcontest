@@ -24,30 +24,17 @@
     {
       "entity": {
         "name": "disc",
-        "state": { "player": "0" }
-      },
-      "destination": { "index": 36 }
-    },
-    {
-      "entity": {
-        "name": "disc",
         "state": { "player": "1" }
       },
       "destination": { "index": 28 }
-    },
-    {
-      "entity": {
-        "name": "disc",
-        "state": { "player": "1" }
-      },
-      "destination": { "index": 35 }
     }
   ],
   "minPlayers": 2,
   "maxPlayers": 2,
   "turn": {
     "minMoves": 1,
-    "maxMoves": 1
+    "maxMoves": 1,
+    "passIfNoMoves": true
   },
   "moves": {
     "placeDisc": {
@@ -70,13 +57,23 @@
               "matcher": { "type": "Space" }
             },
             {
+              "type": "Not",
+              "conditions": [{ "type": "Contains" }]
+            },
+            {
               "type": "Would",
               "conditions": [{
                 "type": "InLine",
                 "sequence": [
                   {
                     "conditions": [{
-                      "type": "Contains"
+                      "type": "Contains",
+                      "conditions": [{
+                        "type": "Is",
+                        "matcher": {
+                          "player": "Current"
+                        }
+                      }]
                     }]
                   },
                   {
@@ -102,7 +99,13 @@
                   },
                   {
                     "conditions": [{
-                      "type": "Contains"
+                      "type": "Contains",
+                      "conditions": [{
+                        "type": "Is",
+                        "matcher": {
+                          "player": "Current"
+                        }
+                      }]
                     }]
                   }
                 ]
@@ -110,29 +113,40 @@
             }
           ]
         }
-      }
-    },
-    "pass": {
-      "type": "Pass",
-      "conditions": [{
-        "type": "MoveIsImpossible",
-        "moveNames": ["placeDisc"]
+      },
+      "then": [{
+        "type": "ForEach",
+        "arguments": {
+          "targets": {
+            "automatic": true,
+            "contextPath": [
+              "moveConditionResults",
+              0,
+              "conditionResults",
+              "destination",
+              "results",
+              2,
+              "results",
+              0,
+              "matches",
+              { "flatten": true, "map": ["entities"] },
+              { "flatten": true }
+            ]
+          }
+        },
+        "move": {
+          "type": "ForEach",
+          "arguments": { "targets": {} },
+          "move": {
+            "type": "SetState",
+            "arguments": { "entity": {} },
+            "state": {
+              "player": "Current"
+            }
+          }
+        }
       }]
     }
   },
-  "endIf": [
-    {
-      "conditions": [{
-        "target": {
-          "conditions": [{
-            "type": "Is",
-            "matcher": { "name": "mainGrid" }
-          }]
-        },
-        "type": "EverySpace",
-        "spaceConditions": [{"type": "Contains"}]
-      }],
-      "result": { "draw": true }
-    }
-  ]
+  "endIf": []
 }
