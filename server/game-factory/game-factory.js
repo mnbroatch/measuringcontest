@@ -46,13 +46,13 @@ export default function gameFactory (gameRules, rulesHash, server) {
   if (rules.turn) {
     game.turn = rules.turn
     game.turn.onBegin = ({ G, events, ctx, ...restBgioArguments }) => {
-      const bgioArguments = {
-        G: deserialize(JSON.stringify(G), registry),
-        ctx,
-        events,
-        ...restBgioArguments
-      }
       if (rules.turn.passIfNoMoves && G.meta.passCount < ctx.numPlayers) {
+        const bgioArguments = {
+          G: deserialize(JSON.stringify(G), registry),
+          ctx,
+          events,
+          ...restBgioArguments
+        }
         if (!areThereValidMoves(bgioArguments, game.moves)) {
           G.meta.passCount++
           events.pass()

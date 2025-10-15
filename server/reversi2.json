@@ -148,5 +148,19 @@
       }]
     }
   },
-  "endIf": []
+  "endIf": [
+    {
+      "conditions": [{
+        "type": "EverySpace",
+        "target": {
+          "conditions": [{
+            "type": "Is",
+            "matcher": { "name": "mainGrid" }
+          }]
+        },
+        "spaceConditions": [{"type": "Contains"}]
+      }],
+      "result": { "draw": true }
+    }
+  ]
 }
