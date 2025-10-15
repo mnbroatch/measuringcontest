@@ -11,8 +11,8 @@ export default function GameEditor ({ initialGameName, initialGameRules, saveGam
     // initialGameRules || JSON.stringify(ticTacTwo, null, 2)
     // initialGameRules || JSON.stringify(ticTacToe, null, 2)
     // initialGameRules || JSON.stringify(connectFour, null, 2)
-    initialGameRules || JSON.stringify(reversi, null, 2)
-    // initialGameRules || JSON.stringify(reversi2, null, 2)
+    // initialGameRules || JSON.stringify(reversi, null, 2)
+    initialGameRules || JSON.stringify(reversi2, null, 2)
   )
   const [gameName, setGameName] = useState(initialGameName)
 

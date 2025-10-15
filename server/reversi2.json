@@ -111,6 +111,13 @@
           ]
         }
       }
+    },
+    "pass": {
+      "type": "Pass",
+      "conditions": [{
+        "type": "MoveIsImpossible",
+        "moveNames": ["placeDisc"]
+      }]
     }
   },
   "endIf": [

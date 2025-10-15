@@ -1,6 +1,6 @@
 import { INVALID_MOVE } from 'boardgame.io/dist/cjs/core.js';
 import checkConditions from "../utils/check-conditions.js";
-import get from "../utils/get.js";
+import resolveArguments from "../utils/resolve-arguments.js";
 
 export default class Move {
   constructor (rule) {
@@ -46,31 +46,10 @@ export default class Move {
     }) , {})
   }
 
-  resolveArguments (bgioArguments, payload, context) {
-    return Object.entries(this.rule.arguments ?? {}).reduce((acc, [argName, argRule]) => {
-      let argument = payload?.arguments?.[argName]
-      if (!argument) {
-        if (!argRule.automatic) {
-          console.error(`non-automatic move rule didn't get argument: ${argName} in ${JSON.stringify(this.rule)}`)
-        }
-        if (argRule.location === 'bank') {
-          argument = bgioArguments.G.bank.getOne(bgioArguments, argRule)
-        } else if (argRule.contextPath) {
-          console.log('context', context)
-          argument = get(context, argRule.contextPath)
-        } else {
-          argument = bgioArguments.G.bank.findOne(bgioArguments, argRule, context)
-        }
-      }
-      return {...acc, [argName]: argument}
-    }, {})
-  }
-
-
   doMove (bgioArguments, payload, context, skipCheck = false) {
     const resolvedPayload = {
       ...payload,
-      arguments: this.resolveArguments(bgioArguments, payload, context)
+      arguments: resolveArguments(bgioArguments, this.rule, payload, context)
     }
 
     let conditionResults
