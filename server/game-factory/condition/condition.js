@@ -14,7 +14,7 @@ export default class Condition {
       if (conditionPayload.target) {
         conditionPayload.originalTarget = conditionPayload.target
       }
-      if (this.rule.target.targetingType === 'Relative') {
+      if (this.rule.target.targetingType === 'RelativeCoordinates') {
         let parent = G.bank.findParent(conditionPayload.target)
         // // we always want the SpaceGroup, whether target is Space or Entity
         // while (parent.rule.type !== 'Grid') {
@@ -29,6 +29,8 @@ export default class Condition {
           parent.getRelativeCoordinates(oldCoordinates, this.rule.target.location)
         conditionPayload.target =
           newCoordinates && parent.spaces[parent.getIndex(newCoordinates)]
+      } else if (this.rule.target.targetingType === 'Parent') {
+        conditionPayload.target = G.bank.findParent(conditionPayload.target)
       } else {
         conditionPayload.target = G.bank.findOne(
           bgioArguments,

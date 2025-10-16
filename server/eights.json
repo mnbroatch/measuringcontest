@@ -119,21 +119,36 @@
       }
     },
     {
-      "type": "MoveEntity",
+      "type": "ForEach",
       "arguments": {
-        "entity": {
-          "automatic": true,
-          "conditions": [{
-            "type": "Is",
-            "matcher": { "name": "stock" }
-          }]
-        },
-        "destination": {
-          "automatic": true,
-          "conditions": [{
-            "type": "Is",
-            "matcher": { "name": "stock" }
-          }]
+        "targets": "Player"
+      },
+      "move": {
+        "type": "MoveEntity",
+        "arguments": {
+          "entity": {
+            "automatic": true,
+            "conditions": [
+              {
+                "type": "Is",
+                "target": { "targetingType": "Parent" },
+                "matcher": { "name": "stock" }
+              },
+              {
+                "type": "Position",
+                "position": "First"
+              }
+            ]
+          },
+          "destination": {
+            "automatic": true,
+            "conditions": [{
+              "type": "Is",
+              "matcher": {
+                "name": "hand"
+              }
+            }]
+          }
         }
       }
     }
