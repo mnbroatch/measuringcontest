@@ -87,11 +87,9 @@
       "arguments": {
         "targets": {
           "automatic": true,
+          "matchMultiple": true,
           "location": "bank", 
-          "conditions": [{
-            "type": "Is",
-            "matcher": { "name": "card" }
-          }]
+          "matcher": { "name": "card" }
         }
       },
       "move": {
@@ -105,6 +103,18 @@
               "matcher": { "name": "stock" }
             }]
           }
+        }
+      }
+    },
+    {
+      "type": "Shuffle",
+      "arguments": {
+        "target": {
+          "automatic": true,
+          "conditions": [{
+            "type": "Is",
+            "matcher": { "name": "stock" }
+          }]
         }
       }
     }

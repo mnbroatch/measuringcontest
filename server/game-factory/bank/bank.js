@@ -68,16 +68,23 @@ class Bank {
     return slot.getOne(bgioArguments, { state: rule.state })
   }
 
-  getMultiple (bgioArguments, matcher, count) {
-    const slot = this.getSlot(bgioArguments, matcher)
-    if (!slot) {
-      console.error(`No matching slot for ${JSON.stringify(matcher)}`)
+  getMultiple (bgioArguments, rule, count) {
+    const slots = this.getSlots(bgioArguments, rule.matcher)
+    if (!slots.length) {
+      console.error(`No matching slots for ${JSON.stringify(rule.matcher)}`)
     }
-    return slot.getMultiple(bgioArguments, count, { state: matcher.state })
+    return slots.reduce((acc, slot) => [
+      ...acc,
+      ...slot.getMultiple(bgioArguments, count, { state: rule.matcher.state })
+    ], [])
   }
 
   getSlot (bgioArguments, matcher) {
     return this.slots.find(slot => entityMatches(bgioArguments, matcher, slot))
+  }
+
+  getSlots (bgioArguments, matcher) {
+    return this.slots.filter(slot => entityMatches(bgioArguments, matcher, slot))
   }
 
   returnToBank (bgioArguments, entity) {

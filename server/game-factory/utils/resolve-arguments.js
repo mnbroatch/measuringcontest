@@ -14,13 +14,18 @@ export default function resolveArguments (
         console.error(`non-automatic move rule didn't get argument: ${argName} in ${JSON.stringify(moveRule)}`)
       }
       if (argRule.location === 'bank') {
-        argument = bgioArguments.G.bank.getOne(bgioArguments, argRule)
+        argument = argRule.matchMultiple
+          ? bgioArguments.G.bank.getMultiple(bgioArguments, argRule)
+          : bgioArguments.G.bank.getOne(bgioArguments, argRule)
       } else if (argRule.contextPath) {
         argument = get(context, argRule.contextPath)
       } else if (argRule.gamePath) {
         argument = get(bgioArguments.G, argRule.gamePath)
       } else {
         argument = bgioArguments.G.bank.findOne(bgioArguments, argRule, context)
+        argument = argRule.matchMultiple
+          ? bgioArguments.G.bank.findAll(bgioArguments, argRule, context)
+          : bgioArguments.G.bank.findOne(bgioArguments, argRule, context)
       }
     }
     return {...acc, [argName]: argument}

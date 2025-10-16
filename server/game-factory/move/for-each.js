@@ -4,6 +4,7 @@ import { getMoveInstance } from "./move-factory.js";
 
 export default class ForEach extends Move {
   do(bgioArguments, { arguments: { targets } }, context) {
+    console.log('targets', targets)
     targets.forEach((target) => {
       const loopItemArgNames = Object.keys(this.rule.move.arguments)
         .filter(a => this.rule.move.arguments[a] === 'LoopItem')

@@ -35,15 +35,15 @@ export default class Move {
 
   checkConditionGroups (bgioArguments, payload, context) {
     return Object.entries(this.conditionMappings)
-    .reduce((acc, [groupName, { conditions, getPayload }]) => ({
-      ...acc,
-      [groupName]: checkConditions(
-        bgioArguments,
-        { conditions },
-        getPayload(payload),
-        context
-      )
-    }) , {})
+      .reduce((acc, [groupName, { conditions, getPayload }]) => ({
+        ...acc,
+        [groupName]: checkConditions(
+          bgioArguments,
+          { conditions },
+          getPayload(payload),
+          context
+        )
+      }) , {})
   }
 
   doMove (bgioArguments, payload, context, skipCheck = false) {
@@ -58,7 +58,6 @@ export default class Move {
     }
 
     if (!skipCheck && !Object.values(conditionResults).every(r => r.conditionsAreMet)) {
-console.log('conditionResults', conditionResults)
       return INVALID_MOVE
     } else {
       this.do(bgioArguments, resolvedPayload)

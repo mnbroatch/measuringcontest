@@ -4,6 +4,7 @@ import MoveEntity from "./move-entity.js";
 import SetState from "./set-state.js";
 import ForEach from "./for-each.js";
 import Pass from "./pass.js";
+import Shuffle from "./shuffle.js";
 // import Swap from "./swap.js";
 
 export default function moveFactory(moveRule) {
@@ -63,5 +64,7 @@ export function getMoveInstance (moveRule) {
       return new ForEach(moveRule);
     case 'Pass':
       return new Pass(moveRule);
+    case 'Shuffle':
+      return new Shuffle(moveRule);
   }
 }
