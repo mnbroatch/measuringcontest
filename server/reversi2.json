@@ -24,17 +24,30 @@
     {
       "entity": {
         "name": "disc",
+        "state": { "player": "0" }
+      },
+      "destination": { "index": 36 }
+    },
+    {
+      "entity": {
+        "name": "disc",
         "state": { "player": "1" }
       },
       "destination": { "index": 28 }
+    },
+    {
+      "entity": {
+        "name": "disc",
+        "state": { "player": "1" }
+      },
+      "destination": { "index": 35 }
     }
   ],
   "minPlayers": 2,
   "maxPlayers": 2,
   "turn": {
     "minMoves": 1,
-    "maxMoves": 1,
-    "passIfNoMoves": true
+    "maxMoves": 1
   },
   "moves": {
     "placeDisc": {
@@ -135,31 +148,14 @@
           }
         },
         "move": {
-          "type": "ForEach",
-          "arguments": { "targets": {} },
-          "move": {
-            "type": "SetState",
-            "arguments": { "entity": {} },
-            "state": {
-              "player": "Current"
-            }
+          "type": "SetState",
+          "arguments": { "entity": "LoopItem" },
+          "state": {
+            "player": "Current"
           }
         }
       }]
     }
   },
-  "endIf": [
-    {
-      "conditions": [{
-        "type": "Evaluate",
-        "expression": "passCount == 2",
-        "arguments": {
-          "passCount": {
-            "gamePath": ["meta", "passCount"]
-          }
-        }
-      }],
-      "result": { "draw": true }
-    }
-  ]
+  "endIf": []
 }

@@ -148,14 +148,10 @@
           }
         },
         "move": {
-          "type": "ForEach",
-          "arguments": { "targets": {} },
-          "move": {
-            "type": "SetState",
-            "arguments": { "entity": {} },
-            "state": {
-              "player": "Current"
-            }
+          "type": "SetState",
+          "arguments": { "entity": "LoopItem" },
+          "state": {
+            "player": "Current"
           }
         }
       }]

@@ -1,84 +1,122 @@
 {
   "entities": [
     {
-      "name": "mainGrid",
-      "type": "Grid",
-      "width": 3,
-      "height": 3
+      "type": "Space",
+      "name": "hand",
+      "perPlayer": true,
+      "hiddenFrom": "Others"
     },
     {
-      "name": "playerMarker",
-      "perPlayer": true,
-      "count": "Infinity"
+      "type": "Space",
+      "name": "discard",
+      "hiddenFrom": "All"
+    },
+    {
+      "type": "Space",
+      "name": "discard",
+      "hiddenFrom": "Others"
+    },
+    {
+      "type": "Space",
+      "name": "stock",
+      "hiddenFrom": "Others"
+    },
+    {"value": 2, "suit": "clubs", "displayName": "2c", "name": "card"},
+    {"value": 3, "suit": "clubs", "displayName": "3c", "name": "card"},
+    {"value": 4, "suit": "clubs", "displayName": "4c", "name": "card"},
+    {"value": 5, "suit": "clubs", "displayName": "5c", "name": "card"},
+    {"value": 6, "suit": "clubs", "displayName": "6c", "name": "card"},
+    {"value": 7, "suit": "clubs", "displayName": "7c", "name": "card"},
+    {"value": 8, "suit": "clubs", "displayName": "8c", "name": "card"},
+    {"value": 9, "suit": "clubs", "displayName": "9c", "name": "card"},
+    {"value": 10, "suit": "clubs", "displayName": "10c", "name": "card"},
+    {"value": 11, "suit": "clubs", "displayName": "jc", "name": "card"},
+    {"value": 12, "suit": "clubs", "displayName": "qc", "name": "card"},
+    {"value": 13, "suit": "clubs", "displayName": "kc", "name": "card"},
+    {"value": 14, "suit": "clubs", "displayName": "ac", "name": "card"},
+    {"value": 2, "suit": "diamonds", "displayName": "2d", "name": "card"},
+    {"value": 3, "suit": "diamonds", "displayName": "3d", "name": "card"},
+    {"value": 4, "suit": "diamonds", "displayName": "4d", "name": "card"},
+    {"value": 5, "suit": "diamonds", "displayName": "5d", "name": "card"},
+    {"value": 6, "suit": "diamonds", "displayName": "6d", "name": "card"},
+    {"value": 7, "suit": "diamonds", "displayName": "7d", "name": "card"},
+    {"value": 8, "suit": "diamonds", "displayName": "8d", "name": "card"},
+    {"value": 9, "suit": "diamonds", "displayName": "9d", "name": "card"},
+    {"value": 10, "suit": "diamonds", "displayName": "10d", "name": "card"},
+    {"value": 11, "suit": "diamonds", "displayName": "jd", "name": "card"},
+    {"value": 12, "suit": "diamonds", "displayName": "qd", "name": "card"},
+    {"value": 13, "suit": "diamonds", "displayName": "kd", "name": "card"},
+    {"value": 14, "suit": "diamonds", "displayName": "ad", "name": "card"},
+    {"value": 2, "suit": "hearts", "displayName": "2h", "name": "card"},
+    {"value": 3, "suit": "hearts", "displayName": "3h", "name": "card"},
+    {"value": 4, "suit": "hearts", "displayName": "4h", "name": "card"},
+    {"value": 5, "suit": "hearts", "displayName": "5h", "name": "card"},
+    {"value": 6, "suit": "hearts", "displayName": "6h", "name": "card"},
+    {"value": 7, "suit": "hearts", "displayName": "7h", "name": "card"},
+    {"value": 8, "suit": "hearts", "displayName": "8h", "name": "card"},
+    {"value": 9, "suit": "hearts", "displayName": "9h", "name": "card"},
+    {"value": 10, "suit": "hearts", "displayName": "10h", "name": "card"},
+    {"value": 11, "suit": "hearts", "displayName": "jh", "name": "card"},
+    {"value": 12, "suit": "hearts", "displayName": "qh", "name": "card"},
+    {"value": 13, "suit": "hearts", "displayName": "kh", "name": "card"},
+    {"value": 14, "suit": "hearts", "displayName": "ah", "name": "card"},
+    {"value": 2, "suit": "spades", "displayName": "2s", "name": "card"},
+    {"value": 3, "suit": "spades", "displayName": "3s", "name": "card"},
+    {"value": 4, "suit": "spades", "displayName": "4s", "name": "card"},
+    {"value": 5, "suit": "spades", "displayName": "5s", "name": "card"},
+    {"value": 6, "suit": "spades", "displayName": "6s", "name": "card"},
+    {"value": 7, "suit": "spades", "displayName": "7s", "name": "card"},
+    {"value": 8, "suit": "spades", "displayName": "8s", "name": "card"},
+    {"value": 9, "suit": "spades", "displayName": "9s", "name": "card"},
+    {"value": 10, "suit": "spades", "displayName": "10s", "name": "card"},
+    {"value": 11, "suit": "spades", "displayName": "js", "name": "card"},
+    {"value": 12, "suit": "spades", "displayName": "qs", "name": "card"},
+    {"value": 13, "suit": "spades", "displayName": "ks", "name": "card"},
+    {"value": 14, "suit": "spades", "displayName": "as", "name": "card"}
+  ],
+  "sharedBoard": [
+    { "name": "stock" },
+    { "name": "discard" }
+  ],
+  "personalBoard": [
+    { "name": "hand" }
+  ],
+  "initialMoves": [
+    {
+      "type": "ForEach",
+      "arguments": {
+        "targets": {
+          "automatic": true,
+          "location": "bank", 
+          "conditions": [{
+            "type": "Is",
+            "matcher": { "name": "card" }
+          }]
+        }
+      },
+      "move": {
+        "type": "MoveEntity",
+        "arguments": {
+          "entity": "LoopItem",
+          "destination": {
+            "automatic": true,
+            "conditions": [{
+              "type": "Is",
+              "matcher": { "name": "stock" }
+            }]
+          }
+        }
+      }
     }
   ],
-  "sharedBoard": [{ "name": "mainGrid" }],
   "minPlayers": 2,
-  "maxPlayers": 2,
+  "maxPlayers": 5,
   "turn": {
     "minMoves": 1,
     "maxMoves": 1
   },
   "moves": {
-    "placePlayerMarker": {
-      "type": "MoveEntity",
-      "arguments": {
-        "entity": {
-          "automatic": true,
-          "location": "bank", 
-          "matcher": {
-            "name": "playerMarker",
-            "player": "Current"
-          }
-        },
-        "destination": {
-          "conditions": [
-            {
-              "type": "Is",
-              "matcher": { "type": "Space" }
-            },
-            {
-              "type": "Would",
-              "conditions": [{"type": "Contains"}]
-            }
-          ]
-        }
-      }
-    }
   },
   "endIf": [
-    {
-      "conditions": [{
-        "target": {
-          "conditions": [{
-            "type": "Is",
-            "matcher": { "name": "mainGrid" }
-          }]
-        },
-        "type": "ContainsLine",
-        "length": 3,
-        "spaceGroupConditions": [{
-          "type": "ContainsSame",
-          "properties": ["player"]
-        }],
-        "spaceConditions": [{"type": "Contains"}]
-      }],
-      "result": {
-        "winner": [ "conditionResults", 0, "matches", 0, "spaces", 0, "entities", 0, "rule", "player" ]
-      }
-    },
-    {
-      "conditions": [{
-        "type": "EverySpace",
-        "target": {
-          "conditions": [{
-            "type": "Is",
-            "matcher": { "name": "mainGrid" }
-          }]
-        },
-        "spaceConditions": [{"type": "Contains"}]
-      }],
-      "result": { "draw": true }
-    }
   ]
 }

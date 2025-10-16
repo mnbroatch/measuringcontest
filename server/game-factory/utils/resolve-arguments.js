@@ -1,6 +1,12 @@
 import get from "./get.js";
 
-export default function resolveArguments (bgioArguments, moveRule, payload, context) {
+// todo: change to resolve one arguments at a time? probably 2 composed fns
+export default function resolveArguments (
+  bgioArguments,
+  moveRule,
+  payload,
+  context
+) {
   return Object.entries(moveRule.arguments ?? {}).reduce((acc, [argName, argRule]) => {
     let argument = payload?.arguments?.[argName]
     if (!argument) {
