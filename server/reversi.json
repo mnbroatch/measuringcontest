@@ -149,7 +149,12 @@
         },
         "move": {
           "type": "SetState",
-          "arguments": { "entity": "LoopItem" },
+          "arguments": {
+            "entity": {
+              "automatic": true,
+              "contextPath": [ "loopTarget" ]
+            }
+          },
           "state": {
             "player": "Current"
           }

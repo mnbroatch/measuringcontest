@@ -95,7 +95,10 @@
       "move": {
         "type": "MoveEntity",
         "arguments": {
-          "entity": "LoopItem",
+          "entity": {
+            "automatic": true,
+            "contextPath": [ "loopTarget" ]
+          },
           "destination": {
             "automatic": true,
             "conditions": [{
