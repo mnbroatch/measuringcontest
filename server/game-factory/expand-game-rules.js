@@ -35,7 +35,7 @@ function expandInitialPlacements (rules) {
     // const invariantConditionMappings = [
     //   {
     //     rule: {
-    //       type: 'bankHasEnough',
+    //       type: 'BankHasEnough',
     //       entity: rule.entity
     //     }
     //   },
@@ -50,7 +50,7 @@ function expandInitialPlacements (rules) {
         arguments: {
           entity: {
             automatic: true,
-            location: 'bank',
+            location: 'Bank',
             matcher,
             state
           },

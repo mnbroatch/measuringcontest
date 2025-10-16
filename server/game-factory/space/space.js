@@ -6,8 +6,12 @@ export default class Space extends Entity {
     this.entities = []
   }
 
-  placeEntity(entity) {
+  placeEntity (entity) {
     this.entities.push(entity);
+  }
+
+  remove (entity) {
+    this.entities.splice(this.entities.indexOf(entity), 1);
   }
 
   isEmpty() {

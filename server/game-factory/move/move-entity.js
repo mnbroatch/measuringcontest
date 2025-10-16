@@ -1,7 +1,11 @@
 import Move from "./move.js";
 
 export default class MoveEntity extends Move {
-  do(_, { arguments: { destination, entity } }) {
+  do(bgioArguments, { arguments: { destination, entity } }) {
+    if (this.rule.arguments.entity.location !== 'Bank') {
+      // conditional access to handle LoopItem and other weird rules
+      bgioArguments.G.bank.findParent(entity)?.remove(entity)
+    }
     destination.placeEntity(entity)
   }
 }

@@ -13,7 +13,7 @@ export default function resolveArguments (
       if (!argRule.automatic) {
         console.error(`non-automatic move rule didn't get argument: ${argName} in ${JSON.stringify(moveRule)}`)
       }
-      if (argRule.location === 'bank') {
+      if (argRule.location === 'Bank') {
         argument = argRule.matchMultiple
           ? bgioArguments.G.bank.getMultiple(bgioArguments, argRule)
           : bgioArguments.G.bank.getOne(bgioArguments, argRule)

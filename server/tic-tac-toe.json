@@ -25,7 +25,7 @@
       "arguments": {
         "entity": {
           "automatic": true,
-          "location": "bank", 
+          "location": "Bank", 
           "matcher": {
             "name": "playerMarker",
             "player": "Current"

@@ -88,7 +88,7 @@
         "targets": {
           "automatic": true,
           "matchMultiple": true,
-          "location": "bank", 
+          "location": "Bank", 
           "matcher": { "name": "card" }
         }
       },
@@ -110,6 +110,25 @@
       "type": "Shuffle",
       "arguments": {
         "target": {
+          "automatic": true,
+          "conditions": [{
+            "type": "Is",
+            "matcher": { "name": "stock" }
+          }]
+        }
+      }
+    },
+    {
+      "type": "MoveEntity",
+      "arguments": {
+        "entity": {
+          "automatic": true,
+          "conditions": [{
+            "type": "Is",
+            "matcher": { "name": "stock" }
+          }]
+        },
+        "destination": {
           "automatic": true,
           "conditions": [{
             "type": "Is",
