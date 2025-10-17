@@ -4,6 +4,17 @@ import cloneDeep from "lodash/cloneDeep.js";
 // { type: 'IsEmpty' } = { type: 'not', conditions: [{ type: 'Contains' }], 
 // { matcher: {...blah} } => conditions.push({type: "Is", matcher: {...blah} })
 
+    // put somewhere
+    // const invariantConditionMappings = [
+    //   {
+    //     rule: {
+    //       type: 'BankHasEnough',
+    //       entity: rule.entity
+    //     }
+    //   },
+    // ]
+
+
 // Things we always want, don't need to configure, and
 // want to treat as first-class citizens
 const invariantEntities = [
@@ -28,23 +39,29 @@ function expandInitialPlacements (rules) {
     rules.initialPlacements.unshift(...sharedBoardPlacements)
   }
 
+  if (rules.personalBoard) {
+    rules.entities.push({
+      type: "PersonalBoard",
+      name: 'personalBoard',
+      perPlayer: true
+    })
+    const personalBoardPlacements = rules.personalBoard.map(matcher => ({
+      entity: matcher,
+      destination: {
+        name: 'personalBoard'
+      }
+    }))
+    if (!rules.initialPlacements) rules.initialPlacements = []
+    rules.initialPlacements.unshift(...personalBoardPlacements)
+  }
+
   if (rules.initialPlacements) {
     const initialPlacementMoves = rules.initialPlacements.map(placementMatchers =>  {
-
-    // put somewhere
-    // const invariantConditionMappings = [
-    //   {
-    //     rule: {
-    //       type: 'BankHasEnough',
-    //       entity: rule.entity
-    //     }
-    //   },
-    // ]
-
 
       // probably going to need to separate this even in the shorthand. maybe
       // combine, then search entity rule and extract state variables instead?
       const { state, ...matcher } = placementMatchers.entity
+
       return {
         type: 'MoveEntity',
         arguments: {

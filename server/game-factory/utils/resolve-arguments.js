@@ -8,6 +8,7 @@ export default function resolveArguments (
   context
 ) {
   return Object.entries(moveRule.arguments ?? {}).reduce((acc, [argName, argRule]) => {
+    console.log(bgioArguments)
     let argument = payload?.arguments?.[argName]
     if (!argument) {
       if (!argRule.automatic) {
@@ -19,6 +20,9 @@ export default function resolveArguments (
           : bgioArguments.G.bank.getOne(bgioArguments, argRule)
       } else if (argRule.contextPath) {
         argument = get(context, argRule.contextPath)
+      } else if (argRule.ctxPath) {
+        // getting player list from playOrder, does this exist for custom turn order?
+        argument = get(bgioArguments.ctx, argRule.contextPath)
       } else if (argRule.gamePath) {
         argument = get(bgioArguments.G, argRule.gamePath)
       } else {

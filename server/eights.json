@@ -124,7 +124,7 @@
     {
       "type": "ForEach",
       "arguments": {
-        "targets": "Player"
+        "targets": { "ctxPath": ["playOrder"] }
       },
       "move": {
         "type": "MoveEntity",
@@ -145,12 +145,16 @@
           },
           "destination": {
             "automatic": true,
-            "conditions": [{
-              "type": "Is",
-              "matcher": {
-                "name": "hand"
+            "conditions": [
+              {
+                "type": "Is",
+                "target": { "targetingType": "Parent" },
+                "matcher": {
+                  "name": "personalBoard",
+                  "player": { "contextPath": ["loopTarget"] }
+                }
               }
-            }]
+            ]
           }
         }
       }

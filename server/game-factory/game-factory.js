@@ -26,6 +26,14 @@ export default function gameFactory (gameRules, rulesHash, server) {
       { matcher: { name: "sharedBoard" } }
     )
 
+    console.log('bgioArguments', bgioArguments)
+    if (rules.personalBoard) {
+      initialState.personalBoards = initialState.bank.getOne(
+        bgioArguments,
+        { matcher: { name: "sharedBoard" } }
+      )
+    }
+
     rules.initialMoves?.forEach(moveRule => {
       moveFactory(moveRule).moveInstance.doMove({
         ...bgioArguments,
