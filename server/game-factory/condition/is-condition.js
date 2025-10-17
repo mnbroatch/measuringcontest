@@ -2,9 +2,9 @@ import Condition from "./condition.js";
 import entityMatches from '../utils/entity-matches.js'
 
 export default class Is extends Condition {
-  checkCondition(bgioArguments, { target }) {
+  checkCondition(bgioArguments, { target }, context) {
     return {
-      conditionIsMet: entityMatches(bgioArguments, this.rule.matcher, target)
+      conditionIsMet: entityMatches(bgioArguments, this.rule.matcher, target, context)
     }
   }
 }

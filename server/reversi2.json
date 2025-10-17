@@ -54,7 +54,6 @@
       "type": "MoveEntity",
       "arguments": {
         "entity": {
-          "automatic": true,
           "location": "Bank", 
           "matcher": {
             "name": "disc"
@@ -131,7 +130,6 @@
         "type": "ForEach",
         "arguments": {
           "targets": {
-            "automatic": true,
             "contextPath": [
               "moveConditionResults",
               0,
@@ -151,7 +149,6 @@
           "type": "SetState",
           "arguments": {
             "entity": {
-              "automatic": true,
               "contextPath": [ "loopTarget" ]
             }
           },

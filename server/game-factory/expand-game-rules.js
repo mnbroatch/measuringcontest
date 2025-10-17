@@ -18,9 +18,12 @@ import cloneDeep from "lodash/cloneDeep.js";
 // Things we always want, don't need to configure, and
 // want to treat as first-class citizens
 const invariantEntities = [
-  { type: "Space" },
   {
-    type: "SharedBoard",
+    type: "Space",
+    count: "Infinity",
+  },
+  {
+    type: "Board",
     name: 'sharedBoard'
   }
 ]
@@ -41,7 +44,7 @@ function expandInitialPlacements (rules) {
 
   if (rules.personalBoard) {
     rules.entities.push({
-      type: "PersonalBoard",
+      type: "Board",
       name: 'personalBoard',
       perPlayer: true
     })

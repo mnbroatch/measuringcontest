@@ -8,23 +8,19 @@ export default function resolveArguments (
   context
 ) {
   return Object.entries(moveRule.arguments ?? {}).reduce((acc, [argName, argRule]) => {
-    console.log(bgioArguments)
     let argument = payload?.arguments?.[argName]
     if (!argument) {
-      if (!argRule.automatic) {
-        console.error(`non-automatic move rule didn't get argument: ${argName} in ${JSON.stringify(moveRule)}`)
-      }
-      if (argRule.location === 'Bank') {
-        argument = argRule.matchMultiple
-          ? bgioArguments.G.bank.getMultiple(bgioArguments, argRule)
-          : bgioArguments.G.bank.getOne(bgioArguments, argRule)
-      } else if (argRule.contextPath) {
+      if (argRule.contextPath) {
         argument = get(context, argRule.contextPath)
       } else if (argRule.ctxPath) {
         // getting player list from playOrder, does this exist for custom turn order?
-        argument = get(bgioArguments.ctx, argRule.contextPath)
+        argument = get(bgioArguments.ctx, argRule.ctxPath)
       } else if (argRule.gamePath) {
         argument = get(bgioArguments.G, argRule.gamePath)
+      } else if (argRule.location === 'Bank') {
+        argument = argRule.matchMultiple
+          ? bgioArguments.G.bank.getMultiple(bgioArguments, argRule, context)
+          : bgioArguments.G.bank.getOne(bgioArguments, argRule, context)
       } else {
         argument = bgioArguments.G.bank.findOne(bgioArguments, argRule, context)
         argument = argRule.matchMultiple

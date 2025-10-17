@@ -1,4 +1,4 @@
-import SharedBoard from "./shared-board.js";
+import Board from "./board.js";
 import SpaceGroup from "./space-group/space-group.js";
 import Space from "./space/space.js";
 import Grid from "./space-group/grid.js";
@@ -7,7 +7,7 @@ import BankSlot from "./bank/bank-slot.js";
 import Entity from "./entity.js";
 
 export const registry = {
-  SharedBoard,
+  Board,
   SpaceGroup,
   Space,
   Grid,

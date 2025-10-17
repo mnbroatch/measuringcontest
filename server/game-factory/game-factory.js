@@ -26,11 +26,10 @@ export default function gameFactory (gameRules, rulesHash, server) {
       { matcher: { name: "sharedBoard" } }
     )
 
-    console.log('bgioArguments', bgioArguments)
     if (rules.personalBoard) {
       initialState.personalBoards = initialState.bank.getOne(
         bgioArguments,
-        { matcher: { name: "sharedBoard" } }
+        { matcher: { name: "personalBoard" } }
       )
     }
 

@@ -9,11 +9,11 @@ class BankSlot {
     this.remaining = +rule.count || 1
   }
 
-  getOne (bgioArguments, options) {
-    return this.getMultiple(bgioArguments, 1, options)[0]
+  getOne (bgioArguments, options, context) {
+    return this.getMultiple(bgioArguments, 1, options, context)[0]
   }
 
-  getMultiple (bgioArguments, count = Infinity, options = {}) {
+  getMultiple (bgioArguments, count = Infinity, options = {}, context) {
     const toReturn = []
     
     if (this.remaining === Infinity && count === Infinity) {
@@ -45,7 +45,7 @@ class BankSlot {
     
     if (options.state) {
       toReturn.forEach(entity => {
-        entity.state = { ...entity.state, ...resolveProperties(bgioArguments, options.state) }
+        entity.state = { ...entity.state, ...resolveProperties(bgioArguments, options.state, context) }
       })
     }
     

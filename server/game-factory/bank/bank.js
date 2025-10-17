@@ -60,16 +60,16 @@ class Bank {
     )
   }
  
-  getOne (bgioArguments, rule) {
-    const slot = this.getSlot(bgioArguments, rule.matcher)
+  getOne (bgioArguments, rule, context) {
+    const slot = this.getSlot(bgioArguments, rule.matcher, context)
     if (!slot) {
       console.error(`No matching slot for ${JSON.stringify(rule.matcher)}`)
     }
-    return slot.getOne(bgioArguments, { state: rule.state })
+    return slot.getOne(bgioArguments, { state: rule.state }, context)
   }
 
-  getMultiple (bgioArguments, rule, count) {
-    const slots = this.getSlots(bgioArguments, rule.matcher)
+  getMultiple (bgioArguments, rule, count, context) {
+    const slots = this.getSlots(bgioArguments, rule.matcher, context)
     if (!slots.length) {
       console.error(`No matching slots for ${JSON.stringify(rule.matcher)}`)
     }
@@ -79,12 +79,12 @@ class Bank {
     ], [])
   }
 
-  getSlot (bgioArguments, matcher) {
-    return this.slots.find(slot => entityMatches(bgioArguments, matcher, slot))
+  getSlot (bgioArguments, matcher, context) {
+    return this.slots.find(slot => entityMatches(bgioArguments, matcher, slot, context))
   }
 
-  getSlots (bgioArguments, matcher) {
-    return this.slots.filter(slot => entityMatches(bgioArguments, matcher, slot))
+  getSlots (bgioArguments, matcher, context) {
+    return this.slots.filter(slot => entityMatches(bgioArguments, matcher, slot, context))
   }
 
   returnToBank (bgioArguments, entity) {
