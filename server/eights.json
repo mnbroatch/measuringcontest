@@ -120,35 +120,41 @@
     {
       "type": "ForEach",
       "arguments": {
-        "targets": { "ctxPath": ["playOrder"] }
+        "targets": { "literal": [0,1,2,3,4] }
       },
       "move": {
-        "type": "MoveEntity",
+        "type": "ForEach",
         "arguments": {
-          "entity": {
-            "conditions": [
-              {
-                "type": "Is",
-                "target": { "targetingType": "Parent" },
-                "matcher": { "name": "stock" }
-              },
-              {
-                "type": "Position",
-                "position": "First"
-              }
-            ]
-          },
-          "destination": {
-            "conditions": [
-              {
-                "type": "Is",
-                "target": { "targetingType": "Parent" },
-                "matcher": {
-                  "name": "personalBoard",
-                  "player": { "contextPath": ["loopTarget"] }
+          "targets": { "ctxPath": ["playOrder"] }
+        },
+        "move": {
+          "type": "MoveEntity",
+          "arguments": {
+            "entity": {
+              "conditions": [
+                {
+                  "type": "Is",
+                  "target": { "targetingType": "Parent" },
+                  "matcher": { "name": "stock" }
+                },
+                {
+                  "type": "Position",
+                  "position": "First"
                 }
-              }
-            ]
+              ]
+            },
+            "destination": {
+              "conditions": [
+                {
+                  "type": "Is",
+                  "target": { "targetingType": "Parent" },
+                  "matcher": {
+                    "name": "personalBoard",
+                    "player": { "contextPath": ["loopTarget"] }
+                  }
+                }
+              ]
+            }
           }
         }
       }

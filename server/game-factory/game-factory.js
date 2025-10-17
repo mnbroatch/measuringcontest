@@ -27,9 +27,16 @@ export default function gameFactory (gameRules, rulesHash, server) {
     )
 
     if (rules.personalBoard) {
-      initialState.personalBoards = initialState.bank.getOne(
-        bgioArguments,
-        { matcher: { name: "personalBoard" } }
+      initialState.personalBoards = bgioArguments.ctx.playOrder.map((playerID) => 
+        initialState.bank.getOne(
+          bgioArguments,
+          {
+            matcher: {
+              name: "personalBoard",
+              player: playerID,
+            }
+          }
+        )
       )
     }
 

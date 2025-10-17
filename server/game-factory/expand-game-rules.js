@@ -1,4 +1,5 @@
 import cloneDeep from "lodash/cloneDeep.js";
+import find from "lodash/find.js";
 
 // for later when we implement deep replacement
 // { type: 'IsEmpty' } = { type: 'not', conditions: [{ type: 'Contains' }], 
@@ -59,28 +60,65 @@ function expandInitialPlacements (rules) {
   }
 
   if (rules.initialPlacements) {
-    const initialPlacementMoves = rules.initialPlacements.map(placementMatchers =>  {
+    const initialPlacementMoves = rules.initialPlacements.map(placement =>  {
 
       // probably going to need to separate this even in the shorthand. maybe
       // combine, then search entity rule and extract state variables instead?
-      const { state, ...matcher } = placementMatchers.entity
-
-      return {
-        type: 'MoveEntity',
-        arguments: {
-          entity: {
-            automatic: true,
-            location: 'Bank',
-            matcher,
-            state
+      const { state, ...matcher } = placement.entity
+      const entityDefinition = find(rules.entities, matcher)
+      
+      if (placement.destination.name === 'personalBoard') {
+        return {
+          type: 'ForEach',
+          arguments: {
+            targets: { ctxPath: ['playOrder'] }
           },
-          destination: {
-            automatic: true,
-            conditions: [{
-              type: 'Is',
-              matcher: placementMatchers.destination
-            }]
-          },
+          move: {
+            type: 'MoveEntity',
+            arguments: {
+              entity: {
+                automatic: true,
+                location: 'Bank',
+                matcher: {
+                  ...matcher,
+                  ...(entityDefinition.perPlayer
+                      ? { player: { contextPath: ['loopTarget'] } }
+                      : {}
+                  )
+                },
+                state
+              },
+              destination: {
+                automatic: true,
+                conditions: [{
+                  type: 'Is',
+                  matcher: {
+                    ...placement.destination,
+                    player: { contextPath: ['loopTarget'] }
+                  }
+                }]
+              },
+            }
+          }
+        }
+      } else {
+        return {
+          type: 'MoveEntity',
+          arguments: {
+            entity: {
+              automatic: true,
+              location: 'Bank',
+              matcher,
+              state
+            },
+            destination: {
+              automatic: true,
+              conditions: [{
+                type: 'Is',
+                matcher: placement.destination
+              }]
+            },
+          }
         }
       }
     })
