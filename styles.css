@@ -2,6 +2,10 @@
   display: block;
 }
 
+.personal-board {
+  margin-top: 20px;
+}
+
 .grid {
   box-sizing: border-box;
   gap: 1px;
@@ -53,6 +57,12 @@
 .entity {
   height: 100%;
   width: 100%;
+  box-sizing: border-box;
+  border: 1px solid black;
+}
+
+.entity--clickable {
+  background-color: rgba(144, 238, 144, .4);
 }
 
 .entity.player-0 {

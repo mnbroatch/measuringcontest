@@ -20,6 +20,11 @@ const clicksMap = {
     (bgioState, moveRule, context) => {
       return bgioState.G.bank.findAll(bgioState, moveRule.arguments.destination, context)
     }
+  ],
+  playCard: [
+    (bgioState, moveRule, context) => {
+      return bgioState.G.bank.findAll(bgioState, moveRule.arguments.entity, context)
+    }
   ]
 }
 

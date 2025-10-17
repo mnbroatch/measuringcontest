@@ -13,8 +13,7 @@
     },
     {
       "type": "Space",
-      "name": "discard",
-      "hiddenFrom": "Others"
+      "name": "playArea"
     },
     {
       "type": "Space",
@@ -76,7 +75,8 @@
   ],
   "sharedBoard": [
     { "name": "stock" },
-    { "name": "discard" }
+    { "name": "discard" },
+    { "name": "playArea" }
   ],
   "personalBoard": [
     { "name": "hand" }
@@ -167,6 +167,31 @@
     "maxMoves": 1
   },
   "moves": {
+    "playCard": {
+      "type": "MoveEntity",
+      "arguments": {
+        "entity": {
+          "conditions": [
+            {
+              "type": "Is",
+              "target": { "targetingType": "Parent" },
+              "matcher": {
+                "name": "hand",
+                "player": "Current"
+              }
+            }
+          ]
+        },
+        "destination": {
+          "conditions": [
+            {
+              "type": "Is",
+              "matcher": { "name": "playArea" }
+            }
+          ]
+        }
+      }
+    }
   },
   "endIf": [
   ]
