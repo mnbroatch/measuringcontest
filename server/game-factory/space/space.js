@@ -6,8 +6,12 @@ export default class Space extends Entity {
     this.entities = []
   }
 
-  placeEntity (entity) {
-    this.entities.push(entity);
+  placeEntity (entity, position = 'Last') {
+    if (position === 'Last') {
+      this.entities.push(entity);
+    } else if (position === 'First') {
+      this.entities.unshift(entity);
+    }
   }
 
   remove (entity) {

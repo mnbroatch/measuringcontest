@@ -136,10 +136,6 @@
                   "type": "Is",
                   "target": { "targetingType": "Parent" },
                   "matcher": { "name": "stock" }
-                },
-                {
-                  "type": "Position",
-                  "position": "First"
                 }
               ]
             },
@@ -171,6 +167,7 @@
       "type": "MoveEntity",
       "arguments": {
         "entity": {
+          "playerChoice": true,
           "conditions": [
             {
               "type": "Is",
@@ -179,6 +176,51 @@
                 "name": "hand",
                 "player": "Current"
               }
+            },
+            {
+              "type": "Is",
+              "matcher": {
+                "pick": {
+                  "properties": ["suit"],
+                  "target": {
+                    "conditions": [
+                      {
+                        "type": "Is",
+                        "target": { "targetingType": "Parent" },
+                        "matcher": { "name": "stock" }
+                      },
+                      {
+                        "type": "Position",
+                        "position": "First"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "destination": {
+          "position": "First",
+          "conditions": [
+            {
+              "type": "Is",
+              "matcher": { "name": "playArea" }
+            }
+          ]
+        }
+      }
+    },
+    "takeCard": {
+      "type": "MoveEntity",
+      "arguments": {
+        "entity": {
+          "playerChoice": true,
+          "conditions": [
+            {
+              "type": "Is",
+              "target": { "targetingType": "Parent" },
+              "matcher": { "name": "stock" }
             }
           ]
         },
@@ -186,7 +228,10 @@
           "conditions": [
             {
               "type": "Is",
-              "matcher": { "name": "playArea" }
+              "matcher": {
+                "name": "hand",
+                "player": "Current"
+              }
             }
           ]
         }

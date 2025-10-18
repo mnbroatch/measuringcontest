@@ -47,7 +47,8 @@
   "maxPlayers": 2,
   "turn": {
     "minMoves": 1,
-    "maxMoves": 1
+    "maxMoves": 1,
+    "passIfNoMoves": true
   },
   "moves": {
     "placeDisc": {
@@ -160,5 +161,18 @@
       }]
     }
   },
-  "endIf": []
+  "endIf": [
+    {
+      "conditions": [{
+        "type": "Evaluate",
+        "expression": "passCount == 2",
+        "arguments": {
+          "passCount": {
+            "gamePath": ["meta", "passCount"]
+          }
+        }
+      }],
+      "result": { "draw": true }
+    }
+  ]
 }
