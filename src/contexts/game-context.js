@@ -1,32 +1,17 @@
+// Before sending a move to the back end, multiple front end steps
+// might need to occur (e.g. select a piece then a destination).
+// That flow is managed here.
+
 import React, { createContext, useContext, useReducer, useLayoutEffect } from 'react';
 import { serialize } from 'wackson'
 import preparePayload from "../../server/game-factory/utils/prepare-payload.js";
-import createPayload from "../../server/game-factory/utils/create-payload.js";
 import simulateMove from "../../server/game-factory/utils/simulate-move.js";
+import getSteps from "../../server/game-factory/utils/get-steps.js";
+import createPayload from "../../server/game-factory/utils/create-payload.js";
 
 const GameContext = createContext({
   dispatch: () => {},
 });
-
-// TODO: make this based on move type instead of move name, using automatic: true as a hint for which entities don't require a step
-// maybe build partial payload instead of targets array and check with isValid or similar
-const clicksMap = {
-  placePlayerMarker: [
-    (bgioState, moveRule, context) => {
-      return bgioState.G.bank.findAll(bgioState, moveRule.arguments.destination, context)
-    }
-  ],
-  placeDisc: [
-    (bgioState, moveRule, context) => {
-      return bgioState.G.bank.findAll(bgioState, moveRule.arguments.destination, context)
-    }
-  ],
-  playCard: [
-    (bgioState, moveRule, context) => {
-      return bgioState.G.bank.findAll(bgioState, moveRule.arguments.entity, context)
-    }
-  ]
-}
 
 export function GameProvider ({ gameConnection, children, isSpectator }) {
   const { state: bgioState, moves } = gameConnection
@@ -70,19 +55,18 @@ export function GameProvider ({ gameConnection, children, isSpectator }) {
       .filter(([moveName]) => !currentMoveState.eliminatedMoves.includes(moveName))
       .map(([moveName, move]) => ({
         ...move.moveInstance.rule,
-        steps: clicksMap[move.moveInstance.rule.type], // is this unused?
         moveName
       }))
     possibleMoveRules.forEach((moveRule) => {
-      const moveSteps = clicksMap[moveRule.moveName]
-      const lastStep = moveSteps?.[currentMoveState.stepIndex - 1]
-      const currentStep = moveSteps?.[currentMoveState.stepIndex]
-      const finishedOnLastStep = moveSteps && !!lastStep && !currentStep
-      const clickable = new Set(currentStep?.(
+      const moveSteps = getSteps(
         bgioState,
         moveRule,
         { moveInstance: moves[moveRule.moveName].moveInstance }
-      ) || [])
+      )
+      const lastStep = moveSteps?.[currentMoveState.stepIndex - 1]
+      const currentStep = moveSteps?.[currentMoveState.stepIndex]
+      const finishedOnLastStep = moveSteps && !!lastStep && !currentStep
+      const clickable = new Set(currentStep?.getClickable() || [])
       possibleMoveMeta[moveRule.moveName] = { finishedOnLastStep, clickable }
       clickable.forEach((entity) => { allClickable.add(entity) })
     })
@@ -100,7 +84,13 @@ export function GameProvider ({ gameConnection, children, isSpectator }) {
         const moveName = possibleMoveNames[0]
         if (possibleMoveMeta[moveName].finishedOnLastStep) {
           const move = moves[moveName]
-          const movePayload = createPayload(move.moveInstance.rule.type, currentMoveState.targets)
+          const moveRule = move.moveInstance.rule
+          const movePayload = createPayload(
+            bgioState,
+            moveRule,
+            currentMoveState.targets,
+            { moveInstance: moves[moveRule.name].moveInstance }
+          )
           move(movePayload)
           dispatch({ type: 'moveMade', movePayload, move })
         }
@@ -119,8 +109,7 @@ export function GameProvider ({ gameConnection, children, isSpectator }) {
 }
 
 function getWinnerAfterMove (gameConnection, moveInstance, movePayload) {
-
-  const { simulatedG } = simulateMove(
+  const simulatedG = simulateMove(
     gameConnection.state,
     preparePayload(movePayload),
     { moveInstance }

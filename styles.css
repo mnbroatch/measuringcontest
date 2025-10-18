@@ -38,6 +38,7 @@
 .space {
   transition: 100ms background-color;
   border: 1px solid grey;
+  box-sizing: border-box;
 }
 
 .space--clickable {

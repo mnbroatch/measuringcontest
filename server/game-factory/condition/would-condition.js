@@ -1,14 +1,33 @@
 import Condition from "./condition.js";
 import checkConditions from "../utils/check-conditions.js";
+import createPayload from "../utils/create-payload.js";
 import simulateMove from "../utils/simulate-move.js";
 
 export default class WouldCondition extends Condition {
-  checkCondition(bgioArguments, payload, context) {
-    const { simulatedG, simulatedPayload } = simulateMove(
+  checkCondition(bgioArguments, { target, targets }, context) {
+    const payload = createPayload(
+      bgioArguments,
+      context.moveInstance.rule,
+      targets ?? [target],
+      context
+    )
+
+    const simulatedG = simulateMove(
       bgioArguments,
       payload,
       context
     )
+
+    let simulatedConditionsPayload = {}
+    if (target) {
+      simulatedConditionsPayload = {
+        target: simulatedG.bank.locate(target.entityId)
+      }
+    } else if (targets) {
+      simulatedConditionsPayload = {
+        targets: targets.map(t => simulatedG.bank.locate(t.entityId))
+      }
+    }
 
     const conditionResults = checkConditions(
       {
@@ -16,7 +35,7 @@ export default class WouldCondition extends Condition {
         G: simulatedG
       },
       this.rule,
-      simulatedPayload,
+      simulatedConditionsPayload,
       context
     )
 

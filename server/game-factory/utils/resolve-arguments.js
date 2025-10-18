@@ -20,7 +20,6 @@ export default function resolveArguments (
       } else if (argRule.gamePath) {
         argument = get(bgioArguments.G, argRule.gamePath)
       } else if (argRule.location === 'Bank') {
-        console.log('argRule', argRule)
         argument = argRule.matchMultiple
           ? bgioArguments.G.bank.getMultiple(bgioArguments, argRule, context)
           : bgioArguments.G.bank.getOne(bgioArguments, argRule, context)

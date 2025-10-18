@@ -63,6 +63,7 @@
           }
         },
         "destination": {
+          "playerChoice": true,
           "conditions": [
             {
               "type": "Is",

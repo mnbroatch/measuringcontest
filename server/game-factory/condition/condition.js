@@ -48,7 +48,6 @@ export default class Condition {
       ], [])
     }
 
-
     // I don't love having this exception here; will we need more?
     // Need a better system for move args => condition target in general
     if (this.rule.type !== 'Evaluate') {
