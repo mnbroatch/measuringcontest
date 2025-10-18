@@ -206,6 +206,15 @@
               }
             },
             {
+              "type": "Not",
+              "conditions": [{
+                "type": "Is",
+                "matcher": {
+                  "value": 8
+                }
+              }]
+            },
+            {
               "type": "Some",
               "conditions": [
                 {
@@ -251,6 +260,40 @@
                   }
                 }
               ]
+            }
+          ]
+        },
+        "destination": {
+          "position": "First",
+          "conditions": [
+            {
+              "type": "Is",
+              "matcher": { "name": "discard" }
+            }
+          ]
+        }
+      }
+    },
+    "playEight": {
+      "type": "MoveEntity",
+      "position": "First",
+      "arguments": {
+        "entity": {
+          "playerChoice": true,
+          "conditions": [
+            {
+              "type": "Is",
+              "target": { "targetingType": "Parent" },
+              "matcher": {
+                "name": "hand",
+                "player": "Current"
+              }
+            },
+            {
+              "type": "Is",
+              "matcher": {
+                "value": 8
+              }
             }
           ]
         },
