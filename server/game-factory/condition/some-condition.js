@@ -7,8 +7,9 @@ export default class SomeCondition extends Condition {
       bgioArguments,
       this.rule,
       payload,
-      context
+      context,
+      true
     )
-    return { conditionIsMet: results.some(r => r.conditionsAreMet) }
+    return { conditionIsMet: results.some(r => r.conditionIsMet) }
   }
 }

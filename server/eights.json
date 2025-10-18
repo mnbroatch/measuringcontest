@@ -13,10 +13,6 @@
     },
     {
       "type": "Space",
-      "name": "playArea"
-    },
-    {
-      "type": "Space",
       "name": "stock",
       "hiddenFrom": "Others"
     },
@@ -75,8 +71,7 @@
   ],
   "sharedBoard": [
     { "name": "stock" },
-    { "name": "discard" },
-    { "name": "playArea" }
+    { "name": "discard" }
   ],
   "personalBoard": [
     { "name": "hand" }
@@ -136,6 +131,10 @@
                   "type": "Is",
                   "target": { "targetingType": "Parent" },
                   "matcher": { "name": "stock" }
+                },
+                {
+                  "type": "Position",
+                  "position": "First"
                 }
               ]
             },
@@ -154,6 +153,34 @@
           }
         }
       }
+    },
+    {
+      "type": "MoveEntity",
+      "arguments": {
+        "entity": {
+          "conditions": [
+            {
+              "type": "Is",
+              "target": { "targetingType": "Parent" },
+              "matcher": { "name": "stock" }
+            },
+            {
+              "type": "Position",
+              "position": "First"
+            }
+          ]
+        },
+        "destination": {
+          "conditions": [
+            {
+              "type": "Is",
+              "matcher": {
+                "name": "discard"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "minPlayers": 2,
@@ -165,6 +192,7 @@
   "moves": {
     "playCard": {
       "type": "MoveEntity",
+      "position": "First",
       "arguments": {
         "entity": {
           "playerChoice": true,
@@ -178,25 +206,51 @@
               }
             },
             {
-              "type": "Is",
-              "matcher": {
-                "pick": {
-                  "properties": ["suit"],
-                  "target": {
-                    "conditions": [
-                      {
-                        "type": "Is",
-                        "target": { "targetingType": "Parent" },
-                        "matcher": { "name": "stock" }
-                      },
-                      {
-                        "type": "Position",
-                        "position": "First"
+              "type": "Some",
+              "conditions": [
+                {
+                  "type": "Is",
+                  "matcher": {
+                    "pick": {
+                      "properties": ["suit"],
+                      "target": {
+                        "conditions": [
+                          {
+                            "type": "Is",
+                            "target": { "targetingType": "Parent" },
+                            "matcher": { "name": "discard" }
+                          },
+                          {
+                            "type": "Position",
+                            "position": "First"
+                          }
+                        ]
                       }
-                    ]
+                    }
+                  }
+                },
+                {
+                  "type": "Is",
+                  "matcher": {
+                    "pick": {
+                      "properties": ["value"],
+                      "target": {
+                        "conditions": [
+                          {
+                            "type": "Is",
+                            "target": { "targetingType": "Parent" },
+                            "matcher": { "name": "discard" }
+                          },
+                          {
+                            "type": "Position",
+                            "position": "First"
+                          }
+                        ]
+                      }
+                    }
                   }
                 }
-              }
+              ]
             }
           ]
         },
@@ -205,7 +259,7 @@
           "conditions": [
             {
               "type": "Is",
-              "matcher": { "name": "playArea" }
+              "matcher": { "name": "discard" }
             }
           ]
         }

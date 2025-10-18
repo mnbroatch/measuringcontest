@@ -1,5 +1,6 @@
 import Is from "./is-condition.js";
 import Not from "./not-condition.js";
+import Some from "./some-condition.js";
 import EverySpaceCondition from "./every-space-condition.js";
 import ContainsCondition from "./contains-condition.js";
 import ContainsSameCondition from "./contains-same-condition.js";
@@ -18,6 +19,8 @@ export default function conditionFactory(rule) {
     return new Is(rule);
   } else if (rule.type === "Not") {
     return new Not(rule);
+  } else if (rule.type === "Some") {
+    return new Some(rule);
   } else if (rule.type === "Contains") {
     return new ContainsCondition(rule);
   } else if (rule.type === "ContainsSame") {
