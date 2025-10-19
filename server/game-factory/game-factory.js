@@ -53,7 +53,7 @@ export default function gameFactory (gameRules, rulesHash, server) {
     game.moves =
       Object.entries(rules.moves).reduce((acc, [name, moveDefinition]) => ({
         ...acc,
-        [name]: moveFactory({ ...moveDefinition, name }, server)
+        [name]: moveFactory({ ...moveDefinition, name })
       }), {})
   }
 
@@ -74,6 +74,18 @@ export default function gameFactory (gameRules, rulesHash, server) {
           G.meta.passCount = 0
         }
       }
+    }
+
+    if (rules.turn?.stages) {
+      Object.entries(rules.turn.stages).forEach(([stageName, stage]) => {
+        if (stage.moves) {
+          game.turn.stages[stageName] =
+            Object.entries(rules.moves).reduce((acc, [name, moveDefinition]) => ({
+              ...acc,
+              [name]: moveFactory({ ...moveDefinition, name })
+            }), {})
+        }
+      })
     }
   }
 

@@ -36,7 +36,7 @@ export default function Root () {
 
 export const Route = createRootRoute({
   beforeLoad: async ({ location }) => {
-    const publicPaths = ['/login']
+    const publicPaths = ['/login', '/editor']
     const isPublicRoute = publicPaths.some(path => location.pathname === path)
     
     if (!isPublicRoute) {
