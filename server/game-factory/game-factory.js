@@ -79,8 +79,8 @@ export default function gameFactory (gameRules, rulesHash, server) {
     if (rules.turn?.stages) {
       Object.entries(rules.turn.stages).forEach(([stageName, stage]) => {
         if (stage.moves) {
-          game.turn.stages[stageName] =
-            Object.entries(rules.moves).reduce((acc, [name, moveDefinition]) => ({
+          game.turn.stages[stageName].moves =
+            Object.entries(stage.moves).reduce((acc, [name, moveDefinition]) => ({
               ...acc,
               [name]: moveFactory({ ...moveDefinition, name })
             }), {})
@@ -107,6 +107,7 @@ export default function gameFactory (gameRules, rulesHash, server) {
     }
   }
 
+  console.log('game', game)
   return game
 }
 

@@ -186,7 +186,7 @@
   "minPlayers": 2,
   "maxPlayers": 5,
   "turn": {
-    "activateOnSetup": true,
+    "activePlayers": { "currentPlayer": "play" },
     "stages": {
       "play": {
         "minMoves": 1,

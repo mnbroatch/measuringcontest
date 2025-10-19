@@ -25,11 +25,13 @@ export default function useSinglePlayerGame (gameRules, numPlayers) {
       G: deserialize(JSON.stringify(clientState.G), registry),
       originalG: clientState.G,
     }
-    gameover = state?.ctx?.gameover
-    moves = client && !gameover
+    const rawMoves = game.turn?.stages?.[state.ctx.activePlayers?.[client.playerID]]?.moves ?? game.moves
+    // todo: loop over rawMoves instead
+    moves = client.playerID && !gameover
       ? Object.entries(client.moves).reduce((acc, [moveName, m]) => {
           const move = function (payload) { m(preparePayload(payload)) }
-          move.moveInstance = game.moves[moveName].moveInstance
+          if (!rawMoves[moveName]) return acc
+          move.moveInstance = rawMoves[moveName].moveInstance
           return {
             ...acc,
             [moveName]: move
