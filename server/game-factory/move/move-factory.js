@@ -2,6 +2,7 @@ import { serialize, deserialize } from 'wackson'
 import { registry } from '../registry.js'
 import MoveEntity from "./move-entity.js";
 import SetState from "./set-state.js";
+import SetActivePlayers from "./set-active-players.js";
 import ForEach from "./for-each.js";
 import Pass from "./pass.js";
 import Shuffle from "./shuffle.js";
@@ -66,5 +67,7 @@ export function getMoveInstance (moveRule) {
       return new Pass(moveRule);
     case 'Shuffle':
       return new Shuffle(moveRule);
+    case 'SetActivePlayers':
+      return new SetActivePlayers(moveRule);
   }
 }

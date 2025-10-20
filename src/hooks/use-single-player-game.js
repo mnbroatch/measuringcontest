@@ -26,7 +26,7 @@ export default function useSinglePlayerGame (gameRules, numPlayers) {
       originalG: clientState.G,
     }
     const rawMoves = game.turn?.stages?.[state.ctx.activePlayers?.[client.playerID]]?.moves ?? game.moves
-    // todo: loop over rawMoves instead
+    // todo cleanup: loop over rawMoves instead of skipping entries
     moves = client.playerID && !gameover
       ? Object.entries(client.moves).reduce((acc, [moveName, m]) => {
           const move = function (payload) { m(preparePayload(payload)) }

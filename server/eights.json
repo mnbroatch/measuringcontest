@@ -313,8 +313,10 @@
               "type": "SetActivePlayers",
               "arguments": {
                 "options": {
-                  "currentPlayer": {
-                    "stage": "nameSuit"
+                  "literal": {
+                    "currentPlayer": {
+                      "stage": "nameSuit"
+                    }
                   }
                 }
               }
@@ -367,10 +369,10 @@
                     "position": "First"
                   }
                 ]
+              },
+              "state": {
+                "suit": "hearts"
               }
-            },
-            "state": {
-              "suit": "hearts"
             }
           }
         }
