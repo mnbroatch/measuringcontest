@@ -189,8 +189,6 @@
     "activePlayers": { "currentPlayer": "play" },
     "stages": {
       "play": {
-        "minMoves": 1,
-        "maxMoves": 1,
         "moves": {
           "playCard": {
             "type": "MoveEntity",
@@ -274,7 +272,8 @@
                   }
                 ]
               }
-            }
+            },
+            "then": [{ "type": "EndTurn" }]
           },
           "playEight": {
             "type": "MoveEntity",
@@ -316,7 +315,9 @@
                   "literal": {
                     "currentPlayer": {
                       "stage": "nameSuit"
-                    }
+                    },
+                    "minMoves": 1,
+                    "maxMoves": 1
                   }
                 }
               }
@@ -346,7 +347,8 @@
                   }
                 ]
               }
-            }
+            },
+            "then": [{ "type": "EndTurn" }]
           }
         }
       },

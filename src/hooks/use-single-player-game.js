@@ -39,6 +39,7 @@ export default function useSinglePlayerGame (gameRules, numPlayers) {
         }, {})
       : []
   }
+  console.log('state', state)
 
   return {
     client,

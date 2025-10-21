@@ -107,7 +107,6 @@ export default function gameFactory (gameRules, rulesHash, server) {
     }
   }
 
-  console.log('game', game)
   return game
 }
 
