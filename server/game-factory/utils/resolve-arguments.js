@@ -23,11 +23,13 @@ export default function resolveArguments (
         argument = argRule.matchMultiple
           ? bgioArguments.G.bank.getMultiple(bgioArguments, argRule, context)
           : bgioArguments.G.bank.getOne(bgioArguments, argRule, context)
-      } else {
+      } else if (argRule.conditions) {
         argument = bgioArguments.G.bank.findOne(bgioArguments, argRule, context)
         argument = argRule.matchMultiple
           ? bgioArguments.G.bank.findAll(bgioArguments, argRule, context)
           : bgioArguments.G.bank.findOne(bgioArguments, argRule, context)
+      } else {
+        return argument
       }
     }
     return {...acc, [argName]: argument}

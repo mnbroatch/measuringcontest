@@ -4,18 +4,22 @@ const baseMoveArgsMap = {
   SetState: ['entity', 'state'],
 }
 
-// we should probably only be making current step targets clickable...
-// probably will be obvious once we have multi-step moves in practice
 export default function getSteps (bgioState, moveRule, context) {
   return baseMoveArgsMap[moveRule.type]
     .filter(argName => moveRule.arguments[argName].playerChoice)
     .map(argName => ({
       argName,
-      getClickable: () => bgioState.G.bank.findAll(
-        bgioState,
-        moveRule.arguments[argName],
-        context
-      )
+      getClickable: argName === 'state'
+        ? () => moveRule.arguments[argName].possibleValues.map((value) => ({
+            abstract: true,
+            ...moveRule.arguments[argName],
+            value
+          }))
+        : () => bgioState.G.bank.findAll(
+            bgioState,
+            moveRule.arguments[argName],
+            context
+          )
     }))
 }
 

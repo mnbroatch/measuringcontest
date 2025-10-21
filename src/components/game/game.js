@@ -1,9 +1,9 @@
 import React from 'react'
 import Entity from '../entity/entity.js'
+import AbstractChoices from '../abstract-choices.js'
 
 export default function Game ({ bgioState }) {
   const { G } = bgioState
-
 
   return (
     <>
@@ -21,6 +21,7 @@ export default function Game ({ bgioState }) {
           ))}
         </div>
       )}
+      <AbstractChoices />
     </>
   )
 }

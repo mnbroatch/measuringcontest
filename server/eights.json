@@ -373,7 +373,9 @@
                 ]
               },
               "state": {
-                "suit": "hearts"
+                "playerChoice": true,
+                "property": "suit",
+                "possibleValues": [ "clubs", "hearts", "spades", "diamonds" ]
               }
             }
           }
