@@ -315,9 +315,7 @@
                   "literal": {
                     "currentPlayer": {
                       "stage": "nameSuit"
-                    },
-                    "minMoves": 1,
-                    "maxMoves": 1
+                    }
                   }
                 }
               }
@@ -353,8 +351,6 @@
         }
       },
       "nameSuit": {
-        "minMoves": 1,
-        "maxMoves": 1,
         "moves": {
           "nameSuit": {
             "type": "SetState",
@@ -377,7 +373,8 @@
                 "property": "suit",
                 "possibleValues": [ "clubs", "hearts", "spades", "diamonds" ]
               }
-            }
+            },
+            "then": [{ "type": "EndTurn" }]
           }
         }
       }

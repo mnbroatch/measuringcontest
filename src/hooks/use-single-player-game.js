@@ -29,7 +29,9 @@ export default function useSinglePlayerGame (gameRules, numPlayers) {
     // todo cleanup: loop over rawMoves instead of skipping entries
     moves = client.playerID && !gameover
       ? Object.entries(client.moves).reduce((acc, [moveName, m]) => {
-          const move = function (payload) { m(preparePayload(payload)) }
+          const move = function (payload) {
+          m(preparePayload(payload))
+        }
           if (!rawMoves[moveName]) return acc
           move.moveInstance = rawMoves[moveName].moveInstance
           return {
@@ -39,7 +41,6 @@ export default function useSinglePlayerGame (gameRules, numPlayers) {
         }, {})
       : []
   }
-  console.log('state', state)
 
   return {
     client,

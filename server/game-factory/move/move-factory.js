@@ -46,9 +46,9 @@ function revivePayload (serializablePayload, G) {
   if (serializablePayload) {
     const payload = deserialize(JSON.stringify(serializablePayload), registry)
     payload.arguments =
-      Object.entries(payload.arguments).reduce((acc, [key, entityId]) => ({
+      Object.entries(payload.arguments).reduce((acc, [key, argOrEntityId]) => ({
         ...acc,
-        [key]: G.bank.locate(entityId)
+        [key]: typeof argOrEntityId === 'number' ? G.bank.locate(argOrEntityId) : argOrEntityId
       }), {})
     return payload
   } else {

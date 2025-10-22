@@ -16,7 +16,6 @@ export default class Move {
         [argName]: {
           conditions: argRule.conditions,
           getPayload: payload => {
-            console.log('payload', payload)
           return ({
             ...payload,
             target: payload.arguments[argName]

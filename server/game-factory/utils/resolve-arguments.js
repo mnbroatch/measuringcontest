@@ -24,7 +24,6 @@ export default function resolveArguments (
           ? bgioArguments.G.bank.getMultiple(bgioArguments, argRule, context)
           : bgioArguments.G.bank.getOne(bgioArguments, argRule, context)
       } else if (argRule.conditions) {
-        argument = bgioArguments.G.bank.findOne(bgioArguments, argRule, context)
         argument = argRule.matchMultiple
           ? bgioArguments.G.bank.findAll(bgioArguments, argRule, context)
           : bgioArguments.G.bank.findOne(bgioArguments, argRule, context)

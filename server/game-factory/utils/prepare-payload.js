@@ -7,7 +7,7 @@ export default function preparePayload (payload) {
     payloadCopy.arguments =
       Object.entries(payloadCopy.arguments).reduce((acc, [key, argument]) => ({
         ...acc,
-        [key]: argument.entityId
+        [key]: argument.abstract ? argument : argument.entityId
       }), {})
     return JSON.parse(serialize(payloadCopy, { deduplicateInstances: false }))
   } else {
