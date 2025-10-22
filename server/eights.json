@@ -4,17 +4,16 @@
       "type": "Space",
       "name": "hand",
       "perPlayer": true,
-      "hiddenFrom": "Others"
+      "contentsHiddenFrom": "Others"
     },
     {
       "type": "Space",
-      "name": "discard",
-      "hiddenFrom": "All"
+      "name": "discard"
     },
     {
       "type": "Space",
       "name": "stock",
-      "hiddenFrom": "Others"
+      "contentsHiddenFrom": "All"
     },
     {"value": 2, "suit": "clubs", "displayName": "2c", "name": "card"},
     {"value": 3, "suit": "clubs", "displayName": "3c", "name": "card"},

@@ -36,7 +36,7 @@ export default function moveFactory(moveRule) {
       }
     }
 
-    return JSON.parse(serialize(G, { deduplicateInstances: false }))
+    return JSON.parse(serialize(G))
   }
   compatibleMove.moveInstance = moveInstance
   return compatibleMove

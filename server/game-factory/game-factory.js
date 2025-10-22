@@ -46,7 +46,7 @@ export default function gameFactory (gameRules, rulesHash, server) {
         G: initialState
       });
     })
-    return JSON.parse(serialize(initialState, { deduplicateInstances: false }));
+    return JSON.parse(serialize(initialState));
   }
 
   if (rules.moves) {
@@ -105,6 +105,30 @@ export default function gameFactory (gameRules, rulesHash, server) {
         return result
       }
     }
+  }
+
+  game.playerView = ({ G, playerID }) => {
+    G = deserialize(JSON.stringify(G), registry)
+    Object.values(G.bank.tracker).forEach(((entity) => {
+      if (
+        entity.rule.contentsHiddenFrom === 'All' 
+         || (
+            entity.rule.contentsHiddenFrom === 'Others'
+              && (
+                playerID !== entity.rule.player
+                || playerID == undefined
+              )
+          )
+      ) {
+        if (entity.spaces) {
+          entity.spaces = []
+        }
+        if (entity.entities) {
+          entity.entities = []
+        }
+      }
+    }))
+    return JSON.parse(serialize(G))
   }
 
   return game

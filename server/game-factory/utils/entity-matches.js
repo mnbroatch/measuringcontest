@@ -16,12 +16,5 @@ function getEntityMatcher (entity) {
 }
 
 export default function entityMatches (bgioArguments, matcher, entity, context) {
-  const x = matches(resolveMatcher(bgioArguments, matcher, context))(getEntityMatcher(entity))
-  if (x) {
-    console.log('----------')
-    console.log('resolveMatcher(bgioArguments, matcher, context)', resolveMatcher(bgioArguments, matcher, context))
-    console.log('matcher', matcher)
-    console.log('entity', entity)
-  }
-  return x
+  return matches(resolveMatcher(bgioArguments, matcher, context))(getEntityMatcher(entity))
 }
