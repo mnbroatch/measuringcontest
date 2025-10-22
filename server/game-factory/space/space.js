@@ -18,6 +18,12 @@ export default class Space extends Entity {
     this.entities.splice(this.entities.indexOf(entity), 1);
   }
 
+  takeOne (position = 'First') {
+    if (position === 'First') {
+      return this.entities.splice(0, 1)[0];
+    }
+  }
+
   isEmpty() {
     return this.entities.length === 0;
   }

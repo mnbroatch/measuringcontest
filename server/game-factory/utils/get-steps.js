@@ -1,6 +1,7 @@
 // controls order of what players need to click first
 const baseMoveArgsMap = {
   MoveEntity: ['entity', 'destination'],
+  TakeFrom: ['source', 'destination'],
   SetState: ['entity', 'state'],
 }
 

@@ -36,9 +36,12 @@
 }
 
 .space {
+  display: inline-block;
   transition: 100ms background-color;
   border: 1px solid grey;
   box-sizing: border-box;
+  min-width: 10px;
+  min-height: 10px;
 }
 
 .space--clickable {

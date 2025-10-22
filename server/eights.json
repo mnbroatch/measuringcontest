@@ -321,14 +321,13 @@
             }]
           },
           "takeCard": {
-            "type": "MoveEntity",
+            "type": "TakeFrom",
             "arguments": {
-              "entity": {
+              "source": {
                 "playerChoice": true,
                 "conditions": [
                   {
                     "type": "Is",
-                    "target": { "targetingType": "Parent" },
                     "matcher": { "name": "stock" }
                   }
                 ]

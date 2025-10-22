@@ -16,9 +16,7 @@ export default function Editor () {
         saveGame={({ gameRules }) => setGameRules(gameRules)}
       />
       <button
-        onClick={() => {
-          setSavedGameRules(gameRules)
-        }}
+        onClick={() => { setSavedGameRules(gameRules) }}
       >
         Test Game with 
         <input

@@ -2,7 +2,7 @@
 // might need to occur (e.g. select a piece then a destination).
 // That flow is managed here.
 
-import React, { createContext, useContext, useReducer, useLayoutEffect } from 'react';
+import React, { createContext, useContext, useReducer, useLayoutEffect, useEffect } from 'react';
 import { serialize } from 'wackson'
 import preparePayload from "../../server/game-factory/utils/prepare-payload.js";
 import simulateMove from "../../server/game-factory/utils/simulate-move.js";
@@ -43,6 +43,8 @@ export function GameProvider ({ gameConnection, children, isSpectator }) {
           ...initialState,
           winnerAfterMove: getWinnerAfterMove(gameConnection, action.move.moveInstance, action.movePayload),
         }
+      case 'clear':
+          return initialState
     }
 
     return state
@@ -100,6 +102,12 @@ export function GameProvider ({ gameConnection, children, isSpectator }) {
 
   const allClickableToUse = currentMoveState.winnerAfterMove ? new Set() : allClickable
   const currentMoveTargetsToUse = currentMoveState.winnerAfterMove ? [] : currentMoveState.targets
+
+  useEffect(() => {
+    if (gameConnection.state._stateID === 0) {
+      dispatch({ type: 'clear' })
+    }
+  }, [gameConnection.state._stateID])
 
   return (
     <GameContext.Provider value={{ dispatch, allClickable: allClickableToUse, currentMoveTargets: currentMoveTargetsToUse }}>

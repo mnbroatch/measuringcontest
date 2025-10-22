@@ -6,15 +6,28 @@ import connectFour from "../../../server/connect-four.json";
 import reversi from "../../../server/reversi.json";
 import reversi2 from "../../../server/reversi2.json";
 
+const exampleGames = [
+  {
+    name: 'Three in a Row',
+    rules: JSON.stringify(ticTacToe, null, 2)
+  },
+  {
+    name: 'Four in a Row but With Gravity',
+    rules: JSON.stringify(connectFour, null, 2)
+  },
+  {
+    name: 'Forth and Back White and Black',
+    rules: JSON.stringify(reversi, null, 2)
+  },
+  {
+    name: 'Discharged for Emotional Instability Eights',
+    rules: JSON.stringify(eights, null, 2)
+  },
+]
+
 export default function GameEditor ({ initialGameName, initialGameRules, saveGame }) {
-  const [gameRules, setGameRules] = useState(
-    initialGameRules || JSON.stringify(eights, null, 2)
-    // initialGameRules || JSON.stringify(ticTacToe, null, 2)
-    // initialGameRules || JSON.stringify(connectFour, null, 2)
-    // initialGameRules || JSON.stringify(reversi, null, 2)
-    // initialGameRules || JSON.stringify(reversi2, null, 2)
-  )
-  const [gameName, setGameName] = useState(initialGameName)
+  const [gameRules, setGameRules] = useState(initialGameRules || '')
+  const [gameName, setGameName] = useState(initialGameName || '')
 
   const setGameMeta = useCallback(
     debounce((gName, gRules) => {
@@ -32,6 +45,17 @@ export default function GameEditor ({ initialGameName, initialGameRules, saveGam
 
   return (
     <div>
+      {exampleGames.map(({name, rules}, i) => (
+        <button
+          key={i}
+          onClick={() => {
+            setGameRules(rules)
+            setGameName(name)
+          }}
+        >
+          {name}
+        </button>
+      ))}
       <div>
         <textarea
           onChange={(e) => {setGameRules(e.target.value)}}
