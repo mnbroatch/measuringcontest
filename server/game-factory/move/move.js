@@ -16,10 +16,10 @@ export default class Move {
         [argName]: {
           conditions: argRule.conditions,
           getPayload: payload => {
-          return ({
-            ...payload,
-            target: payload.arguments[argName]
-          })
+            return ({
+              ...payload,
+              target: payload.arguments[argName]
+            })
           }
         }
       }), {})

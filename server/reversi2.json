@@ -152,10 +152,11 @@
           "arguments": {
             "entity": {
               "contextPath": [ "loopTarget" ]
+            },
+            "state": {
+              "property": "player",
+              "value": "Current"
             }
-          },
-          "state": {
-            "player": "Current"
           }
         }
       }]

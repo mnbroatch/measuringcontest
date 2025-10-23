@@ -28,7 +28,7 @@ export default function resolveArguments (
           ? bgioArguments.G.bank.findAll(bgioArguments, argRule, context)
           : bgioArguments.G.bank.findOne(bgioArguments, argRule, context)
       } else {
-        return argument
+        argument = argRule
       }
     }
     return {...acc, [argName]: argument}
