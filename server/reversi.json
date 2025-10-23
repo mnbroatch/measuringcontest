@@ -3,8 +3,8 @@
     {
       "name": "mainGrid",
       "type": "Grid",
-      "width": 3,
-      "height": 2
+      "width": 8,
+      "height": 8
     },
     {
       "name": "disc",
@@ -19,14 +19,28 @@
         "name": "disc",
         "state": { "player": "0" }
       },
-      "destination": { "index": 0 }
+      "destination": { "index": 27 }
+    },
+    {
+      "entity": {
+        "name": "disc",
+        "state": { "player": "0" }
+      },
+      "destination": { "index": 36 }
     },
     {
       "entity": {
         "name": "disc",
         "state": { "player": "1" }
       },
-      "destination": { "index": 1 }
+      "destination": { "index": 28 }
+    },
+    {
+      "entity": {
+        "name": "disc",
+        "state": { "player": "1" }
+      },
+      "destination": { "index": 35 }
     }
   ],
   "minPlayers": 2,
@@ -152,14 +166,34 @@
     {
       "conditions": [{
         "type": "Evaluate",
-        "expression": "passCount == 2",
+        "expression": "passCount == numPlayers",
         "arguments": {
           "passCount": {
             "gamePath": ["meta", "passCount"]
+          },
+          "numPlayers": {
+            "ctxPath": ["playOrder", "length"]
           }
         }
       }],
-      "result": { "draw": true }
+      "result": {
+        "winners": {
+          "mapMax": {
+            "targets": {
+              "ctxPath": ["playOrder"]
+            },
+            "mapping": {
+              "type": "count",
+              "conditions": [{
+                "type": "Is",
+                "matcher": {
+                  "player": { "contextPath": [ "loopTarget" ] }
+                }
+              }]
+            }
+          }
+        }
+      }
     }
   ]
 }

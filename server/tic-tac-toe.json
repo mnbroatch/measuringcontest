@@ -64,7 +64,9 @@
         "spaceConditions": [{"type": "Contains"}]
       }],
       "result": {
-        "winner": [ "conditionResults", 0, "matches", 0, "spaces", 0, "entities", 0, "rule", "player" ]
+        "winner": {
+          "contextPath": [ "results", 0, "matches", 0, "spaces", 0, "entities", 0, "rule", "player" ]
+        }
       }
     },
     {

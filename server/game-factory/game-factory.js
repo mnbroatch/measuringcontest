@@ -1,4 +1,3 @@
-import get from "lodash/get.js";
 import { serialize, deserialize } from "wackson";
 import moveFactory from "./move/move-factory.js";
 import checkConditions from "./utils/check-conditions.js";
@@ -6,6 +5,7 @@ import areThereValidMoves from "./utils/any-valid-moves.js";
 import { registry } from "./registry.js";
 import Bank from "./bank/bank.js";
 import expandGameRules from "./expand-game-rules.js";
+import resolveProperties from './utils/resolve-properties.js'
 
 export default function gameFactory (gameRules, rulesHash, server) {
   const game = { name: rulesHash }
@@ -98,37 +98,52 @@ export default function gameFactory (gameRules, rulesHash, server) {
       const matchingWinScenarioResult = getMatchingWinScenarioResult(bgioArguments, rules.endIf)
       if (matchingWinScenarioResult) {
         const resultRule = matchingWinScenarioResult.winScenario.result
-        const result = {...resultRule}
         if (resultRule.winner) {
-          result.winner = get(matchingWinScenarioResult, result.winner)
+          return {
+            winner: resolveProperties(
+              bgioArguments,
+              resultRule.winner,
+              { results: matchingWinScenarioResult.conditionResults.results }
+            )
+          }
         }
-        return result
+        if (resultRule.winners) {
+          return {
+            winners: resolveProperties(
+              bgioArguments,
+              resultRule.winners,
+              { results: matchingWinScenarioResult.conditionResults.results }
+            )
+          }
+        }
       }
     }
   }
 
-  game.playerView = ({ G, playerID }) => {
-    G = deserialize(JSON.stringify(G), registry)
-    Object.values(G.bank.tracker).forEach(((entity) => {
-      if (
-        entity.rule.contentsHiddenFrom === 'All' 
-         || (
-            entity.rule.contentsHiddenFrom === 'Others'
-              && (
-                playerID !== entity.rule.player
-                || playerID == undefined
-              )
-          )
-      ) {
-        if (entity.spaces) {
-          entity.spaces = []
+  if (!gameRules.DEBUG_DISABLE_SECRET_STATE) {
+    game.playerView = ({ G, playerID }) => {
+      G = deserialize(JSON.stringify(G), registry)
+      Object.values(G.bank.tracker).forEach(((entity) => {
+        if (
+          entity.rule.contentsHiddenFrom === 'All' 
+           || (
+              entity.rule.contentsHiddenFrom === 'Others'
+                && (
+                  playerID !== entity.rule.player
+                  || playerID == undefined
+                )
+            )
+        ) {
+          if (entity.spaces) {
+            entity.spaces = []
+          }
+          if (entity.entities) {
+            entity.entities = []
+          }
         }
-        if (entity.entities) {
-          entity.entities = []
-        }
-      }
-    }))
-    return JSON.parse(serialize(G))
+      }))
+      return JSON.parse(serialize(G))
+    }
   }
 
   return game

@@ -166,14 +166,34 @@
     {
       "conditions": [{
         "type": "Evaluate",
-        "expression": "passCount == 2",
+        "expression": "passCount == numPlayers",
         "arguments": {
           "passCount": {
             "gamePath": ["meta", "passCount"]
+          },
+          "numPlayers": {
+            "ctxPath": ["playOrder", "length"]
           }
         }
       }],
-      "result": { "draw": true }
+      "result": {
+        "winner": {
+          "mapMax": {
+            "targets": {
+              "ctxPath": ["playOrder"]
+            },
+            "mapping": {
+              "type": "count",
+              "conditions": [{
+                "type": "Is",
+                "matcher": {
+                  "player": { "contextPath": [ "loopTarget" ] }
+                }
+              }]
+            }
+          }
+        }
+      }
     }
   ]
 }
