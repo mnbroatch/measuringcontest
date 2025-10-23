@@ -10,8 +10,8 @@ export default function simulateMove (bgioArguments, payload, context) {
   const simulatedPayload = { ...payload, arguments: {} }
   Object.entries(payload.arguments).forEach(([argName, arg]) => {
     simulatedPayload.arguments[argName] = arg.abstract
-    ? arg
-    : simulatedG.bank.locate(arg)
+      ? arg
+      : simulatedG.bank.locate(typeof arg === 'string' ? arg : arg.entityId)
   })
 
   context.moveInstance.doMove(
