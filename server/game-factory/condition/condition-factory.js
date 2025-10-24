@@ -11,7 +11,6 @@ import MoveIsImpossible from "./move-is-impossible.js";
 import Evaluate from "./evaluate-condition.js";
 import Position from "./position-condition.js";
 // import BingoCondition from "./bingo-condition.js";
-// import SomeCondition from "./some-condition.js";
 // import RelativeMoveCondition from "./relative-move-condition.js";
 
 export default function conditionFactory(rule) {
@@ -39,8 +38,6 @@ export default function conditionFactory(rule) {
     return new Position(rule);
   // } else if (rule.type === "bingo") {
     // return new BingoCondition(rule);
-  // } else if (rule.type === "some") {
-    // return new SomeCondition(rule);
   // } else if (rule.type === "relativeMove") {
   //   return new RelativeMoveCondition(rule);
   } else if (rule.type === "ContainsLine") {

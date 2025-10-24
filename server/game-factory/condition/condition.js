@@ -1,3 +1,5 @@
+import { resolveArguments2 } from '../utils/resolve-arguments.js'
+
 export default class Condition {
   constructor (rule) {
     this.rule = rule;
@@ -14,29 +16,12 @@ export default class Condition {
       if (conditionPayload.target) {
         conditionPayload.originalTarget = conditionPayload.target
       }
-      if (this.rule.target.targetingType === 'RelativeCoordinates') {
-        let parent = G.bank.findParent(conditionPayload.target)
-        // // we always want the SpaceGroup, whether target is Space or Entity
-        // while (parent.rule.type !== 'Grid') {
-        //   parent = G.bank.findParent(parent)
-        //   if (!parent) {
-        //     throw new Error(`couldnt find Grid parent of entity with rule ${conditionPayload.target.rule}`)
-        //   }
-        // }
-        const oldCoordinates =
-          parent.getCoordinates(conditionPayload.target.rule.index)
-        const newCoordinates =
-          parent.getRelativeCoordinates(oldCoordinates, this.rule.target.location)
-        conditionPayload.target =
-          newCoordinates && parent.spaces[parent.getIndex(newCoordinates)]
-      } else if (this.rule.target.targetingType === 'Parent') {
-        conditionPayload.target = G.bank.findParent(conditionPayload.target)
-      } else {
-        conditionPayload.target = G.bank.findOne(
-          bgioArguments,
-          this.rule.target
-        )
-      }
+      conditionPayload.target = resolveArguments2(
+        bgioArguments,
+        this.rule,
+        this.rule.target,
+        context
+      )
     }
     if (this.rule.targets) {
       if (conditionPayload.targets) {

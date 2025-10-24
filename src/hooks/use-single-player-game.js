@@ -25,7 +25,8 @@ export default function useSinglePlayerGame (gameRules, numPlayers) {
       G: deserialize(JSON.stringify(clientState.G), registry),
       originalG: clientState.G,
     }
-    const rawMoves = game.turn?.stages?.[state.ctx.activePlayers?.[state.ctx.currentPlayer]]?.moves ?? game.moves
+    // todo: investigate - game.moves is undefined when starting new game after existing game in editor?
+    const rawMoves = game.turn?.stages?.[state.ctx.activePlayers?.[state.ctx.currentPlayer]]?.moves ?? game.moves ?? []
     // todo cleanup: loop over rawMoves instead of skipping entries
     moves = !gameover
       ? Object.entries(client.moves).reduce((acc, [moveName, m]) => {

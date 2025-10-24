@@ -34,3 +34,42 @@ export default function resolveArguments (
     return {...acc, [argName]: argument}
   }, {})
 }
+
+// beginning of migrating condition targets over here
+export function resolveArguments2 (bgioArguments, conditionRule, target, context) {
+  const { G } = bgioArguments
+
+  let resolvedTarget
+  if (conditionRule.target.targetingType === 'RelativeCoordinates') {
+    let parent = G.bank.findParent(target)
+    // // we always want the SpaceGroup, whether target is Space or Entity
+    // while (parent.rule.type !== 'Grid') {
+    //   parent = G.bank.findParent(parent)
+    //   if (!parent) {
+    //     throw new Error(`couldnt find Grid parent of entity with rule ${target.rule}`)
+    //   }
+    // }
+    const oldCoordinates =
+      parent.getCoordinates(target.rule.index)
+    const newCoordinates =
+      parent.getRelativeCoordinates(oldCoordinates, conditionRule.target.location)
+    resolvedTarget =
+      newCoordinates && parent.spaces[parent.getIndex(newCoordinates)]
+  } else if (conditionRule.target.targetingType === 'Parent') {
+    console.log('conditionRule.matcher', conditionRule.matcher)
+    console.log('target', target)
+    resolvedTarget = G.bank.findParent(conditionRule.matcher)
+    console.log('resolvedTarget', resolvedTarget)
+  } else if (conditionRule.target.contextPath) {
+    resolvedTarget = get(context, conditionRule.target.contextPath)
+  } else if (conditionRule.target.ctxPath) {
+    // getting player list from playOrder, does this exist for custom turn order?
+    resolvedTarget = get(bgioArguments.ctx, conditionRule.target.ctxPath)
+  } else {
+    resolvedTarget = G.bank.findOne(
+      bgioArguments,
+      conditionRule.target
+    )
+  }
+  return resolvedTarget
+}

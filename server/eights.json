@@ -378,6 +378,30 @@
       }
     }
   },
-  "endIf": [
-  ]
+  "endIf": [{
+    "type": "Some",
+    "target": { "ctxPath": ["playOrder"] },
+    "conditions": [{
+      "type": "Evaluate",
+      "expression": "handCount == 0",
+      "arguments": {
+        "handCount": {
+          "type": "RelativePath",
+          "target": {
+            "type": "Is",
+            "target": { "targetingType": "Parent" },
+            "matcher": {
+              "name": "hand",
+              "player": { "contextPath": ["loopTarget"] }
+            }
+          },
+          "path": ["length"]
+        },
+        "numPlayers": {
+          "ctxPath": ["playOrder", "length"]
+        }
+      }
+    }],
+    "result": {"blah": "bleh"}
+  }]
 }
