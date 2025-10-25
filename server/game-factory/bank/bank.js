@@ -40,7 +40,7 @@ class Bank {
     }
     return filter(
       Object.values(this.tracker),
-      (entity) => checkConditions(
+      entity => checkConditions(
         bgioArguments,
         rule,
         { target: entity },
@@ -61,17 +61,17 @@ class Bank {
   }
  
   getOne (bgioArguments, rule, context) {
-    const slot = this.getSlot(bgioArguments, rule.matcher, context)
+    const slot = this.getSlot(bgioArguments, rule, context)
     if (!slot) {
-      console.error(`No matching slot for ${JSON.stringify(rule.matcher)}`)
+      console.error(`No matching slot for ${JSON.stringify(rule)}`)
     }
     return slot.getOne(bgioArguments, { state: rule.state }, context)
   }
 
   getMultiple (bgioArguments, rule, count, context) {
-    const slots = this.getSlots(bgioArguments, rule.matcher, context)
+    const slots = this.getSlots(bgioArguments, rule, context)
     if (!slots.length) {
-      console.error(`No matching slots for ${JSON.stringify(rule.matcher)}`)
+      console.error(`No matching slots for ${JSON.stringify(rule)}`)
     }
     return slots.reduce((acc, slot) => [
       ...acc,
@@ -79,8 +79,14 @@ class Bank {
     ], [])
   }
 
-  getSlot (bgioArguments, matcher, context) {
-    return this.slots.find(slot => entityMatches(bgioArguments, matcher, slot, context))
+  getSlot (bgioArguments, rule, context) {
+    return this.slots.find(slot => checkConditions(
+        bgioArguments,
+        rule,
+        { target: slot },
+        context
+      ).conditionsAreMet
+    )
   }
 
   getSlots (bgioArguments, matcher, context) {

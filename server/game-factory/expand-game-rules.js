@@ -74,11 +74,11 @@ function expandInitialPlacements (rules) {
             targets: { ctxPath: ['playOrder'] }
           },
           move: {
-            type: 'MoveEntity',
-            arguments: {
-              entity: {
-                automatic: true,
-                location: 'Bank',
+            type: 'PlaceNew',
+            entity: {
+              state,
+              conditions: [{
+                type: 'Is',
                 matcher: {
                   ...matcher,
                   ...(entityDefinition.perPlayer
@@ -86,8 +86,9 @@ function expandInitialPlacements (rules) {
                       : {}
                   )
                 },
-                state
-              },
+              }]
+            },
+            arguments: {
               destination: {
                 automatic: true,
                 conditions: [{
@@ -103,14 +104,15 @@ function expandInitialPlacements (rules) {
         }
       } else {
         return {
-          type: 'MoveEntity',
-          arguments: {
-            entity: {
-              automatic: true,
-              location: 'Bank',
+          type: 'PlaceNew',
+          entity: {
+            state,
+            conditions: [{
+              type: 'Is',
               matcher,
-              state
-            },
+            }]
+          },
+          arguments: {
             destination: {
               automatic: true,
               conditions: [{

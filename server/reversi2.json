@@ -177,7 +177,7 @@
         }
       }],
       "result": {
-        "winner": {
+        "winners": {
           "mapMax": {
             "targets": {
               "ctxPath": ["playOrder"]

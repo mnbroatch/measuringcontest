@@ -23,7 +23,12 @@ export default function gameFactory (gameRules, rulesHash, server) {
     initialState.bank = new Bank(entityDefinitions)
     initialState.sharedBoard = initialState.bank.getOne(
       bgioArguments,
-      { matcher: { name: "sharedBoard" } }
+      {
+        conditions: [{
+          type: 'Is',
+          matcher: { name: "sharedBoard" }
+        }]
+      }
     )
 
     if (rules.personalBoard) {
@@ -31,10 +36,13 @@ export default function gameFactory (gameRules, rulesHash, server) {
         initialState.bank.getOne(
           bgioArguments,
           {
-            matcher: {
-              name: "personalBoard",
-              player: playerID,
-            }
+            conditions: [{
+              type: 'Is',
+              matcher: {
+                name: "personalBoard",
+                player: playerID,
+              }
+            }]
           }
         )
       )

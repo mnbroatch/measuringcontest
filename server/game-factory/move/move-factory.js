@@ -1,6 +1,7 @@
 import { serialize, deserialize } from 'wackson'
 import { registry } from '../registry.js'
 import MoveEntity from "./move-entity.js";
+import PlaceNew from "./place-new.js";
 import TakeFrom from "./take-from.js";
 import SetState from "./set-state.js";
 import SetActivePlayers from "./set-active-players.js";
@@ -61,6 +62,8 @@ export function getMoveInstance (moveRule) {
   switch (moveRule.type) {
     case 'MoveEntity':
       return new MoveEntity(moveRule);
+    case 'PlaceNew':
+      return new PlaceNew(moveRule);
     case 'TakeFrom':
       return new TakeFrom(moveRule);
     case 'SetState':

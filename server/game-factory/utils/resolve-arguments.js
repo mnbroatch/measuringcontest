@@ -19,10 +19,6 @@ export default function resolveArguments (
         argument = get(bgioArguments.ctx, argRule.ctxPath)
       } else if (argRule.gamePath) {
         argument = get(bgioArguments.G, argRule.gamePath)
-      } else if (argRule.location === 'Bank') {
-        argument = argRule.matchMultiple
-          ? bgioArguments.G.bank.getMultiple(bgioArguments, argRule, context)
-          : bgioArguments.G.bank.getOne(bgioArguments, argRule, context)
       } else if (argRule.conditions) {
         argument = argRule.matchMultiple
           ? bgioArguments.G.bank.findAll(bgioArguments, argRule, context)
@@ -36,12 +32,17 @@ export default function resolveArguments (
 }
 
 // beginning of migrating condition targets over here
-export function resolveArguments2 (bgioArguments, conditionRule, target, context) {
+export function resolveArguments2 (
+  bgioArguments,
+  conditionRule,
+  originalTarget,
+  context
+) {
   const { G } = bgioArguments
 
   let resolvedTarget
   if (conditionRule.target.targetingType === 'RelativeCoordinates') {
-    let parent = G.bank.findParent(target)
+    let parent = G.bank.findParent(originalTarget)
     // // we always want the SpaceGroup, whether target is Space or Entity
     // while (parent.rule.type !== 'Grid') {
     //   parent = G.bank.findParent(parent)
@@ -50,16 +51,13 @@ export function resolveArguments2 (bgioArguments, conditionRule, target, context
     //   }
     // }
     const oldCoordinates =
-      parent.getCoordinates(target.rule.index)
+      parent.getCoordinates(originalTarget.rule.index)
     const newCoordinates =
       parent.getRelativeCoordinates(oldCoordinates, conditionRule.target.location)
     resolvedTarget =
       newCoordinates && parent.spaces[parent.getIndex(newCoordinates)]
   } else if (conditionRule.target.targetingType === 'Parent') {
-    console.log('conditionRule.matcher', conditionRule.matcher)
-    console.log('target', target)
     resolvedTarget = G.bank.findParent(conditionRule.matcher)
-    console.log('resolvedTarget', resolvedTarget)
   } else if (conditionRule.target.contextPath) {
     resolvedTarget = get(context, conditionRule.target.contextPath)
   } else if (conditionRule.target.ctxPath) {
@@ -71,5 +69,6 @@ export function resolveArguments2 (bgioArguments, conditionRule, target, context
       conditionRule.target
     )
   }
+  console.log('resolvedTarget', resolvedTarget)
   return resolvedTarget
 }

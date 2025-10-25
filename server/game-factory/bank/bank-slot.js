@@ -44,8 +44,9 @@ class BankSlot {
     }
     
     if (options.state) {
+      const newState = resolveProperties(bgioArguments, options.state, context)
       toReturn.forEach(entity => {
-        entity.state = { ...entity.state, ...resolveProperties(bgioArguments, options.state, context) }
+        entity.state = { ...entity.state, ...newState }
       })
     }
     

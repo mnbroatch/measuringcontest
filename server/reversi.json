@@ -52,17 +52,15 @@
   },
   "moves": {
     "placeDisc": {
-      "type": "MoveEntity",
+      "type": "PlaceNew",
+      "entity": {
+        "state": { "player": "Current" },
+        "conditions": [{
+          "type": "Is",
+          "matcher": { "name": "disc" }
+        }]
+      },
       "arguments": {
-        "entity": {
-          "location": "Bank", 
-          "matcher": {
-            "name": "disc"
-          },
-          "state": {
-            "player": "Current"
-          }
-        },
         "destination": {
           "playerChoice": true,
           "conditions": [

@@ -13,8 +13,6 @@ export default function resolveProperties (bgioArguments, obj, context) {
       resolvedProperties[key] = get(context, value.contextPath)
     } else if (key === 'contextPath') {
       // ok this is getting ridiculous
-      console.log('context', context)
-      console.log('value', value)
       resolvedProperties = get(context, value)
     } else if (key === 'pick' && value?.target?.conditions) {
       // this is the only one that replaces properties object? bugs found here

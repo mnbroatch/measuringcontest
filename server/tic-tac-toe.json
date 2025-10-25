@@ -21,15 +21,17 @@
   },
   "moves": {
     "placePlayerMarker": {
-      "type": "MoveEntity",
-      "arguments": {
-        "entity": {
-          "location": "Bank", 
+      "type": "PlaceNew",
+      "entity": {
+        "conditions": [{
+          "type": "Is",
           "matcher": {
             "name": "playerMarker",
             "player": "Current"
           }
-        },
+        }]
+      },
+      "arguments": {
         "destination": {
           "playerChoice": true,
           "conditions": [
