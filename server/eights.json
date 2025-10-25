@@ -77,27 +77,19 @@
   ],
   "initialMoves": [
     {
-      "type": "ForEach",
-      "arguments": {
-        "targets": {
-          "matchMultiple": true,
-          "location": "Bank", 
+      "type": "PlaceNew",
+      "matchMultiple": true,
+      "entity": {
+        "conditions": [{
+          "type": "Is",
           "matcher": { "name": "card" }
-        }
+        }]
       },
-      "move": {
-        "type": "MoveEntity",
-        "arguments": {
-          "entity": {
-            "contextPath": [ "loopTarget" ]
-          },
-          "destination": {
-            "conditions": [{
-              "type": "Is",
-              "matcher": { "name": "stock" }
-            }]
-          }
-        }
+      "arguments": {
+        "conditions": [{
+          "type": "Is",
+          "matcher": { "name": "stock" }
+        }]
       }
     },
     {
