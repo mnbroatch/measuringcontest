@@ -90,7 +90,6 @@ function expandInitialPlacements (rules) {
             },
             arguments: {
               destination: {
-                automatic: true,
                 conditions: [{
                   type: 'Is',
                   matcher: {
@@ -114,7 +113,6 @@ function expandInitialPlacements (rules) {
           },
           arguments: {
             destination: {
-              automatic: true,
               conditions: [{
                 type: 'Is',
                 matcher: placement.destination

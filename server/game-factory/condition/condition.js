@@ -19,7 +19,7 @@ export default class Condition {
       conditionPayload.target = resolveArguments2(
         bgioArguments,
         this.rule,
-        this.rule.target,
+        conditionPayload.originalTarget,
         context
       )
     }

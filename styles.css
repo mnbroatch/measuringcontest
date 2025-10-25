@@ -2,8 +2,12 @@
   display: block;
 }
 
+.shared-board>.space {
+  margin: 20px;
+}
+
 .personal-board {
-  margin-top: 20px;
+  margin: 20px;
 }
 
 .grid {

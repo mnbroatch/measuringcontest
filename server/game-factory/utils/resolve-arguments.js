@@ -57,7 +57,7 @@ export function resolveArguments2 (
     resolvedTarget =
       newCoordinates && parent.spaces[parent.getIndex(newCoordinates)]
   } else if (conditionRule.target.targetingType === 'Parent') {
-    resolvedTarget = G.bank.findParent(conditionRule.matcher)
+    resolvedTarget = G.bank.findParent(originalTarget)
   } else if (conditionRule.target.contextPath) {
     resolvedTarget = get(context, conditionRule.target.contextPath)
   } else if (conditionRule.target.ctxPath) {
@@ -69,6 +69,5 @@ export function resolveArguments2 (
       conditionRule.target
     )
   }
-  console.log('resolvedTarget', resolvedTarget)
   return resolvedTarget
 }

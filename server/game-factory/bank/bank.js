@@ -75,7 +75,7 @@ class Bank {
     }
     return slots.reduce((acc, slot) => [
       ...acc,
-      ...slot.getMultiple(bgioArguments, count, { state: rule.matcher.state })
+      ...slot.getMultiple(bgioArguments, count, { state: rule.state })
     ], [])
   }
 
@@ -89,8 +89,14 @@ class Bank {
     )
   }
 
-  getSlots (bgioArguments, matcher, context) {
-    return this.slots.filter(slot => entityMatches(bgioArguments, matcher, slot, context))
+  getSlots (bgioArguments, rule, context) {
+    return this.slots.filter(slot => checkConditions(
+        bgioArguments,
+        rule,
+        { target: slot },
+        context
+      ).conditionsAreMet
+    )
   }
 
   returnToBank (bgioArguments, entity) {

@@ -114,8 +114,7 @@ export default function gameFactory (gameRules, rulesHash, server) {
               { results: matchingWinScenarioResult.conditionResults.results }
             )
           }
-        }
-        if (resultRule.winners) {
+        } else if (resultRule.winners) {
           return {
             winners: resolveProperties(
               bgioArguments,
@@ -123,6 +122,8 @@ export default function gameFactory (gameRules, rulesHash, server) {
               { results: matchingWinScenarioResult.conditionResults.results }
             )
           }
+        } else {
+          return resultRule
         }
       }
     }
