@@ -19,7 +19,7 @@ export default class SomeCondition extends Condition {
     })
 
     return {
-      conditionIsMet: results.some(r => r.conditionIsMet),
+      conditionIsMet: results.some(r => r.conditionsAreMet),
       results
     }
   }

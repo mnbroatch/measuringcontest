@@ -338,17 +338,13 @@
             "target": {
               "conditions": [{
                 "type": "Is",
-                "target": { "targetingType": "Parent" },
                 "matcher": {
                   "name": "hand",
                   "player": { "contextPath": ["loopTarget"] }
                 }
               }]
             },
-            "path": ["length"]
-          },
-          "numPlayers": {
-            "ctxPath": ["playOrder", "length"]
+            "path": ["entities", "length"]
           }
         }
       }]

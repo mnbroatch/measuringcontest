@@ -31,9 +31,6 @@ export default function resolveArguments (
           : bgioArguments.G.bank.findOne(bgioArguments, argRule, context)
       } else if (argRule.type === 'RelativePath') {
         const target = bgioArguments.G.bank.findOne(bgioArguments, argRule.target, context)
-        console.log('argRule.path', argRule.path)
-        console.log('target', target)
-console.log('get(target, argRule.path)', get(target, argRule.path))
         argument = get(target, argRule.path)
       } else {
         argument = argRule
