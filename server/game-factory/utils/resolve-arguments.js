@@ -1,3 +1,9 @@
+// what the heck happened here?
+// duck typing contextPath
+// but using type === 'RelativePath'
+// but also targetingType === 'Parent'
+//
+// gonna be a good refactor
 import get from "./get.js";
 
 // todo: change to resolve one arguments at a time? probably 2 composed fns
@@ -23,6 +29,12 @@ export default function resolveArguments (
         argument = argRule.matchMultiple
           ? bgioArguments.G.bank.findAll(bgioArguments, argRule, context)
           : bgioArguments.G.bank.findOne(bgioArguments, argRule, context)
+      } else if (argRule.type === 'RelativePath') {
+        const target = bgioArguments.G.bank.findOne(bgioArguments, argRule.target, context)
+        console.log('argRule.path', argRule.path)
+        console.log('target', target)
+console.log('get(target, argRule.path)', get(target, argRule.path))
+        argument = get(target, argRule.path)
       } else {
         argument = argRule
       }

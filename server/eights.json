@@ -336,12 +336,14 @@
           "handCount": {
             "type": "RelativePath",
             "target": {
-              "type": "Is",
-              "target": { "targetingType": "Parent" },
-              "matcher": {
-                "name": "hand",
-                "player": { "contextPath": ["loopTarget"] }
-              }
+              "conditions": [{
+                "type": "Is",
+                "target": { "targetingType": "Parent" },
+                "matcher": {
+                  "name": "hand",
+                  "player": { "contextPath": ["loopTarget"] }
+                }
+              }]
             },
             "path": ["length"]
           },
