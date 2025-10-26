@@ -17,7 +17,7 @@ const exampleGames = [
   },
   {
     name: 'Forth and Back White and Black',
-    rules: JSON.stringify(reversi, null, 2)
+    rules: JSON.stringify(reversi2, null, 2)
   },
   {
     name: 'Discharged for Emotional Instability Eights',
