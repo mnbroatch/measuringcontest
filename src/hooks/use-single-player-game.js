@@ -4,6 +4,7 @@ import { useGameserverConnection } from "./use-gameserver-connection.js";
 import gameFactory from '../../server/game-factory/game-factory.js'
 import { registry } from "../../server/game-factory/registry.js";
 import preparePayload from "../../server/game-factory/utils/prepare-payload.js";
+import getCurrentMoves from "../../server/game-factory/utils/get-current-moves.js";
 
 export default function useSinglePlayerGame (gameRules, numPlayers) {
   const game = useMemo(() => gameRules && gameFactory(JSON.parse(gameRules), 'WIP'), [gameRules])
@@ -25,16 +26,13 @@ export default function useSinglePlayerGame (gameRules, numPlayers) {
       G: deserialize(JSON.stringify(clientState.G), registry),
       originalG: clientState.G,
     }
-    // todo: investigate - game.moves is undefined when starting new game after existing game in editor?
-    const rawMoves = game.turn?.stages?.[state.ctx.activePlayers?.[state.ctx.currentPlayer]]?.moves ?? game.moves ?? []
-    // todo cleanup: loop over rawMoves instead of skipping entries
+
     moves = !gameover
-      ? Object.entries(client.moves).reduce((acc, [moveName, m]) => {
+      ? Object.entries(getCurrentMoves(game, state)).reduce((acc, [moveName, rawMove]) => {
           const move = function (payload) {
-          m(preparePayload(payload))
-        }
-          if (!rawMoves[moveName]) return acc
-          move.moveInstance = rawMoves[moveName].moveInstance
+            client.moves[moveName](preparePayload(payload))
+          }
+          move.moveInstance = rawMove.moveInstance
           return {
             ...acc,
             [moveName]: move
@@ -43,8 +41,6 @@ export default function useSinglePlayerGame (gameRules, numPlayers) {
       : []
   }
 
-  console.log('state', state)
-  console.log('client', client)
   return {
     client,
     state,

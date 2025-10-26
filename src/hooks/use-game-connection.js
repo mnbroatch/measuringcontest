@@ -7,6 +7,7 @@ import { useGameserverConnection } from "./use-gameserver-connection.js";
 import gameFactory from '../../server/game-factory/game-factory.js'
 import { registry } from "../../server/game-factory/registry.js";
 import preparePayload from "../../server/game-factory/utils/prepare-payload.js";
+import getCurrentMoves from "../../server/game-factory/utils/get-current-moves.js";
 
 export default function useGameConnection () {
   const { roomcode: roomCode } = useParams({})
@@ -46,15 +47,18 @@ export default function useGameConnection () {
       originalG: clientState.G,
     }
     gameover = state?.ctx?.gameover
-    moves = client && !gameover
-      ? Object.entries(client.moves).reduce((acc, [moveName, m]) => {
-        const move = function (payload) { m(preparePayload(payload)) }
-        move.moveInstance = game.moves[moveName].moveInstance
-        return {
-          ...acc,
-          [moveName]: move
-        }
-      }, {})
+
+    moves = !gameover
+      ? Object.entries(getCurrentMoves(game, state, client.playerID)).reduce((acc, [moveName, rawMove]) => {
+          const move = function (payload) {
+            client.moves[moveName](preparePayload(payload))
+          }
+          move.moveInstance = rawMove.moveInstance
+          return {
+            ...acc,
+            [moveName]: move
+          }
+        }, {})
       : []
   }
 

@@ -2,6 +2,7 @@ import { serialize, deserialize } from "wackson";
 import moveFactory from "./move/move-factory.js";
 import checkConditions from "./utils/check-conditions.js";
 import areThereValidMoves from "./utils/any-valid-moves.js";
+import getCurrentMoves from "./utils/get-current-moves.js";
 import { registry } from "./registry.js";
 import Bank from "./bank/bank.js";
 import expandGameRules from "./expand-game-rules.js";
@@ -68,7 +69,7 @@ export default function gameFactory (gameRules, rulesHash, server) {
   if (rules.phases) {
     game.phases = Object.entries(rules.phases).reduce((acc, [name, phaseRule]) => ({
       ...acc,
-      [name]: createPhase(phaseRule)
+      [name]: createPhase(phaseRule, game)
     }), {})
   }
 
@@ -189,28 +190,25 @@ function getMatchingWinScenarioResult(bgioArguments, winScenarios) {
 function createTurn (turnRule, game) {
   const turn = { ...turnRule }
 
-
-  // this is troublesome, I think game.moves is assuming no phases/stages
-  // with moves inside them...
-  //
-  // unfortunately we have to attach this to every turn
-  //
-  // turn.onBegin = ({ G, events, ctx, ...restBgioArguments }) => {
-  //   if (turnRule.passIfNoMoves && G.meta.passCount < ctx.numPlayers) {
-  //     const bgioArguments = {
-  //       G: deserialize(JSON.stringify(G), registry),
-  //       ctx,
-  //       events,
-  //       ...restBgioArguments
-  //     }
-  //     if (!areThereValidMoves(bgioArguments, game.moves)) {
-  //       G.meta.passCount++
-  //       events.pass()
-  //     } else {
-  //       G.meta.passCount = 0
-  //     }
-  //   }
-  // }
+  turn.onBegin = ({ G, events, ctx, ...restBgioArguments }) => {
+    if (turnRule.passIfNoMoves && G.meta.passCount < ctx.numPlayers) {
+      const bgioArguments = {
+        G: deserialize(JSON.stringify(G), registry),
+        ctx,
+        events,
+        ...restBgioArguments
+      }
+      if (!areThereValidMoves(
+        bgioArguments,
+        getCurrentMoves(game, bgioArguments)
+      )) {
+        G.meta.passCount++
+        events.pass()
+      } else {
+        G.meta.passCount = 0
+      }
+    }
+  }
 
   if (turnRule.stages) {
     Object.entries(turnRule.stages).forEach(([stageName, stageRule]) => {
@@ -222,11 +220,12 @@ function createTurn (turnRule, game) {
   return turn
 }
 
-function createPhase (phaseRule) {
-  if (phaseRule.turns) {
-    Object.entries(phaseRule.turns).forEach(([turnName, turnRule]) => {
-      phaseRule.turns[turnName] = createTurn(turnRule)
-    })
+function createPhase (phaseRule, game) {
+  if (phaseRule.turn) {
+    phaseRule.turn = createTurn(phaseRule.turn, game)
+  }
+  if (phaseRule.moves) {
+    phaseRule.moves = createMoves(phaseRule.moves)
   }
   return phaseRule
 }
