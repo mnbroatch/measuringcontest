@@ -58,43 +58,18 @@ export default function gameFactory (gameRules, rulesHash, server) {
   }
 
   if (rules.moves) {
-    game.moves =
-      Object.entries(rules.moves).reduce((acc, [name, moveDefinition]) => ({
-        ...acc,
-        [name]: moveFactory({ ...moveDefinition, name })
-      }), {})
+    game.moves = createMoves(rules.moves)
   }
 
   if (rules.turn) {
-    game.turn = rules.turn
-    game.turn.onBegin = ({ G, events, ctx, ...restBgioArguments }) => {
-      if (rules.turn.passIfNoMoves && G.meta.passCount < ctx.numPlayers) {
-        const bgioArguments = {
-          G: deserialize(JSON.stringify(G), registry),
-          ctx,
-          events,
-          ...restBgioArguments
-        }
-        if (!areThereValidMoves(bgioArguments, game.moves)) {
-          G.meta.passCount++
-          events.pass()
-        } else {
-          G.meta.passCount = 0
-        }
-      }
-    }
+    game.turn = createTurn(rules.turn)
+  }
 
-    if (rules.turn?.stages) {
-      Object.entries(rules.turn.stages).forEach(([stageName, stage]) => {
-        if (stage.moves) {
-          game.turn.stages[stageName].moves =
-            Object.entries(stage.moves).reduce((acc, [name, moveDefinition]) => ({
-              ...acc,
-              [name]: moveFactory({ ...moveDefinition, name })
-            }), {})
-        }
-      })
-    }
+  if (rules.phases) {
+    game.phases = Object.entries(rules.phases).reduce((acc, [name, phaseRule]) => ({
+      ...acc,
+      [name]: createPhase(phaseRule)
+    }))
   }
 
   if (rules.endIf) {
@@ -208,4 +183,49 @@ function getMatchingWinScenarioResult(bgioArguments, winScenarios) {
   }
 
   return null;
+}
+
+function createTurn (turnRule) {
+  const turn = { ...turnRule }
+  turn.onBegin = ({ G, events, ctx, ...restBgioArguments }) => {
+    if (turnRule.passIfNoMoves && G.meta.passCount < ctx.numPlayers) {
+      const bgioArguments = {
+        G: deserialize(JSON.stringify(G), registry),
+        ctx,
+        events,
+        ...restBgioArguments
+      }
+      if (!areThereValidMoves(bgioArguments, game.moves)) {
+        G.meta.passCount++
+        events.pass()
+      } else {
+        G.meta.passCount = 0
+      }
+    }
+  }
+
+  if (turnRule.stages) {
+    Object.entries(turnRule.stages).forEach(([stageName, stageRule]) => {
+      if (stageRule.moves) {
+        turn.stages[stageName].moves = createMoves(stageRule.moves)
+      }
+    })
+  }
+  return turn
+}
+
+function createPhase (phaseRule) {
+  if (phaseRule.turns) {
+    Object.entries(phaseRule.turns).reduce((acc, [turnName, turnRule]) => ({
+      ...acc,
+      [turnName]: createTurn(turnRule)
+    }), {})
+  }
+}
+
+function createMoves (moves) {
+  return Object.entries(moves).reduce((acc, [name, moveDefinition]) => ({
+    ...acc,
+    [name]: moveFactory({ ...moveDefinition, name })
+  }), {})
 }
