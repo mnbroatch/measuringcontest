@@ -36,7 +36,7 @@ function expandEntities (rules) {
   ]
 }
 
-function expandInitialPlacements (rules) {
+function expandInitialPlacements (rules, entities) {
   if (rules.sharedBoard) {
     const sharedBoardPlacements = rules.sharedBoard.map(matcher => ({ entity: matcher, destination: { name: 'sharedBoard' } }))
     if (!rules.initialPlacements) rules.initialPlacements = []
@@ -44,7 +44,7 @@ function expandInitialPlacements (rules) {
   }
 
   if (rules.personalBoard) {
-    rules.entities.push({
+    entities.push({
       type: "Board",
       name: 'personalBoard',
       perPlayer: true
@@ -65,7 +65,7 @@ function expandInitialPlacements (rules) {
       // probably going to need to separate this even in the shorthand. maybe
       // combine, then search entity rule and extract state variables instead?
       const { state, ...matcher } = placement.entity
-      const entityDefinition = find(rules.entities, matcher)
+      const entityDefinition = find(entities, matcher)
       
       if (placement.destination.name === 'personalBoard') {
         return {
@@ -132,7 +132,13 @@ export default function expandGameRules (gameRules) {
   const rules = cloneDeep(gameRules)
 
   expandEntities(rules)
-  expandInitialPlacements(rules)
+  expandInitialPlacements(rules, rules.entities)
+
+  if (rules.phases) {
+    Object.entries(rules.phases).forEach((phaseRule) => {
+      expandInitialPlacements(phaseRule, rules.entities)
+    })
+  }
 
   return rules
 }

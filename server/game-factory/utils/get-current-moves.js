@@ -9,5 +9,5 @@ export default function getCurrentMoves (game, state, playerID) {
   const phaseOrRoot = game.phases?.[phaseName] ?? game
   const stageOrPhaseOrRoot = phaseOrRoot.turn?.stages?.[stageName] ?? phaseOrRoot
 
-  return stageOrPhaseOrRoot.moves
+  return stageOrPhaseOrRoot.moves ?? {}
 }

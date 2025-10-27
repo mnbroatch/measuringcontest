@@ -60,6 +60,7 @@ export default class Move {
     }
 
     if (!skipCheck && !Object.values(conditionResults).every(r => r.conditionsAreMet)) {
+      console.log('this', this)
       return INVALID_MOVE
     } else {
       this.do(bgioArguments, resolvedPayload, context)

@@ -1,12 +1,11 @@
 import { serialize, deserialize } from "wackson";
 import moveFactory from "./move/move-factory.js";
-import checkConditions from "./utils/check-conditions.js";
 import areThereValidMoves from "./utils/any-valid-moves.js";
 import getCurrentMoves from "./utils/get-current-moves.js";
 import { registry } from "./registry.js";
 import Bank from "./bank/bank.js";
 import expandGameRules from "./expand-game-rules.js";
-import resolveProperties from './utils/resolve-properties.js'
+import getScenarioResults from './utils/get-scenario-results.js'
 
 export default function gameFactory (gameRules, rulesHash, server) {
   const game = { name: rulesHash }
@@ -49,7 +48,7 @@ export default function gameFactory (gameRules, rulesHash, server) {
       )
     }
 
-    rules.initialMoves?.forEach(moveRule => {
+    rules.initialMoves?.forEach((moveRule) => {
       moveFactory(moveRule).moveInstance.doMove({
         ...bgioArguments,
         G: initialState
@@ -79,29 +78,7 @@ export default function gameFactory (gameRules, rulesHash, server) {
         G: deserialize(JSON.stringify(G), registry),
         ...restBgioArguments
       }
-      const matchingWinScenarioResult = getMatchingWinScenarioResult(bgioArguments, rules.endIf)
-      if (matchingWinScenarioResult) {
-        const resultRule = matchingWinScenarioResult.winScenario.result
-        if (resultRule.winner) {
-          return {
-            winner: resolveProperties(
-              bgioArguments,
-              resultRule.winner,
-              { results: matchingWinScenarioResult.conditionResults.results }
-            )
-          }
-        } else if (resultRule.winners) {
-          return {
-            winners: resolveProperties(
-              bgioArguments,
-              resultRule.winners,
-              { results: matchingWinScenarioResult.conditionResults.results }
-            )
-          }
-        } else {
-          return resultRule
-        }
-      }
+      return getScenarioResults(bgioArguments, rules.endIf)
     }
   }
 
@@ -176,17 +153,6 @@ function expandEntityDefinitions (entities, ctx) {
   }, [])
 }
 
-function getMatchingWinScenarioResult(bgioArguments, winScenarios) {
-  for (const winScenario of winScenarios) {
-    const conditionResults = checkConditions(bgioArguments, winScenario)
-    if (conditionResults.conditionsAreMet) {
-      return { winScenario, conditionResults }
-    }
-  }
-
-  return null;
-}
-
 function createTurn (turnRule, game) {
   const turn = { ...turnRule }
 
@@ -221,13 +187,41 @@ function createTurn (turnRule, game) {
 }
 
 function createPhase (phaseRule, game) {
+  const phase = {...phaseRule}
   if (phaseRule.turn) {
-    phaseRule.turn = createTurn(phaseRule.turn, game)
+    phase.turn = createTurn(phaseRule.turn, game)
   }
   if (phaseRule.moves) {
-    phaseRule.moves = createMoves(phaseRule.moves)
+    phase.moves = createMoves(phaseRule.moves)
   }
-  return phaseRule
+
+  phase.onBegin = (bgioArguments) => {
+    if (phaseRule.initialMoves) {
+      phase.initialMoves.forEach((moveRule) => {
+        moveFactory(moveRule)(bgioArguments);
+      })
+      bgioArguments.G.currentPhaseHasBeenSetUp = true
+      return bgioArguments.G
+    }
+  }
+
+  if (phaseRule.endIf) {
+    phase.endIf = ({ G, ...restBgioArguments }) => {
+      const bgioArguments = {
+        G: deserialize(JSON.stringify(G), registry),
+        ...restBgioArguments
+      }
+      if (bgioArguments.G.currentPhaseHasBeenSetUp) {
+        const result = getScenarioResults(bgioArguments, phaseRule.endIf)
+        if (result) {
+          bgioArguments.G.currentPhaseHasBeenSetUp = false
+          return result
+        }
+      }
+    }
+  }
+
+  return phase
 }
 
 function createMoves (moves) {
