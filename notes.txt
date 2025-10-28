@@ -1,4 +1,5 @@
 todo:
+seems like invalid moves still count as moves without maxMoves?
 {"message":"The incoming token has expired"}
 currently, first ruleset for gamename is used. should use ruleset hash
   - does gamename actually do anything for us?

@@ -156,24 +156,24 @@ function expandEntityDefinitions (entities, ctx) {
 function createTurn (turnRule, game) {
   const turn = { ...turnRule }
 
-  turn.onBegin = ({ G, events, ctx, ...restBgioArguments }) => {
-    if (turnRule.passIfNoMoves && G.meta.passCount < ctx.numPlayers) {
-      const bgioArguments = {
-        G: deserialize(JSON.stringify(G), registry),
-        ctx,
-        events,
-        ...restBgioArguments
+  turn.onBegin = (bgioArguments) => {
+    const newG = doInitialMoves(bgioArguments, turnRule.initialMoves)
+    if (turnRule.passIfNoMoves && G.meta.passCount < bgioArguments.ctx.numPlayers) {
+      const newBgioArguments = {
+        ...bgioArguments,
+        G: newG,
       }
       if (!areThereValidMoves(
-        bgioArguments,
-        getCurrentMoves(game, bgioArguments)
+        newBgioArguments,
+        getCurrentMoves(game, newBgioArguments)
       )) {
         G.meta.passCount++
-        events.pass()
+        newBgioArguments.events.pass()
       } else {
         G.meta.passCount = 0
       }
     }
+    return JSON.parse(serialize(newG));
   }
 
   if (turnRule.stages) {
@@ -196,17 +196,9 @@ function createPhase (phaseRule, game) {
   }
 
   phase.onBegin = (bgioArguments) => {
-    if (phaseRule.initialMoves) {
-      const newG = deserialize(JSON.stringify(bgioArguments.G), registry)
-      phase.initialMoves.forEach((moveRule) => {
-        moveFactory(moveRule).moveInstance.doMove({
-          ...bgioArguments,
-          G: newG,
-        });
-      })
-      newG.meta.currentPhaseHasBeenSetUp = true
-      return JSON.parse(serialize(newG));
-    }
+    const newG = doInitialMoves(bgioArguments, phaseRule.initialMoves)
+    newG.meta.currentPhaseHasBeenSetUp = true
+    return JSON.parse(serialize(newG));
   }
 
   if (phaseRule.endIf) {
@@ -226,6 +218,17 @@ function createPhase (phaseRule, game) {
   }
 
   return phase
+}
+
+function doInitialMoves (bgioArguments, initialMoves = []) {
+  const newG = deserialize(JSON.stringify(bgioArguments.G), registry)
+  initialMoves.forEach((moveRule) => {
+    moveFactory(moveRule).moveInstance.doMove({
+      ...bgioArguments,
+      G: newG,
+    });
+  })
+  return newG
 }
 
 function createMoves (moves) {

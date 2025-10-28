@@ -18,6 +18,7 @@ export default class ForEach extends Move {
           loopContext
         )
       }
+      console.log('resolvedPayload', resolvedPayload)
       getMoveInstance(this.rule.move).doMove(
         bgioArguments,
         resolvedPayload,

@@ -12,7 +12,7 @@ export default function checkConditions (
   
   for (const conditionRule of conditions) {
     const result = conditionFactory(conditionRule).check(bgioArguments, payload, context);
-    
+
     if (!result.conditionIsMet && !escapeOnSuccess) {
       failedAt = conditionRule
       break

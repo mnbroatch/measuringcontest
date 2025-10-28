@@ -37,15 +37,42 @@ export default class Move {
 
   checkConditionGroups (bgioArguments, payload, context) {
     return Object.entries(this.conditionMappings)
-      .reduce((acc, [groupName, { conditions, getPayload }]) => ({
-        ...acc,
-        [groupName]: checkConditions(
-          bgioArguments,
-          { conditions },
-          getPayload(payload),
-          context
-        )
-      }) , {})
+      .reduce((acc, [groupName, { conditions, getPayload }]) => {
+        if (this.rule.arguments?.[groupName]?.matchMultiple) {
+          // todo: this is slightly wrong if an argument has "moves" as name, say.
+          // More obviously, we only keep last results. Will it ever apply
+          // to where we use conditionResults (endIf, for instance)
+          let results
+          let i = 0
+          do {
+            results = checkConditions(
+              bgioArguments,
+              { conditions },
+              getPayload({
+                arguments: {
+                  [groupName]: payload.arguments[groupName][i]
+                }
+              }),
+              context
+            )
+            i++
+          } while (i < payload.arguments[groupName].length && results.conditionsAreMet)
+          return ({
+            ...acc,
+            [groupName]: results
+          })
+        } else {
+          return ({
+            ...acc,
+            [groupName]: checkConditions(
+              bgioArguments,
+              { conditions },
+              getPayload(payload),
+              context
+            )
+          })
+        }
+        } , {})
   }
 
   doMove (bgioArguments, payload, context, skipCheck = false) {
@@ -60,10 +87,12 @@ export default class Move {
     }
 
     if (!skipCheck && !Object.values(conditionResults).every(r => r.conditionsAreMet)) {
-      console.log('this', this)
       return INVALID_MOVE
     } else {
       this.do(bgioArguments, resolvedPayload, context)
+      if (context) {
+        context.previousArguments = resolvedPayload.arguments
+      }
     }
 
     return { conditionResults }

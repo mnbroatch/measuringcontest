@@ -1,4 +1,5 @@
 import { serialize, deserialize } from 'wackson'
+import { INVALID_MOVE } from 'boardgame.io/dist/cjs/core.js';
 import { registry } from '../registry.js'
 import MoveEntity from "./move-entity.js";
 import PlaceNew from "./place-new.js";
@@ -30,9 +31,13 @@ export default function moveFactory(moveRule) {
 
     context.moveConditionResults = [moveConditionResults]
 
-    if (moveRule.then) {
+    if (moveConditionResults !== INVALID_MOVE && moveRule.then) {
       for (let automaticMoveRule of moveRule.then) {
-        const result = getMoveInstance(automaticMoveRule).doMove(bgioArguments, {}, context)
+        const result = getMoveInstance(automaticMoveRule).doMove(
+          bgioArguments,
+          {},
+          {...context} // spread here so prevArguments doesn't change for sibling
+        )
         context.moveConditionResults.push(result)
           context
       }

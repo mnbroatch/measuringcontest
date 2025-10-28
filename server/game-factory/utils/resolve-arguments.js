@@ -20,6 +20,7 @@ export default function resolveArguments (
         argument = argRule.literal
       } else if (argRule.contextPath) {
         argument = get(context, argRule.contextPath)
+        console.log('argument', argument)
       } else if (argRule.ctxPath) {
         // getting player list from playOrder, does this exist for custom turn order?
         argument = get(bgioArguments.ctx, argRule.ctxPath)
@@ -30,8 +31,8 @@ export default function resolveArguments (
           ? bgioArguments.G.bank.findAll(bgioArguments, argRule, context)
           : bgioArguments.G.bank.findOne(bgioArguments, argRule, context)
       } else if (argRule.type === 'RelativePath') {
-        const target = bgioArguments.G.bank.findOne(bgioArguments, argRule.target, context)
-        argument = get(target, argRule.path)
+        const target = resolveTarget(bgioArguments, argRule.target, context)
+        argument = get(target.attributes, argRule.path)
       } else {
         argument = argRule
       }
@@ -67,6 +68,9 @@ export function resolveArguments2 (
       newCoordinates && parent.spaces[parent.getIndex(newCoordinates)]
   } else if (conditionRule.target.targetingType === 'Parent') {
     resolvedTarget = G.bank.findParent(originalTarget)
+  // } else if (argRule.type === 'RelativePath') {
+  //   const target = bgioArguments.G.bank.findOne(bgioArguments, argRule.target, context)
+  //   argument = get(target, argRule.path)
   } else if (conditionRule.target.contextPath) {
     resolvedTarget = get(context, conditionRule.target.contextPath)
   } else if (conditionRule.target.ctxPath) {
@@ -79,4 +83,17 @@ export function resolveArguments2 (
     )
   }
   return resolvedTarget
+}
+
+// want to move most stuff here
+function resolveTarget (
+  bgioArguments,
+  targetRule,
+  context
+) {
+  if (targetRule.contextPath) {
+    return get(context, targetRule.contextPath)
+  } else if (true) {
+    return bgioArguments.G.bank.findOne(bgioArguments, targetRule, context)
+  }
 }
