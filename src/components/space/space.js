@@ -62,6 +62,7 @@ export default function Space ({ space }) {
               <Entity entity={entities[i]} />
             </div>
           ))}
+          {!entities.length && space.attributes.name}
         </div>
     </a>
   );

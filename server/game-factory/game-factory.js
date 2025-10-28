@@ -197,11 +197,15 @@ function createPhase (phaseRule, game) {
 
   phase.onBegin = (bgioArguments) => {
     if (phaseRule.initialMoves) {
+      const newG = deserialize(JSON.stringify(bgioArguments.G), registry)
       phase.initialMoves.forEach((moveRule) => {
-        moveFactory(moveRule)(bgioArguments);
+        moveFactory(moveRule).moveInstance.doMove({
+          ...bgioArguments,
+          G: newG,
+        });
       })
-      bgioArguments.G.currentPhaseHasBeenSetUp = true
-      return bgioArguments.G
+      newG.meta.currentPhaseHasBeenSetUp = true
+      return JSON.parse(serialize(newG));
     }
   }
 
@@ -211,10 +215,10 @@ function createPhase (phaseRule, game) {
         G: deserialize(JSON.stringify(G), registry),
         ...restBgioArguments
       }
-      if (bgioArguments.G.currentPhaseHasBeenSetUp) {
+      if (bgioArguments.G.meta.currentPhaseHasBeenSetUp) {
         const result = getScenarioResults(bgioArguments, phaseRule.endIf)
         if (result) {
-          bgioArguments.G.currentPhaseHasBeenSetUp = false
+          bgioArguments.G.meta.currentPhaseHasBeenSetUp = false
           return result
         }
       }
