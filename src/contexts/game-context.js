@@ -8,6 +8,7 @@ import preparePayload from "../../server/game-factory/utils/prepare-payload.js";
 import simulateMove from "../../server/game-factory/utils/simulate-move.js";
 import getSteps from "../../server/game-factory/utils/get-steps.js";
 import createPayload from "../../server/game-factory/utils/create-payload.js";
+import checkConditions from '../../server/game-factory/utils/check-conditions.js';
 
 const GameContext = createContext({
   dispatch: () => {},
@@ -60,6 +61,12 @@ export function GameProvider ({ gameConnection, children, isSpectator }) {
         moveName
       }))
     possibleMoveRules.forEach((moveRule) => {
+      const moveIsAllowed = checkConditions(
+        bgioState,
+        moveRule,
+        {},
+        { moveInstance: moves[moveRule.moveName].moveInstance }
+      ).conditionsAreMet
       const moveSteps = getSteps(
         bgioState,
         moveRule,
@@ -68,7 +75,9 @@ export function GameProvider ({ gameConnection, children, isSpectator }) {
       const lastStep = moveSteps?.[currentMoveState.stepIndex - 1]
       const currentStep = moveSteps?.[currentMoveState.stepIndex]
       const finishedOnLastStep = moveSteps && !!lastStep && !currentStep
-      const clickable = new Set(currentStep?.getClickable() || [])
+      const clickable = new Set(
+        (moveIsAllowed && currentStep?.getClickable()) || []
+      )
       possibleMoveMeta[moveRule.moveName] = { finishedOnLastStep, clickable }
       clickable.forEach((entity) => { allClickable.add(entity) })
     })

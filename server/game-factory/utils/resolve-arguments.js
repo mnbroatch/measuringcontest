@@ -20,7 +20,6 @@ export default function resolveArguments (
         argument = argRule.literal
       } else if (argRule.contextPath) {
         argument = get(context, argRule.contextPath)
-        console.log('argument', argument)
       } else if (argRule.ctxPath) {
         // getting player list from playOrder, does this exist for custom turn order?
         argument = get(bgioArguments.ctx, argRule.ctxPath)

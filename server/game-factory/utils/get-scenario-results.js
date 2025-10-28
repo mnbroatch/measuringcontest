@@ -14,7 +14,7 @@ export default function getScenarioResults(bgioArguments, scenarios) {
 
   if (match) {
     const resultRule = match.scenario.result
-    if (resultRule.winner) {
+    if (resultRule?.winner) {
       return {
         winner: resolveProperties(
           bgioArguments,
@@ -22,7 +22,7 @@ export default function getScenarioResults(bgioArguments, scenarios) {
           { results: match.conditionResults.results }
         )
       }
-    } else if (resultRule.winners) {
+    } else if (resultRule?.winners) {
       return {
         winners: resolveProperties(
           bgioArguments,
@@ -31,7 +31,7 @@ export default function getScenarioResults(bgioArguments, scenarios) {
         )
       }
     } else {
-      return resultRule
+      return resultRule ?? true
     }
   }
 

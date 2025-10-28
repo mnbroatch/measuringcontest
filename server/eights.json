@@ -152,20 +152,14 @@
           {
             "type": "ForEach",
             "conditions": [{
-              "type": "Evaluate",
-              "expression": "stockCount == 0",
-              "arguments": {
-                "stockCount": {
-                  "type": "RelativePath",
-                  "target": {
-                    "conditions": [{
-                      "type": "Is",
-                      "matcher": { "name": "stock" }
-                    }]
-                  },
-                  "path": ["entities", "length"]
-                }
-              }
+              "type": "Not",
+              "target": {
+                "conditions": [{
+                  "type": "Is",
+                  "matcher": { "name": "stock" }
+                }]
+              },
+              "conditions": [{ "type": "Contains" }]
             }],
             "arguments": {
               "targets": {
@@ -311,29 +305,20 @@
                       }
                     },
                     "conditions": [{
-                      "type": "Evaluate",
-                      "expression": "playedValue == 8",
-                      "arguments": {
-                        "playedValue": {
-                          "type": "RelativePath",
-                          "target": { "contextPath": ["previousArguments", "entity"] },
-                          "path": ["value"]
-                        }
-                      }
+                      "type": "Is",
+                      "target": { "contextPath": ["previousArguments", "entity"] },
+                      "matcher": { "value": 8 }
                     }]
                   },
                   {
                     "type": "EndTurn",
                     "conditions": [{
-                      "type": "Evaluate",
-                      "expression": "playedValue != 8",
-                      "arguments": {
-                        "playedValue": {
-                          "type": "RelativePath",
-                          "target": { "contextPath": ["previousArguments", "entity"] },
-                          "path": ["value"]
-                        }
-                      }
+                      "type": "Not",
+                      "target": { "contextPath": ["previousArguments", "entity"] },
+                      "conditions": [{
+                        "type": "Is",
+                        "matcher": { "value": 8 }
+                      }]
                     }]
                   }
                 ]
@@ -407,33 +392,52 @@
       },
       "endIf": [{
         "conditions": [{
-          "type": "Some",
-          "target": { "ctxPath": ["playOrder"] },
-          "conditions": [{
-            "type": "Evaluate",
-            "expression": "handCount == 0",
-            "arguments": {
-              "handCount": {
-                "type": "RelativePath",
-                "target": {
-                  "conditions": [{
-                    "type": "Is",
-                    "matcher": {
-                      "name": "hand",
-                      "player": { "contextPath": ["loopTarget"] }
-                    }
-                  }]
-                },
-                "path": ["entities", "length"]
+          "type": "Is",
+          "target": {
+            "conditions": [
+              {
+                "type": "Is",
+                "matcher": { "name": "hand" }
+              },
+              {
+                "type": "Not",
+                "conditions": [{ "type": "Contains" }]
               }
-            }
-          }]
-        }],
-        "result": {"blah": "bleh"}
+            ]
+          }
+        }]
       }]
     },
     "score": {
-      "next": "play"
+      "next": "play",
+      "initialMoves": [
+        {
+          "type": "ForEach",
+          "arguments": {
+            "targets": { "ctxPath": ["playOrder"] }
+          },
+          "move": {
+            "type": "SetState",
+            "arguments": {
+              "entity": {
+                "conditions": [
+                  {
+                    "type": "Is",
+                    "matcher": {
+                      "name": "score",
+                      "player": { "contextPath": ["loopTarget"] }
+                    }
+                  }
+                ]
+              },
+              "state": {
+                "property": "value",
+                "value": 10
+              }
+            }
+          }
+        }
+      ]
     }
   },
   "endIf": []
