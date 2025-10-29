@@ -38,7 +38,8 @@ export default class Condition {
     if (this.rule.type !== 'Evaluate') {
       // nonexistent relative spaces for instance fulfill no conditions ever
       if (!conditionPayload.target && !conditionPayload.targets?.length) {
-        console.log('this.rule', this.rule)
+        // todo: double check why so many nonexistent conditions
+        // console.log('this.rule', this.rule)
         return { conditionIsMet: false }
       }
     }

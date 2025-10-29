@@ -431,8 +431,14 @@
                 ]
               },
               "state": {
+                "expression": "num",
                 "property": "value",
-                "value": 10
+                "value": {
+                  "expression": "num",
+                  "arguments": {
+                    "num": 10
+                  }
+                }
               }
             }
           }

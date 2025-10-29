@@ -4,6 +4,7 @@
 // but also targetingType === 'Parent'
 //
 // gonna be a good refactor
+import resolveExpression from "./resolve-expression.js";
 import get from "./get.js";
 
 // todo: change to resolve one arguments at a time? probably 2 composed fns
@@ -32,7 +33,11 @@ export default function resolveArguments (
       } else if (argRule.type === 'RelativePath') {
         const target = resolveTarget(bgioArguments, argRule.target, context)
         argument = get(target.attributes, argRule.path)
+      } else if (argRule.expression) {
+        argument = resolveExpression(bgioArguments, argRule, payload, context)
       } else {
+        console.log('moveRule', moveRule)
+        console.log('argRule', argRule)
         argument = argRule
       }
     }
