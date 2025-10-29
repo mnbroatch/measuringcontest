@@ -55,25 +55,50 @@ function resolveProperty (bgioArguments, value, context) {
       context
     ).length
   } else if (value?.mapMax) {
-    const targets = resolveProperty(bgioArguments, value.mapMax.targets, context)
+    const mappedTargets = getMappedTargets(
+      bgioArguments,
+      value.mapMax.targets,
+      value.mapMax.mapping,
+      context
+    )
     let maxValue
-    let maxTargets = []
-    for (let i = 0, len = targets.length; i < len; i++) {
-      const target = targets[i]
-      const val = resolveProperty(
-        bgioArguments,
-        value.mapMax.mapping,
-        { ...context, loopTarget: target }
-      )
+    const maxTargets = []
+    for (let i = 0, len = mappedTargets.length; i < len; i++) {
+      const { target, value: val } = mappedTargets[i]
       if (maxValue === undefined || val > maxValue) {
         maxValue = val
-        maxTargets = [target]
+        maxTargets.length = 0
+        maxTargets.push(target)
       } else if (val === maxValue) {
         maxTargets.push(target)
       }
+      return maxTargets
     }
-    return maxTargets
+  } else if (value?.map && !Array.isArray(value)) {
+    console.log('value', value)
+    return getMappedTargets(
+      bgioArguments,
+      value.map.targets,
+      value.map.mapping,
+      context
+    ).map(mappedTarget => mappedTarget.value)
   } else {
     return value
   }
+}
+
+function getMappedTargets (bgioArguments, targets, mapping, context) {
+  return resolveProperty(
+    bgioArguments,
+    targets,
+    context
+  )
+    .map(target => ({
+      target,
+      value: resolveProperty(
+        bgioArguments,
+        mapping,
+        { ...context, loopTarget: target }
+      )
+    }))
 }

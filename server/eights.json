@@ -433,9 +433,28 @@
               "state": {
                 "property": "value",
                 "value": {
-                  "expression": "num",
+                  "expression": "sum(faceValues)",
                   "arguments": {
-                    "num": 10
+                    "faceValues": {
+                      "map": {
+                        "targets": {
+                          "conditions": [
+                            {
+                              "type": "Is",
+                              "matcher": {
+                                "name": "hand",
+                                "player": { "contextPath": [ "loopTarget" ] }
+                              }
+                            }
+                          ]
+                        },
+                        "mapping": {
+                          "type": "RelativePath",
+                          "target": { "contextPath": ["loopTarget"] },
+                          "path": ["value"]
+                        }
+                      }
+                    }
                   }
                 }
               }
