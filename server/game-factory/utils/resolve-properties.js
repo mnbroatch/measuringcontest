@@ -42,7 +42,15 @@ function resolveProperty (bgioArguments, value, context) {
   if (value?.ctxPath) {
     return get(bgioArguments.ctx, value.ctxPath)
   } else if (value?.expression) {
-    return resolveExpression(bgioArguments, value, undefined, context)
+    return resolveExpression(
+      bgioArguments,
+      {
+        ...value,
+        arguments: resolveProperties(bgioArguments, value.arguments, context)
+      },
+      undefined,
+      context
+    )
   } else if (value === 'CurrentPlayer') {
     // should we just use ctxpath
     return bgioArguments.ctx.currentPlayer
@@ -54,6 +62,10 @@ function resolveProperty (bgioArguments, value, context) {
       value,
       context
     ).length
+  } else if (value?.conditions) {
+    return value.matchMultiple
+      ? bgioArguments.G.bank.findAll(bgioArguments, value, context)
+      : bgioArguments.G.bank.findOne(bgioArguments, value, context)
   } else if (value?.mapMax) {
     const mappedTargets = getMappedTargets(
       bgioArguments,
@@ -75,7 +87,6 @@ function resolveProperty (bgioArguments, value, context) {
       return maxTargets
     }
   } else if (value?.map && !Array.isArray(value)) {
-    console.log('value', value)
     return getMappedTargets(
       bgioArguments,
       value.map.targets,
@@ -88,6 +99,9 @@ function resolveProperty (bgioArguments, value, context) {
 }
 
 function getMappedTargets (bgioArguments, targets, mapping, context) {
+  console.log('return resolveProperty( bgioArguments, targets, context)', resolveProperty( bgioArguments, targets, context))
+  console.log('targets', targets)
+  console.log('context', context)
   return resolveProperty(
     bgioArguments,
     targets,
