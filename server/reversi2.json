@@ -43,7 +43,7 @@
         "destination": {}
       },
       "entity": {
-        "state": { "player": "Current" },
+        "state": { "player": "CurrentPlayer" },
         "conditions": [{
           "type": "Is",
           "matcher": { "name": "disc" }
@@ -58,7 +58,7 @@
           "type": "PlaceNew",
           "arguments": {},
           "entity": {
-            "state": { "player": "Current" },
+            "state": { "player": "CurrentPlayer" },
             "conditions": [{
               "type": "Is",
               "matcher": { "name": "disc" }
@@ -74,7 +74,7 @@
                 "type": "PlaceNew",
                 "arguments": {},
                 "entity": {
-                  "state": { "player": "Current" },
+                  "state": { "player": "CurrentPlayer" },
                   "conditions": [{
                     "type": "Is",
                     "matcher": { "name": "disc" }
@@ -93,7 +93,7 @@
           "type": "PlaceNew",
           "arguments": {},
           "entity": {
-            "state": { "player": "Current" },
+            "state": { "player": "CurrentPlayer" },
             "conditions": [{
               "type": "Is",
               "matcher": { "name": "disc" }
@@ -113,7 +113,7 @@
                 "type": "PlaceNew",
                 "arguments": {},
                 "entity": {
-                  "state": { "player": "Current" },
+                  "state": { "player": "CurrentPlayer" },
                   "conditions": [{
                     "type": "Is",
                     "matcher": { "name": "disc" }
@@ -127,7 +127,7 @@
               "placeDisc": {
                 "type": "PlaceNew",
                 "entity": {
-                  "state": { "player": "Current" },
+                  "state": { "player": "CurrentPlayer" },
                   "conditions": [{
                     "type": "Is",
                     "matcher": { "name": "disc" }
@@ -156,7 +156,7 @@
                                 "conditions": [{
                                   "type": "Is",
                                   "matcher": {
-                                    "player": "Current"
+                                    "player": "CurrentPlayer"
                                   }
                                 }]
                               }]
@@ -171,7 +171,7 @@
                                     "conditions": [{
                                       "type": "Is",
                                       "matcher": {
-                                        "player": "Current"
+                                        "player": "CurrentPlayer"
                                       }
                                     }]
                                   }]
@@ -188,7 +188,7 @@
                                 "conditions": [{
                                   "type": "Is",
                                   "matcher": {
-                                    "player": "Current"
+                                    "player": "CurrentPlayer"
                                   }
                                 }]
                               }]
@@ -226,7 +226,7 @@
                       },
                       "state": {
                         "property": "player",
-                        "value": "Current"
+                        "value": "CurrentPlayer"
                       }
                     }
                   }

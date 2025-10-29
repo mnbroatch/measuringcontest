@@ -157,7 +157,7 @@ function createTurn (turnRule, game) {
 
   turn.onBegin = (bgioArguments) => {
     const newG = doInitialMoves(bgioArguments, turnRule.initialMoves)
-    if (turnRule.passIfNoMoves && G.meta.passCount < bgioArguments.ctx.numPlayers) {
+    if (turnRule.passIfNoMoves && newG.meta.passCount < bgioArguments.ctx.numPlayers) {
       const newBgioArguments = {
         ...bgioArguments,
         G: newG,
@@ -166,10 +166,10 @@ function createTurn (turnRule, game) {
         newBgioArguments,
         getCurrentMoves(game, newBgioArguments)
       )) {
-        G.meta.passCount++
+        newG.meta.passCount++
         newBgioArguments.events.pass()
       } else {
-        G.meta.passCount = 0
+        newG.meta.passCount = 0
       }
     }
     return JSON.parse(serialize(newG));

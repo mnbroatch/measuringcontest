@@ -1,59 +1,39 @@
 import pick from "lodash/pick.js";
 import get from "./get.js";
+import resolveExpression from "./resolve-expression.js";
 
-// probably merge better with resolveArguments, esp. contextPath
-// can Current be merged with ctxPath?
-// should this be recursive?
+// probably replaces some stuff in resolveArguments, esp. contextPath
 export default function resolveProperties (bgioArguments, obj, context) {
-  let resolvedProperties = { ...obj }
+  let resolvedProperties = Array.isArray(obj) ? [...obj] : { ...obj }
+
+  // don't like this special case here but how else to merge props
   Object.entries(obj).forEach(([key, value]) => {
-    if (key === 'player' && value === 'Current') {
-      resolvedProperties.player = bgioArguments.ctx.currentPlayer
-    } else if (value?.contextPath) {
-      resolvedProperties[key] = get(context, value.contextPath)
-    } else if (key === 'contextPath') {
-      // ok this is getting ridiculous
-      resolvedProperties = get(context, value)
-    } else if (key === 'pick' && value?.target?.conditions) {
-      // this is the only one that replaces properties object? bugs found here
+    if (key === 'pick' && value?.target) {
       const target = bgioArguments.G.bank.findOne(
         bgioArguments,
         value.target,
         context
       )
-      // manual merging of state makes it seem like this should be different
-      resolvedProperties = {
-        ...resolvedProperties,
-        ...pick(resolveProperties(
-            bgioArguments,
-            { ...target.rule, ...target.state },
-            context
-          ),
-          value.properties
-        )
-      }
+      const newProperties = pick(
+        resolveProperties(
+          bgioArguments,
+          target.attributes,
+          context
+        ),
+        value.properties
+      )
+      Object.assign(resolvedProperties, newProperties)
       delete resolvedProperties.pick
-      } else if (key === 'mapMax') {
-        const targets = resolveProperty(bgioArguments, value.targets, context)
-        let maxValue
-        let maxTargets = []
-        for (let i = 0, len = targets.length; i < len; i++) {
-          const target = targets[i]
-          const val = resolveProperty(
-            bgioArguments,
-            value.mapping,
-            { ...context, loopTarget: target }
-          )
-          if (maxValue === undefined || val > maxValue) {
-            maxValue = val
-            maxTargets = [target]
-          } else if (val === maxValue) {
-            maxTargets.push(target)
-          }
-        }
-        resolvedProperties = maxTargets
-      }
+    } else {
+      resolvedProperties[key] = resolveProperty(bgioArguments, value, context)
+    }
+
+    // experimental, maybe this is sufficiently recursive?
+    if (typeof resolvedProperties[key] === 'object' && resolvedProperties[key] !== null) {
+      resolvedProperties[key] = resolveProperties(bgioArguments, resolvedProperties[key], context)
+    }
   })
+
   return resolvedProperties
 }
 
@@ -61,11 +41,39 @@ export default function resolveProperties (bgioArguments, obj, context) {
 function resolveProperty (bgioArguments, value, context) {
   if (value?.ctxPath) {
     return get(bgioArguments.ctx, value.ctxPath)
+  } else if (value?.expression) {
+    return resolveExpression(bgioArguments, value, undefined, context)
+  } else if (value === 'CurrentPlayer') {
+    // should we just use ctxpath
+    return bgioArguments.ctx.currentPlayer
+  } else if (value?.contextPath) {
+    return get(context, value.contextPath)
   } else if (value?.type === 'count') {
     return bgioArguments.G.bank.findAll(
       bgioArguments,
       value,
       context
     ).length
+  } else if (value?.mapMax) {
+    const targets = resolveProperty(bgioArguments, value.mapMax.targets, context)
+    let maxValue
+    let maxTargets = []
+    for (let i = 0, len = targets.length; i < len; i++) {
+      const target = targets[i]
+      const val = resolveProperty(
+        bgioArguments,
+        value.mapMax.mapping,
+        { ...context, loopTarget: target }
+      )
+      if (maxValue === undefined || val > maxValue) {
+        maxValue = val
+        maxTargets = [target]
+      } else if (val === maxValue) {
+        maxTargets.push(target)
+      }
+    }
+    return maxTargets
+  } else {
+    return value
   }
 }

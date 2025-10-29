@@ -1,7 +1,6 @@
 import checkConditions from "./check-conditions.js";
 import resolveProperties from './resolve-properties.js'
 
-// todo: can we generically loop through properties instead of winner specifics?
 export default function getScenarioResults(bgioArguments, scenarios) {
   let match
   for (const scenario of scenarios) {
@@ -12,29 +11,13 @@ export default function getScenarioResults(bgioArguments, scenarios) {
     }
   }
 
-  if (match) {
-    const resultRule = match.scenario.result
-    if (resultRule?.winner) {
-      return {
-        winner: resolveProperties(
-          bgioArguments,
-          resultRule.winner,
-          { results: match.conditionResults.results }
-        )
-      }
-    } else if (resultRule?.winners) {
-      return {
-        winners: resolveProperties(
-          bgioArguments,
-          resultRule.winners,
-          { results: match.conditionResults.results }
-        )
-      }
-    } else {
-      return resultRule ?? true
-    }
+  if (match?.scenario?.result) {
+    return resolveProperties(
+      bgioArguments,
+      match.scenario.result,
+      { results: match.conditionResults.results }
+    )
+  } else {
+    return match
   }
-
-
-  return null;
 }

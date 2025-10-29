@@ -224,7 +224,7 @@
                         "target": { "targetingType": "Parent" },
                         "matcher": {
                           "name": "hand",
-                          "player": "Current"
+                          "player": "CurrentPlayer"
                         }
                       },
                       {
@@ -350,7 +350,7 @@
                         "type": "Is",
                         "matcher": {
                           "name": "hand",
-                          "player": "Current"
+                          "player": "CurrentPlayer"
                         }
                       }
                     ]
@@ -431,7 +431,6 @@
                 ]
               },
               "state": {
-                "expression": "num",
                 "property": "value",
                 "value": {
                   "expression": "num",
