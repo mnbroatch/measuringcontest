@@ -6,7 +6,11 @@ export default class SetState extends Move {
   do(bgioArguments, { arguments: { entity, state } }, context) {
     entity.state = {
       ...entity.state,
-      ...resolveProperties(bgioArguments, { [state.property]: state.value }, context) 
+      ...resolveProperties(
+        bgioArguments,
+        { [state.property]: state.value },
+        { ...context, currentValue: entity.state?.[state.property] }
+      )
     }
   }
 }

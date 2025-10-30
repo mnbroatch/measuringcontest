@@ -1,4 +1,5 @@
 todo:
+moving to another phase should probably set current player to 0 by default?
 setState validation 
 {"message":"The incoming token has expired"}
 currently, first ruleset for gamename is used. should use ruleset hash

@@ -197,6 +197,7 @@ function createPhase (phaseRule, game) {
   phase.onBegin = (bgioArguments) => {
     const newG = doInitialMoves(bgioArguments, phaseRule.initialMoves)
     newG.meta.currentPhaseHasBeenSetUp = true
+    newG.meta.nextPhase = phaseRule.next
     return JSON.parse(serialize(newG));
   }
 
@@ -209,11 +210,14 @@ function createPhase (phaseRule, game) {
       if (bgioArguments.G.meta.currentPhaseHasBeenSetUp) {
         const result = getScenarioResults(bgioArguments, phaseRule.endIf)
         if (result) {
-          bgioArguments.G.meta.currentPhaseHasBeenSetUp = false
           return result
         }
       }
     }
+  }
+
+  phase.onEnd = ({ G }) => {
+    G.meta.currentPhaseHasBeenSetUp = false
   }
 
   return phase

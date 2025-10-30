@@ -14,16 +14,18 @@ export default function resolveProperties (bgioArguments, obj, context) {
         value.target,
         context
       )
-      const newProperties = pick(
-        resolveProperties(
-          bgioArguments,
-          target.attributes,
-          context
-        ),
-        value.properties
-      )
-      Object.assign(resolvedProperties, newProperties)
-      delete resolvedProperties.pick
+      if (target !== undefined) {
+        const newProperties = pick(
+          resolveProperties(
+            bgioArguments,
+            target.attributes,
+            context
+          ),
+          value.properties
+        )
+        Object.assign(resolvedProperties, newProperties)
+        delete resolvedProperties.pick
+      }
     } else {
       resolvedProperties[key] = resolveProperty(bgioArguments, value, context)
     }
@@ -62,6 +64,9 @@ function resolveProperty (bgioArguments, value, context) {
       value,
       context
     ).length
+  } else if (value?.type === 'RelativePath') {
+    const target = resolveProperty(bgioArguments, value.target, context)
+    return get(target.attributes, value.path)
   } else if (value?.conditions) {
     return value.matchMultiple
       ? bgioArguments.G.bank.findAll(bgioArguments, value, context)
@@ -98,22 +103,19 @@ function resolveProperty (bgioArguments, value, context) {
   }
 }
 
-function getMappedTargets (bgioArguments, targets, mapping, context) {
-  console.log('targets', targets)
-  const x = resolveProperty(
+function getMappedTargets (bgioArguments, targetsRule, mapping, context) {
+  const targets = resolveProperty(
     bgioArguments,
-    targets,
+    targetsRule,
     context
   ) ?? []
 
-console.log('x', x)
-
-    return x.map(target => ({
-      target,
-      value: resolveProperty(
-        bgioArguments,
-        mapping,
-        { ...context, loopTarget: target }
-      )
-    }))
+  return targets.map(target => ({
+    target,
+    value: resolveProperty(
+      bgioArguments,
+      mapping,
+      { ...context, loopTarget: target }
+    )
+  }))
 }
