@@ -443,6 +443,7 @@
                               "type": "Is",
                               "matcher": {
                                 "name": "hand",
+                                "target": { "targetingType": "Parent" },
                                 "player": { "contextPath": [ "loopTarget" ] }
                               }
                             }

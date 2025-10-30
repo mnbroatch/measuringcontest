@@ -99,15 +99,16 @@ function resolveProperty (bgioArguments, value, context) {
 }
 
 function getMappedTargets (bgioArguments, targets, mapping, context) {
-  console.log('return resolveProperty( bgioArguments, targets, context)', resolveProperty( bgioArguments, targets, context))
   console.log('targets', targets)
-  console.log('context', context)
-  return resolveProperty(
+  const x = resolveProperty(
     bgioArguments,
     targets,
     context
-  )
-    .map(target => ({
+  ) ?? []
+
+console.log('x', x)
+
+    return x.map(target => ({
       target,
       value: resolveProperty(
         bgioArguments,
