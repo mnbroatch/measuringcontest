@@ -1,7 +1,4 @@
-// what the heck happened here?
-// using type === 'RelativePath'
-//
-// gonna be a good refactor
+import resolveProperties from "./resolve-properties.js";
 import get from "./get.js";
 
 // todo: change to resolve one arguments at a time? probably 2 composed fns
@@ -11,34 +8,15 @@ export default function resolveArguments (
   payload,
   context
 ) {
-  return Object.entries(moveRule.arguments ?? {}).reduce((acc, [argName, argRule]) => {
-    let argument = payload?.arguments?.[argName]
-    if (argument === undefined) {
-      if (argRule.literal !== undefined) {
-        argument = argRule.literal
-      } else if (argRule.gamePath) {
-        argument = get(bgioArguments.G, argRule.gamePath)
-      } else if (argRule.conditions) {
-        argument = argRule.matchMultiple
-          ? bgioArguments.G.bank.findAll(bgioArguments, argRule, context)
-          : bgioArguments.G.bank.findOne(bgioArguments, argRule, context)
-      } else if (argRule.type === 'contextPath') {
-        argument = get(context, argRule.path)
-      } else if (argRule.type === 'ctxPath') {
-        argument = get(bgioArguments.ctx, argRule.path)
-      } else if (argRule.type === 'RelativePath') {
-        const target = resolveTarget(bgioArguments, argRule.target, context)
-        argument = get(target.attributes, argRule.path)
-      } else {
-        argument = argRule
-      }
-    }
-    if (argument === undefined) {
-      console.log('moveRule', moveRule)
+  return Object.entries(moveRule.arguments ?? {})
+    .reduce((acc, [argName, argRule]) => {
       console.log('argRule', argRule)
-    }
-    return {...acc, [argName]: argument}
-  }, {})
+      return {
+        ...acc,
+        [argName]: payload?.arguments?.[argName]
+          ?? resolveProperties(bgioArguments, argRule, context)
+      }
+    }, {})
 }
 
 // beginning of migrating condition targets over here

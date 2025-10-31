@@ -9,18 +9,9 @@ export default class ForEach extends Move {
         ...context,
         loopTarget: target
       }
-      const payload = { arguments: {} }
-      const resolvedPayload = {
-        arguments: resolveArguments(
-          bgioArguments,
-          this.rule.move,
-          payload,
-          loopContext
-        )
-      }
       getMoveInstance(this.rule.move).doMove(
         bgioArguments,
-        resolvedPayload,
+        undefined,
         loopContext
       )
     })

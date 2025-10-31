@@ -41,6 +41,8 @@ function resolveProperty (bgioArguments, value, context) {
     return get(context, value.path)
   } else if (value?.type === 'ctxPath') {
     return get(bgioArguments.ctx, value.path)
+  } else if (value?.type === 'gamePath') {
+    return get(bgioArguments.G, value.path)
   } else if (value?.type === 'RelativePath') {
     const target = resolveProperty(bgioArguments, value.target, context)
     return get(target.attributes, value.path)

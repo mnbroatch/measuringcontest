@@ -103,7 +103,7 @@
         {
           "type": "ForEach",
           "arguments": {
-            "targets": { "literal": [0] }
+            "targets": [0]
           },
           "move": {
             "type": "ForEach",
@@ -503,8 +503,35 @@
                   "expression": "existingScore + sum(faceValues)",
                   "arguments": {
                     "existingScore": {
-                      "type": "contextPath",
-                      "path": ["currentValue"]
+                      "type": "RelativePath",
+                      "target": {
+                        "conditions": [
+                          {
+                            "type": "Is",
+                            "matcher": {
+                              "name": "score",
+                              "player": {
+                                "type": "RelativePath",
+                                "target": {
+                                  "a": 1,
+                                  "conditions": [
+                                    {
+                                      "type": "Is",
+                                      "matcher": { "name": "hand" }
+                                    },
+                                    {
+                                      "type": "Not",
+                                      "conditions": [{ "type": "Contains" }]
+                                    }
+                                  ]
+                                },
+                                "path": ["player"]
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "path": ["value"]
                     },
                     "faceValues": {
                       "type": "map",

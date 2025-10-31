@@ -1,16 +1,11 @@
 import Move from "./move.js";
-import resolveProperties from '../utils/resolve-properties.js'
 
 // todo: invariant conditions like "is one of the allowed values"
 export default class SetState extends Move {
-  do(bgioArguments, { arguments: { entity, state } }, context) {
+  do(_, { arguments: { entity, state } }) {
     entity.state = {
       ...entity.state,
-      ...resolveProperties(
-        bgioArguments,
-        { [state.property]: state.value },
-        { ...context, currentValue: entity.state?.[state.property] }
-      )
+      [state.property]: state.value,
     }
   }
 }

@@ -186,7 +186,8 @@
         "expression": "passCount == numPlayers",
         "arguments": {
           "passCount": {
-            "gamePath": ["meta", "passCount"]
+            "type": "gamePath",
+            "path": ["_meta", "passCount"]
           },
           "numPlayers": {
             "type": "ctxPath",
