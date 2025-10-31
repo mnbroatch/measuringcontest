@@ -1,5 +1,5 @@
 todo:
-going from finished connect four to reversi breaks
+clicking fast on reversi lets player 1 take 2 turns (quirk of single player mode?)
 setState validation 
 {"message":"The incoming token has expired"}
 currently, first ruleset for gamename is used. should use ruleset hash

@@ -85,6 +85,14 @@ function resolveProperty (bgioArguments, value, context) {
         value.properties
       )
     }
+  } else if (value?.type === 'RelativeCoordinates') {
+    let parent = G.bank.findParent(context.originalTarget)
+    const oldCoordinates =
+      parent.getCoordinates(context.originalTarget.rule.index)
+    const newCoordinates =
+      parent.getRelativeCoordinates(oldCoordinates, value.location)
+    resolvedTarget =
+      newCoordinates && parent.spaces[parent.getIndex(newCoordinates)]
   } else if (value?.conditions) {
     return value.matchMultiple
       ? bgioArguments.G.bank.findAll(bgioArguments, value, context)

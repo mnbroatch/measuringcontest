@@ -1,4 +1,4 @@
-import { resolveArguments2 } from '../utils/resolve-arguments.js'
+import resolveProperties from "../utils/resolve-properties.js";
 
 export default class Condition {
   constructor (rule) {
@@ -8,22 +8,19 @@ export default class Condition {
   check (bgioArguments, payload = {}, context) {
     const { G } = bgioArguments
     const conditionPayload = {...payload}
+    const newContext = { ...context }
 
     if (this.rule.target) {
       if (conditionPayload.target) {
-        conditionPayload.originalTarget = conditionPayload.target
+        newContext.originalTarget = conditionPayload.target
       }
-      conditionPayload.target = resolveArguments2(
+      conditionPayload.target = resolveProperties(
         bgioArguments,
-        this.rule,
-        conditionPayload.originalTarget,
-        context
+        this.rule.target,
+        newContext
       )
     }
     if (this.rule.targets) {
-      if (conditionPayload.targets) {
-        conditionPayload.originalTargets = conditionPayload.targets
-      }
       conditionPayload.targets = this.rule.targets.reduce((acc, target) => [
         ...acc,
         ...G.bank.findAll(bgioArguments, target)
@@ -38,7 +35,7 @@ export default class Condition {
       return { conditionIsMet: false }
     }
 
-    return this.checkCondition(bgioArguments, conditionPayload, context)
+    return this.checkCondition(bgioArguments, conditionPayload, newContext)
   }
 
   isMet(...args) {
