@@ -46,6 +46,8 @@ function resolveProperty (bgioArguments, value, context) {
   } else if (value?.type === 'RelativePath') {
     const target = resolveProperty(bgioArguments, value.target, context)
     return get(target.attributes, value.path)
+  } else if (value.type === 'Parent') {
+    return bgioArguments.G.bank.findParent(context.originalTarget)
   } else if (value?.type === 'map') {
     return getMappedTargets(
       bgioArguments,
@@ -86,13 +88,12 @@ function resolveProperty (bgioArguments, value, context) {
       )
     }
   } else if (value?.type === 'RelativeCoordinates') {
-    let parent = G.bank.findParent(context.originalTarget)
+    let parent = bgioArguments.G.bank.findParent(context.originalTarget)
     const oldCoordinates =
       parent.getCoordinates(context.originalTarget.rule.index)
     const newCoordinates =
       parent.getRelativeCoordinates(oldCoordinates, value.location)
-    resolvedTarget =
-      newCoordinates && parent.spaces[parent.getIndex(newCoordinates)]
+    return  newCoordinates && parent.spaces[parent.getIndex(newCoordinates)]
   } else if (value?.conditions) {
     return value.matchMultiple
       ? bgioArguments.G.bank.findAll(bgioArguments, value, context)

@@ -3,7 +3,6 @@ import checkConditions from "../utils/check-conditions.js";
 
 export default class EveryCondition extends Condition {
   checkCondition(bgioArguments, { target: targets }, context) {
-    console.log('targets', targets)
     const results = targets.map((target) => {
       const loopContext = {
         ...context,
