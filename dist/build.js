@@ -1,6 +1,46 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ 45:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ SetActivePlayers)
+/* harmony export */ });
+/* harmony import */ var _move_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20426);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function _possibleConstructorReturn(t, e) { if (e && ("object" == _typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return _assertThisInitialized(t); }
+function _assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
+function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
+function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
+
+var SetActivePlayers = /*#__PURE__*/function (_Move) {
+  function SetActivePlayers() {
+    _classCallCheck(this, SetActivePlayers);
+    return _callSuper(this, SetActivePlayers, arguments);
+  }
+  _inherits(SetActivePlayers, _Move);
+  return _createClass(SetActivePlayers, [{
+    key: "do",
+    value: function _do(bgioArguments, _ref) {
+      var options = _ref.arguments.options;
+      bgioArguments.events.setActivePlayers(options);
+    }
+  }]);
+}(_move_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
+
+
+/***/ }),
+
 /***/ 119:
 /***/ ((module) => {
 
@@ -1616,7 +1656,7 @@ function Space(_ref) {
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_entity_entity_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
       entity: entities[i]
     }));
-  })));
+  }), !entities.length && space.attributes.name));
 }
 
 /***/ }),
@@ -2206,16 +2246,17 @@ module.exports = toInteger;
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (/* binding */ gameFactory)
 /* harmony export */ });
-/* harmony import */ var lodash_get_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(44861);
-/* harmony import */ var wackson__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(92244);
-/* harmony import */ var _move_move_factory_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(54101);
-/* harmony import */ var _utils_check_conditions_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(82326);
+/* harmony import */ var wackson__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(92244);
+/* harmony import */ var _move_move_factory_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(54101);
+/* harmony import */ var _utils_any_valid_moves_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7453);
+/* harmony import */ var _utils_get_current_moves_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(93228);
 /* harmony import */ var _registry_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(14142);
 /* harmony import */ var _bank_bank_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(15020);
 /* harmony import */ var _expand_game_rules_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(43634);
-var _excluded = ["G"];
+/* harmony import */ var _utils_get_scenario_results_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(13489);
+var _excluded = ["G"],
+  _excluded2 = ["G"];
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
@@ -2240,7 +2281,8 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 
 
 
-function gameFactory(gameRules, rulesHash) {
+
+function gameFactory(gameRules, rulesHash, server) {
   var game = {
     name: rulesHash
   };
@@ -2248,52 +2290,81 @@ function gameFactory(gameRules, rulesHash) {
   game.setup = function (bgioArguments) {
     var _rules$initialMoves;
     var ctx = bgioArguments.ctx;
-    var initialState = {};
+    var initialState = {
+      meta: {
+        passCount: 0
+      }
+    };
     var entityDefinitions = expandEntityDefinitions(rules.entities, ctx);
     initialState.bank = new _bank_bank_js__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A(entityDefinitions);
     initialState.sharedBoard = initialState.bank.getOne(bgioArguments, {
-      matcher: {
-        name: "sharedBoard"
-      }
+      conditions: [{
+        type: 'Is',
+        matcher: {
+          name: "sharedBoard"
+        }
+      }]
     });
+    if (rules.personalBoard) {
+      initialState.personalBoards = bgioArguments.ctx.playOrder.map(function (playerID) {
+        return initialState.bank.getOne(bgioArguments, {
+          conditions: [{
+            type: 'Is',
+            matcher: {
+              name: "personalBoard",
+              player: playerID
+            }
+          }]
+        });
+      });
+    }
     (_rules$initialMoves = rules.initialMoves) === null || _rules$initialMoves === void 0 || _rules$initialMoves.forEach(function (moveRule) {
-      (0,_move_move_factory_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(moveRule).moveInstance.doMove(_objectSpread(_objectSpread({}, bgioArguments), {}, {
+      (0,_move_move_factory_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)(moveRule).moveInstance.doMove(_objectSpread(_objectSpread({}, bgioArguments), {}, {
         G: initialState
       }));
     });
-    return JSON.parse((0,wackson__WEBPACK_IMPORTED_MODULE_1__/* .serialize */ .l)(initialState, {
-      deduplicateInstances: false
-    }));
+    return JSON.parse((0,wackson__WEBPACK_IMPORTED_MODULE_0__/* .serialize */ .l)(initialState));
   };
   if (rules.moves) {
-    game.moves = Object.entries(rules.moves).reduce(function (acc, _ref) {
-      var _ref2 = _slicedToArray(_ref, 2),
-        name = _ref2[0],
-        moveDefinition = _ref2[1];
-      return _objectSpread(_objectSpread({}, acc), {}, _defineProperty({}, name, (0,_move_move_factory_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(_objectSpread(_objectSpread({}, moveDefinition), {}, {
-        name: name
-      }))));
-    }, {});
+    game.moves = createMoves(rules.moves);
   }
   if (rules.turn) {
-    game.turn = rules.turn;
+    game.turn = createTurn(rules.turn, game);
+  }
+  if (rules.phases) {
+    game.phases = Object.entries(rules.phases).reduce(function (acc, _ref) {
+      var _ref2 = _slicedToArray(_ref, 2),
+        name = _ref2[0],
+        phaseRule = _ref2[1];
+      return _objectSpread(_objectSpread({}, acc), {}, _defineProperty({}, name, createPhase(phaseRule, game)));
+    }, {});
   }
   if (rules.endIf) {
     game.endIf = function (_ref3) {
       var G = _ref3.G,
         restBgioArguments = _objectWithoutProperties(_ref3, _excluded);
       var bgioArguments = _objectSpread({
-        G: (0,wackson__WEBPACK_IMPORTED_MODULE_1__/* .deserialize */ .i)(JSON.stringify(G), _registry_js__WEBPACK_IMPORTED_MODULE_4__/* .registry */ .u)
+        G: (0,wackson__WEBPACK_IMPORTED_MODULE_0__/* .deserialize */ .i)(JSON.stringify(G), _registry_js__WEBPACK_IMPORTED_MODULE_4__/* .registry */ .u)
       }, restBgioArguments);
-      var matchingWinScenarioResult = getMatchingWinScenarioResult(bgioArguments, rules.endIf);
-      if (matchingWinScenarioResult) {
-        var resultRule = matchingWinScenarioResult.winScenario.result;
-        var result = _objectSpread({}, resultRule);
-        if (resultRule.winner) {
-          result.winner = lodash_get_js__WEBPACK_IMPORTED_MODULE_0__(matchingWinScenarioResult, result.winner);
+      return (0,_utils_get_scenario_results_js__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A)(bgioArguments, rules.endIf);
+    };
+  }
+  if (!gameRules.DEBUG_DISABLE_SECRET_STATE) {
+    game.playerView = function (_ref4) {
+      var G = _ref4.G,
+        playerID = _ref4.playerID;
+      G = (0,wackson__WEBPACK_IMPORTED_MODULE_0__/* .deserialize */ .i)(JSON.stringify(G), _registry_js__WEBPACK_IMPORTED_MODULE_4__/* .registry */ .u);
+      Object.values(G.bank.tracker).forEach(function (entity) {
+        if (entity.rule.contentsHiddenFrom === 'All' || entity.rule.contentsHiddenFrom === 'Others' && (playerID !== entity.rule.player || playerID == undefined)) {
+          if (entity.spaces) {
+            entity.spaces = [];
+          }
+          if (entity.entities) {
+            entity.entities = [];
+          }
         }
-        return result;
-      }
+      });
+      return JSON.parse((0,wackson__WEBPACK_IMPORTED_MODULE_0__/* .serialize */ .l)(G));
     };
   }
   return game;
@@ -2336,26 +2407,103 @@ function expandEntityDefinitions(entities, ctx) {
     }
   }, []);
 }
-function getMatchingWinScenarioResult(bgioArguments, winScenarios) {
-  var _iterator = _createForOfIteratorHelper(winScenarios),
-    _step;
-  try {
-    for (_iterator.s(); !(_step = _iterator.n()).done;) {
-      var winScenario = _step.value;
-      var conditionResults = (0,_utils_check_conditions_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)(bgioArguments, winScenario);
-      if (conditionResults.conditionsAreMet) {
-        return {
-          winScenario: winScenario,
-          conditionResults: conditionResults
-        };
+function createTurn(turnRule, game) {
+  var _turnRule$order;
+  var turn = _objectSpread({}, turnRule);
+  turn.onBegin = function (bgioArguments) {
+    var newG = doInitialMoves(bgioArguments, turnRule.initialMoves);
+    if (turnRule.passIfNoMoves && newG.meta.passCount < bgioArguments.ctx.numPlayers) {
+      var newBgioArguments = _objectSpread(_objectSpread({}, bgioArguments), {}, {
+        G: newG
+      });
+      if (!(0,_utils_any_valid_moves_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(newBgioArguments, (0,_utils_get_current_moves_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)(game, newBgioArguments))) {
+        newG.meta.passCount++;
+        newBgioArguments.events.pass();
+      } else {
+        newG.meta.passCount = 0;
       }
     }
-  } catch (err) {
-    _iterator.e(err);
-  } finally {
-    _iterator.f();
+    return JSON.parse((0,wackson__WEBPACK_IMPORTED_MODULE_0__/* .serialize */ .l)(newG));
+  };
+  if (turnRule.stages) {
+    Object.entries(turnRule.stages).forEach(function (_ref5) {
+      var _ref6 = _slicedToArray(_ref5, 2),
+        stageName = _ref6[0],
+        stageRule = _ref6[1];
+      if (stageRule.moves) {
+        turn.stages[stageName].moves = createMoves(stageRule.moves);
+      }
+    });
   }
-  return null;
+  if (((_turnRule$order = turnRule.order) === null || _turnRule$order === void 0 ? void 0 : _turnRule$order.playOrder) === 'RotateFirst') {
+    turnRule.order.first = function () {
+      return 0;
+    };
+    turnRule.order.next = function (_ref7) {
+      var ctx = _ref7.ctx;
+      return (ctx.playOrderPos + 1) % ctx.numPlayers;
+    };
+    turn.order.playOrder = function (_ref8) {
+      var ctx = _ref8.ctx;
+      return [].concat(_toConsumableArray(ctx.playOrder.slice(1)), [ctx.playOrder[0]]);
+    };
+  }
+  return turn;
+}
+function createPhase(phaseRule, game) {
+  var phase = _objectSpread({}, phaseRule);
+  if (phaseRule.turn) {
+    phase.turn = createTurn(phaseRule.turn, game);
+  }
+  if (phaseRule.moves) {
+    phase.moves = createMoves(phaseRule.moves);
+  }
+  phase.onBegin = function (bgioArguments) {
+    var newG = doInitialMoves(bgioArguments, phaseRule.initialMoves);
+    newG.meta.currentPhaseHasBeenSetUp = true;
+    newG.meta.nextPhase = phaseRule.next;
+    return JSON.parse((0,wackson__WEBPACK_IMPORTED_MODULE_0__/* .serialize */ .l)(newG));
+  };
+  if (phaseRule.endIf) {
+    phase.endIf = function (_ref9) {
+      var G = _ref9.G,
+        restBgioArguments = _objectWithoutProperties(_ref9, _excluded2);
+      var bgioArguments = _objectSpread({
+        G: (0,wackson__WEBPACK_IMPORTED_MODULE_0__/* .deserialize */ .i)(JSON.stringify(G), _registry_js__WEBPACK_IMPORTED_MODULE_4__/* .registry */ .u)
+      }, restBgioArguments);
+      if (bgioArguments.G.meta.currentPhaseHasBeenSetUp) {
+        var result = (0,_utils_get_scenario_results_js__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A)(bgioArguments, phaseRule.endIf);
+        if (result) {
+          return result;
+        }
+      }
+    };
+  }
+  phase.onEnd = function (_ref0) {
+    var G = _ref0.G;
+    G.meta.currentPhaseHasBeenSetUp = false;
+  };
+  return phase;
+}
+function doInitialMoves(bgioArguments) {
+  var initialMoves = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+  var newG = (0,wackson__WEBPACK_IMPORTED_MODULE_0__/* .deserialize */ .i)(JSON.stringify(bgioArguments.G), _registry_js__WEBPACK_IMPORTED_MODULE_4__/* .registry */ .u);
+  initialMoves.forEach(function (moveRule) {
+    (0,_move_move_factory_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)(moveRule).moveInstance.doMove(_objectSpread(_objectSpread({}, bgioArguments), {}, {
+      G: newG
+    }));
+  });
+  return newG;
+}
+function createMoves(moves) {
+  return Object.entries(moves).reduce(function (acc, _ref1) {
+    var _ref10 = _slicedToArray(_ref1, 2),
+      name = _ref10[0],
+      moveDefinition = _ref10[1];
+    return _objectSpread(_objectSpread({}, acc), {}, _defineProperty({}, name, (0,_move_move_factory_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)(_objectSpread(_objectSpread({}, moveDefinition), {}, {
+      name: name
+    }))));
+  }, {});
 }
 
 /***/ }),
@@ -2622,6 +2770,38 @@ function invariant(condition, message) {
 
 /***/ }),
 
+/***/ 7453:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ areThereValidMoves)
+/* harmony export */ });
+/* harmony import */ var _resolve_arguments_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(26750);
+
+
+// will need to handle args that are dependent on others eventually
+// probably also needs optimization for complex games
+function areThereValidMoves(bgioArguments, moves) {
+  return Object.values(moves).some(function (move) {
+    var moveInstance = move.moveInstance;
+
+    // the magic is that resolveArguments will try to find
+    // valid values for arguments. This could be incomplete...
+    var payload = {
+      arguments: (0,_resolve_arguments_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)(bgioArguments, moveInstance.rule, {}, {
+        moveInstance: moveInstance
+      }, true)
+    };
+    var context = {
+      moveInstance: moveInstance
+    };
+    return moveInstance.isValid(bgioArguments, payload, context);
+  });
+}
+
+/***/ }),
+
 /***/ 7624:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -2709,6 +2889,45 @@ function equalArrays(array, other, bitmask, customizer, equalFunc, stack) {
 }
 
 module.exports = equalArrays;
+
+
+/***/ }),
+
+/***/ 7726:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ Pass)
+/* harmony export */ });
+/* harmony import */ var _move_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20426);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function _possibleConstructorReturn(t, e) { if (e && ("object" == _typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return _assertThisInitialized(t); }
+function _assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
+function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
+function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
+
+var Pass = /*#__PURE__*/function (_Move) {
+  function Pass() {
+    _classCallCheck(this, Pass);
+    return _callSuper(this, Pass, arguments);
+  }
+  _inherits(Pass, _Move);
+  return _createClass(Pass, [{
+    key: "do",
+    value: function _do(bgioArguments) {
+      bgioArguments.events.endTurn();
+    }
+  }]);
+}(_move_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
 
 
 /***/ }),
@@ -20519,6 +20738,60 @@ const base64Decoder = {
 
 /***/ }),
 
+/***/ 11040:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ Evaluate)
+/* harmony export */ });
+/* harmony import */ var lodash_matches_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(52620);
+/* harmony import */ var _condition_condition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(47978);
+/* harmony import */ var _utils_resolve_expression_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(37938);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function _possibleConstructorReturn(t, e) { if (e && ("object" == _typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return _assertThisInitialized(t); }
+function _assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
+function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
+function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
+
+
+
+var Evaluate = /*#__PURE__*/function (_Condition) {
+  function Evaluate() {
+    _classCallCheck(this, Evaluate);
+    return _callSuper(this, Evaluate, arguments);
+  }
+  _inherits(Evaluate, _Condition);
+  return _createClass(Evaluate, [{
+    key: "checkCondition",
+    value: function checkCondition(bgioArguments, payload, context) {
+      var newContext = _objectSpread({}, context);
+      if (payload !== null && payload !== void 0 && payload.target) {
+        newContext.target = payload.target;
+      }
+      var result = (0,_utils_resolve_expression_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(bgioArguments, this.rule, payload, newContext);
+      return {
+        result: result,
+        conditionIsMet: !!result
+      };
+    }
+  }]);
+}(_condition_condition_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A);
+
+
+/***/ }),
+
 /***/ 11395:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -21250,6 +21523,53 @@ module.exports = baseKeys;
 
 /***/ }),
 
+/***/ 13489:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ getScenarioResults)
+/* harmony export */ });
+/* harmony import */ var _check_conditions_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(82326);
+/* harmony import */ var _resolve_properties_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31577);
+function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+
+
+function getScenarioResults(bgioArguments, scenarios) {
+  var _match;
+  var match;
+  var _iterator = _createForOfIteratorHelper(scenarios),
+    _step;
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var scenario = _step.value;
+      var conditionResults = (0,_check_conditions_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)(bgioArguments, scenario);
+      if (conditionResults.conditionsAreMet) {
+        match = {
+          scenario: scenario,
+          conditionResults: conditionResults
+        };
+        break;
+      }
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+  if ((_match = match) !== null && _match !== void 0 && (_match = _match.scenario) !== null && _match !== void 0 && _match.result) {
+    return (0,_resolve_properties_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)(bgioArguments, match.scenario.result, {
+      results: match.conditionResults.results
+    });
+  } else {
+    return match;
+  }
+}
+
+/***/ }),
+
 /***/ 13508:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
@@ -21495,7 +21815,7 @@ class BaseRootRoute extends BaseRoute {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   u: () => (/* binding */ registry)
 /* harmony export */ });
-/* harmony import */ var _shared_board_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(39949);
+/* harmony import */ var _board_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(36369);
 /* harmony import */ var _space_group_space_group_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(34386);
 /* harmony import */ var _space_space_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(39054);
 /* harmony import */ var _space_group_grid_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(56884);
@@ -21510,7 +21830,7 @@ class BaseRootRoute extends BaseRoute {
 
 
 var registry = {
-  SharedBoard: _shared_board_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A,
+  Board: _board_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A,
   SpaceGroup: _space_group_space_group_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A,
   Space: _space_space_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A,
   Grid: _space_group_grid_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A,
@@ -21701,6 +22021,12 @@ module.exports = nodeUtil;
 /* harmony import */ var _registry_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(14142);
 /* harmony import */ var _bank_slot_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(96173);
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
@@ -21772,31 +22098,44 @@ var Bank = /*#__PURE__*/function () {
     }
   }, {
     key: "getOne",
-    value: function getOne(bgioArguments, rule) {
-      var slot = this.getSlot(bgioArguments, rule.matcher);
+    value: function getOne(bgioArguments, rule, context) {
+      var slot = this.getSlot(bgioArguments, rule, context);
       if (!slot) {
-        console.error("No matching slot for ".concat(JSON.stringify(rule.matcher)));
+        console.error("No matching slot for ".concat(JSON.stringify(rule)));
       }
       return slot.getOne(bgioArguments, {
         state: rule.state
-      });
+      }, context);
     }
   }, {
     key: "getMultiple",
-    value: function getMultiple(bgioArguments, matcher, count) {
-      var slot = this.getSlot(bgioArguments, matcher);
-      if (!slot) {
-        console.error("No matching slot for ".concat(JSON.stringify(matcher)));
+    value: function getMultiple(bgioArguments, rule, count, context) {
+      var slots = this.getSlots(bgioArguments, rule, context);
+      if (!slots.length) {
+        console.error("No matching slots for ".concat(JSON.stringify(rule)));
       }
-      return slot.getMultiple(bgioArguments, count, {
-        state: matcher.state
-      });
+      return slots.reduce(function (acc, slot) {
+        return [].concat(_toConsumableArray(acc), _toConsumableArray(slot.getMultiple(bgioArguments, count, {
+          state: rule.state
+        })));
+      }, []);
     }
   }, {
     key: "getSlot",
-    value: function getSlot(bgioArguments, matcher) {
+    value: function getSlot(bgioArguments, rule, context) {
       return this.slots.find(function (slot) {
-        return (0,_utils_entity_matches_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(bgioArguments, matcher, slot);
+        return (0,_utils_check_conditions_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)(bgioArguments, rule, {
+          target: slot
+        }, context).conditionsAreMet;
+      });
+    }
+  }, {
+    key: "getSlots",
+    value: function getSlots(bgioArguments, rule, context) {
+      return this.slots.filter(function (slot) {
+        return (0,_utils_check_conditions_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)(bgioArguments, rule, {
+          target: slot
+        }, context).conditionsAreMet;
       });
     }
   }, {
@@ -21958,6 +22297,49 @@ const createGlobalSignOutClient = (config) => (0,_aws_amplify_core_internals_aws
 
 //# sourceMappingURL=createGlobalSignOutClient.mjs.map
 
+
+/***/ }),
+
+/***/ 15693:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ getSteps)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+// controls order of what players need to click first
+var baseMoveArgsMap = {
+  PlaceNew: ['destination'],
+  MoveEntity: ['entity', 'destination'],
+  TakeFrom: ['source', 'destination'],
+  SetState: ['entity', 'state']
+};
+function getSteps(bgioState, moveRule, context) {
+  return baseMoveArgsMap[moveRule.type].filter(function (argName) {
+    return moveRule.arguments[argName].playerChoice;
+  }).map(function (argName) {
+    return {
+      argName: argName,
+      getClickable: argName === 'state' ? function () {
+        return moveRule.arguments[argName].possibleValues.map(function (value) {
+          return _objectSpread(_objectSpread({
+            "abstract": true
+          }, moveRule.arguments[argName]), {}, {
+            value: value
+          });
+        });
+      } : function () {
+        return bgioState.G.bank.findAll(bgioState, moveRule.arguments[argName], context);
+      }
+    };
+  });
+}
 
 /***/ }),
 
@@ -23199,7 +23581,7 @@ module.exports = isTypedArray;
 /***/ ((module) => {
 
 "use strict";
-module.exports = {};
+module.exports = /*#__PURE__*/JSON.parse('{"entities":[{"name":"mainGrid","type":"Grid","width":3,"height":1},{"name":"disc","state":{"player":"0"},"count":"Infinity"}],"sharedBoard":[{"name":"mainGrid"}],"initialPlacements":[{"entity":{"name":"disc","state":{"player":"0"}},"destination":{"index":0}},{"entity":{"name":"disc","state":{"player":"1"}},"destination":{"index":1}}],"minPlayers":2,"maxPlayers":2,"turn":{"minMoves":1,"maxMoves":1,"passIfNoMoves":true},"moves":{"inRootDummy":{"type":"PlaceNew","arguments":{"destination":{}},"entity":{"state":{"player":"CurrentPlayer"},"conditions":[{"type":"Is","matcher":{"name":"disc"}}]}}},"phases":{"mlah":{"moves":{"inOtherPhaseDummy":{"type":"PlaceNew","arguments":{},"entity":{"state":{"player":"CurrentPlayer"},"conditions":[{"type":"Is","matcher":{"name":"disc"}}]}}},"turn":{"stages":{"sdasd":{"moves":{"inOtherPhaseAndStageDummy":{"type":"PlaceNew","arguments":{},"entity":{"state":{"player":"CurrentPlayer"},"conditions":[{"type":"Is","matcher":{"name":"disc"}}]}}}}}}},"blah":{"start":true,"moves":{"inPhaseDummy":{"type":"PlaceNew","arguments":{},"entity":{"state":{"player":"CurrentPlayer"},"conditions":[{"type":"Is","matcher":{"name":"disc"}}]}}},"turn":{"minMoves":1,"maxMoves":1,"passIfNoMoves":true,"activePlayers":{"currentPlayer":"bleh"},"stages":{"bluh":{"moves":{"inOtherStageDummy":{"type":"PlaceNew","arguments":{},"entity":{"state":{"player":"CurrentPlayer"},"conditions":[{"type":"Is","matcher":{"name":"disc"}}]}}}},"bleh":{"moves":{"placeDisc":{"type":"PlaceNew","entity":{"state":{"player":"CurrentPlayer"},"conditions":[{"type":"Is","matcher":{"name":"disc"}}]},"arguments":{"destination":{"playerChoice":true,"conditions":[{"type":"Is","matcher":{"type":"Space"}},{"type":"Not","conditions":[{"type":"Contains"}]},{"type":"Would","conditions":[{"type":"InLine","sequence":[{"conditions":[{"type":"Contains","conditions":[{"type":"Is","matcher":{"player":"CurrentPlayer"}}]}]},{"minCount":1,"conditions":[{"type":"Not","conditions":[{"type":"Contains","conditions":[{"type":"Is","matcher":{"player":"CurrentPlayer"}}]}]},{"type":"ContainsSame","properties":["player"]}]},{"conditions":[{"type":"Contains","conditions":[{"type":"Is","matcher":{"player":"CurrentPlayer"}}]}]}]}]}]}},"then":[{"type":"ForEach","arguments":{"targets":{"contextPath":["moveConditionResults",0,"conditionResults","destination","results",2,"results",0,"matches",{"flatten":true,"map":["entities"]},{"flatten":true}]}},"move":{"type":"SetState","arguments":{"entity":{"contextPath":["loopTarget"]},"state":{"property":"player","value":"CurrentPlayer"}}}}]}}}}}}},"endIf":[{"conditions":[{"type":"Evaluate","expression":"passCount == numPlayers","arguments":{"passCount":{"gamePath":["meta","passCount"]},"numPlayers":{"ctxPath":["playOrder","length"]}}}],"result":{"winners":{"mapMax":{"targets":{"ctxPath":["playOrder"]},"mapping":{"type":"count","conditions":[{"type":"Is","matcher":{"player":{"contextPath":["loopTarget"]}}}]}}}}}]}');
 
 /***/ }),
 
@@ -23901,12 +24283,22 @@ const getAuthUserAgentValue = (action, customUserAgentDetails) => (0,_aws_amplif
 /* harmony export */ });
 /* harmony import */ var _is_condition_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(75131);
 /* harmony import */ var _not_condition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(98382);
-/* harmony import */ var _every_space_condition_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(22151);
-/* harmony import */ var _contains_condition_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(53046);
-/* harmony import */ var _contains_same_condition_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(66557);
-/* harmony import */ var _contains_line_condition_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(96401);
-/* harmony import */ var _in_line_condition_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(76783);
-/* harmony import */ var _would_condition_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(37590);
+/* harmony import */ var _or_condition_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(96714);
+/* harmony import */ var _some_condition_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(26843);
+/* harmony import */ var _every_space_condition_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(22151);
+/* harmony import */ var _contains_condition_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(53046);
+/* harmony import */ var _contains_same_condition_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(66557);
+/* harmony import */ var _contains_line_condition_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(96401);
+/* harmony import */ var _in_line_condition_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(76783);
+/* harmony import */ var _would_condition_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(37590);
+/* harmony import */ var _move_is_impossible_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(38905);
+/* harmony import */ var _evaluate_condition_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(11040);
+/* harmony import */ var _position_condition_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(52512);
+
+
+
+
+
 
 
 
@@ -23916,7 +24308,6 @@ const getAuthUserAgentValue = (action, customUserAgentDetails) => (0,_aws_amplif
 
 
 // import BingoCondition from "./bingo-condition.js";
-// import SomeCondition from "./some-condition.js";
 // import RelativeMoveCondition from "./relative-move-condition.js";
 
 function conditionFactory(rule) {
@@ -23924,24 +24315,32 @@ function conditionFactory(rule) {
     return new _is_condition_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A(rule);
   } else if (rule.type === "Not") {
     return new _not_condition_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A(rule);
+  } else if (rule.type === "Or") {
+    return new _or_condition_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A(rule);
+  } else if (rule.type === "Some") {
+    return new _some_condition_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A(rule);
   } else if (rule.type === "Contains") {
-    return new _contains_condition_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A(rule);
+    return new _contains_condition_js__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A(rule);
   } else if (rule.type === "ContainsSame") {
-    return new _contains_same_condition_js__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A(rule);
+    return new _contains_same_condition_js__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A(rule);
   } else if (rule.type === "EverySpace") {
-    return new _every_space_condition_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A(rule);
+    return new _every_space_condition_js__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A(rule);
   } else if (rule.type === "InLine") {
-    return new _in_line_condition_js__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A(rule);
+    return new _in_line_condition_js__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A(rule);
   } else if (rule.type === "Would") {
-    return new _would_condition_js__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A(rule);
+    return new _would_condition_js__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A(rule);
+  } else if (rule.type === "MoveIsImpossible") {
+    return new _move_is_impossible_js__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A(rule);
+  } else if (rule.type === "Evaluate") {
+    return new _evaluate_condition_js__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A(rule);
+  } else if (rule.type === "Position") {
+    return new _position_condition_js__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A(rule);
     // } else if (rule.type === "bingo") {
     // return new BingoCondition(rule);
-    // } else if (rule.type === "some") {
-    // return new SomeCondition(rule);
     // } else if (rule.type === "relativeMove") {
     //   return new RelativeMoveCondition(rule);
   } else if (rule.type === "ContainsLine") {
-    return new _contains_line_condition_js__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A(rule);
+    return new _contains_line_condition_js__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A(rule);
   }
 }
 
@@ -24922,7 +25321,7 @@ module.exports = stackClear;
 /* harmony export */ });
 /* harmony import */ var boardgame_io_dist_cjs_core_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10061);
 /* harmony import */ var _utils_check_conditions_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(82326);
-/* harmony import */ var _utils_get_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(12495);
+/* harmony import */ var _utils_resolve_arguments_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(26750);
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -24978,42 +25377,34 @@ var Move = /*#__PURE__*/function () {
   }, {
     key: "checkConditionGroups",
     value: function checkConditionGroups(bgioArguments, payload, context) {
+      var _this = this;
       return Object.entries(this.conditionMappings).reduce(function (acc, _ref3) {
+        var _this$rule$arguments;
         var _ref4 = _slicedToArray(_ref3, 2),
           groupName = _ref4[0],
           _ref4$ = _ref4[1],
           conditions = _ref4$.conditions,
           getPayload = _ref4$.getPayload;
-        return _objectSpread(_objectSpread({}, acc), {}, _defineProperty({}, groupName, (0,_utils_check_conditions_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)(bgioArguments, {
-          conditions: conditions
-        }, getPayload(payload), context)));
-      }, {});
-    }
-  }, {
-    key: "resolveArguments",
-    value: function resolveArguments(bgioArguments, payload, context) {
-      var _this$rule$arguments,
-        _this = this;
-      return Object.entries((_this$rule$arguments = this.rule.arguments) !== null && _this$rule$arguments !== void 0 ? _this$rule$arguments : {}).reduce(function (acc, _ref5) {
-        var _payload$arguments;
-        var _ref6 = _slicedToArray(_ref5, 2),
-          argName = _ref6[0],
-          argRule = _ref6[1];
-        var argument = payload === null || payload === void 0 || (_payload$arguments = payload.arguments) === null || _payload$arguments === void 0 ? void 0 : _payload$arguments[argName];
-        if (!argument) {
-          if (!argRule.automatic) {
-            console.error("non-automatic move rule didn't get argument: ".concat(argName, " in ").concat(JSON.stringify(_this.rule)));
-          }
-          if (argRule.location === 'bank') {
-            argument = bgioArguments.G.bank.getOne(bgioArguments, argRule);
-          } else if (argRule.contextPath) {
-            console.log('context', context);
-            argument = (0,_utils_get_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(context, argRule.contextPath);
-          } else {
-            argument = bgioArguments.G.bank.findOne(bgioArguments, argRule, context);
-          }
+        if ((_this$rule$arguments = _this.rule.arguments) !== null && _this$rule$arguments !== void 0 && (_this$rule$arguments = _this$rule$arguments[groupName]) !== null && _this$rule$arguments !== void 0 && _this$rule$arguments.matchMultiple) {
+          // todo: this is slightly wrong if an argument has "moves" as name, say.
+          // More obviously, we only keep last results. Will it ever apply
+          // to where we use conditionResults (endIf, for instance)
+          var results;
+          var i = 0;
+          do {
+            results = (0,_utils_check_conditions_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)(bgioArguments, {
+              conditions: conditions
+            }, getPayload({
+              arguments: _defineProperty({}, groupName, payload.arguments[groupName][i])
+            }), context);
+            i++;
+          } while (i < payload.arguments[groupName].length && results.conditionsAreMet);
+          return _objectSpread(_objectSpread({}, acc), {}, _defineProperty({}, groupName, results));
+        } else {
+          return _objectSpread(_objectSpread({}, acc), {}, _defineProperty({}, groupName, (0,_utils_check_conditions_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)(bgioArguments, {
+            conditions: conditions
+          }, getPayload(payload), context)));
         }
-        return _objectSpread(_objectSpread({}, acc), {}, _defineProperty({}, argName, argument));
       }, {});
     }
   }, {
@@ -25021,7 +25412,7 @@ var Move = /*#__PURE__*/function () {
     value: function doMove(bgioArguments, payload, context) {
       var skipCheck = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
       var resolvedPayload = _objectSpread(_objectSpread({}, payload), {}, {
-        arguments: this.resolveArguments(bgioArguments, payload, context)
+        arguments: (0,_utils_resolve_arguments_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(bgioArguments, this.rule, payload, context)
       });
       var conditionResults;
       if (!skipCheck) {
@@ -25032,7 +25423,10 @@ var Move = /*#__PURE__*/function () {
       })) {
         return boardgame_io_dist_cjs_core_js__WEBPACK_IMPORTED_MODULE_0__/* .INVALID_MOVE */ .GU;
       } else {
-        this["do"](bgioArguments, resolvedPayload);
+        this["do"](bgioArguments, resolvedPayload, context);
+        if (context) {
+          context.previousArguments = resolvedPayload.arguments;
+        }
       }
       return {
         conditionResults: conditionResults
@@ -25796,17 +26190,17 @@ function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" 
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
 
-function resolveMatcher(bgioArguments, matcher) {
+function resolveMatcher(bgioArguments, matcher, context) {
   var resolvedMatcher = _objectSpread({}, matcher);
   delete resolvedMatcher.state;
   delete resolvedMatcher.stateGroups;
-  return (0,_utils_resolve_properties_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)(bgioArguments, resolvedMatcher);
+  return (0,_utils_resolve_properties_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)(bgioArguments, resolvedMatcher, context);
 }
 function getEntityMatcher(entity) {
   return _objectSpread(_objectSpread({}, entity.rule), entity.state);
 }
-function entityMatches(bgioArguments, matcher, entity) {
-  return lodash_matches_js__WEBPACK_IMPORTED_MODULE_0__(resolveMatcher(bgioArguments, matcher))(getEntityMatcher(entity));
+function entityMatches(bgioArguments, matcher, entity, context) {
+  return lodash_matches_js__WEBPACK_IMPORTED_MODULE_0__(resolveMatcher(bgioArguments, matcher, context))(getEntityMatcher(entity));
 }
 
 /***/ }),
@@ -25956,11 +26350,24 @@ var MoveEntity = /*#__PURE__*/function (_Move) {
   _inherits(MoveEntity, _Move);
   return _createClass(MoveEntity, [{
     key: "do",
-    value: function _do(_, _ref) {
+    value: function _do(bgioArguments, _ref) {
+      var _this = this;
       var _ref$arguments = _ref.arguments,
-        destination = _ref$arguments.destination,
-        entity = _ref$arguments.entity;
-      destination.placeEntity(entity);
+        entity = _ref$arguments.entity,
+        destination = _ref$arguments.destination;
+      console.log('this.rule.arguments.entity', this.rule.arguments.entity);
+      // todo: move all such things to always be multiple
+      if (Array.isArray(entity)) {
+        entity.forEach(function (e) {
+          var _bgioArguments$G$bank;
+          (_bgioArguments$G$bank = bgioArguments.G.bank.findParent(e)) === null || _bgioArguments$G$bank === void 0 || _bgioArguments$G$bank.remove(e);
+          destination.placeEntity(e, _this.rule.position);
+        });
+      } else {
+        var _bgioArguments$G$bank2;
+        (_bgioArguments$G$bank2 = bgioArguments.G.bank.findParent(entity)) === null || _bgioArguments$G$bank2 === void 0 || _bgioArguments$G$bank2.remove(entity);
+        destination.placeEntity(entity, this.rule.position);
+      }
     }
   }]);
 }(_move_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
@@ -26602,7 +27009,7 @@ var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_3__/* .createRoot
         while (1) switch (_context.n) {
           case 0:
             location = _ref.location;
-            publicPaths = ['/login'];
+            publicPaths = ['/login', '/editor'];
             isPublicRoute = publicPaths.some(function (path) {
               return location.pathname === path;
             });
@@ -27353,6 +27760,110 @@ module.exports = arrayEach;
 
 /***/ }),
 
+/***/ 26750:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ resolveArguments),
+/* harmony export */   V: () => (/* binding */ resolveArguments2)
+/* harmony export */ });
+/* harmony import */ var _get_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12495);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+// what the heck happened here?
+// duck typing contextPath
+// but using type === 'RelativePath'
+// but also targetingType === 'Parent'
+//
+// gonna be a good refactor
+
+
+// todo: change to resolve one arguments at a time? probably 2 composed fns
+function resolveArguments(bgioArguments, moveRule, payload, context) {
+  var _moveRule$arguments;
+  return Object.entries((_moveRule$arguments = moveRule.arguments) !== null && _moveRule$arguments !== void 0 ? _moveRule$arguments : {}).reduce(function (acc, _ref) {
+    var _payload$arguments;
+    var _ref2 = _slicedToArray(_ref, 2),
+      argName = _ref2[0],
+      argRule = _ref2[1];
+    var argument = payload === null || payload === void 0 || (_payload$arguments = payload.arguments) === null || _payload$arguments === void 0 ? void 0 : _payload$arguments[argName];
+    if (argument === undefined) {
+      if (argRule.literal !== undefined) {
+        argument = argRule.literal;
+      } else if (argRule.contextPath) {
+        argument = (0,_get_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)(context, argRule.contextPath);
+      } else if (argRule.ctxPath) {
+        // getting player list from playOrder, does this exist for custom turn order?
+        argument = (0,_get_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)(bgioArguments.ctx, argRule.ctxPath);
+      } else if (argRule.gamePath) {
+        argument = (0,_get_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)(bgioArguments.G, argRule.gamePath);
+      } else if (argRule.conditions) {
+        argument = argRule.matchMultiple ? bgioArguments.G.bank.findAll(bgioArguments, argRule, context) : bgioArguments.G.bank.findOne(bgioArguments, argRule, context);
+      } else if (argRule.type === 'RelativePath') {
+        var target = resolveTarget(bgioArguments, argRule.target, context);
+        argument = (0,_get_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)(target.attributes, argRule.path);
+      } else {
+        argument = argRule;
+      }
+    }
+    return _objectSpread(_objectSpread({}, acc), {}, _defineProperty({}, argName, argument));
+  }, {});
+}
+
+// beginning of migrating condition targets over here
+function resolveArguments2(bgioArguments, conditionRule, originalTarget, context) {
+  var G = bgioArguments.G;
+  var resolvedTarget;
+  if (conditionRule.target.targetingType === 'RelativeCoordinates') {
+    var parent = G.bank.findParent(originalTarget);
+    // // we always want the SpaceGroup, whether target is Space or Entity
+    // while (parent.rule.type !== 'Grid') {
+    //   parent = G.bank.findParent(parent)
+    //   if (!parent) {
+    //     throw new Error(`couldnt find Grid parent of entity with rule ${target.rule}`)
+    //   }
+    // }
+    var oldCoordinates = parent.getCoordinates(originalTarget.rule.index);
+    var newCoordinates = parent.getRelativeCoordinates(oldCoordinates, conditionRule.target.location);
+    resolvedTarget = newCoordinates && parent.spaces[parent.getIndex(newCoordinates)];
+  } else if (conditionRule.target.targetingType === 'Parent') {
+    resolvedTarget = G.bank.findParent(originalTarget);
+    // } else if (argRule.type === 'RelativePath') {
+    //   const target = bgioArguments.G.bank.findOne(bgioArguments, argRule.target, context)
+    //   argument = get(target, argRule.path)
+  } else if (conditionRule.target.contextPath) {
+    resolvedTarget = (0,_get_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)(context, conditionRule.target.contextPath);
+  } else if (conditionRule.target.ctxPath) {
+    // getting player list from playOrder, does this exist for custom turn order?
+    resolvedTarget = (0,_get_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)(bgioArguments.ctx, conditionRule.target.ctxPath);
+  } else {
+    resolvedTarget = G.bank.findOne(bgioArguments, conditionRule.target);
+  }
+  return resolvedTarget;
+}
+
+// want to move most stuff here
+function resolveTarget(bgioArguments, targetRule, context) {
+  if (targetRule.contextPath) {
+    return (0,_get_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)(context, targetRule.contextPath);
+  } else if (true) {
+    return bgioArguments.G.bank.findOne(bgioArguments, targetRule, context);
+  }
+}
+
+/***/ }),
+
 /***/ 26837:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -27392,6 +27903,64 @@ var isArguments = baseIsArguments(function() { return arguments; }()) ? baseIsAr
 };
 
 module.exports = isArguments;
+
+
+/***/ }),
+
+/***/ 26843:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ SomeCondition)
+/* harmony export */ });
+/* harmony import */ var _condition_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(47978);
+/* harmony import */ var _utils_check_conditions_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(82326);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function _possibleConstructorReturn(t, e) { if (e && ("object" == _typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return _assertThisInitialized(t); }
+function _assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
+function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
+function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
+
+
+
+var SomeCondition = /*#__PURE__*/function (_Condition) {
+  function SomeCondition() {
+    _classCallCheck(this, SomeCondition);
+    return _callSuper(this, SomeCondition, arguments);
+  }
+  _inherits(SomeCondition, _Condition);
+  return _createClass(SomeCondition, [{
+    key: "checkCondition",
+    value: function checkCondition(bgioArguments, _ref, context) {
+      var _this = this;
+      var targets = _ref.target;
+      var results = targets.map(function (target) {
+        var loopContext = _objectSpread(_objectSpread({}, context), {}, {
+          loopTarget: target
+        });
+        return (0,_utils_check_conditions_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)(bgioArguments, _this.rule, undefined, loopContext);
+      });
+      return {
+        conditionIsMet: results.some(function (r) {
+          return r.conditionsAreMet;
+        }),
+        results: results
+      };
+    }
+  }]);
+}(_condition_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
 
 
 /***/ }),
@@ -29681,28 +30250,64 @@ module.exports = arrayPush;
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (/* binding */ createPayload)
 /* harmony export */ });
-// this can't stay like this
-function createPayload(moveType, targets) {
-  switch (moveType) {
-    case 'MoveEntity':
-      return {
-        arguments: {
-          destination: targets[0]
-        }
-      };
-    case 'SetState':
-      return {
-        arguments: {
-          entity: targets[0]
-        }
-      };
-    case 'ForEach':
-      return {
-        arguments: {
-          targets: targets
-        }
-      };
-  }
+/* harmony import */ var _get_steps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15693);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+function createPayload(bgioState, moveRule, targets, context) {
+  var moveSteps = (0,_get_steps_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)(bgioState, moveRule, context);
+  var moveArguments = moveSteps.reduce(function (acc, step, i) {
+    return _objectSpread(_objectSpread({}, acc), {}, _defineProperty({}, step.argName, targets[i]));
+  }, {});
+  return {
+    arguments: moveArguments
+  };
+}
+
+/***/ }),
+
+/***/ 30537:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ AbstractChoices)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
+/* harmony import */ var _contexts_game_context_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(76526);
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+
+
+function AbstractChoices() {
+  var _useGame = (0,_contexts_game_context_js__WEBPACK_IMPORTED_MODULE_1__/* .useGame */ .I)(),
+    dispatch = _useGame.dispatch,
+    allClickable = _useGame.allClickable;
+  var abstractChoices = _toConsumableArray(allClickable).filter(function (c) {
+    return c["abstract"];
+  });
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "personal-boards"
+  }, abstractChoices.map(function (choice, i) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+      key: i,
+      className: "abstract-choice",
+      onClick: function onClick() {
+        return dispatch({
+          type: 'click',
+          target: choice
+        });
+      }
+    }, choice.value);
+  }));
 }
 
 /***/ }),
@@ -29872,18 +30477,113 @@ module.exports = mapToArray;
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (/* binding */ resolveProperties)
 /* harmony export */ });
+/* harmony import */ var lodash_pick_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(30652);
+/* harmony import */ var _get_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(12495);
+/* harmony import */ var _resolve_expression_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(37938);
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-function resolveProperties(bgioArguments, obj) {
-  var resolvedProperties = _objectSpread({}, obj);
-  if (resolvedProperties.player === 'Current') {
-    resolvedProperties.player = bgioArguments.ctx.currentPlayer;
-  }
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+
+
+
+
+// probably replaces some stuff in resolveArguments, esp. contextPath
+function resolveProperties(bgioArguments, obj, context) {
+  var resolvedProperties = Array.isArray(obj) ? _toConsumableArray(obj) : _objectSpread({}, obj);
+
+  // don't like this special case here but how else to merge props
+  Object.entries(obj).forEach(function (_ref) {
+    var _ref2 = _slicedToArray(_ref, 2),
+      key = _ref2[0],
+      value = _ref2[1];
+    if (key === 'pick' && value !== null && value !== void 0 && value.target) {
+      var target = bgioArguments.G.bank.findOne(bgioArguments, value.target, context);
+      if (target !== undefined) {
+        var newProperties = lodash_pick_js__WEBPACK_IMPORTED_MODULE_0__(resolveProperties(bgioArguments, target.attributes, context), value.properties);
+        Object.assign(resolvedProperties, newProperties);
+        delete resolvedProperties.pick;
+      }
+    } else {
+      resolvedProperties[key] = resolveProperty(bgioArguments, value, context);
+    }
+
+    // experimental, maybe this is sufficiently recursive?
+    if (_typeof(resolvedProperties[key]) === 'object' && resolvedProperties[key] !== null) {
+      resolvedProperties[key] = resolveProperties(bgioArguments, resolvedProperties[key], context);
+    }
+  });
   return resolvedProperties;
+}
+
+// start migrating things here
+function resolveProperty(bgioArguments, value, context) {
+  if (value !== null && value !== void 0 && value.ctxPath) {
+    return (0,_get_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)(bgioArguments.ctx, value.ctxPath);
+  } else if (value !== null && value !== void 0 && value.expression) {
+    return (0,_resolve_expression_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(bgioArguments, _objectSpread(_objectSpread({}, value), {}, {
+      arguments: resolveProperties(bgioArguments, value.arguments, context)
+    }), undefined, context);
+  } else if (value === 'CurrentPlayer') {
+    // should we just use ctxpath
+    return bgioArguments.ctx.currentPlayer;
+  } else if (value !== null && value !== void 0 && value.contextPath) {
+    return (0,_get_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)(context, value.contextPath);
+  } else if ((value === null || value === void 0 ? void 0 : value.type) === 'count') {
+    return bgioArguments.G.bank.findAll(bgioArguments, value, context).length;
+  } else if ((value === null || value === void 0 ? void 0 : value.type) === 'RelativePath') {
+    var target = resolveProperty(bgioArguments, value.target, context);
+    return (0,_get_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)(target.attributes, value.path);
+  } else if (value !== null && value !== void 0 && value.conditions) {
+    return value.matchMultiple ? bgioArguments.G.bank.findAll(bgioArguments, value, context) : bgioArguments.G.bank.findOne(bgioArguments, value, context);
+  } else if (value !== null && value !== void 0 && value.mapMax) {
+    var mappedTargets = getMappedTargets(bgioArguments, value.mapMax.targets, value.mapMax.mapping, context);
+    var maxValue;
+    var maxTargets = [];
+    for (var i = 0, len = mappedTargets.length; i < len; i++) {
+      var _mappedTargets$i = mappedTargets[i],
+        _target = _mappedTargets$i.target,
+        val = _mappedTargets$i.value;
+      if (maxValue === undefined || val > maxValue) {
+        maxValue = val;
+        maxTargets.length = 0;
+        maxTargets.push(_target);
+      } else if (val === maxValue) {
+        maxTargets.push(_target);
+      }
+      return maxTargets;
+    }
+  } else if (value !== null && value !== void 0 && value.map && !Array.isArray(value)) {
+    return getMappedTargets(bgioArguments, value.map.targets, value.map.mapping, context).map(function (mappedTarget) {
+      return mappedTarget.value;
+    });
+  } else {
+    return value;
+  }
+}
+function getMappedTargets(bgioArguments, targetsRule, mapping, context) {
+  var _resolveProperty;
+  var targets = (_resolveProperty = resolveProperty(bgioArguments, targetsRule, context)) !== null && _resolveProperty !== void 0 ? _resolveProperty : [];
+  return targets.map(function (target) {
+    return {
+      target: target,
+      value: resolveProperty(bgioArguments, mapping, _objectSpread(_objectSpread({}, context), {}, {
+        loopTarget: target
+      }))
+    };
+  });
 }
 
 /***/ }),
@@ -32519,16 +33219,20 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 
 // todo: remember why reducing to id was preferred?
 function preparePayload(payload) {
-  var payloadCopy = _objectSpread({}, payload);
-  payloadCopy.arguments = Object.entries(payloadCopy.arguments).reduce(function (acc, _ref) {
-    var _ref2 = _slicedToArray(_ref, 2),
-      key = _ref2[0],
-      argument = _ref2[1];
-    return _objectSpread(_objectSpread({}, acc), {}, _defineProperty({}, key, argument.entityId));
-  }, {});
-  return JSON.parse((0,wackson__WEBPACK_IMPORTED_MODULE_0__/* .serialize */ .l)(payloadCopy, {
-    deduplicateInstances: false
-  }));
+  if (payload !== null && payload !== void 0 && payload.arguments) {
+    var payloadCopy = _objectSpread({}, payload);
+    payloadCopy.arguments = Object.entries(payloadCopy.arguments).reduce(function (acc, _ref) {
+      var _ref2 = _slicedToArray(_ref, 2),
+        key = _ref2[0],
+        argument = _ref2[1];
+      return _objectSpread(_objectSpread({}, acc), {}, _defineProperty({}, key, argument["abstract"] ? argument : argument.entityId));
+    }, {});
+    return JSON.parse((0,wackson__WEBPACK_IMPORTED_MODULE_0__/* .serialize */ .l)(payloadCopy, {
+      deduplicateInstances: false
+    }));
+  } else {
+    return payload;
+  }
 }
 
 /***/ }),
@@ -32732,6 +33436,40 @@ const AUTH_KEY_PREFIX = 'CognitoIdentityServiceProvider';
 
 
 //# sourceMappingURL=constants.mjs.map
+
+
+/***/ }),
+
+/***/ 36369:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ Board)
+/* harmony export */ });
+/* harmony import */ var _space_space_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(39054);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function _possibleConstructorReturn(t, e) { if (e && ("object" == _typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return _assertThisInitialized(t); }
+function _assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
+function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
+function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
+
+var Board = /*#__PURE__*/function (_Space) {
+  function Board() {
+    _classCallCheck(this, Board);
+    return _callSuper(this, Board, arguments);
+  }
+  _inherits(Board, _Space);
+  return _createClass(Board);
+}(_space_space_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
 
 
 /***/ }),
@@ -33128,7 +33866,8 @@ const completeOAuthSignOut = async (store) => {
 /* harmony export */ });
 /* harmony import */ var _condition_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(47978);
 /* harmony import */ var _utils_check_conditions_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(82326);
-/* harmony import */ var _utils_simulate_move_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(75319);
+/* harmony import */ var _utils_create_payload_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(30396);
+/* harmony import */ var _utils_simulate_move_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(75319);
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -33148,6 +33887,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
 
 
 
+
 var WouldCondition = /*#__PURE__*/function (_Condition) {
   function WouldCondition() {
     _classCallCheck(this, WouldCondition);
@@ -33156,13 +33896,26 @@ var WouldCondition = /*#__PURE__*/function (_Condition) {
   _inherits(WouldCondition, _Condition);
   return _createClass(WouldCondition, [{
     key: "checkCondition",
-    value: function checkCondition(bgioArguments, payload, context) {
-      var _simulateMove = (0,_utils_simulate_move_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(bgioArguments, payload, context),
-        simulatedG = _simulateMove.simulatedG,
-        simulatedPayload = _simulateMove.simulatedPayload;
+    value: function checkCondition(bgioArguments, _ref, context) {
+      var target = _ref.target,
+        targets = _ref.targets;
+      var payload = (0,_utils_create_payload_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(bgioArguments, context.moveInstance.rule, targets !== null && targets !== void 0 ? targets : [target], context);
+      var simulatedG = (0,_utils_simulate_move_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)(bgioArguments, payload, context);
+      var simulatedConditionsPayload = {};
+      if (target) {
+        simulatedConditionsPayload = {
+          target: simulatedG.bank.locate(target.entityId)
+        };
+      } else if (targets) {
+        simulatedConditionsPayload = {
+          targets: targets.map(function (t) {
+            return simulatedG.bank.locate(t.entityId);
+          })
+        };
+      }
       var conditionResults = (0,_utils_check_conditions_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)(_objectSpread(_objectSpread({}, bgioArguments), {}, {
         G: simulatedG
-      }), this.rule, simulatedPayload, context);
+      }), this.rule, simulatedConditionsPayload, context);
       var conditionIsMet = conditionResults.conditionsAreMet;
 
       // optimization: don't bother restoring on failure
@@ -33955,6 +34708,30 @@ async function handleMFAChallenge({ challengeName, challengeResponse, clientMeta
 
 /***/ }),
 
+/***/ 37938:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ resolveExpression)
+/* harmony export */ });
+/* harmony import */ var expr_eval__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(70469);
+/* harmony import */ var _utils_resolve_arguments_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(26750);
+
+
+var parser = new expr_eval__WEBPACK_IMPORTED_MODULE_0__/* .Parser */ .iX();
+parser.functions.sum = function (array) {
+  return array.reduce(function (acc, val) {
+    return acc + val;
+  }, 0);
+};
+function resolveExpression(bgioArguments, rule, payload, context) {
+  var args = (0,_utils_resolve_arguments_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)(bgioArguments, rule, payload, context);
+  return parser.evaluate(rule.expression, args);
+}
+
+/***/ }),
+
 /***/ 38037:
 /***/ ((__unused_webpack_module, exports) => {
 
@@ -34226,6 +35003,49 @@ var QueryErrorResetBoundary = ({
 
 /***/ }),
 
+/***/ 38905:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ MoveIsImpossible)
+/* harmony export */ });
+/* harmony import */ var lodash_matches_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(52620);
+/* harmony import */ var _condition_condition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(47978);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function _possibleConstructorReturn(t, e) { if (e && ("object" == _typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return _assertThisInitialized(t); }
+function _assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
+function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
+function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
+
+
+var MoveIsImpossible = /*#__PURE__*/function (_Condition) {
+  function MoveIsImpossible() {
+    _classCallCheck(this, MoveIsImpossible);
+    return _callSuper(this, MoveIsImpossible, arguments);
+  }
+  _inherits(MoveIsImpossible, _Condition);
+  return _createClass(MoveIsImpossible, [{
+    key: "checkCondition",
+    value: function checkCondition(bgioArguments, payload, context) {
+      return {
+        conditionIsMet: true
+      };
+    }
+  }]);
+}(_condition_condition_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A);
+
+
+/***/ }),
+
 /***/ 38913:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -34307,7 +35127,25 @@ var Space = /*#__PURE__*/function (_Entity) {
   return _createClass(Space, [{
     key: "placeEntity",
     value: function placeEntity(entity) {
-      this.entities.push(entity);
+      var position = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'Last';
+      if (position === 'Last') {
+        this.entities.push(entity);
+      } else if (position === 'First') {
+        this.entities.unshift(entity);
+      }
+    }
+  }, {
+    key: "remove",
+    value: function remove(entity) {
+      this.entities.splice(this.entities.indexOf(entity), 1);
+    }
+  }, {
+    key: "takeOne",
+    value: function takeOne() {
+      var position = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'First';
+      if (position === 'First') {
+        return this.entities.splice(0, 1)[0];
+      }
     }
   }, {
     key: "isEmpty",
@@ -34858,40 +35696,6 @@ function getDefaultState() {
 
 /***/ }),
 
-/***/ 39949:
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   A: () => (/* binding */ SharedBoard)
-/* harmony export */ });
-/* harmony import */ var _space_space_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(39054);
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
-function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
-function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
-function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
-function _possibleConstructorReturn(t, e) { if (e && ("object" == _typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return _assertThisInitialized(t); }
-function _assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
-function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
-function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
-function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
-function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
-
-var SharedBoard = /*#__PURE__*/function (_Space) {
-  function SharedBoard() {
-    _classCallCheck(this, SharedBoard);
-    return _callSuper(this, SharedBoard, arguments);
-  }
-  _inherits(SharedBoard, _Space);
-  return _createClass(SharedBoard);
-}(_space_space_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
-
-
-/***/ }),
-
 /***/ 40511:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -35060,6 +35864,14 @@ function RoomGame(_ref) {
     }, player.name);
   })));
 }
+
+/***/ }),
+
+/***/ 41038:
+/***/ ((module) => {
+
+"use strict";
+module.exports = /*#__PURE__*/JSON.parse('{"DEBUG_DISABLE_SECRET_STATE":true,"entities":[{"name":"score","perPlayer":true,"displayProperties":["value"],"state":{"value":0}},{"type":"Space","name":"hand","perPlayer":true,"contentsHiddenFrom":"Others"},{"type":"Space","name":"discard"},{"type":"Space","name":"stock","contentsHiddenFrom":"All"},{"value":1,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":2,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":3,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":4,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":5,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":6,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":7,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":8,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":9,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":10,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":11,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":12,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":13,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":1,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":2,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":3,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":4,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":5,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":6,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":7,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":8,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":9,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":10,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":11,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":12,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":13,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":1,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":2,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":3,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":4,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":5,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":6,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":7,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":8,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":9,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":10,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":11,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":12,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":13,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":1,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":2,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":3,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":4,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":5,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":6,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":7,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":8,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":9,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":10,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":11,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":12,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":13,"suit":"spades","displayProperties":["value","suit"],"name":"card"}],"sharedBoard":[{"name":"stock"},{"name":"discard"}],"personalBoard":[{"name":"hand"},{"name":"score"}],"initialMoves":[{"type":"PlaceNew","matchMultiple":true,"entity":{"conditions":[{"type":"Is","matcher":{"name":"card"}}]},"arguments":{"destination":{"conditions":[{"type":"Is","matcher":{"name":"stock"}}]}}}],"minPlayers":2,"maxPlayers":5,"phases":{"play":{"start":true,"next":"score","initialMoves":[{"type":"MoveEntity","arguments":{"entity":{"matchMultiple":true,"conditions":[{"type":"Is","matcher":{"name":"card"}}]},"destination":{"conditions":[{"type":"Is","matcher":{"name":"stock"}}]}}},{"type":"Shuffle","arguments":{"target":{"conditions":[{"type":"Is","matcher":{"name":"stock"}}]}}},{"type":"ForEach","arguments":{"targets":{"literal":[0,1,2,3,4,5]}},"move":{"type":"ForEach","arguments":{"targets":{"ctxPath":["playOrder"]}},"move":{"type":"MoveEntity","arguments":{"entity":{"conditions":[{"type":"Is","target":{"targetingType":"Parent"},"matcher":{"name":"stock"}},{"type":"Position","position":"First"}]},"destination":{"conditions":[{"type":"Is","target":{"targetingType":"Parent"},"matcher":{"name":"personalBoard","player":{"contextPath":["loopTarget"]}}}]}}}}},{"type":"MoveEntity","arguments":{"entity":{"conditions":[{"type":"Is","target":{"targetingType":"Parent"},"matcher":{"name":"stock"}},{"type":"Position","position":"First"}]},"destination":{"conditions":[{"type":"Is","matcher":{"name":"discard"}}]}}}],"turn":{"order":{"playOrder":"RotateFirst"},"activePlayers":{"currentPlayer":"normalPlay"},"initialMoves":[{"type":"ForEach","conditions":[{"type":"Not","target":{"conditions":[{"type":"Is","matcher":{"name":"stock"}}]},"conditions":[{"type":"Contains"}]}],"arguments":{"targets":{"matchMultiple":true,"conditions":[{"type":"Is","target":{"targetingType":"Parent"},"matcher":{"name":"discard"}},{"type":"Not","conditions":[{"type":"Position","position":"First"}]}]}},"move":{"type":"MoveEntity","arguments":{"entity":{"contextPath":["loopTarget"]},"destination":{"conditions":[{"type":"Is","matcher":{"name":"stock"}}]}}}},{"type":"Shuffle","arguments":{"target":{"conditions":[{"type":"Is","matcher":{"name":"stock"}}]}}}],"stages":{"normalPlay":{"moves":{"playCard":{"type":"MoveEntity","position":"First","arguments":{"entity":{"playerChoice":true,"conditions":[{"type":"Is","target":{"targetingType":"Parent"},"matcher":{"name":"hand","player":"CurrentPlayer"}},{"type":"Or","conditions":[{"type":"Is","matcher":{"value":8}},{"type":"Is","matcher":{"pick":{"properties":["suit"],"target":{"conditions":[{"type":"Is","target":{"targetingType":"Parent"},"matcher":{"name":"discard"}},{"type":"Position","position":"First"}]}}}},{"type":"Is","matcher":{"pick":{"properties":["value"],"target":{"conditions":[{"type":"Is","target":{"targetingType":"Parent"},"matcher":{"name":"discard"}},{"type":"Position","position":"First"}]}}}}]}]},"destination":{"position":"First","conditions":[{"type":"Is","matcher":{"name":"discard"}}]}},"then":[{"type":"SetActivePlayers","arguments":{"options":{"literal":{"currentPlayer":{"stage":"nameSuit"}}}},"conditions":[{"type":"Is","target":{"contextPath":["previousArguments","entity"]},"matcher":{"value":8}}]},{"type":"EndTurn","conditions":[{"type":"Not","target":{"contextPath":["previousArguments","entity"]},"conditions":[{"type":"Is","matcher":{"value":8}}]}]}]},"takeCard":{"type":"TakeFrom","conditions":[{"type":"Contains","target":{"conditions":[{"type":"Is","matcher":{"name":"stock"}}]}}],"arguments":{"source":{"playerChoice":true,"conditions":[{"type":"Is","matcher":{"name":"stock"}}]},"destination":{"conditions":[{"type":"Is","matcher":{"name":"hand","player":"CurrentPlayer"}}]}},"then":[{"type":"EndTurn"}]}}},"nameSuit":{"moves":{"nameSuit":{"type":"SetState","arguments":{"entity":{"conditions":[{"type":"Is","target":{"targetingType":"Parent"},"matcher":{"name":"discard"}},{"type":"Position","position":"First"}]},"state":{"playerChoice":true,"property":"suit","possibleValues":["clubs","hearts","spades","diamonds"]}},"then":[{"type":"EndTurn"}]}}}}},"endIf":[{"conditions":[{"type":"Is","target":{"conditions":[{"type":"Is","matcher":{"name":"hand"}},{"type":"Not","conditions":[{"type":"Contains"}]}]}}]}]},"score":{"next":"play","initialMoves":[{"type":"ForEach","arguments":{"targets":{"ctxPath":["playOrder"]}},"move":{"type":"SetState","arguments":{"entity":{"conditions":[{"type":"Is","matcher":{"name":"score","player":{"type":"RelativePath","target":{"conditions":[{"type":"Is","matcher":{"name":"hand"}},{"type":"Not","conditions":[{"type":"Contains"}]}]},"path":["player"]}}}]},"state":{"property":"value","value":{"expression":"existingScore + sum(faceValues)","arguments":{"existingScore":{"contextPath":["currentValue"]},"faceValues":{"map":{"targets":{"matchMultiple":true,"conditions":[{"type":"Is","target":{"targetingType":"Parent"},"matcher":{"name":"hand","player":{"contextPath":["loopTarget"]}}}]},"mapping":{"expression":"cardValue == 8 ? 50 : (cardValue >= 10 and cardValue <= 13) ? 10 : cardValue","arguments":{"cardValue":{"type":"RelativePath","target":{"contextPath":["loopTarget"]},"path":["value"]}}}}}}}}}}}],"endIf":[true]}},"endIf":[{"conditions":[{"type":"Is","target":{"conditions":[{"type":"Is","matcher":{"name":"score"}},{"type":"Evaluate","expression":"score >= numPlayers * 50","arguments":{"score":{"type":"RelativePath","target":{"contextPath":["target"]},"path":["value"]},"numPlayers":{"ctxPath":["playOrder","length"]}}}]}}],"result":{"winner":{"contextPath":["results",0,"target","attributes","player"]}}}]}');
 
 /***/ }),
 
@@ -36146,6 +36958,45 @@ function expoDetect() {
 
 /***/ }),
 
+/***/ 43568:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ EndTurn)
+/* harmony export */ });
+/* harmony import */ var _move_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20426);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function _possibleConstructorReturn(t, e) { if (e && ("object" == _typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return _assertThisInitialized(t); }
+function _assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
+function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
+function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
+
+var EndTurn = /*#__PURE__*/function (_Move) {
+  function EndTurn() {
+    _classCallCheck(this, EndTurn);
+    return _callSuper(this, EndTurn, arguments);
+  }
+  _inherits(EndTurn, _Move);
+  return _createClass(EndTurn, [{
+    key: "do",
+    value: function _do(bgioArguments) {
+      bgioArguments.events.endTurn();
+    }
+  }]);
+}(_move_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
+
+
+/***/ }),
+
 /***/ 43570:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
@@ -36280,7 +37131,14 @@ function encodePacketToBinary(packet, callback) {
 /* harmony export */   A: () => (/* binding */ expandGameRules)
 /* harmony export */ });
 /* harmony import */ var lodash_cloneDeep_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5398);
+/* harmony import */ var lodash_find_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(80954);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 var _excluded = ["state"];
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
 function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
@@ -36291,22 +37149,34 @@ function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 
 
+
 // for later when we implement deep replacement
 // { type: 'IsEmpty' } = { type: 'not', conditions: [{ type: 'Contains' }], 
 // { matcher: {...blah} } => conditions.push({type: "Is", matcher: {...blah} })
 
+// put somewhere
+// const invariantConditionMappings = [
+//   {
+//     rule: {
+//       type: 'BankHasEnough',
+//       entity: rule.entity
+//     }
+//   },
+// ]
+
 // Things we always want, don't need to configure, and
 // want to treat as first-class citizens
 var invariantEntities = [{
-  type: "Space"
+  type: "Space",
+  count: "Infinity"
 }, {
-  type: "SharedBoard",
+  type: "Board",
   name: 'sharedBoard'
 }];
 function expandEntities(rules) {
   rules.entities = [].concat(invariantEntities, _toConsumableArray(rules.entities || []));
 }
-function expandInitialPlacements(rules) {
+function expandInitialPlacements(rules, entities) {
   if (rules.sharedBoard) {
     var _rules$initialPlaceme;
     var sharedBoardPlacements = rules.sharedBoard.map(function (matcher) {
@@ -36320,42 +37190,88 @@ function expandInitialPlacements(rules) {
     if (!rules.initialPlacements) rules.initialPlacements = [];
     (_rules$initialPlaceme = rules.initialPlacements).unshift.apply(_rules$initialPlaceme, _toConsumableArray(sharedBoardPlacements));
   }
-  if (rules.initialPlacements) {
-    var _rules$initialMoves;
-    var initialPlacementMoves = rules.initialPlacements.map(function (placementMatchers) {
-      // put somewhere
-      // const invariantConditionMappings = [
-      //   {
-      //     rule: {
-      //       type: 'bankHasEnough',
-      //       entity: rule.entity
-      //     }
-      //   },
-      // ]
-
-      // probably going to need to separate this even in the shorthand. maybe
-      // combine, then search entity rule and extract state variables instead?
-      var _placementMatchers$en = placementMatchers.entity,
-        state = _placementMatchers$en.state,
-        matcher = _objectWithoutProperties(_placementMatchers$en, _excluded);
+  if (rules.personalBoard) {
+    var _rules$initialPlaceme2;
+    entities.push({
+      type: "Board",
+      name: 'personalBoard',
+      perPlayer: true
+    });
+    var personalBoardPlacements = rules.personalBoard.map(function (matcher) {
       return {
-        type: 'MoveEntity',
-        arguments: {
-          entity: {
-            automatic: true,
-            location: 'bank',
-            matcher: matcher,
-            state: state
-          },
-          destination: {
-            automatic: true,
-            conditions: [{
-              type: 'Is',
-              matcher: placementMatchers.destination
-            }]
-          }
+        entity: matcher,
+        destination: {
+          name: 'personalBoard'
         }
       };
+    });
+    if (!rules.initialPlacements) rules.initialPlacements = [];
+    (_rules$initialPlaceme2 = rules.initialPlacements).unshift.apply(_rules$initialPlaceme2, _toConsumableArray(personalBoardPlacements));
+  }
+  if (rules.initialPlacements) {
+    var _rules$initialMoves;
+    var initialPlacementMoves = rules.initialPlacements.map(function (placement) {
+      // probably going to need to separate this even in the shorthand. maybe
+      // combine, then search entity rule and extract state variables instead?
+      var _placement$entity = placement.entity,
+        state = _placement$entity.state,
+        matcher = _objectWithoutProperties(_placement$entity, _excluded);
+      var entityDefinition = lodash_find_js__WEBPACK_IMPORTED_MODULE_1__(entities, matcher);
+      if (placement.destination.name === 'personalBoard') {
+        return {
+          type: 'ForEach',
+          arguments: {
+            targets: {
+              ctxPath: ['playOrder']
+            }
+          },
+          move: {
+            type: 'PlaceNew',
+            entity: {
+              state: state,
+              conditions: [{
+                type: 'Is',
+                matcher: _objectSpread(_objectSpread({}, matcher), entityDefinition.perPlayer ? {
+                  player: {
+                    contextPath: ['loopTarget']
+                  }
+                } : {})
+              }]
+            },
+            arguments: {
+              destination: {
+                conditions: [{
+                  type: 'Is',
+                  matcher: _objectSpread(_objectSpread({}, placement.destination), {}, {
+                    player: {
+                      contextPath: ['loopTarget']
+                    }
+                  })
+                }]
+              }
+            }
+          }
+        };
+      } else {
+        return {
+          type: 'PlaceNew',
+          entity: {
+            state: state,
+            conditions: [{
+              type: 'Is',
+              matcher: matcher
+            }]
+          },
+          arguments: {
+            destination: {
+              conditions: [{
+                type: 'Is',
+                matcher: placement.destination
+              }]
+            }
+          }
+        };
+      }
     });
     if (!rules.initialMoves) rules.initialMoves = [];
     (_rules$initialMoves = rules.initialMoves).unshift.apply(_rules$initialMoves, _toConsumableArray(initialPlacementMoves));
@@ -36365,7 +37281,12 @@ function expandInitialPlacements(rules) {
 function expandGameRules(gameRules) {
   var rules = lodash_cloneDeep_js__WEBPACK_IMPORTED_MODULE_0__(gameRules);
   expandEntities(rules);
-  expandInitialPlacements(rules);
+  expandInitialPlacements(rules, rules.entities);
+  if (rules.phases) {
+    Object.entries(rules.phases).forEach(function (phaseRule) {
+      expandInitialPlacements(phaseRule, rules.entities);
+    });
+  }
   return rules;
 }
 
@@ -37972,6 +38893,46 @@ class Derived {
 
 /***/ }),
 
+/***/ 47118:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ Shuffle)
+/* harmony export */ });
+/* harmony import */ var _move_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20426);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function _possibleConstructorReturn(t, e) { if (e && ("object" == _typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return _assertThisInitialized(t); }
+function _assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
+function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
+function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
+
+var Shuffle = /*#__PURE__*/function (_Move) {
+  function Shuffle() {
+    _classCallCheck(this, Shuffle);
+    return _callSuper(this, Shuffle, arguments);
+  }
+  _inherits(Shuffle, _Move);
+  return _createClass(Shuffle, [{
+    key: "do",
+    value: function _do(bgioArguments, _ref) {
+      var target = _ref.arguments.target;
+      target.entities = bgioArguments.random.Shuffle(target.entities);
+    }
+  }]);
+}(_move_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
+
+
+/***/ }),
+
 /***/ 47359:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -38160,6 +39121,7 @@ const handleOAuthSignOut = async (cognitoConfig, store, tokenOrchestrator, redir
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (/* binding */ Condition)
 /* harmony export */ });
+/* harmony import */ var _utils_resolve_arguments_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(26750);
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -38175,6 +39137,7 @@ function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = 
 function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
 var Condition = /*#__PURE__*/function () {
   function Condition(rule) {
     _classCallCheck(this, Condition);
@@ -38183,7 +39146,6 @@ var Condition = /*#__PURE__*/function () {
   return _createClass(Condition, [{
     key: "check",
     value: function check(bgioArguments) {
-      var _conditionPayload$tar;
       var payload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
       var context = arguments.length > 2 ? arguments[2] : undefined;
       var G = bgioArguments.G;
@@ -38196,21 +39158,7 @@ var Condition = /*#__PURE__*/function () {
         if (conditionPayload.target) {
           conditionPayload.originalTarget = conditionPayload.target;
         }
-        if (this.rule.target.targetingType === 'Relative') {
-          var parent = G.bank.findParent(conditionPayload.target);
-          // // we always want the SpaceGroup, whether target is Space or Entity
-          // while (parent.rule.type !== 'Grid') {
-          //   parent = G.bank.findParent(parent)
-          //   if (!parent) {
-          //     throw new Error(`couldnt find Grid parent of entity with rule ${conditionPayload.target.rule}`)
-          //   }
-          // }
-          var oldCoordinates = parent.getCoordinates(conditionPayload.target.rule.index);
-          var newCoordinates = parent.getRelativeCoordinates(oldCoordinates, this.rule.target.location);
-          conditionPayload.target = newCoordinates && parent.spaces[parent.getIndex(newCoordinates)];
-        } else {
-          conditionPayload.target = G.bank.findOne(bgioArguments, this.rule.target);
-        }
+        conditionPayload.target = (0,_utils_resolve_arguments_js__WEBPACK_IMPORTED_MODULE_0__/* .resolveArguments2 */ .V)(bgioArguments, this.rule, conditionPayload.originalTarget, context);
       }
       if (this.rule.targets) {
         if (conditionPayload.targets) {
@@ -38221,11 +39169,18 @@ var Condition = /*#__PURE__*/function () {
         }, []);
       }
 
-      // nonexistent relative spaces for instance fulfill no conditions ever
-      if (!conditionPayload.target && !((_conditionPayload$tar = conditionPayload.targets) !== null && _conditionPayload$tar !== void 0 && _conditionPayload$tar.length)) {
-        return {
-          conditionIsMet: false
-        };
+      // I don't love having this exception here; will we need more?
+      // Need a better system for move args => condition target in general
+      if (this.rule.type !== 'Evaluate') {
+        var _conditionPayload$tar;
+        // nonexistent relative spaces for instance fulfill no conditions ever
+        if (!conditionPayload.target && !((_conditionPayload$tar = conditionPayload.targets) !== null && _conditionPayload$tar !== void 0 && _conditionPayload$tar.length)) {
+          // todo: double check why so many nonexistent conditions
+          // console.log('this.rule', this.rule)
+          return {
+            conditionIsMet: false
+          };
+        }
       }
       return this.checkCondition(bgioArguments, conditionPayload, context);
     }
@@ -39131,7 +40086,7 @@ module.exports = baseIteratee;
 /***/ ((module) => {
 
 "use strict";
-module.exports = {};
+module.exports = /*#__PURE__*/JSON.parse('{"entities":[{"name":"mainGrid","type":"Grid","width":3,"height":3},{"name":"playerMarker","perPlayer":true,"count":"Infinity"}],"sharedBoard":[{"name":"mainGrid"}],"minPlayers":2,"maxPlayers":2,"turn":{"minMoves":1,"maxMoves":1},"moves":{"placePlayerMarker":{"type":"PlaceNew","entity":{"conditions":[{"type":"Is","matcher":{"name":"playerMarker","player":"CurrentPlayer"}}]},"arguments":{"destination":{"playerChoice":true,"conditions":[{"type":"Is","matcher":{"type":"Space"}},{"type":"Not","conditions":[{"type":"Contains"}]}]}}}},"endIf":[{"conditions":[{"target":{"conditions":[{"type":"Is","matcher":{"name":"mainGrid"}}]},"type":"ContainsLine","length":3,"spaceGroupConditions":[{"type":"ContainsSame","properties":["player"]}],"spaceConditions":[{"type":"Contains"}]}],"result":{"winner":{"contextPath":["results",0,"matches",0,"spaces",0,"entities",0,"rule","player"]}}},{"conditions":[{"type":"EverySpace","target":{"conditions":[{"type":"Is","matcher":{"name":"mainGrid"}}]},"spaceConditions":[{"type":"Contains"}]}],"result":{"draw":true}}]}');
 
 /***/ }),
 
@@ -39357,6 +40312,53 @@ module.exports = Uint8Array;
 
 /***/ }),
 
+/***/ 52512:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ Position)
+/* harmony export */ });
+/* harmony import */ var _condition_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(47978);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function _possibleConstructorReturn(t, e) { if (e && ("object" == _typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return _assertThisInitialized(t); }
+function _assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
+function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
+function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
+
+var Position = /*#__PURE__*/function (_Condition) {
+  function Position() {
+    _classCallCheck(this, Position);
+    return _callSuper(this, Position, arguments);
+  }
+  _inherits(Position, _Condition);
+  return _createClass(Position, [{
+    key: "checkCondition",
+    value: function checkCondition(bgioArguments, _ref) {
+      var target = _ref.target;
+      var parent = bgioArguments.G.bank.findParent(target);
+      var conditionIsMet;
+      if (this.rule.position === 'First') {
+        conditionIsMet = parent.entities.indexOf(target) === 0;
+      }
+      return {
+        conditionIsMet: conditionIsMet
+      };
+    }
+  }]);
+}(_condition_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
+
+
+/***/ }),
+
 /***/ 52620:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -39542,11 +40544,13 @@ var ContainsCondition = /*#__PURE__*/function (_Condition) {
           conditionIsMet: false
         };
       } else {
-        var matches = target.entities.filter(function (entity) {
+        var _target$entities$filt, _target$entities;
+        // doesn't work to find spaces in target.spaces yet
+        var matches = (_target$entities$filt = (_target$entities = target.entities) === null || _target$entities === void 0 ? void 0 : _target$entities.filter(function (entity) {
           return (0,_utils_check_conditions_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(bgioArguments, _this.rule, {
             target: entity
           }, context).conditionsAreMet;
-        });
+        })) !== null && _target$entities$filt !== void 0 ? _target$entities$filt : [];
         return {
           matches: matches,
           conditionIsMet: !!matches.length
@@ -40277,10 +41281,17 @@ function stringifySearchWith(stringify, parser) {
 /* harmony export */   R: () => (/* binding */ getMoveInstance)
 /* harmony export */ });
 /* harmony import */ var wackson__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(92244);
-/* harmony import */ var _registry_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(14142);
-/* harmony import */ var _move_entity_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(23372);
-/* harmony import */ var _set_state_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(95027);
-/* harmony import */ var _for_each_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(79180);
+/* harmony import */ var boardgame_io_dist_cjs_core_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(10061);
+/* harmony import */ var _registry_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(14142);
+/* harmony import */ var _move_entity_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(23372);
+/* harmony import */ var _place_new_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(94887);
+/* harmony import */ var _take_from_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(85541);
+/* harmony import */ var _set_state_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(95027);
+/* harmony import */ var _set_active_players_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(45);
+/* harmony import */ var _end_turn_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(43568);
+/* harmony import */ var _for_each_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(79180);
+/* harmony import */ var _pass_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(7726);
+/* harmony import */ var _shuffle_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(47118);
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 var _excluded = ["G"];
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
@@ -40302,6 +41313,13 @@ function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t =
 
 
 
+
+
+
+
+
+
+
 // import Swap from "./swap.js";
 
 function moveFactory(moveRule) {
@@ -40311,7 +41329,7 @@ function moveFactory(moveRule) {
   var compatibleMove = function compatibleMove(_ref, serializablePayload) {
     var serializableG = _ref.G,
       restBgioArguments = _objectWithoutProperties(_ref, _excluded);
-    var G = (0,wackson__WEBPACK_IMPORTED_MODULE_0__/* .deserialize */ .i)(JSON.stringify(serializableG), _registry_js__WEBPACK_IMPORTED_MODULE_1__/* .registry */ .u);
+    var G = (0,wackson__WEBPACK_IMPORTED_MODULE_0__/* .deserialize */ .i)(JSON.stringify(serializableG), _registry_js__WEBPACK_IMPORTED_MODULE_2__/* .registry */ .u);
     var payload = revivePayload(serializablePayload, G);
     var bgioArguments = _objectSpread({
       G: G
@@ -40321,13 +41339,14 @@ function moveFactory(moveRule) {
     };
     var moveConditionResults = moveInstance.doMove(bgioArguments, payload, context);
     context.moveConditionResults = [moveConditionResults];
-    if (moveRule.then) {
+    if (moveConditionResults !== boardgame_io_dist_cjs_core_js__WEBPACK_IMPORTED_MODULE_1__/* .INVALID_MOVE */ .GU && moveRule.then) {
       var _iterator = _createForOfIteratorHelper(moveRule.then),
         _step;
       try {
         for (_iterator.s(); !(_step = _iterator.n()).done;) {
           var automaticMoveRule = _step.value;
-          var result = getMoveInstance(automaticMoveRule).doMove(bgioArguments, {}, context);
+          var result = getMoveInstance(automaticMoveRule).doMove(bgioArguments, {}, _objectSpread({}, context) // spread here so prevArguments doesn't change for sibling
+          );
           context.moveConditionResults.push(result);
           context;
         }
@@ -40337,31 +41356,45 @@ function moveFactory(moveRule) {
         _iterator.f();
       }
     }
-    return JSON.parse((0,wackson__WEBPACK_IMPORTED_MODULE_0__/* .serialize */ .l)(G, {
-      deduplicateInstances: false
-    }));
+    return JSON.parse((0,wackson__WEBPACK_IMPORTED_MODULE_0__/* .serialize */ .l)(G));
   };
   compatibleMove.moveInstance = moveInstance;
   return compatibleMove;
 }
 function revivePayload(serializablePayload, G) {
-  var payload = (0,wackson__WEBPACK_IMPORTED_MODULE_0__/* .deserialize */ .i)(JSON.stringify(serializablePayload), _registry_js__WEBPACK_IMPORTED_MODULE_1__/* .registry */ .u);
-  payload.arguments = Object.entries(payload.arguments).reduce(function (acc, _ref2) {
-    var _ref3 = _slicedToArray(_ref2, 2),
-      key = _ref3[0],
-      entityId = _ref3[1];
-    return _objectSpread(_objectSpread({}, acc), {}, _defineProperty({}, key, G.bank.locate(entityId)));
-  }, {});
-  return payload;
+  if (serializablePayload) {
+    var payload = (0,wackson__WEBPACK_IMPORTED_MODULE_0__/* .deserialize */ .i)(JSON.stringify(serializablePayload), _registry_js__WEBPACK_IMPORTED_MODULE_2__/* .registry */ .u);
+    payload.arguments = Object.entries(payload.arguments).reduce(function (acc, _ref2) {
+      var _ref3 = _slicedToArray(_ref2, 2),
+        key = _ref3[0],
+        argOrEntityId = _ref3[1];
+      return _objectSpread(_objectSpread({}, acc), {}, _defineProperty({}, key, typeof argOrEntityId === 'number' ? G.bank.locate(argOrEntityId) : argOrEntityId));
+    }, {});
+    return payload;
+  } else {
+    return serializablePayload;
+  }
 }
 function getMoveInstance(moveRule) {
   switch (moveRule.type) {
     case 'MoveEntity':
-      return new _move_entity_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A(moveRule);
+      return new _move_entity_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A(moveRule);
+    case 'PlaceNew':
+      return new _place_new_js__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A(moveRule);
+    case 'TakeFrom':
+      return new _take_from_js__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A(moveRule);
     case 'SetState':
-      return new _set_state_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A(moveRule);
+      return new _set_state_js__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A(moveRule);
     case 'ForEach':
-      return new _for_each_js__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A(moveRule);
+      return new _for_each_js__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A(moveRule);
+    case 'Pass':
+      return new _pass_js__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A(moveRule);
+    case 'Shuffle':
+      return new _shuffle_js__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A(moveRule);
+    case 'SetActivePlayers':
+      return new _set_active_players_js__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A(moveRule);
+    case 'EndTurn':
+      return new _end_turn_js__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A(moveRule);
   }
 }
 
@@ -40947,7 +41980,6 @@ var SpaceGroupCondition = /*#__PURE__*/function (_Condition) {
     key: "findMatches",
     value: function findMatches(bgioArguments, target) {
       var matches = [];
-      console.log('target', target);
       for (var i = 0; i < target.spaces.length; i++) {
         var space = target.spaces[i];
         matches.push.apply(matches, _toConsumableArray(this.checkForPattern(bgioArguments, space, target, matches).matches));
@@ -44524,21 +45556,15 @@ const listenForOAuthFlowCancellation = (store) => {
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
 /* harmony import */ var _entity_entity_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(80271);
-/* harmony import */ var _server_connect_four_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(95979);
+/* harmony import */ var _abstract_choices_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(30537);
 /* harmony import */ var _server_game_factory_condition_condition_factory_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(19125);
-function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-
+/* harmony import */ var _server_connect_four_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(95979);
 
 
 
 function Game(_ref) {
   var bgioState = _ref.bgioState;
   var G = bgioState.G;
-
-  // console.log('getMatchingWinConditionResult(bgioArguments, rules.endIf)', getMatchingWinConditionResult(bgioState, connectFour.endIf))
-
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "shared-board"
   }, G.sharedBoard.entities.map(function (entity, i) {
@@ -44546,46 +45572,44 @@ function Game(_ref) {
       key: i,
       entity: entity
     });
-  })));
+  })), G.personalBoards && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "personal-boards"
+  }, G.personalBoards.map(function (board, i) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      key: i,
+      className: "personal-board"
+    }, board.entities.map(function (entity, j) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_entity_entity_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A, {
+        key: j,
+        entity: entity
+      });
+    }));
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_abstract_choices_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, null));
 }
-function getMatchingWinConditionResult(bgioArguments, winConditions) {
-  var _iterator = _createForOfIteratorHelper(winConditions),
-    _step;
-  try {
-    for (_iterator.s(); !(_step = _iterator.n()).done;) {
-      var winCondition = _step.value;
-      var conditionResults = [];
-      var _iterator2 = _createForOfIteratorHelper(winCondition.conditions),
-        _step2;
-      try {
-        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-          var cond = _step2.value;
-          var conditionResult = conditionFactory(cond).check(bgioArguments);
-          if (conditionResult.conditionIsMet) {
-            conditionResults.push(conditionResult);
-          } else {
-            break;
-          }
-        }
-      } catch (err) {
-        _iterator2.e(err);
-      } finally {
-        _iterator2.f();
-      }
-      if (conditionResults.length === winCondition.conditions.length) {
-        return {
-          winCondition: winCondition,
-          conditionResults: conditionResults
-        };
-      }
-    }
-  } catch (err) {
-    _iterator.e(err);
-  } finally {
-    _iterator.f();
-  }
-  return null;
-}
+
+
+// console.log('getMatchingWinConditionResult(bgioArguments, rules.endIf)', getMatchingWinConditionResult(bgioState, connectFour.endIf))
+// function getMatchingWinConditionResult(bgioArguments, winConditions) {
+//   for (const winCondition of winConditions) {
+//     const conditionResults = [];
+
+//     for (const cond of winCondition.conditions) {
+//       const conditionResult = conditionFactory(cond).check(bgioArguments);
+
+//       if (conditionResult.conditionIsMet) {
+//         conditionResults.push(conditionResult);
+//       } else {
+//         break;
+//       }
+//     }
+
+//     if (conditionResults.length === winCondition.conditions.length) {
+//       return { winCondition, conditionResults };
+//     }
+//   }
+
+//   return null;
+// }
 
 /***/ }),
 
@@ -47513,6 +48537,1857 @@ module.exports = MapCache;
 
 /***/ }),
 
+/***/ 70469:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   iX: () => (/* binding */ Parser)
+/* harmony export */ });
+/* unused harmony export Expression */
+var INUMBER = 'INUMBER';
+var IOP1 = 'IOP1';
+var IOP2 = 'IOP2';
+var IOP3 = 'IOP3';
+var IVAR = 'IVAR';
+var IVARNAME = 'IVARNAME';
+var IFUNCALL = 'IFUNCALL';
+var IFUNDEF = 'IFUNDEF';
+var IEXPR = 'IEXPR';
+var IEXPREVAL = 'IEXPREVAL';
+var IMEMBER = 'IMEMBER';
+var IENDSTATEMENT = 'IENDSTATEMENT';
+var IARRAY = 'IARRAY';
+
+function Instruction(type, value) {
+  this.type = type;
+  this.value = (value !== undefined && value !== null) ? value : 0;
+}
+
+Instruction.prototype.toString = function () {
+  switch (this.type) {
+    case INUMBER:
+    case IOP1:
+    case IOP2:
+    case IOP3:
+    case IVAR:
+    case IVARNAME:
+    case IENDSTATEMENT:
+      return this.value;
+    case IFUNCALL:
+      return 'CALL ' + this.value;
+    case IFUNDEF:
+      return 'DEF ' + this.value;
+    case IARRAY:
+      return 'ARRAY ' + this.value;
+    case IMEMBER:
+      return '.' + this.value;
+    default:
+      return 'Invalid Instruction';
+  }
+};
+
+function unaryInstruction(value) {
+  return new Instruction(IOP1, value);
+}
+
+function binaryInstruction(value) {
+  return new Instruction(IOP2, value);
+}
+
+function ternaryInstruction(value) {
+  return new Instruction(IOP3, value);
+}
+
+function simplify(tokens, unaryOps, binaryOps, ternaryOps, values) {
+  var nstack = [];
+  var newexpression = [];
+  var n1, n2, n3;
+  var f;
+  for (var i = 0; i < tokens.length; i++) {
+    var item = tokens[i];
+    var type = item.type;
+    if (type === INUMBER || type === IVARNAME) {
+      if (Array.isArray(item.value)) {
+        nstack.push.apply(nstack, simplify(item.value.map(function (x) {
+          return new Instruction(INUMBER, x);
+        }).concat(new Instruction(IARRAY, item.value.length)), unaryOps, binaryOps, ternaryOps, values));
+      } else {
+        nstack.push(item);
+      }
+    } else if (type === IVAR && values.hasOwnProperty(item.value)) {
+      item = new Instruction(INUMBER, values[item.value]);
+      nstack.push(item);
+    } else if (type === IOP2 && nstack.length > 1) {
+      n2 = nstack.pop();
+      n1 = nstack.pop();
+      f = binaryOps[item.value];
+      item = new Instruction(INUMBER, f(n1.value, n2.value));
+      nstack.push(item);
+    } else if (type === IOP3 && nstack.length > 2) {
+      n3 = nstack.pop();
+      n2 = nstack.pop();
+      n1 = nstack.pop();
+      if (item.value === '?') {
+        nstack.push(n1.value ? n2.value : n3.value);
+      } else {
+        f = ternaryOps[item.value];
+        item = new Instruction(INUMBER, f(n1.value, n2.value, n3.value));
+        nstack.push(item);
+      }
+    } else if (type === IOP1 && nstack.length > 0) {
+      n1 = nstack.pop();
+      f = unaryOps[item.value];
+      item = new Instruction(INUMBER, f(n1.value));
+      nstack.push(item);
+    } else if (type === IEXPR) {
+      while (nstack.length > 0) {
+        newexpression.push(nstack.shift());
+      }
+      newexpression.push(new Instruction(IEXPR, simplify(item.value, unaryOps, binaryOps, ternaryOps, values)));
+    } else if (type === IMEMBER && nstack.length > 0) {
+      n1 = nstack.pop();
+      nstack.push(new Instruction(INUMBER, n1.value[item.value]));
+    } /* else if (type === IARRAY && nstack.length >= item.value) {
+      var length = item.value;
+      while (length-- > 0) {
+        newexpression.push(nstack.pop());
+      }
+      newexpression.push(new Instruction(IARRAY, item.value));
+    } */ else {
+      while (nstack.length > 0) {
+        newexpression.push(nstack.shift());
+      }
+      newexpression.push(item);
+    }
+  }
+  while (nstack.length > 0) {
+    newexpression.push(nstack.shift());
+  }
+  return newexpression;
+}
+
+function substitute(tokens, variable, expr) {
+  var newexpression = [];
+  for (var i = 0; i < tokens.length; i++) {
+    var item = tokens[i];
+    var type = item.type;
+    if (type === IVAR && item.value === variable) {
+      for (var j = 0; j < expr.tokens.length; j++) {
+        var expritem = expr.tokens[j];
+        var replitem;
+        if (expritem.type === IOP1) {
+          replitem = unaryInstruction(expritem.value);
+        } else if (expritem.type === IOP2) {
+          replitem = binaryInstruction(expritem.value);
+        } else if (expritem.type === IOP3) {
+          replitem = ternaryInstruction(expritem.value);
+        } else {
+          replitem = new Instruction(expritem.type, expritem.value);
+        }
+        newexpression.push(replitem);
+      }
+    } else if (type === IEXPR) {
+      newexpression.push(new Instruction(IEXPR, substitute(item.value, variable, expr)));
+    } else {
+      newexpression.push(item);
+    }
+  }
+  return newexpression;
+}
+
+function evaluate(tokens, expr, values) {
+  var nstack = [];
+  var n1, n2, n3;
+  var f, args, argCount;
+
+  if (isExpressionEvaluator(tokens)) {
+    return resolveExpression(tokens, values);
+  }
+
+  var numTokens = tokens.length;
+
+  for (var i = 0; i < numTokens; i++) {
+    var item = tokens[i];
+    var type = item.type;
+    if (type === INUMBER || type === IVARNAME) {
+      nstack.push(item.value);
+    } else if (type === IOP2) {
+      n2 = nstack.pop();
+      n1 = nstack.pop();
+      if (item.value === 'and') {
+        nstack.push(n1 ? !!evaluate(n2, expr, values) : false);
+      } else if (item.value === 'or') {
+        nstack.push(n1 ? true : !!evaluate(n2, expr, values));
+      } else if (item.value === '=') {
+        f = expr.binaryOps[item.value];
+        nstack.push(f(n1, evaluate(n2, expr, values), values));
+      } else {
+        f = expr.binaryOps[item.value];
+        nstack.push(f(resolveExpression(n1, values), resolveExpression(n2, values)));
+      }
+    } else if (type === IOP3) {
+      n3 = nstack.pop();
+      n2 = nstack.pop();
+      n1 = nstack.pop();
+      if (item.value === '?') {
+        nstack.push(evaluate(n1 ? n2 : n3, expr, values));
+      } else {
+        f = expr.ternaryOps[item.value];
+        nstack.push(f(resolveExpression(n1, values), resolveExpression(n2, values), resolveExpression(n3, values)));
+      }
+    } else if (type === IVAR) {
+      if (item.value in expr.functions) {
+        nstack.push(expr.functions[item.value]);
+      } else if (item.value in expr.unaryOps && expr.parser.isOperatorEnabled(item.value)) {
+        nstack.push(expr.unaryOps[item.value]);
+      } else {
+        var v = values[item.value];
+        if (v !== undefined) {
+          nstack.push(v);
+        } else {
+          throw new Error('undefined variable: ' + item.value);
+        }
+      }
+    } else if (type === IOP1) {
+      n1 = nstack.pop();
+      f = expr.unaryOps[item.value];
+      nstack.push(f(resolveExpression(n1, values)));
+    } else if (type === IFUNCALL) {
+      argCount = item.value;
+      args = [];
+      while (argCount-- > 0) {
+        args.unshift(resolveExpression(nstack.pop(), values));
+      }
+      f = nstack.pop();
+      if (f.apply && f.call) {
+        nstack.push(f.apply(undefined, args));
+      } else {
+        throw new Error(f + ' is not a function');
+      }
+    } else if (type === IFUNDEF) {
+      // Create closure to keep references to arguments and expression
+      nstack.push((function () {
+        var n2 = nstack.pop();
+        var args = [];
+        var argCount = item.value;
+        while (argCount-- > 0) {
+          args.unshift(nstack.pop());
+        }
+        var n1 = nstack.pop();
+        var f = function () {
+          var scope = Object.assign({}, values);
+          for (var i = 0, len = args.length; i < len; i++) {
+            scope[args[i]] = arguments[i];
+          }
+          return evaluate(n2, expr, scope);
+        };
+        // f.name = n1
+        Object.defineProperty(f, 'name', {
+          value: n1,
+          writable: false
+        });
+        values[n1] = f;
+        return f;
+      })());
+    } else if (type === IEXPR) {
+      nstack.push(createExpressionEvaluator(item, expr));
+    } else if (type === IEXPREVAL) {
+      nstack.push(item);
+    } else if (type === IMEMBER) {
+      n1 = nstack.pop();
+      nstack.push(n1[item.value]);
+    } else if (type === IENDSTATEMENT) {
+      nstack.pop();
+    } else if (type === IARRAY) {
+      argCount = item.value;
+      args = [];
+      while (argCount-- > 0) {
+        args.unshift(nstack.pop());
+      }
+      nstack.push(args);
+    } else {
+      throw new Error('invalid Expression');
+    }
+  }
+  if (nstack.length > 1) {
+    throw new Error('invalid Expression (parity)');
+  }
+  // Explicitly return zero to avoid test issues caused by -0
+  return nstack[0] === 0 ? 0 : resolveExpression(nstack[0], values);
+}
+
+function createExpressionEvaluator(token, expr, values) {
+  if (isExpressionEvaluator(token)) return token;
+  return {
+    type: IEXPREVAL,
+    value: function (scope) {
+      return evaluate(token.value, expr, scope);
+    }
+  };
+}
+
+function isExpressionEvaluator(n) {
+  return n && n.type === IEXPREVAL;
+}
+
+function resolveExpression(n, values) {
+  return isExpressionEvaluator(n) ? n.value(values) : n;
+}
+
+function expressionToString(tokens, toJS) {
+  var nstack = [];
+  var n1, n2, n3;
+  var f, args, argCount;
+  for (var i = 0; i < tokens.length; i++) {
+    var item = tokens[i];
+    var type = item.type;
+    if (type === INUMBER) {
+      if (typeof item.value === 'number' && item.value < 0) {
+        nstack.push('(' + item.value + ')');
+      } else if (Array.isArray(item.value)) {
+        nstack.push('[' + item.value.map(escapeValue).join(', ') + ']');
+      } else {
+        nstack.push(escapeValue(item.value));
+      }
+    } else if (type === IOP2) {
+      n2 = nstack.pop();
+      n1 = nstack.pop();
+      f = item.value;
+      if (toJS) {
+        if (f === '^') {
+          nstack.push('Math.pow(' + n1 + ', ' + n2 + ')');
+        } else if (f === 'and') {
+          nstack.push('(!!' + n1 + ' && !!' + n2 + ')');
+        } else if (f === 'or') {
+          nstack.push('(!!' + n1 + ' || !!' + n2 + ')');
+        } else if (f === '||') {
+          nstack.push('(function(a,b){ return Array.isArray(a) && Array.isArray(b) ? a.concat(b) : String(a) + String(b); }((' + n1 + '),(' + n2 + ')))');
+        } else if (f === '==') {
+          nstack.push('(' + n1 + ' === ' + n2 + ')');
+        } else if (f === '!=') {
+          nstack.push('(' + n1 + ' !== ' + n2 + ')');
+        } else if (f === '[') {
+          nstack.push(n1 + '[(' + n2 + ') | 0]');
+        } else {
+          nstack.push('(' + n1 + ' ' + f + ' ' + n2 + ')');
+        }
+      } else {
+        if (f === '[') {
+          nstack.push(n1 + '[' + n2 + ']');
+        } else {
+          nstack.push('(' + n1 + ' ' + f + ' ' + n2 + ')');
+        }
+      }
+    } else if (type === IOP3) {
+      n3 = nstack.pop();
+      n2 = nstack.pop();
+      n1 = nstack.pop();
+      f = item.value;
+      if (f === '?') {
+        nstack.push('(' + n1 + ' ? ' + n2 + ' : ' + n3 + ')');
+      } else {
+        throw new Error('invalid Expression');
+      }
+    } else if (type === IVAR || type === IVARNAME) {
+      nstack.push(item.value);
+    } else if (type === IOP1) {
+      n1 = nstack.pop();
+      f = item.value;
+      if (f === '-' || f === '+') {
+        nstack.push('(' + f + n1 + ')');
+      } else if (toJS) {
+        if (f === 'not') {
+          nstack.push('(' + '!' + n1 + ')');
+        } else if (f === '!') {
+          nstack.push('fac(' + n1 + ')');
+        } else {
+          nstack.push(f + '(' + n1 + ')');
+        }
+      } else if (f === '!') {
+        nstack.push('(' + n1 + '!)');
+      } else {
+        nstack.push('(' + f + ' ' + n1 + ')');
+      }
+    } else if (type === IFUNCALL) {
+      argCount = item.value;
+      args = [];
+      while (argCount-- > 0) {
+        args.unshift(nstack.pop());
+      }
+      f = nstack.pop();
+      nstack.push(f + '(' + args.join(', ') + ')');
+    } else if (type === IFUNDEF) {
+      n2 = nstack.pop();
+      argCount = item.value;
+      args = [];
+      while (argCount-- > 0) {
+        args.unshift(nstack.pop());
+      }
+      n1 = nstack.pop();
+      if (toJS) {
+        nstack.push('(' + n1 + ' = function(' + args.join(', ') + ') { return ' + n2 + ' })');
+      } else {
+        nstack.push('(' + n1 + '(' + args.join(', ') + ') = ' + n2 + ')');
+      }
+    } else if (type === IMEMBER) {
+      n1 = nstack.pop();
+      nstack.push(n1 + '.' + item.value);
+    } else if (type === IARRAY) {
+      argCount = item.value;
+      args = [];
+      while (argCount-- > 0) {
+        args.unshift(nstack.pop());
+      }
+      nstack.push('[' + args.join(', ') + ']');
+    } else if (type === IEXPR) {
+      nstack.push('(' + expressionToString(item.value, toJS) + ')');
+    } else if (type === IENDSTATEMENT) ; else {
+      throw new Error('invalid Expression');
+    }
+  }
+  if (nstack.length > 1) {
+    if (toJS) {
+      nstack = [ nstack.join(',') ];
+    } else {
+      nstack = [ nstack.join(';') ];
+    }
+  }
+  return String(nstack[0]);
+}
+
+function escapeValue(v) {
+  if (typeof v === 'string') {
+    return JSON.stringify(v).replace(/\u2028/g, '\\u2028').replace(/\u2029/g, '\\u2029');
+  }
+  return v;
+}
+
+function contains(array, obj) {
+  for (var i = 0; i < array.length; i++) {
+    if (array[i] === obj) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function getSymbols(tokens, symbols, options) {
+  options = options || {};
+  var withMembers = !!options.withMembers;
+  var prevVar = null;
+
+  for (var i = 0; i < tokens.length; i++) {
+    var item = tokens[i];
+    if (item.type === IVAR || item.type === IVARNAME) {
+      if (!withMembers && !contains(symbols, item.value)) {
+        symbols.push(item.value);
+      } else if (prevVar !== null) {
+        if (!contains(symbols, prevVar)) {
+          symbols.push(prevVar);
+        }
+        prevVar = item.value;
+      } else {
+        prevVar = item.value;
+      }
+    } else if (item.type === IMEMBER && withMembers && prevVar !== null) {
+      prevVar += '.' + item.value;
+    } else if (item.type === IEXPR) {
+      getSymbols(item.value, symbols, options);
+    } else if (prevVar !== null) {
+      if (!contains(symbols, prevVar)) {
+        symbols.push(prevVar);
+      }
+      prevVar = null;
+    }
+  }
+
+  if (prevVar !== null && !contains(symbols, prevVar)) {
+    symbols.push(prevVar);
+  }
+}
+
+function Expression(tokens, parser) {
+  this.tokens = tokens;
+  this.parser = parser;
+  this.unaryOps = parser.unaryOps;
+  this.binaryOps = parser.binaryOps;
+  this.ternaryOps = parser.ternaryOps;
+  this.functions = parser.functions;
+}
+
+Expression.prototype.simplify = function (values) {
+  values = values || {};
+  return new Expression(simplify(this.tokens, this.unaryOps, this.binaryOps, this.ternaryOps, values), this.parser);
+};
+
+Expression.prototype.substitute = function (variable, expr) {
+  if (!(expr instanceof Expression)) {
+    expr = this.parser.parse(String(expr));
+  }
+
+  return new Expression(substitute(this.tokens, variable, expr), this.parser);
+};
+
+Expression.prototype.evaluate = function (values) {
+  values = values || {};
+  return evaluate(this.tokens, this, values);
+};
+
+Expression.prototype.toString = function () {
+  return expressionToString(this.tokens, false);
+};
+
+Expression.prototype.symbols = function (options) {
+  options = options || {};
+  var vars = [];
+  getSymbols(this.tokens, vars, options);
+  return vars;
+};
+
+Expression.prototype.variables = function (options) {
+  options = options || {};
+  var vars = [];
+  getSymbols(this.tokens, vars, options);
+  var functions = this.functions;
+  return vars.filter(function (name) {
+    return !(name in functions);
+  });
+};
+
+Expression.prototype.toJSFunction = function (param, variables) {
+  var expr = this;
+  var f = new Function(param, 'with(this.functions) with (this.ternaryOps) with (this.binaryOps) with (this.unaryOps) { return ' + expressionToString(this.simplify(variables).tokens, true) + '; }'); // eslint-disable-line no-new-func
+  return function () {
+    return f.apply(expr, arguments);
+  };
+};
+
+var TEOF = 'TEOF';
+var TOP = 'TOP';
+var TNUMBER = 'TNUMBER';
+var TSTRING = 'TSTRING';
+var TPAREN = 'TPAREN';
+var TBRACKET = 'TBRACKET';
+var TCOMMA = 'TCOMMA';
+var TNAME = 'TNAME';
+var TSEMICOLON = 'TSEMICOLON';
+
+function Token(type, value, index) {
+  this.type = type;
+  this.value = value;
+  this.index = index;
+}
+
+Token.prototype.toString = function () {
+  return this.type + ': ' + this.value;
+};
+
+function TokenStream(parser, expression) {
+  this.pos = 0;
+  this.current = null;
+  this.unaryOps = parser.unaryOps;
+  this.binaryOps = parser.binaryOps;
+  this.ternaryOps = parser.ternaryOps;
+  this.consts = parser.consts;
+  this.expression = expression;
+  this.savedPosition = 0;
+  this.savedCurrent = null;
+  this.options = parser.options;
+  this.parser = parser;
+}
+
+TokenStream.prototype.newToken = function (type, value, pos) {
+  return new Token(type, value, pos != null ? pos : this.pos);
+};
+
+TokenStream.prototype.save = function () {
+  this.savedPosition = this.pos;
+  this.savedCurrent = this.current;
+};
+
+TokenStream.prototype.restore = function () {
+  this.pos = this.savedPosition;
+  this.current = this.savedCurrent;
+};
+
+TokenStream.prototype.next = function () {
+  if (this.pos >= this.expression.length) {
+    return this.newToken(TEOF, 'EOF');
+  }
+
+  if (this.isWhitespace() || this.isComment()) {
+    return this.next();
+  } else if (this.isRadixInteger() ||
+      this.isNumber() ||
+      this.isOperator() ||
+      this.isString() ||
+      this.isParen() ||
+      this.isBracket() ||
+      this.isComma() ||
+      this.isSemicolon() ||
+      this.isNamedOp() ||
+      this.isConst() ||
+      this.isName()) {
+    return this.current;
+  } else {
+    this.parseError('Unknown character "' + this.expression.charAt(this.pos) + '"');
+  }
+};
+
+TokenStream.prototype.isString = function () {
+  var r = false;
+  var startPos = this.pos;
+  var quote = this.expression.charAt(startPos);
+
+  if (quote === '\'' || quote === '"') {
+    var index = this.expression.indexOf(quote, startPos + 1);
+    while (index >= 0 && this.pos < this.expression.length) {
+      this.pos = index + 1;
+      if (this.expression.charAt(index - 1) !== '\\') {
+        var rawString = this.expression.substring(startPos + 1, index);
+        this.current = this.newToken(TSTRING, this.unescape(rawString), startPos);
+        r = true;
+        break;
+      }
+      index = this.expression.indexOf(quote, index + 1);
+    }
+  }
+  return r;
+};
+
+TokenStream.prototype.isParen = function () {
+  var c = this.expression.charAt(this.pos);
+  if (c === '(' || c === ')') {
+    this.current = this.newToken(TPAREN, c);
+    this.pos++;
+    return true;
+  }
+  return false;
+};
+
+TokenStream.prototype.isBracket = function () {
+  var c = this.expression.charAt(this.pos);
+  if ((c === '[' || c === ']') && this.isOperatorEnabled('[')) {
+    this.current = this.newToken(TBRACKET, c);
+    this.pos++;
+    return true;
+  }
+  return false;
+};
+
+TokenStream.prototype.isComma = function () {
+  var c = this.expression.charAt(this.pos);
+  if (c === ',') {
+    this.current = this.newToken(TCOMMA, ',');
+    this.pos++;
+    return true;
+  }
+  return false;
+};
+
+TokenStream.prototype.isSemicolon = function () {
+  var c = this.expression.charAt(this.pos);
+  if (c === ';') {
+    this.current = this.newToken(TSEMICOLON, ';');
+    this.pos++;
+    return true;
+  }
+  return false;
+};
+
+TokenStream.prototype.isConst = function () {
+  var startPos = this.pos;
+  var i = startPos;
+  for (; i < this.expression.length; i++) {
+    var c = this.expression.charAt(i);
+    if (c.toUpperCase() === c.toLowerCase()) {
+      if (i === this.pos || (c !== '_' && c !== '.' && (c < '0' || c > '9'))) {
+        break;
+      }
+    }
+  }
+  if (i > startPos) {
+    var str = this.expression.substring(startPos, i);
+    if (str in this.consts) {
+      this.current = this.newToken(TNUMBER, this.consts[str]);
+      this.pos += str.length;
+      return true;
+    }
+  }
+  return false;
+};
+
+TokenStream.prototype.isNamedOp = function () {
+  var startPos = this.pos;
+  var i = startPos;
+  for (; i < this.expression.length; i++) {
+    var c = this.expression.charAt(i);
+    if (c.toUpperCase() === c.toLowerCase()) {
+      if (i === this.pos || (c !== '_' && (c < '0' || c > '9'))) {
+        break;
+      }
+    }
+  }
+  if (i > startPos) {
+    var str = this.expression.substring(startPos, i);
+    if (this.isOperatorEnabled(str) && (str in this.binaryOps || str in this.unaryOps || str in this.ternaryOps)) {
+      this.current = this.newToken(TOP, str);
+      this.pos += str.length;
+      return true;
+    }
+  }
+  return false;
+};
+
+TokenStream.prototype.isName = function () {
+  var startPos = this.pos;
+  var i = startPos;
+  var hasLetter = false;
+  for (; i < this.expression.length; i++) {
+    var c = this.expression.charAt(i);
+    if (c.toUpperCase() === c.toLowerCase()) {
+      if (i === this.pos && (c === '$' || c === '_')) {
+        if (c === '_') {
+          hasLetter = true;
+        }
+        continue;
+      } else if (i === this.pos || !hasLetter || (c !== '_' && (c < '0' || c > '9'))) {
+        break;
+      }
+    } else {
+      hasLetter = true;
+    }
+  }
+  if (hasLetter) {
+    var str = this.expression.substring(startPos, i);
+    this.current = this.newToken(TNAME, str);
+    this.pos += str.length;
+    return true;
+  }
+  return false;
+};
+
+TokenStream.prototype.isWhitespace = function () {
+  var r = false;
+  var c = this.expression.charAt(this.pos);
+  while (c === ' ' || c === '\t' || c === '\n' || c === '\r') {
+    r = true;
+    this.pos++;
+    if (this.pos >= this.expression.length) {
+      break;
+    }
+    c = this.expression.charAt(this.pos);
+  }
+  return r;
+};
+
+var codePointPattern = /^[0-9a-f]{4}$/i;
+
+TokenStream.prototype.unescape = function (v) {
+  var index = v.indexOf('\\');
+  if (index < 0) {
+    return v;
+  }
+
+  var buffer = v.substring(0, index);
+  while (index >= 0) {
+    var c = v.charAt(++index);
+    switch (c) {
+      case '\'':
+        buffer += '\'';
+        break;
+      case '"':
+        buffer += '"';
+        break;
+      case '\\':
+        buffer += '\\';
+        break;
+      case '/':
+        buffer += '/';
+        break;
+      case 'b':
+        buffer += '\b';
+        break;
+      case 'f':
+        buffer += '\f';
+        break;
+      case 'n':
+        buffer += '\n';
+        break;
+      case 'r':
+        buffer += '\r';
+        break;
+      case 't':
+        buffer += '\t';
+        break;
+      case 'u':
+        // interpret the following 4 characters as the hex of the unicode code point
+        var codePoint = v.substring(index + 1, index + 5);
+        if (!codePointPattern.test(codePoint)) {
+          this.parseError('Illegal escape sequence: \\u' + codePoint);
+        }
+        buffer += String.fromCharCode(parseInt(codePoint, 16));
+        index += 4;
+        break;
+      default:
+        throw this.parseError('Illegal escape sequence: "\\' + c + '"');
+    }
+    ++index;
+    var backslash = v.indexOf('\\', index);
+    buffer += v.substring(index, backslash < 0 ? v.length : backslash);
+    index = backslash;
+  }
+
+  return buffer;
+};
+
+TokenStream.prototype.isComment = function () {
+  var c = this.expression.charAt(this.pos);
+  if (c === '/' && this.expression.charAt(this.pos + 1) === '*') {
+    this.pos = this.expression.indexOf('*/', this.pos) + 2;
+    if (this.pos === 1) {
+      this.pos = this.expression.length;
+    }
+    return true;
+  }
+  return false;
+};
+
+TokenStream.prototype.isRadixInteger = function () {
+  var pos = this.pos;
+
+  if (pos >= this.expression.length - 2 || this.expression.charAt(pos) !== '0') {
+    return false;
+  }
+  ++pos;
+
+  var radix;
+  var validDigit;
+  if (this.expression.charAt(pos) === 'x') {
+    radix = 16;
+    validDigit = /^[0-9a-f]$/i;
+    ++pos;
+  } else if (this.expression.charAt(pos) === 'b') {
+    radix = 2;
+    validDigit = /^[01]$/i;
+    ++pos;
+  } else {
+    return false;
+  }
+
+  var valid = false;
+  var startPos = pos;
+
+  while (pos < this.expression.length) {
+    var c = this.expression.charAt(pos);
+    if (validDigit.test(c)) {
+      pos++;
+      valid = true;
+    } else {
+      break;
+    }
+  }
+
+  if (valid) {
+    this.current = this.newToken(TNUMBER, parseInt(this.expression.substring(startPos, pos), radix));
+    this.pos = pos;
+  }
+  return valid;
+};
+
+TokenStream.prototype.isNumber = function () {
+  var valid = false;
+  var pos = this.pos;
+  var startPos = pos;
+  var resetPos = pos;
+  var foundDot = false;
+  var foundDigits = false;
+  var c;
+
+  while (pos < this.expression.length) {
+    c = this.expression.charAt(pos);
+    if ((c >= '0' && c <= '9') || (!foundDot && c === '.')) {
+      if (c === '.') {
+        foundDot = true;
+      } else {
+        foundDigits = true;
+      }
+      pos++;
+      valid = foundDigits;
+    } else {
+      break;
+    }
+  }
+
+  if (valid) {
+    resetPos = pos;
+  }
+
+  if (c === 'e' || c === 'E') {
+    pos++;
+    var acceptSign = true;
+    var validExponent = false;
+    while (pos < this.expression.length) {
+      c = this.expression.charAt(pos);
+      if (acceptSign && (c === '+' || c === '-')) {
+        acceptSign = false;
+      } else if (c >= '0' && c <= '9') {
+        validExponent = true;
+        acceptSign = false;
+      } else {
+        break;
+      }
+      pos++;
+    }
+
+    if (!validExponent) {
+      pos = resetPos;
+    }
+  }
+
+  if (valid) {
+    this.current = this.newToken(TNUMBER, parseFloat(this.expression.substring(startPos, pos)));
+    this.pos = pos;
+  } else {
+    this.pos = resetPos;
+  }
+  return valid;
+};
+
+TokenStream.prototype.isOperator = function () {
+  var startPos = this.pos;
+  var c = this.expression.charAt(this.pos);
+
+  if (c === '+' || c === '-' || c === '*' || c === '/' || c === '%' || c === '^' || c === '?' || c === ':' || c === '.') {
+    this.current = this.newToken(TOP, c);
+  } else if (c === '∙' || c === '•') {
+    this.current = this.newToken(TOP, '*');
+  } else if (c === '>') {
+    if (this.expression.charAt(this.pos + 1) === '=') {
+      this.current = this.newToken(TOP, '>=');
+      this.pos++;
+    } else {
+      this.current = this.newToken(TOP, '>');
+    }
+  } else if (c === '<') {
+    if (this.expression.charAt(this.pos + 1) === '=') {
+      this.current = this.newToken(TOP, '<=');
+      this.pos++;
+    } else {
+      this.current = this.newToken(TOP, '<');
+    }
+  } else if (c === '|') {
+    if (this.expression.charAt(this.pos + 1) === '|') {
+      this.current = this.newToken(TOP, '||');
+      this.pos++;
+    } else {
+      return false;
+    }
+  } else if (c === '=') {
+    if (this.expression.charAt(this.pos + 1) === '=') {
+      this.current = this.newToken(TOP, '==');
+      this.pos++;
+    } else {
+      this.current = this.newToken(TOP, c);
+    }
+  } else if (c === '!') {
+    if (this.expression.charAt(this.pos + 1) === '=') {
+      this.current = this.newToken(TOP, '!=');
+      this.pos++;
+    } else {
+      this.current = this.newToken(TOP, c);
+    }
+  } else {
+    return false;
+  }
+  this.pos++;
+
+  if (this.isOperatorEnabled(this.current.value)) {
+    return true;
+  } else {
+    this.pos = startPos;
+    return false;
+  }
+};
+
+TokenStream.prototype.isOperatorEnabled = function (op) {
+  return this.parser.isOperatorEnabled(op);
+};
+
+TokenStream.prototype.getCoordinates = function () {
+  var line = 0;
+  var column;
+  var newline = -1;
+  do {
+    line++;
+    column = this.pos - newline;
+    newline = this.expression.indexOf('\n', newline + 1);
+  } while (newline >= 0 && newline < this.pos);
+
+  return {
+    line: line,
+    column: column
+  };
+};
+
+TokenStream.prototype.parseError = function (msg) {
+  var coords = this.getCoordinates();
+  throw new Error('parse error [' + coords.line + ':' + coords.column + ']: ' + msg);
+};
+
+function ParserState(parser, tokenStream, options) {
+  this.parser = parser;
+  this.tokens = tokenStream;
+  this.current = null;
+  this.nextToken = null;
+  this.next();
+  this.savedCurrent = null;
+  this.savedNextToken = null;
+  this.allowMemberAccess = options.allowMemberAccess !== false;
+}
+
+ParserState.prototype.next = function () {
+  this.current = this.nextToken;
+  return (this.nextToken = this.tokens.next());
+};
+
+ParserState.prototype.tokenMatches = function (token, value) {
+  if (typeof value === 'undefined') {
+    return true;
+  } else if (Array.isArray(value)) {
+    return contains(value, token.value);
+  } else if (typeof value === 'function') {
+    return value(token);
+  } else {
+    return token.value === value;
+  }
+};
+
+ParserState.prototype.save = function () {
+  this.savedCurrent = this.current;
+  this.savedNextToken = this.nextToken;
+  this.tokens.save();
+};
+
+ParserState.prototype.restore = function () {
+  this.tokens.restore();
+  this.current = this.savedCurrent;
+  this.nextToken = this.savedNextToken;
+};
+
+ParserState.prototype.accept = function (type, value) {
+  if (this.nextToken.type === type && this.tokenMatches(this.nextToken, value)) {
+    this.next();
+    return true;
+  }
+  return false;
+};
+
+ParserState.prototype.expect = function (type, value) {
+  if (!this.accept(type, value)) {
+    var coords = this.tokens.getCoordinates();
+    throw new Error('parse error [' + coords.line + ':' + coords.column + ']: Expected ' + (value || type));
+  }
+};
+
+ParserState.prototype.parseAtom = function (instr) {
+  var unaryOps = this.tokens.unaryOps;
+  function isPrefixOperator(token) {
+    return token.value in unaryOps;
+  }
+
+  if (this.accept(TNAME) || this.accept(TOP, isPrefixOperator)) {
+    instr.push(new Instruction(IVAR, this.current.value));
+  } else if (this.accept(TNUMBER)) {
+    instr.push(new Instruction(INUMBER, this.current.value));
+  } else if (this.accept(TSTRING)) {
+    instr.push(new Instruction(INUMBER, this.current.value));
+  } else if (this.accept(TPAREN, '(')) {
+    this.parseExpression(instr);
+    this.expect(TPAREN, ')');
+  } else if (this.accept(TBRACKET, '[')) {
+    if (this.accept(TBRACKET, ']')) {
+      instr.push(new Instruction(IARRAY, 0));
+    } else {
+      var argCount = this.parseArrayList(instr);
+      instr.push(new Instruction(IARRAY, argCount));
+    }
+  } else {
+    throw new Error('unexpected ' + this.nextToken);
+  }
+};
+
+ParserState.prototype.parseExpression = function (instr) {
+  var exprInstr = [];
+  if (this.parseUntilEndStatement(instr, exprInstr)) {
+    return;
+  }
+  this.parseVariableAssignmentExpression(exprInstr);
+  if (this.parseUntilEndStatement(instr, exprInstr)) {
+    return;
+  }
+  this.pushExpression(instr, exprInstr);
+};
+
+ParserState.prototype.pushExpression = function (instr, exprInstr) {
+  for (var i = 0, len = exprInstr.length; i < len; i++) {
+    instr.push(exprInstr[i]);
+  }
+};
+
+ParserState.prototype.parseUntilEndStatement = function (instr, exprInstr) {
+  if (!this.accept(TSEMICOLON)) return false;
+  if (this.nextToken && this.nextToken.type !== TEOF && !(this.nextToken.type === TPAREN && this.nextToken.value === ')')) {
+    exprInstr.push(new Instruction(IENDSTATEMENT));
+  }
+  if (this.nextToken.type !== TEOF) {
+    this.parseExpression(exprInstr);
+  }
+  instr.push(new Instruction(IEXPR, exprInstr));
+  return true;
+};
+
+ParserState.prototype.parseArrayList = function (instr) {
+  var argCount = 0;
+
+  while (!this.accept(TBRACKET, ']')) {
+    this.parseExpression(instr);
+    ++argCount;
+    while (this.accept(TCOMMA)) {
+      this.parseExpression(instr);
+      ++argCount;
+    }
+  }
+
+  return argCount;
+};
+
+ParserState.prototype.parseVariableAssignmentExpression = function (instr) {
+  this.parseConditionalExpression(instr);
+  while (this.accept(TOP, '=')) {
+    var varName = instr.pop();
+    var varValue = [];
+    var lastInstrIndex = instr.length - 1;
+    if (varName.type === IFUNCALL) {
+      if (!this.tokens.isOperatorEnabled('()=')) {
+        throw new Error('function definition is not permitted');
+      }
+      for (var i = 0, len = varName.value + 1; i < len; i++) {
+        var index = lastInstrIndex - i;
+        if (instr[index].type === IVAR) {
+          instr[index] = new Instruction(IVARNAME, instr[index].value);
+        }
+      }
+      this.parseVariableAssignmentExpression(varValue);
+      instr.push(new Instruction(IEXPR, varValue));
+      instr.push(new Instruction(IFUNDEF, varName.value));
+      continue;
+    }
+    if (varName.type !== IVAR && varName.type !== IMEMBER) {
+      throw new Error('expected variable for assignment');
+    }
+    this.parseVariableAssignmentExpression(varValue);
+    instr.push(new Instruction(IVARNAME, varName.value));
+    instr.push(new Instruction(IEXPR, varValue));
+    instr.push(binaryInstruction('='));
+  }
+};
+
+ParserState.prototype.parseConditionalExpression = function (instr) {
+  this.parseOrExpression(instr);
+  while (this.accept(TOP, '?')) {
+    var trueBranch = [];
+    var falseBranch = [];
+    this.parseConditionalExpression(trueBranch);
+    this.expect(TOP, ':');
+    this.parseConditionalExpression(falseBranch);
+    instr.push(new Instruction(IEXPR, trueBranch));
+    instr.push(new Instruction(IEXPR, falseBranch));
+    instr.push(ternaryInstruction('?'));
+  }
+};
+
+ParserState.prototype.parseOrExpression = function (instr) {
+  this.parseAndExpression(instr);
+  while (this.accept(TOP, 'or')) {
+    var falseBranch = [];
+    this.parseAndExpression(falseBranch);
+    instr.push(new Instruction(IEXPR, falseBranch));
+    instr.push(binaryInstruction('or'));
+  }
+};
+
+ParserState.prototype.parseAndExpression = function (instr) {
+  this.parseComparison(instr);
+  while (this.accept(TOP, 'and')) {
+    var trueBranch = [];
+    this.parseComparison(trueBranch);
+    instr.push(new Instruction(IEXPR, trueBranch));
+    instr.push(binaryInstruction('and'));
+  }
+};
+
+var COMPARISON_OPERATORS = ['==', '!=', '<', '<=', '>=', '>', 'in'];
+
+ParserState.prototype.parseComparison = function (instr) {
+  this.parseAddSub(instr);
+  while (this.accept(TOP, COMPARISON_OPERATORS)) {
+    var op = this.current;
+    this.parseAddSub(instr);
+    instr.push(binaryInstruction(op.value));
+  }
+};
+
+var ADD_SUB_OPERATORS = ['+', '-', '||'];
+
+ParserState.prototype.parseAddSub = function (instr) {
+  this.parseTerm(instr);
+  while (this.accept(TOP, ADD_SUB_OPERATORS)) {
+    var op = this.current;
+    this.parseTerm(instr);
+    instr.push(binaryInstruction(op.value));
+  }
+};
+
+var TERM_OPERATORS = ['*', '/', '%'];
+
+ParserState.prototype.parseTerm = function (instr) {
+  this.parseFactor(instr);
+  while (this.accept(TOP, TERM_OPERATORS)) {
+    var op = this.current;
+    this.parseFactor(instr);
+    instr.push(binaryInstruction(op.value));
+  }
+};
+
+ParserState.prototype.parseFactor = function (instr) {
+  var unaryOps = this.tokens.unaryOps;
+  function isPrefixOperator(token) {
+    return token.value in unaryOps;
+  }
+
+  this.save();
+  if (this.accept(TOP, isPrefixOperator)) {
+    if (this.current.value !== '-' && this.current.value !== '+') {
+      if (this.nextToken.type === TPAREN && this.nextToken.value === '(') {
+        this.restore();
+        this.parseExponential(instr);
+        return;
+      } else if (this.nextToken.type === TSEMICOLON || this.nextToken.type === TCOMMA || this.nextToken.type === TEOF || (this.nextToken.type === TPAREN && this.nextToken.value === ')')) {
+        this.restore();
+        this.parseAtom(instr);
+        return;
+      }
+    }
+
+    var op = this.current;
+    this.parseFactor(instr);
+    instr.push(unaryInstruction(op.value));
+  } else {
+    this.parseExponential(instr);
+  }
+};
+
+ParserState.prototype.parseExponential = function (instr) {
+  this.parsePostfixExpression(instr);
+  while (this.accept(TOP, '^')) {
+    this.parseFactor(instr);
+    instr.push(binaryInstruction('^'));
+  }
+};
+
+ParserState.prototype.parsePostfixExpression = function (instr) {
+  this.parseFunctionCall(instr);
+  while (this.accept(TOP, '!')) {
+    instr.push(unaryInstruction('!'));
+  }
+};
+
+ParserState.prototype.parseFunctionCall = function (instr) {
+  var unaryOps = this.tokens.unaryOps;
+  function isPrefixOperator(token) {
+    return token.value in unaryOps;
+  }
+
+  if (this.accept(TOP, isPrefixOperator)) {
+    var op = this.current;
+    this.parseAtom(instr);
+    instr.push(unaryInstruction(op.value));
+  } else {
+    this.parseMemberExpression(instr);
+    while (this.accept(TPAREN, '(')) {
+      if (this.accept(TPAREN, ')')) {
+        instr.push(new Instruction(IFUNCALL, 0));
+      } else {
+        var argCount = this.parseArgumentList(instr);
+        instr.push(new Instruction(IFUNCALL, argCount));
+      }
+    }
+  }
+};
+
+ParserState.prototype.parseArgumentList = function (instr) {
+  var argCount = 0;
+
+  while (!this.accept(TPAREN, ')')) {
+    this.parseExpression(instr);
+    ++argCount;
+    while (this.accept(TCOMMA)) {
+      this.parseExpression(instr);
+      ++argCount;
+    }
+  }
+
+  return argCount;
+};
+
+ParserState.prototype.parseMemberExpression = function (instr) {
+  this.parseAtom(instr);
+  while (this.accept(TOP, '.') || this.accept(TBRACKET, '[')) {
+    var op = this.current;
+
+    if (op.value === '.') {
+      if (!this.allowMemberAccess) {
+        throw new Error('unexpected ".", member access is not permitted');
+      }
+
+      this.expect(TNAME);
+      instr.push(new Instruction(IMEMBER, this.current.value));
+    } else if (op.value === '[') {
+      if (!this.tokens.isOperatorEnabled('[')) {
+        throw new Error('unexpected "[]", arrays are disabled');
+      }
+
+      this.parseExpression(instr);
+      this.expect(TBRACKET, ']');
+      instr.push(binaryInstruction('['));
+    } else {
+      throw new Error('unexpected symbol: ' + op.value);
+    }
+  }
+};
+
+function add(a, b) {
+  return Number(a) + Number(b);
+}
+
+function sub(a, b) {
+  return a - b;
+}
+
+function mul(a, b) {
+  return a * b;
+}
+
+function div(a, b) {
+  return a / b;
+}
+
+function mod(a, b) {
+  return a % b;
+}
+
+function concat(a, b) {
+  if (Array.isArray(a) && Array.isArray(b)) {
+    return a.concat(b);
+  }
+  return '' + a + b;
+}
+
+function equal(a, b) {
+  return a === b;
+}
+
+function notEqual(a, b) {
+  return a !== b;
+}
+
+function greaterThan(a, b) {
+  return a > b;
+}
+
+function lessThan(a, b) {
+  return a < b;
+}
+
+function greaterThanEqual(a, b) {
+  return a >= b;
+}
+
+function lessThanEqual(a, b) {
+  return a <= b;
+}
+
+function andOperator(a, b) {
+  return Boolean(a && b);
+}
+
+function orOperator(a, b) {
+  return Boolean(a || b);
+}
+
+function inOperator(a, b) {
+  return contains(b, a);
+}
+
+function sinh(a) {
+  return ((Math.exp(a) - Math.exp(-a)) / 2);
+}
+
+function cosh(a) {
+  return ((Math.exp(a) + Math.exp(-a)) / 2);
+}
+
+function tanh(a) {
+  if (a === Infinity) return 1;
+  if (a === -Infinity) return -1;
+  return (Math.exp(a) - Math.exp(-a)) / (Math.exp(a) + Math.exp(-a));
+}
+
+function asinh(a) {
+  if (a === -Infinity) return a;
+  return Math.log(a + Math.sqrt((a * a) + 1));
+}
+
+function acosh(a) {
+  return Math.log(a + Math.sqrt((a * a) - 1));
+}
+
+function atanh(a) {
+  return (Math.log((1 + a) / (1 - a)) / 2);
+}
+
+function log10(a) {
+  return Math.log(a) * Math.LOG10E;
+}
+
+function neg(a) {
+  return -a;
+}
+
+function not(a) {
+  return !a;
+}
+
+function trunc(a) {
+  return a < 0 ? Math.ceil(a) : Math.floor(a);
+}
+
+function random(a) {
+  return Math.random() * (a || 1);
+}
+
+function factorial(a) { // a!
+  return gamma(a + 1);
+}
+
+function isInteger(value) {
+  return isFinite(value) && (value === Math.round(value));
+}
+
+var GAMMA_G = 4.7421875;
+var GAMMA_P = [
+  0.99999999999999709182,
+  57.156235665862923517, -59.597960355475491248,
+  14.136097974741747174, -0.49191381609762019978,
+  0.33994649984811888699e-4,
+  0.46523628927048575665e-4, -0.98374475304879564677e-4,
+  0.15808870322491248884e-3, -0.21026444172410488319e-3,
+  0.21743961811521264320e-3, -0.16431810653676389022e-3,
+  0.84418223983852743293e-4, -0.26190838401581408670e-4,
+  0.36899182659531622704e-5
+];
+
+// Gamma function from math.js
+function gamma(n) {
+  var t, x;
+
+  if (isInteger(n)) {
+    if (n <= 0) {
+      return isFinite(n) ? Infinity : NaN;
+    }
+
+    if (n > 171) {
+      return Infinity; // Will overflow
+    }
+
+    var value = n - 2;
+    var res = n - 1;
+    while (value > 1) {
+      res *= value;
+      value--;
+    }
+
+    if (res === 0) {
+      res = 1; // 0! is per definition 1
+    }
+
+    return res;
+  }
+
+  if (n < 0.5) {
+    return Math.PI / (Math.sin(Math.PI * n) * gamma(1 - n));
+  }
+
+  if (n >= 171.35) {
+    return Infinity; // will overflow
+  }
+
+  if (n > 85.0) { // Extended Stirling Approx
+    var twoN = n * n;
+    var threeN = twoN * n;
+    var fourN = threeN * n;
+    var fiveN = fourN * n;
+    return Math.sqrt(2 * Math.PI / n) * Math.pow((n / Math.E), n) *
+      (1 + (1 / (12 * n)) + (1 / (288 * twoN)) - (139 / (51840 * threeN)) -
+      (571 / (2488320 * fourN)) + (163879 / (209018880 * fiveN)) +
+      (5246819 / (75246796800 * fiveN * n)));
+  }
+
+  --n;
+  x = GAMMA_P[0];
+  for (var i = 1; i < GAMMA_P.length; ++i) {
+    x += GAMMA_P[i] / (n + i);
+  }
+
+  t = n + GAMMA_G + 0.5;
+  return Math.sqrt(2 * Math.PI) * Math.pow(t, n + 0.5) * Math.exp(-t) * x;
+}
+
+function stringOrArrayLength(s) {
+  if (Array.isArray(s)) {
+    return s.length;
+  }
+  return String(s).length;
+}
+
+function hypot() {
+  var sum = 0;
+  var larg = 0;
+  for (var i = 0; i < arguments.length; i++) {
+    var arg = Math.abs(arguments[i]);
+    var div;
+    if (larg < arg) {
+      div = larg / arg;
+      sum = (sum * div * div) + 1;
+      larg = arg;
+    } else if (arg > 0) {
+      div = arg / larg;
+      sum += div * div;
+    } else {
+      sum += arg;
+    }
+  }
+  return larg === Infinity ? Infinity : larg * Math.sqrt(sum);
+}
+
+function condition(cond, yep, nope) {
+  return cond ? yep : nope;
+}
+
+/**
+* Decimal adjustment of a number.
+* From @escopecz.
+*
+* @param {Number} value The number.
+* @param {Integer} exp  The exponent (the 10 logarithm of the adjustment base).
+* @return {Number} The adjusted value.
+*/
+function roundTo(value, exp) {
+  // If the exp is undefined or zero...
+  if (typeof exp === 'undefined' || +exp === 0) {
+    return Math.round(value);
+  }
+  value = +value;
+  exp = -(+exp);
+  // If the value is not a number or the exp is not an integer...
+  if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0)) {
+    return NaN;
+  }
+  // Shift
+  value = value.toString().split('e');
+  value = Math.round(+(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp)));
+  // Shift back
+  value = value.toString().split('e');
+  return +(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp));
+}
+
+function setVar(name, value, variables) {
+  if (variables) variables[name] = value;
+  return value;
+}
+
+function arrayIndex(array, index) {
+  return array[index | 0];
+}
+
+function max(array) {
+  if (arguments.length === 1 && Array.isArray(array)) {
+    return Math.max.apply(Math, array);
+  } else {
+    return Math.max.apply(Math, arguments);
+  }
+}
+
+function min(array) {
+  if (arguments.length === 1 && Array.isArray(array)) {
+    return Math.min.apply(Math, array);
+  } else {
+    return Math.min.apply(Math, arguments);
+  }
+}
+
+function arrayMap(f, a) {
+  if (typeof f !== 'function') {
+    throw new Error('First argument to map is not a function');
+  }
+  if (!Array.isArray(a)) {
+    throw new Error('Second argument to map is not an array');
+  }
+  return a.map(function (x, i) {
+    return f(x, i);
+  });
+}
+
+function arrayFold(f, init, a) {
+  if (typeof f !== 'function') {
+    throw new Error('First argument to fold is not a function');
+  }
+  if (!Array.isArray(a)) {
+    throw new Error('Second argument to fold is not an array');
+  }
+  return a.reduce(function (acc, x, i) {
+    return f(acc, x, i);
+  }, init);
+}
+
+function arrayFilter(f, a) {
+  if (typeof f !== 'function') {
+    throw new Error('First argument to filter is not a function');
+  }
+  if (!Array.isArray(a)) {
+    throw new Error('Second argument to filter is not an array');
+  }
+  return a.filter(function (x, i) {
+    return f(x, i);
+  });
+}
+
+function stringOrArrayIndexOf(target, s) {
+  if (!(Array.isArray(s) || typeof s === 'string')) {
+    throw new Error('Second argument to indexOf is not a string or array');
+  }
+
+  return s.indexOf(target);
+}
+
+function arrayJoin(sep, a) {
+  if (!Array.isArray(a)) {
+    throw new Error('Second argument to join is not an array');
+  }
+
+  return a.join(sep);
+}
+
+function sign(x) {
+  return ((x > 0) - (x < 0)) || +x;
+}
+
+var ONE_THIRD = 1/3;
+function cbrt(x) {
+  return x < 0 ? -Math.pow(-x, ONE_THIRD) : Math.pow(x, ONE_THIRD);
+}
+
+function expm1(x) {
+  return Math.exp(x) - 1;
+}
+
+function log1p(x) {
+  return Math.log(1 + x);
+}
+
+function log2(x) {
+  return Math.log(x) / Math.LN2;
+}
+
+function Parser(options) {
+  this.options = options || {};
+  this.unaryOps = {
+    sin: Math.sin,
+    cos: Math.cos,
+    tan: Math.tan,
+    asin: Math.asin,
+    acos: Math.acos,
+    atan: Math.atan,
+    sinh: Math.sinh || sinh,
+    cosh: Math.cosh || cosh,
+    tanh: Math.tanh || tanh,
+    asinh: Math.asinh || asinh,
+    acosh: Math.acosh || acosh,
+    atanh: Math.atanh || atanh,
+    sqrt: Math.sqrt,
+    cbrt: Math.cbrt || cbrt,
+    log: Math.log,
+    log2: Math.log2 || log2,
+    ln: Math.log,
+    lg: Math.log10 || log10,
+    log10: Math.log10 || log10,
+    expm1: Math.expm1 || expm1,
+    log1p: Math.log1p || log1p,
+    abs: Math.abs,
+    ceil: Math.ceil,
+    floor: Math.floor,
+    round: Math.round,
+    trunc: Math.trunc || trunc,
+    '-': neg,
+    '+': Number,
+    exp: Math.exp,
+    not: not,
+    length: stringOrArrayLength,
+    '!': factorial,
+    sign: Math.sign || sign
+  };
+
+  this.binaryOps = {
+    '+': add,
+    '-': sub,
+    '*': mul,
+    '/': div,
+    '%': mod,
+    '^': Math.pow,
+    '||': concat,
+    '==': equal,
+    '!=': notEqual,
+    '>': greaterThan,
+    '<': lessThan,
+    '>=': greaterThanEqual,
+    '<=': lessThanEqual,
+    and: andOperator,
+    or: orOperator,
+    'in': inOperator,
+    '=': setVar,
+    '[': arrayIndex
+  };
+
+  this.ternaryOps = {
+    '?': condition
+  };
+
+  this.functions = {
+    random: random,
+    fac: factorial,
+    min: min,
+    max: max,
+    hypot: Math.hypot || hypot,
+    pyt: Math.hypot || hypot, // backward compat
+    pow: Math.pow,
+    atan2: Math.atan2,
+    'if': condition,
+    gamma: gamma,
+    roundTo: roundTo,
+    map: arrayMap,
+    fold: arrayFold,
+    filter: arrayFilter,
+    indexOf: stringOrArrayIndexOf,
+    join: arrayJoin
+  };
+
+  this.consts = {
+    E: Math.E,
+    PI: Math.PI,
+    'true': true,
+    'false': false
+  };
+}
+
+Parser.prototype.parse = function (expr) {
+  var instr = [];
+  var parserState = new ParserState(
+    this,
+    new TokenStream(this, expr),
+    { allowMemberAccess: this.options.allowMemberAccess }
+  );
+
+  parserState.parseExpression(instr);
+  parserState.expect(TEOF, 'EOF');
+
+  return new Expression(instr, this);
+};
+
+Parser.prototype.evaluate = function (expr, variables) {
+  return this.parse(expr).evaluate(variables);
+};
+
+var sharedParser = new Parser();
+
+Parser.parse = function (expr) {
+  return sharedParser.parse(expr);
+};
+
+Parser.evaluate = function (expr, variables) {
+  return sharedParser.parse(expr).evaluate(variables);
+};
+
+var optionNameMap = {
+  '+': 'add',
+  '-': 'subtract',
+  '*': 'multiply',
+  '/': 'divide',
+  '%': 'remainder',
+  '^': 'power',
+  '!': 'factorial',
+  '<': 'comparison',
+  '>': 'comparison',
+  '<=': 'comparison',
+  '>=': 'comparison',
+  '==': 'comparison',
+  '!=': 'comparison',
+  '||': 'concatenate',
+  'and': 'logical',
+  'or': 'logical',
+  'not': 'logical',
+  '?': 'conditional',
+  ':': 'conditional',
+  '=': 'assignment',
+  '[': 'array',
+  '()=': 'fndef'
+};
+
+function getOptionName(op) {
+  return optionNameMap.hasOwnProperty(op) ? optionNameMap[op] : op;
+}
+
+Parser.prototype.isOperatorEnabled = function (op) {
+  var optionName = getOptionName(op);
+  var operators = this.options.operators || {};
+
+  return !(optionName in operators) || !!operators[optionName];
+};
+
+/*!
+ Based on ndef.parser, by Raphael Graf(r@undefined.ch)
+ http://www.undefined.ch/mparser/index.html
+
+ Ported to JavaScript and modified by Matthew Crumley (email@matthewcrumley.com, http://silentmatt.com/)
+
+ You are free to use and modify this code in anyway you find useful. Please leave this comment in the code
+ to acknowledge its original source. If you feel like it, I enjoy hearing about projects that use my code,
+ but don't feel like you have to let me know or ask permission.
+*/
+
+// Backwards compatibility
+var index = {
+  Parser: Parser,
+  Expression: Expression
+};
+
+/* unused harmony default export */ var __WEBPACK_DEFAULT_EXPORT__ = ((/* unused pure expression or super */ null && (index)));
+
+
+
+/***/ }),
+
 /***/ 70690:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
@@ -49731,6 +52606,7 @@ class Fetch extends (/* unused pure expression or super */ null && (Polling)) {
 /* harmony import */ var _server_game_factory_game_factory_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(5988);
 /* harmony import */ var _server_game_factory_registry_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(14142);
 /* harmony import */ var _server_game_factory_utils_prepare_payload_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(35259);
+/* harmony import */ var _server_game_factory_utils_get_current_moves_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(93228);
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -49743,6 +52619,7 @@ function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t =
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
 
 
 
@@ -49789,14 +52666,14 @@ function useGameConnection() {
       originalG: clientState.G
     });
     gameover = (_state = state) === null || _state === void 0 || (_state = _state.ctx) === null || _state === void 0 ? void 0 : _state.gameover;
-    moves = client && !gameover ? Object.entries(client.moves).reduce(function (acc, _ref) {
+    moves = !gameover ? Object.entries((0,_server_game_factory_utils_get_current_moves_js__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A)(game, state, client.playerID)).reduce(function (acc, _ref) {
       var _ref2 = _slicedToArray(_ref, 2),
         moveName = _ref2[0],
-        m = _ref2[1];
+        rawMove = _ref2[1];
       var move = function move(payload) {
-        m((0,_server_game_factory_utils_prepare_payload_js__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A)(payload));
+        client.moves[moveName]((0,_server_game_factory_utils_prepare_payload_js__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A)(payload));
       };
-      move.moveInstance = game.moves[moveName].moveInstance;
+      move.moveInstance = rawMove.moveInstance;
       return _objectSpread(_objectSpread({}, acc), {}, _defineProperty({}, moveName, move));
     }, {}) : [];
   }
@@ -50160,10 +53037,11 @@ var Is = /*#__PURE__*/function (_Condition) {
   _inherits(Is, _Condition);
   return _createClass(Is, [{
     key: "checkCondition",
-    value: function checkCondition(bgioArguments, _ref) {
+    value: function checkCondition(bgioArguments, _ref, context) {
       var target = _ref.target;
       return {
-        conditionIsMet: (0,_utils_entity_matches_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)(bgioArguments, this.rule.matcher, target)
+        target: target,
+        conditionIsMet: (0,_utils_entity_matches_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)(bgioArguments, this.rule.matcher, target, context)
       };
     }
   }]);
@@ -50181,8 +53059,13 @@ var Is = /*#__PURE__*/function (_Condition) {
 /* harmony export */ });
 /* harmony import */ var wackson__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(92244);
 /* harmony import */ var _registry_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(14142);
-/* harmony import */ var _utils_create_payload_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(30396);
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
@@ -50190,27 +53073,22 @@ function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" 
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
 
-
 function simulateMove(bgioArguments, payload, context) {
-  var _simulatedPayload$tar;
   var simulatedG = (0,wackson__WEBPACK_IMPORTED_MODULE_0__/* .deserialize */ .i)((0,wackson__WEBPACK_IMPORTED_MODULE_0__/* .serialize */ .l)(bgioArguments.G), _registry_js__WEBPACK_IMPORTED_MODULE_1__/* .registry */ .u);
   var newBgioArguments = _objectSpread(_objectSpread({}, bgioArguments), {}, {
     G: simulatedG
   });
-  var simulatedPayload = _objectSpread({}, payload);
-  if (payload.target) {
-    simulatedPayload.target = simulatedG.bank.locate(payload.target.entityId);
-  }
-  if (payload.targets) {
-    simulatedPayload.targets = payload.targets.map(function (t) {
-      return simulatedG.bank.locate(t.entityId);
-    });
-  }
-  context.moveInstance.doMove(newBgioArguments, (0,_utils_create_payload_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(context.moveInstance.rule.type, (_simulatedPayload$tar = simulatedPayload.targets) !== null && _simulatedPayload$tar !== void 0 ? _simulatedPayload$tar : [simulatedPayload.target]), context, true);
-  return {
-    simulatedG: simulatedG,
-    simulatedPayload: simulatedPayload
-  };
+  var simulatedPayload = _objectSpread(_objectSpread({}, payload), {}, {
+    arguments: {}
+  });
+  Object.entries(payload.arguments).forEach(function (_ref) {
+    var _ref2 = _slicedToArray(_ref, 2),
+      argName = _ref2[0],
+      arg = _ref2[1];
+    simulatedPayload.arguments[argName] = arg["abstract"] ? arg : simulatedG.bank.locate(typeof arg === 'number' ? arg : arg.entityId);
+  });
+  context.moveInstance.doMove(newBgioArguments, simulatedPayload, context, true);
+  return simulatedG;
 }
 
 /***/ }),
@@ -50231,7 +53109,7 @@ function simulateMove(bgioArguments, payload, context) {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `.content{display:block}.grid{box-sizing:border-box;gap:1px;background-color:#333;padding:1px;width:500px}.grid__cell{background-color:#fff;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:12px;color:#666;position:relative}.grid__cell .space{height:100%;width:100%}.roomGame{border:1px solid gray;border-radius:8px}.space{transition:100ms background-color}.space--clickable{background-color:rgba(144,238,144,.4)}.space--targeted{background-color:gray}.space__entity-grid{box-sizing:border-box;gap:3%;padding:3%}.entity{height:100%;width:100%}.entity.player-0{background-color:pink}.entity.player-1{background-color:#add8e6}.debug-panel .pane{width:420px !important}`, ""]);
+___CSS_LOADER_EXPORT___.push([module.id, `.content{display:block}.shared-board>.space{margin:20px}.personal-board{margin:20px}.grid{box-sizing:border-box;background-color:#333;width:500px}.grid__cell{background-color:#fff;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:12px;color:#666;position:relative}.grid__cell .space{height:100%;width:100%}.roomGame{border:1px solid gray;border-radius:8px}.space{display:inline-block;transition:100ms background-color;border:1px solid gray;box-sizing:border-box;min-width:10px;min-height:10px}.space--clickable{background-color:rgba(144,238,144,.4)}.space--targeted{background-color:gray}.space__entity-grid{box-sizing:border-box}.entity{height:100%;width:100%;box-sizing:border-box;border:1px solid #000}.entity--clickable{background-color:rgba(144,238,144,.4)}.entity.player-0{background-color:pink}.entity.player-1{background-color:#add8e6}.debug-panel .pane{width:420px !important}`, ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -51033,8 +53911,10 @@ var StorageAction;
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
 /* harmony import */ var wackson__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(75554);
 /* harmony import */ var _server_game_factory_utils_prepare_payload_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(35259);
-/* harmony import */ var _server_game_factory_utils_create_payload_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(30396);
-/* harmony import */ var _server_game_factory_utils_simulate_move_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(75319);
+/* harmony import */ var _server_game_factory_utils_simulate_move_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(75319);
+/* harmony import */ var _server_game_factory_utils_get_steps_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(15693);
+/* harmony import */ var _server_game_factory_utils_create_payload_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(30396);
+/* harmony import */ var _server_game_factory_utils_check_conditions_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(82326);
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -51051,6 +53931,12 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+// Before sending a move to the back end, multiple front end steps
+// might need to occur (e.g. select a piece then a destination).
+// That flow is managed here.
+
+
+
 
 
 
@@ -51059,17 +53945,6 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 var GameContext = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.createContext)({
   dispatch: function dispatch() {}
 });
-
-// TODO: make this based on move type instead of move name, using automatic: true as a hint for which entities don't require a step
-// maybe build partial payload instead of targets array and check with isValid or similar
-var clicksMap = {
-  placePlayerMarker: [function (bgioState, moveRule, context) {
-    return bgioState.G.bank.findAll(bgioState, moveRule.arguments.destination, context);
-  }],
-  placeDisc: [function (bgioState, moveRule, context) {
-    return bgioState.G.bank.findAll(bgioState, moveRule.arguments.destination, context);
-  }]
-};
 function GameProvider(_ref) {
   var gameConnection = _ref.gameConnection,
     children = _ref.children,
@@ -51115,6 +53990,8 @@ function GameProvider(_ref) {
           return _objectSpread(_objectSpread({}, initialState), {}, {
             winnerAfterMove: getWinnerAfterMove(gameConnection, action.move.moveInstance, action.movePayload)
           });
+        case 'clear':
+          return initialState;
       }
       return state;
     }, initialState),
@@ -51133,19 +54010,20 @@ function GameProvider(_ref) {
         moveName = _ref7[0],
         move = _ref7[1];
       return _objectSpread(_objectSpread({}, move.moveInstance.rule), {}, {
-        steps: clicksMap[move.moveInstance.rule.type],
-        // is this unused?
         moveName: moveName
       });
     });
     possibleMoveRules.forEach(function (moveRule) {
-      var moveSteps = clicksMap[moveRule.moveName];
+      var moveIsAllowed = (0,_server_game_factory_utils_check_conditions_js__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(bgioState, moveRule, {}, {
+        moveInstance: moves[moveRule.moveName].moveInstance
+      }).conditionsAreMet;
+      var moveSteps = (0,_server_game_factory_utils_get_steps_js__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A)(bgioState, moveRule, {
+        moveInstance: moves[moveRule.moveName].moveInstance
+      });
       var lastStep = moveSteps === null || moveSteps === void 0 ? void 0 : moveSteps[currentMoveState.stepIndex - 1];
       var currentStep = moveSteps === null || moveSteps === void 0 ? void 0 : moveSteps[currentMoveState.stepIndex];
       var finishedOnLastStep = moveSteps && !!lastStep && !currentStep;
-      var clickable = new Set((currentStep === null || currentStep === void 0 ? void 0 : currentStep(bgioState, moveRule, {
-        moveInstance: moves[moveRule.moveName].moveInstance
-      })) || []);
+      var clickable = new Set(moveIsAllowed && (currentStep === null || currentStep === void 0 ? void 0 : currentStep.getClickable()) || []);
       possibleMoveMeta[moveRule.moveName] = {
         finishedOnLastStep: finishedOnLastStep,
         clickable: clickable
@@ -51171,7 +54049,10 @@ function GameProvider(_ref) {
         var moveName = possibleMoveNames[0];
         if (possibleMoveMeta[moveName].finishedOnLastStep) {
           var move = moves[moveName];
-          var movePayload = (0,_server_game_factory_utils_create_payload_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)(move.moveInstance.rule.type, currentMoveState.targets);
+          var moveRule = move.moveInstance.rule;
+          var movePayload = (0,_server_game_factory_utils_create_payload_js__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)(bgioState, moveRule, currentMoveState.targets, {
+            moveInstance: moves[moveRule.name].moveInstance
+          });
           move(movePayload);
           dispatch({
             type: 'moveMade',
@@ -51184,6 +54065,13 @@ function GameProvider(_ref) {
   }, [currentMoveState.targets]);
   var allClickableToUse = currentMoveState.winnerAfterMove ? new Set() : allClickable;
   var currentMoveTargetsToUse = currentMoveState.winnerAfterMove ? [] : currentMoveState.targets;
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    if (gameConnection.state._stateID === 0) {
+      dispatch({
+        type: 'clear'
+      });
+    }
+  }, [gameConnection.state._stateID]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(GameContext.Provider, {
     value: {
       dispatch: dispatch,
@@ -51194,10 +54082,9 @@ function GameProvider(_ref) {
 }
 function getWinnerAfterMove(gameConnection, moveInstance, movePayload) {
   var _gameConnection$game$, _gameConnection$game;
-  var _simulateMove = (0,_server_game_factory_utils_simulate_move_js__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A)(gameConnection.state, (0,_server_game_factory_utils_prepare_payload_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(movePayload), {
-      moveInstance: moveInstance
-    }),
-    simulatedG = _simulateMove.simulatedG;
+  var simulatedG = (0,_server_game_factory_utils_simulate_move_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)(gameConnection.state, (0,_server_game_factory_utils_prepare_payload_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(movePayload), {
+    moveInstance: moveInstance
+  });
   return (_gameConnection$game$ = (_gameConnection$game = gameConnection.game).endIf) === null || _gameConnection$game$ === void 0 ? void 0 : _gameConnection$game$.call(_gameConnection$game, _objectSpread(_objectSpread({}, gameConnection.state), {}, {
     G: JSON.parse((0,wackson__WEBPACK_IMPORTED_MODULE_1__/* .serialize */ .l)(simulatedG))
   }));
@@ -52474,9 +55361,12 @@ module.exports = baseProperty;
 /* harmony export */   A: () => (/* binding */ ForEach)
 /* harmony export */ });
 /* harmony import */ var _move_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20426);
-/* harmony import */ var _utils_create_payload_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(30396);
+/* harmony import */ var _utils_resolve_arguments_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(26750);
 /* harmony import */ var _move_factory_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(54101);
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
 function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
 function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
@@ -52504,7 +55394,16 @@ var ForEach = /*#__PURE__*/function (_Move) {
       var _this = this;
       var targets = _ref.arguments.targets;
       targets.forEach(function (target) {
-        (0,_move_factory_js__WEBPACK_IMPORTED_MODULE_2__/* .getMoveInstance */ .R)(_this.rule.move).doMove(bgioArguments, (0,_utils_create_payload_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)(_this.rule.move.type, [target]), context);
+        var loopContext = _objectSpread(_objectSpread({}, context), {}, {
+          loopTarget: target
+        });
+        var payload = {
+          arguments: {}
+        };
+        var resolvedPayload = {
+          arguments: (0,_utils_resolve_arguments_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)(bgioArguments, _this.rule.move, payload, loopContext)
+        };
+        (0,_move_factory_js__WEBPACK_IMPORTED_MODULE_2__/* .getMoveInstance */ .R)(_this.rule.move).doMove(bgioArguments, resolvedPayload, loopContext);
       });
     }
   }]);
@@ -53198,9 +56097,11 @@ exports.diffAny = diffAny;
 
 
 function Entity(_ref) {
+  var _entity$rule$displayP;
   var entity = _ref.entity;
   var _useGame = (0,_contexts_game_context_js__WEBPACK_IMPORTED_MODULE_1__/* .useGame */ .I)(),
-    allClickable = _useGame.allClickable;
+    allClickable = _useGame.allClickable,
+    dispatch = _useGame.dispatch;
   var isClickable = allClickable.has(entity);
   var attributes = entity.attributes;
   switch (attributes.type) {
@@ -53216,8 +56117,21 @@ function Entity(_ref) {
       });
     default:
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-        className: ['entity', attributes.player && "player-".concat(attributes.player), allClickable.has(entity) && 'space--clickable'].filter(Boolean).join(' ')
-      });
+        onClick: function onClick(e) {
+          if (isClickable) {
+            e.stopPropagation();
+            dispatch({
+              type: 'click',
+              target: entity
+            });
+          }
+        },
+        className: ['entity', attributes.player && "player-".concat(attributes.player), allClickable.has(entity) && 'entity--clickable'].filter(Boolean).join(' ')
+      }, (_entity$rule$displayP = entity.rule.displayProperties) === null || _entity$rule$displayP === void 0 ? void 0 : _entity$rule$displayP.map(function (property, i) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+          key: i
+        }, property, ": ", entity.attributes[property]);
+      }));
   }
 }
 
@@ -54207,7 +57121,7 @@ function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 
-function checkConditions(bgioArguments, _ref, payload, context) {
+function checkConditions(bgioArguments, _ref, payload, context, escapeOnSuccess) {
   var _ref$conditions = _ref.conditions,
     conditions = _ref$conditions === void 0 ? [] : _ref$conditions;
   var results = [];
@@ -54218,8 +57132,11 @@ function checkConditions(bgioArguments, _ref, payload, context) {
     for (_iterator.s(); !(_step = _iterator.n()).done;) {
       var conditionRule = _step.value;
       var result = (0,_condition_condition_factory_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)(conditionRule).check(bgioArguments, payload, context);
-      if (!result.conditionIsMet) {
+      if (!result.conditionIsMet && !escapeOnSuccess) {
         failedAt = conditionRule;
+        break;
+      } else if (result.conditionIsMet && escapeOnSuccess) {
+        results.push(result);
         break;
       } else {
         results.push(result);
@@ -54810,7 +57727,7 @@ var api = init(defaultConverter, { path: '/' });
 /* harmony import */ var lodash_debounce__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(53576);
 /* harmony import */ var lodash_debounce__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash_debounce__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _server_tic_tac_toe_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(51026);
-/* harmony import */ var _server_tic_tac_two_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(85664);
+/* harmony import */ var _server_eights_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(41038);
 /* harmony import */ var _server_connect_four_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(95979);
 /* harmony import */ var _server_reversi_json__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(97752);
 /* harmony import */ var _server_reversi2_json__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(18082);
@@ -54827,21 +57744,28 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+var exampleGames = [{
+  name: 'Three in a Row',
+  rules: JSON.stringify(_server_tic_tac_toe_json__WEBPACK_IMPORTED_MODULE_2__, null, 2)
+}, {
+  name: 'Four in a Row but With Gravity',
+  rules: JSON.stringify(_server_connect_four_json__WEBPACK_IMPORTED_MODULE_4__, null, 2)
+}, {
+  name: 'Forth and Back White and Black',
+  rules: JSON.stringify(_server_reversi2_json__WEBPACK_IMPORTED_MODULE_6__, null, 2)
+}, {
+  name: 'Discharged for Emotional Instability Eights',
+  rules: JSON.stringify(_server_eights_json__WEBPACK_IMPORTED_MODULE_3__, null, 2)
+}];
 function GameEditor(_ref) {
   var initialGameName = _ref.initialGameName,
     initialGameRules = _ref.initialGameRules,
     saveGame = _ref.saveGame;
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(
-    // initialGameRules || JSON.stringify(ticTacTwo, null, 2)
-    // initialGameRules || JSON.stringify(ticTacToe, null, 2)
-    // initialGameRules || JSON.stringify(connectFour, null, 2)
-    initialGameRules || JSON.stringify(_server_reversi_json__WEBPACK_IMPORTED_MODULE_5__, null, 2)
-    // initialGameRules || JSON.stringify(reversi2, null, 2)
-    ),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(initialGameRules || ''),
     _useState2 = _slicedToArray(_useState, 2),
     gameRules = _useState2[0],
     setGameRules = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(initialGameName),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(initialGameName || ''),
     _useState4 = _slicedToArray(_useState3, 2),
     gameName = _useState4[0],
     setGameName = _useState4[1];
@@ -54857,7 +57781,17 @@ function GameEditor(_ref) {
       setGameMeta.cancel();
     };
   }, [setGameMeta, gameName, gameRules]);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("textarea", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, exampleGames.map(function (_ref2, i) {
+    var name = _ref2.name,
+      rules = _ref2.rules;
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+      key: i,
+      onClick: function onClick() {
+        setGameRules(rules);
+        setGameName(name);
+      }
+    }, name);
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("textarea", {
     onChange: function onChange(e) {
       setGameRules(e.target.value);
     },
@@ -55471,11 +58405,45 @@ const DEFAULT_MAX_DELAY_MS = 5 * 60 * 1000;
 
 /***/ }),
 
-/***/ 85664:
-/***/ ((module) => {
+/***/ 85541:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-module.exports = {};
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ TakeFrom)
+/* harmony export */ });
+/* harmony import */ var _move_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20426);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function _possibleConstructorReturn(t, e) { if (e && ("object" == _typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return _assertThisInitialized(t); }
+function _assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
+function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
+function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
+
+var TakeFrom = /*#__PURE__*/function (_Move) {
+  function TakeFrom() {
+    _classCallCheck(this, TakeFrom);
+    return _callSuper(this, TakeFrom, arguments);
+  }
+  _inherits(TakeFrom, _Move);
+  return _createClass(TakeFrom, [{
+    key: "do",
+    value: function _do(bgioArguments, _ref) {
+      var _ref$arguments = _ref.arguments,
+        source = _ref$arguments.source,
+        destination = _ref$arguments.destination;
+      destination.placeEntity(source.takeOne(this.rule.arguments.source.position));
+    }
+  }]);
+}(_move_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
+
 
 /***/ }),
 
@@ -57063,6 +60031,7 @@ function DefaultGlobalNotFound() {
 /* harmony import */ var _server_game_factory_game_factory_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(5988);
 /* harmony import */ var _server_game_factory_registry_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(14142);
 /* harmony import */ var _server_game_factory_utils_prepare_payload_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(35259);
+/* harmony import */ var _server_game_factory_utils_get_current_moves_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(93228);
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -57075,6 +60044,7 @@ function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t =
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
 
 
 
@@ -57095,20 +60065,18 @@ function useSinglePlayerGame(gameRules, numPlayers) {
   var moves;
   var gameover;
   if (game && clientState) {
-    var _state;
     state = _objectSpread(_objectSpread({}, clientState), {}, {
       G: (0,wackson__WEBPACK_IMPORTED_MODULE_1__/* .deserialize */ .i)(JSON.stringify(clientState.G), _server_game_factory_registry_js__WEBPACK_IMPORTED_MODULE_4__/* .registry */ .u),
       originalG: clientState.G
     });
-    gameover = (_state = state) === null || _state === void 0 || (_state = _state.ctx) === null || _state === void 0 ? void 0 : _state.gameover;
-    moves = client && !gameover ? Object.entries(client.moves).reduce(function (acc, _ref) {
+    moves = !gameover ? Object.entries((0,_server_game_factory_utils_get_current_moves_js__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(game, state)).reduce(function (acc, _ref) {
       var _ref2 = _slicedToArray(_ref, 2),
         moveName = _ref2[0],
-        m = _ref2[1];
+        rawMove = _ref2[1];
       var move = function move(payload) {
-        m((0,_server_game_factory_utils_prepare_payload_js__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)(payload));
+        client.moves[moveName]((0,_server_game_factory_utils_prepare_payload_js__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)(payload));
       };
-      move.moveInstance = game.moves[moveName].moveInstance;
+      move.moveInstance = rawMove.moveInstance;
       return _objectSpread(_objectSpread({}, acc), {}, _defineProperty({}, moveName, move));
     }, {}) : [];
   }
@@ -59576,6 +62544,28 @@ const fromUtf8 = (input) => new TextEncoder().encode(input);
 
 /***/ }),
 
+/***/ 93228:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ getCurrentMoves)
+/* harmony export */ });
+// get the most specific set of moves for current stage/phase
+// todo: investigate - game.moves is undefined when starting new game after existing game in editor?
+function getCurrentMoves(game, state, playerID) {
+  var _state$ctx$activePlay, _game$phases$phaseNam, _game$phases, _phaseOrRoot$turn$sta, _phaseOrRoot$turn, _stageOrPhaseOrRoot$m;
+  var phaseName = state.ctx.phase;
+
+  // currentPlayer used for single player editor mode
+  var stageName = (_state$ctx$activePlay = state.ctx.activePlayers) === null || _state$ctx$activePlay === void 0 ? void 0 : _state$ctx$activePlay[playerID !== null && playerID !== void 0 ? playerID : state.ctx.currentPlayer];
+  var phaseOrRoot = (_game$phases$phaseNam = (_game$phases = game.phases) === null || _game$phases === void 0 ? void 0 : _game$phases[phaseName]) !== null && _game$phases$phaseNam !== void 0 ? _game$phases$phaseNam : game;
+  var stageOrPhaseOrRoot = (_phaseOrRoot$turn$sta = (_phaseOrRoot$turn = phaseOrRoot.turn) === null || _phaseOrRoot$turn === void 0 || (_phaseOrRoot$turn = _phaseOrRoot$turn.stages) === null || _phaseOrRoot$turn === void 0 ? void 0 : _phaseOrRoot$turn[stageName]) !== null && _phaseOrRoot$turn$sta !== void 0 ? _phaseOrRoot$turn$sta : phaseOrRoot;
+  return (_stageOrPhaseOrRoot$m = stageOrPhaseOrRoot.moves) !== null && _stageOrPhaseOrRoot$m !== void 0 ? _stageOrPhaseOrRoot$m : {};
+}
+
+/***/ }),
+
 /***/ 93792:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -59738,6 +62728,50 @@ function n(n){for(var r=arguments.length,t=Array(r>1?r-1:0),e=1;e<r;e++)t[e-1]=a
 
 /***/ }),
 
+/***/ 94887:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ PlaceNew)
+/* harmony export */ });
+/* harmony import */ var _move_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20426);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function _possibleConstructorReturn(t, e) { if (e && ("object" == _typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return _assertThisInitialized(t); }
+function _assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
+function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
+function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
+
+var PlaceNew = /*#__PURE__*/function (_Move) {
+  function PlaceNew() {
+    _classCallCheck(this, PlaceNew);
+    return _callSuper(this, PlaceNew, arguments);
+  }
+  _inherits(PlaceNew, _Move);
+  return _createClass(PlaceNew, [{
+    key: "do",
+    value: function _do(bgioArguments, _ref, context) {
+      var _this = this;
+      var destination = _ref.arguments.destination;
+      var entities = this.rule.matchMultiple ? bgioArguments.G.bank.getMultiple(bgioArguments, this.rule.entity, this.rule.count, context) : [bgioArguments.G.bank.getOne(bgioArguments, this.rule.entity, context)];
+      entities.forEach(function (entity) {
+        destination.placeEntity(entity, _this.rule.position);
+      });
+    }
+  }]);
+}(_move_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
+
+
+/***/ }),
+
 /***/ 95003:
 /***/ ((module) => {
 
@@ -59821,6 +62855,8 @@ function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new T
 function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
 
 
+
+// todo: invariant conditions like "is one of the allowed values"
 var SetState = /*#__PURE__*/function (_Move) {
   function SetState() {
     _classCallCheck(this, SetState);
@@ -59829,9 +62865,14 @@ var SetState = /*#__PURE__*/function (_Move) {
   _inherits(SetState, _Move);
   return _createClass(SetState, [{
     key: "do",
-    value: function _do(bgioArguments, _ref) {
-      var entity = _ref.arguments.entity;
-      entity.state = _objectSpread(_objectSpread({}, entity.state), (0,_utils_resolve_properties_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)(bgioArguments, this.rule.state));
+    value: function _do(bgioArguments, _ref, context) {
+      var _entity$state;
+      var _ref$arguments = _ref.arguments,
+        entity = _ref$arguments.entity,
+        state = _ref$arguments.state;
+      entity.state = _objectSpread(_objectSpread({}, entity.state), (0,_utils_resolve_properties_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)(bgioArguments, _defineProperty({}, state.property, state.value), _objectSpread(_objectSpread({}, context), {}, {
+        currentValue: (_entity$state = entity.state) === null || _entity$state === void 0 ? void 0 : _entity$state[state.property]
+      })));
     }
   }]);
 }(_move_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
@@ -60155,7 +63196,7 @@ module.exports = baseMatchesProperty;
 /***/ ((module) => {
 
 "use strict";
-module.exports = {};
+module.exports = /*#__PURE__*/JSON.parse('{"entities":[{"name":"mainGrid","type":"Grid","width":7,"height":6},{"name":"playerMarker","perPlayer":true,"count":"Infinity"}],"sharedBoard":[{"name":"mainGrid"}],"minPlayers":2,"maxPlayers":2,"turn":{"minMoves":1,"maxMoves":1},"moves":{"placePlayerMarker":{"type":"PlaceNew","entity":{"conditions":[{"type":"Is","matcher":{"name":"playerMarker","player":"CurrentPlayer"}}]},"arguments":{"destination":{"playerChoice":true,"conditions":[{"type":"Is","matcher":{"type":"Space"}},{"type":"Not","conditions":[{"type":"Contains"}]},{"type":"Not","conditions":[{"target":{"targetingType":"RelativeCoordinates","location":[0,1]},"type":"Not","conditions":[{"type":"Contains"}]}]}]}}}},"endIf":[{"conditions":[{"target":{"conditions":[{"type":"Is","matcher":{"name":"mainGrid"}}]},"type":"ContainsLine","length":4,"spaceGroupConditions":[{"type":"ContainsSame","properties":["player"]}],"spaceConditions":[{"type":"Contains"}]}],"result":{"winner":{"contextPath":["results",0,"matches",0,"spaces",0,"entities",0,"rule","player"]}}},{"conditions":[{"type":"EverySpace","target":{"conditions":[{"type":"Is","matcher":{"name":"mainGrid"}}]},"spaceConditions":[{"type":"Contains"}]}],"result":{"draw":true}}]}');
 
 /***/ }),
 
@@ -60195,29 +63236,41 @@ var BankSlot = /*#__PURE__*/function () {
   }
   return _createClass(BankSlot, [{
     key: "getOne",
-    value: function getOne(bgioArguments, options) {
-      return this.getMultiple(bgioArguments, 1, options)[0];
+    value: function getOne(bgioArguments, options, context) {
+      return this.getMultiple(bgioArguments, 1, options, context)[0];
     }
   }, {
     key: "getMultiple",
-    value: function getMultiple(bgioArguments, count, options) {
+    value: function getMultiple(bgioArguments) {
       var _this = this;
+      var count = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Infinity;
+      var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+      var context = arguments.length > 3 ? arguments[3] : undefined;
       var toReturn = [];
-      if (this.remaining >= count) {
-        if (this.remaining) {
-          this.remaining -= count;
-        }
-        var remainder = count - this.pool.length;
-        toReturn.push.apply(toReturn, _toConsumableArray(this.pool.splice(0, count)));
-        if (remainder > 0) {
-          toReturn.push.apply(toReturn, _toConsumableArray(Array.from(new Array(remainder)).map(function () {
-            return _this.bank.createEntity(_this.rule);
-          })));
-        }
+      if (this.remaining === Infinity && count === Infinity) {
+        throw new Error("Cannot get infinite pieces from slot with infinite remaining: ".concat(this.rule.name));
+      }
+      if (count !== Infinity && count > this.remaining) {
+        throw new Error("Requested ".concat(count, " pieces but only ").concat(this.remaining, " available in slot: ").concat(this.rule.name));
+      }
+
+      // Determine actual count to fetch
+      var actualCount = count === Infinity ? this.remaining : count;
+      if (this.remaining !== Infinity) {
+        this.remaining -= actualCount;
+      }
+      var fromPool = Math.min(actualCount, this.pool.length);
+      toReturn.push.apply(toReturn, _toConsumableArray(this.pool.splice(0, fromPool)));
+      var remainder = actualCount - fromPool;
+      if (remainder > 0) {
+        toReturn.push.apply(toReturn, _toConsumableArray(Array.from(new Array(remainder)).map(function () {
+          return _this.bank.createEntity(_this.rule);
+        })));
       }
       if (options.state) {
+        var newState = (0,_utils_resolve_properties_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)(bgioArguments, options.state, context);
         toReturn.forEach(function (entity) {
-          entity.state = _objectSpread(_objectSpread({}, entity.state), (0,_utils_resolve_properties_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)(bgioArguments, options.state));
+          entity.state = _objectSpread(_objectSpread({}, entity.state), newState);
         });
       }
       return toReturn;
@@ -60421,6 +63474,53 @@ function Grid(_ref) {
     }));
   }));
 }
+
+/***/ }),
+
+/***/ 96714:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ Or)
+/* harmony export */ });
+/* harmony import */ var _condition_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(47978);
+/* harmony import */ var _utils_check_conditions_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(82326);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function _possibleConstructorReturn(t, e) { if (e && ("object" == _typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return _assertThisInitialized(t); }
+function _assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
+function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
+function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
+
+
+var Or = /*#__PURE__*/function (_Condition) {
+  function Or() {
+    _classCallCheck(this, Or);
+    return _callSuper(this, Or, arguments);
+  }
+  _inherits(Or, _Condition);
+  return _createClass(Or, [{
+    key: "checkCondition",
+    value: function checkCondition(bgioArguments, payload, context) {
+      var _checkConditions = (0,_utils_check_conditions_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)(bgioArguments, this.rule, payload, context, true),
+        results = _checkConditions.results;
+      return {
+        conditionIsMet: results.some(function (r) {
+          return r.conditionIsMet;
+        })
+      };
+    }
+  }]);
+}(_condition_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
+
 
 /***/ }),
 
@@ -60861,7 +63961,7 @@ function svelteSSRDetect() {
 /***/ ((module) => {
 
 "use strict";
-module.exports = /*#__PURE__*/JSON.parse('{"entities":[{"name":"mainGrid","type":"Grid","width":8,"height":8},{"name":"disc","state":{"player":"0"},"count":"Infinity"}],"sharedBoard":[{"name":"mainGrid"}],"initialPlacements":[{"entity":{"name":"disc","state":{"player":"0"}},"destination":{"index":27}},{"entity":{"name":"disc","state":{"player":"0"}},"destination":{"index":36}},{"entity":{"name":"disc","state":{"player":"1"}},"destination":{"index":28}},{"entity":{"name":"disc","state":{"player":"1"}},"destination":{"index":35}}],"minPlayers":2,"maxPlayers":2,"turn":{"minMoves":1,"maxMoves":1},"moves":{"placeDisc":{"type":"MoveEntity","arguments":{"entity":{"automatic":true,"location":"bank","matcher":{"name":"disc"},"state":{"player":"Current"}},"destination":{"conditions":[{"type":"Is","matcher":{"type":"Space"}},{"type":"Not","conditions":[{"type":"Contains"}]},{"type":"Would","conditions":[{"type":"InLine","sequence":[{"conditions":[{"type":"Contains","conditions":[{"type":"Is","matcher":{"player":"Current"}}]}]},{"minCount":1,"conditions":[{"type":"Not","conditions":[{"type":"Contains","conditions":[{"type":"Is","matcher":{"player":"Current"}}]}]},{"type":"ContainsSame","properties":["player"]}]},{"conditions":[{"type":"Contains","conditions":[{"type":"Is","matcher":{"player":"Current"}}]}]}]}]}]}},"then":[{"type":"ForEach","arguments":{"targets":{"automatic":true,"contextPath":["moveConditionResults",0,"conditionResults","destination","results",2,"results",0,"matches",{"flatten":true,"map":["entities"]},{"flatten":true}]}},"move":{"type":"ForEach","arguments":{"targets":{}},"move":{"type":"SetState","arguments":{"entity":{}},"state":{"player":"Current"}}}}]}},"endIf":[]}');
+module.exports = {};
 
 /***/ }),
 
