@@ -196,23 +196,22 @@
       }],
       "result": {
         "winners": {
-          "mapMax": {
-            "targets": {
-              "type": "ctxPath",
-              "path": ["playOrder"]
-            },
-            "mapping": {
-              "type": "count",
-              "conditions": [{
-                "type": "Is",
-                "matcher": {
-                  "player": {
-                    "type": "contextPath",
-                    "path": [ "loopTarget" ]
-                  }
+          "type": "mapMax",
+          "targets": {
+            "type": "ctxPath",
+            "path": ["playOrder"]
+          },
+          "mapping": {
+            "type": "count",
+            "conditions": [{
+              "type": "Is",
+              "matcher": {
+                "player": {
+                  "type": "contextPath",
+                  "path": [ "loopTarget" ]
                 }
-              }]
-            }
+              }
+            }]
           }
         }
       }

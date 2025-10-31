@@ -142,7 +142,7 @@
         {
           "type": "ForEach",
           "arguments": {
-            "targets": { "literal": [0,1,2,3,4,5] }
+            "targets": { "literal": [0] }
           },
           "move": {
             "type": "ForEach",
@@ -318,42 +318,40 @@
                           {
                             "type": "Is",
                             "matcher": {
-                              "pick": {
-                                "properties": ["suit"],
-                                "target": {
-                                  "conditions": [
-                                    {
-                                      "type": "Is",
-                                      "target": { "type": "Parent" },
-                                      "matcher": { "name": "discard" }
-                                    },
-                                    {
-                                      "type": "Position",
-                                      "position": "First"
-                                    }
-                                  ]
-                                }
+                              "type": "Pick",
+                              "properties": ["suit"],
+                              "target": {
+                                "conditions": [
+                                  {
+                                    "type": "Is",
+                                    "target": { "type": "Parent" },
+                                    "matcher": { "name": "discard" }
+                                  },
+                                  {
+                                    "type": "Position",
+                                    "position": "First"
+                                  }
+                                ]
                               }
                             }
                           },
                           {
                             "type": "Is",
                             "matcher": {
-                              "pick": {
-                                "properties": ["value"],
-                                "target": {
-                                  "conditions": [
-                                    {
-                                      "type": "Is",
-                                      "target": { "type": "Parent" },
-                                      "matcher": { "name": "discard" }
-                                    },
-                                    {
-                                      "type": "Position",
-                                      "position": "First"
-                                    }
-                                  ]
-                                }
+                              "type": "Pick",
+                              "properties": ["value"],
+                              "target": {
+                                "conditions": [
+                                  {
+                                    "type": "Is",
+                                    "target": { "type": "Parent" },
+                                    "matcher": { "name": "discard" }
+                                  },
+                                  {
+                                    "type": "Position",
+                                    "position": "First"
+                                  }
+                                ]
                               }
                             }
                           }
@@ -539,6 +537,7 @@
               "state": {
                 "property": "value",
                 "value": {
+                  "type": "expression",
                   "expression": "existingScore + sum(faceValues)",
                   "arguments": {
                     "existingScore": {
@@ -546,34 +545,34 @@
                       "path": ["currentValue"]
                     },
                     "faceValues": {
-                      "map": {
-                        "targets": {
-                          "matchMultiple": true,
-                          "conditions": [
-                            {
-                              "type": "Is",
-                              "target": { "type": "Parent" },
-                              "matcher": {
-                                "name": "hand",
-                                "player": {
-                                  "type": "contextPath",
-                                  "path": [ "loopTarget" ]
-                                }
+                      "type": "map",
+                      "targets": {
+                        "matchMultiple": true,
+                        "conditions": [
+                          {
+                            "type": "Is",
+                            "target": { "type": "Parent" },
+                            "matcher": {
+                              "name": "hand",
+                              "player": {
+                                "type": "contextPath",
+                                "path": [ "loopTarget" ]
                               }
                             }
-                          ]
-                        },
-                        "mapping": {
-                          "expression": "cardValue == 8 ? 50 : (cardValue >= 10 and cardValue <= 13) ? 10 : cardValue",
-                          "arguments": {
-                            "cardValue": {
-                              "type": "RelativePath",
-                              "target": {
-                                "type": "contextPath",
-                                "path": ["loopTarget"]
-                              },
-                              "path": ["value"]
-                            }
+                          }
+                        ]
+                      },
+                      "mapping": {
+                        "type": "expression",
+                        "expression": "cardValue == 8 ? 50 : (cardValue >= 10 and cardValue <= 13) ? 10 : cardValue",
+                        "arguments": {
+                          "cardValue": {
+                            "type": "RelativePath",
+                            "target": {
+                              "type": "contextPath",
+                              "path": ["loopTarget"]
+                            },
+                            "path": ["value"]
                           }
                         }
                       }

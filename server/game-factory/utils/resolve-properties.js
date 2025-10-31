@@ -4,33 +4,17 @@ import resolveExpression from "./resolve-expression.js";
 
 // probably replaces some stuff in resolveArguments, esp. contextPath
 export default function resolveProperties (bgioArguments, obj, context) {
-  let resolvedProperties = Array.isArray(obj) ? [...obj] : { ...obj }
+  if (typeof obj !== 'object' || obj === null) {
+    return obj
+  }
 
-  // don't like this special case here but how else to merge props
-  Object.entries(obj).forEach(([key, value]) => {
-    if (key === 'pick' && value?.target) {
-      const target = bgioArguments.G.bank.findOne(
-        bgioArguments,
-        value.target,
-        context
-      )
-      if (target !== undefined) {
-        const newProperties = pick(
-          resolveProperties(
-            bgioArguments,
-            target.attributes,
-            context
-          ),
-          value.properties
-        )
-        Object.assign(resolvedProperties, newProperties)
-        delete resolvedProperties.pick
-      }
-    } else {
-      resolvedProperties[key] = resolveProperty(bgioArguments, value, context)
-    }
+  const resolvedObject = resolveProperty(bgioArguments, obj, context)
+  let resolvedProperties = Array.isArray(resolvedObject)
+    ? [...resolvedObject]
+    : { ...resolvedObject }
 
-    // experimental, maybe this is sufficiently recursive?
+  Object.entries(resolvedObject).forEach(([key, value]) => {
+    resolvedProperties[key] = resolveProperty(bgioArguments, value, context)
     if (typeof resolvedProperties[key] === 'object' && resolvedProperties[key] !== null) {
       resolvedProperties[key] = resolveProperties(bgioArguments, resolvedProperties[key], context)
     }
@@ -41,7 +25,7 @@ export default function resolveProperties (bgioArguments, obj, context) {
 
 // start migrating things here
 function resolveProperty (bgioArguments, value, context) {
-  if (value?.expression) {
+  if (value?.type === 'expression') {
     return resolveExpression(
       bgioArguments,
       {
@@ -64,15 +48,18 @@ function resolveProperty (bgioArguments, value, context) {
   } else if (value?.type === 'RelativePath') {
     const target = resolveProperty(bgioArguments, value.target, context)
     return get(target.attributes, value.path)
-  } else if (value?.conditions) {
-    return value.matchMultiple
-      ? bgioArguments.G.bank.findAll(bgioArguments, value, context)
-      : bgioArguments.G.bank.findOne(bgioArguments, value, context)
-  } else if (value?.mapMax) {
+  } else if (value?.type === 'map') {
+    return getMappedTargets(
+      bgioArguments,
+      value.targets,
+      value.mapping,
+      context
+    ).map(mappedTarget => mappedTarget.value)
+  } else if (value?.type === 'mapMax') {
     const mappedTargets = getMappedTargets(
       bgioArguments,
-      value.mapMax.targets,
-      value.mapMax.mapping,
+      value.targets,
+      value.mapping,
       context
     )
     let maxValue
@@ -88,13 +75,23 @@ function resolveProperty (bgioArguments, value, context) {
       }
       return maxTargets
     }
-  } else if (value?.map && !Array.isArray(value)) {
-    return getMappedTargets(
-      bgioArguments,
-      value.map.targets,
-      value.map.mapping,
-      context
-    ).map(mappedTarget => mappedTarget.value)
+  } else if (value?.type === 'Pick') {
+    const target = resolveProperty(bgioArguments, value.target, context)
+    console.log('target', target)
+    if (target !== undefined) {
+      return pick(
+        resolveProperties(
+          bgioArguments,
+          target.attributes,
+          context
+        ),
+        value.properties
+      )
+    }
+  } else if (value?.conditions) {
+    return value.matchMultiple
+      ? bgioArguments.G.bank.findAll(bgioArguments, value, context)
+      : bgioArguments.G.bank.findOne(bgioArguments, value, context)
   } else {
     return value
   }
