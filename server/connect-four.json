@@ -51,7 +51,7 @@
               "conditions": [
                 {
                   "target": {
-                    "targetingType": "RelativeCoordinates",
+                    "type": "RelativeCoordinates",
                     "location": [0, 1]
                   },
                   "type": "Not",
@@ -67,37 +67,58 @@
   "endIf": [
     {
       "conditions": [{
+        "type": "Some",
         "target": {
+          "matchMultiple": true,
           "conditions": [{
             "type": "Is",
-            "matcher": { "name": "mainGrid" }
-          }]
-        },
-        "type": "ContainsLine",
-        "length": 4,
-        "spaceGroupConditions": [{
-          "type": "ContainsSame",
-          "properties": ["player"]
-        }],
-        "spaceConditions": [{"type": "Contains"}]
+            "matcher": { "type": "Space" }
+          }
+        ]},
+        "conditions": [{
+          "type": "InLine",
+          "target": {
+            "type": "contextPath",
+            "path": ["loopTarget"]
+          },
+          "sequence": [
+            {
+              "minCount": 4,
+              "conditions": [{
+                "type": "ContainsSame",
+                "properties": ["player"]
+              }]
+            }
+          ]
+        }]
       }],
       "result": {
         "winner": {
           "type": "contextPath",
-          "path": [ "results", 0, "matches", 0, "spaces", 0, "entities", 0, "rule", "player" ]
+          "path": ["results", 0, "result", "entities", 0, "attributes", "player"]
         }
       }
     },
     {
       "conditions": [{
-        "type": "EverySpace",
+        "type": "Every",
         "target": {
-          "conditions": [{
-            "type": "Is",
-            "matcher": { "name": "mainGrid" }
-          }]
+          "matchMultiple": true,
+          "conditions": [
+            {
+              "type": "Is",
+              "target": { "type": "Parent" },
+              "matcher": { "name": "mainGrid" }
+            }
+          ]
         },
-        "spaceConditions": [{"type": "Contains"}]
+        "conditions": [{
+          "target": {
+            "type": "contextPath",
+            "path": ["loopTarget"]
+          },
+          "type": "Contains"
+        }]
       }],
       "result": { "draw": true }
     }

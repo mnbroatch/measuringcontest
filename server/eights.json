@@ -159,7 +159,7 @@
                   "conditions": [
                     {
                       "type": "Is",
-                      "target": { "targetingType": "Parent" },
+                      "target": { "type": "Parent" },
                       "matcher": { "name": "stock" }
                     },
                     {
@@ -172,7 +172,7 @@
                   "conditions": [
                     {
                       "type": "Is",
-                      "target": { "targetingType": "Parent" },
+                      "target": { "type": "Parent" },
                       "matcher": {
                         "name": "personalBoard",
                         "player": {
@@ -194,7 +194,7 @@
               "conditions": [
                 {
                   "type": "Is",
-                  "target": { "targetingType": "Parent" },
+                  "target": { "type": "Parent" },
                   "matcher": { "name": "stock" }
                 },
                 {
@@ -240,7 +240,7 @@
                 "conditions": [
                   {
                     "type": "Is",
-                    "target": { "targetingType": "Parent" },
+                    "target": { "type": "Parent" },
                     "matcher": { "name": "discard" }
                   },
                   {
@@ -297,7 +297,7 @@
                     "conditions": [
                       {
                         "type": "Is",
-                        "target": { "targetingType": "Parent" },
+                        "target": { "type": "Parent" },
                         "matcher": {
                           "name": "hand",
                           "player": {
@@ -324,7 +324,7 @@
                                   "conditions": [
                                     {
                                       "type": "Is",
-                                      "target": { "targetingType": "Parent" },
+                                      "target": { "type": "Parent" },
                                       "matcher": { "name": "discard" }
                                     },
                                     {
@@ -345,7 +345,7 @@
                                   "conditions": [
                                     {
                                       "type": "Is",
-                                      "target": { "targetingType": "Parent" },
+                                      "target": { "type": "Parent" },
                                       "matcher": { "name": "discard" }
                                     },
                                     {
@@ -457,7 +457,7 @@
                     "conditions": [
                       {
                         "type": "Is",
-                        "target": { "targetingType": "Parent" },
+                        "target": { "type": "Parent" },
                         "matcher": { "name": "discard" }
                       },
                       {
@@ -552,7 +552,7 @@
                           "conditions": [
                             {
                               "type": "Is",
-                              "target": { "targetingType": "Parent" },
+                              "target": { "type": "Parent" },
                               "matcher": {
                                 "name": "hand",
                                 "player": {

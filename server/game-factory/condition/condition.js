@@ -33,15 +33,13 @@ export default class Condition {
       ], [])
     }
 
-    // I don't love having this exception here; will we need more?
-    // Need a better system for move args => condition target in general
-    if (this.rule.type !== 'Evaluate') {
-      // nonexistent relative spaces for instance fulfill no conditions ever
-      if (!conditionPayload.target && !conditionPayload.targets?.length) {
-        // todo: double check why so many nonexistent conditions
-        // console.log('this.rule', this.rule)
-        return { conditionIsMet: false }
-      }
+    if (
+      (this.rule.target || this.rule.targets)
+        && !conditionPayload.target
+        && !conditionPayload.targets?.length
+    ) {
+      console.log('condition missing target: ', this.rule)
+      return { conditionIsMet: false }
     }
 
     return this.checkCondition(bgioArguments, conditionPayload, context)

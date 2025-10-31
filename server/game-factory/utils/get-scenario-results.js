@@ -12,6 +12,7 @@ export default function getScenarioResults(bgioArguments, scenarios) {
   }
 
   if (match?.scenario?.result) {
+    console.log('match.conditionResults.results ', match.conditionResults.results )
     return resolveProperties(
       bgioArguments,
       match.scenario.result,

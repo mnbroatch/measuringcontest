@@ -1,15 +1,14 @@
 import Condition from "./condition.js";
-import checkConditions from "../utils/check-conditions.js";
+import findMetCondition from "../utils/find-met-condition.js";
 
 export default class Or extends Condition {
   checkCondition(bgioArguments, payload, context) {
-    const { results } = checkConditions(
+    const result = findMetCondition(
       bgioArguments,
       this.rule,
       payload,
-      context,
-      true
+      context
     )
-    return { conditionIsMet: results.some(r => r.conditionIsMet) }
+    return { conditionIsMet: !!result }
   }
 }

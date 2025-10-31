@@ -1,6 +1,5 @@
 // what the heck happened here?
 // using type === 'RelativePath'
-// but also targetingType === 'Parent'
 //
 // gonna be a good refactor
 import get from "./get.js";
@@ -48,7 +47,7 @@ export function resolveArguments2 (
   const { G } = bgioArguments
 
   let resolvedTarget
-  if (conditionRule.target.targetingType === 'RelativeCoordinates') {
+  if (conditionRule.target.type === 'RelativeCoordinates') {
     let parent = G.bank.findParent(originalTarget)
     // // we always want the SpaceGroup, whether target is Space or Entity
     // while (parent.rule.type !== 'Grid') {
@@ -63,7 +62,7 @@ export function resolveArguments2 (
       parent.getRelativeCoordinates(oldCoordinates, conditionRule.target.location)
     resolvedTarget =
       newCoordinates && parent.spaces[parent.getIndex(newCoordinates)]
-  } else if (conditionRule.target.targetingType === 'Parent') {
+  } else if (conditionRule.target.type === 'Parent') {
     resolvedTarget = G.bank.findParent(originalTarget)
   // } else if (argRule.type === 'RelativePath') {
   //   const target = bgioArguments.G.bank.findOne(bgioArguments, argRule.target, context)
@@ -73,9 +72,10 @@ export function resolveArguments2 (
   } else if (conditionRule.target.type === 'ctxPath') {
     resolvedTarget = get(bgioArguments.ctx, conditionRule.target.path)
   } else {
-    resolvedTarget = G.bank.findOne(
+    resolvedTarget = resolveTarget(
       bgioArguments,
-      conditionRule.target
+      conditionRule.target,
+      context
     )
   }
   return resolvedTarget
@@ -90,6 +90,8 @@ function resolveTarget (
   if (targetRule.type === 'contextPath') {
     return get(context, targetRule.path)
   } else if (true) {
-    return bgioArguments.G.bank.findOne(bgioArguments, targetRule, context)
+    return targetRule.matchMultiple
+      ? bgioArguments.G.bank.findAll(bgioArguments, targetRule, context)
+      : bgioArguments.G.bank.findOne(bgioArguments, targetRule, context)
   }
 }

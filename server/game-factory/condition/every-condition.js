@@ -1,9 +1,10 @@
 import Condition from "./condition.js";
 import checkConditions from "../utils/check-conditions.js";
 
-export default class SomeCondition extends Condition {
+export default class EveryCondition extends Condition {
   checkCondition(bgioArguments, { target: targets }, context) {
-    const result = targets.find((target) => {
+    console.log('targets', targets)
+    const results = targets.map((target) => {
       const loopContext = {
         ...context,
         loopTarget: target
@@ -14,12 +15,12 @@ export default class SomeCondition extends Condition {
         this.rule,
         undefined,
         loopContext
-      ).conditionsAreMet
+      )
     })
 
     return {
-      conditionIsMet: !!result,
-      result
+      conditionIsMet: results.every(r => r.conditionsAreMet),
+      results
     }
   }
 }
