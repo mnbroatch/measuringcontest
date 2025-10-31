@@ -4,7 +4,6 @@ import ticTacToe from "../../../server/tic-tac-toe.json";
 import eights from "../../../server/eights.json";
 import connectFour from "../../../server/connect-four.json";
 import reversi from "../../../server/reversi.json";
-import reversi2 from "../../../server/reversi2.json";
 
 const exampleGames = [
   {
@@ -17,7 +16,7 @@ const exampleGames = [
   },
   {
     name: 'Forth and Back White and Black',
-    rules: JSON.stringify(reversi2, null, 2)
+    rules: JSON.stringify(reversi, null, 2)
   },
   {
     name: 'Discharged for Emotional Instability Eights',
