@@ -147,7 +147,10 @@
           "move": {
             "type": "ForEach",
             "arguments": {
-              "targets": { "ctxPath": ["playOrder"] }
+              "targets": {
+                "type": "ctxPath",
+                "path": ["playOrder"]
+              }
             },
             "move": {
               "type": "MoveEntity",
@@ -172,7 +175,10 @@
                       "target": { "targetingType": "Parent" },
                       "matcher": {
                         "name": "personalBoard",
-                        "player": { "contextPath": ["loopTarget"] }
+                        "player": {
+                          "type": "contextPath",
+                          "path": ["loopTarget"]
+                        }
                       }
                     }
                   ]
@@ -250,7 +256,10 @@
             "move": {
               "type": "MoveEntity",
               "arguments": {
-                "entity": { "contextPath": ["loopTarget"] },
+                "entity": {
+                  "type": "contextPath",
+                  "path": ["loopTarget"]
+                },
                 "destination": {
                   "conditions": [
                     {
@@ -291,7 +300,10 @@
                         "target": { "targetingType": "Parent" },
                         "matcher": {
                           "name": "hand",
-                          "player": "CurrentPlayer"
+                          "player": {
+                            "type": "ctxPath",
+                            "path": ["currentPlayer"]
+                          }
                         }
                       },
                       {
@@ -373,7 +385,10 @@
                     },
                     "conditions": [{
                       "type": "Is",
-                      "target": { "contextPath": ["previousArguments", "entity"] },
+                      "target": {
+                        "type": "contextPath",
+                        "path": ["previousArguments", "entity"]
+                      },
                       "matcher": { "value": 8 }
                     }]
                   },
@@ -381,7 +396,10 @@
                     "type": "EndTurn",
                     "conditions": [{
                       "type": "Not",
-                      "target": { "contextPath": ["previousArguments", "entity"] },
+                      "target": {
+                        "type": "contextPath",
+                        "path": ["previousArguments", "entity"]
+                      },
                       "conditions": [{
                         "type": "Is",
                         "matcher": { "value": 8 }
@@ -417,7 +435,10 @@
                         "type": "Is",
                         "matcher": {
                           "name": "hand",
-                          "player": "CurrentPlayer"
+                          "player": {
+                            "type": "ctxPath",
+                            "path": ["currentPlayer"]
+                          }
                         }
                       }
                     ]
@@ -481,7 +502,10 @@
         {
           "type": "ForEach",
           "arguments": {
-            "targets": { "ctxPath": ["playOrder"] }
+            "targets": {
+              "type": "ctxPath",
+              "path": ["playOrder"]
+            }
           },
           "move": {
             "type": "SetState",
@@ -517,7 +541,10 @@
                 "value": {
                   "expression": "existingScore + sum(faceValues)",
                   "arguments": {
-                    "existingScore": { "contextPath": ["currentValue"] },
+                    "existingScore": {
+                      "type": "contextPath",
+                      "path": ["currentValue"]
+                    },
                     "faceValues": {
                       "map": {
                         "targets": {
@@ -528,7 +555,10 @@
                               "target": { "targetingType": "Parent" },
                               "matcher": {
                                 "name": "hand",
-                                "player": { "contextPath": [ "loopTarget" ] }
+                                "player": {
+                                  "type": "contextPath",
+                                  "path": [ "loopTarget" ]
+                                }
                               }
                             }
                           ]
@@ -538,7 +568,10 @@
                           "arguments": {
                             "cardValue": {
                               "type": "RelativePath",
-                              "target": { "contextPath": ["loopTarget"] },
+                              "target": {
+                                "type": "contextPath",
+                                "path": ["loopTarget"]
+                              },
                               "path": ["value"]
                             }
                           }
@@ -570,11 +603,16 @@
             "arguments": {
               "score": {
                 "type": "RelativePath",
-                "target": { "contextPath": ["target"] },
+                "target": {
+                  "type": "contextPath",
+                  "path": ["target"]
+                },
                 "path": ["value"]
               },
               "numPlayers": {
-                "ctxPath": ["playOrder", "length"]
+               
+                "type": "ctxPath",
+                "path": ["playOrder", "length"]
               }
             }
           }
@@ -583,7 +621,8 @@
     }],
     "result": {
       "winner": {
-        "contextPath": [ "results", 0, "target", "attributes", "player"]
+        "type": "contextPath",
+        "path": [ "results", 0, "target", "attributes", "player"]
       }
     }
   }]

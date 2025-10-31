@@ -41,9 +41,7 @@ export default function resolveProperties (bgioArguments, obj, context) {
 
 // start migrating things here
 function resolveProperty (bgioArguments, value, context) {
-  if (value?.ctxPath) {
-    return get(bgioArguments.ctx, value.ctxPath)
-  } else if (value?.expression) {
+  if (value?.expression) {
     return resolveExpression(
       bgioArguments,
       {
@@ -53,17 +51,16 @@ function resolveProperty (bgioArguments, value, context) {
       undefined,
       context
     )
-  } else if (value === 'CurrentPlayer') {
-    // should we just use ctxpath
-    return bgioArguments.ctx.currentPlayer
-  } else if (value?.contextPath) {
-    return get(context, value.contextPath)
   } else if (value?.type === 'count') {
     return bgioArguments.G.bank.findAll(
       bgioArguments,
       value,
       context
     ).length
+  } else if (value?.type === 'contextPath') {
+    return get(context, value.path)
+  } else if (value?.type === 'ctxPath') {
+    return get(bgioArguments.ctx, value.path)
   } else if (value?.type === 'RelativePath') {
     const target = resolveProperty(bgioArguments, value.target, context)
     return get(target.attributes, value.path)

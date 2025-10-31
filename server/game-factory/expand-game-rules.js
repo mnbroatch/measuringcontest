@@ -71,7 +71,10 @@ function expandInitialPlacements (rules, entities) {
         return {
           type: 'ForEach',
           arguments: {
-            targets: { ctxPath: ['playOrder'] }
+            targets: {
+              type: 'ctxPath',
+              path: ['playOrder']
+            }
           },
           move: {
             type: 'PlaceNew',
@@ -82,7 +85,12 @@ function expandInitialPlacements (rules, entities) {
                 matcher: {
                   ...matcher,
                   ...(entityDefinition.perPlayer
-                      ? { player: { contextPath: ['loopTarget'] } }
+                      ? {
+                          player: {
+                            type: 'contextPath',
+                            path: ['loopTarget']
+                          }
+                        }
                       : {}
                   )
                 },
@@ -94,7 +102,10 @@ function expandInitialPlacements (rules, entities) {
                   type: 'Is',
                   matcher: {
                     ...placement.destination,
-                    player: { contextPath: ['loopTarget'] }
+                    player: {
+                      type: 'contextPath',
+                      path: ['loopTarget']
+                    }
                   }
                 }]
               },

@@ -54,7 +54,12 @@
     "placeDisc": {
       "type": "PlaceNew",
       "entity": {
-        "state": { "player": "CurrentPlayer" },
+        "state": {
+          "player": {
+            "type": "ctxPath",
+            "path": ["currentPlayer"]
+          }
+        },
         "conditions": [{
           "type": "Is",
           "matcher": { "name": "disc" }
@@ -83,7 +88,10 @@
                       "conditions": [{
                         "type": "Is",
                         "matcher": {
-                          "player": "CurrentPlayer"
+                          "player": {
+                            "type": "ctxPath",
+                            "path": ["currentPlayer"]
+                          }
                         }
                       }]
                     }]
@@ -98,7 +106,10 @@
                           "conditions": [{
                             "type": "Is",
                             "matcher": {
-                              "player": "CurrentPlayer"
+                              "player": {
+                                "type": "ctxPath",
+                                "path": ["currentPlayer"]
+                              }
                             }
                           }]
                         }]
@@ -115,7 +126,10 @@
                       "conditions": [{
                         "type": "Is",
                         "matcher": {
-                          "player": "CurrentPlayer"
+                          "player": {
+                            "type": "ctxPath",
+                            "path": ["currentPlayer"]
+                          }
                         }
                       }]
                     }]
@@ -130,7 +144,8 @@
         "type": "ForEach",
         "arguments": {
           "targets": {
-            "contextPath": [
+            "type": "contextPath",
+            "path": [
               "moveConditionResults",
               0,
               "conditionResults",
@@ -149,11 +164,15 @@
           "type": "SetState",
           "arguments": {
             "entity": {
-              "contextPath": [ "loopTarget" ]
+              "type": "contextPath",
+              "path": [ "loopTarget" ]
             },
             "state": {
               "property": "player",
-              "value": "CurrentPlayer"
+              "value": {
+                "type": "ctxPath",
+                "path": ["currentPlayer"]
+              }
             }
           }
         }
@@ -170,7 +189,8 @@
             "gamePath": ["meta", "passCount"]
           },
           "numPlayers": {
-            "ctxPath": ["playOrder", "length"]
+            "type": "ctxPath",
+            "path": ["playOrder", "length"]
           }
         }
       }],
@@ -178,14 +198,18 @@
         "winners": {
           "mapMax": {
             "targets": {
-              "ctxPath": ["playOrder"]
+              "type": "ctxPath",
+              "path": ["playOrder"]
             },
             "mapping": {
               "type": "count",
               "conditions": [{
                 "type": "Is",
                 "matcher": {
-                  "player": { "contextPath": [ "loopTarget" ] }
+                  "player": {
+                    "type": "contextPath",
+                    "path": [ "loopTarget" ]
+                  }
                 }
               }]
             }

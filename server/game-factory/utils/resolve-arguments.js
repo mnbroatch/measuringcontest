@@ -1,6 +1,5 @@
 // what the heck happened here?
-// duck typing contextPath
-// but using type === 'RelativePath'
+// using type === 'RelativePath'
 // but also targetingType === 'Parent'
 //
 // gonna be a good refactor
@@ -18,17 +17,16 @@ export default function resolveArguments (
     if (argument === undefined) {
       if (argRule.literal !== undefined) {
         argument = argRule.literal
-      } else if (argRule.contextPath) {
-        argument = get(context, argRule.contextPath)
-      } else if (argRule.ctxPath) {
-        // getting player list from playOrder, does this exist for custom turn order?
-        argument = get(bgioArguments.ctx, argRule.ctxPath)
       } else if (argRule.gamePath) {
         argument = get(bgioArguments.G, argRule.gamePath)
       } else if (argRule.conditions) {
         argument = argRule.matchMultiple
           ? bgioArguments.G.bank.findAll(bgioArguments, argRule, context)
           : bgioArguments.G.bank.findOne(bgioArguments, argRule, context)
+      } else if (argRule.type === 'contextPath') {
+        argument = get(context, argRule.path)
+      } else if (argRule.type === 'ctxPath') {
+        argument = get(bgioArguments.ctx, argRule.path)
       } else if (argRule.type === 'RelativePath') {
         const target = resolveTarget(bgioArguments, argRule.target, context)
         argument = get(target.attributes, argRule.path)
@@ -70,11 +68,10 @@ export function resolveArguments2 (
   // } else if (argRule.type === 'RelativePath') {
   //   const target = bgioArguments.G.bank.findOne(bgioArguments, argRule.target, context)
   //   argument = get(target, argRule.path)
-  } else if (conditionRule.target.contextPath) {
-    resolvedTarget = get(context, conditionRule.target.contextPath)
-  } else if (conditionRule.target.ctxPath) {
-    // getting player list from playOrder, does this exist for custom turn order?
-    resolvedTarget = get(bgioArguments.ctx, conditionRule.target.ctxPath)
+  } else if (conditionRule.target.type === 'contextPath') {
+    resolvedTarget = get(context, conditionRule.target.path)
+  } else if (conditionRule.target.type === 'ctxPath') {
+    resolvedTarget = get(bgioArguments.ctx, conditionRule.target.path)
   } else {
     resolvedTarget = G.bank.findOne(
       bgioArguments,
@@ -90,8 +87,8 @@ function resolveTarget (
   targetRule,
   context
 ) {
-  if (targetRule.contextPath) {
-    return get(context, targetRule.contextPath)
+  if (targetRule.type === 'contextPath') {
+    return get(context, targetRule.path)
   } else if (true) {
     return bgioArguments.G.bank.findOne(bgioArguments, targetRule, context)
   }

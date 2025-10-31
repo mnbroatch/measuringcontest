@@ -27,7 +27,10 @@
           "type": "Is",
           "matcher": {
             "name": "playerMarker",
-            "player": "CurrentPlayer"
+            "player": {
+              "type": "ctxPath",
+              "path": ["currentPlayer"]
+            }
           }
         }]
       },
@@ -80,7 +83,8 @@
       }],
       "result": {
         "winner": {
-          "contextPath": [ "results", 0, "matches", 0, "spaces", 0, "entities", 0, "rule", "player" ]
+          "type": "contextPath",
+          "path": [ "results", 0, "matches", 0, "spaces", 0, "entities", 0, "rule", "player" ]
         }
       }
     },
