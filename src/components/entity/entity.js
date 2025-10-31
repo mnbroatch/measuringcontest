@@ -27,9 +27,11 @@ export default function Entity ({ entity }) {
           allClickable.has(entity) && 'entity--clickable',
         ].filter(Boolean).join(' ')}
       >
-        {entity.rule.displayProperties?.map(
-          property => `${property}: ${entity.attributes[property]}`
-        ).join('|')}
+        {entity.rule.displayProperties?.map((property, i) => (
+          <div key={i}>
+            {property}: {entity.attributes[property]}
+          </div>
+        ))}
       </div>
   }
 }

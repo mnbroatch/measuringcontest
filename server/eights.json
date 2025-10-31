@@ -34,7 +34,46 @@
     {"value": 10, "suit": "clubs", "displayProperties": ["value", "suit"], "name": "card"},
     {"value": 11, "suit": "clubs", "displayProperties": ["value", "suit"], "name": "card"},
     {"value": 12, "suit": "clubs", "displayProperties": ["value", "suit"], "name": "card"},
-    {"value": 13, "suit": "clubs", "displayProperties": ["value", "suit"], "name": "card"}
+    {"value": 13, "suit": "clubs", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 1, "suit": "diamonds", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 2, "suit": "diamonds", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 3, "suit": "diamonds", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 4, "suit": "diamonds", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 5, "suit": "diamonds", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 6, "suit": "diamonds", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 7, "suit": "diamonds", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 8, "suit": "diamonds", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 9, "suit": "diamonds", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 10, "suit": "diamonds", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 11, "suit": "diamonds", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 12, "suit": "diamonds", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 13, "suit": "diamonds", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 1, "suit": "hearts", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 2, "suit": "hearts", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 3, "suit": "hearts", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 4, "suit": "hearts", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 5, "suit": "hearts", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 6, "suit": "hearts", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 7, "suit": "hearts", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 8, "suit": "hearts", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 9, "suit": "hearts", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 10, "suit": "hearts", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 11, "suit": "hearts", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 12, "suit": "hearts", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 13, "suit": "hearts", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 1, "suit": "spades", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 2, "suit": "spades", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 3, "suit": "spades", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 4, "suit": "spades", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 5, "suit": "spades", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 6, "suit": "spades", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 7, "suit": "spades", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 8, "suit": "spades", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 9, "suit": "spades", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 10, "suit": "spades", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 11, "suit": "spades", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 12, "suit": "spades", "displayProperties": ["value", "suit"], "name": "card"},
+    {"value": 13, "suit": "spades", "displayProperties": ["value", "suit"], "name": "card"}
   ],
   "sharedBoard": [
     { "name": "stock" },
@@ -103,7 +142,7 @@
         {
           "type": "ForEach",
           "arguments": {
-            "targets": { "literal": [0] }
+            "targets": { "literal": [0,1,2,3,4,5] }
           },
           "move": {
             "type": "ForEach",
@@ -172,6 +211,9 @@
         }
       ],
       "turn": {
+        "order": {
+          "playOrder": "RotateFirst"
+        },
         "activePlayers": { "currentPlayer": "normalPlay" },
         "initialMoves": [
           {

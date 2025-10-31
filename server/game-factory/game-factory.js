@@ -182,6 +182,15 @@ function createTurn (turnRule, game) {
       }
     })
   }
+
+  if (turnRule.order?.playOrder === 'RotateFirst') {
+    turnRule.order.first = () => 0
+    turnRule.order.next = ({ ctx }) => (ctx.playOrderPos + 1) % ctx.numPlayers
+    turn.order.playOrder = ({ ctx }) => {
+      return [...ctx.playOrder.slice(1), ctx.playOrder[0]];
+    }
+  }
+
   return turn
 }
 
