@@ -8,19 +8,15 @@ export default function resolveProperties (bgioArguments, obj, context) {
     return obj
   }
 
-  const resolvedObject = resolveProperty(bgioArguments, obj, context)
-  let resolvedProperties = Array.isArray(resolvedObject)
-    ? [...resolvedObject]
-    : { ...resolvedObject }
+  let resolvedProperties = Array.isArray(obj)
+    ? [...obj]
+    : { ...obj }
 
-  Object.entries(resolvedObject).forEach(([key, value]) => {
+  Object.entries(obj).forEach(([key, value]) => {
     resolvedProperties[key] = resolveProperty(bgioArguments, value, context)
-    if (typeof resolvedProperties[key] === 'object' && resolvedProperties[key] !== null) {
-      resolvedProperties[key] = resolveProperties(bgioArguments, resolvedProperties[key], context)
-    }
   })
 
-  return resolvedProperties
+  return resolveProperty(bgioArguments, resolvedProperties, context)
 }
 
 // start migrating things here
@@ -77,7 +73,6 @@ function resolveProperty (bgioArguments, value, context) {
     }
   } else if (value?.type === 'Pick') {
     const target = resolveProperty(bgioArguments, value.target, context)
-    console.log('target', target)
     if (target !== undefined) {
       return pick(
         resolveProperties(

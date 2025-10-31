@@ -33,6 +33,10 @@ export default function resolveArguments (
         argument = argRule
       }
     }
+    if (argument === undefined) {
+      console.log('moveRule', moveRule)
+      console.log('argRule', argRule)
+    }
     return {...acc, [argName]: argument}
   }, {})
 }

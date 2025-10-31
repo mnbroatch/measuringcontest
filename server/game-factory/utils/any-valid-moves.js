@@ -6,17 +6,20 @@ export default function areThereValidMoves(bgioArguments, moves) {
   return Object.values(moves).some(move => {
     const { moveInstance } = move
 
-    // the magic is that resolveArguments will try to find
-    // valid values for arguments. This could be incomplete...
-    const payload = {
-      arguments: resolveArguments(
-        bgioArguments,
-        moveInstance.rule,
-        {},
-        { moveInstance },
-        true
-      ) }
-    const context = { moveInstance }
-    return moveInstance.isValid(bgioArguments, payload, context)
+    const args = resolveArguments(
+      bgioArguments,
+      moveInstance.rule,
+      {},
+      { moveInstance },
+      true
+    )
+
+    if (Object.values(args).every(arg => arg !== undefined)) {
+      const payload = { arguments: args }
+      const context = { moveInstance }
+      return moveInstance.isValid(bgioArguments, payload, context)
+    } else {
+      return false
+    }
   })
 }

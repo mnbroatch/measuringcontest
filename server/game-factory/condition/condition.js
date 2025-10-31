@@ -9,9 +9,6 @@ export default class Condition {
     const { G } = bgioArguments
     const conditionPayload = {...payload}
 
-    // override specific rules with different targets
-    // aka "can place here if this other space is not empty"
-    // this will probably grow messy and want to be refactored
     if (this.rule.target) {
       if (conditionPayload.target) {
         conditionPayload.originalTarget = conditionPayload.target
@@ -38,7 +35,6 @@ export default class Condition {
         && !conditionPayload.target
         && !conditionPayload.targets?.length
     ) {
-      console.log('condition missing target: ', this.rule)
       return { conditionIsMet: false }
     }
 

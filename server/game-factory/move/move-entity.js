@@ -2,7 +2,6 @@ import Move from "./move.js";
 
 export default class MoveEntity extends Move {
   do(bgioArguments, { arguments: { entity, destination } }) {
-    console.log('this.rule.arguments.entity', this.rule.arguments.entity)
     // todo: move all such things to always be multiple
     if (Array.isArray(entity)) {
       entity.forEach((e) => {

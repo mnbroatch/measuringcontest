@@ -1,6 +1,5 @@
 import find from 'lodash/find.js'
 import filter from 'lodash/filter.js'
-import entityMatches from '../utils/entity-matches.js'
 import checkConditions from '../utils/check-conditions.js'
 import { registry } from '../registry.js'
 import BankSlot from './bank-slot.js'

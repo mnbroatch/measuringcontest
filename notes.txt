@@ -1,5 +1,5 @@
 todo:
-moving to another phase should probably set current player to 0 by default?
+going from finished connect four to reversi breaks
 setState validation 
 {"message":"The incoming token has expired"}
 currently, first ruleset for gamename is used. should use ruleset hash
