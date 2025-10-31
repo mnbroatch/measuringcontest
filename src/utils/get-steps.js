@@ -1,13 +1,14 @@
 // controls order of what players need to click first
-const baseMoveArgsMap = {
+const argNamesMap = {
   PlaceNew: ['destination'],
   MoveEntity: ['entity', 'destination'],
   TakeFrom: ['source', 'destination'],
   SetState: ['entity', 'state'],
 }
 
+// this might not be where special handling for setstate wants to live
 export default function getSteps (bgioState, moveRule, context) {
-  return baseMoveArgsMap[moveRule.type]
+  return argNamesMap[moveRule.type]
     .filter(argName => moveRule.arguments[argName].playerChoice)
     .map(argName => ({
       argName,
@@ -24,4 +25,6 @@ export default function getSteps (bgioState, moveRule, context) {
           )
     }))
 }
+
+
 

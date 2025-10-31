@@ -14,7 +14,7 @@ export default function gameFactory (gameRules, rulesHash, server) {
   game.setup = (bgioArguments) => {
     const { ctx } = bgioArguments
     const initialState = {
-      meta: {
+      _meta: {
         passCount: 0,
       }
     };
@@ -157,7 +157,7 @@ function createTurn (turnRule, game) {
 
   turn.onBegin = (bgioArguments) => {
     const newG = doInitialMoves(bgioArguments, turnRule.initialMoves)
-    if (turnRule.passIfNoMoves && newG.meta.passCount < bgioArguments.ctx.numPlayers) {
+    if (turnRule.passIfNoMoves && newG._meta.passCount < bgioArguments.ctx.numPlayers) {
       const newBgioArguments = {
         ...bgioArguments,
         G: newG,
@@ -166,10 +166,10 @@ function createTurn (turnRule, game) {
         newBgioArguments,
         getCurrentMoves(game, newBgioArguments)
       )) {
-        newG.meta.passCount++
+        newG._meta.passCount++
         newBgioArguments.events.pass()
       } else {
-        newG.meta.passCount = 0
+        newG._meta.passCount = 0
       }
     }
     return JSON.parse(serialize(newG));
@@ -186,8 +186,10 @@ function createTurn (turnRule, game) {
   if (turnRule.order?.playOrder === 'RotateFirst') {
     turnRule.order.first = () => 0
     turnRule.order.next = ({ ctx }) => (ctx.playOrderPos + 1) % ctx.numPlayers
-    turn.order.playOrder = ({ ctx }) => {
-      return [...ctx.playOrder.slice(1), ctx.playOrder[0]];
+    turn.order.playOrder = ({ ctx, G }) => {
+      return G._meta.isAfterFirstPhase
+        ? [...ctx.playOrder.slice(1), ctx.playOrder[0]]
+        : ctx.playOrder
     }
   }
 
@@ -205,8 +207,8 @@ function createPhase (phaseRule, game) {
 
   phase.onBegin = (bgioArguments) => {
     const newG = doInitialMoves(bgioArguments, phaseRule.initialMoves)
-    newG.meta.currentPhaseHasBeenSetUp = true
-    newG.meta.nextPhase = phaseRule.next
+    newG._meta.currentPhaseHasBeenSetUp = true
+    newG._meta.nextPhase = phaseRule.next
     return JSON.parse(serialize(newG));
   }
 
@@ -216,7 +218,7 @@ function createPhase (phaseRule, game) {
         G: deserialize(JSON.stringify(G), registry),
         ...restBgioArguments
       }
-      if (bgioArguments.G.meta.currentPhaseHasBeenSetUp) {
+      if (bgioArguments.G._meta.currentPhaseHasBeenSetUp) {
         const result = getScenarioResults(bgioArguments, phaseRule.endIf)
         if (result) {
           return result
@@ -226,7 +228,8 @@ function createPhase (phaseRule, game) {
   }
 
   phase.onEnd = ({ G }) => {
-    G.meta.currentPhaseHasBeenSetUp = false
+    G._meta.currentPhaseHasBeenSetUp = false
+    G._meta.isAfterFirstPhase = true
   }
 
   return phase

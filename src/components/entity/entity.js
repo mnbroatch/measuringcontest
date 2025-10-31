@@ -4,7 +4,7 @@ import Grid from '../board/grid.js'
 import Space from "../space/space.js";
 
 export default function Entity ({ entity }) {
-  const { allClickable, dispatch } = useGame()
+  const { clickTarget, allClickable } = useGame()
   const isClickable = allClickable.has(entity)
   const attributes = entity.attributes
 
@@ -18,7 +18,7 @@ export default function Entity ({ entity }) {
         onClick={(e) => {
           if (isClickable) {
             e.stopPropagation()
-            dispatch({ type: 'click', target: entity })
+            clickTarget(entity)
           }
         }}
         className={[

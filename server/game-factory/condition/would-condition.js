@@ -1,16 +1,24 @@
 import Condition from "./condition.js";
 import checkConditions from "../utils/check-conditions.js";
-import createPayload from "../utils/create-payload.js";
 import simulateMove from "../utils/simulate-move.js";
 
+// relying on target order is not perfect;
+// I think we'll want to switch to named arguments
+const argNameMap = {
+  PlaceNew: ['destination'],
+  MoveEntity: ['entity', 'destination'],
+  TakeFrom: ['source', 'destination'],
+  SetState: ['entity', 'state'],
+}
+
 export default class WouldCondition extends Condition {
-  checkCondition(bgioArguments, { target, targets }, context) {
-    const payload = createPayload(
-      bgioArguments,
-      context.moveInstance.rule,
-      targets ?? [target],
-      context
-    )
+  checkCondition(bgioArguments, { target, targets = [target] }, context) {
+    const payload = {
+      arguments: targets.reduce((acc, target, i) => ({
+        ...acc,
+        [argNameMap[context.moveInstance.rule.type][i]]: target
+      }), {})
+    }
 
     const simulatedG = simulateMove(
       bgioArguments,
@@ -56,24 +64,21 @@ export default class WouldCondition extends Condition {
   }
 }
 
+// references to simulated object are useless
 function restoreReferences(obj, getOriginalEntity, seen = new WeakSet()) {
-  // Handle primitives and null
   if (typeof obj !== 'object' || obj === null) {
     return obj;
   }
   
-  // Prevent infinite loops on circular references
   if (seen.has(obj)) {
     return obj;
   }
   seen.add(obj);
   
-  // If this object has an entityId, replace it entirely
   if (obj.entityId !== undefined) {
     return getOriginalEntity(obj.entityId);
   }
   
-  // Otherwise, recursively process its properties
   if (Array.isArray(obj)) {
     return obj.map(item => restoreReferences(item, getOriginalEntity, seen));
   } else {

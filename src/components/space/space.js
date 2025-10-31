@@ -22,7 +22,7 @@ function calculateOptimalCols(numSquares) {
 }
 
 export default function Space ({ space }) {
-  const { dispatch, allClickable, currentMoveTargets } = useGame()
+  const { clickTarget, allClickable, currentMoveTargets } = useGame()
   const { entities, entityId } = space.attributes
 
   const columns = calculateOptimalCols(entities.length)
@@ -37,7 +37,7 @@ export default function Space ({ space }) {
         clickable && 'space--clickable',
         targeted && 'space--targeted'
       ].filter(Boolean).join(' ')}
-      onClick={() => dispatch({ type: 'click', target: space })}
+      onClick={() => clickTarget(space)}
     >
        <div 
           className="space__entity-grid"

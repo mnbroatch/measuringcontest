@@ -1,128 +1,165 @@
-// Before sending a move to the back end, multiple front end steps
-// might need to occur (e.g. select a piece then a destination).
-// That flow is managed here.
-
-import React, { createContext, useContext, useReducer, useLayoutEffect, useEffect } from 'react';
+import React, { createContext, useContext, useState, useLayoutEffect, useEffect } from 'react';
 import { serialize } from 'wackson'
 import preparePayload from "../../server/game-factory/utils/prepare-payload.js";
 import simulateMove from "../../server/game-factory/utils/simulate-move.js";
-import getSteps from "../../server/game-factory/utils/get-steps.js";
-import createPayload from "../../server/game-factory/utils/create-payload.js";
 import checkConditions from '../../server/game-factory/utils/check-conditions.js';
+import getSteps from '../utils/get-steps.js';
+import createPayload from '../utils/create-payload.js';
 
 const GameContext = createContext({
-  dispatch: () => {},
+  clickTarget: () => {},
 });
 
-export function GameProvider ({ gameConnection, children, isSpectator }) {
-  const { state: bgioState, moves } = gameConnection
+export function GameProvider({ gameConnection, children, isSpectator }) {
+  const [moveBuilder, setMoveBuilder] = useState({
+    targets: [],
+    stepIndex: 0,
+    eliminatedMoves: []
+  });
 
-  const initialState = { eliminatedMoves: [], stepIndex: 0, targets: [], winnerAfterMove: undefined }
-  const [currentMoveState, disp] = useReducer((state, action) => {
-    const { eliminatedMoves, stepIndex, targets } = state
-    const { type: actionType, possibleMoveMeta } = action
+  const [optimisticWinner, setOptimisticWinner] = useState(null);
 
-    switch (actionType) {
-      case 'click':
-        const { target } = action
-        const newEliminatedMoves = Object.entries(possibleMoveMeta)
-          .reduce((acc, [moveName, { clickable, finishedOnLastStep }]) => {
-            return !finishedOnLastStep && clickable.has(target)
-              ? acc
-              : [...acc, moveName]
-          }, [...eliminatedMoves])
-        if (newEliminatedMoves.length === Object.keys(moves).length) {
-          console.error('invalid move with target of rule: ', target?.rule)
-          return state
-        } else {
-          return { eliminatedMoves: newEliminatedMoves, stepIndex: stepIndex + 1, targets: [...targets, target] }
-        }
-      case 'moveMade':
-        // we simulate the end of the game so we can optimistically change UI, avoiding
-        // flash of "available" (but not really) moves
-        return {
-          ...initialState,
-          winnerAfterMove: getWinnerAfterMove(gameConnection, action.move.moveInstance, action.movePayload),
-        }
-      case 'clear':
-          return initialState
-    }
+  const { possibleMoveMeta, allClickable } = getPossibleMoves(
+    gameConnection,
+    moveBuilder,
+    isSpectator
+  )
 
-    return state
-  }, initialState)
-
-  const possibleMoveMeta = {}
-  const allClickable = new Set()
-  if (!isSpectator) {
-    const possibleMoveRules = Object.entries(moves)
-      .filter(([moveName]) => !currentMoveState.eliminatedMoves.includes(moveName))
-      .map(([moveName, move]) => ({
-        ...move.moveInstance.rule,
-        moveName
-      }))
-    possibleMoveRules.forEach((moveRule) => {
-      const moveIsAllowed = checkConditions(
-        bgioState,
-        moveRule,
-        {},
-        { moveInstance: moves[moveRule.moveName].moveInstance }
-      ).conditionsAreMet
-      const moveSteps = getSteps(
-        bgioState,
-        moveRule,
-        { moveInstance: moves[moveRule.moveName].moveInstance }
-      )
-      const lastStep = moveSteps?.[currentMoveState.stepIndex - 1]
-      const currentStep = moveSteps?.[currentMoveState.stepIndex]
-      const finishedOnLastStep = moveSteps && !!lastStep && !currentStep
-      const clickable = new Set(
-        (moveIsAllowed && currentStep?.getClickable()) || []
-      )
-      possibleMoveMeta[moveRule.moveName] = { finishedOnLastStep, clickable }
-      clickable.forEach((entity) => { allClickable.add(entity) })
-    })
-  }
-
-  const dispatch = (action) => { disp({ ...action, possibleMoveMeta }) }
-
-  // useLayoutEffect clears move after we get into "last step complete"
-  // state where nothing is clickable and before browser paint,
-  // so we don't see a flash of temporary nonclickableness
+  // Auto-execute when move is complete
+  // layout effect so we don't flash "this has been selected" state on last click
   useLayoutEffect(() => {
-    if (!isSpectator) {
-      const possibleMoveNames = Object.keys(possibleMoveMeta)
-      if (possibleMoveNames.length === 1) {
-        const moveName = possibleMoveNames[0]
-        if (possibleMoveMeta[moveName].finishedOnLastStep) {
-          const move = moves[moveName]
-          const moveRule = move.moveInstance.rule
-          const movePayload = createPayload(
-            bgioState,
-            moveRule,
-            currentMoveState.targets,
-            { moveInstance: moves[moveRule.name].moveInstance }
-          )
-          move(movePayload)
-          dispatch({ type: 'moveMade', movePayload, move })
-        }
-      }
+    if (isSpectator || optimisticWinner) return;
+
+    const completed = findCompletedMove(possibleMoveMeta, moveBuilder, gameConnection.moves);
+    
+    if (completed) {
+      // Calculate optimistic winner
+      const winner = getWinnerAfterMove(
+        gameConnection,
+        completed.move.moveInstance,
+        completed.payload
+      );
+      
+      // Execute the server action
+      completed.move(completed.payload);
+      
+      // Update UI
+      setOptimisticWinner(winner);
+      setMoveBuilder({ targets: [], stepIndex: 0, eliminatedMoves: [] });
     }
-  }, [currentMoveState.targets])
+  }, [moveBuilder.targets]);
 
-  const allClickableToUse = currentMoveState.winnerAfterMove ? new Set() : allClickable
-  const currentMoveTargetsToUse = currentMoveState.winnerAfterMove ? [] : currentMoveState.targets
-
+  // Clear when game resets
   useEffect(() => {
     if (gameConnection.state._stateID === 0) {
-      dispatch({ type: 'clear' })
+      setMoveBuilder({ targets: [], stepIndex: 0, eliminatedMoves: [] });
+      setOptimisticWinner(null);
     }
-  }, [gameConnection.state._stateID])
+  }, [gameConnection.state._stateID]);
+
+  const handleClick = (target) => {
+    // Filter out moves that don't accept this target
+    const newEliminated = Object.entries(possibleMoveMeta)
+      .filter(([_, meta]) => !meta.finishedOnLastStep && !meta.clickableForMove.has(target))
+      .map(([name]) => name)
+      .concat(moveBuilder.eliminatedMoves);
+
+    if (newEliminated.length === Object.keys(gameConnection.moves).length) {
+      console.error('invalid move with target:', target?.rule);
+      return;
+    }
+
+    setMoveBuilder({
+      eliminatedMoves: newEliminated,
+      stepIndex: moveBuilder.stepIndex + 1,
+      targets: [...moveBuilder.targets, target]
+    });
+  };
 
   return (
-    <GameContext.Provider value={{ dispatch, allClickable: allClickableToUse, currentMoveTargets: currentMoveTargetsToUse }}>
+    <GameContext.Provider value={{
+      clickTarget: handleClick,
+      allClickable: optimisticWinner ? new Set() : allClickable,
+      currentMoveTargets: optimisticWinner ? [] : moveBuilder.targets
+    }}>
       {children}
     </GameContext.Provider>
   );
+}
+
+export const useGame = () => useContext(GameContext);
+
+function getPossibleMoves(gameConnection, moveBuilder, isSpectator) {
+  if (isSpectator) {
+    return { possibleMoveMeta: {}, allClickable: new Set() };
+  }
+
+  const { state: bgioState, moves } = gameConnection;
+  const { eliminatedMoves, stepIndex } = moveBuilder;
+  
+  const possibleMoveMeta = {};
+  const allClickable = new Set();
+
+  const availableMoves = Object.entries(moves)
+    .filter(([moveName]) => !eliminatedMoves.includes(moveName));
+
+  availableMoves.forEach(([moveName, move]) => {
+    const moveRule = { ...move.moveInstance.rule, moveName };
+    
+    const moveIsAllowed = checkConditions(
+      bgioState,
+      moveRule,
+      {},
+      { moveInstance: move.moveInstance }
+    ).conditionsAreMet;
+
+    const moveSteps = getSteps(
+      bgioState,
+      moveRule,
+      { moveInstance: move.moveInstance }
+    );
+
+    const lastStep = moveSteps?.[stepIndex - 1];
+    const currentStep = moveSteps?.[stepIndex];
+    const finishedOnLastStep = moveSteps && !!lastStep && !currentStep;
+    
+    const clickableForMove = new Set(
+      (moveIsAllowed && currentStep?.getClickable()) || []
+    );
+
+    possibleMoveMeta[moveName] = { finishedOnLastStep, clickableForMove };
+    
+    clickableForMove.forEach((entity) => {
+      allClickable.add(entity);
+    });
+  });
+
+  return { possibleMoveMeta, allClickable };
+}
+
+function findCompletedMove(possibleMoveMeta, moveBuilder, moves, bgioState) {
+  const possibleMoveNames = Object.keys(possibleMoveMeta);
+  
+  // Only one possible move left
+  if (possibleMoveNames.length !== 1) return null;
+  
+  const moveName = possibleMoveNames[0];
+  const meta = possibleMoveMeta[moveName];
+  
+  // And it's finished
+  if (!meta.finishedOnLastStep) return null;
+  
+  const move = moves[moveName];
+  const moveRule = move.moveInstance.rule;
+  
+  const payload = createPayload(
+    bgioState,
+    moveRule,
+    moveBuilder.targets,
+    { moveInstance: moves[moveRule.name].moveInstance }
+  );
+
+  return { moveName, move, payload };
 }
 
 function getWinnerAfterMove (gameConnection, moveInstance, movePayload) {
@@ -137,5 +174,3 @@ function getWinnerAfterMove (gameConnection, moveInstance, movePayload) {
     G: JSON.parse(serialize(simulatedG))
   })
 }
-
-export const useGame = () => useContext(GameContext);

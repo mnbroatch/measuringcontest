@@ -39,7 +39,7 @@
 
 .space {
   display: inline-block;
-  transition: 100ms background-color;
+  /* transition: 100ms background-color; */
   border: 1px solid grey;
   box-sizing: border-box;
   min-width: 10px;

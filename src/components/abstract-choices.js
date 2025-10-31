@@ -2,7 +2,7 @@ import React from 'react'
 import { useGame } from "../contexts/game-context.js";
 
 export default function AbstractChoices () {
-  const { dispatch, allClickable } = useGame()
+  const { clickTarget, allClickable } = useGame()
 
   const abstractChoices = [...allClickable].filter(c => c.abstract)
 
@@ -12,7 +12,7 @@ export default function AbstractChoices () {
         <button
           key={i}
           className="abstract-choice"
-          onClick={() => dispatch({ type: 'click', target: choice })}
+          onClick={() => clickTarget(choice)}
         >
           {choice.value}
         </button>
