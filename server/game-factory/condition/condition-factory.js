@@ -7,7 +7,6 @@ import ContainsCondition from "./contains-condition.js";
 import ContainsSameCondition from "./contains-same-condition.js";
 import InLine from "./in-line-condition.js";
 import Would from "./would-condition.js";
-import MoveIsImpossible from "./move-is-impossible.js";
 import Evaluate from "./evaluate-condition.js";
 import Position from "./position-condition.js";
 // import BingoCondition from "./bingo-condition.js";
@@ -32,8 +31,6 @@ export default function conditionFactory(rule) {
     return new InLine(rule);
   } else if (rule.type === "Would") {
     return new Would(rule);
-  } else if (rule.type === "MoveIsImpossible") {
-    return new MoveIsImpossible(rule);
   } else if (rule.type === "Evaluate") {
     return new Evaluate(rule);
   } else if (rule.type === "Position") {

@@ -3,7 +3,7 @@ import conditionFactory from "./condition-factory.js";
 import Condition from "./condition.js";
 
 export default class ContainsSame extends Condition {
-  checkCondition (bgioArguments, { targets }) {
+  checkCondition (bgioArguments, rule, { targets }) {
     if (targets.length === 1 && targets[0].entities?.length) {
       return { conditionIsMet: true }
     }
@@ -14,7 +14,7 @@ export default class ContainsSame extends Condition {
         type: "Contains",
         conditions: [{
           type: 'Is',
-          matcher: pick(entity.rule, this.rule.properties)
+          matcher: pick(entity.rule, rule.properties)
         }]
       })
       return restEntities.every(ent => {

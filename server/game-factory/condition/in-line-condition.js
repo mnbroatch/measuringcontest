@@ -5,13 +5,13 @@ import checkConditions from "../utils/check-conditions.js";
 const directions = [[1, 0], [1, 1], [0, 1], [-1, 1]];
 
 export default class InLineCondition extends Condition {
-  checkCondition(bgioArguments, payload) {
+  checkCondition(bgioArguments, rule, payload) {
     const { G } = bgioArguments;
     const { target } = payload;
     const parent = G.bank.findParent(payload.target);
     
     // Find all sequences in the grid
-    const { matches: allMatches } = gridContainsSequence(bgioArguments, parent, this.rule.sequence);
+    const { matches: allMatches } = gridContainsSequence(bgioArguments, parent, rule.sequence);
     
     // Filter to only sequences that contain the target space
     const matches = allMatches.filter(sequence => 

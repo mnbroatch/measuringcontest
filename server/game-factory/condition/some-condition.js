@@ -2,7 +2,7 @@ import Condition from "./condition.js";
 import checkConditions from "../utils/check-conditions.js";
 
 export default class SomeCondition extends Condition {
-  checkCondition(bgioArguments, { target: targets }, context) {
+  checkCondition(bgioArguments, rule, { target: targets }, context) {
     const result = targets.find((target) => {
       const loopContext = {
         ...context,
@@ -11,7 +11,7 @@ export default class SomeCondition extends Condition {
 
       return checkConditions(
         bgioArguments,
-        this.rule,
+        rule,
         undefined,
         loopContext
       ).conditionsAreMet

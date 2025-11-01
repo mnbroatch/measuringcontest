@@ -12,7 +12,7 @@ const argNameMap = {
 }
 
 export default class WouldCondition extends Condition {
-  checkCondition(bgioArguments, { target, targets = [target] }, context) {
+  checkCondition(bgioArguments, rule, { target, targets = [target] }, context) {
     const payload = {
       arguments: targets.reduce((acc, target, i) => ({
         ...acc,
@@ -42,7 +42,7 @@ export default class WouldCondition extends Condition {
         ...bgioArguments,
         G: simulatedG
       },
-      this.rule,
+      rule,
       simulatedConditionsPayload,
       context
     )

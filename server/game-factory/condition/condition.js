@@ -8,35 +8,38 @@ export default class Condition {
   check (bgioArguments, payload = {}, context) {
     const { G } = bgioArguments
     const conditionPayload = {...payload}
+
+    const rule = resolveProperties(
+      bgioArguments,
+      this.rule,
+      context,
+      true
+    )
+
     const newContext = { ...context }
 
-    if (this.rule.target) {
+    if (rule.target) {
       if (conditionPayload.target) {
         newContext.originalTarget = conditionPayload.target
       }
-      conditionPayload.target = resolveProperties(
-        bgioArguments,
-        this.rule.target,
-        newContext,
-        true
-      )
     }
-    if (this.rule.targets) {
-      conditionPayload.targets = this.rule.targets.reduce((acc, target) => [
+
+    if (rule.targets) {
+      conditionPayload.targets = rule.targets.reduce((acc, target) => [
         ...acc,
         ...G.bank.findAll(bgioArguments, target)
       ], [])
     }
 
     if (
-      (this.rule.target || this.rule.targets)
+      (rule.target || rule.targets)
         && !conditionPayload.target
         && !conditionPayload.targets?.length
     ) {
       return { conditionIsMet: false }
     }
 
-    return this.checkCondition(bgioArguments, conditionPayload, newContext)
+    return this.checkCondition(bgioArguments, rule, conditionPayload, newContext)
   }
 
   isMet(...args) {
