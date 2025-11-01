@@ -2,8 +2,6 @@ todo:
 clicking fast on reversi lets player 1 take 2 turns (quirk of single player mode?)
 setState validation 
 {"message":"The incoming token has expired"}
-currently, first ruleset for gamename is used. should use ruleset hash
-  - does gamename actually do anything for us?
 validate numPlayers against rule def
 check: did I actually authenticate against using client token for gameserver rest API or did I hallucinate that?
   - in other words, is REST API actually only available from gateway?
@@ -15,32 +13,8 @@ delete game from server on room delete
 check for handling of weird characters in game name, esp. quotes
 useles apigw url path paramter configs?
 can't have creator leave game
-grid is janky with background color used as cell border
-editor test game reset after game end doesn't show candidate moves
 
-
-(really just add separate spectator route?)
+add separate spectator route?
 hide game if not joined room
 handle auto join if going from room not joined to room joined
-
-perPlayer: true just gets transformed at creation time to variants: { '0': { player: '0' }, '1': { player: '1' } }
-variants get turned into their own bespoke entity with their own bank
-{
-  name: "thing-variantname"
-  metadata: { parentName: 'thing', variantName: 'variantname' }
-}
-
-
-How can UI know conditions based on partial move?
-"move a shape to a space with a matching shape on it"
-basic idea: 
-  - as we build the payload incrementally, conditions that rely on the partial will be activated
-  - initially, no spaces would be selectable, but once piece is selected matching ones would be
-- different move types will also probably always want to go in a specific order, but I don't think that matters.
-  - even if you have to select a piece first and you select an "eventually invalid" one (where no matching spaces exist), that's OK
-    - the fact that there's no matching spaces will force the user to undo and the UI will be clear
-- we will need a UI-side sense of a move type having "stages"
-  - "now we are selecting a piece"
-  - multi-select will probably be its own headache
-
 
