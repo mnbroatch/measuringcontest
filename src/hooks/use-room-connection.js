@@ -2,12 +2,12 @@ import { useEffect, useRef } from 'react'
 import { useParams } from '@tanstack/react-router';
 import { useQueryClient } from '@tanstack/react-query'
 import { ActivePlayers } from 'boardgame.io/core';
-import { serialize, deserialize } from "wackson";
+import { deserialize } from "wackson";
 import { useJoinRoomMutation } from "../queries/use-join-room-mutation.js";
 import { useRoomQuery } from "../queries/use-room-query.js"
 import { useGameserverConnection } from "./use-gameserver-connection.js";
 import { registry } from "../../server/game-factory/registry.js";
-import preparePayload from "../../server/game-factory/utils/prepare-payload.js";
+import preparePayload from "../utils/prepare-payload.js";
 
 const RoomGame = {
   name: 'bgestagingroom',

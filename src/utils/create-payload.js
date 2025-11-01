@@ -1,15 +1,17 @@
-import getSteps from "./get-steps.js";
+// not perfect; I think we'll want to switch to named arguments
+const moveArgsMap = {
+  PlaceNew: ['destination'],
+  MoveEntity: ['entity', 'destination'],
+  TakeFrom: ['source', 'destination'],
+  SetState: ['entity', 'state'],
+}
 
-export default function createPayload (bgioState, moveRule, targets, context) {
-  const moveSteps = getSteps(
-    bgioState,
-    moveRule,
-    context
-  )
-  const moveArguments = moveSteps.reduce((acc, step, i) => ({
-    ...acc,
-    [step.argName]: targets[i]
-  }), {})
-  return { arguments: moveArguments }
+export default function createPayload (moveRule, targets) {
+  return {
+    arguments: targets.reduce((acc, target, i) => ({
+      ...acc,
+      [moveArgsMap[moveRule.type][i]]: target
+    }), {})
+  }
 }
 

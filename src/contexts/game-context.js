@@ -1,10 +1,10 @@
 import React, { createContext, useContext, useState, useLayoutEffect, useEffect } from 'react';
 import { serialize } from 'wackson'
-import preparePayload from "../../server/game-factory/utils/prepare-payload.js";
 import simulateMove from "../../server/game-factory/utils/simulate-move.js";
 import checkConditions from '../../server/game-factory/utils/check-conditions.js';
 import getSteps from '../utils/get-steps.js';
 import createPayload from '../utils/create-payload.js';
+import preparePayload from "../utils/prepare-payload.js";
 
 const GameContext = createContext({
   clickTarget: () => {},
@@ -153,10 +153,8 @@ function findCompletedMove(possibleMoveMeta, moveBuilder, moves, bgioState) {
   const moveRule = move.moveInstance.rule;
   
   const payload = createPayload(
-    bgioState,
     moveRule,
-    moveBuilder.targets,
-    { moveInstance: moves[moveRule.name].moveInstance }
+    moveBuilder.targets
   );
 
   return { moveName, move, payload };

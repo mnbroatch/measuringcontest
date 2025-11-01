@@ -3,7 +3,7 @@ import { deserialize } from "wackson";
 import { useGameserverConnection } from "./use-gameserver-connection.js";
 import gameFactory from '../../server/game-factory/game-factory.js'
 import { registry } from "../../server/game-factory/registry.js";
-import preparePayload from "../../server/game-factory/utils/prepare-payload.js";
+import preparePayload from "../utils/prepare-payload.js";
 import getCurrentMoves from "../../server/game-factory/utils/get-current-moves.js";
 
 export default function useSinglePlayerGame (gameRules, numPlayers) {
@@ -26,6 +26,8 @@ export default function useSinglePlayerGame (gameRules, numPlayers) {
       G: deserialize(JSON.stringify(clientState.G), registry),
       originalG: clientState.G,
     }
+
+    gameover = state?.ctx?.gameover
 
     moves = !gameover
       ? Object.entries(getCurrentMoves(client.game, state)).reduce((acc, [moveName, rawMove]) => {
