@@ -2,7 +2,6 @@ import pick from "lodash/pick.js";
 import get from "./get.js";
 import resolveExpression from "./resolve-expression.js";
 
-// probably replaces some stuff in resolveArguments, esp. contextPath
 export default function resolveProperties (bgioArguments, obj, context) {
   if (typeof obj !== 'object' || obj === null) {
     return obj
@@ -19,7 +18,6 @@ export default function resolveProperties (bgioArguments, obj, context) {
   return resolveProperty(bgioArguments, resolvedProperties, context)
 }
 
-// start migrating things here
 function resolveProperty (bgioArguments, value, context) {
   if (value?.type === 'expression') {
     return resolveExpression(
@@ -28,7 +26,6 @@ function resolveProperty (bgioArguments, value, context) {
         ...value,
         arguments: resolveProperties(bgioArguments, value.arguments, context)
       },
-      undefined,
       context
     )
   } else if (value?.type === 'count') {

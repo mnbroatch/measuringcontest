@@ -1,5 +1,4 @@
 import Move from "./move.js";
-import resolveArguments from '../utils/resolve-arguments.js'
 import { getMoveInstance } from "./move-factory.js";
 
 export default class ForEach extends Move {

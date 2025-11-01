@@ -1,17 +1,13 @@
-import resolveArguments from "./resolve-arguments.js";
+import resolveProperties from "./resolve-properties.js";
 
-// will need to handle args that are dependent on others eventually
-// probably also needs optimization for complex games
 export default function areThereValidMoves(bgioArguments, moves) {
   return Object.values(moves).some(move => {
     const { moveInstance } = move
 
-    const args = resolveArguments(
+    const args = resolveProperties(
       bgioArguments,
-      moveInstance.rule,
-      {},
-      { moveInstance },
-      true
+      moveInstance.rule.arguments,
+      { moveInstance }
     )
 
     if (Object.values(args).every(arg => arg !== undefined)) {

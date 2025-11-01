@@ -11,7 +11,6 @@ export default class Evaluate extends Condition {
     const result = resolveExpression(
       bgioArguments,
       this.rule,
-      payload,
       newContext
     )
     return { result, conditionIsMet: !!result }
