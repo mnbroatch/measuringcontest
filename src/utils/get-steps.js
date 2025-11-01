@@ -25,6 +25,3 @@ export default function getSteps (bgioState, moveRule, context) {
           )
     }))
 }
-
-
-

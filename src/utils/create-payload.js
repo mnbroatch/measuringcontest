@@ -1,16 +1,15 @@
-// not perfect; I think we'll want to switch to named arguments
-const moveArgsMap = {
-  PlaceNew: ['destination'],
-  MoveEntity: ['entity', 'destination'],
-  TakeFrom: ['source', 'destination'],
-  SetState: ['entity', 'state'],
-}
+import getSteps from './get-steps.js';
 
-export default function createPayload (moveRule, targets) {
+export default function createPayload (bgioState, moveRule, targets, context) {
+  const argNames = getSteps(
+    bgioState,
+    moveRule,
+    context
+  ).map(s => s.argName)
   return {
     arguments: targets.reduce((acc, target, i) => ({
       ...acc,
-      [moveArgsMap[moveRule.type][i]]: target
+      [argNames[i]]: target
     }), {})
   }
 }

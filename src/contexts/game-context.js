@@ -30,7 +30,8 @@ export function GameProvider({ gameConnection, children, isSpectator }) {
   useLayoutEffect(() => {
     if (isSpectator || optimisticWinner) return;
 
-    const completed = findCompletedMove(possibleMoveMeta, moveBuilder, gameConnection.moves);
+    const completed = findCompletedMove(gameConnection.state, possibleMoveMeta, moveBuilder, gameConnection.moves);
+    console.log('completed', completed)
     
     if (completed) {
       // Calculate optimistic winner
@@ -137,7 +138,7 @@ function getPossibleMoves(gameConnection, moveBuilder, isSpectator) {
   return { possibleMoveMeta, allClickable };
 }
 
-function findCompletedMove(possibleMoveMeta, moveBuilder, moves, bgioState) {
+function findCompletedMove(bgioArguments, possibleMoveMeta, moveBuilder, moves) {
   const possibleMoveNames = Object.keys(possibleMoveMeta);
   
   // Only one possible move left
@@ -153,8 +154,10 @@ function findCompletedMove(possibleMoveMeta, moveBuilder, moves, bgioState) {
   const moveRule = move.moveInstance.rule;
   
   const payload = createPayload(
+    bgioArguments,
     moveRule,
-    moveBuilder.targets
+    moveBuilder.targets,
+    { moveInstance: move.moveInstance }
   );
 
   return { moveName, move, payload };

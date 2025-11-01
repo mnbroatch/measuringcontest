@@ -101,6 +101,25 @@
           }
         },
         {
+          "type": "MoveEntity",
+          "arguments": {
+            "entity": {
+              "conditions": [{
+                "type": "Is",
+                "matcher": {
+                  "value": 8
+                }
+              }]
+            },
+            "destination": {
+              "conditions": [{
+                "type": "Is",
+                "matcher": { "name": "hand" }
+              }]
+            }
+          }
+        },
+        {
           "type": "ForEach",
           "arguments": {
             "targets": [0]
@@ -335,10 +354,8 @@
                     "type": "SetActivePlayers",
                     "arguments": {
                       "options": {
-                        "literal": {
-                          "currentPlayer": {
-                            "stage": "nameSuit"
-                          }
+                        "currentPlayer": {
+                          "stage": "nameSuit"
                         }
                       }
                     },
@@ -478,7 +495,6 @@
                       "player": {
                         "type": "RelativePath",
                         "target": {
-                          "a": 1,
                           "conditions": [
                             {
                               "type": "Is",
@@ -559,7 +575,6 @@
                             "type": "RelativePath",
                             "target": {
 
-                          "b": 2,
                               "type": "contextPath",
                               "path": ["loopTarget"]
                             },
@@ -594,7 +609,6 @@
               "score": {
                 "type": "RelativePath",
                 "target": {
-                          "c": 3,
                   "type": "contextPath",
                   "path": ["target"]
                 },
