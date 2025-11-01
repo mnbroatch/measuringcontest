@@ -2,7 +2,7 @@ import pick from "lodash/pick.js";
 import get from "./get.js";
 import resolveExpression from "./resolve-expression.js";
 
-export default function resolveProperties (bgioArguments, obj, context) {
+export default function resolveProperties (bgioArguments, obj, context, recursive) {
   if (typeof obj !== 'object' || obj === null) {
     return obj
   }
@@ -12,7 +12,9 @@ export default function resolveProperties (bgioArguments, obj, context) {
     : { ...obj }
 
   Object.entries(obj).forEach(([key, value]) => {
-    resolvedProperties[key] = resolveProperty(bgioArguments, value, context)
+    resolvedProperties[key] = recursive
+      ? resolveProperties(bgioArguments, value, context, true)
+      : resolveProperty(bgioArguments, value, context)
   })
 
   return resolveProperty(bgioArguments, resolvedProperties, context)

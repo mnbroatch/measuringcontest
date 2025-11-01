@@ -17,7 +17,8 @@ export default class Condition {
       conditionPayload.target = resolveProperties(
         bgioArguments,
         this.rule.target,
-        newContext
+        newContext,
+        true
       )
     }
     if (this.rule.targets) {

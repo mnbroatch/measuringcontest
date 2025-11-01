@@ -70,7 +70,10 @@
           },
           "sequence": [
             {
-              "minCount": 3,
+              "minCount": {
+                "type": "expression",
+                "expression": "3"
+              },
               "conditions": [{
                 "type": "ContainsSame",
                 "properties": ["player"]
