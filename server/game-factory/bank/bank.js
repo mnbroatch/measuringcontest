@@ -52,6 +52,12 @@ class Bank {
     return this.findAll(bgioArguments, rule, context)[0]
   }
 
+  find (bgioArguments, rule, context) {
+    return rule.matchMultiple
+      ? this.findAll(bgioArguments, rule, context)
+      : this.findOne(bgioArguments, rule, context)
+  }
+
   findParent (entity) {
     return find(this.tracker, ent =>
       ent.entities?.includes(entity)

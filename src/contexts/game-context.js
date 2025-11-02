@@ -31,7 +31,6 @@ export function GameProvider({ gameConnection, children, isSpectator }) {
     if (isSpectator || optimisticWinner) return;
 
     const completed = findCompletedMove(gameConnection.state, possibleMoveMeta, moveBuilder, gameConnection.moves);
-    console.log('completed', completed)
     
     if (completed) {
       // Calculate optimistic winner

@@ -83,10 +83,15 @@ export default class Move {
           return {
             ...acc,
             [argName]: payload?.arguments?.[argName]
-              ?? resolveProperties(bgioArguments, argRule, context)
+              ?? bgioArguments.G.bank.find(
+                bgioArguments,
+                resolveProperties(bgioArguments, argRule, context),
+                context
+              )
           }
         }, {})
     }
+    
 
     let conditionResults
     if (!skipCheck) {

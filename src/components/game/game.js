@@ -25,28 +25,3 @@ export default function Game ({ bgioState }) {
     </>
   )
 }
-
-import conditionFactory from "../../../server/game-factory/condition/condition-factory.js";
-import connectFour from "../../../server/connect-four.json";
-// console.log('getMatchingWinConditionResult(bgioArguments, rules.endIf)', getMatchingWinConditionResult(bgioState, connectFour.endIf))
-// function getMatchingWinConditionResult(bgioArguments, winConditions) {
-//   for (const winCondition of winConditions) {
-//     const conditionResults = [];
-
-//     for (const cond of winCondition.conditions) {
-//       const conditionResult = conditionFactory(cond).check(bgioArguments);
-
-//       if (conditionResult.conditionIsMet) {
-//         conditionResults.push(conditionResult);
-//       } else {
-//         break;
-//       }
-//     }
-
-//     if (conditionResults.length === winCondition.conditions.length) {
-//       return { winCondition, conditionResults };
-//     }
-//   }
-
-//   return null;
-// }

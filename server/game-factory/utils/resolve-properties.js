@@ -2,6 +2,12 @@ import pick from "lodash/pick.js";
 import get from "./get.js";
 import resolveExpression from "./resolve-expression.js";
 
+// some keys only contain things that will be the root of a later resolution
+const resolutionTerminators = [
+  'conditions',
+  'move',
+]
+
 export default function resolveProperties (bgioArguments, obj, context, recursive) {
   if (typeof obj !== 'object' || obj === null) {
     return obj
@@ -12,9 +18,11 @@ export default function resolveProperties (bgioArguments, obj, context, recursiv
     : { ...obj }
 
   Object.entries(obj).forEach(([key, value]) => {
-    resolvedProperties[key] = recursive
-      ? resolveProperties(bgioArguments, value, context, true)
-      : resolveProperty(bgioArguments, value, context)
+    if (!resolutionTerminators.includes(key)) {
+      resolvedProperties[key] = recursive
+        ? resolveProperties(bgioArguments, value, context, true)
+        : resolveProperty(bgioArguments, value, context)
+    }
   })
 
   return resolveProperty(bgioArguments, resolvedProperties, context)
@@ -87,16 +95,14 @@ function resolveProperty (bgioArguments, value, context) {
       )
     }
   } else if (value?.type === 'RelativeCoordinates') {
-    let parent = bgioArguments.G.bank.findParent(context.originalTarget)
+    const parent = bgioArguments.G.bank.findParent(context.originalTarget)
     const oldCoordinates =
       parent.getCoordinates(context.originalTarget.rule.index)
     const newCoordinates =
       parent.getRelativeCoordinates(oldCoordinates, value.location)
-    return  newCoordinates && parent.spaces[parent.getIndex(newCoordinates)]
-  } else if (value?.conditions) {
-    return value.matchMultiple
-      ? bgioArguments.G.bank.findAll(bgioArguments, value, context)
-      : bgioArguments.G.bank.findOne(bgioArguments, value, context)
+    const x = newCoordinates && parent.spaces[parent.getIndex(newCoordinates)]
+    console.log('x', x)
+    return x
   } else {
     return value
   }

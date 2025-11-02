@@ -1,7 +1,7 @@
 import checkConditions from "./check-conditions.js";
 import resolveProperties from './resolve-properties.js'
 
-export default function getScenarioResults(bgioArguments, scenarios) {
+export default function getScenarioResults(bgioArguments, scenarios, context) {
   let match
   for (const scenario of scenarios) {
     const conditionResults = checkConditions(bgioArguments, scenario)
