@@ -10,18 +10,17 @@ export default class Condition {
     const { G } = bgioArguments
     const conditionPayload = {...payload}
 
-    const rule = resolveProperties(
-      bgioArguments,
-      this.rule,
-      context,
-      true
-    )
-
     const newContext = { ...context }
-
     if (conditionPayload.target) {
       newContext.originalTarget = conditionPayload.target
     }
+
+    const rule = resolveProperties(
+      bgioArguments,
+      this.rule,
+      newContext,
+      true
+    )
 
     if (rule.target !== undefined) {
       // if it's an instance, we already found it. This would happen for example
@@ -42,11 +41,6 @@ export default class Condition {
       ], [])
     }
 
-    if (rule.matcher.player !== undefined && rule.matcher.name === 'score') {
-      console.log('rule', rule)
-      console.log('conditionPayload', conditionPayload)
-    }
-
     if (
       (rule.target !== undefined || rule.targets !== undefined)
         && !conditionPayload.target
@@ -54,6 +48,7 @@ export default class Condition {
     ) {
       return { conditionIsMet: false }
     }
+    
     return this.checkCondition(bgioArguments, rule, conditionPayload, newContext)
   }
 

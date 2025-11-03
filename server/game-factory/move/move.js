@@ -40,6 +40,9 @@ export default class Move {
     return Object.entries(this.conditionMappings)
       .reduce((acc, [groupName, { conditions, getPayload }]) => {
         if (this.rule.arguments?.[groupName]?.matchMultiple) {
+          if (!payload.arguments[groupName].length) {
+            return { conditionsAreMet: false }
+          }
           // todo: this is slightly wrong if an argument has "moves" as name, say.
           // More obviously, we only keep last results. Will it ever apply
           // to where we use conditionResults (endIf, for instance)
@@ -73,24 +76,27 @@ export default class Move {
             )
           })
         }
-        } , {})
+      } , {})
   }
 
   doMove (bgioArguments, payload, context, skipCheck = false) {
+    const rule = resolveProperties(
+      bgioArguments,
+      this.rule,
+      context,
+      true
+    )
     const resolvedPayload = {
       ...payload,
-      arguments: Object.entries(this.rule.arguments ?? {})
-        .reduce((acc, [argName, argRule]) => {
-          const resolved = payload?.arguments?.[argName]
-            ?? resolveProperties(bgioArguments, argRule, context);
+      arguments: Object.entries(rule.arguments ?? {})
+        .reduce((acc, [argName, arg]) => {
           return {
             ...acc,
             [argName]: payload?.arguments?.[argName]
               ?? (
-                // resolved?.conditions
-                isPlainObject(resolved) && argName !== 'state'
-                  ? bgioArguments.G.bank.find(bgioArguments, resolved, context)
-                  : resolved
+                isPlainObject(arg) && argName !== 'state'
+                  ? bgioArguments.G.bank.find(bgioArguments, arg, context)
+                  : arg
               )
           };
         }, {})
@@ -104,7 +110,7 @@ export default class Move {
     if (!skipCheck && !Object.values(conditionResults).every(r => r.conditionsAreMet)) {
       return INVALID_MOVE
     } else {
-      this.do(bgioArguments, resolvedPayload, context)
+      this.do(bgioArguments, rule, resolvedPayload, context)
       if (context) {
         context.previousArguments = resolvedPayload.arguments
       }

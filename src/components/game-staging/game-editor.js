@@ -2,8 +2,10 @@ import React, { useState, useCallback, useEffect } from 'react'
 import debounce from 'lodash/debounce'
 import ticTacToe from "../../../server/tic-tac-toe.json";
 import eights from "../../../server/eights.json";
+import eights2 from "../../../server/eights2.json";
 import connectFour from "../../../server/connect-four.json";
 import reversi from "../../../server/reversi.json";
+import reversi2 from "../../../server/reversi2.json";
 
 const exampleGames = [
   {
@@ -21,6 +23,14 @@ const exampleGames = [
   {
     name: 'Discharged for Emotional Instability Eights',
     rules: JSON.stringify(eights, null, 2)
+  },
+  {
+    name: 'DEBUG Forth and Back White and Black',
+    rules: JSON.stringify(reversi2, null, 2)
+  },
+  {
+    name: 'DEBUG Discharged for Emotional Instability Eights',
+    rules: JSON.stringify(eights2, null, 2)
   },
 ]
 

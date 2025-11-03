@@ -145,7 +145,7 @@
         {
           "type": "ForEach",
           "arguments": {
-            "targets": [0,1,2,3,4]
+            "targets": [0]
           },
           "move": {
             "type": "ForEach",

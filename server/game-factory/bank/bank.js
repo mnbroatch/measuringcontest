@@ -53,9 +53,13 @@ class Bank {
   }
 
   find (bgioArguments, rule, context) {
-    return rule.matchMultiple
+    const x = rule.matchMultiple
       ? this.findAll(bgioArguments, rule, context)
       : this.findOne(bgioArguments, rule, context)
+    if (!x && rule.blah) {
+      throw new Error('bleh')
+    }
+    return x
   }
 
   findParent (entity) {

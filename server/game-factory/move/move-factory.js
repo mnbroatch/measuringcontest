@@ -39,7 +39,6 @@ export default function moveFactory(moveRule) {
           {...context} // spread here so prevArguments doesn't change for sibling
         )
         context.moveConditionResults.push(result)
-          context
       }
     }
 

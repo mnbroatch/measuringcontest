@@ -1,4 +1,5 @@
 import pick from "lodash/pick.js";
+import isPlainObject from "lodash/isPlainObject.js";
 import get from "./get.js";
 import resolveExpression from "./resolve-expression.js";
 
@@ -6,6 +7,7 @@ import resolveExpression from "./resolve-expression.js";
 const resolutionTerminators = [
   'conditions',
   'move',
+  'then'
 ]
 
 export default function resolveProperties (bgioArguments, obj, context, recursive) {
@@ -51,10 +53,13 @@ function resolveProperty (bgioArguments, value, context) {
   } else if (value?.type === 'gamePath') {
     return get(bgioArguments.G, value.path)
   } else if (value?.type === 'RelativePath') {
-    const target = resolveProperty(bgioArguments, value.target, context)
+    const targetRule = resolveProperty(bgioArguments, value.target, context)
+    const target = isPlainObject(targetRule)
+      ? bgioArguments.G.bank.find(bgioArguments, targetRule, context)
+      : targetRule
     return get(target.attributes, value.path)
   } else if (value?.type === 'Parent') {
-    return bgioArguments.G.bank.findParent(context.originalTarget)
+    return bgioArguments.G.bank.findParent(context.originalTarget) ?? null
   } else if (value?.type === 'map') {
     return getMappedTargets(
       bgioArguments,
@@ -83,7 +88,10 @@ function resolveProperty (bgioArguments, value, context) {
       return maxTargets
     }
   } else if (value?.type === 'Pick') {
-    const target = resolveProperty(bgioArguments, value.target, context)
+    const targetRule = resolveProperty(bgioArguments, value.target, context)
+    const target = isPlainObject(targetRule)
+        ? bgioArguments.G.bank.find(bgioArguments, targetRule, context)
+        : targetRule
     if (target !== undefined) {
       return pick(
         resolveProperties(
@@ -107,10 +115,11 @@ function resolveProperty (bgioArguments, value, context) {
 }
 
 function getMappedTargets (bgioArguments, targetsRule, mapping, context) {
-  const targets = resolveProperty(
-    bgioArguments,
-    targetsRule,
-    context
+  const resolvedTargetsRule = resolveProperty(bgioArguments, targetsRule, context)
+  const targets = (
+    isPlainObject(resolvedTargetsRule)
+      ? bgioArguments.G.bank.find(bgioArguments, resolvedTargetsRule, context)
+      : resolvedTargetsRule
   ) ?? []
 
   return targets.map(target => ({

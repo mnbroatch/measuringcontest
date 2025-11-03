@@ -1,19 +1,32 @@
+import isPlainObject from "lodash/isPlainObject.js";
 import resolveProperties from "./resolve-properties.js";
 
 export default function areThereValidMoves(bgioArguments, moves) {
   return Object.values(moves).some(move => {
     const { moveInstance } = move
 
-    const args = resolveProperties(
+    const context = { moveInstance }
+
+    const rule = resolveProperties(
       bgioArguments,
-      moveInstance.rule.arguments,
-      { moveInstance }
+      moveInstance.rule,
+      context
     )
 
-    if (Object.values(args).every(arg => arg !== undefined)) {
-      const payload = { arguments: args }
-      const context = { moveInstance }
-      return moveInstance.isValid(bgioArguments, payload, context)
+    const resolvedPayload = {
+      arguments: Object.entries(rule.arguments ?? {})
+        .reduce((acc, [argName, arg]) => {
+          return {
+            ...acc,
+            [argName]: isPlainObject(arg) && argName !== 'state'
+              ? bgioArguments.G.bank.find(bgioArguments, arg, context)
+              : arg
+          };
+        }, {})
+    }
+
+    if (Object.values(resolvedPayload.arguments).every(arg => arg !== undefined)) {
+      return moveInstance.isValid(bgioArguments, resolvedPayload, context)
     } else {
       return false
     }
