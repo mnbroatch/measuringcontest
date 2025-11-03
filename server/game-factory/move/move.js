@@ -1,4 +1,5 @@
 import { INVALID_MOVE } from 'boardgame.io/dist/cjs/core.js';
+import isPlainObject from "lodash/isPlainObject.js";
 import checkConditions from "../utils/check-conditions.js";
 import resolveProperties from "../utils/resolve-properties.js";
 
@@ -80,18 +81,20 @@ export default class Move {
       ...payload,
       arguments: Object.entries(this.rule.arguments ?? {})
         .reduce((acc, [argName, argRule]) => {
+          const resolved = payload?.arguments?.[argName]
+            ?? resolveProperties(bgioArguments, argRule, context);
           return {
             ...acc,
             [argName]: payload?.arguments?.[argName]
-              ?? bgioArguments.G.bank.find(
-                bgioArguments,
-                resolveProperties(bgioArguments, argRule, context),
-                context
+              ?? (
+                // resolved?.conditions
+                isPlainObject(resolved) && argName !== 'state'
+                  ? bgioArguments.G.bank.find(bgioArguments, resolved, context)
+                  : resolved
               )
-          }
+          };
         }, {})
-    }
-    
+    };
 
     let conditionResults
     if (!skipCheck) {

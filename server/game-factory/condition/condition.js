@@ -16,8 +16,6 @@ export default class Condition {
       context,
       true
     )
-    console.log('payload.target', payload.target)
-    console.log('rule.target', rule.target)
 
     const newContext = { ...context }
 
@@ -25,13 +23,16 @@ export default class Condition {
       newContext.originalTarget = conditionPayload.target
     }
 
-    // wip: maybe get rid of the condition
-    if (rule.target) {
+    if (rule.target !== undefined) {
       // if it's an instance, we already found it. This would happen for example
       // by using context.loopTarget as a condition target
       conditionPayload.target = isPlainObject(rule.target)
         ? G.bank.find(bgioArguments, rule.target, newContext)
         : rule.target
+    } else {
+      conditionPayload.target = isPlainObject(payload.target)
+        ? G.bank.find(bgioArguments, payload.target, newContext)
+        : payload.target
     }
 
     if (rule.targets) {
@@ -41,14 +42,18 @@ export default class Condition {
       ], [])
     }
 
+    if (rule.matcher.player !== undefined && rule.matcher.name === 'score') {
+      console.log('rule', rule)
+      console.log('conditionPayload', conditionPayload)
+    }
+
     if (
-      (rule.target || rule.targets)
+      (rule.target !== undefined || rule.targets !== undefined)
         && !conditionPayload.target
         && !conditionPayload.targets?.length
     ) {
       return { conditionIsMet: false }
     }
-
     return this.checkCondition(bgioArguments, rule, conditionPayload, newContext)
   }
 
