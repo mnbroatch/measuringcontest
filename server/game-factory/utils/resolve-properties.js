@@ -1,7 +1,7 @@
 import pick from "lodash/pick.js";
-import isPlainObject from "lodash/isPlainObject.js";
 import get from "./get.js";
 import resolveExpression from "./resolve-expression.js";
+import resolveEntity from "./resolve-entity.js";
 
 // some keys only contain things that will be the root of a later resolution
 const resolutionTerminators = [
@@ -55,9 +55,11 @@ function resolveProperty (bgioArguments, value, context) {
     return get(bgioArguments.G, value.path)
   } else if (value?.type === 'RelativePath') {
     const targetRule = resolveProperty(bgioArguments, value.target, context)
-    const target = isPlainObject(targetRule)
-      ? bgioArguments.G.bank.find(bgioArguments, targetRule, context)
-      : targetRule
+    const target = resolveEntity(
+      bgioArguments,
+      targetRule,
+      context
+    )
     return get(target.attributes, value.path)
   } else if (value?.type === 'Parent') {
     return bgioArguments.G.bank.findParent(context.originalTarget) ?? null
@@ -90,9 +92,11 @@ function resolveProperty (bgioArguments, value, context) {
     }
   } else if (value?.type === 'Pick') {
     const targetRule = resolveProperty(bgioArguments, value.target, context)
-    const target = isPlainObject(targetRule)
-        ? bgioArguments.G.bank.find(bgioArguments, targetRule, context)
-        : targetRule
+    const target = resolveEntity(
+      bgioArguments,
+      targetRule,
+      context
+    )
     if (target !== undefined) {
       return pick(
         resolveProperties(
@@ -116,11 +120,12 @@ function resolveProperty (bgioArguments, value, context) {
 }
 
 function getMappedTargets (bgioArguments, targetsRule, mapping, context) {
-  const resolvedTargetsRule = resolveProperty(bgioArguments, targetsRule, context)
-  const targets = (
-    isPlainObject(resolvedTargetsRule)
-      ? bgioArguments.G.bank.find(bgioArguments, resolvedTargetsRule, context)
-      : resolvedTargetsRule
+  const targetRule = resolveProperty(bgioArguments, targetsRule, context)
+
+  const targets = resolveEntity(
+    bgioArguments,
+    targetRule,
+    context
   ) ?? []
 
   return targets.map(target => ({

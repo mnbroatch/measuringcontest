@@ -1,7 +1,7 @@
 import { INVALID_MOVE } from 'boardgame.io/dist/cjs/core.js';
-import isPlainObject from "lodash/isPlainObject.js";
 import checkConditions from "../utils/check-conditions.js";
 import resolveProperties from "../utils/resolve-properties.js";
+import resolveEntity from "../utils/resolve-entity.js";
 
 export default class Move {
   constructor (rule) {
@@ -94,9 +94,11 @@ export default class Move {
             ...acc,
             [argName]: payload?.arguments?.[argName]
               ?? (
-                isPlainObject(arg) && argName !== 'state'
-                  ? bgioArguments.G.bank.find(bgioArguments, arg, context)
-                  : arg
+                argName !== 'state' && resolveEntity(
+                  bgioArguments,
+                  arg,
+                  context
+                )
               )
           };
         }, {})

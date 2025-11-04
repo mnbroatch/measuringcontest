@@ -1,5 +1,5 @@
-import isPlainObject from "lodash/isPlainObject.js";
 import resolveProperties from "./resolve-properties.js";
+import resolveEntity from "./resolve-entity.js";
 
 export default function areThereValidMoves(bgioArguments, moves) {
   return Object.values(moves).some(move => {
@@ -18,10 +18,12 @@ export default function areThereValidMoves(bgioArguments, moves) {
         .reduce((acc, [argName, arg]) => {
           return {
             ...acc,
-            [argName]: isPlainObject(arg) && argName !== 'state'
-              ? bgioArguments.G.bank.find(bgioArguments, arg, context)
-              : arg
-          };
+            [argName]: argName !== 'state' && resolveEntity(
+              bgioArguments,
+              arg,
+              context
+            )
+          }
         }, {})
     }
 
