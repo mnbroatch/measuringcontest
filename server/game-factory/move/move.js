@@ -93,12 +93,11 @@ export default class Move {
           return {
             ...acc,
             [argName]: payload?.arguments?.[argName]
-              ?? (
-                argName !== 'state' && resolveEntity(
-                  bgioArguments,
-                  arg,
-                  context
-                )
+              ?? resolveEntity(
+                bgioArguments,
+                arg,
+                context,
+                argName
               )
           };
         }, {})

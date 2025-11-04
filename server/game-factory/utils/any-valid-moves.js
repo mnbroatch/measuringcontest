@@ -18,10 +18,11 @@ export default function areThereValidMoves(bgioArguments, moves) {
         .reduce((acc, [argName, arg]) => {
           return {
             ...acc,
-            [argName]: argName !== 'state' && resolveEntity(
+            [argName]: resolveEntity(
               bgioArguments,
               arg,
-              context
+              context,
+              argName 
             )
           }
         }, {})
