@@ -1,5 +1,5 @@
-import isPlainObject from "lodash/isPlainObject.js";
 import resolveProperties from "../utils/resolve-properties.js";
+import resolveEntity from "../utils/resolve-entity.js";
 
 export default class Condition {
   constructor (rule) {
@@ -22,17 +22,11 @@ export default class Condition {
       true
     )
 
-    if (rule.target !== undefined) {
-      // if it's an instance, we already found it. This would happen for example
-      // by using context.loopTarget as a condition target
-      conditionPayload.target = isPlainObject(rule.target)
-        ? G.bank.find(bgioArguments, rule.target, newContext)
-        : rule.target
-    } else {
-      conditionPayload.target = isPlainObject(payload.target)
-        ? G.bank.find(bgioArguments, payload.target, newContext)
-        : payload.target
-    }
+    conditionPayload.target = resolveEntity(
+      bgioArguments,
+      rule.target !== undefined ? rule.target : payload.target,
+      newContext
+    )
 
     if (rule.targets) {
       conditionPayload.targets = rule.targets.reduce((acc, targetRule) => [
