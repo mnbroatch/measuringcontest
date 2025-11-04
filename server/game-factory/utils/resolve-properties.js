@@ -7,7 +7,8 @@ import resolveExpression from "./resolve-expression.js";
 const resolutionTerminators = [
   'conditions',
   'move',
-  'then'
+  'then',
+  'mapping',
 ]
 
 export default function resolveProperties (bgioArguments, obj, context, recursive) {

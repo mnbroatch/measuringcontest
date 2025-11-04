@@ -549,7 +549,6 @@
                               "player": {
                                 "type": "RelativePath",
                                 "target": {
-                                  "a": 1,
                                   "conditions": [
                                     {
                                       "type": "Is",
@@ -626,7 +625,7 @@
       "conditions": [
         {
           "type": "Evaluate",
-          "expression": "score >= numPlayers * 50",
+          "expression": "score >= numPlayers * 1",
           "arguments": {
             "score": {
               "type": "RelativePath",
@@ -648,7 +647,7 @@
     "result": {
       "winner": {
         "type": "contextPath",
-        "path": [ "results", 0, "target", "attributes", "player"]
+        "path": ["results",0,"result","rule","player"]
       }
     }
   }]

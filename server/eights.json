@@ -648,7 +648,7 @@
     "result": {
       "winner": {
         "type": "contextPath",
-        "path": [ "results", 0, "target", "attributes", "player"]
+        "path": ["results",0,"result","rule","player"]
       }
     }
   }]
