@@ -54,7 +54,7 @@
       "arguments": {
         "destination": {
           "playerChoice": true,
-          "conditions": [
+          "constraints": [
             {
               "type": "Is",
               "matcher": { "type": "Space" }
@@ -190,7 +190,7 @@
           },
           "mapping": {
             "type": "count",
-            "conditions": [{
+            "constraints": [{
               "type": "Is",
               "matcher": {
                 "player": {

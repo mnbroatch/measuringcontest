@@ -1,4 +1,5 @@
 todo:
+change every target to every targets tictactoe
 clicking fast on reversi lets player 1 take 2 turns (quirk of single player mode?)
 setState validation 
 {"message":"The incoming token has expired"}

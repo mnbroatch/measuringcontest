@@ -98,7 +98,7 @@ function expandInitialPlacements (rules, entities) {
             },
             arguments: {
               destination: {
-                conditions: [{
+                constraints: [{
                   type: 'Is',
                   matcher: {
                     ...placement.destination,
@@ -124,7 +124,7 @@ function expandInitialPlacements (rules, entities) {
           },
           arguments: {
             destination: {
-              conditions: [{
+              constraints: [{
                 type: 'Is',
                 matcher: placement.destination
               }]

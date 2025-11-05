@@ -37,7 +37,7 @@
       "arguments": {
         "destination": {
           "playerChoice": true,
-          "conditions": [
+          "constraints": [
             {
               "type": "Is",
               "matcher": { "type": "Space" }
@@ -57,7 +57,7 @@
         "type": "Some",
         "target": {
           "matchMultiple": true,
-          "conditions": [{
+          "constraints": [{
             "type": "Is",
             "matcher": { "type": "Space" }
           }
@@ -94,13 +94,11 @@
         "type": "Every",
         "target": {
           "matchMultiple": true,
-          "conditions": [
-            {
-              "type": "Is",
-              "target": { "type": "Parent" },
-              "matcher": { "name": "mainGrid" }
-            }
-          ]
+          "constraints": [{
+            "type": "Is",
+            "target": { "type": "Parent" },
+            "matcher": { "name": "mainGrid" }
+          }]
         },
         "conditions": [{
           "target": {

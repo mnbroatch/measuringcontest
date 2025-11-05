@@ -42,6 +42,13 @@ export default class Condition {
       return { conditionIsMet: false }
     }
     
+    if (rule.type === 'Every') {
+      console.log('---------')
+      console.log('rule', rule)
+      console.log('conditionPayload', conditionPayload)
+      console.log('payload', payload)
+      console.log('context', context)
+    }
     return this.checkCondition(bgioArguments, rule, conditionPayload, newContext)
   }
 

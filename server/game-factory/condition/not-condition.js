@@ -3,12 +3,12 @@ import checkConditions from "../utils/check-conditions.js";
 
 export default class NotCondition extends Condition {
   checkCondition(bgioArguments, rule, payload, context) {
-    const { conditionsAreMet } = checkConditions(
+    const result = checkConditions(
       bgioArguments,
       rule,
       payload,
       context
     )
-    return { conditionIsMet: !conditionsAreMet }
+    return { conditionIsMet: !result.conditionsAreMet }
   }
 }

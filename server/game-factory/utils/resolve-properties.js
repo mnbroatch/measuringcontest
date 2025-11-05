@@ -7,13 +7,14 @@ import resolveEntity from "./resolve-entity.js";
 // some keys only contain things that will be the root of a later resolution
 const resolutionTerminators = [
   'conditions',
+  'constraints',
   'move',
   'then',
   'mapping',
 ]
 
 export default function resolveProperties (bgioArguments, obj, context) {
-  if (typeof obj !== 'object' || obj === null || !isPlainObject(obj)) {
+  if (!isPlainObject(obj) && !Array.isArray(obj)) {
     return obj
   }
 
@@ -27,7 +28,23 @@ export default function resolveProperties (bgioArguments, obj, context) {
     }
   })
 
-  return resolveProperty(bgioArguments, resolvedProperties, context)
+  const resolved = resolveProperty(bgioArguments, resolvedProperties, context)
+
+  let maybeEntity = resolved
+
+  // todo: comprehensive "should become entity" so we don't rely on error flow
+  if (!maybeEntity?.playerChoice && maybeEntity?.constraints) {
+    try {
+      maybeEntity = resolveEntity(
+        bgioArguments,
+        resolved,
+        context
+      ) ?? resolved
+    } catch (e) {
+    }
+  }
+
+  return maybeEntity
 }
 
 function resolveProperty (bgioArguments, value, context) {
@@ -70,12 +87,14 @@ function resolveProperty (bgioArguments, value, context) {
       context
     ).map(mappedTarget => mappedTarget.value)
   } else if (value?.type === 'mapMax') {
+    console.log('value', value)
     const mappedTargets = getMappedTargets(
       bgioArguments,
       value.targets,
       value.mapping,
       context
     )
+    console.log('123', 123)
     let maxValue
     const maxTargets = []
     for (let i = 0, len = mappedTargets.length; i < len; i++) {
@@ -136,3 +155,4 @@ function getMappedTargets (bgioArguments, targetsRule, mapping, context) {
     )
   }))
 }
+

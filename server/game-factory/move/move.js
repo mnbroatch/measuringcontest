@@ -7,6 +7,7 @@ export default class Move {
   constructor (rule) {
     this.rule = rule
 
+    console.log('rule', rule)
     this.conditionMappings = {
       move: {
         conditions: rule.conditions,
@@ -15,7 +16,7 @@ export default class Move {
       ...Object.entries(rule.arguments ?? {}).reduce((acc, [argName, argRule]) => ({
         ...acc,
         [argName]: {
-          conditions: argRule.conditions,
+          conditions: argRule.constraints,
           getPayload: payload => {
             return ({
               ...payload,
