@@ -1,3 +1,4 @@
+import isPlainObject from "lodash/isPlainObject.js";
 import pick from "lodash/pick.js";
 import get from "./get.js";
 import resolveExpression from "./resolve-expression.js";
@@ -12,7 +13,7 @@ const resolutionTerminators = [
 ]
 
 export default function resolveProperties (bgioArguments, obj, context) {
-  if (typeof obj !== 'object' || obj === null) {
+  if (typeof obj !== 'object' || obj === null || !isPlainObject(obj)) {
     return obj
   }
 

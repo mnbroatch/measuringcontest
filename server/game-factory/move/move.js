@@ -84,8 +84,7 @@ export default class Move {
     const rule = resolveProperties(
       bgioArguments,
       this.rule,
-      context,
-      true
+      context
     )
     const resolvedPayload = {
       ...payload,

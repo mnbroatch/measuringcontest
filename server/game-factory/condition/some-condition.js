@@ -8,7 +8,6 @@ export default class SomeCondition extends Condition {
         ...context,
         loopTarget: target
       }
-
       return checkConditions(
         bgioArguments,
         rule,

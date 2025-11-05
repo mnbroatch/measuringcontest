@@ -18,8 +18,7 @@ export default class Condition {
     const rule = resolveProperties(
       bgioArguments,
       this.rule,
-      newContext,
-      true
+      newContext
     )
 
     conditionPayload.target = resolveEntity(
