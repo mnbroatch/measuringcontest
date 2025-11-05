@@ -18,13 +18,10 @@ export default function getSteps (bgioState, moveRule, context) {
             ...moveRule.arguments[argName],
             value
           }))
-        : () => {
-          console.log('------------')
-          return bgioState.G.bank.findAll(
+        : () => bgioState.G.bank.findAll(
             bgioState,
             moveRule.arguments[argName],
             context
           )
-        }
     }))
 }

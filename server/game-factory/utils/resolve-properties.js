@@ -87,14 +87,12 @@ function resolveProperty (bgioArguments, value, context) {
       context
     ).map(mappedTarget => mappedTarget.value)
   } else if (value?.type === 'mapMax') {
-    console.log('value', value)
     const mappedTargets = getMappedTargets(
       bgioArguments,
       value.targets,
       value.mapping,
       context
     )
-    console.log('123', 123)
     let maxValue
     const maxTargets = []
     for (let i = 0, len = mappedTargets.length; i < len; i++) {
@@ -106,8 +104,8 @@ function resolveProperty (bgioArguments, value, context) {
       } else if (val === maxValue) {
         maxTargets.push(target)
       }
-      return maxTargets
     }
+    return maxTargets
   } else if (value?.type === 'Pick') {
     const targetRule = resolveProperties(bgioArguments, value.target, context)
     const target = resolveEntity(
