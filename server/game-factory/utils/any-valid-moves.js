@@ -13,6 +13,10 @@ export default function areThereValidMoves(bgioArguments, moves) {
       context
     )
 
+    // todo: This is incomplete. it is only concerned with the
+    // validity of one argument at a time and the combination
+    // of individually valid choices can be invalid. One option
+    // (maybe the only one) is to try all combinations of valid arguments.
     const resolvedPayload = {
       arguments: Object.entries(rule.arguments ?? {})
         .reduce((acc, [argName, arg]) => {

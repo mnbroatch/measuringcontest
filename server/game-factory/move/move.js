@@ -1,13 +1,11 @@
 import { INVALID_MOVE } from 'boardgame.io/dist/cjs/core.js';
 import checkConditions from "../utils/check-conditions.js";
 import resolveProperties from "../utils/resolve-properties.js";
-import resolveEntity from "../utils/resolve-entity.js";
 
 export default class Move {
   constructor (rule) {
     this.rule = rule
 
-    console.log('rule', rule)
     this.conditionMappings = {
       move: {
         conditions: rule.conditions,
@@ -93,13 +91,7 @@ export default class Move {
         .reduce((acc, [argName, arg]) => {
           return {
             ...acc,
-            [argName]: payload?.arguments?.[argName]
-              ?? resolveEntity(
-                bgioArguments,
-                arg,
-                context,
-                argName
-              )
+            [argName]: payload?.arguments?.[argName] ?? arg
           };
         }, {})
     };

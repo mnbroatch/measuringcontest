@@ -27,6 +27,17 @@ export default class Condition {
       newContext
     )
 
+    const x = rule.target !== undefined
+      ? rule.target
+      : payload.target
+
+      if (x !== conditionPayload.target) {
+      console.log('-------------')
+      console.log('rule', rule)
+      console.log('x', x)
+      console.log('conditionPayload.target ', conditionPayload.target )
+    }
+
     if (rule.targets) {
       conditionPayload.targets = rule.targets.reduce((acc, targetRule) => [
         ...acc,
@@ -42,13 +53,6 @@ export default class Condition {
       return { conditionIsMet: false }
     }
     
-    if (rule.type === 'Every') {
-      console.log('---------')
-      console.log('rule', rule)
-      console.log('conditionPayload', conditionPayload)
-      console.log('payload', payload)
-      console.log('context', context)
-    }
     return this.checkCondition(bgioArguments, rule, conditionPayload, newContext)
   }
 

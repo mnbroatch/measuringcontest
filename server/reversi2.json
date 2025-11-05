@@ -125,7 +125,44 @@
             }
           ]
         }
-      }
+      },
+      "then": [{
+        "type": "ForEach",
+        "arguments": {
+          "targets": {
+            "type": "contextPath",
+            "path": [
+              "moveConditionResults",
+              0,
+              "conditionResults",
+              "destination",
+              "results",
+              2,
+              "results",
+              0,
+              "matches",
+              { "flatten": true, "map": ["entities"] },
+              { "flatten": true }
+            ]
+          }
+        },
+        "move": {
+          "type": "SetState",
+          "arguments": {
+            "entity": {
+              "type": "contextPath",
+              "path": [ "loopTarget" ]
+            },
+            "state": {
+              "property": "player",
+              "value": {
+                "type": "ctxPath",
+                "path": ["currentPlayer"]
+              }
+            }
+          }
+        }
+      }]
     }
   },
   "endIf": [

@@ -33,7 +33,8 @@ export default function resolveProperties (bgioArguments, obj, context) {
   let maybeEntity = resolved
 
   // todo: comprehensive "should become entity" so we don't rely on error flow
-  if (!maybeEntity?.playerChoice && maybeEntity?.constraints) {
+  if (
+    !maybeEntity?.playerChoice && maybeEntity?.constraints) {
     try {
       maybeEntity = resolveEntity(
         bgioArguments,
