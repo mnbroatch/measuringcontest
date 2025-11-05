@@ -43,9 +43,10 @@ export default class Move {
           if (!payload.arguments[groupName].length) {
             return { conditionsAreMet: false }
           }
-          // todo: this is slightly wrong if an argument has "moves" as name, say.
-          // More obviously, we only keep last results. Will it ever apply
-          // to where we use conditionResults (endIf, for instance)
+
+          // this is slightly wrong if an argument has "moves" as name, say.
+          // More obviously, we only keep last results. Will the issue matter
+          // where we use conditionResults (endIf, for instance)?
           let results
           let i = 0
           do {

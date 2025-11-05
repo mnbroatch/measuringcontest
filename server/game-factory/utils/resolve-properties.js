@@ -11,7 +11,7 @@ const resolutionTerminators = [
   'mapping',
 ]
 
-export default function resolveProperties (bgioArguments, obj, context, recursive) {
+export default function resolveProperties (bgioArguments, obj, context) {
   if (typeof obj !== 'object' || obj === null) {
     return obj
   }
@@ -22,9 +22,7 @@ export default function resolveProperties (bgioArguments, obj, context, recursiv
 
   Object.entries(obj).forEach(([key, value]) => {
     if (!resolutionTerminators.includes(key)) {
-      resolvedProperties[key] = recursive
-        ? resolveProperties(bgioArguments, value, context, true)
-        : resolveProperty(bgioArguments, value, context)
+      resolvedProperties[key] = resolveProperties(bgioArguments, value, context)
     }
   })
 
@@ -54,7 +52,7 @@ function resolveProperty (bgioArguments, value, context) {
   } else if (value?.type === 'gamePath') {
     return get(bgioArguments.G, value.path)
   } else if (value?.type === 'RelativePath') {
-    const targetRule = resolveProperty(bgioArguments, value.target, context)
+    const targetRule = resolveProperties(bgioArguments, value.target, context)
     const target = resolveEntity(
       bgioArguments,
       targetRule,
@@ -91,7 +89,7 @@ function resolveProperty (bgioArguments, value, context) {
       return maxTargets
     }
   } else if (value?.type === 'Pick') {
-    const targetRule = resolveProperty(bgioArguments, value.target, context)
+    const targetRule = resolveProperties(bgioArguments, value.target, context)
     const target = resolveEntity(
       bgioArguments,
       targetRule,
@@ -120,7 +118,7 @@ function resolveProperty (bgioArguments, value, context) {
 }
 
 function getMappedTargets (bgioArguments, targetsRule, mapping, context) {
-  const targetRule = resolveProperty(bgioArguments, targetsRule, context)
+  const targetRule = resolveProperties(bgioArguments, targetsRule, context)
 
   const targets = resolveEntity(
     bgioArguments,
@@ -130,7 +128,7 @@ function getMappedTargets (bgioArguments, targetsRule, mapping, context) {
 
   return targets.map(target => ({
     target,
-    value: resolveProperty(
+    value: resolveProperties(
       bgioArguments,
       mapping,
       { ...context, loopTarget: target }
