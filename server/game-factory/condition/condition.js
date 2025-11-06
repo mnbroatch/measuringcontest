@@ -5,7 +5,7 @@ export default class Condition {
     this.rule = rule;
   }
   
-  check (bgioArguments, payload) {
+  check (bgioArguments, payload, context) {
     const conditionPayload = { ...payload }
     const newContext = { ...context }
 
