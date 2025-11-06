@@ -4,7 +4,7 @@ export default function checkConditions (
   bgioArguments,
   rule,
   payload,
-  context,
+  context
 ) {
   const { constraints = [], conditions = constraints } = rule
   const results = [];
@@ -15,13 +15,6 @@ export default function checkConditions (
       .check(bgioArguments, payload, context);
     if (!result.conditionIsMet) {
       failedAt = conditionRule
-    // if (rule.playerChoice) {
-    //   console.log('------')
-    //   console.log('payload', payload)
-    //   console.log('rule', rule)
-    //   console.log('failedAt', failedAt)
-    // }
-
       break
     } else {
       results.push(result);

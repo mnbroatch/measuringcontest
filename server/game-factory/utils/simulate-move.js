@@ -18,7 +18,7 @@ export default function simulateMove (bgioArguments, payload, context) {
     newBgioArguments,
     simulatedPayload,
     context,
-    true
+    { skipCheck: true }
   )
 
   return simulatedG

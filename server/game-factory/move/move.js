@@ -5,81 +5,81 @@ import resolveProperties from "../utils/resolve-properties.js";
 export default class Move {
   constructor (rule) {
     this.rule = rule
+  }
 
-    this.conditionMappings = {
-      move: {
-        conditions: rule.conditions,
-        getPayload: payload => payload
-      },
-      ...Object.entries(rule.arguments ?? {}).reduce((acc, [argName, argRule]) => ({
-        ...acc,
-        [argName]: {
-          conditions: argRule.constraints,
-          getPayload: payload => {
-            return ({
-              ...payload,
-              target: payload.arguments[argName]
-            })
-          }
+  checkValidity (bgioArguments, payload, context) {
+    const argRuleEntries = Object.entries(this.rule.arguments ?? {})
+
+    if (
+      !argRuleEntries.every(([argName]) => {
+        const arg = payload.arguments[argName]
+        return arg !== undefined && (!Array.isArray(arg) || arg.length)
+      })
+    ) {
+      // not the best return value but we don't want to do expensive checks
+      // when we know the operation is doomed. At least for now.
+      return false
+    }
+
+    const argumentResults = {}
+
+    for (let i = 0, len = argRuleEntries.length; i < len; i++) {
+      const [argName, argRule] = argRuleEntries[i]
+      const payloadArg = payload.arguments[argName]
+      const args = Array.isArray(payloadArg)
+        ? payloadArg
+        : [payloadArg]
+
+      const argResults = []
+      for (let j = 0, len = args.length; j < len; j++) {
+        const arg = args[j]
+        const result = checkConditions(
+          bgioArguments,
+          { conditions: argRule.constraints },
+          { target: arg },
+          context
+        )
+        argResults.push(result)
+        if (!result.conditionsAreMet) {
+          break
         }
-      }), {})
+      }
+
+      const argConditionsAreMet = argResults.at(-1).conditionsAreMet
+      argumentResults[argName] = {
+        results: argResults,
+        conditionsAreMet: argConditionsAreMet
+      }
+      if (!argConditionsAreMet) {
+        break
+      }
+    }
+
+    const moveResults = checkConditions(
+      bgioArguments,
+      { conditions: this.rule.conditions },
+      undefined,
+      context
+    )
+
+    return {
+      argumentResults,
+      moveResults,
+      conditionsAreMet: moveResults.conditionsAreMet
+        && Object.values(argumentResults).every(a => a.conditionsAreMet)
     }
   }
 
   isValid (bgioArguments, payload, context) {
-    const conditionResults = this.checkConditionGroups(
+    const conditionResults = this.checkValidity(
       bgioArguments,
       payload,
       context
     )
-    return Object.values(conditionResults).every(r => r.conditionsAreMet)
+    return conditionResults.conditionsAreMet
   }
 
-  checkConditionGroups (bgioArguments, payload, context) {
-    return Object.entries(this.conditionMappings)
-      .reduce((acc, [groupName, { conditions, getPayload }]) => {
-        if (this.rule.arguments?.[groupName]?.matchMultiple) {
-          if (!payload.arguments[groupName].length) {
-            return { conditionsAreMet: false }
-          }
-
-          // this is slightly wrong if an argument has "moves" as name, say.
-          // More obviously, we only keep last results. Will the issue matter
-          // where we use conditionResults (endIf, for instance)?
-          let results
-          let i = 0
-          do {
-            results = checkConditions(
-              bgioArguments,
-              { conditions },
-              getPayload({
-                arguments: {
-                  [groupName]: payload.arguments[groupName][i]
-                }
-              }),
-              context
-            )
-            i++
-          } while (i < payload.arguments[groupName].length && results.conditionsAreMet)
-          return ({
-            ...acc,
-            [groupName]: results
-          })
-        } else {
-          return ({
-            ...acc,
-            [groupName]: checkConditions(
-              bgioArguments,
-              { conditions },
-              getPayload(payload),
-              context
-            )
-          })
-        }
-      } , {})
-  }
-
-  doMove (bgioArguments, payload, context, skipCheck = false) {
+  doMove (bgioArguments, payload, context, { skipCheck = false } = {}) {
     const rule = resolveProperties(
       bgioArguments,
       this.rule,
@@ -98,10 +98,10 @@ export default class Move {
 
     let conditionResults
     if (!skipCheck) {
-      conditionResults = this.checkConditionGroups(bgioArguments, resolvedPayload, context)
+      conditionResults = this.checkValidity(bgioArguments, resolvedPayload, context)
     }
 
-    if (!skipCheck && !Object.values(conditionResults).every(r => r.conditionsAreMet)) {
+    if (!skipCheck && !conditionResults.conditionsAreMet) {
       return INVALID_MOVE
     } else {
       this.do(bgioArguments, rule, resolvedPayload, context)
