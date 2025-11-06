@@ -5,11 +5,10 @@ export default class Condition {
     this.rule = rule;
   }
   
-  check (bgioArguments, payload = {}, context = {}) {
-    const { G } = bgioArguments
-    const conditionPayload = {...payload}
-
+  check (bgioArguments, payload) {
+    const conditionPayload = { ...payload }
     const newContext = { ...context }
+
     if (conditionPayload.target) {
       newContext.originalTarget = conditionPayload.target
     }
@@ -20,26 +19,14 @@ export default class Condition {
       newContext
     )
 
-    // rule.target being null (versus undefined) here would mean Parent or
-    // RelativePath resolution, for instance, is missing.
-    conditionPayload.target = rule.target !== undefined
-      ? rule.target
-      : payload.target
-
-    rule.target ?? payload.target
-
-    if (rule.targets) {
-      conditionPayload.targets = rule.targets.reduce((acc, targetRule) => [
-        ...acc,
-        ...G.bank.findAll(bgioArguments, targetRule, newContext)
-      ], [])
+    // We don't simply defer to payload target because of Parent and RelativePath
+    // target types, for instance, which retarget to another entity
+    if (rule.target !== undefined) {
+      conditionPayload.target = rule.target
     }
 
-    if (
-      (this.rule.target !== undefined || this.rule.targets !== undefined)
-        && !conditionPayload.target
-        && !conditionPayload.targets?.length
-    ) {
+    // Nonexistent entities never fulfill conditions (including "Not" conditions!)
+    if (this.rule.target !== undefined && !conditionPayload.target) {
       return { conditionIsMet: false }
     }
     
