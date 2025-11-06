@@ -1,9 +1,9 @@
 import isPlainObject from "lodash/isPlainObject.js";
 
-const abstractEntityNames = ['state']
+const abstractTargetNames = ['state']
 
-export default function resolveEntity (bgioArguments, target, context, name) {
-  return !abstractEntityNames.includes(name) && isPlainObject(target)
+export default function resolveEntity (bgioArguments, target, context, targetName) {
+  return !abstractTargetNames.includes(targetName) && isPlainObject(target)
     ? bgioArguments.G.bank.find(bgioArguments, target, context)
     : target
 }

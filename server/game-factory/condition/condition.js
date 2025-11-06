@@ -1,5 +1,4 @@
 import resolveProperties from "../utils/resolve-properties.js";
-import resolveEntity from "../utils/resolve-entity.js";
 
 export default class Condition {
   constructor (rule) {
@@ -21,22 +20,9 @@ export default class Condition {
       newContext
     )
 
-    conditionPayload.target = resolveEntity(
-      bgioArguments,
-      rule.target !== undefined ? rule.target : payload.target,
-      newContext
-    )
-
-    const x = rule.target !== undefined
+    conditionPayload.target = rule.target !== undefined
       ? rule.target
       : payload.target
-
-      if (x !== conditionPayload.target) {
-      console.log('-------------')
-      console.log('rule', rule)
-      console.log('x', x)
-      console.log('conditionPayload.target ', conditionPayload.target )
-    }
 
     if (rule.targets) {
       conditionPayload.targets = rule.targets.reduce((acc, targetRule) => [
@@ -46,7 +32,7 @@ export default class Condition {
     }
 
     if (
-      (rule.target !== undefined || rule.targets !== undefined)
+      (this.rule.target !== undefined || this.rule.targets !== undefined)
         && !conditionPayload.target
         && !conditionPayload.targets?.length
     ) {

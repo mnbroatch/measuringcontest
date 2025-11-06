@@ -30,22 +30,13 @@ export default function resolveProperties (bgioArguments, obj, context) {
 
   const resolved = resolveProperty(bgioArguments, resolvedProperties, context)
 
-  let maybeEntity = resolved
-
-  // todo: comprehensive "should become entity" so we don't rely on error flow
-  if (
-    !maybeEntity?.playerChoice && maybeEntity?.constraints) {
-    try {
-      maybeEntity = resolveEntity(
+  return !resolved?.playerChoice && resolved?.constraints
+    ? resolveEntity(
         bgioArguments,
         resolved,
         context
-      ) ?? resolved
-    } catch (e) {
-    }
-  }
-
-  return maybeEntity
+      )
+    : resolved
 }
 
 function resolveProperty (bgioArguments, value, context) {
@@ -71,12 +62,7 @@ function resolveProperty (bgioArguments, value, context) {
   } else if (value?.type === 'gamePath') {
     return get(bgioArguments.G, value.path)
   } else if (value?.type === 'RelativePath') {
-    const targetRule = resolveProperties(bgioArguments, value.target, context)
-    const target = resolveEntity(
-      bgioArguments,
-      targetRule,
-      context
-    )
+    const target = resolveProperties(bgioArguments, value.target, context)
     return get(target.attributes, value.path)
   } else if (value?.type === 'Parent') {
     return bgioArguments.G.bank.findParent(context.originalTarget) ?? null
@@ -108,12 +94,7 @@ function resolveProperty (bgioArguments, value, context) {
     }
     return maxTargets
   } else if (value?.type === 'Pick') {
-    const targetRule = resolveProperties(bgioArguments, value.target, context)
-    const target = resolveEntity(
-      bgioArguments,
-      targetRule,
-      context
-    )
+    const target = resolveProperties(bgioArguments, value.target, context)
     if (target !== undefined) {
       return pick(
         resolveProperties(
@@ -137,21 +118,13 @@ function resolveProperty (bgioArguments, value, context) {
 }
 
 function getMappedTargets (bgioArguments, targetsRule, mapping, context) {
-  const targetRule = resolveProperties(bgioArguments, targetsRule, context)
-
-  const targets = resolveEntity(
-    bgioArguments,
-    targetRule,
-    context
-  ) ?? []
-
-  return targets.map(target => ({
+  return resolveProperties(bgioArguments, targetsRule, context)?.map(target => ({
     target,
     value: resolveProperties(
       bgioArguments,
       mapping,
       { ...context, loopTarget: target }
     )
-  }))
+  })) ?? []
 }
 
