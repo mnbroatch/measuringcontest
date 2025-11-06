@@ -20,9 +20,13 @@ export default class Condition {
       newContext
     )
 
+    // rule.target being null (versus undefined) here would mean Parent or
+    // RelativePath resolution, for instance, is missing.
     conditionPayload.target = rule.target !== undefined
       ? rule.target
       : payload.target
+
+    rule.target ?? payload.target
 
     if (rule.targets) {
       conditionPayload.targets = rule.targets.reduce((acc, targetRule) => [
