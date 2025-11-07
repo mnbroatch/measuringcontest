@@ -6,6 +6,7 @@ import eights2 from "../../../server/eights2.json";
 import connectFour from "../../../server/connect-four.json";
 import reversi from "../../../server/reversi.json";
 import reversi2 from "../../../server/reversi2.json";
+import checkers from "../../../server/checkers.json";
 
 const exampleGames = [
   {
@@ -23,6 +24,10 @@ const exampleGames = [
   {
     name: 'Discharged for Emotional Instability Eights',
     rules: JSON.stringify(eights, null, 2)
+  },
+  {
+    name: 'Kingly Jumps',
+    rules: JSON.stringify(checkers, null, 2)
   },
   {
     name: 'DEBUG Forth and Back White and Black',

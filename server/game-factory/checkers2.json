@@ -1,0 +1,324 @@
+
+{
+  "entities": [
+    {
+      "name": "mainGrid",
+      "type": "Grid",
+      "width": 8,
+      "height": 8
+    },
+    {
+      "name": "checker",
+      "perPlayer": true,
+      "state": { 
+        "isKing": false
+      },
+      "displayProperties": ["isKing"],
+      "count": 12
+    }
+  ],
+  "sharedBoard": [{ "name": "mainGrid" }],
+  "initialPlacements": [
+    {"entity": {"name": "checker", "player": "0"}, "destination": {"index": 1}},
+    {"entity": {"name": "checker", "player": "0"}, "destination": {"index": 3}},
+    {"entity": {"name": "checker", "player": "0"}, "destination": {"index": 5}},
+    {"entity": {"name": "checker", "player": "0"}, "destination": {"index": 7}},
+    {"entity": {"name": "checker", "player": "0"}, "destination": {"index": 8}},
+    {"entity": {"name": "checker", "player": "0"}, "destination": {"index": 10}},
+    {"entity": {"name": "checker", "player": "0"}, "destination": {"index": 12}},
+    {"entity": {"name": "checker", "player": "0"}, "destination": {"index": 14}},
+    {"entity": {"name": "checker", "player": "0"}, "destination": {"index": 17}},
+    {"entity": {"name": "checker", "player": "0"}, "destination": {"index": 19}},
+    {"entity": {"name": "checker", "player": "0"}, "destination": {"index": 21}},
+    {"entity": {"name": "checker", "player": "0"}, "destination": {"index": 23}},
+    {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 40}},
+    {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 42}},
+    {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 44}},
+    {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 46}},
+    {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 49}},
+    {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 51}},
+    {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 53}},
+    {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 55}},
+    {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 56}},
+    {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 58}},
+    {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 60}},
+    {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 62}}
+  ],
+  "minPlayers": 2,
+  "maxPlayers": 2,
+  "turn": {
+    "minMoves": 1,
+    "maxMoves": 1
+  },
+  "moves": {
+    "moveChecker": {
+      "type": "MoveEntity",
+      "arguments": {
+        "entity": {
+          "playerChoice": true,
+          "constraints": [
+            {
+              "type": "Is",
+              "matcher": {
+                "name": "checker",
+                "player": {
+                  "type": "ctxPath",
+                  "path": ["currentPlayer"]
+                }
+              }
+            }
+          ]
+        },
+        "destination": {
+          "playerChoice": true,
+          "constraints": [
+            {
+              "type": "Is",
+              "matcher": { "type": "Space" }
+            },
+            {
+              "type": "Not",
+              "conditions": [{ "type": "Contains" }]
+            },
+            {
+              "type": "Or",
+              "conditions": [
+                {
+                  "type": "DiagonalNeighbor",
+                  "of": {
+                    "type": "contextPath",
+                    "path": ["previousArguments", "entity", "parent"]
+                  },
+                  "direction": "forward"
+                },
+                {
+                  "type": "DiagonalNeighbor",
+                  "of": {
+                    "type": "contextPath",
+                    "path": ["previousArguments", "entity", "parent"]
+                  },
+                  "direction": "backward",
+                  "conditions": [{
+                    "type": "Is",
+                    "target": {
+                      "type": "contextPath",
+                      "path": ["previousArguments", "entity"]
+                    },
+                    "matcher": { "isKing": true }
+                  }]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "then": [
+        {
+          "type": "SetState",
+          "arguments": {
+            "entity": {
+              "type": "contextPath",
+              "path": ["previousArguments", "entity"]
+            },
+            "state": {
+              "property": "isKing",
+              "value": true
+            }
+          },
+          "conditions": [{
+            "type": "Evaluate",
+            "expression": "(player == 0 and row == 7) or (player == 1 and row == 0)",
+            "arguments": {
+              "player": {
+                "type": "RelativePath",
+                "target": {
+                  "type": "contextPath",
+                  "path": ["previousArguments", "entity"]
+                },
+                "path": ["player"]
+              },
+              "row": {
+                "type": "RelativePath",
+                "target": {
+                  "type": "contextPath",
+                  "path": ["previousArguments", "destination"]
+                },
+                "path": ["row"]
+              }
+            }
+          }]
+        }
+      ]
+    },
+    "jumpChecker": {
+      "type": "MoveEntity",
+      "arguments": {
+        "entity": {
+          "playerChoice": true,
+          "constraints": [
+            {
+              "type": "Is",
+              "matcher": {
+                "name": "checker",
+                "player": {
+                  "type": "ctxPath",
+                  "path": ["currentPlayer"]
+                }
+              }
+            }
+          ]
+        },
+        "destination": {
+          "playerChoice": true,
+          "constraints": [
+            {
+              "type": "Is",
+              "matcher": { "type": "Space" }
+            },
+            {
+              "type": "Not",
+              "conditions": [{ "type": "Contains" }]
+            },
+            {
+              "type": "DiagonalDistance",
+              "from": {
+                "type": "contextPath",
+                "path": ["previousArguments", "entity", "parent"]
+              },
+              "distance": 2
+            },
+            {
+              "type": "PathBetween",
+              "from": {
+                "type": "contextPath",
+                "path": ["previousArguments", "entity", "parent"]
+              },
+              "conditions": [{
+                "type": "Contains",
+                "conditions": [{
+                  "type": "Is",
+                  "matcher": {
+                    "name": "checker"
+                  }
+                }, {
+                  "type": "Not",
+                  "conditions": [{
+                    "type": "Is",
+                    "matcher": {
+                      "player": {
+                        "type": "ctxPath",
+                        "path": ["currentPlayer"]
+                      }
+                    }
+                  }]
+                }]
+              }]
+            }
+          ]
+        }
+      },
+      "then": [
+        {
+          "type": "RemoveEntity",
+          "arguments": {
+            "entity": {
+              "constraints": [
+                {
+                  "type": "PathBetween",
+                  "from": {
+                    "type": "contextPath",
+                    "path": ["previousArguments", "entity", "parent"]
+                  },
+                  "to": {
+                    "type": "contextPath",
+                    "path": ["previousArguments", "destination"]
+                  }
+                },
+                {
+                  "type": "Contains",
+                  "conditions": [{
+                    "type": "Is",
+                    "matcher": { "name": "checker" }
+                  }]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "SetState",
+          "arguments": {
+            "entity": {
+              "type": "contextPath",
+              "path": ["previousArguments", "entity"]
+            },
+            "state": {
+              "property": "isKing",
+              "value": true
+            }
+          },
+          "conditions": [{
+            "type": "Evaluate",
+            "expression": "(player == 0 and row == 7) or (player == 1 and row == 0)",
+            "arguments": {
+              "player": {
+                "type": "RelativePath",
+                "target": {
+                  "type": "contextPath",
+                  "path": ["previousArguments", "entity"]
+                },
+                "path": ["player"]
+              },
+              "row": {
+                "type": "RelativePath",
+                "target": {
+                  "type": "contextPath",
+                  "path": ["previousArguments", "destination"]
+                },
+                "path": ["row"]
+              }
+            }
+          }]
+        }
+      ]
+    }
+  },
+  "endIf": [
+    {
+      "conditions": [{
+        "type": "Not",
+        "target": {
+          "matchMultiple": true,
+          "constraints": [{
+            "type": "Is",
+            "matcher": {
+              "name": "checker",
+              "player": "0"
+            }
+          }]
+        }
+      }],
+      "result": {
+        "winner": 1
+      }
+    },
+    {
+      "conditions": [{
+        "type": "Not",
+        "target": {
+          "matchMultiple": true,
+          "constraints": [{
+            "type": "Is",
+            "matcher": {
+              "name": "checker",
+              "player": "1"
+            }
+          }]
+        }
+      }],
+      "result": {
+        "winner": 0
+      }
+    }
+  ]
+}
