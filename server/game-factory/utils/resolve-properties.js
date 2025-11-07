@@ -109,11 +109,12 @@ function resolveProperty (bgioArguments, value, context) {
       )
     }
   } else if (value?.type === 'Coordinates') {
-    console.log('context', context)
-    console.log('bgioArguments.G.bank.findParent(context.originalTarget)', bgioArguments.G.bank.findParent(context.originalTarget))
     return bgioArguments.G.bank.findParent(context.originalTarget)
       .getCoordinates(context.originalTarget.rule.index)
   } else if (value?.type === 'RelativeCoordinates') {
+    console.log('value', value)
+    console.log('context', context)
+
     const parent = bgioArguments.G.bank.findParent(context.originalTarget)
     const oldCoordinates =
       parent.getCoordinates(context.originalTarget.rule.index)

@@ -81,69 +81,11 @@
               "conditions": [{ "type": "Contains" }]
             },
             {
-              "type": "Or",
-              "conditions": [
-                {
-                  "type": "Is",
-                  "target": {
-                    "type": "RelativeCoordinates",
-                    "of": {
-                      "type": "contextPath",
-                      "path": ["previousArguments", "entity", "parent"]
-                    },
-                    "location": [1, 1]
-                  }
-                },
-                {
-                  "type": "Is",
-                  "target": {
-                    "type": "RelativeCoordinates",
-                    "of": {
-                      "type": "contextPath",
-                      "path": ["previousArguments", "entity"]
-                    },
-                    "location": [1, -1]
-                  }
-                },
-                {
-                  "type": "Is",
-                  "target": {
-                    "type": "RelativeCoordinates",
-                    "of": {
-                      "type": "contextPath",
-                      "path": ["previousArguments", "entity"]
-                    },
-                    "location": [-1, 1]
-                  },
-                  "conditions": [{
-                    "type": "Is",
-                    "target": {
-                      "type": "contextPath",
-                      "path": ["previousArguments", "entity"]
-                    },
-                    "matcher": { "isKing": true }
-                  }]
-                },
-                {
-                  "type": "Is",
-                  "target": {
-                    "type": "RelativeCoordinates",
-                    "of": {
-                      "type": "contextPath",
-                      "path": ["previousArguments", "entity"]
-                    },
-                    "location": [-1, -1]
-                  },
-                  "conditions": [{
-                    "type": "Is",
-                    "target": {
-                      "type": "contextPath",
-                      "path": ["previousArguments", "entity"]
-                    },
-                    "matcher": { "isKing": true }
-                  }]
-                }
-              ]
+              "type": "Contains",
+              "target": {
+                "type": "RelativeCoordinates",
+                "location": [-1, 1]
+              }
             }
           ]
         }
