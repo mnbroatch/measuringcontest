@@ -21,8 +21,8 @@ export default class Entity {
 
   get attributes () {
     return {
-      ...this,
       ...this.rule,
+      ...this,
       ...this.state
     }
   }

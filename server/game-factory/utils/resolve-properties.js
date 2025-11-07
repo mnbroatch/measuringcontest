@@ -63,12 +63,12 @@ function resolveProperty (bgioArguments, value, context) {
     return get(bgioArguments.G, value.path)
   } else if (value?.type === 'RelativePath') {
     const target = resolveProperties(bgioArguments, value.target, context)
-    console.log('value', value)
-    console.log('target', target)
-    console.log('context', context)
     return get(target.attributes, value.path) ?? null
   } else if (value?.type === 'Parent') {
-    return bgioArguments.G.bank.findParent(context.originalTarget) ?? null
+    const originalTarget = value.target
+      ? resolveProperties(bgioArguments, value.target, context)
+      : context.originalTarget
+    return bgioArguments.G.bank.findParent(originalTarget) ?? null
   } else if (value?.type === 'map') {
     return getMappedTargets(
       bgioArguments,
@@ -109,15 +109,18 @@ function resolveProperty (bgioArguments, value, context) {
       )
     }
   } else if (value?.type === 'Coordinates') {
-    return bgioArguments.G.bank.findParent(context.originalTarget)
-      .getCoordinates(context.originalTarget.rule.index)
+    const originalTarget = value.target
+      ? resolveProperties(bgioArguments, value.target, context)
+      : context.originalTarget
+    return bgioArguments.G.bank.findParent(originalTarget)
+      .getCoordinates(originalTarget.rule.index)
   } else if (value?.type === 'RelativeCoordinates') {
-    console.log('value', value)
-    console.log('context', context)
-
-    const parent = bgioArguments.G.bank.findParent(context.originalTarget)
+    const originalTarget = value.target
+      ? resolveProperties(bgioArguments, value.target, context)
+      : context.originalTarget
+    const parent = bgioArguments.G.bank.findParent(originalTarget)
     const oldCoordinates =
-      parent.getCoordinates(context.originalTarget.rule.index)
+      parent.getCoordinates(originalTarget.rule.index)
     const newCoordinates =
       parent.getRelativeCoordinates(oldCoordinates, value.location)
     return (newCoordinates && parent.spaces[parent.getIndex(newCoordinates)]) ?? null

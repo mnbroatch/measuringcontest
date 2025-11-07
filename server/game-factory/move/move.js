@@ -37,7 +37,7 @@ export default class Move {
           bgioArguments,
           { conditions: argRule.constraints },
           { target: arg },
-          context
+          { ...context, moveArguments: payload.arguments }
         )
         argResults.push(result)
         if (!result.conditionsAreMet) {
@@ -59,7 +59,7 @@ export default class Move {
       bgioArguments,
       { conditions: this.rule.conditions },
       undefined,
-      context
+      { ...context, moveArguments: payload.arguments }
     )
 
     return {
