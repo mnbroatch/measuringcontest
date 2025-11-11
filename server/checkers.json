@@ -47,133 +47,398 @@
   "minPlayers": 2,
   "maxPlayers": 2,
   "turn": {
-    "minMoves": 1,
-    "maxMoves": 1
-  },
-  "moves": {
-    "moveChecker": {
-      "type": "MoveEntity",
-      "arguments": {
-        "entity": {
-          "playerChoice": true,
-          "constraints": [
-            {
-              "type": "Is",
-              "matcher": {
-                "name": "checker",
-                "player": {
-                  "type": "ctxPath",
-                  "path": ["currentPlayer"]
-                }
+    "activePlayers": { "currentPlayer": "moveIfNoJump" },
+    "stages": {
+      "jumpIfPossible": {
+        "moves": {
+          "moveChecker": {
+            "type": "MoveEntity",
+            "arguments": {
+              "entity": {
+                "playerChoice": true,
+                "constraints": [
+                  {
+                    "type": "Is",
+                    "matcher": {
+                      "name": "checker",
+                      "player": {
+                        "type": "ctxPath",
+                        "path": ["currentPlayer"]
+                      }
+                    }
+                  }
+                ]
+              },
+              "destination": {
+                "playerChoice": true,
+                "constraints": [
+                  {
+                    "type": "Is",
+                    "matcher": { "type": "Space" }
+                  },
+                  {
+                    "type": "Not",
+                    "conditions": [{ "type": "Contains" }]
+                  },
+                  {
+                    "type": "Or",
+                    "conditions": [
+                      {
+                        "type": "Contains",
+                        "target": {
+                          "type": "RelativeCoordinates",
+                          "location": {
+                            "type": "expression",
+                            "expression": "player == '0' ? player0RelativeCoordinates : player1RelativeCoordinates",
+                            "arguments": {
+                              "player0RelativeCoordinates": [-1, 1],
+                              "player1RelativeCoordinates": [-1, -1],
+                              "player": {
+                                "type": "ctxPath",
+                                "path": ["currentPlayer"]
+                              }
+                            }
+                          }
+                        },
+                        "conditions": [{
+                          "type": "Is",
+                          "entity": {
+                            "type": "contextPath",
+                            "path": ["moveArguments", "entity"]
+                          }
+                        }]
+                      },
+                      {
+                        "type": "Contains",
+                        "target": {
+                          "type": "RelativeCoordinates",
+                          "location": {
+                            "type": "expression",
+                            "expression": "player == '0' ? player0RelativeCoordinates : player1RelativeCoordinates",
+                            "arguments": {
+                              "player0RelativeCoordinates": [1, 1],
+                              "player1RelativeCoordinates": [1, -1],
+                              "player": {
+                                "type": "ctxPath",
+                                "path": ["currentPlayer"]
+                              }
+                            }
+                          }
+                        },
+                        "conditions": [{
+                          "type": "Is",
+                          "entity": {
+                            "type": "contextPath",
+                            "path": ["moveArguments", "entity"]
+                          }
+                        }]
+                      }
+                    ]
+                  }
+                ]
               }
-            }
-          ]
-        },
-        "destination": {
-          "playerChoice": true,
-          "constraints": [
-            {
-              "type": "Is",
-              "matcher": { "type": "Space" }
             },
-            {
-              "type": "Not",
-              "conditions": [{ "type": "Contains" }]
-            },
-            {
-              "type": "Or",
-              "conditions": [
-                {
-                  "type": "Contains",
-                  "target": {
-                    "type": "RelativeCoordinates",
-                    "location": {
-                      "type": "expression",
-                      "expression": "player == '0' ? player0RelativeCoordinates : player1RelativeCoordinates",
-                      "arguments": {
-                        "player0RelativeCoordinates": [-1, 1],
-                        "player1RelativeCoordinates": [-1, -1],
-                        "player": {
-                          "type": "ctxPath",
-                          "path": ["currentPlayer"]
-                        }
-                      }
-                    }
+            "then": [
+              {
+                "type": "SetState",
+                "arguments": {
+                  "entity": {
+                    "type": "contextPath",
+                    "path": ["previousArguments", "entity"]
                   },
-                  "conditions": [{
-                    "type": "Is",
-                    "entity": {
-                      "type": "contextPath",
-                      "path": ["moveArguments", "entity"]
-                    }
-                  }]
+                  "state": {
+                    "property": "isKing",
+                    "value": true
+                  }
                 },
-                {
-                  "type": "Contains",
-                  "target": {
-                    "type": "RelativeCoordinates",
-                    "location": {
-                      "type": "expression",
-                      "expression": "player == '0' ? player0RelativeCoordinates : player1RelativeCoordinates",
-                      "arguments": {
-                        "player0RelativeCoordinates": [1, 1],
-                        "player1RelativeCoordinates": [1, -1],
-                        "player": {
-                          "type": "ctxPath",
-                          "path": ["currentPlayer"]
-                        }
+                "conditions": [{
+                  "type": "Evaluate",
+                  "expression": "(player == '0' and destinationCoordinates[1] == 0) or (player == '1' and destinationCoordinates[1] == 7)",
+                  "arguments": {
+                    "player": {
+                      "type": "RelativePath",
+                      "target": {
+                        "type": "contextPath",
+                        "path": ["previousArguments", "entity"]
+                      },
+                      "path": ["player"]
+                    },
+                    "destinationCoordinates": {
+                      "type": "Coordinates",
+                      "target": {
+                        "type": "contextPath",
+                        "path": ["previousArguments", "destination"]
                       }
                     }
-                  },
-                  "conditions": [{
-                    "type": "Is",
-                    "entity": {
-                      "type": "contextPath",
-                      "path": ["moveArguments", "entity"]
-                    }
-                  }]
-                }
-              ]
-            }
-          ]
+                  }
+                }]
+              }
+            ]
+          }
         }
       },
-      "then": [
-        {
-          "type": "SetState",
-          "arguments": {
-            "entity": {
-              "type": "contextPath",
-              "path": ["previousArguments", "entity"]
-            },
-            "state": {
-              "property": "isKing",
-              "value": true
-            }
-          },
-          "conditions": [{
-            "type": "Evaluate",
-            "expression": "(player == '0' and destinationCoordinates[1] == 0) or (player == '1' and destinationCoordinates[1] == 7)",
+      "keepJumping": {
+        "moves": {
+          "moveChecker": {
+            "type": "MoveEntity",
             "arguments": {
-              "player": {
-                "type": "RelativePath",
-                "target": {
-                  "type": "contextPath",
-                  "path": ["previousArguments", "entity"]
-                },
-                "path": ["player"]
+              "entity": {
+                "playerChoice": true,
+                "constraints": [
+                  {
+                    "type": "Is",
+                    "matcher": {
+                      "name": "checker",
+                      "player": {
+                        "type": "ctxPath",
+                        "path": ["currentPlayer"]
+                      }
+                    }
+                  }
+                ]
               },
-              "destinationCoordinates": {
-                "type": "Coordinates",
-                "target": {
-                  "type": "contextPath",
-                  "path": ["previousArguments", "destination"]
-                }
+              "destination": {
+                "playerChoice": true,
+                "constraints": [
+                  {
+                    "type": "Is",
+                    "matcher": { "type": "Space" }
+                  },
+                  {
+                    "type": "Not",
+                    "conditions": [{ "type": "Contains" }]
+                  },
+                  {
+                    "type": "Or",
+                    "conditions": [
+                      {
+                        "type": "Contains",
+                        "target": {
+                          "type": "RelativeCoordinates",
+                          "location": {
+                            "type": "expression",
+                            "expression": "player == '0' ? player0RelativeCoordinates : player1RelativeCoordinates",
+                            "arguments": {
+                              "player0RelativeCoordinates": [-1, 1],
+                              "player1RelativeCoordinates": [-1, -1],
+                              "player": {
+                                "type": "ctxPath",
+                                "path": ["currentPlayer"]
+                              }
+                            }
+                          }
+                        },
+                        "conditions": [{
+                          "type": "Is",
+                          "entity": {
+                            "type": "contextPath",
+                            "path": ["moveArguments", "entity"]
+                          }
+                        }]
+                      },
+                      {
+                        "type": "Contains",
+                        "target": {
+                          "type": "RelativeCoordinates",
+                          "location": {
+                            "type": "expression",
+                            "expression": "player == '0' ? player0RelativeCoordinates : player1RelativeCoordinates",
+                            "arguments": {
+                              "player0RelativeCoordinates": [1, 1],
+                              "player1RelativeCoordinates": [1, -1],
+                              "player": {
+                                "type": "ctxPath",
+                                "path": ["currentPlayer"]
+                              }
+                            }
+                          }
+                        },
+                        "conditions": [{
+                          "type": "Is",
+                          "entity": {
+                            "type": "contextPath",
+                            "path": ["moveArguments", "entity"]
+                          }
+                        }]
+                      }
+                    ]
+                  }
+                ]
               }
-            }
-          }]
+            },
+            "then": [
+              {
+                "type": "SetState",
+                "arguments": {
+                  "entity": {
+                    "type": "contextPath",
+                    "path": ["previousArguments", "entity"]
+                  },
+                  "state": {
+                    "property": "isKing",
+                    "value": true
+                  }
+                },
+                "conditions": [{
+                  "type": "Evaluate",
+                  "expression": "(player == '0' and destinationCoordinates[1] == 0) or (player == '1' and destinationCoordinates[1] == 7)",
+                  "arguments": {
+                    "player": {
+                      "type": "RelativePath",
+                      "target": {
+                        "type": "contextPath",
+                        "path": ["previousArguments", "entity"]
+                      },
+                      "path": ["player"]
+                    },
+                    "destinationCoordinates": {
+                      "type": "Coordinates",
+                      "target": {
+                        "type": "contextPath",
+                        "path": ["previousArguments", "destination"]
+                      }
+                    }
+                  }
+                }]
+              }
+            ],
+            "then": [{
+              "type": "EndTurn"
+            }]
+          }
         }
-      ]
+      },
+      "moveIfNoJump": {
+        "moves": {
+          "moveChecker": {
+            "type": "MoveEntity",
+            "arguments": {
+              "entity": {
+                "playerChoice": true,
+                "constraints": [
+                  {
+                    "type": "Is",
+                    "matcher": {
+                      "name": "checker",
+                      "player": {
+                        "type": "ctxPath",
+                        "path": ["currentPlayer"]
+                      }
+                    }
+                  }
+                ]
+              },
+              "destination": {
+                "playerChoice": true,
+                "constraints": [
+                  {
+                    "type": "Is",
+                    "matcher": { "type": "Space" }
+                  },
+                  {
+                    "type": "Not",
+                    "conditions": [{ "type": "Contains" }]
+                  },
+                  {
+                    "type": "Or",
+                    "conditions": [
+                      {
+                        "type": "Contains",
+                        "target": {
+                          "type": "RelativeCoordinates",
+                          "location": {
+                            "type": "expression",
+                            "expression": "player == '0' ? player0RelativeCoordinates : player1RelativeCoordinates",
+                            "arguments": {
+                              "player0RelativeCoordinates": [-1, 1],
+                              "player1RelativeCoordinates": [-1, -1],
+                              "player": {
+                                "type": "ctxPath",
+                                "path": ["currentPlayer"]
+                              }
+                            }
+                          }
+                        },
+                        "conditions": [{
+                          "type": "Is",
+                          "entity": {
+                            "type": "contextPath",
+                            "path": ["moveArguments", "entity"]
+                          }
+                        }]
+                      },
+                      {
+                        "type": "Contains",
+                        "target": {
+                          "type": "RelativeCoordinates",
+                          "location": {
+                            "type": "expression",
+                            "expression": "player == '0' ? player0RelativeCoordinates : player1RelativeCoordinates",
+                            "arguments": {
+                              "player0RelativeCoordinates": [1, 1],
+                              "player1RelativeCoordinates": [1, -1],
+                              "player": {
+                                "type": "ctxPath",
+                                "path": ["currentPlayer"]
+                              }
+                            }
+                          }
+                        },
+                        "conditions": [{
+                          "type": "Is",
+                          "entity": {
+                            "type": "contextPath",
+                            "path": ["moveArguments", "entity"]
+                          }
+                        }]
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "then": [
+              {
+                "type": "SetState",
+                "arguments": {
+                  "entity": {
+                    "type": "contextPath",
+                    "path": ["previousArguments", "entity"]
+                  },
+                  "state": {
+                    "property": "isKing",
+                    "value": true
+                  }
+                },
+                "conditions": [{
+                  "type": "Evaluate",
+                  "expression": "(player == '0' and destinationCoordinates[1] == 0) or (player == '1' and destinationCoordinates[1] == 7)",
+                  "arguments": {
+                    "player": {
+                      "type": "RelativePath",
+                      "target": {
+                        "type": "contextPath",
+                        "path": ["previousArguments", "entity"]
+                      },
+                      "path": ["player"]
+                    },
+                    "destinationCoordinates": {
+                      "type": "Coordinates",
+                      "target": {
+                        "type": "contextPath",
+                        "path": ["previousArguments", "destination"]
+                      }
+                    }
+                  }
+                }]
+              }
+            ],
+            "then": [{
+              "type": "EndTurn"
+            }]
+          }
+        }
+      }
     }
   },
   "endIf": [
