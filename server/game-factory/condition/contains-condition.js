@@ -13,8 +13,8 @@ export default class ContainsCondition extends Condition {
         bgioArguments,
         rule,
         { target: entity },
-        context).conditionsAreMet
-      ) ?? []
+        context
+      ).conditionsAreMet) ?? []
       return { matches, conditionIsMet: !!matches.length }
     }
   }

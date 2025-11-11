@@ -122,7 +122,10 @@ function resolveProperty (bgioArguments, value, context) {
     const oldCoordinates =
       parent.getCoordinates(originalTarget.rule.index)
     const newCoordinates =
-      parent.getRelativeCoordinates(oldCoordinates, value.location)
+      parent.getRelativeCoordinates(
+      oldCoordinates,
+      resolveProperties(bgioArguments, value.location, context)
+    )
     return (newCoordinates && parent.spaces[parent.getIndex(newCoordinates)]) ?? null
   } else {
     return value

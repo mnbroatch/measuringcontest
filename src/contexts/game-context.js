@@ -105,18 +105,28 @@ function getPossibleMoves(gameConnection, moveBuilder, isSpectator) {
 
   availableMoves.forEach(([moveName, move]) => {
     const moveRule = { ...move.moveInstance.rule, moveName };
+    const context = { moveInstance: move.moveInstance }
     
+    const payload = createPayload(
+      bgioState,
+      moveRule,
+      moveBuilder.targets,
+      context
+    );
+    
+    context.moveArguments = payload.arguments 
+
     const moveIsAllowed = checkConditions(
       bgioState,
       moveRule,
       {},
-      { moveInstance: move.moveInstance }
+      context
     ).conditionsAreMet;
 
     const moveSteps = getSteps(
       bgioState,
       moveRule,
-      { moveInstance: move.moveInstance }
+      context
     );
 
     const lastStep = moveSteps?.[stepIndex - 1];

@@ -81,11 +81,59 @@
               "conditions": [{ "type": "Contains" }]
             },
             {
-              "type": "Contains",
-              "target": {
-                "type": "RelativeCoordinates",
-                "location": [-1, 1]
-              }
+              "type": "Or",
+              "conditions": [
+                {
+                  "type": "Contains",
+                  "target": {
+                    "type": "RelativeCoordinates",
+                    "location": {
+                      "type": "expression",
+                      "expression": "player == '0' ? player0RelativeCoordinates : player1RelativeCoordinates",
+                      "arguments": {
+                        "player0RelativeCoordinates": [-1, 1],
+                        "player1RelativeCoordinates": [-1, -1],
+                        "player": {
+                          "type": "ctxPath",
+                          "path": ["currentPlayer"]
+                        }
+                      }
+                    }
+                  },
+                  "conditions": [{
+                    "type": "Is",
+                    "entity": {
+                      "type": "contextPath",
+                      "path": ["moveArguments", "entity"]
+                    }
+                  }]
+                },
+                {
+                  "type": "Contains",
+                  "target": {
+                    "type": "RelativeCoordinates",
+                    "location": {
+                      "type": "expression",
+                      "expression": "player == '0' ? player0RelativeCoordinates : player1RelativeCoordinates",
+                      "arguments": {
+                        "player0RelativeCoordinates": [1, 1],
+                        "player1RelativeCoordinates": [1, -1],
+                        "player": {
+                          "type": "ctxPath",
+                          "path": ["currentPlayer"]
+                        }
+                      }
+                    }
+                  },
+                  "conditions": [{
+                    "type": "Is",
+                    "entity": {
+                      "type": "contextPath",
+                      "path": ["moveArguments", "entity"]
+                    }
+                  }]
+                }
+              ]
             }
           ]
         }
