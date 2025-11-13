@@ -2,7 +2,16 @@ import _matches from "lodash/matches.js";
 import Condition from "./condition.js";
 import checkConditions from "../utils/check-conditions.js";
 
-const directions = [[1, 0], [1, 1], [0, 1], [-1, 1]];
+const directions = [
+  [1, 0],   // right
+  [1, 1],   // diagonal down-right
+  [0, 1],   // down
+  [-1, 1],  // diagonal down-left
+  [-1, 0],  // left (NEW)
+  [-1, -1], // diagonal up-left (NEW)
+  [0, -1],  // up (NEW)
+  [1, -1]   // diagonal up-right (NEW)
+];
 
 export default class InLineCondition extends Condition {
   checkCondition(bgioArguments, rule, payload) {
@@ -45,19 +54,33 @@ function getLineStartingPoints(grid, dx, dy) {
   const starts = [];
   
   if (dx === 1 && dy === 0) {
-    // Horizontal: start at leftmost column
+    // Horizontal right: start at leftmost column
     for (let y = 0; y < height; y++) starts.push([0, y]);
+  } else if (dx === -1 && dy === 0) {
+    // Horizontal left: start at rightmost column
+    for (let y = 0; y < height; y++) starts.push([width - 1, y]);
   } else if (dx === 0 && dy === 1) {
-    // Vertical: start at top row
+    // Vertical down: start at top row
     for (let x = 0; x < width; x++) starts.push([x, 0]);
+  } else if (dx === 0 && dy === -1) {
+    // Vertical up: start at bottom row
+    for (let x = 0; x < width; x++) starts.push([x, height - 1]);
   } else if (dx === 1 && dy === 1) {
-    // Diagonal ?: start from top row and left column
+    // Diagonal down-right: start from top row and left column
     for (let x = 0; x < width; x++) starts.push([x, 0]);
     for (let y = 1; y < height; y++) starts.push([0, y]);
   } else if (dx === -1 && dy === 1) {
-    // Diagonal ?: start from top row and right column
+    // Diagonal down-left: start from top row and right column
     for (let x = 0; x < width; x++) starts.push([x, 0]);
     for (let y = 1; y < height; y++) starts.push([width - 1, y]);
+  } else if (dx === 1 && dy === -1) {
+    // Diagonal up-right: start from bottom row and left column
+    for (let x = 0; x < width; x++) starts.push([x, height - 1]);
+    for (let y = 0; y < height - 1; y++) starts.push([0, y]);
+  } else if (dx === -1 && dy === -1) {
+    // Diagonal up-left: start from bottom row and right column
+    for (let x = 0; x < width; x++) starts.push([x, height - 1]);
+    for (let y = 0; y < height - 1; y++) starts.push([width - 1, y]);
   }
   
   return starts;
@@ -120,7 +143,6 @@ function tryMatchSequence(bgioArguments, lineSpaces, startIndex, sequencePattern
     // Greedy: try to match as many as possible up to max
     while (matchedCount < max && spaceIndex < lineSpaces.length) {
       const space = lineSpaces[spaceIndex];
-      
       // Pass all previously matched spaces in this chunk
       if (checkSpaceConditions(bgioArguments, space, conditions, chunkMatches)) {
         chunkMatches.push(space);

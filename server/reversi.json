@@ -78,64 +78,56 @@
               "conditions": [{ "type": "Contains" }]
             },
             {
-              "type": "Would",
-              "conditions": [{
-                "type": "InLine",
-                "sequence": [
-                  {
-                    "conditions": [{
-                      "type": "Contains",
+              "type": "InLine",
+              "sequence": [
+                {
+                  "conditions": [{
+                    "type": "Is",
+                    "entity": {
+                      "type": "contextPath",
+                      "path": ["originalTarget"]
+                    }
+                  }]
+                },
+                {
+                  "minCount": 1,
+                  "conditions": [
+                    {
+                      "type": "Not",
                       "conditions": [{
-                        "type": "Is",
-                        "matcher": {
-                          "player": {
-                            "type": "ctxPath",
-                            "path": ["currentPlayer"]
-                          }
-                        }
-                      }]
-                    }]
-                  },
-                  {
-                    "minCount": 1,
-                    "conditions": [
-                      {
-                        "type": "Not",
+                        "type": "Contains",
                         "conditions": [{
-                          "type": "Contains",
-                          "conditions": [{
-                            "type": "Is",
-                            "matcher": {
-                              "player": {
-                                "type": "ctxPath",
-                                "path": ["currentPlayer"]
-                              }
+                          "type": "Is",
+                          "matcher": {
+                            "player": {
+                              "type": "ctxPath",
+                              "path": ["currentPlayer"]
                             }
-                          }]
-                        }]
-                      },
-                      {
-                        "type": "ContainsSame",
-                        "properties": ["player"]
-                      }
-                    ]
-                  },
-                  {
-                    "conditions": [{
-                      "type": "Contains",
-                      "conditions": [{
-                        "type": "Is",
-                        "matcher": {
-                          "player": {
-                            "type": "ctxPath",
-                            "path": ["currentPlayer"]
                           }
-                        }
+                        }]
                       }]
+                    },
+                    {
+                      "type": "ContainsSame",
+                      "properties": ["player"]
+                    }
+                  ]
+                },
+                {
+                  "conditions": [{
+                    "type": "Contains",
+                    "conditions": [{
+                      "type": "Is",
+                      "matcher": {
+                        "player": {
+                          "type": "ctxPath",
+                          "path": ["currentPlayer"]
+                        }
+                      }
                     }]
-                  }
-                ]
-              }]
+                  }]
+                }
+              ]
             }
           ]
         }
@@ -155,8 +147,6 @@
               0,
               "results",
               2,
-              "results",
-              0,
               "matches",
               { "flatten": true, "map": ["entities"] },
               { "flatten": true }

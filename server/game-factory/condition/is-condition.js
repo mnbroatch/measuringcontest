@@ -10,7 +10,7 @@ export default class Is extends Condition {
       }
     }
 
-    return {
+    const x = {
       target,
       conditionIsMet: entityMatches(
         bgioArguments,
@@ -19,5 +19,7 @@ export default class Is extends Condition {
         context
       )
     }
+    if (rule.blah) console.log('x', x)
+    return x
   }
 }
