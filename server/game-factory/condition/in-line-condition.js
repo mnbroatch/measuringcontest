@@ -1,17 +1,18 @@
+// haven't verified cache invalidation robustness
 import _matches from "lodash/matches.js";
 import Condition from "./condition.js";
 import checkConditions from "../utils/check-conditions.js";
 
+// Only use 4 directions - we'll check both directions along each line
 const directions = [
-  [1, 0],   // right
+  [1, 0],   // horizontal
+  [0, 1],   // vertical
   [1, 1],   // diagonal down-right
-  [0, 1],   // down
   [-1, 1],  // diagonal down-left
-  [-1, 0],  // left (NEW)
-  [-1, -1], // diagonal up-left (NEW)
-  [0, -1],  // up (NEW)
-  [1, -1]   // diagonal up-right (NEW)
 ];
+
+// Cache for grid sequences - WeakMap so it gets garbage collected with the grid
+const sequenceCache = new WeakMap();
 
 export default class InLineCondition extends Condition {
   checkCondition(bgioArguments, rule, payload) {
@@ -31,10 +32,37 @@ export default class InLineCondition extends Condition {
   }
 }
 
+// Helper to create a cache key from sequence pattern
+function getSequenceKey(sequencePattern) {
+  return JSON.stringify(sequencePattern);
+}
+
 // Shared function for finding all sequences in a grid
 export function gridContainsSequence(bgioArguments, grid, sequencePattern) {
+  // Check cache first
+  const cacheKey = getSequenceKey(sequencePattern);
+  let gridCache = sequenceCache.get(grid);
+  
+  if (!gridCache) {
+    gridCache = new Map();
+    sequenceCache.set(grid, gridCache);
+  }
+  
+  // Check if we've already calculated this sequence for this grid state
+  const gridStateKey = getGridStateKey(grid);
+  const cacheEntry = gridCache.get(cacheKey);
+  
+  if (cacheEntry && cacheEntry.stateKey === gridStateKey) {
+    return cacheEntry.result;
+  }
+  
+  // Calculate matches
   const matches = [];
-  const sequenceLength = sequencePattern.reduce((sum, chunk) => sum + (chunk.count || 1), 0);
+  
+  // Calculate minimum sequence length once
+  const minSequenceLength = sequencePattern.reduce((sum, chunk) => 
+    sum + (chunk.minCount || chunk.count || 1), 0
+  );
   
   // For each direction, scan each row/column/diagonal once
   for (const [dx, dy] of directions) {
@@ -42,11 +70,55 @@ export function gridContainsSequence(bgioArguments, grid, sequencePattern) {
     
     for (const [startX, startY] of lines) {
       const lineSpaces = getLineSpaces(grid, startX, startY, dx, dy);
-      const lineMatches = findSequencesInLine(bgioArguments, lineSpaces, sequencePattern);
-      matches.push(...lineMatches);
+      
+      // Skip lines that are too short (before processing)
+      if (lineSpaces.length < minSequenceLength) {
+        continue;
+      }
+      
+      // Check both forward and backward along this line
+      const forwardMatches = findSequencesInLine(bgioArguments, lineSpaces, sequencePattern, minSequenceLength);
+      matches.push(...forwardMatches);
+      
+      // Only reverse if needed (avoid creating new arrays unnecessarily)
+      if (forwardMatches.length === 0 || sequencePattern.length > 1) {
+        const reverseMatches = findSequencesInLine(bgioArguments, lineSpaces, sequencePattern, minSequenceLength, true);
+        matches.push(...reverseMatches);
+      }
     }
   }
-  return { matches, conditionIsMet: !!matches.length };
+  
+  const result = { matches, conditionIsMet: !!matches.length };
+  
+  // Store in cache
+  gridCache.set(cacheKey, {
+    stateKey: gridStateKey,
+    result
+  });
+  
+  return result;
+}
+
+// Create a state key based on what spaces contain
+function getGridStateKey(grid) {
+  // Create a comprehensive hash that captures any state change
+  const spaces = grid.entities || [];
+  return spaces.map(space => {
+    const entities = space.entities || [];
+    if (entities.length === 0) return 'empty';
+    
+    // Include all entity data that could affect conditions
+    return entities.map(entity => {
+      // Serialize the entire entity state
+      return JSON.stringify({
+        id: entity.entityId,
+        type: entity.type,
+        state: entity.state,
+        // Add any other properties that conditions might check
+        attributes: entity.attributes
+      });
+    }).sort().join('|');
+  }).join(',');
 }
 
 function getLineStartingPoints(grid, dx, dy) {
@@ -54,17 +126,11 @@ function getLineStartingPoints(grid, dx, dy) {
   const starts = [];
   
   if (dx === 1 && dy === 0) {
-    // Horizontal right: start at leftmost column
+    // Horizontal: start at leftmost column
     for (let y = 0; y < height; y++) starts.push([0, y]);
-  } else if (dx === -1 && dy === 0) {
-    // Horizontal left: start at rightmost column
-    for (let y = 0; y < height; y++) starts.push([width - 1, y]);
   } else if (dx === 0 && dy === 1) {
-    // Vertical down: start at top row
+    // Vertical: start at top row
     for (let x = 0; x < width; x++) starts.push([x, 0]);
-  } else if (dx === 0 && dy === -1) {
-    // Vertical up: start at bottom row
-    for (let x = 0; x < width; x++) starts.push([x, height - 1]);
   } else if (dx === 1 && dy === 1) {
     // Diagonal down-right: start from top row and left column
     for (let x = 0; x < width; x++) starts.push([x, 0]);
@@ -73,14 +139,6 @@ function getLineStartingPoints(grid, dx, dy) {
     // Diagonal down-left: start from top row and right column
     for (let x = 0; x < width; x++) starts.push([x, 0]);
     for (let y = 1; y < height; y++) starts.push([width - 1, y]);
-  } else if (dx === 1 && dy === -1) {
-    // Diagonal up-right: start from bottom row and left column
-    for (let x = 0; x < width; x++) starts.push([x, height - 1]);
-    for (let y = 0; y < height - 1; y++) starts.push([0, y]);
-  } else if (dx === -1 && dy === -1) {
-    // Diagonal up-left: start from bottom row and right column
-    for (let x = 0; x < width; x++) starts.push([x, height - 1]);
-    for (let y = 0; y < height - 1; y++) starts.push([width - 1, y]);
   }
   
   return starts;
@@ -98,20 +156,25 @@ function getLineSpaces(grid, startX, startY, dx, dy) {
   return spaces;
 }
 
-function findSequencesInLine(bgioArguments, lineSpaces, sequencePattern) {
+function findSequencesInLine(bgioArguments, lineSpaces, sequencePattern, minSequenceLength, reverse = false) {
   const matches = [];
-  const minSequenceLength = sequencePattern.reduce((sum, chunk) => 
-    sum + (chunk.minCount || chunk.count || 1), 0
-  );
   
+  // Use original array or iterate in reverse without creating new array
+  const length = lineSpaces.length;
   let startIndex = 0;
   
-  while (startIndex <= lineSpaces.length - minSequenceLength) {
-    const matchedSpaces = tryMatchSequence(bgioArguments, lineSpaces, startIndex, sequencePattern);
+  while (startIndex <= length - minSequenceLength) {
+    const matchedSpaces = tryMatchSequence(
+      bgioArguments, 
+      lineSpaces, 
+      startIndex, 
+      sequencePattern,
+      reverse
+    );
     
     if (matchedSpaces) {
       matches.push(matchedSpaces);
-      startIndex++; // Changed from startIndex += matchedSpaces.length
+      startIndex++; // Move one space forward to find overlapping matches
     } else {
       startIndex++;
     }
@@ -120,9 +183,10 @@ function findSequencesInLine(bgioArguments, lineSpaces, sequencePattern) {
   return matches;
 }
 
-function tryMatchSequence(bgioArguments, lineSpaces, startIndex, sequencePattern) {
+function tryMatchSequence(bgioArguments, lineSpaces, startIndex, sequencePattern, reverse = false) {
   let spaceIndex = startIndex;
   const matchedSpaces = [];
+  const length = lineSpaces.length;
   
   for (const chunk of sequencePattern) {
     const { count, minCount, maxCount, conditions } = chunk;
@@ -141,8 +205,12 @@ function tryMatchSequence(bgioArguments, lineSpaces, startIndex, sequencePattern
     const chunkMatches = [];
     
     // Greedy: try to match as many as possible up to max
-    while (matchedCount < max && spaceIndex < lineSpaces.length) {
-      const space = lineSpaces[spaceIndex];
+    while (matchedCount < max && spaceIndex < length) {
+      // Access space directly or in reverse without creating new array
+      const space = reverse 
+        ? lineSpaces[length - 1 - spaceIndex]
+        : lineSpaces[spaceIndex];
+      
       // Pass all previously matched spaces in this chunk
       if (checkSpaceConditions(bgioArguments, space, conditions, chunkMatches)) {
         chunkMatches.push(space);
@@ -161,11 +229,16 @@ function tryMatchSequence(bgioArguments, lineSpaces, startIndex, sequencePattern
     matchedSpaces.push(...chunkMatches);
   }
   
-  return matchedSpaces;
+  return matchedSpaces.length > 0 ? matchedSpaces : null;
 }
 
 function checkSpaceConditions(bgioArguments, space, conditions, chunkMatches = []) {
-  return  checkConditions(
+  // Early exit if no conditions
+  if (!conditions || conditions.length === 0) {
+    return true;
+  }
+  
+  return checkConditions(
     bgioArguments,
     { conditions },
     {
