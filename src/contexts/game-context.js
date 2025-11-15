@@ -125,8 +125,7 @@ function getPossibleMoves(gameConnection, moveBuilder, isSpectator) {
 
     const moveSteps = getSteps(
       bgioState,
-      moveRule,
-      context
+      moveRule
     );
 
     const lastStep = moveSteps?.[stepIndex - 1];
@@ -134,7 +133,7 @@ function getPossibleMoves(gameConnection, moveBuilder, isSpectator) {
     const finishedOnLastStep = moveSteps && !!lastStep && !currentStep;
     
     const clickableForMove = new Set(
-      (moveIsAllowed && currentStep?.getClickable()) || []
+      (moveIsAllowed && currentStep?.getClickable(context)) || []
     );
 
     possibleMoveMeta[moveName] = { finishedOnLastStep, clickableForMove };

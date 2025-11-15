@@ -80,12 +80,27 @@
                     "conditions": [{ "type": "Contains" }]
                   },
                   {
-                    "type": "InLine",
-                    "sequence": [
+                    "type": "Or",
+                    "conditions": [
                       {
+                        "type": "Contains",
+                        "target": {
+                          "type": "RelativeCoordinates",
+                          "location": {
+                            "type": "expression",
+                            "expression": "player == '0' ? player0RelativeCoordinates : player1RelativeCoordinates",
+                            "arguments": {
+                              "player0RelativeCoordinates": [-2, 2],
+                              "player1RelativeCoordinates": [-2, -2],
+                              "player": {
+                                "type": "ctxPath",
+                                "path": ["currentPlayer"]
+                              }
+                            }
+                          }
+                        },
                         "conditions": [{
                           "type": "Is",
-                          "blah": true,
                           "entity": {
                             "type": "contextPath",
                             "path": ["moveArguments", "entity"]
@@ -93,10 +108,52 @@
                         }]
                       },
                       {
+                        "type": "Contains",
+                        "target": {
+                          "type": "RelativeCoordinates",
+                          "location": {
+                            "type": "expression",
+                            "expression": "player == '0' ? player0RelativeCoordinates : player1RelativeCoordinates",
+                            "arguments": {
+                              "player0RelativeCoordinates": [2, 2],
+                              "player1RelativeCoordinates": [2, -2],
+                              "player": {
+                                "type": "ctxPath",
+                                "path": ["currentPlayer"]
+                              }
+                            }
+                          }
+                        },
                         "conditions": [{
-                          "type": "Not",
+                          "type": "Is",
+                          "entity": {
+                            "type": "contextPath",
+                            "path": ["moveArguments", "entity"]
+                          }
+                        }]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "InLine",
+                    "sequence": [
+                      {
+                        "conditions": [{
+                          "type": "Contains",
                           "conditions": [{
-                            "type": "Contains",
+                            "type": "Is",
+                            "entity": {
+                              "type": "contextPath",
+                              "path": ["moveArguments", "entity"]
+                            }
+                          }]
+                        }]
+                      },
+                      {
+                        "conditions": [{
+                          "type": "Contains",
+                          "conditions": [{
+                            "type": "Not",
                             "conditions": [{
                               "type": "Is",
                               "matcher": {

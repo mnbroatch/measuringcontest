@@ -7,7 +7,7 @@ const argNamesMap = {
 }
 
 // this might not be where special handling for setstate wants to live
-export default function getSteps (bgioState, moveRule, context) {
+export default function getSteps (bgioState, moveRule) {
   return argNamesMap[moveRule.type]
     .filter(argName => moveRule.arguments[argName].playerChoice)
     .map(argName => ({
@@ -18,7 +18,7 @@ export default function getSteps (bgioState, moveRule, context) {
             ...moveRule.arguments[argName],
             value
           }))
-        : () => bgioState.G.bank.findAll(
+        : (context) => bgioState.G.bank.findAll(
             bgioState,
             moveRule.arguments[argName],
             context

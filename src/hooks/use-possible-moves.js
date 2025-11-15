@@ -17,20 +17,24 @@ export default function usePossibleMoves(gameConnection, moveBuilder, isSpectato
     const availableMoves = Object.entries(moves)
       .filter(([moveName]) => !eliminatedMoves.includes(moveName));
 
+    console.log('moveBuilder', moveBuilder)
+
     availableMoves.forEach(([moveName, move]) => {
       const moveRule = { ...move.moveInstance.rule, moveName };
       
+      const context = { moveInstance: move.moveInstance }
+
       const moveIsAllowed = checkConditions(
         bgioState,
         moveRule,
         {},
-        { moveInstance: move.moveInstance }
+        context
       ).conditionsAreMet;
 
       const moveSteps = getSteps(
         bgioState,
         moveRule,
-        { moveInstance: move.moveInstance }
+        context
       );
 
       const lastStep = moveSteps?.[stepIndex - 1];
@@ -38,7 +42,7 @@ export default function usePossibleMoves(gameConnection, moveBuilder, isSpectato
       const finishedOnLastStep = moveSteps && !!lastStep && !currentStep;
       
       const clickableForMove = new Set(
-        (moveIsAllowed && currentStep?.getClickable()) || []
+        (moveIsAllowed && currentStep?.getClickable(context)) || []
       );
 
       possibleMoveMeta[moveName] = { finishedOnLastStep, clickableForMove };

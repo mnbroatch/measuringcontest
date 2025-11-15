@@ -15,13 +15,13 @@ const directions = [
 const sequenceCache = new WeakMap();
 
 export default class InLineCondition extends Condition {
-  checkCondition(bgioArguments, rule, payload) {
+  checkCondition(bgioArguments, rule, payload, context) {
     const { G } = bgioArguments;
     const { target } = payload;
     const parent = G.bank.findParent(payload.target);
     
     // Find all sequences in the grid
-    const { matches: allMatches } = gridContainsSequence(bgioArguments, parent, rule.sequence);
+    const { matches: allMatches } = gridContainsSequence(bgioArguments, parent, rule.sequence, context);
     
     // Filter to only sequences that contain the target space
     const matches = allMatches.filter(sequence => 
@@ -38,7 +38,7 @@ function getSequenceKey(sequencePattern) {
 }
 
 // Shared function for finding all sequences in a grid
-export function gridContainsSequence(bgioArguments, grid, sequencePattern) {
+export function gridContainsSequence(bgioArguments, grid, sequencePattern, context) {
   // Check cache first
   const cacheKey = getSequenceKey(sequencePattern);
   let gridCache = sequenceCache.get(grid);
@@ -77,12 +77,12 @@ export function gridContainsSequence(bgioArguments, grid, sequencePattern) {
       }
       
       // Check both forward and backward along this line
-      const forwardMatches = findSequencesInLine(bgioArguments, lineSpaces, sequencePattern, minSequenceLength);
+      const forwardMatches = findSequencesInLine(bgioArguments, lineSpaces, sequencePattern, minSequenceLength, context);
       matches.push(...forwardMatches);
       
       // Only reverse if needed (avoid creating new arrays unnecessarily)
       if (forwardMatches.length === 0 || sequencePattern.length > 1) {
-        const reverseMatches = findSequencesInLine(bgioArguments, lineSpaces, sequencePattern, minSequenceLength, true);
+        const reverseMatches = findSequencesInLine(bgioArguments, lineSpaces, sequencePattern, minSequenceLength, context, true);
         matches.push(...reverseMatches);
       }
     }
@@ -156,7 +156,7 @@ function getLineSpaces(grid, startX, startY, dx, dy) {
   return spaces;
 }
 
-function findSequencesInLine(bgioArguments, lineSpaces, sequencePattern, minSequenceLength, reverse = false) {
+function findSequencesInLine(bgioArguments, lineSpaces, sequencePattern, minSequenceLength, context, reverse = false) {
   const matches = [];
   
   // Use original array or iterate in reverse without creating new array
@@ -169,6 +169,7 @@ function findSequencesInLine(bgioArguments, lineSpaces, sequencePattern, minSequ
       lineSpaces, 
       startIndex, 
       sequencePattern,
+      context,
       reverse
     );
     
@@ -183,7 +184,7 @@ function findSequencesInLine(bgioArguments, lineSpaces, sequencePattern, minSequ
   return matches;
 }
 
-function tryMatchSequence(bgioArguments, lineSpaces, startIndex, sequencePattern, reverse = false) {
+function tryMatchSequence(bgioArguments, lineSpaces, startIndex, sequencePattern, context, reverse = false) {
   let spaceIndex = startIndex;
   const matchedSpaces = [];
   const length = lineSpaces.length;
@@ -212,7 +213,7 @@ function tryMatchSequence(bgioArguments, lineSpaces, startIndex, sequencePattern
         : lineSpaces[spaceIndex];
       
       // Pass all previously matched spaces in this chunk
-      if (checkSpaceConditions(bgioArguments, space, conditions, chunkMatches)) {
+      if (checkSpaceConditions(bgioArguments, space, conditions, chunkMatches, context)) {
         chunkMatches.push(space);
         matchedCount++;
         spaceIndex++;
@@ -232,7 +233,7 @@ function tryMatchSequence(bgioArguments, lineSpaces, startIndex, sequencePattern
   return matchedSpaces.length > 0 ? matchedSpaces : null;
 }
 
-function checkSpaceConditions(bgioArguments, space, conditions, chunkMatches = []) {
+function checkSpaceConditions(bgioArguments, space, conditions, chunkMatches = [], context) {
   // Early exit if no conditions
   if (!conditions || conditions.length === 0) {
     return true;
@@ -244,6 +245,7 @@ function checkSpaceConditions(bgioArguments, space, conditions, chunkMatches = [
     {
       target: space,
       targets: [space, ...chunkMatches] // for ContainsSame, other group conditions
-    }
+    },
+    context
   ).conditionsAreMet
 }
