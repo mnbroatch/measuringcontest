@@ -65,16 +65,20 @@
   border: 1px solid black;
 }
 
-.entity--clickable {
-  background-color: rgba(144, 238, 144, .4);
-}
-
 .entity.player-0 {
   background-color: pink;
 }
 
+.entity.player-0.entity--clickable {
+  background-color: #f0e0d8;
+}
+
 .entity.player-1 {
   background-color: lightblue;
+}
+
+.entity.player-1.entity--clickable {
+  background-color: paleturquoise;
 }
 
 .debug-panel .pane {
