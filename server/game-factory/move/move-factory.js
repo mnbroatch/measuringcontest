@@ -2,6 +2,7 @@ import { serialize, deserialize } from 'wackson'
 import { INVALID_MOVE } from 'boardgame.io/dist/cjs/core.js';
 import { registry } from '../registry.js'
 import MoveEntity from "./move-entity.js";
+import RemoveEntity from "./remove-entity.js";
 import PlaceNew from "./place-new.js";
 import TakeFrom from "./take-from.js";
 import SetState from "./set-state.js";
@@ -68,6 +69,8 @@ export function getMoveInstance (moveRule) {
       return new MoveEntity(moveRule);
     case 'PlaceNew':
       return new PlaceNew(moveRule);
+    case 'RemoveEntity':
+      return new RemoveEntity(moveRule);
     case 'TakeFrom':
       return new TakeFrom(moveRule);
     case 'SetState':

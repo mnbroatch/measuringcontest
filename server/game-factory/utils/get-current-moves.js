@@ -1,4 +1,5 @@
 // get the most specific set of moves for current stage/phase
+// this will probably all break for complex stages with multiple active players
 export default function getCurrentMoves (game, state, playerID) {
   const phaseName = state.ctx.phase
 

@@ -6,6 +6,7 @@ import simulateMove from "../utils/simulate-move.js";
 // I think we'll want to switch to named arguments
 const argNameMap = {
   PlaceNew: ['destination'],
+  RemoveEntity: ['entity'],
   MoveEntity: ['entity', 'destination'],
   TakeFrom: ['source', 'destination'],
   SetState: ['entity', 'state'],

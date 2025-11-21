@@ -1,6 +1,7 @@
 // controls order of what players need to click first
 const argNamesMap = {
   PlaceNew: ['destination'],
+  RemoveEntity: ['entity'],
   MoveEntity: ['entity', 'destination'],
   TakeFrom: ['source', 'destination'],
   SetState: ['entity', 'state'],

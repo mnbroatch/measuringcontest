@@ -156,20 +156,36 @@ function createTurn (turnRule, game) {
   const turn = { ...turnRule }
 
   turn.onBegin = (bgioArguments) => {
-    const newG = doInitialMoves(bgioArguments, turnRule.initialMoves)
-    if (turnRule.passIfNoMoves && newG._meta.passCount < bgioArguments.ctx.numPlayers) {
+    const newG = doMoves(bgioArguments, turnRule.initialMoves)
+    const stageRule = turnRule.stages?.[bgioArguments.ctx.activePlayers?.[bgioArguments.ctx.currentPlayer]]
+    if (
+      (
+        turnRule.passIfNoMoves
+        && newG._meta.noMovesCount < bgioArguments.ctx.numPlayers
+      ) || (
+        stageRule.onNoMoves
+      )
+    ) {
       const newBgioArguments = {
         ...bgioArguments,
         G: newG,
       }
-      if (!areThereValidMoves(
+      const thereAreValidMoves = areThereValidMoves(
         newBgioArguments,
         getCurrentMoves(game, newBgioArguments)
-      )) {
-        newG._meta.passCount++
-        newBgioArguments.events.pass()
-      } else {
-        newG._meta.passCount = 0
+      )
+
+      if (!thereAreValidMoves) {
+        if (stageRule.onNoMoves) {
+          doMoves(bgioArguments, stageRule.onNoMoves)
+        }
+
+        if (turnRule.passIfNoMoves) {
+          newG._meta.passCount++
+          newBgioArguments.events.pass()
+        } else {
+          newG._meta.passCount = 0
+        }
       }
     }
     return JSON.parse(serialize(newG));
@@ -206,7 +222,7 @@ function createPhase (phaseRule, game) {
   }
 
   phase.onBegin = (bgioArguments) => {
-    const newG = doInitialMoves(bgioArguments, phaseRule.initialMoves)
+    const newG = doMoves(bgioArguments, phaseRule.initialMoves)
     newG._meta.currentPhaseHasBeenSetUp = true
     newG._meta.nextPhase = phaseRule.next
     return JSON.parse(serialize(newG));
@@ -235,9 +251,9 @@ function createPhase (phaseRule, game) {
   return phase
 }
 
-function doInitialMoves (bgioArguments, initialMoves = []) {
+function doMoves (bgioArguments, moves = []) {
   const newG = deserialize(JSON.stringify(bgioArguments.G), registry)
-  initialMoves.forEach((moveRule) => {
+  moves.forEach((moveRule) => {
     moveFactory(moveRule).moveInstance.doMove({
       ...bgioArguments,
       G: newG,

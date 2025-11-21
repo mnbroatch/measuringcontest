@@ -49,8 +49,18 @@
     "activePlayers": { "currentPlayer": "jumpIfPossible" },
     "stages": {
       "jumpIfPossible": {
+        "onNoMoves": [{
+          "type": "SetActivePlayers",
+          "options": {
+            "currentPlayer": {
+              "stage": "moveIfNoJump",
+              "maxMoves": 1,
+              "minMoves": 1
+            }
+          }
+        }],
         "moves": {
-          "moveChecker": {
+          "jumpChecker": {
             "type": "MoveEntity",
             "arguments": {
               "entity": {
@@ -182,6 +192,37 @@
             },
             "then": [
               {
+                "type": "ForEach",
+                "arguments": {
+                  "targets": {
+                    "type": "contextPath",
+                    "path": [
+                      "moveConditionResults",
+                      0,
+                      "conditionResults",
+                      "argumentResults",
+                      "destination",
+                      "results",
+                      0,
+                      "results",
+                      3,
+                      "matches",
+                      { "flatten": true, "map": ["entities"] },
+                      { "flatten": true }
+                    ]
+                  }
+                },
+                "move": {
+                  "type": "RemoveEntity",
+                  "arguments": {
+                    "entity": {
+                      "type": "contextPath",
+                      "path": [ "loopTarget" ]
+                    }
+                  }
+                }
+              },
+              {
                 "type": "SetState",
                 "arguments": {
                   "entity": {
@@ -214,6 +255,14 @@
                     }
                   }
                 }]
+              },
+              {
+                "type": "SetActivePlayers",
+                "options": {
+                  "currentPlayer": {
+                    "stage": "keepJumping"
+                  }
+                }
               }
             ]
           }
