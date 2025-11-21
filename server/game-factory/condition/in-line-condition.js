@@ -1,9 +1,10 @@
-// haven't verified cache invalidation robustness
+// claude ai did most of this
+
 import _matches from "lodash/matches.js";
 import Condition from "./condition.js";
 import checkConditions from "../utils/check-conditions.js";
 
-// Only use 4 directions - we'll check both directions along each line
+// We'll check reverse directions along each line
 const directions = [
   [1, 0],   // horizontal
   [0, 1],   // vertical
@@ -11,7 +12,6 @@ const directions = [
   [-1, 1],  // diagonal down-left
 ];
 
-// Cache for grid sequences - WeakMap so it gets garbage collected with the grid
 const sequenceCache = new WeakMap();
 
 export default class InLineCondition extends Condition {
@@ -20,10 +20,8 @@ export default class InLineCondition extends Condition {
     const { target } = payload;
     const parent = G.bank.findParent(payload.target);
     
-    // Find all sequences in the grid
     const { matches: allMatches } = gridContainsSequence(bgioArguments, parent, rule.sequence, context);
     
-    // Filter to only sequences that contain the target space
     const matches = allMatches.filter(sequence => 
       sequence.some(space => space === target)
     );
@@ -32,15 +30,17 @@ export default class InLineCondition extends Condition {
   }
 }
 
-// Helper to create a cache key from sequence pattern
-function getSequenceKey(sequencePattern) {
-  return JSON.stringify(sequencePattern);
+function getSequenceKey(sequencePattern, context) {
+  const contextKey = {
+    moveInstance: context.moveInstance?.id,
+    moveArguments: context.moveArguments,
+    // Add other context properties that conditions might use
+  };
+  return JSON.stringify({ pattern: sequencePattern, context: contextKey });
 }
 
-// Shared function for finding all sequences in a grid
 export function gridContainsSequence(bgioArguments, grid, sequencePattern, context) {
-  // Check cache first
-  const cacheKey = getSequenceKey(sequencePattern);
+  const cacheKey = getSequenceKey(sequencePattern, context);
   let gridCache = sequenceCache.get(grid);
   
   if (!gridCache) {
@@ -48,7 +48,6 @@ export function gridContainsSequence(bgioArguments, grid, sequencePattern, conte
     sequenceCache.set(grid, gridCache);
   }
   
-  // Check if we've already calculated this sequence for this grid state
   const gridStateKey = getGridStateKey(grid);
   const cacheEntry = gridCache.get(cacheKey);
   
@@ -56,10 +55,8 @@ export function gridContainsSequence(bgioArguments, grid, sequencePattern, conte
     return cacheEntry.result;
   }
   
-  // Calculate matches
   const matches = [];
   
-  // Calculate minimum sequence length once
   const minSequenceLength = sequencePattern.reduce((sum, chunk) => 
     sum + (chunk.minCount || chunk.count || 1), 0
   );
@@ -71,12 +68,12 @@ export function gridContainsSequence(bgioArguments, grid, sequencePattern, conte
     for (const [startX, startY] of lines) {
       const lineSpaces = getLineSpaces(grid, startX, startY, dx, dy);
       
-      // Skip lines that are too short (before processing)
       if (lineSpaces.length < minSequenceLength) {
         continue;
       }
       
-      // Check both forward and backward along this line
+      // todo: this forward/backward logic seems jank. why split them up?
+
       const forwardMatches = findSequencesInLine(bgioArguments, lineSpaces, sequencePattern, minSequenceLength, context);
       matches.push(...forwardMatches);
       
@@ -90,7 +87,6 @@ export function gridContainsSequence(bgioArguments, grid, sequencePattern, conte
   
   const result = { matches, conditionIsMet: !!matches.length };
   
-  // Store in cache
   gridCache.set(cacheKey, {
     stateKey: gridStateKey,
     result
@@ -99,24 +95,21 @@ export function gridContainsSequence(bgioArguments, grid, sequencePattern, conte
   return result;
 }
 
-// Create a state key based on what spaces contain
+// todo: use stable hash library that we're using for game rules hash
 function getGridStateKey(grid) {
-  // Create a comprehensive hash that captures any state change
   const spaces = grid.entities || [];
+  
   return spaces.map(space => {
     const entities = space.entities || [];
     if (entities.length === 0) return 'empty';
     
-    // Include all entity data that could affect conditions
     return entities.map(entity => {
-      // Serialize the entire entity state
-      return JSON.stringify({
-        id: entity.entityId,
-        type: entity.type,
-        state: entity.state,
-        // Add any other properties that conditions might check
-        attributes: entity.attributes
+      const sortedKeys = Object.keys(entity).sort();
+      const stateObj = {};
+      sortedKeys.forEach(key => {
+        stateObj[key] = entity[key];
       });
+      return JSON.stringify(stateObj);
     }).sort().join('|');
   }).join(',');
 }

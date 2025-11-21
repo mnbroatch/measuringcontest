@@ -2793,20 +2793,158 @@ function invariant(condition, message) {
 /* harmony export */ });
 /* harmony import */ var _resolve_properties_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(31577);
 /* harmony import */ var _resolve_entity_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(159);
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+// import resolveProperties from "./resolve-properties.js";
+// import resolveEntity from "./resolve-entity.js";
+
+// export default function areThereValidMoves(bgioArguments, moves) {
+//   return Object.values(moves).some(move => {
+//     const { moveInstance } = move
+
+//     const context = { moveInstance }
+
+//     const rule = resolveProperties(
+//       bgioArguments,
+//       moveInstance.rule,
+//       context
+//     )
+
+//     // todo: This is incomplete. it is only concerned with the
+//     // validity of one argument at a time and the combination
+//     // of individually valid choices can be invalid. One option
+//     // (maybe the only one) is to try all combinations of valid arguments.
+//     const resolvedPayload = {
+//       arguments: Object.entries(rule.arguments ?? {})
+//         .reduce((acc, [argName, arg]) => {
+//           return {
+//             ...acc,
+//             [argName]: resolveEntity(
+//               bgioArguments,
+//               arg,
+//               context,
+//               argName 
+//             )
+//           }
+//         }, {})
+//     }
+
+//     if (Object.values(resolvedPayload.arguments).every(arg => arg !== undefined)) {
+//       return moveInstance.isValid(bgioArguments, resolvedPayload, context)
+//     } else {
+//       return false
+//     }
+//   })
+// }
 
 
+
+
+// Recursively find all contextPath references to moveArguments
+function findMoveArgumentReferences(obj) {
+  var refs = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : new Set();
+  if (!obj || _typeof(obj) !== 'object') {
+    return refs;
+  }
+
+  // Check if this is a contextPath reference to moveArguments
+  if (obj.type === 'contextPath' && Array.isArray(obj.path)) {
+    if (obj.path[0] === 'moveArguments' && obj.path[1]) {
+      refs.add(obj.path[1]);
+    }
+  }
+
+  // Recurse into object properties and array elements
+  for (var _i = 0, _Object$values = Object.values(obj); _i < _Object$values.length; _i++) {
+    var value = _Object$values[_i];
+    findMoveArgumentReferences(value, refs);
+  }
+  return refs;
+}
+
+// Build a dependency graph and return topologically sorted argument names
+function getArgumentOrder(ruleArguments) {
+  var argNames = Object.keys(ruleArguments);
+  var graph = {};
+  var inDegree = {};
+
+  // Initialize
+  argNames.forEach(function (name) {
+    graph[name] = [];
+    inDegree[name] = 0;
+  });
+
+  // Build dependency edges (if arg B references arg A, A -> B)
+  argNames.forEach(function (argName) {
+    var arg = ruleArguments[argName];
+    var referencedArgs = findMoveArgumentReferences(arg);
+    referencedArgs.forEach(function (refArg) {
+      if (argNames.includes(refArg) && refArg !== argName) {
+        graph[refArg].push(argName);
+        inDegree[argName]++;
+      }
+    });
+  });
+
+  // Topological sort (Kahn's algorithm)
+  var queue = argNames.filter(function (name) {
+    return inDegree[name] === 0;
+  });
+  var sorted = [];
+  while (queue.length > 0) {
+    var current = queue.shift();
+    sorted.push(current);
+    graph[current].forEach(function (neighbor) {
+      inDegree[neighbor]--;
+      if (inDegree[neighbor] === 0) {
+        queue.push(neighbor);
+      }
+    });
+  }
+
+  // If not all nodes processed, there's a cycle - fall back to original order
+  return sorted.length === argNames.length ? sorted : argNames;
+}
+
+// Recursively try to build a valid argument combination
+function findValidCombination(bgioArguments, moveInstance, ruleArguments, orderedArgNames, context) {
+  var index = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 0;
+  var currentArgs = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : {};
+  // Base case: all arguments resolved
+  if (index === orderedArgNames.length) {
+    var resolvedPayload = {
+      arguments: currentArgs
+    };
+    return moveInstance.isValid(bgioArguments, resolvedPayload, context);
+  }
+  var argName = orderedArgNames[index];
+  var arg = ruleArguments[argName];
+
+  // Update context with current arguments for dependency resolution
+  var updatedContext = _objectSpread(_objectSpread({}, context), {}, {
+    moveArguments: currentArgs
+  });
+
+  // Get all possible values for this argument
+  var matches = (0,_resolve_entity_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)(bgioArguments, _objectSpread(_objectSpread({}, arg), {}, {
+    matchMultiple: true
+  }), updatedContext, argName);
+  var matchArray = Array.isArray(matches) ? matches : matches !== undefined ? [matches] : [];
+
+  // If no valid values for this argument, this branch fails
+  if (matchArray.length === 0) {
+    return false;
+  }
+
+  // Try each possible value (short-circuits on first success)
+  return matchArray.some(function (value) {
+    return findValidCombination(bgioArguments, moveInstance, ruleArguments, orderedArgNames, context, index + 1, _objectSpread(_objectSpread({}, currentArgs), {}, _defineProperty({}, argName, value)));
+  });
+}
 function areThereValidMoves(bgioArguments, moves) {
   return Object.values(moves).some(function (move) {
     var _rule$arguments;
@@ -2815,26 +2953,20 @@ function areThereValidMoves(bgioArguments, moves) {
       moveInstance: moveInstance
     };
     var rule = (0,_resolve_properties_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)(bgioArguments, moveInstance.rule, context);
+    var ruleArguments = (_rule$arguments = rule.arguments) !== null && _rule$arguments !== void 0 ? _rule$arguments : {};
 
-    // todo: This is incomplete. it is only concerned with the
-    // validity of one argument at a time and the combination
-    // of individually valid choices can be invalid. One option
-    // (maybe the only one) is to try all combinations of valid arguments.
-    var resolvedPayload = {
-      arguments: Object.entries((_rule$arguments = rule.arguments) !== null && _rule$arguments !== void 0 ? _rule$arguments : {}).reduce(function (acc, _ref) {
-        var _ref2 = _slicedToArray(_ref, 2),
-          argName = _ref2[0],
-          arg = _ref2[1];
-        return _objectSpread(_objectSpread({}, acc), {}, _defineProperty({}, argName, (0,_resolve_entity_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)(bgioArguments, arg, context, argName)));
-      }, {})
-    };
-    if (Object.values(resolvedPayload.arguments).every(function (arg) {
-      return arg !== undefined;
-    })) {
-      return moveInstance.isValid(bgioArguments, resolvedPayload, context);
-    } else {
-      return false;
+    // If no arguments required, just check if move is valid
+    if (Object.keys(ruleArguments).length === 0) {
+      return moveInstance.isValid(bgioArguments, {
+        arguments: {}
+      }, context);
     }
+
+    // Get dependency-ordered argument names
+    var orderedArgNames = getArgumentOrder(ruleArguments);
+
+    // Recursively search for any valid combination (short-circuits on first valid)
+    return findValidCombination(bgioArguments, moveInstance, ruleArguments, orderedArgNames, context);
   });
 }
 
@@ -54070,12 +54202,13 @@ function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.
 function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
 function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
 function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
-// haven't verified cache invalidation robustness
+// claude ai did most of this
 
 
 
 
-// Only use 4 directions - we'll check both directions along each line
+
+// We'll check reverse directions along each line
 var directions = [[1, 0],
 // horizontal
 [0, 1],
@@ -54084,8 +54217,6 @@ var directions = [[1, 0],
 // diagonal down-right
 [-1, 1] // diagonal down-left
 ];
-
-// Cache for grid sequences - WeakMap so it gets garbage collected with the grid
 var sequenceCache = new WeakMap();
 var InLineCondition = /*#__PURE__*/function (_Condition) {
   function InLineCondition() {
@@ -54099,12 +54230,8 @@ var InLineCondition = /*#__PURE__*/function (_Condition) {
       var G = bgioArguments.G;
       var target = payload.target;
       var parent = G.bank.findParent(payload.target);
-
-      // Find all sequences in the grid
       var _gridContainsSequence = gridContainsSequence(bgioArguments, parent, rule.sequence, context),
         allMatches = _gridContainsSequence.matches;
-
-      // Filter to only sequences that contain the target space
       var matches = allMatches.filter(function (sequence) {
         return sequence.some(function (space) {
           return space === target;
@@ -54116,33 +54243,33 @@ var InLineCondition = /*#__PURE__*/function (_Condition) {
       };
     }
   }]);
-}(_condition_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A); // Helper to create a cache key from sequence pattern
+}(_condition_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A);
 
-function getSequenceKey(sequencePattern) {
-  return JSON.stringify(sequencePattern);
+function getSequenceKey(sequencePattern, context) {
+  var _context$moveInstance;
+  var contextKey = {
+    moveInstance: (_context$moveInstance = context.moveInstance) === null || _context$moveInstance === void 0 ? void 0 : _context$moveInstance.id,
+    moveArguments: context.moveArguments
+    // Add other context properties that conditions might use
+  };
+  return JSON.stringify({
+    pattern: sequencePattern,
+    context: contextKey
+  });
 }
-
-// Shared function for finding all sequences in a grid
 function gridContainsSequence(bgioArguments, grid, sequencePattern, context) {
-  // Check cache first
-  var cacheKey = getSequenceKey(sequencePattern);
+  var cacheKey = getSequenceKey(sequencePattern, context);
   var gridCache = sequenceCache.get(grid);
   if (!gridCache) {
     gridCache = new Map();
     sequenceCache.set(grid, gridCache);
   }
-
-  // Check if we've already calculated this sequence for this grid state
   var gridStateKey = getGridStateKey(grid);
   var cacheEntry = gridCache.get(cacheKey);
   if (cacheEntry && cacheEntry.stateKey === gridStateKey) {
     return cacheEntry.result;
   }
-
-  // Calculate matches
   var matches = [];
-
-  // Calculate minimum sequence length once
   var minSequenceLength = sequencePattern.reduce(function (sum, chunk) {
     return sum + (chunk.minCount || chunk.count || 1);
   }, 0);
@@ -54164,13 +54291,12 @@ function gridContainsSequence(bgioArguments, grid, sequencePattern, context) {
             startX = _step2$value[0],
             startY = _step2$value[1];
           var lineSpaces = getLineSpaces(grid, startX, startY, dx, dy);
-
-          // Skip lines that are too short (before processing)
           if (lineSpaces.length < minSequenceLength) {
             continue;
           }
 
-          // Check both forward and backward along this line
+          // todo: this forward/backward logic seems jank. why split them up?
+
           var forwardMatches = findSequencesInLine(bgioArguments, lineSpaces, sequencePattern, minSequenceLength, context);
           matches.push.apply(matches, _toConsumableArray(forwardMatches));
 
@@ -54195,8 +54321,6 @@ function gridContainsSequence(bgioArguments, grid, sequencePattern, context) {
     matches: matches,
     conditionIsMet: !!matches.length
   };
-
-  // Store in cache
   gridCache.set(cacheKey, {
     stateKey: gridStateKey,
     result: result
@@ -54204,24 +54328,19 @@ function gridContainsSequence(bgioArguments, grid, sequencePattern, context) {
   return result;
 }
 
-// Create a state key based on what spaces contain
+// todo: use stable hash library that we're using for game rules hash
 function getGridStateKey(grid) {
-  // Create a comprehensive hash that captures any state change
   var spaces = grid.entities || [];
   return spaces.map(function (space) {
     var entities = space.entities || [];
     if (entities.length === 0) return 'empty';
-
-    // Include all entity data that could affect conditions
     return entities.map(function (entity) {
-      // Serialize the entire entity state
-      return JSON.stringify({
-        id: entity.entityId,
-        type: entity.type,
-        state: entity.state,
-        // Add any other properties that conditions might check
-        attributes: entity.attributes
+      var sortedKeys = Object.keys(entity).sort();
+      var stateObj = {};
+      sortedKeys.forEach(function (key) {
+        stateObj[key] = entity[key];
       });
+      return JSON.stringify(stateObj);
     }).sort().join('|');
   }).join(',');
 }
