@@ -40,6 +40,46 @@ var SetActivePlayers = /*#__PURE__*/function (_Move) {
 
 /***/ }),
 
+/***/ 115:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ RemoveEntity)
+/* harmony export */ });
+/* harmony import */ var _move_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20426);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function _possibleConstructorReturn(t, e) { if (e && ("object" == _typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return _assertThisInitialized(t); }
+function _assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
+function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
+function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
+
+var RemoveEntity = /*#__PURE__*/function (_Move) {
+  function RemoveEntity() {
+    _classCallCheck(this, RemoveEntity);
+    return _callSuper(this, RemoveEntity, arguments);
+  }
+  _inherits(RemoveEntity, _Move);
+  return _createClass(RemoveEntity, [{
+    key: "do",
+    value: function _do(bgioArguments, rule, _ref) {
+      var entity = _ref.arguments.entity;
+      bgioArguments.G.bank.returnToBank(bgioArguments, entity);
+    }
+  }]);
+}(_move_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
+
+
+/***/ }),
+
 /***/ 119:
 /***/ ((module) => {
 
@@ -2423,16 +2463,24 @@ function createTurn(turnRule, game) {
   var _turnRule$order;
   var turn = _objectSpread({}, turnRule);
   turn.onBegin = function (bgioArguments) {
-    var newG = doInitialMoves(bgioArguments, turnRule.initialMoves);
-    if (turnRule.passIfNoMoves && newG._meta.passCount < bgioArguments.ctx.numPlayers) {
+    var _turnRule$stages, _bgioArguments$ctx$ac;
+    var newG = doMoves(bgioArguments, turnRule.initialMoves);
+    var stageRule = (_turnRule$stages = turnRule.stages) === null || _turnRule$stages === void 0 ? void 0 : _turnRule$stages[(_bgioArguments$ctx$ac = bgioArguments.ctx.activePlayers) === null || _bgioArguments$ctx$ac === void 0 ? void 0 : _bgioArguments$ctx$ac[bgioArguments.ctx.currentPlayer]];
+    if (turnRule.passIfNoMoves && newG._meta.noMovesCount < bgioArguments.ctx.numPlayers || stageRule !== null && stageRule !== void 0 && stageRule.onNoMoves) {
       var newBgioArguments = _objectSpread(_objectSpread({}, bgioArguments), {}, {
         G: newG
       });
-      if (!(0,_utils_any_valid_moves_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(newBgioArguments, (0,_utils_get_current_moves_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)(game, newBgioArguments))) {
-        newG._meta.passCount++;
-        newBgioArguments.events.pass();
-      } else {
-        newG._meta.passCount = 0;
+      var thereAreValidMoves = (0,_utils_any_valid_moves_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(newBgioArguments, (0,_utils_get_current_moves_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)(game, newBgioArguments));
+      if (!thereAreValidMoves) {
+        if (stageRule !== null && stageRule !== void 0 && stageRule.onNoMoves) {
+          doMoves(bgioArguments, stageRule.onNoMoves);
+        }
+        if (turnRule.passIfNoMoves) {
+          newG._meta.passCount++;
+          newBgioArguments.events.pass();
+        } else {
+          newG._meta.passCount = 0;
+        }
       }
     }
     return JSON.parse((0,wackson__WEBPACK_IMPORTED_MODULE_0__/* .serialize */ .l)(newG));
@@ -2472,7 +2520,7 @@ function createPhase(phaseRule, game) {
     phase.moves = createMoves(phaseRule.moves);
   }
   phase.onBegin = function (bgioArguments) {
-    var newG = doInitialMoves(bgioArguments, phaseRule.initialMoves);
+    var newG = doMoves(bgioArguments, phaseRule.initialMoves);
     newG._meta.currentPhaseHasBeenSetUp = true;
     newG._meta.nextPhase = phaseRule.next;
     return JSON.parse((0,wackson__WEBPACK_IMPORTED_MODULE_0__/* .serialize */ .l)(newG));
@@ -2499,10 +2547,10 @@ function createPhase(phaseRule, game) {
   };
   return phase;
 }
-function doInitialMoves(bgioArguments) {
-  var initialMoves = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+function doMoves(bgioArguments) {
+  var moves = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
   var newG = (0,wackson__WEBPACK_IMPORTED_MODULE_0__/* .deserialize */ .i)(JSON.stringify(bgioArguments.G), _registry_js__WEBPACK_IMPORTED_MODULE_4__/* .registry */ .u);
-  initialMoves.forEach(function (moveRule) {
+  moves.forEach(function (moveRule) {
     (0,_move_move_factory_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)(moveRule).moveInstance.doMove(_objectSpread(_objectSpread({}, bgioArguments), {}, {
       G: newG
     }));
@@ -22395,6 +22443,7 @@ var Bank = /*#__PURE__*/function () {
   }, {
     key: "returnToBank",
     value: function returnToBank(bgioArguments, entity) {
+      this.findParent(entity).remove(entity);
       this.getSlot(bgioArguments, entity.rule).returnToBank(entity);
       delete this.tracker[entity.entityId];
     }
@@ -25666,6 +25715,7 @@ var Move = /*#__PURE__*/function () {
           return _objectSpread(_objectSpread({}, acc), {}, _defineProperty({}, argName, (_payload$arguments$ar = payload === null || payload === void 0 || (_payload$arguments = payload.arguments) === null || _payload$arguments === void 0 ? void 0 : _payload$arguments[argName]) !== null && _payload$arguments$ar !== void 0 ? _payload$arguments$ar : arg));
         }, {})
       });
+      bgioArguments.G._meta.previousPayload = resolvedPayload;
       var conditionResults;
       if (!skipCheck) {
         conditionResults = this.checkValidity(bgioArguments, resolvedPayload, context);
@@ -30587,6 +30637,11 @@ function resolveProperty(bgioArguments, value, context) {
   } else if ((value === null || value === void 0 ? void 0 : value.type) === 'count') {
     return bgioArguments.G.bank.findAll(bgioArguments, value, context).length;
   } else if ((value === null || value === void 0 ? void 0 : value.type) === 'contextPath') {
+    // if (value.path[0] === 'moveArguments' && value.path[1] === 'entity') {
+    //   if (!context.moveArguments.entity) {
+    //     console.log('context', context)
+    //   }
+    // }
     return (0,_get_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(context, value.path);
   } else if ((value === null || value === void 0 ? void 0 : value.type) === 'ctxPath') {
     return (0,_get_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(bgioArguments.ctx, value.path);
@@ -32166,6 +32221,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 // controls order of what players need to click first
 var argNamesMap = {
   PlaceNew: ['destination'],
+  RemoveEntity: ['entity'],
   MoveEntity: ['entity', 'destination'],
   TakeFrom: ['source', 'destination'],
   SetState: ['entity', 'state']
@@ -33960,6 +34016,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
 // I think we'll want to switch to named arguments
 var argNameMap = {
   PlaceNew: ['destination'],
+  RemoveEntity: ['entity'],
   MoveEntity: ['entity', 'destination'],
   TakeFrom: ['source', 'destination'],
   SetState: ['entity', 'state']
@@ -41294,14 +41351,15 @@ function stringifySearchWith(stringify, parser) {
 /* harmony import */ var boardgame_io_dist_cjs_core_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(10061);
 /* harmony import */ var _registry_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(14142);
 /* harmony import */ var _move_entity_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(23372);
-/* harmony import */ var _place_new_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(94887);
-/* harmony import */ var _take_from_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(85541);
-/* harmony import */ var _set_state_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(95027);
-/* harmony import */ var _set_active_players_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(45);
-/* harmony import */ var _end_turn_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(43568);
-/* harmony import */ var _for_each_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(79180);
-/* harmony import */ var _pass_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(7726);
-/* harmony import */ var _shuffle_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(47118);
+/* harmony import */ var _remove_entity_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(115);
+/* harmony import */ var _place_new_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(94887);
+/* harmony import */ var _take_from_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(85541);
+/* harmony import */ var _set_state_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(95027);
+/* harmony import */ var _set_active_players_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(45);
+/* harmony import */ var _end_turn_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(43568);
+/* harmony import */ var _for_each_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(79180);
+/* harmony import */ var _pass_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(7726);
+/* harmony import */ var _shuffle_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(47118);
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 var _excluded = ["G"];
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
@@ -41318,6 +41376,7 @@ function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" 
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
 function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
+
 
 
 
@@ -41389,21 +41448,23 @@ function getMoveInstance(moveRule) {
     case 'MoveEntity':
       return new _move_entity_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A(moveRule);
     case 'PlaceNew':
-      return new _place_new_js__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A(moveRule);
+      return new _place_new_js__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A(moveRule);
+    case 'RemoveEntity':
+      return new _remove_entity_js__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A(moveRule);
     case 'TakeFrom':
-      return new _take_from_js__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A(moveRule);
+      return new _take_from_js__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A(moveRule);
     case 'SetState':
-      return new _set_state_js__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A(moveRule);
+      return new _set_state_js__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A(moveRule);
     case 'ForEach':
-      return new _for_each_js__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A(moveRule);
+      return new _for_each_js__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A(moveRule);
     case 'Pass':
-      return new _pass_js__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A(moveRule);
+      return new _pass_js__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A(moveRule);
     case 'Shuffle':
-      return new _shuffle_js__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A(moveRule);
+      return new _shuffle_js__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A(moveRule);
     case 'SetActivePlayers':
-      return new _set_active_players_js__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A(moveRule);
+      return new _set_active_players_js__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A(moveRule);
     case 'EndTurn':
-      return new _end_turn_js__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A(moveRule);
+      return new _end_turn_js__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A(moveRule);
   }
 }
 
@@ -43328,7 +43389,7 @@ module.exports = DataView;
 /***/ ((module) => {
 
 "use strict";
-module.exports = /*#__PURE__*/JSON.parse('{"entities":[{"name":"mainGrid","type":"Grid","width":8,"height":8},{"name":"checker","perPlayer":true,"state":{"isKing":false},"displayProperties":["isKing"],"count":12}],"sharedBoard":[{"name":"mainGrid"}],"initialPlacements":[{"entity":{"name":"checker","player":"1"},"destination":{"index":37}},{"entity":{"name":"checker","player":"1"},"destination":{"index":3}},{"entity":{"name":"checker","player":"1"},"destination":{"index":5}},{"entity":{"name":"checker","player":"1"},"destination":{"index":7}},{"entity":{"name":"checker","player":"1"},"destination":{"index":8}},{"entity":{"name":"checker","player":"1"},"destination":{"index":10}},{"entity":{"name":"checker","player":"1"},"destination":{"index":12}},{"entity":{"name":"checker","player":"1"},"destination":{"index":14}},{"entity":{"name":"checker","player":"1"},"destination":{"index":17}},{"entity":{"name":"checker","player":"1"},"destination":{"index":19}},{"entity":{"name":"checker","player":"1"},"destination":{"index":21}},{"entity":{"name":"checker","player":"1"},"destination":{"index":23}},{"entity":{"name":"checker","player":"0"},"destination":{"index":40}},{"entity":{"name":"checker","player":"0"},"destination":{"index":42}},{"entity":{"name":"checker","player":"0"},"destination":{"index":44}},{"entity":{"name":"checker","player":"0"},"destination":{"index":46}},{"entity":{"name":"checker","player":"0"},"destination":{"index":49}},{"entity":{"name":"checker","player":"0"},"destination":{"index":51}},{"entity":{"name":"checker","player":"0"},"destination":{"index":53}},{"entity":{"name":"checker","player":"0"},"destination":{"index":55}},{"entity":{"name":"checker","player":"0"},"destination":{"index":56}},{"entity":{"name":"checker","player":"0"},"destination":{"index":58}},{"entity":{"name":"checker","player":"0"},"destination":{"index":60}},{"entity":{"name":"checker","player":"0"},"destination":{"index":62}}],"minPlayers":2,"maxPlayers":2,"turn":{"activePlayers":{"currentPlayer":"jumpIfPossible"},"stages":{"jumpIfPossible":{"moves":{"moveChecker":{"type":"MoveEntity","arguments":{"entity":{"playerChoice":true,"constraints":[{"type":"Is","matcher":{"name":"checker","player":{"type":"ctxPath","path":["currentPlayer"]}}}]},"destination":{"playerChoice":true,"constraints":[{"type":"Is","matcher":{"type":"Space"}},{"type":"Not","conditions":[{"type":"Contains"}]},{"type":"Or","conditions":[{"type":"Contains","target":{"type":"RelativeCoordinates","location":{"type":"expression","expression":"player == \'0\' ? player0RelativeCoordinates : player1RelativeCoordinates","arguments":{"player0RelativeCoordinates":[-2,2],"player1RelativeCoordinates":[-2,-2],"player":{"type":"ctxPath","path":["currentPlayer"]}}}},"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}}]},{"type":"Contains","target":{"type":"RelativeCoordinates","location":{"type":"expression","expression":"player == \'0\' ? player0RelativeCoordinates : player1RelativeCoordinates","arguments":{"player0RelativeCoordinates":[2,2],"player1RelativeCoordinates":[2,-2],"player":{"type":"ctxPath","path":["currentPlayer"]}}}},"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}}]}]},{"type":"InLine","sequence":[{"conditions":[{"type":"Contains","conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}}]}]},{"conditions":[{"type":"Contains","conditions":[{"type":"Not","conditions":[{"type":"Is","matcher":{"player":{"type":"ctxPath","path":["currentPlayer"]}}}]}]}]},{"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["originalTarget"]}}]}]}]}},"then":[{"type":"SetState","arguments":{"entity":{"type":"contextPath","path":["previousArguments","entity"]},"state":{"property":"isKing","value":true}},"conditions":[{"type":"Evaluate","expression":"(player == \'0\' and destinationCoordinates[1] == 0) or (player == \'1\' and destinationCoordinates[1] == 7)","arguments":{"player":{"type":"RelativePath","target":{"type":"contextPath","path":["previousArguments","entity"]},"path":["player"]},"destinationCoordinates":{"type":"Coordinates","target":{"type":"contextPath","path":["previousArguments","destination"]}}}}]}]}}},"keepJumping":{"moves":{"moveChecker":{"type":"MoveEntity","arguments":{"entity":{"playerChoice":true,"constraints":[{"type":"Is","matcher":{"name":"checker","player":{"type":"ctxPath","path":["currentPlayer"]}}}]},"destination":{"playerChoice":true,"constraints":[{"type":"Is","matcher":{"type":"Space"}},{"type":"Not","conditions":[{"type":"Contains"}]},{"type":"Or","conditions":[{"type":"Contains","target":{"type":"RelativeCoordinates","location":{"type":"expression","expression":"player == \'0\' ? player0RelativeCoordinates : player1RelativeCoordinates","arguments":{"player0RelativeCoordinates":[-1,1],"player1RelativeCoordinates":[-1,-1],"player":{"type":"ctxPath","path":["currentPlayer"]}}}},"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}}]},{"type":"Contains","target":{"type":"RelativeCoordinates","location":{"type":"expression","expression":"player == \'0\' ? player0RelativeCoordinates : player1RelativeCoordinates","arguments":{"player0RelativeCoordinates":[1,1],"player1RelativeCoordinates":[1,-1],"player":{"type":"ctxPath","path":["currentPlayer"]}}}},"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}}]}]}]}},"then":[{"type":"EndTurn"}]}}},"moveIfNoJump":{"moves":{"moveChecker":{"type":"MoveEntity","arguments":{"entity":{"playerChoice":true,"constraints":[{"type":"Is","matcher":{"name":"checker","player":{"type":"ctxPath","path":["currentPlayer"]}}}]},"destination":{"playerChoice":true,"constraints":[{"type":"Is","matcher":{"type":"Space"}},{"type":"Not","conditions":[{"type":"Contains"}]},{"type":"Or","conditions":[{"type":"Contains","target":{"type":"RelativeCoordinates","location":{"type":"expression","expression":"player == \'0\' ? player0RelativeCoordinates : player1RelativeCoordinates","arguments":{"player0RelativeCoordinates":[-1,1],"player1RelativeCoordinates":[-1,-1],"player":{"type":"ctxPath","path":["currentPlayer"]}}}},"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}}]},{"type":"Contains","target":{"type":"RelativeCoordinates","location":{"type":"expression","expression":"player == \'0\' ? player0RelativeCoordinates : player1RelativeCoordinates","arguments":{"player0RelativeCoordinates":[1,1],"player1RelativeCoordinates":[1,-1],"player":{"type":"ctxPath","path":["currentPlayer"]}}}},"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}}]}]}]}},"then":[{"type":"EndTurn"}]}}}}},"endIf":[{"conditions":[{"type":"Not","target":{"constraints":[{"type":"Is","matcher":{"player":"0"}}]}}],"result":{"winner":1}},{"conditions":[{"type":"Not","target":{"constraints":[{"type":"Is","matcher":{"player":"1"}}]}}],"result":{"winner":0}}]}');
+module.exports = /*#__PURE__*/JSON.parse('{"entities":[{"name":"mainGrid","type":"Grid","width":8,"height":8},{"name":"checker","perPlayer":true,"state":{"isKing":false},"displayProperties":["isKing","entityId"],"count":12}],"sharedBoard":[{"name":"mainGrid"}],"initialPlacements":[{"entity":{"name":"checker","player":"1"},"destination":{"index":37}},{"entity":{"name":"checker","player":"1"},"destination":{"index":3}},{"entity":{"name":"checker","player":"1"},"destination":{"index":5}},{"entity":{"name":"checker","player":"1"},"destination":{"index":7}},{"entity":{"name":"checker","player":"1"},"destination":{"index":8}},{"entity":{"name":"checker","player":"1"},"destination":{"index":10}},{"entity":{"name":"checker","player":"1"},"destination":{"index":0}},{"entity":{"name":"checker","player":"1"},"destination":{"index":14}},{"entity":{"name":"checker","player":"1"},"destination":{"index":17}},{"entity":{"name":"checker","player":"1"},"destination":{"index":19}},{"entity":{"name":"checker","player":"1"},"destination":{"index":21}},{"entity":{"name":"checker","player":"1"},"destination":{"index":23}},{"entity":{"name":"checker","player":"0"},"destination":{"index":40}},{"entity":{"name":"checker","player":"0"},"destination":{"index":42}},{"entity":{"name":"checker","player":"0"},"destination":{"index":44}},{"entity":{"name":"checker","player":"0"},"destination":{"index":46}},{"entity":{"name":"checker","player":"0"},"destination":{"index":49}},{"entity":{"name":"checker","player":"0"},"destination":{"index":51}},{"entity":{"name":"checker","player":"0"},"destination":{"index":53}},{"entity":{"name":"checker","player":"0"},"destination":{"index":55}},{"entity":{"name":"checker","player":"0"},"destination":{"index":56}},{"entity":{"name":"checker","player":"0"},"destination":{"index":58}},{"entity":{"name":"checker","player":"0"},"destination":{"index":60}},{"entity":{"name":"checker","player":"0"},"destination":{"index":62}}],"minPlayers":2,"maxPlayers":2,"turn":{"activePlayers":{"currentPlayer":"jumpIfPossible","maxMoves":1,"next":{"currentPlayer":{"stage":"keepJumping"}}},"stages":{"jumpIfPossible":{"onNoMoves":[{"type":"SetActivePlayers","options":{"currentPlayer":{"stage":"moveIfNoJump","maxMoves":1,"minMoves":1}}}],"moves":{"jumpChecker":{"type":"MoveEntity","arguments":{"entity":{"playerChoice":true,"constraints":[{"type":"Is","matcher":{"name":"checker","player":{"type":"ctxPath","path":["currentPlayer"]}}}]},"destination":{"playerChoice":true,"constraints":[{"type":"Is","matcher":{"type":"Space"}},{"type":"Not","conditions":[{"type":"Contains"}]},{"type":"Or","conditions":[{"type":"Contains","target":{"type":"RelativeCoordinates","location":{"type":"expression","expression":"player == \'0\' ? player0RelativeCoordinates : player1RelativeCoordinates","arguments":{"player0RelativeCoordinates":[-2,2],"player1RelativeCoordinates":[-2,-2],"player":{"type":"ctxPath","path":["currentPlayer"]}}}},"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}}]},{"type":"Contains","target":{"type":"RelativeCoordinates","location":{"type":"expression","expression":"player == \'0\' ? player0RelativeCoordinates : player1RelativeCoordinates","arguments":{"player0RelativeCoordinates":[2,2],"player1RelativeCoordinates":[2,-2],"player":{"type":"ctxPath","path":["currentPlayer"]}}}},"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}}]}]},{"type":"InLine","sequence":[{"conditions":[{"type":"Contains","conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}}]}]},{"conditions":[{"type":"Contains","conditions":[{"type":"Not","conditions":[{"type":"Is","matcher":{"player":{"type":"ctxPath","path":["currentPlayer"]}}}]}]}]},{"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["originalTarget"]}}]}]}]}},"then":[{"type":"ForEach","arguments":{"targets":{"type":"contextPath","path":["moveConditionResults",0,"conditionResults","argumentResults","destination","results",0,"results",3,"matches",0,1,"entities"]}},"move":{"type":"RemoveEntity","arguments":{"entity":{"type":"contextPath","path":["loopTarget"]}}}},{"type":"SetState","arguments":{"entity":{"type":"contextPath","path":["previousArguments","entity"]},"state":{"property":"isKing","value":true}},"conditions":[{"type":"Evaluate","expression":"(player == \'0\' and destinationCoordinates[1] == 0) or (player == \'1\' and destinationCoordinates[1] == 7)","arguments":{"player":{"type":"RelativePath","target":{"type":"contextPath","path":["previousArguments","entity"]},"path":["player"]},"destinationCoordinates":{"type":"Coordinates","target":{"type":"contextPath","path":["previousArguments","destination"]}}}}]}]}}},"keepJumping":{"moves":{"jumpChecker":{"type":"MoveEntity","arguments":{"entity":{"constraints":[{"type":"Is","entity":{"type":"gamePath","path":["_meta","previousPayload","arguments","entity"]}}]},"destination":{"playerChoice":true,"constraints":[{"type":"Is","matcher":{"type":"Space"}},{"type":"Not","conditions":[{"type":"Contains"}]},{"type":"Or","conditions":[{"type":"Contains","target":{"type":"RelativeCoordinates","location":{"type":"expression","expression":"player == \'0\' ? player0RelativeCoordinates : player1RelativeCoordinates","arguments":{"player0RelativeCoordinates":[-2,2],"player1RelativeCoordinates":[-2,-2],"player":{"type":"ctxPath","path":["currentPlayer"]}}}},"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}}]},{"type":"Contains","target":{"type":"RelativeCoordinates","location":{"type":"expression","expression":"player == \'0\' ? player0RelativeCoordinates : player1RelativeCoordinates","arguments":{"player0RelativeCoordinates":[2,2],"player1RelativeCoordinates":[2,-2],"player":{"type":"ctxPath","path":["currentPlayer"]}}}},"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}}]}]},{"type":"InLine","sequence":[{"conditions":[{"type":"Contains","conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}}]}]},{"conditions":[{"type":"Contains","conditions":[{"type":"Not","conditions":[{"type":"Is","matcher":{"player":{"type":"ctxPath","path":["currentPlayer"]}}}]}]}]},{"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["originalTarget"]}}]}]}]}},"then":[{"type":"ForEach","arguments":{"targets":{"type":"contextPath","path":["moveConditionResults",0,"conditionResults","argumentResults","destination","results",0,"results",3,"matches",0,1,"entities"]}},"move":{"type":"RemoveEntity","arguments":{"entity":{"type":"contextPath","path":["loopTarget"]}}}},{"type":"SetState","arguments":{"entity":{"type":"contextPath","path":["previousArguments","entity"]},"state":{"property":"isKing","value":true}},"conditions":[{"type":"Evaluate","expression":"(player == \'0\' and destinationCoordinates[1] == 0) or (player == \'1\' and destinationCoordinates[1] == 7)","arguments":{"player":{"type":"RelativePath","target":{"type":"contextPath","path":["previousArguments","entity"]},"path":["player"]},"destinationCoordinates":{"type":"Coordinates","target":{"type":"contextPath","path":["previousArguments","destination"]}}}}]}]}}},"moveIfNoJump":{"moves":{"moveChecker":{"type":"MoveEntity","arguments":{"entity":{"playerChoice":true,"constraints":[{"type":"Is","matcher":{"name":"checker","player":{"type":"ctxPath","path":["currentPlayer"]}}}]},"destination":{"playerChoice":true,"constraints":[{"type":"Is","matcher":{"type":"Space"}},{"type":"Not","conditions":[{"type":"Contains"}]},{"type":"Or","conditions":[{"type":"Contains","target":{"type":"RelativeCoordinates","location":{"type":"expression","expression":"player == \'0\' ? player0RelativeCoordinates : player1RelativeCoordinates","arguments":{"player0RelativeCoordinates":[-1,1],"player1RelativeCoordinates":[-1,-1],"player":{"type":"ctxPath","path":["currentPlayer"]}}}},"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}}]},{"type":"Contains","target":{"type":"RelativeCoordinates","location":{"type":"expression","expression":"player == \'0\' ? player0RelativeCoordinates : player1RelativeCoordinates","arguments":{"player0RelativeCoordinates":[1,1],"player1RelativeCoordinates":[1,-1],"player":{"type":"ctxPath","path":["currentPlayer"]}}}},"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}}]}]}]}},"then":[{"type":"EndTurn"}]}}}}},"endIf":[{"conditions":[{"type":"Not","target":{"constraints":[{"type":"Is","matcher":{"player":"0"}}]}}],"result":{"winner":1}},{"conditions":[{"type":"Not","target":{"constraints":[{"type":"Is","matcher":{"player":"1"}}]}}],"result":{"winner":0}}]}');
 
 /***/ }),
 
@@ -53147,7 +53208,7 @@ function simulateMove(bgioArguments, payload, context) {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `.content{display:block}.shared-board>.space{margin:20px}.personal-board{margin:20px}.grid{box-sizing:border-box;background-color:#333;width:500px}.grid__cell{background-color:#fff;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:12px;color:#666;position:relative}.grid__cell .space{height:100%;width:100%}.roomGame{border:1px solid gray;border-radius:8px}.space{display:inline-block;border:1px solid gray;box-sizing:border-box;min-width:10px;min-height:10px}.space--clickable{background-color:rgba(144,238,144,.4)}.space--targeted{background-color:gray}.space__entity-grid{box-sizing:border-box}.entity{height:100%;width:100%;box-sizing:border-box;border:1px solid #000}.entity.player-0{background-color:pink}.entity.player-0.entity--clickable{background-color:#f0e0d8}.entity.player-1{background-color:#add8e6}.entity.player-1.entity--clickable{background-color:#afeeee}.debug-panel .pane{width:420px !important}`, ""]);
+___CSS_LOADER_EXPORT___.push([module.id, `.content{display:block}.shared-board>.space{margin:20px}.personal-board{margin:20px}.grid{box-sizing:border-box;background-color:#333;width:500px}.grid__cell{background-color:#fff;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:12px;color:#666;position:relative}.grid__cell .space{height:100%;width:100%}.roomGame{border:1px solid gray;border-radius:8px}.space{display:inline-block;border:1px solid gray;box-sizing:border-box;min-width:10px;min-height:10px}.space--clickable{background-color:rgba(144,238,144,.4)}.space--targeted{background-color:gray}.space__entity-grid{box-sizing:border-box}.entity{height:100%;width:100%;box-sizing:border-box;border:1px solid #000}.entity.player-0{background-color:pink}.entity--clickable{background-color:rgba(144,238,144,.4)}.entity.player-0.entity--clickable{background-color:#f0e0d8}.entity.player-1{background-color:#add8e6}.entity.player-1.entity--clickable{background-color:#afeeee}.debug-panel .pane{width:420px !important}`, ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -53953,6 +54014,7 @@ var StorageAction;
 /* harmony import */ var _utils_get_steps_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(34631);
 /* harmony import */ var _utils_create_payload_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(19394);
 /* harmony import */ var _utils_prepare_payload_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(65541);
+/* harmony import */ var _server_game_factory_utils_resolve_properties_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(31577);
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -53969,6 +54031,7 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+
 
 
 
@@ -54087,14 +54150,15 @@ function getPossibleMoves(gameConnection, moveBuilder, isSpectator) {
     var _ref9 = _slicedToArray(_ref8, 2),
       moveName = _ref9[0],
       move = _ref9[1];
-    var moveRule = _objectSpread(_objectSpread({}, move.moveInstance.rule), {}, {
+    var moveRule = (0,_server_game_factory_utils_resolve_properties_js__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A)(bgioState, _objectSpread(_objectSpread({}, move.moveInstance.rule), {}, {
       moveName: moveName
-    });
+    }));
     var context = {
-      moveInstance: move.moveInstance
+      moveInstance: move.moveInstance,
+      moveArguments: moveRule.arguments
     };
     var payload = (0,_utils_create_payload_js__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)(bgioState, moveRule, moveBuilder.targets, context);
-    context.moveArguments = payload.arguments;
+    context.moveArguments = _objectSpread(_objectSpread({}, context.moveArguments), payload.arguments);
     var moveIsAllowed = (0,_server_game_factory_utils_check_conditions_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)(bgioState, moveRule, {}, context).conditionsAreMet;
     var moveSteps = (0,_utils_get_steps_js__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A)(bgioState, moveRule);
     var lastStep = moveSteps === null || moveSteps === void 0 ? void 0 : moveSteps[stepIndex - 1];
@@ -56242,9 +56306,10 @@ function Entity(_ref) {
         },
         className: ['entity', attributes.player && "player-".concat(attributes.player), allClickable.has(entity) && 'entity--clickable'].filter(Boolean).join(' ')
       }, (_entity$rule$displayP = entity.rule.displayProperties) === null || _entity$rule$displayP === void 0 ? void 0 : _entity$rule$displayP.map(function (property, i) {
+        var _entity$attributes$pr;
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
           key: i
-        }, property, ": ", entity.attributes[property].toString());
+        }, property, ": ", (_entity$attributes$pr = entity.attributes[property]) === null || _entity$attributes$pr === void 0 ? void 0 : _entity$attributes$pr.toString());
       }));
   }
 }
@@ -62680,6 +62745,7 @@ const fromUtf8 = (input) => new TextEncoder().encode(input);
 /* harmony export */   A: () => (/* binding */ getCurrentMoves)
 /* harmony export */ });
 // get the most specific set of moves for current stage/phase
+// this will probably all break for complex stages with multiple active players
 function getCurrentMoves(game, state, playerID) {
   var _state$ctx$activePlay, _game$phases$phaseNam, _game$phases, _phaseOrRoot$turn$sta, _phaseOrRoot$turn, _stageOrPhaseOrRoot$m;
   var phaseName = state.ctx.phase;
@@ -63406,7 +63472,11 @@ var BankSlot = /*#__PURE__*/function () {
   }, {
     key: "returnToBank",
     value: function returnToBank(entity) {
-      entity.state = {};
+      if (entity.rule.state) {
+        entity.state = entity.rule.state;
+      } else {
+        delete entity.state;
+      }
       if (this.remaining !== undefined) {
         this.remaining += 1;
       }

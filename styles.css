@@ -69,6 +69,10 @@
   background-color: pink;
 }
 
+.entity--clickable {
+  background-color: rgba(144, 238, 144, .4);
+}
+
 .entity.player-0.entity--clickable {
   background-color: #f0e0d8;
 }
