@@ -5,6 +5,7 @@ import checkConditions from '../../server/game-factory/utils/check-conditions.js
 import getSteps from '../utils/get-steps.js';
 import createPayload from '../utils/create-payload.js';
 import preparePayload from "../utils/prepare-payload.js";
+import resolveProperties from "../../server/game-factory/utils/resolve-properties.js";
 
 const GameContext = createContext({
   clickTarget: () => {},
@@ -104,8 +105,15 @@ function getPossibleMoves(gameConnection, moveBuilder, isSpectator) {
     .filter(([moveName]) => !eliminatedMoves.includes(moveName));
 
   availableMoves.forEach(([moveName, move]) => {
-    const moveRule = { ...move.moveInstance.rule, moveName };
-    const context = { moveInstance: move.moveInstance }
+    const moveRule = resolveProperties(
+      bgioState,
+      { ...move.moveInstance.rule, moveName }
+    )
+
+    const context = {
+      moveInstance: move.moveInstance,
+      moveArguments: moveRule.arguments
+    }
     
     const payload = createPayload(
       bgioState,
@@ -114,7 +122,10 @@ function getPossibleMoves(gameConnection, moveBuilder, isSpectator) {
       context
     );
     
-    context.moveArguments = payload.arguments 
+    context.moveArguments = {
+      ...context.moveArguments,
+      ...payload.arguments,
+    }
 
     const moveIsAllowed = checkConditions(
       bgioState,

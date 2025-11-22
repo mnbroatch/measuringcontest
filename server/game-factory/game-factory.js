@@ -163,7 +163,7 @@ function createTurn (turnRule, game) {
         turnRule.passIfNoMoves
         && newG._meta.noMovesCount < bgioArguments.ctx.numPlayers
       ) || (
-        stageRule.onNoMoves
+        stageRule?.onNoMoves
       )
     ) {
       const newBgioArguments = {
@@ -176,7 +176,7 @@ function createTurn (turnRule, game) {
       )
 
       if (!thereAreValidMoves) {
-        if (stageRule.onNoMoves) {
+        if (stageRule?.onNoMoves) {
           doMoves(bgioArguments, stageRule.onNoMoves)
         }
 

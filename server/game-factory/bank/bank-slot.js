@@ -54,7 +54,11 @@ class BankSlot {
   }
 
   returnToBank (entity) {
-    entity.state = {}
+    if (entity.rule.state) {
+      entity.state = entity.rule.state
+    } else {
+      delete entity.state
+    }
     if (this.remaining !== undefined) {
       this.remaining += 1
     }

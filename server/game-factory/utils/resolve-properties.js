@@ -56,6 +56,11 @@ function resolveProperty (bgioArguments, value, context) {
       context
     ).length
   } else if (value?.type === 'contextPath') {
+    // if (value.path[0] === 'moveArguments' && value.path[1] === 'entity') {
+    //   if (!context.moveArguments.entity) {
+    //     console.log('context', context)
+    //   }
+    // }
     return get(context, value.path)
   } else if (value?.type === 'ctxPath') {
     return get(bgioArguments.ctx, value.path)

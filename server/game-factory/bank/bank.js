@@ -105,6 +105,7 @@ class Bank {
   }
 
   returnToBank (bgioArguments, entity) {
+    this.findParent(entity).remove(entity)
     this.getSlot(bgioArguments, entity.rule).returnToBank(entity)
     delete this.tracker[entity.entityId]
   }

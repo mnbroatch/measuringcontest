@@ -29,7 +29,7 @@ export default function Entity ({ entity }) {
       >
         {entity.rule.displayProperties?.map((property, i) => (
           <div key={i}>
-            {property}: {(entity.attributes[property]).toString()}
+            {property}: {(entity.attributes[property])?.toString()}
           </div>
         ))}
       </div>

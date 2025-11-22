@@ -96,6 +96,8 @@ export default class Move {
         }, {})
     };
 
+    bgioArguments.G._meta.previousPayload = resolvedPayload
+
     let conditionResults
     if (!skipCheck) {
       conditionResults = this.checkValidity(bgioArguments, resolvedPayload, context)

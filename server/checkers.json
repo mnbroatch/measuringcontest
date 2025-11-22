@@ -12,7 +12,7 @@
       "state": { 
         "isKing": false
       },
-      "displayProperties": ["isKing"],
+      "displayProperties": ["isKing", "entityId"],
       "count": 12
     }
   ],
@@ -24,7 +24,7 @@
     {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 7}},
     {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 8}},
     {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 10}},
-    {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 12}},
+    {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 0}},
     {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 14}},
     {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 17}},
     {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 19}},
@@ -46,7 +46,15 @@
   "minPlayers": 2,
   "maxPlayers": 2,
   "turn": {
-    "activePlayers": { "currentPlayer": "jumpIfPossible" },
+    "activePlayers": {
+      "currentPlayer": "jumpIfPossible",
+      "maxMoves": 1,
+      "next": {
+        "currentPlayer": {
+          "stage": "keepJumping"
+        }
+      }
+    },
     "stages": {
       "jumpIfPossible": {
         "onNoMoves": [{
@@ -207,8 +215,9 @@
                       "results",
                       3,
                       "matches",
-                      { "flatten": true, "map": ["entities"] },
-                      { "flatten": true }
+                      0,
+                      1,
+                      "entities"
                     ]
                   }
                 },
@@ -255,14 +264,6 @@
                     }
                   }
                 }]
-              },
-              {
-                "type": "SetActivePlayers",
-                "options": {
-                  "currentPlayer": {
-                    "stage": "keepJumping"
-                  }
-                }
               }
             ]
           }
@@ -270,20 +271,16 @@
       },
       "keepJumping": {
         "moves": {
-          "moveChecker": {
+          "jumpChecker": {
             "type": "MoveEntity",
             "arguments": {
               "entity": {
-                "playerChoice": true,
                 "constraints": [
                   {
                     "type": "Is",
-                    "matcher": {
-                      "name": "checker",
-                      "player": {
-                        "type": "ctxPath",
-                        "path": ["currentPlayer"]
-                      }
+                    "entity": {
+                      "type": "gamePath",
+                      "path": ["_meta", "previousPayload", "arguments", "entity"]
                     }
                   }
                 ]
@@ -310,8 +307,8 @@
                             "type": "expression",
                             "expression": "player == '0' ? player0RelativeCoordinates : player1RelativeCoordinates",
                             "arguments": {
-                              "player0RelativeCoordinates": [-1, 1],
-                              "player1RelativeCoordinates": [-1, -1],
+                              "player0RelativeCoordinates": [-2, 2],
+                              "player1RelativeCoordinates": [-2, -2],
                               "player": {
                                 "type": "ctxPath",
                                 "path": ["currentPlayer"]
@@ -335,8 +332,8 @@
                             "type": "expression",
                             "expression": "player == '0' ? player0RelativeCoordinates : player1RelativeCoordinates",
                             "arguments": {
-                              "player0RelativeCoordinates": [1, 1],
-                              "player1RelativeCoordinates": [1, -1],
+                              "player0RelativeCoordinates": [2, 2],
+                              "player1RelativeCoordinates": [2, -2],
                               "player": {
                                 "type": "ctxPath",
                                 "path": ["currentPlayer"]
@@ -353,11 +350,86 @@
                         }]
                       }
                     ]
+                  },
+                  {
+                    "type": "InLine",
+                    "sequence": [
+                      {
+                        "conditions": [{
+                          "type": "Contains",
+                          "conditions": [{
+                            "type": "Is",
+                            "entity": {
+                              "type": "contextPath",
+                              "path": ["moveArguments", "entity"]
+                            }
+                          }]
+                        }]
+                      },
+                      {
+                        "conditions": [{
+                          "type": "Contains",
+                          "conditions": [{
+                            "type": "Not",
+                            "conditions": [{
+                              "type": "Is",
+                              "matcher": {
+                                "player": {
+                                  "type": "ctxPath",
+                                  "path": ["currentPlayer"]
+                                }
+                              }
+                            }]
+                          }]
+                        }]
+                      },
+                      {
+                        "conditions": [{
+                          "type": "Is",
+                          "entity": {
+                            "type": "contextPath",
+                            "path": ["originalTarget"]
+                          }
+                        }]
+                      }
+                    ]
                   }
                 ]
               }
             },
             "then": [
+              {
+                "type": "ForEach",
+                "arguments": {
+                  "targets": {
+                    "type": "contextPath",
+                    "path": [
+                      "moveConditionResults",
+                      0,
+                      "conditionResults",
+                      "argumentResults",
+                      "destination",
+                      "results",
+                      0,
+                      "results",
+                      3,
+                      "matches",
+                      0,
+                      1,
+                      "entities"
+                    ]
+                  }
+                },
+                "move": {
+                  "type": "RemoveEntity",
+                  "arguments": {
+                    "entity": {
+                      "type": "contextPath",
+                      "path": [ "loopTarget" ]
+                    }
+                  }
+                }
+              },
               {
                 "type": "SetState",
                 "arguments": {
@@ -392,10 +464,7 @@
                   }
                 }]
               }
-            ],
-            "then": [{
-              "type": "EndTurn"
-            }]
+            ]
           }
         }
       },
