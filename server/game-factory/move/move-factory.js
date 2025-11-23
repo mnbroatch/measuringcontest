@@ -13,7 +13,7 @@ import Pass from "./pass.js";
 import Shuffle from "./shuffle.js";
 // import Swap from "./swap.js";
 
-export default function moveFactory(moveRule) {
+export default function moveFactory(moveRule, game) {
   const moveInstance = getMoveInstance(moveRule)
 
   // accepts serialized G and payload, returns serialized
@@ -27,7 +27,7 @@ export default function moveFactory(moveRule) {
     const G = deserialize(JSON.stringify(serializableG), registry)
     const payload = revivePayload(serializablePayload, G)
     const bgioArguments = { G, ...restBgioArguments }
-    const context = { moveInstance }
+    const context = { moveInstance, game }
     const moveConditionResults = moveInstance.doMove(bgioArguments, payload, context)
 
     context.moveConditionResults = [moveConditionResults]

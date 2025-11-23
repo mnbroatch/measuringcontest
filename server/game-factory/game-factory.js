@@ -6,8 +6,9 @@ import { registry } from "./registry.js";
 import Bank from "./bank/bank.js";
 import expandGameRules from "./expand-game-rules.js";
 import getScenarioResults from './utils/get-scenario-results.js'
+import doMoves from './utils/do-moves.js'
 
-export default function gameFactory (gameRules, rulesHash, server) {
+export default function gameFactory (gameRules, rulesHash) {
   const game = { name: rulesHash }
   const rules = expandGameRules(gameRules)
 
@@ -16,6 +17,7 @@ export default function gameFactory (gameRules, rulesHash, server) {
     const initialState = {
       _meta: {
         passCount: 0,
+        previousPayloads: {},
       }
     };
 
@@ -49,16 +51,15 @@ export default function gameFactory (gameRules, rulesHash, server) {
     }
 
     rules.initialMoves?.forEach((moveRule) => {
-      moveFactory(moveRule).moveInstance.doMove({
-        ...bgioArguments,
-        G: initialState
-      });
+      moveFactory(moveRule, game).moveInstance.doMove(
+        { ...bgioArguments, G: initialState }
+      );
     })
     return JSON.parse(serialize(initialState));
   }
 
   if (rules.moves) {
-    game.moves = createMoves(rules.moves)
+    game.moves = createMoves(rules.moves, game)
   }
 
   if (rules.turn) {
@@ -156,15 +157,14 @@ function createTurn (turnRule, game) {
   const turn = { ...turnRule }
 
   turn.onBegin = (bgioArguments) => {
-    const newG = doMoves(bgioArguments, turnRule.initialMoves)
+    const newG = doMoves(bgioArguments, turnRule.initialMoves, { game })
     const stageRule = turnRule.stages?.[bgioArguments.ctx.activePlayers?.[bgioArguments.ctx.currentPlayer]]
+
+    doMoves(bgioArguments, stageRule?.initialMoves, { game })
+
     if (
-      (
-        turnRule.passIfNoMoves
+      turnRule.passIfNoMoves
         && newG._meta.noMovesCount < bgioArguments.ctx.numPlayers
-      ) || (
-        stageRule?.onNoMoves
-      )
     ) {
       const newBgioArguments = {
         ...bgioArguments,
@@ -176,10 +176,6 @@ function createTurn (turnRule, game) {
       )
 
       if (!thereAreValidMoves) {
-        if (stageRule?.onNoMoves) {
-          doMoves(bgioArguments, stageRule.onNoMoves)
-        }
-
         if (turnRule.passIfNoMoves) {
           newG._meta.passCount++
           newBgioArguments.events.pass()
@@ -194,7 +190,7 @@ function createTurn (turnRule, game) {
   if (turnRule.stages) {
     Object.entries(turnRule.stages).forEach(([stageName, stageRule]) => {
       if (stageRule.moves) {
-        turn.stages[stageName].moves = createMoves(stageRule.moves)
+        turn.stages[stageName].moves = createMoves(stageRule.moves, game)
       }
     })
   }
@@ -218,11 +214,11 @@ function createPhase (phaseRule, game) {
     phase.turn = createTurn(phaseRule.turn, game)
   }
   if (phaseRule.moves) {
-    phase.moves = createMoves(phaseRule.moves)
+    phase.moves = createMoves(phaseRule.moves, game)
   }
 
   phase.onBegin = (bgioArguments) => {
-    const newG = doMoves(bgioArguments, phaseRule.initialMoves)
+    const newG = doMoves(bgioArguments, phaseRule.initialMoves, { game })
     newG._meta.currentPhaseHasBeenSetUp = true
     newG._meta.nextPhase = phaseRule.next
     return JSON.parse(serialize(newG));
@@ -251,20 +247,9 @@ function createPhase (phaseRule, game) {
   return phase
 }
 
-function doMoves (bgioArguments, moves = []) {
-  const newG = deserialize(JSON.stringify(bgioArguments.G), registry)
-  moves.forEach((moveRule) => {
-    moveFactory(moveRule).moveInstance.doMove({
-      ...bgioArguments,
-      G: newG,
-    });
-  })
-  return newG
-}
-
-function createMoves (moves) {
+function createMoves (moves, game) {
   return Object.entries(moves).reduce((acc, [name, moveDefinition]) => ({
     ...acc,
-    [name]: moveFactory({ ...moveDefinition, name })
+    [name]: moveFactory({ ...moveDefinition, name }, game)
   }), {})
 }

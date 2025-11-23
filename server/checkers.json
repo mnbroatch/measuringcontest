@@ -23,12 +23,12 @@
     {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 5}},
     {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 7}},
     {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 8}},
-    {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 10}},
+    {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 4}},
     {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 0}},
     {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 14}},
     {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 17}},
     {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 19}},
-    {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 21}},
+    {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 2}},
     {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 23}},
     {"entity": {"name": "checker", "player": "0"}, "destination": {"index": 40}},
     {"entity": {"name": "checker", "player": "0"}, "destination": {"index": 42}},
@@ -46,27 +46,9 @@
   "minPlayers": 2,
   "maxPlayers": 2,
   "turn": {
-    "activePlayers": {
-      "currentPlayer": "jumpIfPossible",
-      "maxMoves": 1,
-      "next": {
-        "currentPlayer": {
-          "stage": "keepJumping"
-        }
-      }
-    },
+    "activePlayers": { "currentPlayer": "jumpIfPossible" },
     "stages": {
       "jumpIfPossible": {
-        "onNoMoves": [{
-          "type": "SetActivePlayers",
-          "options": {
-            "currentPlayer": {
-              "stage": "moveIfNoJump",
-              "maxMoves": 1,
-              "minMoves": 1
-            }
-          }
-        }],
         "moves": {
           "jumpChecker": {
             "type": "MoveEntity",
@@ -264,12 +246,22 @@
                     }
                   }
                 }]
+              },
+              {
+                "type": "SetActivePlayers",
+                "options": {
+                  "currentPlayer": { "stage": "keepJumping" }
+                }
               }
             ]
           }
         }
       },
       "keepJumping": {
+        "initialMoves": [{
+          "type": "EndTurn",
+          "conditions": [{ "type": "NoPossibleMoves" }]
+        }],
         "moves": {
           "jumpChecker": {
             "type": "MoveEntity",
@@ -280,7 +272,7 @@
                     "type": "Is",
                     "entity": {
                       "type": "gamePath",
-                      "path": ["_meta", "previousPayload", "arguments", "entity"]
+                      "path": ["_meta", "previousPayloads", "jumpChecker", "arguments", "entity"]
                     }
                   }
                 ]

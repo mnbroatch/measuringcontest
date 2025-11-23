@@ -96,7 +96,10 @@ export default class Move {
         }, {})
     };
 
-    bgioArguments.G._meta.previousPayload = resolvedPayload
+    // does not store automatic moves, do we need that?
+    if (rule.name) {
+      bgioArguments.G._meta.previousPayloads[rule.name] = resolvedPayload
+    }
 
     let conditionResults
     if (!skipCheck) {
