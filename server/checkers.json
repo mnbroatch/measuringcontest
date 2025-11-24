@@ -18,30 +18,8 @@
   ],
   "sharedBoard": [{ "name": "mainGrid" }],
   "initialPlacements": [
-    {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 37}},
-    {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 3}},
-    {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 5}},
-    {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 7}},
-    {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 8}},
-    {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 4}},
-    {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 0}},
-    {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 14}},
-    {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 17}},
-    {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 19}},
-    {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 2}},
-    {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 23}},
-    {"entity": {"name": "checker", "player": "0"}, "destination": {"index": 40}},
-    {"entity": {"name": "checker", "player": "0"}, "destination": {"index": 42}},
-    {"entity": {"name": "checker", "player": "0"}, "destination": {"index": 44}},
-    {"entity": {"name": "checker", "player": "0"}, "destination": {"index": 46}},
-    {"entity": {"name": "checker", "player": "0"}, "destination": {"index": 49}},
-    {"entity": {"name": "checker", "player": "0"}, "destination": {"index": 51}},
-    {"entity": {"name": "checker", "player": "0"}, "destination": {"index": 53}},
-    {"entity": {"name": "checker", "player": "0"}, "destination": {"index": 55}},
-    {"entity": {"name": "checker", "player": "0"}, "destination": {"index": 56}},
-    {"entity": {"name": "checker", "player": "0"}, "destination": {"index": 58}},
-    {"entity": {"name": "checker", "player": "0"}, "destination": {"index": 60}},
-    {"entity": {"name": "checker", "player": "0"}, "destination": {"index": 62}}
+    {"entity": {"name": "checker", "player": "1"}, "destination": {"index": 55}},
+    {"entity": {"name": "checker", "player": "0"}, "destination": {"index": 8}}
   ],
   "minPlayers": 2,
   "maxPlayers": 2,
@@ -49,6 +27,13 @@
     "activePlayers": { "currentPlayer": "jumpIfPossible" },
     "stages": {
       "jumpIfPossible": {
+        "initialMoves": [{
+          "type": "SetActivePlayers",
+          "options": {
+            "currentPlayer": { "stage": "moveIfNoJump" }
+          },
+          "conditions": [{ "type": "NoPossibleMoves" }]
+        }],
         "moves": {
           "jumpChecker": {
             "type": "MoveEntity",
@@ -214,40 +199,6 @@
                 }
               },
               {
-                "type": "SetState",
-                "arguments": {
-                  "entity": {
-                    "type": "contextPath",
-                    "path": ["previousArguments", "entity"]
-                  },
-                  "state": {
-                    "property": "isKing",
-                    "value": true
-                  }
-                },
-                "conditions": [{
-                  "type": "Evaluate",
-                  "expression": "(player == '0' and destinationCoordinates[1] == 0) or (player == '1' and destinationCoordinates[1] == 7)",
-                  "arguments": {
-                    "player": {
-                      "type": "RelativePath",
-                      "target": {
-                        "type": "contextPath",
-                        "path": ["previousArguments", "entity"]
-                      },
-                      "path": ["player"]
-                    },
-                    "destinationCoordinates": {
-                      "type": "Coordinates",
-                      "target": {
-                        "type": "contextPath",
-                        "path": ["previousArguments", "destination"]
-                      }
-                    }
-                  }
-                }]
-              },
-              {
                 "type": "SetActivePlayers",
                 "options": {
                   "currentPlayer": { "stage": "keepJumping" }
@@ -259,7 +210,10 @@
       },
       "keepJumping": {
         "initialMoves": [{
-          "type": "EndTurn",
+          "type": "SetActivePlayers",
+          "options": {
+            "currentPlayer": { "stage": "kingPieces" }
+          },
           "conditions": [{ "type": "NoPossibleMoves" }]
         }],
         "moves": {
@@ -423,41 +377,10 @@
                 }
               },
               {
-                "type": "SetState",
-                "arguments": {
-                  "entity": {
-                    "type": "contextPath",
-                    "path": ["previousArguments", "entity"]
-                  },
-                  "state": {
-                    "property": "isKing",
-                    "value": true
-                  }
+                "type": "SetActivePlayers",
+                "options": {
+                  "currentPlayer": { "stage": "kingPieces" }
                 },
-                "conditions": [{
-                  "type": "Evaluate",
-                  "expression": "(player == '0' and destinationCoordinates[1] == 0) or (player == '1' and destinationCoordinates[1] == 7)",
-                  "arguments": {
-                    "player": {
-                      "type": "RelativePath",
-                      "target": {
-                        "type": "contextPath",
-                        "path": ["previousArguments", "entity"]
-                      },
-                      "path": ["player"]
-                    },
-                    "destinationCoordinates": {
-                      "type": "Coordinates",
-                      "target": {
-                        "type": "contextPath",
-                        "path": ["previousArguments", "destination"]
-                      }
-                    }
-                  }
-                }]
-              },
-              {
-                "type": "EndTurn",
                 "conditions": [{ "type": "NoPossibleMoves" }]
               }
             ]
@@ -555,45 +478,54 @@
             },
             "then": [
               {
-                "type": "SetState",
-                "arguments": {
-                  "entity": {
+                "type": "SetActivePlayers",
+                "options": {
+                  "currentPlayer": { "stage": "kingPieces" }
+                },
+                "conditions": [{ "type": "NoPossibleMoves" }]
+              }
+            ]
+          }
+        }
+      },
+      "kingPieces": {
+        "initialMoves": [
+          {
+            "type": "SetState",
+            "arguments": {
+              "entity": {
+                "type": "gamePath",
+                "path": ["_meta", "previousPayloads", "jumpChecker", "arguments", "entity"]
+              },
+              "state": {
+                "property": "isKing",
+                "value": true
+              }
+            },
+            "conditions": [{
+              "type": "Evaluate",
+              "expression": "(player == '0' and destinationCoordinates[1] == 0) or (player == '1' and destinationCoordinates[1] == 7)",
+              "arguments": {
+                "player": {
+                  "type": "RelativePath",
+                  "target": {
                     "type": "contextPath",
                     "path": ["previousArguments", "entity"]
                   },
-                  "state": {
-                    "property": "isKing",
-                    "value": true
-                  }
+                  "path": ["player"]
                 },
-                "conditions": [{
-                  "type": "Evaluate",
-                  "expression": "(player == '0' and destinationCoordinates[1] == 0) or (player == '1' and destinationCoordinates[1] == 7)",
-                  "arguments": {
-                    "player": {
-                      "type": "RelativePath",
-                      "target": {
-                        "type": "contextPath",
-                        "path": ["previousArguments", "entity"]
-                      },
-                      "path": ["player"]
-                    },
-                    "destinationCoordinates": {
-                      "type": "Coordinates",
-                      "target": {
-                        "type": "contextPath",
-                        "path": ["previousArguments", "destination"]
-                      }
-                    }
+                "destinationCoordinates": {
+                  "type": "Coordinates",
+                  "target": {
+                    "type": "contextPath",
+                    "path": ["previousArguments", "destination"]
                   }
-                }]
+                }
               }
-            ],
-            "then": [{
-              "type": "EndTurn"
             }]
-          }
-        }
+          },
+          { "type": "EndTurn" }
+        ]
       }
     }
   },
