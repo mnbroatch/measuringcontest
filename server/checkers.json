@@ -455,6 +455,10 @@
                     }
                   }
                 }]
+              },
+              {
+                "type": "EndTurn",
+                "conditions": [{ "type": "NoPossibleMoves" }]
               }
             ]
           }
