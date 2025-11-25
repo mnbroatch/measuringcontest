@@ -8,8 +8,8 @@ export default class ContainsCondition extends Condition {
     if (!target) {
       return { matches: [], conditionIsMet: false }
     } else {
-      // doesn't work to find spaces in target.spaces yet
-      const matches = target.entities?.filter(entity => checkConditions(
+      const candidates = target.entities ?? target.spaces
+      const matches = candidates?.filter(entity => checkConditions(
         bgioArguments,
         rule,
         { target: entity },

@@ -608,9 +608,9 @@
               }
             }
           }
-        }
-      ],
-      "endIf": [true]
+        },
+        { "type": "EndTurn" }
+      ]
     }
   },
   "endIf": [{

@@ -179,7 +179,7 @@
       "arguments": {
         "passCount": {
           "type": "gamePath",
-          "path": ["_meta", "passCount"]
+          "path": ["_meta", "passedPlayers", "length"]
         },
         "numPlayers": {
           "type": "ctxPath",

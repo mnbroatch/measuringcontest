@@ -158,43 +158,41 @@
       }]
     }
   },
-  "endIf": [
-    {
-      "conditions": [{
-        "type": "Evaluate",
-        "expression": "passCount == numPlayers",
-        "arguments": {
-          "passCount": {
-            "type": "gamePath",
-            "path": ["_meta", "passCount"]
-          },
-          "numPlayers": {
-            "type": "ctxPath",
-            "path": ["playOrder", "length"]
-          }
+  "endIf": [{
+    "conditions": [{
+      "type": "Evaluate",
+      "expression": "passCount == numPlayers",
+      "arguments": {
+        "passCount": {
+          "type": "gamePath",
+          "path": ["_meta", "passedPlayers", "length"]
+        },
+        "numPlayers": {
+          "type": "ctxPath",
+          "path": ["playOrder", "length"]
         }
-      }],
-      "result": {
-        "winners": {
-          "type": "mapMax",
-          "targets": {
-            "type": "ctxPath",
-            "path": ["playOrder"]
-          },
-          "mapping": {
-            "type": "count",
-            "constraints": [{
-              "type": "Is",
-              "matcher": {
-                "player": {
-                  "type": "contextPath",
-                  "path": [ "loopTarget" ]
-                }
+      }
+    }],
+    "result": {
+      "winners": {
+        "type": "mapMax",
+        "targets": {
+          "type": "ctxPath",
+          "path": ["playOrder"]
+        },
+        "mapping": {
+          "type": "count",
+          "constraints": [{
+            "type": "Is",
+            "matcher": {
+              "player": {
+                "type": "contextPath",
+                "path": [ "loopTarget" ]
               }
-            }]
-          }
+            }
+          }]
         }
       }
     }
-  ]
+  }]
 }

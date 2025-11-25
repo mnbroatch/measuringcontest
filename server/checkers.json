@@ -667,8 +667,7 @@
                 "type": "SetActivePlayers",
                 "options": {
                   "currentPlayer": { "stage": "kingPieces" }
-                },
-                "conditions": [{ "type": "NoPossibleMoves" }]
+                }
               }
             ]
           }
@@ -710,39 +709,61 @@
               }
             }]
           },
+          {
+            "type": "SetState",
+            "arguments": {
+              "entity": {
+                "type": "gamePath",
+                "path": ["_meta", "previousPayloads", "moveChecker", "arguments", "entity"]
+              },
+              "state": {
+                "property": "isKing",
+                "value": true
+              }
+            },
+            "conditions": [{
+              "type": "Evaluate",
+              "expression": "(player == '0' and destinationCoordinates[1] == 0) or (player == '1' and destinationCoordinates[1] == 7)",
+              "arguments": {
+                "player": {
+                  "type": "RelativePath",
+                  "target": {
+                    "type": "contextPath",
+                    "path": ["previousArguments", "entity"]
+                  },
+                  "path": ["player"]
+                },
+                "destinationCoordinates": {
+                  "type": "Coordinates",
+                  "target": {
+                    "type": "contextPath",
+                    "path": ["previousArguments", "destination"]
+                  }
+                }
+              }
+            }]
+          },
           { "type": "EndTurn" }
         ]
       }
     }
   },
-  "endIf": [
-    {
-      "conditions": [{
-        "type": "Not",
-        "target": {
-          "constraints": [{
-            "type": "Is",
-            "matcher": { "player": "0" }
-          }]
+  "endIf": [{
+    "conditions": [{
+      "type": "Evaluate",
+      "expression": "passCount > 0",
+      "arguments": {
+        "passCount": {
+          "type": "gamePath",
+          "path": ["_meta", "passCount"]
         }
-      }],
-      "result": {
-        "winner": 1
       }
-    },
-    {
-      "conditions": [{
-        "type": "Not",
-        "target": {
-          "constraints": [{
-            "type": "Is",
-            "matcher": { "player": "1" }
-          }]
-        }
-      }],
-      "result": {
-        "winner": 0
+    }],
+    "result": {
+      "winner": {
+        "type": "ctxPath",
+        "path": ["currentPlayer"]
       }
     }
-  ]
+  }]
 }

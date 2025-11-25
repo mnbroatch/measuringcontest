@@ -16,7 +16,7 @@ export default function gameFactory (gameRules, rulesHash) {
     const { ctx } = bgioArguments
     const initialState = {
       _meta: {
-        passCount: 0,
+        passedPlayers: [],
         previousPayloads: {},
       }
     };
@@ -164,7 +164,7 @@ function createTurn (turnRule, game) {
 
     if (
       turnRule.passIfNoMoves
-        && newG._meta.noMovesCount < bgioArguments.ctx.numPlayers
+        && newG._meta.passedPlayers.length < bgioArguments.ctx.numPlayers
     ) {
       const newBgioArguments = {
         ...bgioArguments,
@@ -177,10 +177,10 @@ function createTurn (turnRule, game) {
 
       if (!thereAreValidMoves) {
         if (turnRule.passIfNoMoves) {
-          newG._meta.passCount++
+          newG._meta.passedPlayers.push(bgioArguments.ctx.currentPlayer)
           newBgioArguments.events.pass()
         } else {
-          newG._meta.passCount = 0
+          newG._meta.passedPlayers = []
         }
       }
     }
