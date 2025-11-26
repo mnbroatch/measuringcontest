@@ -74,7 +74,7 @@ exports.handler = async (event) => {
   const rawBody = event.isBase64Encoded
     ? Buffer.from(event.body, 'base64').toString('utf8')
     : event.body
-  const body = JSON.parse(event.body);
+  const body = JSON.parse(rawBody);
 
   // Fetch the room
   const roomResp = await dynamoDb.send(
