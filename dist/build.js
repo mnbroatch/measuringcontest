@@ -172,7 +172,7 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-console.warn("[tanstack-router] These exports from \"/home/matt/Programming/measuringcontest/src/routes/rooms.$roomcode.js\" will not be code-split and will increase your bundle size:\n- RoomPage\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
+console.warn("[tanstack-router] These exports from \"/home/mnbro/Programming/measuringcontest/src/routes/rooms.$roomcode.js\" will not be code-split and will increase your bundle size:\n- RoomPage\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
 
 
 
@@ -25239,7 +25239,7 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-console.warn("[tanstack-router] These exports from \"/home/matt/Programming/measuringcontest/src/routes/editor.js\" will not be code-split and will increase your bundle size:\n- Editor\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
+console.warn("[tanstack-router] These exports from \"/home/mnbro/Programming/measuringcontest/src/routes/editor.js\" will not be code-split and will increase your bundle size:\n- Editor\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
 
 
 
@@ -30405,16 +30405,21 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 function AbstractChoices() {
   var _useGame = (0,_contexts_game_context_js__WEBPACK_IMPORTED_MODULE_1__/* .useGame */ .I)(),
     clickTarget = _useGame.clickTarget,
-    allClickable = _useGame.allClickable;
+    allClickable = _useGame.allClickable,
+    undoStep = _useGame.undoStep,
+    currentMoveTargets = _useGame.currentMoveTargets;
   var abstractChoices = _toConsumableArray(allClickable).filter(function (c) {
     return c["abstract"];
   });
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "personal-boards"
-  }, abstractChoices.map(function (choice, i) {
+    className: "abstract-choices"
+  }, !!currentMoveTargets.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "abstract-choices__undo",
+    onClick: undoStep
+  }, "Undo"), abstractChoices.map(function (choice, i) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
       key: i,
-      className: "abstract-choice",
+      className: "abstract-choices__choice",
       onClick: function onClick() {
         return clickTarget(choice);
       }
@@ -36610,7 +36615,7 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-console.warn("[tanstack-router] These exports from \"/home/matt/Programming/measuringcontest/src/routes/index.js\" will not be code-split and will increase your bundle size:\n- IndexPage\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
+console.warn("[tanstack-router] These exports from \"/home/mnbro/Programming/measuringcontest/src/routes/index.js\" will not be code-split and will increase your bundle size:\n- IndexPage\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
 
 
 
@@ -37422,7 +37427,7 @@ function expandGameRules(gameRules) {
 /* unused harmony export default */
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
 /* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(82820);
-console.warn("[tanstack-router] These exports from \"/home/matt/Programming/measuringcontest/src/routes/login.js\" will not be code-split and will increase your bundle size:\n- Login\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
+console.warn("[tanstack-router] These exports from \"/home/mnbro/Programming/measuringcontest/src/routes/login.js\" will not be code-split and will increase your bundle size:\n- Login\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
 
 
 function Login() {
@@ -45671,7 +45676,7 @@ const listenForOAuthFlowCancellation = (store) => {
 function Game(_ref) {
   var bgioState = _ref.bgioState;
   var G = bgioState.G;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_abstract_choices_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "shared-board"
   }, G.sharedBoard.entities.map(function (entity, i) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_entity_entity_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A, {
@@ -45690,7 +45695,7 @@ function Game(_ref) {
         entity: entity
       });
     }));
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_abstract_choices_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, null));
+  })));
 }
 
 /***/ }),
@@ -54186,9 +54191,19 @@ function GameProvider(_ref) {
       targets: [].concat(_toConsumableArray(moveBuilder.targets), [target])
     });
   };
+  var undoStep = function undoStep() {
+    if (moveBuilder.targets.length) {
+      setMoveBuilder({
+        targets: moveBuilder.targets.slice(0, -1),
+        stepIndex: Math.max(0, moveBuilder.stepIndex - 1),
+        eliminatedMoves: []
+      });
+    }
+  };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(GameContext.Provider, {
     value: {
       clickTarget: handleClick,
+      undoStep: undoStep,
       allClickable: optimisticWinner ? new Set() : allClickable,
       currentMoveTargets: optimisticWinner ? [] : moveBuilder.targets
     }
