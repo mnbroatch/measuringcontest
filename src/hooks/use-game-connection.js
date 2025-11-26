@@ -51,7 +51,7 @@ export default function useGameConnection () {
     gameover = state?.ctx?.gameover
 
     moves = !gameover
-      ? Object.entries(getCurrentMoves(client.game, state, client.playerID)).reduce((acc, [moveName, rawMove]) => {
+      ? Object.entries(getCurrentMoves(state, client)).reduce((acc, [moveName, rawMove]) => {
           const move = function (payload) {
             client.moves[moveName](preparePayload(payload))
           }

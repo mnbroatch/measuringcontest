@@ -8,8 +8,6 @@ export default class Evaluate extends Condition {
     if (payload?.target) {
       newContext.target = payload.target
     }
-    console.log('payload', payload)
-    console.log('rule', rule)
     const result = resolveExpression(
       bgioArguments,
       rule,

@@ -30,7 +30,7 @@ export default function useSinglePlayerGame (gameRules, numPlayers) {
     gameover = state?.ctx?.gameover
 
     moves = !gameover
-      ? Object.entries(getCurrentMoves(client.game, state)).reduce((acc, [moveName, rawMove]) => {
+      ? Object.entries(getCurrentMoves(state, client)).reduce((acc, [moveName, rawMove]) => {
           const move = function (payload) {
             client.moves[moveName](preparePayload(payload))
           }

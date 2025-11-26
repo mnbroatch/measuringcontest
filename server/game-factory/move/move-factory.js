@@ -1,6 +1,7 @@
 import { serialize, deserialize } from 'wackson'
 import { INVALID_MOVE } from 'boardgame.io/dist/cjs/core.js';
 import { registry } from '../registry.js'
+import deserializeBgioArguments from '../utils/deserialize-bgio-arguments.js'
 import MoveEntity from "./move-entity.js";
 import RemoveEntity from "./remove-entity.js";
 import PlaceNew from "./place-new.js";
@@ -8,34 +9,31 @@ import TakeFrom from "./take-from.js";
 import SetState from "./set-state.js";
 import SetActivePlayers from "./set-active-players.js";
 import EndTurn from "./end-turn.js";
+import PassTurn from "./pass-turn.js";
 import ForEach from "./for-each.js";
 import Pass from "./pass.js";
 import Shuffle from "./shuffle.js";
-// import Swap from "./swap.js";
 
 export default function moveFactory(moveRule, game) {
   const moveInstance = getMoveInstance(moveRule)
 
   // accepts serialized G and payload, returns serialized
   const compatibleMove = function (
-    {
-      G: serializableG,
-      ...restBgioArguments
-    },
-    serializablePayload,
+    bgioArguments,
+    serializablePayload
   ) {
-    const G = deserialize(JSON.stringify(serializableG), registry)
+    const newBgioArguments = deserializeBgioArguments(bgioArguments)
+    const { G } = newBgioArguments
     const payload = revivePayload(serializablePayload, G)
-    const bgioArguments = { G, ...restBgioArguments }
     const context = { moveInstance, game }
-    const moveConditionResults = moveInstance.doMove(bgioArguments, payload, context)
+    const moveConditionResults = moveInstance.doMove(newBgioArguments, payload, context)
 
     context.moveConditionResults = [moveConditionResults]
 
     if (moveConditionResults !== INVALID_MOVE && moveRule.then) {
       for (let automaticMoveRule of moveRule.then) {
         const result = getMoveInstance(automaticMoveRule).doMove(
-          bgioArguments,
+          newBgioArguments,
           {},
           {...context} // spread here so prevArguments doesn't change for sibling
         )
@@ -85,5 +83,7 @@ export function getMoveInstance (moveRule) {
       return new SetActivePlayers(moveRule);
     case 'EndTurn':
       return new EndTurn(moveRule);
+    case 'PassTurn':
+      return new PassTurn(moveRule);
   }
 }

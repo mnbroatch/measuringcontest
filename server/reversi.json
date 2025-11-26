@@ -48,7 +48,10 @@
   "turn": {
     "minMoves": 1,
     "maxMoves": 1,
-    "passIfNoMoves": true
+    "initialMoves": [{
+      "type": "PassTurn",
+      "conditions": [{ "type": "NoPossibleMoves" }]
+    }]
   },
   "moves": {
     "placeDisc": {

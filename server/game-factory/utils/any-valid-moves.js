@@ -134,7 +134,7 @@ export default function areThereValidMoves(bgioArguments, moves) {
       moveInstance.rule,
       context
     );
-    
+
     const ruleArguments = rule.arguments ?? {};
     
     // If no arguments required, just check if move is valid

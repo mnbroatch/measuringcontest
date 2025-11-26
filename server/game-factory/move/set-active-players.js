@@ -11,6 +11,13 @@ export default class SetActivePlayers extends Move {
     const stageName = rule.options.currentPlayer?.stage
     const phaseOrRoot = context.game.phases?.[phaseName] ?? context.game
     const stage = phaseOrRoot?.turn?.stages?.[stageName]
-    doMoves(bgioArguments, stage?.initialMoves, context)
+    doMoves(
+      bgioArguments,
+      stage?.initialMoves,
+      {
+        ...context,
+        stageName,
+      }
+    )
   }
 }

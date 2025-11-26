@@ -1,12 +1,10 @@
-import { serialize, deserialize } from "wackson";
+import { serialize } from "wackson";
 import moveFactory from "./move/move-factory.js";
-import areThereValidMoves from "./utils/any-valid-moves.js";
-import getCurrentMoves from "./utils/get-current-moves.js";
-import { registry } from "./registry.js";
 import Bank from "./bank/bank.js";
 import expandGameRules from "./expand-game-rules.js";
 import getScenarioResults from './utils/get-scenario-results.js'
 import doMoves from './utils/do-moves.js'
+import deserializeBgioArguments from './utils/deserialize-bgio-arguments.js'
 
 export default function gameFactory (gameRules, rulesHash) {
   const game = { name: rulesHash }
@@ -74,18 +72,15 @@ export default function gameFactory (gameRules, rulesHash) {
   }
 
   if (rules.endIf) {
-    game.endIf = ({ G, ...restBgioArguments }) => {
-      const bgioArguments = {
-        G: deserialize(JSON.stringify(G), registry),
-        ...restBgioArguments
-      }
-      return getScenarioResults(bgioArguments, rules.endIf)
+    game.endIf = (bgioArguments) => {
+      const newBgioArguments = deserializeBgioArguments(bgioArguments)
+      return getScenarioResults(newBgioArguments, rules.endIf)
     }
   }
 
   if (!gameRules.DEBUG_DISABLE_SECRET_STATE) {
-    game.playerView = ({ G, playerID }) => {
-      G = deserialize(JSON.stringify(G), registry)
+    game.playerView = (bgioArguments) => {
+      const { G, playerID } = deserializeBgioArguments(bgioArguments)
       Object.values(G.bank.tracker).forEach(((entity) => {
         if (
           entity.rule.contentsHiddenFrom === 'All' 
@@ -157,34 +152,20 @@ function createTurn (turnRule, game) {
   const turn = { ...turnRule }
 
   turn.onBegin = (bgioArguments) => {
-    const newG = doMoves(bgioArguments, turnRule.initialMoves, { game })
-    const stageRule = turnRule.stages?.[bgioArguments.ctx.activePlayers?.[bgioArguments.ctx.currentPlayer]]
+    const newBgioArguments = deserializeBgioArguments(bgioArguments)
+    const stageRule = turnRule.stages?.[
+      newBgioArguments.ctx.activePlayers?.[newBgioArguments.ctx.currentPlayer]
+    ]
 
-    doMoves(bgioArguments, stageRule?.initialMoves, { game })
+    // not 100% sure about this logic / timing, but it seems to work so far in terms
+    // of letting a player pass and still take a turn later if a move becomes available
+    newBgioArguments.G._meta.passedPlayers = newBgioArguments.G._meta.passedPlayers
+      .filter(p => p !== newBgioArguments.ctx.currentPlayer)
 
-    if (
-      turnRule.passIfNoMoves
-        && newG._meta.passedPlayers.length < bgioArguments.ctx.numPlayers
-    ) {
-      const newBgioArguments = {
-        ...bgioArguments,
-        G: newG,
-      }
-      const thereAreValidMoves = areThereValidMoves(
-        newBgioArguments,
-        getCurrentMoves(game, newBgioArguments)
-      )
+    doMoves(newBgioArguments, turnRule.initialMoves, { game })
+    doMoves(newBgioArguments, stageRule?.initialMoves, { game })
 
-      if (!thereAreValidMoves) {
-        if (turnRule.passIfNoMoves) {
-          newG._meta.passedPlayers.push(bgioArguments.ctx.currentPlayer)
-          newBgioArguments.events.pass()
-        } else {
-          newG._meta.passedPlayers = []
-        }
-      }
-    }
-    return JSON.parse(serialize(newG));
+    return JSON.parse(serialize(newBgioArguments.G));
   }
 
   if (turnRule.stages) {
@@ -218,20 +199,18 @@ function createPhase (phaseRule, game) {
   }
 
   phase.onBegin = (bgioArguments) => {
-    const newG = doMoves(bgioArguments, phaseRule.initialMoves, { game })
-    newG._meta.currentPhaseHasBeenSetUp = true
-    newG._meta.nextPhase = phaseRule.next
-    return JSON.parse(serialize(newG));
+    const newBgioArguments = deserializeBgioArguments(bgioArguments)
+    doMoves(newBgioArguments, phaseRule.initialMoves, { game })
+    newBgioArguments.G._meta.currentPhaseHasBeenSetUp = true
+    newBgioArguments.G._meta.nextPhase = phaseRule.next
+    return JSON.parse(serialize(newBgioArguments.G));
   }
 
   if (phaseRule.endIf) {
-    phase.endIf = ({ G, ...restBgioArguments }) => {
-      const bgioArguments = {
-        G: deserialize(JSON.stringify(G), registry),
-        ...restBgioArguments
-      }
-      if (bgioArguments.G._meta.currentPhaseHasBeenSetUp) {
-        const result = getScenarioResults(bgioArguments, phaseRule.endIf)
+    phase.endIf = (bgioArguments) => {
+      const newBgioArguments = deserializeBgioArguments(bgioArguments)
+      if (newBgioArguments.G._meta.currentPhaseHasBeenSetUp) {
+        const result = getScenarioResults(newBgioArguments, phaseRule.endIf)
         if (result) {
           return result
         }
