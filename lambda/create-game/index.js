@@ -70,6 +70,10 @@ async function getJwtSecret() {
 exports.handler = async (event) => {
   const { sessionCode: roomCode } = event.pathParameters;
   const { sub } = event.requestContext.authorizer.claims;
+
+  const rawBody = event.isBase64Encoded
+    ? Buffer.from(event.body, 'base64').toString('utf8')
+    : event.body
   const body = JSON.parse(event.body);
 
   // Fetch the room
