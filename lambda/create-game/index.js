@@ -174,8 +174,7 @@ exports.handler = async (event) => {
     client.start();
 
     client.subscribe((state) => {
-      if (state !== null) { // Wait for actual state
-        console.log('state in subscribe', state)
+      if (state !== null) {
         resolve()
       }
     })
