@@ -77,11 +77,22 @@ export function GameProvider({ gameConnection, children, isSpectator }) {
     });
   };
 
+  const undoStep = () => {
+    if (moveBuilder.targets.length) {
+      setMoveBuilder({
+        targets: moveBuilder.targets.slice(0, -1),
+        stepIndex: Math.max(0, moveBuilder.stepIndex - 1),
+        eliminatedMoves: []
+      })
+    }
+  }
+
   return (
     <GameContext.Provider value={{
       clickTarget: handleClick,
+      undoStep,
       allClickable: optimisticWinner ? new Set() : allClickable,
-      currentMoveTargets: optimisticWinner ? [] : moveBuilder.targets
+      currentMoveTargets: optimisticWinner ? [] : moveBuilder.targets,
     }}>
       {children}
     </GameContext.Provider>

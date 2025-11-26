@@ -7,6 +7,7 @@ export default function Game ({ bgioState }) {
 
   return (
     <>
+      <AbstractChoices />
       <div className="shared-board">
         {G.sharedBoard.entities.map((entity, i) => <Entity key={i} entity={entity} />)}
       </div>
@@ -21,7 +22,6 @@ export default function Game ({ bgioState }) {
           ))}
         </div>
       )}
-      <AbstractChoices />
     </>
   )
 }
