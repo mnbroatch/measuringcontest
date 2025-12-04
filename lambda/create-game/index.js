@@ -85,13 +85,18 @@ exports.handler = async (event) => {
   );
 
   const room = roomResp.Item;
-  const players = Object.entries(body.players).reduce((acc, [boardgamePlayerID, { name }]) => {
+  let players
+  try {
+  players = Object.entries(body.players).reduce((acc, [boardgamePlayerID, { name }]) => {
     const [sub] = Object.entries(room.members).find(([_, member]) => member.boardgamePlayerID === boardgamePlayerID)
     return {
       ...acc,
       [sub]: { name }
     }
   }, {})
+  } catch (e) {
+    console.log('123body', body)
+  }
 
   if (!room) {
     throw new Error("Room not found"); // mapping template can map to 404
