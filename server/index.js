@@ -110,7 +110,6 @@ server.app.use(async (ctx, next) => {
 
 // hack to dynamically register game configs on game creation
 server.app.use(async (ctx, next) => {
-      try {
   const match = ctx.path.match(/^\/games\/([^/]+)\/create$/);
   if (ctx.method === 'POST' && match) {
     const nameOrRulesHash = match[1];
@@ -140,9 +139,6 @@ server.app.use(async (ctx, next) => {
     ctx.req = newStream;
   }
   await next();
-      } catch (e) {
-        console.error('parsedBody', parsedBody)
-      }
 });
 
 server.app.use((ctx, next) => {
