@@ -70,7 +70,11 @@ async function getJwtSecret() {
 exports.handler = async (event) => {
   const { sessionCode: roomCode } = event.pathParameters;
   const { sub } = event.requestContext.authorizer.claims;
-  const body = JSON.parse(event.body);
+
+  const rawBody = event.isBase64Encoded
+    ? Buffer.from(event.body, 'base64').toString('utf8')
+    : event.body
+  const body = JSON.parse(rawBody);
 
   // Fetch the room
   const roomResp = await dynamoDb.send(
