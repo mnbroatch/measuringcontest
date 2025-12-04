@@ -45,6 +45,9 @@ jobs:
           - name: joinroom
             path: lambda/join-room
             zip: joinroom.zip
+          - name: leaveroom
+            path: lambda/leave-room
+            zip: leaveroom.zip
 
     steps:
       - uses: actions/checkout@v3
