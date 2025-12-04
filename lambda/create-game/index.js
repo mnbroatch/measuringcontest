@@ -96,6 +96,7 @@ exports.handler = async (event) => {
   }, {})
   } catch (e) {
     console.log('123body', body)
+    console.error('e', e)
   }
 
   if (!room) {
