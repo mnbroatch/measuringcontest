@@ -60,7 +60,7 @@ async function getJwtSecret() {
   
   const response = await ssmClient.send(new GetParameterCommand({
     Name: "/measuringcontest/boardgame-jwt-secret",
-    WithDecryption: true // Important for SecureString parameters
+    WithDecryption: true
   }));
   
   cachedJwtSecret = response.Parameter.Value;
@@ -85,35 +85,77 @@ exports.handler = async (event) => {
   );
 
   const room = roomResp.Item;
-  let players
-  try {
-  players = Object.entries(body.players).reduce((acc, [boardgamePlayerID, { name }]) => {
-    const [sub] = Object.entries(room.members).find(([_, member]) => member.boardgamePlayerID === boardgamePlayerID)
-    return {
-      ...acc,
-      [sub]: { name }
-    }
-  }, {})
-  } catch (e) {
-    console.log('123body', body)
-    console.error('e', e)
-  }
 
   if (!room) {
-    throw new Error("Room not found"); // mapping template can map to 404
+    throw new Error("Room not found");
   }
 
   if (room.createdBy !== sub) {
-    throw new Error("Unauthorized"); // mapping template -> 403
-  }
-
-  if (!(sub in players)) {
-    throw new Error("Game creator must be in game"); // mapping template -> 403
+    throw new Error("Unauthorized");
   }
 
   // Get JWT secret from Parameter Store
   const jwtSecret = await getJwtSecret();
-  const rulesHash = crypto.createHash('sha256').update(stableHash(body.gameRules)).digest('hex')
+
+  // Connect to RoomGame to get player names
+  const clientToken = jwt.sign({
+    gameId: room.roomGameId,
+    playerId: 'System',
+    purpose: 'gameserver-app'
+  }, jwtSecret, { expiresIn: '30d' });
+
+  let roomClient;
+  let roomGameState;
+  
+  const roomStatePromise = new Promise((resolve, reject) => {
+    roomClient = Client({
+      game: RoomGame,
+      multiplayer: SocketIO({ 
+        server: BOARDGAME_SERVER_URL,
+        socketOpts: {
+          transports: ['websocket', 'polling']
+        }
+      }),
+      matchID: room.roomGameId,
+      playerID: '0',
+      credentials: clientToken,
+    });
+
+    roomClient.start();
+
+    roomClient.subscribe((state) => {
+      if (state !== null) {
+        roomGameState = state;
+        resolve();
+      }
+    });
+
+    // Add timeout
+    setTimeout(() => reject(new Error('Timeout connecting to RoomGame')), 10000);
+  });
+
+  await roomStatePromise;
+
+  // Map boardgame player IDs to user subs with names from RoomGame
+  const players = Object.entries(roomGameState.G.players).reduce((acc, [boardgamePlayerID, playerData]) => {
+    const [userSub] = Object.entries(room.members).find(([_, member]) => 
+      member.boardgamePlayerID === boardgamePlayerID
+    ) || [];
+    
+    return !!userSub
+      ? {
+        ...acc,
+        [userSub]: { name: playerData.name }
+      }
+      : acc
+  }, {});
+
+  if (!(sub in players)) {
+    roomClient.stop();
+    throw new Error("Game creator must be in game");
+  }
+
+  const rulesHash = crypto.createHash('sha256').update(stableHash(body.gameRules)).digest('hex');
 
   // Create JWT for server authentication
   const serverToken = jwt.sign({ purpose: 'gameserver-api' }, jwtSecret, { expiresIn: '1h' });
@@ -129,14 +171,15 @@ exports.handler = async (event) => {
   });
 
   if (!createResp.ok) {
-    const text = await createResp.text(); // read body even on error
+    const text = await createResp.text();
+    roomClient.stop();
     throw new Error(`Boardgame server responded ${createResp.status} ${createResp.statusText}: ${text}`);
   }
 
   const createData = await createResp.json();
   const gameId = createData.matchID;
 
-  const player = players[sub]
+  const player = players[sub];
 
   const joinResp = await fetch(`${BOARDGAME_SERVER_URL}/games/${rulesHash}/${gameId}/join`, {
     method: "POST",
@@ -157,38 +200,9 @@ exports.handler = async (event) => {
 
   if (!joinResp.ok) {
     const text = await joinResp.text();
+    roomClient.stop();
     throw new Error(`Boardgame server responded ${joinResp.status} ${joinResp.statusText}: ${text}`);
   }
-
-  const clientToken = jwt.sign({
-    gameId: room.roomGameId,
-    playerId: 'System',
-    purpose: 'gameserver-app'
-  }, jwtSecret, { expiresIn: '30d' });
-
-  let client
-  const clientInitializationPromise = new Promise(resolve => {
-    client = Client({
-      game: RoomGame,
-      multiplayer: SocketIO({ 
-        server: BOARDGAME_SERVER_URL,
-        socketOpts: {
-          transports: ['websocket', 'polling']
-        }
-      }),
-      matchID: room.roomGameId,
-      playerID: '0',
-      credentials: clientToken,
-    })
-
-    client.start();
-
-    client.subscribe((state) => {
-      if (state !== null) {
-        resolve()
-      }
-    })
-  })
 
   // Update room with game info
   await dynamoDb.send(new UpdateCommand({
@@ -213,11 +227,9 @@ exports.handler = async (event) => {
     ConditionExpression: "attribute_exists(roomCode) AND attribute_not_exists(gameId)"
   }));
 
-  await clientInitializationPromise
+  roomClient.moves.gameCreated(gameId);
 
-  client.moves.gameCreated(gameId); // ?? Add this
-
-  client.stop();
+  roomClient.stop();
 
   return {
     gameId,
