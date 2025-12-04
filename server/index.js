@@ -127,10 +127,14 @@ server.app.use(async (ctx, next) => {
     if (!server.games) server.games = [];
     if (!server.games.find(g => g.name === nameOrRulesHash)) {
       const gameRules = parsedBody?.gameRules;
+      try {
       const newGameDef = gameFactory(JSON.parse(gameRules), nameOrRulesHash);
       const processedGame = ProcessGameConfig(newGameDef);
       server.games.push(processedGame);
       server.transport.addGameSocketListeners(server.app, processedGame);
+      } catch (e) {
+        console.log('parsedBody', parsedBody)
+      }
     }
     
     // Recreate the stream with headers preserved
