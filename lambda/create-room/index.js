@@ -11,7 +11,7 @@ const ssmClient = new SSMClient({});
 const MAX_SESSIONS_PER_USER = 1
 const MAX_SESSIONS_ERROR_MESSAGE = 'You have reached the maximum number of rooms allowed.'
 const MAX_SESSIONS_ERROR_NAME = 'MAX_SESSIONS_ERROR'
-const MAX_USERS_IN_LOBBY = 32
+const MAX_USERS_IN_LOBBY = 2
 const BOARDGAME_SERVER_URL = 'https://gameserver.measuringcontest.com';
 
 // Cache the JWT secret to avoid repeated SSM calls
