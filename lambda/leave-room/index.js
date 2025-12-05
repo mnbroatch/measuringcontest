@@ -51,8 +51,13 @@ const RoomGame = {
     },
     kick: ({G, playerID}, targetPlayerID) => {
       console.error('kicking', targetPlayerID)
+      console.error('playerID', playerID)
+      console.error('typeof playerID', typeof playerID)
       if (playerID === '0' && targetPlayerID !== '1') {
         delete G.players[targetPlayerID];
+        console.error('typeof targetPlayerID', typeof targetPlayerID)
+        console.log('asdasdasd')
+        console.error('JSON.stringify(G.players)', JSON.stringify(G.players))
       }
     },
     setGameMeta: ({G, playerID}, { gameRules, gameName }) => {
