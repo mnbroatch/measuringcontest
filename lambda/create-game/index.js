@@ -53,6 +53,12 @@ const RoomGame = {
         G.status = 'started';
       }
     },
+    gameDeleted: ({G, playerID}) => {
+      if (playerID === '0') {
+        delete G.gameId;
+        G.status = 'waiting';
+      }
+    },
   },
 };
 

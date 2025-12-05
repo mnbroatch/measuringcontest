@@ -27,8 +27,13 @@ const RoomGame = {
       }
     },
     leave: ({G, playerID}) => {
-      if (playerID !== '1' && G.status === 'waiting') {
+      if (playerID !== '1') {
         delete G.players[playerID]
+      }
+    },
+    kick: ({G, playerID}, targetPlayerID) => {
+      if (playerID === '0' && targetPlayerID !== '1') {
+        delete G.players[targetPlayerID];
       }
     },
     setGameMeta: ({G, playerID}, { gameRules, gameName }) => {

@@ -66,6 +66,12 @@ const RoomGame = {
         G.status = 'started';
       }
     },
+    gameDeleted: ({G, playerID}) => {
+      if (playerID === '0') {
+        delete G.gameId;
+        G.status = 'waiting';
+      }
+    },
   },
 };
 
@@ -125,51 +131,21 @@ exports.handler = async (event) => {
 
     roomClient.start();
 
-    // Wait for initial connection and state
-    let initialState;
+    // Wait for connection
     await new Promise((resolve, reject) => {
       roomClient.subscribe((state) => {
         if (state !== null) {
-          initialState = state;
           resolve();
         }
       });
       setTimeout(() => reject(new Error('Timeout connecting to RoomGame')), 10000);
     });
 
-    console.error('Initial state players:', JSON.stringify(initialState.G.players));
-    console.error('About to kick player:', boardgamePlayerID);
-    
-    // Now set up subscription to wait for the kick to take effect
-    const kickPromise = new Promise((resolve) => {
-      let updateCount = 0;
-      const unsubscribe = roomClient.subscribe((state) => {
-        if (state) {
-          updateCount++;
-          console.error(`State update #${updateCount}, players:`, JSON.stringify(state.G.players));
-          
-          if (!state.G.players[boardgamePlayerID]) {
-            console.error('Player successfully removed from state!');
-            unsubscribe();
-            resolve(true);
-          }
-        }
-      });
-      
-      // Timeout after 5 seconds
-      setTimeout(() => {
-        console.error('Timeout waiting for kick to take effect');
-        unsubscribe();
-        resolve(false);
-      }, 5000);
-    });
-
-    // Execute the kick move
-    console.error('Executing kick move...');
+    // Kick the player from RoomGame state
     roomClient.moves.kick(boardgamePlayerID);
     
-    const kickSucceeded = await kickPromise;
-    console.error('Kick result:', kickSucceeded);
+    // Wait for the move to propagate
+    await new Promise(resolve => setTimeout(resolve, 500));
     
   } catch (error) {
     console.error("Error kicking from RoomGame:", error);
@@ -206,7 +182,6 @@ exports.handler = async (event) => {
     }
   } catch (e) {
     console.error("Error calling leave endpoint:", e);
-    // Continue to remove from DynamoDB anyway
   }
   
   // Remove player from DynamoDB
