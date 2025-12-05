@@ -166,6 +166,7 @@ exports.handler = async (event) => {
     throw new Error("Game creator must be in game");
   }
 
+  console.log('typeof body.gameRules', typeof body.gameRules)
   const rulesHash = crypto.createHash('sha256').update(stableHash(body.gameRules)).digest('hex');
 
   // Create JWT for server authentication

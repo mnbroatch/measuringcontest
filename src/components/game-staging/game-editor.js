@@ -7,6 +7,7 @@ import connectFour from "../../../server/connect-four.json";
 import reversi from "../../../server/reversi.json";
 import reversi2 from "../../../server/reversi2.json";
 import checkers from "../../../server/checkers.json";
+import Editor from '@monaco-editor/react';
 
 const exampleGames = [
   {
@@ -71,16 +72,19 @@ export default function GameEditor ({ initialGameName, initialGameRules, saveGam
         </button>
       ))}
       <div>
-        <textarea
-          onChange={(e) => {setGameRules(e.target.value)}}
-          value={gameRules}
-          style={{
-            width: '80%',
-            height: '50vh',
+        <Editor
+          height="400px"
+          defaultLanguage="json"
+          defaultValue={gameRules}
+          onChange={setGameRules}
+          theme="vs-dark"
+          options={{
+            minimap: { enabled: false },
+            fontSize: 14,
+            formatOnPaste: true,
+            formatOnType: true,
           }}
-        >
-        </textarea>
-
+        />
         <div>
           <label>
             Game Name:
