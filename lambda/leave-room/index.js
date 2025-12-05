@@ -50,6 +50,7 @@ const RoomGame = {
       }
     },
     kick: ({G, playerID}, targetPlayerID) => {
+      console.error('kicking', targetPlayerID)
       if (playerID === '0' && targetPlayerID !== '1') {
         delete G.players[targetPlayerID];
       }
@@ -135,6 +136,7 @@ exports.handler = async (event) => {
       setTimeout(() => reject(new Error('Timeout connecting to RoomGame')), 10000);
     });
 
+    console.error('123123kicking', boardgamePlayerID)
     // Kick the player from RoomGame state
     roomClient.moves.kick(boardgamePlayerID);
     
