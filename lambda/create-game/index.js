@@ -36,6 +36,11 @@ const RoomGame = {
         delete G.players[playerID]
       }
     },
+    kick: ({G, playerID}, targetPlayerID) => {
+      if (playerID === '0' && targetPlayerID !== '1') {
+        delete G.players[targetPlayerID];
+      }
+    },
     setGameMeta: ({G, playerID}, { gameRules, gameName }) => {
       if (playerID === '1') {
         G.gameRules = gameRules

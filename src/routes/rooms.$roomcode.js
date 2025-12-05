@@ -31,7 +31,8 @@ export default function RoomPage () {
   const gameRules = roomConnection.state?.G.gameRules
   const gameName = roomConnection.state?.G.gameName
   const gameId = roomConnection.state?.G.gameId
-  const iAmInGame = players && roomConnection.client?.playerID in players
+  const iAmInStagedGame = players && roomConnection.client?.playerID in players
+  const iAmInGame = room.data.players && userId in room.data.players
 
   const [name, setName] = useState(players?.[playerID]?.name)
   const createGameMutation = useCreateGameMutation(roomCode)
@@ -63,7 +64,7 @@ export default function RoomPage () {
               roomConnection.client.moves.join(name)
             }}
           >
-            { iAmInGame ? 'Change name to:' : 'Join Game as:' }
+            { iAmInStagedGame ? 'Change name to:' : 'Join Game as:' }
             <input
               onClick={(e) => {e.stopPropagation()}}
               onChange={(e) => {

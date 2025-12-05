@@ -207,7 +207,8 @@ function RoomPage() {
   var gameRules = (_roomConnection$state3 = roomConnection.state) === null || _roomConnection$state3 === void 0 ? void 0 : _roomConnection$state3.G.gameRules;
   var gameName = (_roomConnection$state4 = roomConnection.state) === null || _roomConnection$state4 === void 0 ? void 0 : _roomConnection$state4.G.gameName;
   var gameId = (_roomConnection$state5 = roomConnection.state) === null || _roomConnection$state5 === void 0 ? void 0 : _roomConnection$state5.G.gameId;
-  var iAmInGame = players && ((_roomConnection$clien2 = roomConnection.client) === null || _roomConnection$clien2 === void 0 ? void 0 : _roomConnection$clien2.playerID) in players;
+  var iAmInStagedGame = players && ((_roomConnection$clien2 = roomConnection.client) === null || _roomConnection$clien2 === void 0 ? void 0 : _roomConnection$clien2.playerID) in players;
+  var iAmInGame = room.data.players && userId in room.data.players;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(players === null || players === void 0 || (_players$playerID = players[playerID]) === null || _players$playerID === void 0 ? void 0 : _players$playerID.name),
     _useState2 = _slicedToArray(_useState, 2),
     name = _useState2[0],
@@ -240,7 +241,7 @@ function RoomPage() {
     onClick: function onClick() {
       roomConnection.client.moves.join(name);
     }
-  }, iAmInGame ? 'Change name to:' : 'Join Game as:', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+  }, iAmInStagedGame ? 'Change name to:' : 'Join Game as:', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
     onClick: function onClick(e) {
       e.stopPropagation();
     },
@@ -34887,11 +34888,6 @@ parser.functions.sum = function (array) {
 };
 function resolveExpression(bgioArguments, rule, context) {
   var args = (0,_utils_resolve_properties_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)(bgioArguments, rule.arguments, context);
-  if (rule.expression === "(player == '0' and destinationCoordinates[1] == 0) or (player == '1' and destinationCoordinates[1] == 7)") {
-    console.log('context', context);
-    console.log('rule', rule);
-    console.log('args', args);
-  }
   return parser.evaluate(rule.expression, args);
 }
 
