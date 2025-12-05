@@ -166,8 +166,15 @@ exports.handler = async (event) => {
     throw new Error("Game creator must be in game");
   }
 
-  console.log('typeof body.gameRules', typeof body.gameRules)
-  const rulesHash = crypto.createHash('sha256').update(stableHash(body.gameRules)).digest('hex');
+  let rulesObject
+  try {
+    rulesObject = JSON.parse(body.gameRules)
+    validateRulesObject(rulesObject)
+  } catch (e) {
+    throw new Error('Invalid rules object: ' + e.message)
+  }
+
+  const rulesHash = crypto.createHash('sha256').update(stableHash(rulesObject)).digest('hex');
 
   // Create JWT for server authentication
   const serverToken = jwt.sign({ purpose: 'gameserver-api' }, jwtSecret, { expiresIn: '1h' });
@@ -247,3 +254,7 @@ exports.handler = async (event) => {
     gameId,
   };
 };
+
+function validateRulesObject (rulesObject) {
+  return true
+}
