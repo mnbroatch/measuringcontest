@@ -142,11 +142,28 @@ exports.handler = async (event) => {
     });
 
     console.error('123123kicking', boardgamePlayerID)
-    // Kick the player from RoomGame state
-    roomClient.moves.kick(boardgamePlayerID);
     
-    // Give the move time to propagate
-    await new Promise(resolve => setTimeout(resolve, 100));
+    // Kick the player from RoomGame state and wait for confirmation
+    const kickPromise = new Promise((resolve) => {
+      let hasUpdated = false;
+      const unsubscribe = roomClient.subscribe((state) => {
+        if (state && !hasUpdated && !state.G.players[boardgamePlayerID]) {
+          hasUpdated = true;
+          unsubscribe();
+          resolve();
+        }
+      });
+      
+      // Timeout after 3 seconds
+      setTimeout(() => {
+        unsubscribe();
+        console.error('kick timed out')
+        resolve();
+      }, 3000);
+    });
+
+    roomClient.moves.kick(boardgamePlayerID);
+    await kickPromise;
     
   } catch (error) {
     console.error("Error kicking from RoomGame:", error);
