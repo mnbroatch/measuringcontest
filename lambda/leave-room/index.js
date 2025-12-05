@@ -3,6 +3,7 @@ const { DynamoDBDocumentClient, GetCommand, UpdateCommand } = require("@aws-sdk/
 const { SSMClient, GetParameterCommand } = require("@aws-sdk/client-ssm");
 const { Client } = require('boardgame.io/client');
 const { SocketIO } = require('boardgame.io/multiplayer');
+const { ActivePlayers } = require('boardgame.io/core')
 const jwt = require('jsonwebtoken');
 
 const client = new DynamoDBClient({});
