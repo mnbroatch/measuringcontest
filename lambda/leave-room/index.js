@@ -50,14 +50,8 @@ const RoomGame = {
       }
     },
     kick: ({G, playerID}, targetPlayerID) => {
-      console.error('kicking', targetPlayerID)
-      console.error('playerID', playerID)
-      console.error('typeof playerID', typeof playerID)
       if (playerID === '0' && targetPlayerID !== '1') {
         delete G.players[targetPlayerID];
-        console.error('typeof targetPlayerID', typeof targetPlayerID)
-        console.log('asdasdasd')
-        console.error('JSON.stringify(G.players)', JSON.stringify(G.players))
       }
     },
     setGameMeta: ({G, playerID}, { gameRules, gameName }) => {
@@ -131,39 +125,51 @@ exports.handler = async (event) => {
 
     roomClient.start();
 
-    // Wait for connection
+    // Wait for initial connection and state
+    let initialState;
     await new Promise((resolve, reject) => {
       roomClient.subscribe((state) => {
         if (state !== null) {
+          initialState = state;
           resolve();
         }
       });
       setTimeout(() => reject(new Error('Timeout connecting to RoomGame')), 10000);
     });
 
-    console.error('123123kicking', boardgamePlayerID)
+    console.error('Initial state players:', JSON.stringify(initialState.G.players));
+    console.error('About to kick player:', boardgamePlayerID);
     
-    // Kick the player from RoomGame state and wait for confirmation
+    // Now set up subscription to wait for the kick to take effect
     const kickPromise = new Promise((resolve) => {
-      let hasUpdated = false;
+      let updateCount = 0;
       const unsubscribe = roomClient.subscribe((state) => {
-        if (state && !hasUpdated && !state.G.players[boardgamePlayerID]) {
-          hasUpdated = true;
-          unsubscribe();
-          resolve();
+        if (state) {
+          updateCount++;
+          console.error(`State update #${updateCount}, players:`, JSON.stringify(state.G.players));
+          
+          if (!state.G.players[boardgamePlayerID]) {
+            console.error('Player successfully removed from state!');
+            unsubscribe();
+            resolve(true);
+          }
         }
       });
       
-      // Timeout after 3 seconds
+      // Timeout after 5 seconds
       setTimeout(() => {
+        console.error('Timeout waiting for kick to take effect');
         unsubscribe();
-        console.error('kick timed out')
-        resolve();
-      }, 3000);
+        resolve(false);
+      }, 5000);
     });
 
+    // Execute the kick move
+    console.error('Executing kick move...');
     roomClient.moves.kick(boardgamePlayerID);
-    await kickPromise;
+    
+    const kickSucceeded = await kickPromise;
+    console.error('Kick result:', kickSucceeded);
     
   } catch (error) {
     console.error("Error kicking from RoomGame:", error);
