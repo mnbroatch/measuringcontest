@@ -27534,7 +27534,7 @@ var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__/* .createRoot
         while (1) switch (_context.n) {
           case 0:
             location = _ref.location;
-            publicPaths = ['/login', '/editor'];
+            publicPaths = ['/home', '/editor'];
             isPublicRoute = publicPaths.some(function (path) {
               return location.pathname === path;
             });
@@ -27551,7 +27551,7 @@ var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__/* .createRoot
               break;
             }
             throw (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_3__/* .redirect */ .V2)({
-              to: '/login',
+              to: '/home',
               search: {
                 redirect: location.href
               }
@@ -37790,28 +37790,6 @@ function expandGameRules(gameRules) {
 
 /***/ }),
 
-/***/ 43759:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   q: () => (/* binding */ Route)
-/* harmony export */ });
-/* unused harmony export default */
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
-/* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(82820);
-console.warn("[tanstack-router] These exports from \"/home/matt/Programming/measuringcontest/src/routes/login.js\" will not be code-split and will increase your bundle size:\n- Login\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
-
-
-function Login() {
-  return 'Log In To Play!';
-}
-var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__/* .createFileRoute */ .WK)('/login')({
-  component: Login
-});
-
-/***/ }),
-
 /***/ 43761:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -40864,6 +40842,28 @@ module.exports = isKeyable;
 
 /***/ }),
 
+/***/ 51919:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   q: () => (/* binding */ Route)
+/* harmony export */ });
+/* unused harmony export default */
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
+/* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(82820);
+console.warn("[tanstack-router] These exports from \"/home/matt/Programming/measuringcontest/src/routes/home.js\" will not be code-split and will increase your bundle size:\n- Login\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
+
+
+function Login() {
+  return 'Log In To Play!';
+}
+var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__/* .createFileRoute */ .WK)('/home')({
+  component: Login
+});
+
+/***/ }),
+
 /***/ 52189:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -41855,20 +41855,22 @@ function Header(_ref) {
   var auth = _ref.auth;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "header"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_home_button_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_home_button_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "header__construction-banner"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "header__construction-banner__label"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(lucide_react__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
     size: "1.1em"
-  }), " pre-alpha"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__/* .Link */ .N_, {
+  }), " pre-alpha")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__/* .Link */ .N_, {
     style: {
       paddingRight: '5px'
     },
     to: "/editor"
   }, "editor"), !auth.loading && !auth.idToken && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "header__login-button",
     onClick: auth.login
   }, "Login with Google"), !auth.loading && !!auth.idToken && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "header__logout-button",
     onClick: auth.logout
   }, "Logout")));
 }
@@ -43438,7 +43440,7 @@ function batch(fn) {
 /* harmony export */   g: () => (/* binding */ routeTree)
 /* harmony export */ });
 /* harmony import */ var _routes_root__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(24786);
-/* harmony import */ var _routes_login__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(43759);
+/* harmony import */ var _routes_home__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(51919);
 /* harmony import */ var _routes_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(19737);
 /* harmony import */ var _routes_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(41930);
 /* harmony import */ var _routes_rooms_$roomcode__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(246);
@@ -43457,9 +43459,9 @@ function batch(fn) {
 
 
 
-var LoginRoute = _routes_login__WEBPACK_IMPORTED_MODULE_1__/* .Route */ .q.update({
-  id: '/login',
-  path: '/login',
+var HomeRoute = _routes_home__WEBPACK_IMPORTED_MODULE_1__/* .Route */ .q.update({
+  id: '/home',
+  path: '/home',
   getParentRoute: function getParentRoute() {
     return _routes_root__WEBPACK_IMPORTED_MODULE_0__/* .Route */ .q;
   }
@@ -43488,7 +43490,7 @@ var RoomsRoomcodeRoute = _routes_rooms_$roomcode__WEBPACK_IMPORTED_MODULE_4__/* 
 var rootRouteChildren = {
   IndexRoute: IndexRoute,
   EditorRoute: EditorRoute,
-  LoginRoute: LoginRoute,
+  HomeRoute: HomeRoute,
   RoomsRoomcodeRoute: RoomsRoomcodeRoute
 };
 var routeTree = _routes_root__WEBPACK_IMPORTED_MODULE_0__/* .Route */ .q._addFileChildren(rootRouteChildren);
@@ -54193,7 +54195,7 @@ function simulateMove(bgioArguments, payload, context) {
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Paytone+One&display=swap);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `:root{--bright-sky: #01baefff;--tropical-teal: #0cbabaff;--dark-amethyst: #380036ff;--midnight-violet: #26081cff;--coffee-bean: #150811ff;--dark-orange: #F58F29}body{margin:0;font-family:"Paytone One",sans-serif;background-color:var(--bright-sky)}.content{display:block;height:100vh;padding:.5em}.header{padding:.5em;position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;background-color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.15)}.header__home-button{font-size:1.2em;text-decoration:none;text-transform:uppercase;color:var(--bright-sky)}.header__construction-banner{font-size:.8em;color:var(--dark-orange);padding:.3em;border:.3em dashed var(--dark-orange);border-radius:1em}.header__construction-banner__label{position:relative;bottom:.1em}.header__construction-banner .lucide-construction{vertical-align:bottom}.header__home-button .lucide-cog{margin-right:-0.05em;margin-left:-0.05em;position:relative;top:.15em}.shared-board>.space{margin:20px}.personal-board{margin:20px}.grid{box-sizing:border-box;background-color:#333;width:500px}.grid__cell{background-color:#fff;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:12px;color:#666;position:relative}.grid__cell .space{height:100%;width:100%}.roomGame{border:1px solid gray;border-radius:8px}.space{display:inline-block;border:1px solid gray;box-sizing:border-box;min-width:10px;min-height:10px}.space--clickable{background-color:rgba(144,238,144,.4)}.space--targeted{background-color:gray}.space__entity-grid{box-sizing:border-box}.entity{height:100%;width:100%;box-sizing:border-box;border:1px solid #000}.entity.player-0{background-color:pink}.entity--clickable{background-color:rgba(144,238,144,.4)}.entity.player-0.entity--clickable{background-color:#f0e0d8}.entity.player-1{background-color:#add8e6}.entity.player-1.entity--clickable{background-color:#afeeee}.debug-panel .pane{width:420px !important}`, ""]);
+___CSS_LOADER_EXPORT___.push([module.id, `:root{--bright-sky: #01baefff;--tropical-teal: #0cbabaff;--dark-amethyst: #380036ff;--midnight-violet: #26081cff;--coffee-bean: #150811ff;--dark-orange: #F58F29}body{margin:0;font-family:"Paytone One",sans-serif;background-color:var(--bright-sky)}.content{display:block;height:100vh;padding:.5em}.header{padding:.5em;position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;background-color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.15)}.header__home-button{font-size:1.2em;text-decoration:none;text-transform:uppercase;color:var(--bright-sky)}.header__construction-banner{font-size:.8em;color:var(--dark-orange);padding:0em .6em;border:.2em dashed var(--dark-orange);border-radius:1em}.header__construction-banner__label{position:relative;bottom:.1em}.header__construction-banner .lucide-construction{vertical-align:bottom}.header__home-button .lucide-cog{margin-right:-0.05em;margin-left:-0.05em;position:relative;top:.15em}.header__login-button,.header__logout-button{background-color:var(--dark-amethyst);color:#fff;font-family:inherit;border:none;padding:.3em .5em;cursor:pointer;border-radius:.2em}.shared-board>.space{margin:20px}.personal-board{margin:20px}.grid{box-sizing:border-box;background-color:#333;width:500px}.grid__cell{background-color:#fff;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:12px;color:#666;position:relative}.grid__cell .space{height:100%;width:100%}.roomGame{border:1px solid gray;border-radius:8px}.space{display:inline-block;border:1px solid gray;box-sizing:border-box;min-width:10px;min-height:10px}.space--clickable{background-color:rgba(144,238,144,.4)}.space--targeted{background-color:gray}.space__entity-grid{box-sizing:border-box}.entity{height:100%;width:100%;box-sizing:border-box;border:1px solid #000}.entity.player-0{background-color:pink}.entity--clickable{background-color:rgba(144,238,144,.4)}.entity.player-0.entity--clickable{background-color:#f0e0d8}.entity.player-1{background-color:#add8e6}.entity.player-1.entity--clickable{background-color:#afeeee}.debug-panel .pane{width:420px !important}`, ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

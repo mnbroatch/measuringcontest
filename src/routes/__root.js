@@ -19,14 +19,14 @@ export default function Root () {
 
 export const Route = createRootRoute({
   beforeLoad: async ({ location }) => {
-    const publicPaths = ['/login', '/editor']
+    const publicPaths = ['/home', '/editor']
     const isPublicRoute = publicPaths.some(path => location.pathname === path)
     
     if (!isPublicRoute) {
       const auth = await useCognitoQuery.preload()
       if (!auth?.idToken) {
         throw redirect({
-          to: '/login',
+          to: '/home',
           search: { redirect: location.href }
         })
       }
