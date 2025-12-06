@@ -4,32 +4,63 @@
   --dark-amethyst: #380036ff;
   --midnight-violet: #26081cff;
   --coffee-bean: #150811ff;
+  --dark-orange: #F58F29;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Paytone+One&display=swap');
 
+body {
+  margin: 0;
+  font-family: "Paytone One", sans-serif;
+  background-color: var(--bright-sky);
+}
+
 .content {
   display: block;
+  height: 100vh;
+  padding: .5em;
 }
 
 .header {
+  padding: .5em;
+  position: sticky;
+  top: 0;
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
 .header__home-button {
+  font-size: 1.2em;
   text-decoration: none;
   text-transform: uppercase;
-  font-size: 20px;
-  font-family: "Paytone One", sans-serif;
-  font-weight: medium;
   color: var(--bright-sky);
 }
 
-.header__home-button .lucide-cog {
-  margin-right: -1px;
-  margin-left: -1px;
+.header__construction-banner {
+  font-size: .8em;
+  color: var(--dark-orange);
+  padding: .3em;
+  border: .3em dashed var(--dark-orange);
+  border-radius: 1em;
+}
+
+.header__construction-banner__label {
   position: relative;
-  top: 3px;
+  bottom: .1em;
+}
+
+.header__construction-banner .lucide-construction {
+  vertical-align: bottom;
+}
+
+.header__home-button .lucide-cog {
+  margin-right: -.05em;
+  margin-left: -.05em;
+  position: relative;
+  top: .15em;
 }
 
 .shared-board>.space {

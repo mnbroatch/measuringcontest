@@ -75,7 +75,7 @@ export default function GameEditor ({ initialGameName, initialGameRules, saveGam
         <Editor
           height="400px"
           defaultLanguage="json"
-          defaultValue={gameRules}
+          value={gameRules}
           onChange={setGameRules}
           theme="vs-dark"
           options={{
