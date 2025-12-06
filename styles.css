@@ -1,5 +1,35 @@
+:root {
+  --bright-sky: #01baefff;
+  --tropical-teal: #0cbabaff;
+  --dark-amethyst: #380036ff;
+  --midnight-violet: #26081cff;
+  --coffee-bean: #150811ff;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Paytone+One&display=swap');
+
 .content {
   display: block;
+}
+
+.header {
+  display: flex;
+}
+
+.header__home-button {
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 20px;
+  font-family: "Paytone One", sans-serif;
+  font-weight: medium;
+  color: var(--bright-sky);
+}
+
+.header__home-button .lucide-cog {
+  margin-right: -1px;
+  margin-left: -1px;
+  position: relative;
+  top: 3px;
 }
 
 .shared-board>.space {

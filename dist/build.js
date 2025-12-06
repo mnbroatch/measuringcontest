@@ -2594,6 +2594,31 @@ function createMoves(moves, game) {
 
 /***/ }),
 
+/***/ 6118:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ HomeButton)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
+/* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(10103);
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(63923);
+
+
+
+function HomeButton() {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__/* .Link */ .N_, {
+    className: "header__home-button",
+    to: "/"
+  }, "B", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(lucide_react__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+    size: "1em",
+    strokeWidth: "3.5"
+  }), "ard Game Engine");
+}
+
+/***/ }),
+
 /***/ 6234:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
@@ -27135,6 +27160,63 @@ module.exports = baseKeysIn;
 
 /***/ }),
 
+/***/ 24372:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ Icon)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
+/* harmony import */ var _defaultAttributes_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(48669);
+/* harmony import */ var _shared_src_utils_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(91475);
+/**
+ * @license lucide-react v0.556.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+
+
+const Icon = (0,react__WEBPACK_IMPORTED_MODULE_0__.forwardRef)(
+  ({
+    color = "currentColor",
+    size = 24,
+    strokeWidth = 2,
+    absoluteStrokeWidth,
+    className = "",
+    children,
+    iconNode,
+    ...rest
+  }, ref) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(
+    "svg",
+    {
+      ref,
+      ..._defaultAttributes_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A,
+      width: size,
+      height: size,
+      stroke: color,
+      strokeWidth: absoluteStrokeWidth ? Number(strokeWidth) * 24 / Number(size) : strokeWidth,
+      className: (0,_shared_src_utils_js__WEBPACK_IMPORTED_MODULE_2__/* .mergeClasses */ .zP)("lucide", className),
+      ...!children && !(0,_shared_src_utils_js__WEBPACK_IMPORTED_MODULE_2__/* .hasA11yProp */ .m$)(rest) && { "aria-hidden": "true" },
+      ...rest
+    },
+    [
+      ...iconNode.map(([tag, attrs]) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(tag, attrs)),
+      ...Array.isArray(children) ? children : [children]
+    ]
+  )
+);
+
+
+//# sourceMappingURL=Icon.js.map
+
+
+/***/ }),
+
 /***/ 24389:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -27418,12 +27500,12 @@ const protocol = 4;
 /* harmony export */ });
 /* unused harmony export default */
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
-/* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(10103);
-/* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(27162);
-/* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(72382);
-/* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(36965);
-/* harmony import */ var _queries_use_cognito_query_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(31384);
-/* harmony import */ var _contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(52904);
+/* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(27162);
+/* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(72382);
+/* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(36965);
+/* harmony import */ var _queries_use_cognito_query_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(31384);
+/* harmony import */ var _contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(52904);
+/* harmony import */ var _components_header_header_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(53871);
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
@@ -27432,29 +27514,16 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 
 
 
+
 function Root() {
-  var auth = (0,_contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_6__/* .useCognitoAuth */ .f)();
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__/* .Link */ .N_, {
-    style: {
-      paddingRight: '5px'
-    },
-    to: "/"
-  }, "home"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__/* .Link */ .N_, {
-    style: {
-      paddingRight: '5px'
-    },
-    to: "/editor"
-  }, "editor"), auth === null || auth === void 0 ? void 0 : auth.userId, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "login-bar"
-  }, !auth.loading && !auth.idToken && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    onClick: auth.login
-  }, "Login with Google"), !auth.loading && !!auth.idToken && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    onClick: auth.logout
-  }, "Logout")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  var auth = (0,_contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_5__/* .useCognitoAuth */ .f)();
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_header_header_js__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    auth: auth
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "content"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__/* .Outlet */ .sv, null)));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__/* .Outlet */ .sv, null)));
 }
-var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_3__/* .createRootRoute */ .gI)({
+var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__/* .createRootRoute */ .gI)({
   beforeLoad: function () {
     var _beforeLoad = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(_ref) {
       var location, publicPaths, isPublicRoute, auth;
@@ -27471,14 +27540,14 @@ var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_3__/* .createRoot
               break;
             }
             _context.n = 1;
-            return _queries_use_cognito_query_js__WEBPACK_IMPORTED_MODULE_5__/* .useCognitoQuery */ .v.preload();
+            return _queries_use_cognito_query_js__WEBPACK_IMPORTED_MODULE_4__/* .useCognitoQuery */ .v.preload();
           case 1:
             auth = _context.v;
             if (auth !== null && auth !== void 0 && auth.idToken) {
               _context.n = 2;
               break;
             }
-            throw (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_4__/* .redirect */ .V2)({
+            throw (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_3__/* .redirect */ .V2)({
               to: '/login',
               search: {
                 redirect: location.href
@@ -39826,6 +39895,38 @@ const version = '6.15.7';
 
 /***/ }),
 
+/***/ 48669:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ defaultAttributes)
+/* harmony export */ });
+/**
+ * @license lucide-react v0.556.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+var defaultAttributes = {
+  xmlns: "http://www.w3.org/2000/svg",
+  width: 24,
+  height: 24,
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 2,
+  strokeLinecap: "round",
+  strokeLinejoin: "round"
+};
+
+
+//# sourceMappingURL=defaultAttributes.js.map
+
+
+/***/ }),
+
 /***/ 48983:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -41729,6 +41830,37 @@ function stringifySearchWith(stringify, parser) {
 
 //# sourceMappingURL=searchParams.js.map
 
+
+/***/ }),
+
+/***/ 53871:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ Header)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
+/* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(10103);
+/* harmony import */ var _home_button_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6118);
+
+
+
+function Header(_ref) {
+  var auth = _ref.auth;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "header"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_home_button_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__/* .Link */ .N_, {
+    style: {
+      paddingRight: '5px'
+    },
+    to: "/editor"
+  }, "editor"), auth === null || auth === void 0 ? void 0 : auth.userId, !auth.loading && !auth.idToken && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    onClick: auth.login
+  }, "Login with Google"), !auth.loading && !!auth.idToken && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    onClick: auth.logout
+  }, "Logout"));
+}
 
 /***/ }),
 
@@ -45996,6 +46128,48 @@ module.exports = initCloneByTag;
 
 /***/ }),
 
+/***/ 63923:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ Cog)
+/* harmony export */ });
+/* unused harmony export __iconNode */
+/* harmony import */ var _createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(68532);
+/**
+ * @license lucide-react v0.556.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const __iconNode = [
+  ["path", { d: "M11 10.27 7 3.34", key: "16pf9h" }],
+  ["path", { d: "m11 13.73-4 6.93", key: "794ttg" }],
+  ["path", { d: "M12 22v-2", key: "1osdcq" }],
+  ["path", { d: "M12 2v2", key: "tus03m" }],
+  ["path", { d: "M14 12h8", key: "4f43i9" }],
+  ["path", { d: "m17 20.66-1-1.73", key: "eq3orb" }],
+  ["path", { d: "m17 3.34-1 1.73", key: "2wel8s" }],
+  ["path", { d: "M2 12h2", key: "1t8f8n" }],
+  ["path", { d: "m20.66 17-1.73-1", key: "sg0v6f" }],
+  ["path", { d: "m20.66 7-1.73 1", key: "1ow05n" }],
+  ["path", { d: "m3.34 17 1.73-1", key: "nuk764" }],
+  ["path", { d: "m3.34 7 1.73 1", key: "1ulond" }],
+  ["circle", { cx: "12", cy: "12", r: "2", key: "1c9p78" }],
+  ["circle", { cx: "12", cy: "12", r: "8", key: "46899m" }]
+];
+const Cog = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)("cog", __iconNode);
+
+
+//# sourceMappingURL=cog.js.map
+
+
+/***/ }),
+
 /***/ 63968:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -48642,6 +48816,50 @@ function baseGetAllKeys(object, keysFunc, symbolsFunc) {
 }
 
 module.exports = baseGetAllKeys;
+
+
+/***/ }),
+
+/***/ 68532:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ createLucideIcon)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
+/* harmony import */ var _shared_src_utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(91475);
+/* harmony import */ var _Icon_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(24372);
+/**
+ * @license lucide-react v0.556.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+
+
+const createLucideIcon = (iconName, iconNode) => {
+  const Component = (0,react__WEBPACK_IMPORTED_MODULE_0__.forwardRef)(
+    ({ className, ...props }, ref) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Icon_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+      ref,
+      iconNode,
+      className: (0,_shared_src_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .mergeClasses */ .zP)(
+        `lucide-${(0,_shared_src_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .toKebabCase */ .fX)((0,_shared_src_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .toPascalCase */ .MX)(iconName))}`,
+        `lucide-${iconName}`,
+        className
+      ),
+      ...props
+    })
+  );
+  Component.displayName = (0,_shared_src_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .toPascalCase */ .MX)(iconName);
+  return Component;
+};
+
+
+//# sourceMappingURL=createLucideIcon.js.map
 
 
 /***/ }),
@@ -53926,8 +54144,9 @@ function simulateMove(bgioArguments, payload, context) {
 
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Paytone+One&display=swap);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `.content{display:block}.shared-board>.space{margin:20px}.personal-board{margin:20px}.grid{box-sizing:border-box;background-color:#333;width:500px}.grid__cell{background-color:#fff;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:12px;color:#666;position:relative}.grid__cell .space{height:100%;width:100%}.roomGame{border:1px solid gray;border-radius:8px}.space{display:inline-block;border:1px solid gray;box-sizing:border-box;min-width:10px;min-height:10px}.space--clickable{background-color:rgba(144,238,144,.4)}.space--targeted{background-color:gray}.space__entity-grid{box-sizing:border-box}.entity{height:100%;width:100%;box-sizing:border-box;border:1px solid #000}.entity.player-0{background-color:pink}.entity--clickable{background-color:rgba(144,238,144,.4)}.entity.player-0.entity--clickable{background-color:#f0e0d8}.entity.player-1{background-color:#add8e6}.entity.player-1.entity--clickable{background-color:#afeeee}.debug-panel .pane{width:420px !important}`, ""]);
+___CSS_LOADER_EXPORT___.push([module.id, `:root{--bright-sky: #01baefff;--tropical-teal: #0cbabaff;--dark-amethyst: #380036ff;--midnight-violet: #26081cff;--coffee-bean: #150811ff}.content{display:block}.header{display:flex}.header__home-button{text-decoration:none;text-transform:uppercase;font-size:20px;font-family:"Paytone One",sans-serif;font-weight:medium;color:var(--bright-sky)}.header__home-button .lucide-cog{margin-right:-1px;margin-left:-1px;position:relative;top:3px}.shared-board>.space{margin:20px}.personal-board{margin:20px}.grid{box-sizing:border-box;background-color:#333;width:500px}.grid__cell{background-color:#fff;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:12px;color:#666;position:relative}.grid__cell .space{height:100%;width:100%}.roomGame{border:1px solid gray;border-radius:8px}.space{display:inline-block;border:1px solid gray;box-sizing:border-box;min-width:10px;min-height:10px}.space--clickable{background-color:rgba(144,238,144,.4)}.space--targeted{background-color:gray}.space__entity-grid{box-sizing:border-box}.entity{height:100%;width:100%;box-sizing:border-box;border:1px solid #000}.entity.player-0{background-color:pink}.entity--clickable{background-color:rgba(144,238,144,.4)}.entity.player-0.entity--clickable{background-color:#f0e0d8}.entity.player-1{background-color:#add8e6}.entity.player-1.entity--clickable{background-color:#afeeee}.debug-panel .pane{width:420px !important}`, ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -62850,6 +63069,50 @@ function webDetect() {
 
 
 //# sourceMappingURL=Web.mjs.map
+
+
+/***/ }),
+
+/***/ 91475:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   MX: () => (/* binding */ toPascalCase),
+/* harmony export */   fX: () => (/* binding */ toKebabCase),
+/* harmony export */   m$: () => (/* binding */ hasA11yProp),
+/* harmony export */   zP: () => (/* binding */ mergeClasses)
+/* harmony export */ });
+/* unused harmony export toCamelCase */
+/**
+ * @license lucide-react v0.556.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+const toKebabCase = (string) => string.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+const toCamelCase = (string) => string.replace(
+  /^([A-Z])|[\s-_]+(\w)/g,
+  (match, p1, p2) => p2 ? p2.toUpperCase() : p1.toLowerCase()
+);
+const toPascalCase = (string) => {
+  const camelCase = toCamelCase(string);
+  return camelCase.charAt(0).toUpperCase() + camelCase.slice(1);
+};
+const mergeClasses = (...classes) => classes.filter((className, index, array) => {
+  return Boolean(className) && className.trim() !== "" && array.indexOf(className) === index;
+}).join(" ").trim();
+const hasA11yProp = (props) => {
+  for (const prop in props) {
+    if (prop.startsWith("aria-") || prop === "role" || prop === "title") {
+      return true;
+    }
+  }
+};
+
+
+//# sourceMappingURL=utils.js.map
 
 
 /***/ }),
