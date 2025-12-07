@@ -2617,7 +2617,9 @@ function HomeButton() {
   }, "B", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(lucide_react__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
     size: "1em",
     strokeWidth: "3.5"
-  }), "ard Game Engine"));
+  }), "ard Game"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    "aria-hidden": "true"
+  }, "Engine"));
 }
 
 /***/ }),
@@ -40858,7 +40860,15 @@ console.warn("[tanstack-router] These exports from \"/home/matt/Programming/meas
 function Home() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "home"
-  });
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "home__splash"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
+    className: "home__tagline"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Play,"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Tweak,"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Repeat.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h5", {
+    className: "home__description"
+  }, "A platform for prototyping board game rules design")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "home__explanation"
+  }, "Define a game in BAGEL (Board game Automation Game Engine Language) that describes rules, pieces, and interactions. Create a lobby in seconds and play with friends using a room code!"));
 }
 var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__/* .createFileRoute */ .WK)('/home')({
   component: Home
@@ -41846,9 +41856,7 @@ function stringifySearchWith(stringify, parser) {
 /* harmony export */   A: () => (/* binding */ Header)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
-/* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(10103);
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(65191);
-/* harmony import */ var _home_button_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6118);
+/* harmony import */ var _home_button_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6118);
 
 
 
@@ -41857,24 +41865,13 @@ function Header(_ref) {
   var auth = _ref.auth;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "header"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_home_button_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "header__construction-banner"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "header__construction-banner__label"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(lucide_react__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
-    size: "1.1em"
-  }), " pre-alpha")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__/* .Link */ .N_, {
-    style: {
-      paddingRight: '5px'
-    },
-    to: "/editor"
-  }, "editor"), !auth.loading && !auth.idToken && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_home_button_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A, null), !auth.loading && !auth.idToken && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "header__login-button",
     onClick: auth.login
-  }, "Login with Google"), !auth.loading && !!auth.idToken && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  }, "Login"), !auth.loading && !!auth.idToken && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "header__logout-button",
     onClick: auth.logout
-  }, "Logout")));
+  }, "Logout"));
 }
 
 /***/ }),
@@ -46490,42 +46487,6 @@ const listenForOAuthFlowCancellation = (store) => {
 
 
 //# sourceMappingURL=cancelOAuthFlow.mjs.map
-
-
-/***/ }),
-
-/***/ 65191:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   A: () => (/* binding */ Construction)
-/* harmony export */ });
-/* unused harmony export __iconNode */
-/* harmony import */ var _createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(68532);
-/**
- * @license lucide-react v0.556.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-
-
-
-const __iconNode = [
-  ["rect", { x: "2", y: "6", width: "20", height: "8", rx: "1", key: "1estib" }],
-  ["path", { d: "M17 14v7", key: "7m2elx" }],
-  ["path", { d: "M7 14v7", key: "1cm7wv" }],
-  ["path", { d: "M17 3v3", key: "1v4jwn" }],
-  ["path", { d: "M7 3v3", key: "7o6guu" }],
-  ["path", { d: "M10 14 2.3 6.3", key: "1023jk" }],
-  ["path", { d: "m14 6 7.7 7.7", key: "1s8pl2" }],
-  ["path", { d: "m8 6 8 8", key: "hl96qh" }]
-];
-const Construction = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)("construction", __iconNode);
-
-
-//# sourceMappingURL=construction.js.map
 
 
 /***/ }),
@@ -54196,8 +54157,9 @@ function simulateMove(bgioArguments, payload, context) {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Paytone+One&display=swap);"]);
+___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `:root{--bright-sky: #01baefff;--tropical-teal: #0cbabaff;--dark-amethyst: #380036ff;--midnight-violet: #26081cff;--coffee-bean: #150811ff;--dark-orange: #F58F29}html{height:100%}body{margin:0;font-family:"Paytone One",sans-serif;height:100%}#root{display:flex;flex-direction:column;height:100%}.content{display:block;padding:.5em;flex:1;background-color:var(--bright-sky)}.header{position:relative;padding:.5em;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 6px rgba(0,0,0,.15)}.header__home-button{font-size:1.2em;text-decoration:none;text-transform:uppercase;color:var(--bright-sky)}.header__construction-banner{font-size:.8em;color:var(--dark-orange);padding:0em .6em;border:.2em dashed var(--dark-orange);border-radius:1em}.header__construction-banner__label{position:relative;bottom:.1em}.header__construction-banner .lucide-construction{vertical-align:bottom}.header__home-button .lucide-cog{margin-right:-0.05em;margin-left:-0.05em;position:relative;top:.15em}.header__login-button,.header__logout-button{background-color:var(--dark-amethyst);color:#fff;font-family:inherit;border:none;padding:.3em .5em;cursor:pointer;border-radius:.2em}.shared-board>.space{margin:20px}.personal-board{margin:20px}.grid{box-sizing:border-box;background-color:#333;width:500px}.grid__cell{background-color:#fff;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:12px;color:#666;position:relative}.grid__cell .space{height:100%;width:100%}.roomGame{border:1px solid gray;border-radius:8px}.space{display:inline-block;border:1px solid gray;box-sizing:border-box;min-width:10px;min-height:10px}.space--clickable{background-color:rgba(144,238,144,.4)}.space--targeted{background-color:gray}.space__entity-grid{box-sizing:border-box}.entity{height:100%;width:100%;box-sizing:border-box;border:1px solid #000}.entity.player-0{background-color:pink}.entity--clickable{background-color:rgba(144,238,144,.4)}.entity.player-0.entity--clickable{background-color:#f0e0d8}.entity.player-1{background-color:#add8e6}.entity.player-1.entity--clickable{background-color:#afeeee}.debug-panel .pane{width:420px !important}`, ""]);
+___CSS_LOADER_EXPORT___.push([module.id, `:root{--bright-sky: #01baefff;--tropical-teal: #0cbabaff;--dark-amethyst: #380036ff;--midnight-violet: #26081cff;--coffee-bean: #150811ff;--dark-orange: #F58F29}html{height:100%}body{margin:0;font-family:"Paytone One",sans-serif;height:100%}#root{display:flex;flex-direction:column;height:100%}.content{display:block;flex:1;background-color:var(--bright-sky)}.header{position:relative;padding:.5em;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 6px rgba(0,0,0,.15)}.home__splash{color:#fff;display:flex;align-items:center;justify-content:space-evenly;background:linear-gradient(to right, var(--bright-sky) 0%, var(--bright-sky) 20%, var(--dark-amethyst) 100%)}.home__tagline{padding-left:.7em}.home__description{padding:0 .7em;font-family:"Nunito",sans-serif}.home__explanation{margin-top:2em;padding:.7em;border-radius:1em;color:var(--dark-amethyst);font-family:"Nunito",sans-serif;font-weight:700;font-size:.8em}.header__home-button{font-size:1.2em;text-decoration:none;text-transform:uppercase;color:var(--bright-sky);text-align:center;line-height:1em}.header__home-button .lucide-cog{margin-right:-0.05em;margin-left:-0.05em;position:relative;top:.15em}.header__login-button,.header__logout-button{background-color:var(--dark-amethyst);color:#fff;font-family:inherit;border:none;padding:.3em .5em;cursor:pointer;border-radius:.2em}.shared-board>.space{margin:20px}.personal-board{margin:20px}.grid{box-sizing:border-box;background-color:#333;width:500px}.grid__cell{background-color:#fff;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:12px;color:#666;position:relative}.grid__cell .space{height:100%;width:100%}.roomGame{border:1px solid gray;border-radius:8px}.space{display:inline-block;border:1px solid gray;box-sizing:border-box;min-width:10px;min-height:10px}.space--clickable{background-color:rgba(144,238,144,.4)}.space--targeted{background-color:gray}.space__entity-grid{box-sizing:border-box}.entity{height:100%;width:100%;box-sizing:border-box;border:1px solid #000}.entity.player-0{background-color:pink}.entity--clickable{background-color:rgba(144,238,144,.4)}.entity.player-0.entity--clickable{background-color:#f0e0d8}.entity.player-1{background-color:#add8e6}.entity.player-1.entity--clickable{background-color:#afeeee}.debug-panel .pane{width:420px !important}`, ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

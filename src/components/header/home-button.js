@@ -9,8 +9,11 @@ export default function HomeButton () {
       aria-label="Board Game Engine"
     >
       <span aria-hidden="true">
-        B<Cog size="1em" strokeWidth="3.5" />ard Game Engine
+        B<Cog size="1em" strokeWidth="3.5" />ard Game
       </span>
+      <div aria-hidden="true">
+        Engine
+      </div>
     </Link>
   )
 }

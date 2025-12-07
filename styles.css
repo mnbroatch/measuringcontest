@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Paytone+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap');
+
 :root {
   --bright-sky: #01baefff;
   --tropical-teal: #0cbabaff;
@@ -6,8 +9,6 @@
   --coffee-bean: #150811ff;
   --dark-orange: #F58F29;
 }
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Paytone+One&display=swap');
 
 html {
   height: 100%;
@@ -27,7 +28,6 @@ body {
 
 .content {
   display: block;
-  padding: .5em;
   flex: 1;
   background-color: var(--bright-sky);
 }
@@ -41,28 +41,46 @@ body {
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
+.home__splash {
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  background: linear-gradient(
+    to right,
+    var(--bright-sky) 0%,
+    var(--bright-sky) 20%,
+    var(--dark-amethyst) 100%
+  ); 
+}
+
+.home__tagline {
+  padding-left: .7em;
+}
+
+.home__description {
+  padding: 0 .7em;
+  font-family: "Nunito", sans-serif;
+}
+
+.home__explanation {
+  margin-top: 2em;
+  /* background-color: white; */
+  padding: .7em;
+  border-radius: 1em;
+  color: var(--dark-amethyst);
+  font-family: "Nunito", sans-serif;
+  font-weight: 700;
+  font-size: .8em;
+}
+
 .header__home-button {
   font-size: 1.2em;
   text-decoration: none;
   text-transform: uppercase;
   color: var(--bright-sky);
-}
-
-.header__construction-banner {
-  font-size: 0.8em;
-  color: var(--dark-orange);
-  padding: 0em 0.6em;
-  border: 0.2em dashed var(--dark-orange);
-  border-radius: 1em;
-}
-
-.header__construction-banner__label {
-  position: relative;
-  bottom: .1em;
-}
-
-.header__construction-banner .lucide-construction {
-  vertical-align: bottom;
+  text-align: center;
+  line-height: 1em;
 }
 
 .header__home-button .lucide-cog {
