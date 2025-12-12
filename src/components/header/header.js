@@ -1,6 +1,4 @@
 import React from 'react'
-import { Link } from '@tanstack/react-router'
-import { Construction } from 'lucide-react'
 import HomeButton from "./home-button.js"
 
 export default function Header ({ auth }) {

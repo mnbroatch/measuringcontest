@@ -55,7 +55,7 @@ const RoomGame = {
       }
     },
     setGameMeta: ({G, playerID}, { gameRules, gameName }) => {
-      if (playerID === '1') {
+      if ((playerID === '0' || playerID === '1') && G.status === 'waiting') {
         G.gameRules = gameRules
         G.gameName = gameName
       }

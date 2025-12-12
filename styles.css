@@ -43,14 +43,18 @@ body {
 
 .home__splash {
   color: white;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+  gap: 1rem;
   align-items: center;
-  justify-content: space-evenly;
   background: linear-gradient(
     to right,
-    var(--bright-sky) 0%,
-    var(--bright-sky) 20%,
-    var(--dark-amethyst) 100%
+    /* var(--bright-sky) 0%, */
+    /* var(--bright-sky) 20%, */
+    /* var(--dark-amethyst) 100% */
+    var(--dark-amethyst) 0%,
+    var(--dark-amethyst) 20%,
+    var(--bright-sky) 100%
   ); 
 }
 
@@ -64,14 +68,36 @@ body {
 }
 
 .home__explanation {
-  margin-top: 2em;
-  /* background-color: white; */
-  padding: .7em;
-  border-radius: 1em;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 200px); /* as many 200px columns as fit */
+  gap: 1rem;
+  justify-content: center; /* centers the entire grid horizontally */
+  margin: 2em;
+}
+
+.home-page-card {
   color: var(--dark-amethyst);
   font-family: "Nunito", sans-serif;
   font-weight: 700;
   font-size: .8em;
+  background-color: white;
+  aspect-ratio: .8;
+  padding: 1em;
+  border-radius: 1em;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+}
+
+.home-page-card__icon {
+  background-color: white;
+  aspect-ratio: .8;
+  padding: 1em;
+}
+
+.home-page-card__description {
+  background-color: white;
+  border-top: 2px solid var(--tropical-teal);
+  padding: 1em;
 }
 
 .header__home-button {
@@ -137,7 +163,6 @@ body {
 
 .space {
   display: inline-block;
-  /* transition: 100ms background-color; */
   border: 1px solid grey;
   box-sizing: border-box;
   min-width: 10px;

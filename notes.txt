@@ -1,3 +1,14 @@
+- Front end only screen: edit game
+  - Not in lobby? "Create Game" button becomes "Create Lobby"
+    - "Create Game" should be "Start Game"
+  - In lobby? Same as now but editor is hidden behind toggle.
+  - both: let's change websocket to only send to roomgame on save; as cool as realtime editing was, a "cancel" button is more useful
+  - save to local storage where we currently save to roomgame
+
+
+
+
+
 todo:
 change every target to every targets tictactoe
 clicking fast on reversi lets player 1 take 2 turns (quirk of single player mode?)

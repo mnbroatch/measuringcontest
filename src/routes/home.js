@@ -1,5 +1,7 @@
 import React from 'react'
 import { createFileRoute } from '@tanstack/react-router'
+import HomePageCard from '../components/home-page-card/home-page-card.js'
+import { PencilRuler, Users } from 'lucide-react'
 
 export default function Home () {
   return (
@@ -21,7 +23,18 @@ export default function Home () {
         </h5>
       </div>
       <div className="home__explanation">
-        Define a game in BAGEL (Board game Automation Game Engine Language) that describes rules, pieces, and interactions. Create a lobby in seconds and play with friends using a room code!
+        <HomePageCard
+          iconComponent={PencilRuler}
+          iconSize="5em"
+          iconStrokeWidth="1.3"
+          description="Define a game using BAGEL (Board game Automation Game Engine Language)"
+        />
+        <HomePageCard
+          iconComponent={Users}
+          iconSize="5em"
+          iconStrokeWidth="1.3"
+          description="Create a lobby in seconds and play with friends using a room code!"
+        />
       </div>
     </div>
   )
