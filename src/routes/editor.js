@@ -10,11 +10,10 @@ export default function Editor () {
   const [gameRules, setGameRules] = useState(null)
   const [savedGameRules, setSavedGameRules] = useState(null)
   const gameConnection = useSinglePlayerGame(savedGameRules, numPlayers)
+
   return (
     <>
-      <GameEditor
-        saveGame={({ gameRules }) => setGameRules(gameRules)}
-      />
+      <GameEditor saveGame={({ gameRules }) => { setGameRules(gameRules) }} />
       <button
         onClick={() => { setSavedGameRules(gameRules) }}
       >

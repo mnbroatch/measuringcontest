@@ -30,6 +30,7 @@ body {
   display: block;
   flex: 1;
   background-color: var(--bright-sky);
+  text-align: center;
 }
 
 .header {
@@ -69,9 +70,9 @@ body {
 
 .home__explanation {
   display: grid;
-  grid-template-columns: repeat(auto-fit, 200px); /* as many 200px columns as fit */
+  grid-template-columns: repeat(auto-fit, 200px);
   gap: 1rem;
-  justify-content: center; /* centers the entire grid horizontally */
+  justify-content: center;
   margin: 2em;
 }
 
@@ -116,6 +117,20 @@ body {
   top: .15em;
 }
 
+.get-started-button {
+  display: inline-block;
+  background-color: var(--dark-amethyst);
+  color: white;
+  border: none;
+  padding: .5em .7em;
+  font-size: 2em;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: .3em;
+  margin: 2em;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+}
+
 .header__login-button, .header__logout-button {
   background-color: var(--dark-amethyst);
   color: white;
@@ -123,7 +138,11 @@ body {
   border: none;
   padding: .3em .5em;
   cursor: pointer;
-  border-radius: .2em
+  border-radius: .2em;
+}
+
+.editor {
+  font-size: 1.4em;
 }
 
 .shared-board>.space {
@@ -210,4 +229,42 @@ body {
 
 .debug-panel .pane {
   width: 420px !important;
+}
+
+.sample-game-select {
+  padding: 0 1em;
+}
+
+.sample-game-select__inner {
+  font-family: "Nunito", sans-serif;
+  max-width: 100%;
+  margin: 1em 0;
+}
+
+.sample-game-select__option {
+  font-family: inherit;
+  max-width: 100%;
+}
+
+.editor-game-name {
+  color: white;
+  margin: 1em;
+}
+
+.editor-game-name__input {
+  font-family: "Nunito", sans-serif;
+  margin-left: 1em;
+  position: relative;
+  bottom: .2em;
+}
+
+@media (min-width: 600px) {
+  .sample-game-select__inner {
+    font-size: inherit;
+  }
+
+  .editor-game-name__input {
+    font-size: inherit;
+    position: static;
+  }
 }

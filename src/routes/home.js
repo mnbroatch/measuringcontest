@@ -1,5 +1,5 @@
 import React from 'react'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import HomePageCard from '../components/home-page-card/home-page-card.js'
 import { PencilRuler, Users } from 'lucide-react'
 
@@ -22,6 +22,12 @@ export default function Home () {
           A platform for prototyping board game rules design
         </h5>
       </div>
+      <Link
+        className="get-started-button"
+        to="/editor"
+      >
+        Get Started
+      </Link>
       <div className="home__explanation">
         <HomePageCard
           iconComponent={PencilRuler}

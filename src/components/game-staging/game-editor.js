@@ -40,10 +40,16 @@ const exampleGames = [
   },
 ]
 
-export default function GameEditor ({ initialGameName, initialGameRules, saveGame }) {
-  const [gameRules, setGameRules] = useState(initialGameRules || '')
-  const [gameName, setGameName] = useState(initialGameName || '')
+const RULES_LOCALSTORAGE_KEY = 'bge-editor-game-rules'
+const NAME_LOCALSTORAGE_KEY = 'bge-editor-game-name'
 
+const gameRulesFromStorage = localStorage.getItem(RULES_LOCALSTORAGE_KEY)
+const gameNameFromStorage = localStorage.getItem(NAME_LOCALSTORAGE_KEY)
+
+export default function GameEditor ({ initialGameName, initialGameRules, saveGame }) {
+  const [gameRules, setGameRules] = useState(initialGameRules || gameRulesFromStorage || '')
+  const [gameName, setGameName] = useState(initialGameName || gameNameFromStorage || '')
+  
   const setGameMeta = useCallback(
     debounce((gName, gRules) => {
       saveGame({ gameName: gName, gameRules: gRules })
@@ -51,32 +57,66 @@ export default function GameEditor ({ initialGameName, initialGameRules, saveGam
     []
   );
 
+  const handleGameRulesChange = (gameRules) => {
+    localStorage.setItem(RULES_LOCALSTORAGE_KEY, gameRules)
+    localStorage.setItem(NAME_LOCALSTORAGE_KEY, gameName)
+    setGameRules(gameRules)
+  }
+  
+  const handleGameNameChange = (gameName) => {
+    localStorage.setItem(RULES_LOCALSTORAGE_KEY, gameRules)
+    localStorage.setItem(NAME_LOCALSTORAGE_KEY, gameName)
+    setGameName(gameName)
+  }
+  
   useEffect(() => {
     setGameMeta(gameName, gameRules);
     return () => {
       setGameMeta.cancel();
     };
   }, [setGameMeta, gameName, gameRules]);
-
+  
+  const handleGameSelect = (e) => {
+    const selectedIndex = e.target.value;
+    if (selectedIndex !== "") {
+      const selectedGame = exampleGames[selectedIndex];
+      setGameRules(selectedGame.rules);
+      setGameName(selectedGame.name);
+    }
+  };
+  
   return (
-    <div>
-      {exampleGames.map(({name, rules}, i) => (
-        <button
-          key={i}
-          onClick={() => {
-            setGameRules(rules)
-            setGameName(name)
-          }}
+    <div className="editor">
+      <div className="sample-game-select">
+        <select
+          className="sample-game-select__inner"
+          onChange={handleGameSelect}
+          defaultValue=""
         >
-          {name}
-        </button>
-      ))}
+          <option
+            value=""
+            className="sample-game-select__option"
+            disabled
+          >
+            Select a sample game
+          </option>
+          {exampleGames.map((game, i) => (
+            <option
+              key={i}
+              value={i}
+              className="sample-game-select__option"
+            >
+              {game.name}
+            </option>
+          ))}
+        </select>
+      </div>
       <div>
         <Editor
           height="400px"
           defaultLanguage="json"
           value={gameRules}
-          onChange={setGameRules}
+          onChange={handleGameRulesChange}
           theme="vs-dark"
           options={{
             minimap: { enabled: false },
@@ -85,15 +125,15 @@ export default function GameEditor ({ initialGameName, initialGameRules, saveGam
             formatOnType: true,
           }}
         />
-        <div>
+        <div className="editor-game-name">
           <label>
             Game Name:
             <input
+              className="editor-game-name__input"
               onClick={(e) => {e.stopPropagation()}}
-              onChange={(e) => {setGameName(e.target.value)}}
+              onChange={(e) => {handleGameNameChange(e.target.value)}}
               value={gameName}
-            >
-            </input>
+            />
           </label>
         </div>
       </div>
