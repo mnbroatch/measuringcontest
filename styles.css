@@ -27,10 +27,17 @@ body {
 }
 
 .content {
-  display: block;
+  display: flex;
+  flex-direction: column;
   flex: 1;
-  background-color: var(--bright-sky);
   text-align: center;
+  background: linear-gradient(
+    to bottom,
+    var(--bright-sky) 0%,
+    var(--bright-sky) 50%,
+    var(--tropical-teal) 80%,
+    var(--tropical-teal) 100%
+  ); 
 }
 
 .header {
@@ -42,38 +49,39 @@ body {
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
-.home__splash {
+.home-splash {
   color: white;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
-  gap: 1rem;
+  gap: 1em;
   align-items: center;
   background: linear-gradient(
     to right,
-    /* var(--bright-sky) 0%, */
-    /* var(--bright-sky) 20%, */
-    /* var(--dark-amethyst) 100% */
     var(--dark-amethyst) 0%,
     var(--dark-amethyst) 20%,
     var(--bright-sky) 100%
   ); 
 }
 
-.home__tagline {
+.home-tagline {
   padding-left: .7em;
 }
 
-.home__description {
+.home-tagline__inner {
+  display: inline-block;
+  text-align: left;
+}
+
+.home-description {
   padding: 0 .7em;
   font-family: "Nunito", sans-serif;
 }
 
-.home__explanation {
+.home-explanation {
   display: grid;
   grid-template-columns: repeat(auto-fit, 200px);
-  gap: 1rem;
+  gap: 1em;
   justify-content: center;
-  margin: 2em;
 }
 
 .home-page-card {
@@ -119,15 +127,15 @@ body {
 
 .get-started-button {
   display: inline-block;
-  background-color: var(--dark-amethyst);
-  color: white;
-  border: none;
-  padding: .5em .7em;
-  font-size: 2em;
+  background-color: var(--dark-orange);
+  border: 3px solid var(--dark-amethyst);
+  color: var(--dark-amethyst);
+  padding: .5em;
+  font-size: 1.5em;
   text-decoration: none;
   cursor: pointer;
   border-radius: .3em;
-  margin: 2em;
+  margin: 1.5em;
   box-shadow: 0 4px 6px rgba(0,0,0,0.15);
 }
 
@@ -142,7 +150,13 @@ body {
 }
 
 .editor {
-  font-size: 1.4em;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.editor section:has(.editor__input) {
+  flex: 1;
 }
 
 .shared-board>.space {
@@ -246,16 +260,54 @@ body {
   max-width: 100%;
 }
 
-.editor-game-name {
+.editor-game-name, .editor-num-players {
   color: white;
-  margin: 1em;
 }
 
-.editor-game-name__input {
+.editor__controls {
+  display: flex;
+  flex-wrap: wrap;
+  margin: .5em;
+  gap: .3em;
+  align-items: center;
+}
+
+.editor-game-name__input, .editor-num-players__input {
   font-family: "Nunito", sans-serif;
   margin-left: 1em;
   position: relative;
   bottom: .2em;
+}
+
+.editor-game-name__input {
+  width: 10em;
+}
+
+.editor-num-players__input {
+  width: 3em;
+}
+
+.editor-buttons {
+  flex: 1;
+  text-align: center;
+}
+
+.editor-buttons__button {
+  display: inline-block;
+  font-family: inherit;
+  background-color: var(--dark-orange);
+  border: 3px solid var(--dark-amethyst);
+  color: var(--dark-amethyst);
+  padding: .2em .3em;
+  font-size: .8em;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: .3em;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+}
+
+.editor-buttons__button:last-child {
+  margin-left: 1em;
 }
 
 @media (min-width: 600px) {
@@ -263,8 +315,16 @@ body {
     font-size: inherit;
   }
 
-  .editor-game-name__input {
+  .editor {
+    font-size: 1.4em;
+  }
+
+  .editor-game-name__input, .editor-num-players__input {
     font-size: inherit;
     position: static;
+  }
+
+  .editor__controls {
+    gap: 1em;
   }
 }

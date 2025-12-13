@@ -6,19 +6,21 @@ import { PencilRuler, Users } from 'lucide-react'
 export default function Home () {
   return (
     <div className="home">
-      <div className="home__splash">
-        <h1 className="home__tagline">
-          <div>
-            Play,
-          </div>
-          <div>
-            Tweak,
-          </div>
-          <div>
-            Repeat.
-          </div>
-        </h1>
-        <h5 className="home__description">
+      <div className="home-splash">
+        <div className="home-tagline">
+          <h1 className="home-tagline__inner">
+            <div>
+              Play,
+            </div>
+            <div>
+              Tweak,
+            </div>
+            <div>
+              Repeat.
+            </div>
+          </h1>
+        </div>
+        <h5 className="home-description">
           A platform for prototyping board game rules design
         </h5>
       </div>
@@ -26,9 +28,9 @@ export default function Home () {
         className="get-started-button"
         to="/editor"
       >
-        Get Started
+        Get Started!
       </Link>
-      <div className="home__explanation">
+      <div className="home-explanation">
         <HomePageCard
           iconComponent={PencilRuler}
           iconSize="5em"
