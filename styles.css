@@ -12,6 +12,7 @@
 
 html {
   height: 100%;
+  overscroll-behavior: none;
 }
 
 body {
@@ -153,6 +154,7 @@ body {
   display: flex;
   flex-direction: column;
   flex: 1;
+  margin: .7em;
 }
 
 .editor section:has(.editor__input) {
@@ -170,7 +172,7 @@ body {
 .grid {
   box-sizing: border-box;
   background-color: #333;
-  width: 500px;
+  max-width: 500px;
 }
 
 .grid__cell {
@@ -242,17 +244,12 @@ body {
 }
 
 .debug-panel .pane {
-  width: 420px !important;
-}
-
-.sample-game-select {
-  padding: 0 1em;
+  max-width: 420px !important;
 }
 
 .sample-game-select__inner {
   font-family: "Nunito", sans-serif;
   max-width: 100%;
-  margin: 1em 0;
 }
 
 .sample-game-select__option {
@@ -262,6 +259,10 @@ body {
 
 .editor-game-name, .editor-num-players {
   color: white;
+}
+
+.editor__input {
+  margin: .7em 0;
 }
 
 .editor__controls {
@@ -290,6 +291,7 @@ body {
 .editor-buttons {
   flex: 1;
   text-align: center;
+  white-space: nowrap;
 }
 
 .editor-buttons__button {
@@ -308,6 +310,14 @@ body {
 
 .editor-buttons__button:last-child {
   margin-left: 1em;
+}
+
+.testing-game {
+  margin: 2em;
+}
+
+.testing-game__title {
+  margin-bottom: 2em;
 }
 
 @media (min-width: 600px) {

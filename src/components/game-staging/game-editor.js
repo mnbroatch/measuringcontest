@@ -46,7 +46,7 @@ const NUM_PLAYERS_LOCALSTORAGE_KEY = 'bge-editor-num-players'
 
 const gameRulesFromStorage = localStorage.getItem(RULES_LOCALSTORAGE_KEY)
 const gameNameFromStorage = localStorage.getItem(NAME_LOCALSTORAGE_KEY)
-const numPlayersFromStorage = localStorage.getItem(NUM_PLAYERS_LOCALSTORAGE_KEY)
+const numPlayersFromStorage = +localStorage.getItem(NUM_PLAYERS_LOCALSTORAGE_KEY)
 
 export default function GameEditor ({
   initialGameName,
@@ -77,7 +77,7 @@ export default function GameEditor ({
     localStorage.setItem(RULES_LOCALSTORAGE_KEY, gameRules)
     localStorage.setItem(NAME_LOCALSTORAGE_KEY, gameName)
     localStorage.setItem(NUM_PLAYERS_LOCALSTORAGE_KEY, newNumPlayers)
-    setNumPlayers(newNumPlayers)
+    setNumPlayers(+newNumPlayers)
   }
   
   const handleGameSelect = (e) => {

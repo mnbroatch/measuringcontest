@@ -7,7 +7,8 @@ export default function Grid ({ grid }) {
     <div
       className="grid"
       style={{ 
-        display: 'grid',
+        display: 'inline-grid',
+        width: '100%',
         gridTemplateColumns: `repeat(${width}, 1fr)`,
         gridTemplateRows: `repeat(${height}, 1fr)`,
       }}
