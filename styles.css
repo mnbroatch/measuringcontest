@@ -161,12 +161,8 @@ body {
   flex: 1;
 }
 
-.shared-board>.space {
-  margin: 20px;
-}
-
-.personal-board {
-  margin: 20px;
+.shared-board {
+  margin: 20px 0;
 }
 
 .grid {
@@ -181,9 +177,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
   color: #666;
   position: relative;
+  overflow: hidden;
 }
 
 .grid__cell .space {
@@ -198,10 +194,13 @@ body {
 
 .space {
   display: inline-block;
-  border: 1px solid grey;
   box-sizing: border-box;
   min-width: 10px;
   min-height: 10px;
+}
+
+.space:not(:has(.entity)) {
+  border: 1px solid grey;
 }
 
 .space--clickable {
@@ -214,6 +213,12 @@ body {
 
 .space__entity-grid {
   box-sizing: border-box;
+  grid-template-columns: repeat(auto-fit, minmax(30px, 1fr));
+}
+
+.space__entity-grid__cell {
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .entity {
@@ -221,6 +226,10 @@ body {
   width: 100%;
   box-sizing: border-box;
   border: 1px solid black;
+  overflow: hidden;
+  font-size: .5em;
+  font-family: "Nunito", sans-serif;
+  font-weight: bold;
 }
 
 .entity.player-0 {

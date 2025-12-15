@@ -1,5 +1,4 @@
 {
-  "DEBUG_DISABLE_SECRET_STATE": true,
   "entities": [
     {
       "name": "score",
@@ -20,7 +19,7 @@
     {
       "type": "Space",
       "name": "stock",
-      "contentsHiddenFrom": "All"
+      "cdontentsHiddenFrom": "All"
     },
     {"value": 1, "suit": "clubs", "displayProperties": ["value", "suit"], "name": "card"},
     {"value": 2, "suit": "clubs", "displayProperties": ["value", "suit"], "name": "card"},

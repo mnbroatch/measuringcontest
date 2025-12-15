@@ -57,7 +57,7 @@ export default function GameEditor ({
 }) {
   const [gameRules, setGameRules] = useState(initialGameRules || gameRulesFromStorage || '')
   const [gameName, setGameName] = useState(initialGameName || gameNameFromStorage || '')
-  const [numPlayers, setNumPlayers] = useState(initialNumPlayers || numPlayersFromStorage || '')
+  const [numPlayers, setNumPlayers] = useState(initialNumPlayers || numPlayersFromStorage || 2)
   
   const handleGameRulesChange = (newGameRules) => {
     localStorage.setItem(RULES_LOCALSTORAGE_KEY, newGameRules)

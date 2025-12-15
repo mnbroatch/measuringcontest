@@ -12,7 +12,7 @@
       "state": { 
         "isKing": false
       },
-      "displayProperties": ["isKing", "entityId"],
+      "displayProperties": ["isKing"],
       "count": 12
     }
   ],
