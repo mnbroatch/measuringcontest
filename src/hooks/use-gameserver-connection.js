@@ -12,7 +12,10 @@ export const useGameserverConnection = ({
   boardgamePlayerID,
   clientToken,
   numPlayers,
-  debug = true,
+  debug = {
+    collapseOnLoad: true,
+    hideToggleButton: true
+  },
   singlePlayer = false,
   enabled = true,
 }) => {
@@ -26,7 +29,7 @@ export const useGameserverConnection = ({
     const connect = async () => {
       try {
         const clientOptions = singlePlayer
-          ? { game, numPlayers }
+          ? { game, numPlayers, debug }
           : {
               game,
               multiplayer: singlePlayer ? undefined : SocketIO({

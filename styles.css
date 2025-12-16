@@ -83,6 +83,7 @@ body {
   grid-template-columns: repeat(auto-fit, 200px);
   gap: 1em;
   justify-content: center;
+  margin-bottom: 2em;
 }
 
 .home-page-card {

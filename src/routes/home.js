@@ -35,7 +35,7 @@ export default function Home () {
           iconComponent={PencilRuler}
           iconSize="5em"
           iconStrokeWidth="1.3"
-          description="Define a game using BAGEL (Board game Automation Game Engine Language)"
+          description="Define a game using BAGEL (Board-based Automated Game Engine Language)"
         />
         <HomePageCard
           iconComponent={Users}
