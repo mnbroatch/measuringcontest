@@ -1740,7 +1740,6 @@ function Space(_ref) {
       width: '100%',
       height: '100%',
       display: 'grid',
-      gridTemplateColumns: "repeat(".concat(columns, ", 1fr)"),
       gridAutoRows: '1fr',
       placeItems: 'center'
     }
@@ -22026,6 +22025,33 @@ module.exports = baseKeys;
 
 /***/ }),
 
+/***/ 13417:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ HomePageCard)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
+
+function HomePageCard(_ref) {
+  var description = _ref.description,
+    IconComponent = _ref.iconComponent,
+    iconSize = _ref.iconSize,
+    iconStrokeWidth = _ref.iconStrokeWidth;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "home-page-card"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(IconComponent, {
+    size: iconSize,
+    strokeWidth: iconStrokeWidth,
+    className: "home-page-card__icon"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "home-page-card__description"
+  }, description));
+}
+
+/***/ }),
+
 /***/ 13489:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
@@ -22609,6 +22635,7 @@ var Bank = /*#__PURE__*/function () {
       if (!slot) {
         console.error("No matching slot for ".concat(JSON.stringify(rule)));
       }
+      console.log('slot', slot);
       return slot.getOne(bgioArguments, {
         state: rule.state
       }, context);
@@ -22885,7 +22912,7 @@ var RoomGame = {
         playerID = _ref3.playerID;
       var gameRules = _ref4.gameRules,
         gameName = _ref4.gameName;
-      if (playerID === '1' && G.status === 'waiting') {
+      if ((playerID === '0' || playerID === '1') && G.status === 'waiting') {
         G.gameRules = gameRules;
         G.gameName = gameName;
       }
@@ -24152,6 +24179,55 @@ class AmplifyError extends Error {
 
 
 //# sourceMappingURL=AmplifyError.mjs.map
+
+
+/***/ }),
+
+/***/ 18458:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ PencilRuler)
+/* harmony export */ });
+/* unused harmony export __iconNode */
+/* harmony import */ var _createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(68532);
+/**
+ * @license lucide-react v0.556.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const __iconNode = [
+  [
+    "path",
+    { d: "M13 7 8.7 2.7a2.41 2.41 0 0 0-3.4 0L2.7 5.3a2.41 2.41 0 0 0 0 3.4L7 13", key: "orapub" }
+  ],
+  ["path", { d: "m8 6 2-2", key: "115y1s" }],
+  ["path", { d: "m18 16 2-2", key: "ee94s4" }],
+  [
+    "path",
+    {
+      d: "m17 11 4.3 4.3c.94.94.94 2.46 0 3.4l-2.6 2.6c-.94.94-2.46.94-3.4 0L11 17",
+      key: "cfq27r"
+    }
+  ],
+  [
+    "path",
+    {
+      d: "M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z",
+      key: "1a8usu"
+    }
+  ],
+  ["path", { d: "m15 5 4 4", key: "1mk7zo" }]
+];
+const PencilRuler = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)("pencil-ruler", __iconNode);
+
+
+//# sourceMappingURL=pencil-ruler.js.map
 
 
 /***/ }),
@@ -25524,38 +25600,46 @@ console.warn("[tanstack-router] These exports from \"/home/matt/Programming/meas
 
 
 
+var SCREEN_STATE_EDITING = 'editing';
+var SCREEN_STATE_TESTING = 'testing';
 function Editor() {
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(2),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(SCREEN_STATE_EDITING),
     _useState2 = _slicedToArray(_useState, 2),
-    numPlayers = _useState2[0],
-    setNumPlayers = _useState2[1];
+    screenState = _useState2[0],
+    setScreenState = _useState2[1];
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState4 = _slicedToArray(_useState3, 2),
-    gameRules = _useState4[0],
-    setGameRules = _useState4[1];
+    savedGameRules = _useState4[0],
+    setSavedGameRules = _useState4[1];
   var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState6 = _slicedToArray(_useState5, 2),
-    savedGameRules = _useState6[0],
-    setSavedGameRules = _useState6[1];
-  var gameConnection = (0,_hooks_use_single_player_game_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(savedGameRules, numPlayers);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_game_editor_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
-    saveGame: function saveGame(_ref) {
-      var gameRules = _ref.gameRules;
-      return setGameRules(gameRules);
-    }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    onClick: function onClick() {
+    savedGameName = _useState6[0],
+    setSavedGameName = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState8 = _slicedToArray(_useState7, 2),
+    savedNumPlayers = _useState8[0],
+    setSavedNumPlayers = _useState8[1];
+  var gameConnection = (0,_hooks_use_single_player_game_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(savedGameRules, savedNumPlayers);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, screenState === SCREEN_STATE_EDITING && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_game_editor_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+    handleTestGame: function handleTestGame(_ref) {
+      var gameRules = _ref.gameRules,
+        gameName = _ref.gameName,
+        numPlayers = _ref.numPlayers;
       setSavedGameRules(gameRules);
+      setSavedGameName(gameName);
+      setSavedNumPlayers(numPlayers);
+      setScreenState(SCREEN_STATE_TESTING);
     }
-  }, "Test Game with", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
-    onClick: function onClick(e) {
-      e.stopPropagation();
-    },
-    onChange: function onChange(e) {
-      setNumPlayers(+e.target.value);
-    },
-    value: numPlayers
-  }), "players"), gameConnection.state && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_play_game_play_game_js__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+  }), gameConnection.state && screenState === SCREEN_STATE_TESTING && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "testing-game"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "testing-game__title"
+  }, "Testing Game: ", savedGameName, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "editor-buttons__button",
+    onClick: function onClick() {
+      setScreenState(SCREEN_STATE_EDITING);
+    }
+  }, "Back to Editor")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_play_game_play_game_js__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
     gameConnection: gameConnection
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_status_game_status_js__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
     gameConnection: gameConnection
@@ -34265,6 +34349,38 @@ function parseRedirect(obj) {
 
 /***/ }),
 
+/***/ 37276:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ Users)
+/* harmony export */ });
+/* unused harmony export __iconNode */
+/* harmony import */ var _createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(68532);
+/**
+ * @license lucide-react v0.556.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const __iconNode = [
+  ["path", { d: "M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2", key: "1yyitq" }],
+  ["path", { d: "M16 3.128a4 4 0 0 1 0 7.744", key: "16gr8j" }],
+  ["path", { d: "M22 21v-2a4 4 0 0 0-3-3.87", key: "kshegd" }],
+  ["circle", { cx: "9", cy: "7", r: "4", key: "nufk8" }]
+];
+const Users = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)("users", __iconNode);
+
+
+//# sourceMappingURL=users.js.map
+
+
+/***/ }),
+
 /***/ 37369:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
@@ -36342,7 +36458,7 @@ function RoomGame(_ref) {
 /***/ ((module) => {
 
 "use strict";
-module.exports = /*#__PURE__*/JSON.parse('{"DEBUG_DISABLE_SECRET_STATE":true,"entities":[{"name":"score","perPlayer":true,"displayProperties":["value"],"state":{"value":0}},{"type":"Space","name":"hand","perPlayer":true,"contentsHiddenFrom":"Others"},{"type":"Space","name":"discard"},{"type":"Space","name":"stock","contentsHiddenFrom":"All"},{"value":1,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":2,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":3,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":4,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":5,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":6,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":7,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":8,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":9,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":10,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":11,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":12,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":13,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":1,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":2,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":3,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":4,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":5,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":6,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":7,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":8,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":9,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":10,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":11,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":12,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":13,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":13,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":1,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":2,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":3,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":4,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":5,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":6,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":7,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":8,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":9,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":10,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":11,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":12,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":13,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":13,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":1,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":2,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":3,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":4,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":5,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":6,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":7,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":8,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":9,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":10,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":11,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":12,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":13,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":13,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"}],"sharedBoard":[{"name":"stock"},{"name":"discard"}],"personalBoard":[{"name":"hand"},{"name":"score"}],"initialMoves":[{"type":"PlaceNew","matchMultiple":true,"entity":{"conditions":[{"type":"Is","matcher":{"name":"card"}}]},"arguments":{"destination":{"constraints":[{"type":"Is","matcher":{"name":"stock"}}]}}}],"minPlayers":2,"maxPlayers":5,"phases":{"play":{"start":true,"next":"score","initialMoves":[{"type":"MoveEntity","arguments":{"entity":{"matchMultiple":true,"constraints":[{"type":"Is","matcher":{"name":"card"}}]},"destination":{"constraints":[{"type":"Is","matcher":{"name":"stock"}}]}}},{"type":"Shuffle","arguments":{"target":{"constraints":[{"type":"Is","matcher":{"name":"stock"}}]}}},{"type":"ForEach","arguments":{"targets":[0,1,2,3,4]},"move":{"type":"ForEach","arguments":{"targets":{"type":"ctxPath","path":["playOrder"]}},"move":{"type":"MoveEntity","arguments":{"entity":{"constraints":[{"type":"Is","target":{"type":"Parent"},"matcher":{"name":"stock"}},{"type":"Position","position":"First"}]},"destination":{"constraints":[{"type":"Is","matcher":{"name":"hand","player":{"type":"contextPath","path":["loopTarget"]}}}]}}}}},{"type":"MoveEntity","arguments":{"entity":{"constraints":[{"type":"Is","target":{"type":"Parent"},"matcher":{"name":"stock"}},{"type":"Position","position":"First"}]},"destination":{"constraints":[{"type":"Is","matcher":{"name":"discard"}}]}}}],"turn":{"order":{"playOrder":"RotateFirst"},"activePlayers":{"currentPlayer":"normalPlay"},"initialMoves":[{"type":"ForEach","arguments":{"targets":{"matchMultiple":true,"constraints":[{"type":"Is","target":{"type":"Parent"},"matcher":{"name":"discard"}},{"type":"Not","conditions":[{"type":"Position","position":"First"}]}]}},"conditions":[{"type":"Not","target":{"constraints":[{"type":"Is","matcher":{"name":"stock"}}]},"conditions":[{"type":"Contains"}]}],"move":{"type":"MoveEntity","arguments":{"entity":{"type":"contextPath","path":["loopTarget"]},"destination":{"constraints":[{"type":"Is","matcher":{"name":"stock"}}]}}}},{"type":"Shuffle","arguments":{"target":{"constraints":[{"type":"Is","matcher":{"name":"stock"}}]}}}],"stages":{"normalPlay":{"moves":{"playCard":{"type":"MoveEntity","position":"First","arguments":{"entity":{"playerChoice":true,"constraints":[{"type":"Is","target":{"type":"Parent"},"matcher":{"name":"hand","player":{"type":"ctxPath","path":["currentPlayer"]}}},{"type":"Or","conditions":[{"type":"Is","matcher":{"value":8}},{"type":"Is","matcher":{"type":"Pick","properties":["suit"],"target":{"constraints":[{"type":"Is","target":{"type":"Parent"},"matcher":{"name":"discard"}},{"type":"Position","position":"First"}]}}},{"type":"Is","matcher":{"type":"Pick","properties":["value"],"target":{"constraints":[{"type":"Is","target":{"type":"Parent"},"matcher":{"name":"discard"}},{"type":"Position","position":"First"}]}}}]}]},"destination":{"position":"First","constraints":[{"type":"Is","matcher":{"name":"discard"}}]}},"then":[{"type":"SetActivePlayers","options":{"currentPlayer":{"stage":"nameSuit"}},"conditions":[{"type":"Is","target":{"type":"contextPath","path":["previousArguments","entity"]},"matcher":{"value":8}}]},{"type":"EndTurn","conditions":[{"type":"Not","target":{"type":"contextPath","path":["previousArguments","entity"]},"conditions":[{"type":"Is","matcher":{"value":8}}]}]}]},"takeCard":{"type":"TakeFrom","conditions":[{"type":"Contains","target":{"constraints":[{"type":"Is","matcher":{"name":"stock"}}]}}],"arguments":{"source":{"playerChoice":true,"constraints":[{"type":"Is","matcher":{"name":"stock"}}]},"destination":{"constraints":[{"type":"Is","matcher":{"name":"hand","player":{"type":"ctxPath","path":["currentPlayer"]}}}]}},"then":[{"type":"EndTurn"}]}}},"nameSuit":{"moves":{"nameSuit":{"type":"SetState","arguments":{"entity":{"constraints":[{"type":"Is","target":{"type":"Parent"},"matcher":{"name":"discard"}},{"type":"Position","position":"First"}]},"state":{"playerChoice":true,"property":"suit","possibleValues":["clubs","hearts","spades","diamonds"]}},"then":[{"type":"EndTurn"}]}}}}},"endIf":[{"conditions":[{"type":"Is","target":{"constraints":[{"type":"Is","matcher":{"name":"hand"}},{"type":"Not","conditions":[{"type":"Contains"}]}]}}]}]},"score":{"next":"play","initialMoves":[{"type":"ForEach","arguments":{"targets":{"type":"ctxPath","path":["playOrder"]}},"move":{"type":"SetState","arguments":{"entity":{"constraints":[{"type":"Is","matcher":{"name":"score","player":{"type":"RelativePath","target":{"constraints":[{"type":"Is","matcher":{"name":"hand"}},{"type":"Not","conditions":[{"type":"Contains"}]}]},"path":["player"]}}}]},"state":{"property":"value","value":{"type":"expression","expression":"existingScore + sum(faceValues)","arguments":{"existingScore":{"type":"RelativePath","target":{"constraints":[{"type":"Is","matcher":{"name":"score","player":{"type":"RelativePath","target":{"a":1,"constraints":[{"type":"Is","matcher":{"name":"hand"}},{"type":"Not","conditions":[{"type":"Contains"}]}]},"path":["player"]}}}]},"path":["value"]},"faceValues":{"type":"map","targets":{"matchMultiple":true,"constraints":[{"type":"Is","target":{"type":"Parent"},"matcher":{"name":"hand","player":{"type":"contextPath","path":["loopTarget"]}}}]},"mapping":{"type":"expression","expression":"cardValue == 8 ? 50 : (cardValue >= 10 and cardValue <= 13) ? 10 : cardValue","arguments":{"cardValue":{"type":"RelativePath","target":{"type":"contextPath","path":["loopTarget"]},"path":["value"]}}}}}}}}}},{"type":"EndTurn"}]}},"endIf":[{"conditions":[{"type":"Some","target":{"matchMultiple":true,"constraints":[{"type":"Is","matcher":{"name":"score"}}]},"conditions":[{"type":"Evaluate","expression":"score >= numPlayers * 50","arguments":{"score":{"type":"RelativePath","target":{"type":"contextPath","path":["loopTarget"]},"path":["value"]},"numPlayers":{"type":"ctxPath","path":["playOrder","length"]}}}]}],"result":{"winner":{"type":"contextPath","path":["results",0,"result","rule","player"]}}}]}');
+module.exports = /*#__PURE__*/JSON.parse('{"entities":[{"name":"score","perPlayer":true,"displayProperties":["value"],"state":{"value":0}},{"type":"Space","name":"hand","perPlayer":true,"contentsHiddenFrom":"Others"},{"type":"Space","name":"discard"},{"type":"Space","name":"stock","cdontentsHiddenFrom":"All"},{"value":1,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":2,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":3,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":4,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":5,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":6,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":7,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":8,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":9,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":10,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":11,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":12,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":13,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":1,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":2,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":3,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":4,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":5,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":6,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":7,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":8,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":9,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":10,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":11,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":12,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":13,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":13,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":1,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":2,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":3,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":4,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":5,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":6,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":7,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":8,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":9,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":10,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":11,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":12,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":13,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":13,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":1,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":2,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":3,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":4,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":5,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":6,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":7,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":8,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":9,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":10,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":11,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":12,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":13,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":13,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"}],"sharedBoard":[{"name":"stock"},{"name":"discard"}],"personalBoard":[{"name":"hand"},{"name":"score"}],"initialMoves":[{"type":"PlaceNew","matchMultiple":true,"entity":{"conditions":[{"type":"Is","matcher":{"name":"card"}}]},"arguments":{"destination":{"constraints":[{"type":"Is","matcher":{"name":"stock"}}]}}}],"minPlayers":2,"maxPlayers":5,"phases":{"play":{"start":true,"next":"score","initialMoves":[{"type":"MoveEntity","arguments":{"entity":{"matchMultiple":true,"constraints":[{"type":"Is","matcher":{"name":"card"}}]},"destination":{"constraints":[{"type":"Is","matcher":{"name":"stock"}}]}}},{"type":"Shuffle","arguments":{"target":{"constraints":[{"type":"Is","matcher":{"name":"stock"}}]}}},{"type":"ForEach","arguments":{"targets":[0,1,2,3,4]},"move":{"type":"ForEach","arguments":{"targets":{"type":"ctxPath","path":["playOrder"]}},"move":{"type":"MoveEntity","arguments":{"entity":{"constraints":[{"type":"Is","target":{"type":"Parent"},"matcher":{"name":"stock"}},{"type":"Position","position":"First"}]},"destination":{"constraints":[{"type":"Is","matcher":{"name":"hand","player":{"type":"contextPath","path":["loopTarget"]}}}]}}}}},{"type":"MoveEntity","arguments":{"entity":{"constraints":[{"type":"Is","target":{"type":"Parent"},"matcher":{"name":"stock"}},{"type":"Position","position":"First"}]},"destination":{"constraints":[{"type":"Is","matcher":{"name":"discard"}}]}}}],"turn":{"order":{"playOrder":"RotateFirst"},"activePlayers":{"currentPlayer":"normalPlay"},"initialMoves":[{"type":"ForEach","arguments":{"targets":{"matchMultiple":true,"constraints":[{"type":"Is","target":{"type":"Parent"},"matcher":{"name":"discard"}},{"type":"Not","conditions":[{"type":"Position","position":"First"}]}]}},"conditions":[{"type":"Not","target":{"constraints":[{"type":"Is","matcher":{"name":"stock"}}]},"conditions":[{"type":"Contains"}]}],"move":{"type":"MoveEntity","arguments":{"entity":{"type":"contextPath","path":["loopTarget"]},"destination":{"constraints":[{"type":"Is","matcher":{"name":"stock"}}]}}}},{"type":"Shuffle","arguments":{"target":{"constraints":[{"type":"Is","matcher":{"name":"stock"}}]}}}],"stages":{"normalPlay":{"moves":{"playCard":{"type":"MoveEntity","position":"First","arguments":{"entity":{"playerChoice":true,"constraints":[{"type":"Is","target":{"type":"Parent"},"matcher":{"name":"hand","player":{"type":"ctxPath","path":["currentPlayer"]}}},{"type":"Or","conditions":[{"type":"Is","matcher":{"value":8}},{"type":"Is","matcher":{"type":"Pick","properties":["suit"],"target":{"constraints":[{"type":"Is","target":{"type":"Parent"},"matcher":{"name":"discard"}},{"type":"Position","position":"First"}]}}},{"type":"Is","matcher":{"type":"Pick","properties":["value"],"target":{"constraints":[{"type":"Is","target":{"type":"Parent"},"matcher":{"name":"discard"}},{"type":"Position","position":"First"}]}}}]}]},"destination":{"position":"First","constraints":[{"type":"Is","matcher":{"name":"discard"}}]}},"then":[{"type":"SetActivePlayers","options":{"currentPlayer":{"stage":"nameSuit"}},"conditions":[{"type":"Is","target":{"type":"contextPath","path":["previousArguments","entity"]},"matcher":{"value":8}}]},{"type":"EndTurn","conditions":[{"type":"Not","target":{"type":"contextPath","path":["previousArguments","entity"]},"conditions":[{"type":"Is","matcher":{"value":8}}]}]}]},"takeCard":{"type":"TakeFrom","conditions":[{"type":"Contains","target":{"constraints":[{"type":"Is","matcher":{"name":"stock"}}]}}],"arguments":{"source":{"playerChoice":true,"constraints":[{"type":"Is","matcher":{"name":"stock"}}]},"destination":{"constraints":[{"type":"Is","matcher":{"name":"hand","player":{"type":"ctxPath","path":["currentPlayer"]}}}]}},"then":[{"type":"EndTurn"}]}}},"nameSuit":{"moves":{"nameSuit":{"type":"SetState","arguments":{"entity":{"constraints":[{"type":"Is","target":{"type":"Parent"},"matcher":{"name":"discard"}},{"type":"Position","position":"First"}]},"state":{"playerChoice":true,"property":"suit","possibleValues":["clubs","hearts","spades","diamonds"]}},"then":[{"type":"EndTurn"}]}}}}},"endIf":[{"conditions":[{"type":"Is","target":{"constraints":[{"type":"Is","matcher":{"name":"hand"}},{"type":"Not","conditions":[{"type":"Contains"}]}]}}]}]},"score":{"next":"play","initialMoves":[{"type":"ForEach","arguments":{"targets":{"type":"ctxPath","path":["playOrder"]}},"move":{"type":"SetState","arguments":{"entity":{"constraints":[{"type":"Is","matcher":{"name":"score","player":{"type":"RelativePath","target":{"constraints":[{"type":"Is","matcher":{"name":"hand"}},{"type":"Not","conditions":[{"type":"Contains"}]}]},"path":["player"]}}}]},"state":{"property":"value","value":{"type":"expression","expression":"existingScore + sum(faceValues)","arguments":{"existingScore":{"type":"RelativePath","target":{"constraints":[{"type":"Is","matcher":{"name":"score","player":{"type":"RelativePath","target":{"a":1,"constraints":[{"type":"Is","matcher":{"name":"hand"}},{"type":"Not","conditions":[{"type":"Contains"}]}]},"path":["player"]}}}]},"path":["value"]},"faceValues":{"type":"map","targets":{"matchMultiple":true,"constraints":[{"type":"Is","target":{"type":"Parent"},"matcher":{"name":"hand","player":{"type":"contextPath","path":["loopTarget"]}}}]},"mapping":{"type":"expression","expression":"cardValue == 8 ? 50 : (cardValue >= 10 and cardValue <= 13) ? 10 : cardValue","arguments":{"cardValue":{"type":"RelativePath","target":{"type":"contextPath","path":["loopTarget"]},"path":["value"]}}}}}}}}}},{"type":"EndTurn"}]}},"endIf":[{"conditions":[{"type":"Some","target":{"matchMultiple":true,"constraints":[{"type":"Is","matcher":{"name":"score"}}]},"conditions":[{"type":"Evaluate","expression":"score >= numPlayers * 50","arguments":{"score":{"type":"RelativePath","target":{"type":"contextPath","path":["loopTarget"]},"path":["value"]},"numPlayers":{"type":"ctxPath","path":["playOrder","length"]}}}]}],"result":{"winner":{"type":"contextPath","path":["results",0,"result","rule","player"]}}}]}');
 
 /***/ }),
 
@@ -40854,21 +40970,42 @@ module.exports = isKeyable;
 /* unused harmony export default */
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
 /* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(82820);
+/* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(10103);
+/* harmony import */ var _components_home_page_card_home_page_card_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(13417);
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(18458);
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(37276);
 console.warn("[tanstack-router] These exports from \"/home/matt/Programming/measuringcontest/src/routes/home.js\" will not be code-split and will increase your bundle size:\n- Home\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
+
+
 
 
 function Home() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "home"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "home__splash"
+    className: "home-splash"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "home-tagline"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
-    className: "home__tagline"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Play,"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Tweak,"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Repeat.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h5", {
-    className: "home__description"
-  }, "A platform for prototyping board game rules design")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "home__explanation"
-  }, "Define a game in BAGEL (Board game Automation Game Engine Language) that describes rules, pieces, and interactions. Create a lobby in seconds and play with friends using a room code!"));
+    className: "home-tagline__inner"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Play,"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Tweak,"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Repeat."))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h5", {
+    className: "home-description"
+  }, "A platform for prototyping board game rules design")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__/* .Link */ .N_, {
+    className: "get-started-button",
+    to: "/editor"
+  }, "Get Started!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "home-explanation"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_home_page_card_home_page_card_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+    iconComponent: lucide_react__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A,
+    iconSize: "5em",
+    iconStrokeWidth: "1.3",
+    description: "Define a game using BAGEL (Board game Automation Game Engine Language)"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_home_page_card_home_page_card_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+    iconComponent: lucide_react__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A,
+    iconSize: "5em",
+    iconStrokeWidth: "1.3",
+    description: "Create a lobby in seconds and play with friends using a room code!"
+  })));
 }
 var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__/* .createFileRoute */ .WK)('/home')({
   component: Home
@@ -41857,8 +41994,6 @@ function stringifySearchWith(stringify, parser) {
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
 /* harmony import */ var _home_button_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6118);
-
-
 
 
 function Header(_ref) {
@@ -44252,7 +44387,7 @@ module.exports = DataView;
 /***/ ((module) => {
 
 "use strict";
-module.exports = /*#__PURE__*/JSON.parse('{"entities":[{"name":"mainGrid","type":"Grid","width":8,"height":8},{"name":"checker","perPlayer":true,"state":{"isKing":false},"displayProperties":["isKing","entityId"],"count":12}],"sharedBoard":[{"name":"mainGrid"}],"initialPlacements":[{"entity":{"name":"checker","player":"1"},"destination":{"index":1}},{"entity":{"name":"checker","player":"1"},"destination":{"index":3}},{"entity":{"name":"checker","player":"1"},"destination":{"index":5}},{"entity":{"name":"checker","player":"1"},"destination":{"index":7}},{"entity":{"name":"checker","player":"1"},"destination":{"index":8}},{"entity":{"name":"checker","player":"1"},"destination":{"index":10}},{"entity":{"name":"checker","player":"1"},"destination":{"index":12}},{"entity":{"name":"checker","player":"1"},"destination":{"index":14}},{"entity":{"name":"checker","player":"1"},"destination":{"index":17}},{"entity":{"name":"checker","player":"1"},"destination":{"index":19}},{"entity":{"name":"checker","player":"1"},"destination":{"index":21}},{"entity":{"name":"checker","player":"1"},"destination":{"index":23}},{"entity":{"name":"checker","player":"0"},"destination":{"index":40}},{"entity":{"name":"checker","player":"0"},"destination":{"index":42}},{"entity":{"name":"checker","player":"0"},"destination":{"index":44}},{"entity":{"name":"checker","player":"0"},"destination":{"index":46}},{"entity":{"name":"checker","player":"0"},"destination":{"index":49}},{"entity":{"name":"checker","player":"0"},"destination":{"index":51}},{"entity":{"name":"checker","player":"0"},"destination":{"index":53}},{"entity":{"name":"checker","player":"0"},"destination":{"index":55}},{"entity":{"name":"checker","player":"0"},"destination":{"index":56}},{"entity":{"name":"checker","player":"0"},"destination":{"index":58}},{"entity":{"name":"checker","player":"0"},"destination":{"index":60}},{"entity":{"name":"checker","player":"0"},"destination":{"index":62}}],"minPlayers":2,"maxPlayers":2,"turn":{"activePlayers":{"currentPlayer":"jumpIfPossible"},"stages":{"jumpIfPossible":{"initialMoves":[{"type":"SetActivePlayers","options":{"currentPlayer":{"stage":"moveIfNoJump"}},"conditions":[{"type":"NoPossibleMoves"}]}],"moves":{"jumpChecker":{"type":"MoveEntity","arguments":{"entity":{"playerChoice":true,"constraints":[{"type":"Is","matcher":{"name":"checker","player":{"type":"ctxPath","path":["currentPlayer"]}}}]},"destination":{"playerChoice":true,"constraints":[{"type":"Is","matcher":{"type":"Space"}},{"type":"Not","conditions":[{"type":"Contains"}]},{"type":"Or","conditions":[{"type":"Contains","target":{"type":"RelativeCoordinates","location":{"type":"expression","expression":"player == \'0\' ? player0RelativeCoordinates : player1RelativeCoordinates","arguments":{"player0RelativeCoordinates":[-2,2],"player1RelativeCoordinates":[-2,-2],"player":{"type":"ctxPath","path":["currentPlayer"]}}}},"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}}]},{"type":"Contains","target":{"type":"RelativeCoordinates","location":{"type":"expression","expression":"player == \'0\' ? player0RelativeCoordinates : player1RelativeCoordinates","arguments":{"player0RelativeCoordinates":[2,2],"player1RelativeCoordinates":[2,-2],"player":{"type":"ctxPath","path":["currentPlayer"]}}}},"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}}]},{"type":"Contains","target":{"type":"RelativeCoordinates","location":{"type":"expression","expression":"player == \'0\' ? player0RelativeCoordinates : player1RelativeCoordinates","arguments":{"player0RelativeCoordinates":[-2,-2],"player1RelativeCoordinates":[-2,2],"player":{"type":"ctxPath","path":["currentPlayer"]}}}},"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}},{"type":"Is","matcher":{"isKing":true}}]},{"type":"Contains","target":{"type":"RelativeCoordinates","location":{"type":"expression","expression":"player == \'0\' ? player0RelativeCoordinates : player1RelativeCoordinates","arguments":{"player0RelativeCoordinates":[2,-2],"player1RelativeCoordinates":[2,2],"player":{"type":"ctxPath","path":["currentPlayer"]}}}},"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}},{"type":"Is","matcher":{"isKing":true}}]}]},{"type":"InLine","sequence":[{"conditions":[{"type":"Contains","conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}}]}]},{"conditions":[{"type":"Contains","conditions":[{"type":"Not","conditions":[{"type":"Is","matcher":{"player":{"type":"ctxPath","path":["currentPlayer"]}}}]}]}]},{"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["originalTarget"]}}]}]}]}},"then":[{"type":"ForEach","arguments":{"targets":{"type":"contextPath","path":["moveConditionResults",0,"conditionResults","argumentResults","destination","results",0,"results",3,"matches",0,1,"entities"]}},"move":{"type":"RemoveEntity","arguments":{"entity":{"type":"contextPath","path":["loopTarget"]}}}},{"type":"SetActivePlayers","options":{"currentPlayer":{"stage":"keepJumping"}}}]}}},"keepJumping":{"initialMoves":[{"type":"SetActivePlayers","options":{"currentPlayer":{"stage":"kingPieces"}},"conditions":[{"type":"NoPossibleMoves"}]}],"moves":{"jumpChecker":{"type":"MoveEntity","arguments":{"entity":{"constraints":[{"type":"Is","entity":{"type":"gamePath","path":["_meta","previousPayloads","jumpChecker","arguments","entity"]}}]},"destination":{"playerChoice":true,"constraints":[{"type":"Is","matcher":{"type":"Space"}},{"type":"Not","conditions":[{"type":"Contains"}]},{"type":"Or","conditions":[{"type":"Contains","target":{"type":"RelativeCoordinates","location":{"type":"expression","expression":"player == \'0\' ? player0RelativeCoordinates : player1RelativeCoordinates","arguments":{"player0RelativeCoordinates":[-2,2],"player1RelativeCoordinates":[-2,-2],"player":{"type":"ctxPath","path":["currentPlayer"]}}}},"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}}]},{"type":"Contains","target":{"type":"RelativeCoordinates","location":{"type":"expression","expression":"player == \'0\' ? player0RelativeCoordinates : player1RelativeCoordinates","arguments":{"player0RelativeCoordinates":[2,2],"player1RelativeCoordinates":[2,-2],"player":{"type":"ctxPath","path":["currentPlayer"]}}}},"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}}]},{"type":"Contains","target":{"type":"RelativeCoordinates","location":{"type":"expression","expression":"player == \'0\' ? player0RelativeCoordinates : player1RelativeCoordinates","arguments":{"player0RelativeCoordinates":[-2,-2],"player1RelativeCoordinates":[-2,2],"player":{"type":"ctxPath","path":["currentPlayer"]}}}},"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}},{"type":"Is","matcher":{"isKing":true}}]},{"type":"Contains","target":{"type":"RelativeCoordinates","location":{"type":"expression","expression":"player == \'0\' ? player0RelativeCoordinates : player1RelativeCoordinates","arguments":{"player0RelativeCoordinates":[2,-2],"player1RelativeCoordinates":[2,2],"player":{"type":"ctxPath","path":["currentPlayer"]}}}},"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}},{"type":"Is","matcher":{"isKing":true}}]}]},{"type":"InLine","sequence":[{"conditions":[{"type":"Contains","conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}}]}]},{"conditions":[{"type":"Contains","conditions":[{"type":"Not","conditions":[{"type":"Is","matcher":{"player":{"type":"ctxPath","path":["currentPlayer"]}}}]}]}]},{"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["originalTarget"]}}]}]}]}},"then":[{"type":"ForEach","arguments":{"targets":{"type":"contextPath","path":["moveConditionResults",0,"conditionResults","argumentResults","destination","results",0,"results",3,"matches",0,1,"entities"]}},"move":{"type":"RemoveEntity","arguments":{"entity":{"type":"contextPath","path":["loopTarget"]}}}},{"type":"SetActivePlayers","options":{"currentPlayer":{"stage":"kingPieces"}},"conditions":[{"type":"NoPossibleMoves"}]}]}}},"moveIfNoJump":{"initialMoves":[{"type":"PassTurn","conditions":[{"type":"NoPossibleMoves"}]}],"moves":{"moveChecker":{"type":"MoveEntity","arguments":{"entity":{"playerChoice":true,"constraints":[{"type":"Is","matcher":{"name":"checker","player":{"type":"ctxPath","path":["currentPlayer"]}}}]},"destination":{"playerChoice":true,"constraints":[{"type":"Is","matcher":{"type":"Space"}},{"type":"Not","conditions":[{"type":"Contains"}]},{"type":"Or","conditions":[{"type":"Contains","target":{"type":"RelativeCoordinates","location":{"type":"expression","expression":"player == \'0\' ? player0RelativeCoordinates : player1RelativeCoordinates","arguments":{"player0RelativeCoordinates":[-1,1],"player1RelativeCoordinates":[-1,-1],"player":{"type":"ctxPath","path":["currentPlayer"]}}}},"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}}]},{"type":"Contains","target":{"type":"RelativeCoordinates","location":{"type":"expression","expression":"player == \'0\' ? player0RelativeCoordinates : player1RelativeCoordinates","arguments":{"player0RelativeCoordinates":[1,1],"player1RelativeCoordinates":[1,-1],"player":{"type":"ctxPath","path":["currentPlayer"]}}}},"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}}]},{"type":"Contains","target":{"type":"RelativeCoordinates","location":{"type":"expression","expression":"player == \'0\' ? player0RelativeCoordinates : player1RelativeCoordinates","arguments":{"player0RelativeCoordinates":[-1,-1],"player1RelativeCoordinates":[-1,1],"player":{"type":"ctxPath","path":["currentPlayer"]}}}},"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}},{"type":"Is","matcher":{"isKing":true}}]},{"type":"Contains","target":{"type":"RelativeCoordinates","location":{"type":"expression","expression":"player == \'0\' ? player0RelativeCoordinates : player1RelativeCoordinates","arguments":{"player0RelativeCoordinates":[1,-1],"player1RelativeCoordinates":[1,1],"player":{"type":"ctxPath","path":["currentPlayer"]}}}},"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}},{"type":"Is","matcher":{"isKing":true}}]}]}]}},"then":[{"type":"SetActivePlayers","options":{"currentPlayer":{"stage":"kingPieces"}}}]}}},"kingPieces":{"initialMoves":[{"type":"ForEach","arguments":{"targets":{"type":"map","targets":{"matchMultiple":true,"constraints":[{"type":"Is","matcher":{"type":"Space"}},{"type":"Contains"},{"type":"Evaluate","expression":"(player == \'0\' and destinationCoordinates[1] == 0) or (player == \'1\' and destinationCoordinates[1] == 7)","arguments":{"player":{"type":"RelativePath","target":{"type":"contextPath","path":["originalTarget"]},"path":["entities",0,"rule","player"]},"destinationCoordinates":{"type":"Coordinates","target":{"type":"contextPath","path":["target"]}}}}]},"mapping":{"type":"contextPath","path":["loopTarget","entities",0]}}},"move":{"type":"SetState","arguments":{"entity":{"type":"contextPath","path":["loopTarget"]},"state":{"property":"isKing","value":true}}}},{"type":"EndTurn"}]}}},"endIf":[{"conditions":[{"type":"Evaluate","expression":"passCount > 0","arguments":{"passCount":{"type":"gamePath","path":["_meta","passedPlayers","length"]}}}],"result":{"winner":{"type":"expression","expression":"(currentPlayer + 1) % 2","arguments":{"currentPlayer":{"type":"ctxPath","path":["currentPlayer"]}}}}}]}');
+module.exports = /*#__PURE__*/JSON.parse('{"entities":[{"name":"mainGrid","type":"Grid","width":8,"height":8},{"name":"checker","perPlayer":true,"state":{"isKing":false},"displayProperties":["isKing"],"count":12}],"sharedBoard":[{"name":"mainGrid"}],"initialPlacements":[{"entity":{"name":"checker","player":"1"},"destination":{"index":1}},{"entity":{"name":"checker","player":"1"},"destination":{"index":3}},{"entity":{"name":"checker","player":"1"},"destination":{"index":5}},{"entity":{"name":"checker","player":"1"},"destination":{"index":7}},{"entity":{"name":"checker","player":"1"},"destination":{"index":8}},{"entity":{"name":"checker","player":"1"},"destination":{"index":10}},{"entity":{"name":"checker","player":"1"},"destination":{"index":12}},{"entity":{"name":"checker","player":"1"},"destination":{"index":14}},{"entity":{"name":"checker","player":"1"},"destination":{"index":17}},{"entity":{"name":"checker","player":"1"},"destination":{"index":19}},{"entity":{"name":"checker","player":"1"},"destination":{"index":21}},{"entity":{"name":"checker","player":"1"},"destination":{"index":23}},{"entity":{"name":"checker","player":"0"},"destination":{"index":40}},{"entity":{"name":"checker","player":"0"},"destination":{"index":42}},{"entity":{"name":"checker","player":"0"},"destination":{"index":44}},{"entity":{"name":"checker","player":"0"},"destination":{"index":46}},{"entity":{"name":"checker","player":"0"},"destination":{"index":49}},{"entity":{"name":"checker","player":"0"},"destination":{"index":51}},{"entity":{"name":"checker","player":"0"},"destination":{"index":53}},{"entity":{"name":"checker","player":"0"},"destination":{"index":55}},{"entity":{"name":"checker","player":"0"},"destination":{"index":56}},{"entity":{"name":"checker","player":"0"},"destination":{"index":58}},{"entity":{"name":"checker","player":"0"},"destination":{"index":60}},{"entity":{"name":"checker","player":"0"},"destination":{"index":62}}],"minPlayers":2,"maxPlayers":2,"turn":{"activePlayers":{"currentPlayer":"jumpIfPossible"},"stages":{"jumpIfPossible":{"initialMoves":[{"type":"SetActivePlayers","options":{"currentPlayer":{"stage":"moveIfNoJump"}},"conditions":[{"type":"NoPossibleMoves"}]}],"moves":{"jumpChecker":{"type":"MoveEntity","arguments":{"entity":{"playerChoice":true,"constraints":[{"type":"Is","matcher":{"name":"checker","player":{"type":"ctxPath","path":["currentPlayer"]}}}]},"destination":{"playerChoice":true,"constraints":[{"type":"Is","matcher":{"type":"Space"}},{"type":"Not","conditions":[{"type":"Contains"}]},{"type":"Or","conditions":[{"type":"Contains","target":{"type":"RelativeCoordinates","location":{"type":"expression","expression":"player == \'0\' ? player0RelativeCoordinates : player1RelativeCoordinates","arguments":{"player0RelativeCoordinates":[-2,2],"player1RelativeCoordinates":[-2,-2],"player":{"type":"ctxPath","path":["currentPlayer"]}}}},"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}}]},{"type":"Contains","target":{"type":"RelativeCoordinates","location":{"type":"expression","expression":"player == \'0\' ? player0RelativeCoordinates : player1RelativeCoordinates","arguments":{"player0RelativeCoordinates":[2,2],"player1RelativeCoordinates":[2,-2],"player":{"type":"ctxPath","path":["currentPlayer"]}}}},"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}}]},{"type":"Contains","target":{"type":"RelativeCoordinates","location":{"type":"expression","expression":"player == \'0\' ? player0RelativeCoordinates : player1RelativeCoordinates","arguments":{"player0RelativeCoordinates":[-2,-2],"player1RelativeCoordinates":[-2,2],"player":{"type":"ctxPath","path":["currentPlayer"]}}}},"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}},{"type":"Is","matcher":{"isKing":true}}]},{"type":"Contains","target":{"type":"RelativeCoordinates","location":{"type":"expression","expression":"player == \'0\' ? player0RelativeCoordinates : player1RelativeCoordinates","arguments":{"player0RelativeCoordinates":[2,-2],"player1RelativeCoordinates":[2,2],"player":{"type":"ctxPath","path":["currentPlayer"]}}}},"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}},{"type":"Is","matcher":{"isKing":true}}]}]},{"type":"InLine","sequence":[{"conditions":[{"type":"Contains","conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}}]}]},{"conditions":[{"type":"Contains","conditions":[{"type":"Not","conditions":[{"type":"Is","matcher":{"player":{"type":"ctxPath","path":["currentPlayer"]}}}]}]}]},{"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["originalTarget"]}}]}]}]}},"then":[{"type":"ForEach","arguments":{"targets":{"type":"contextPath","path":["moveConditionResults",0,"conditionResults","argumentResults","destination","results",0,"results",3,"matches",0,1,"entities"]}},"move":{"type":"RemoveEntity","arguments":{"entity":{"type":"contextPath","path":["loopTarget"]}}}},{"type":"SetActivePlayers","options":{"currentPlayer":{"stage":"keepJumping"}}}]}}},"keepJumping":{"initialMoves":[{"type":"SetActivePlayers","options":{"currentPlayer":{"stage":"kingPieces"}},"conditions":[{"type":"NoPossibleMoves"}]}],"moves":{"jumpChecker":{"type":"MoveEntity","arguments":{"entity":{"constraints":[{"type":"Is","entity":{"type":"gamePath","path":["_meta","previousPayloads","jumpChecker","arguments","entity"]}}]},"destination":{"playerChoice":true,"constraints":[{"type":"Is","matcher":{"type":"Space"}},{"type":"Not","conditions":[{"type":"Contains"}]},{"type":"Or","conditions":[{"type":"Contains","target":{"type":"RelativeCoordinates","location":{"type":"expression","expression":"player == \'0\' ? player0RelativeCoordinates : player1RelativeCoordinates","arguments":{"player0RelativeCoordinates":[-2,2],"player1RelativeCoordinates":[-2,-2],"player":{"type":"ctxPath","path":["currentPlayer"]}}}},"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}}]},{"type":"Contains","target":{"type":"RelativeCoordinates","location":{"type":"expression","expression":"player == \'0\' ? player0RelativeCoordinates : player1RelativeCoordinates","arguments":{"player0RelativeCoordinates":[2,2],"player1RelativeCoordinates":[2,-2],"player":{"type":"ctxPath","path":["currentPlayer"]}}}},"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}}]},{"type":"Contains","target":{"type":"RelativeCoordinates","location":{"type":"expression","expression":"player == \'0\' ? player0RelativeCoordinates : player1RelativeCoordinates","arguments":{"player0RelativeCoordinates":[-2,-2],"player1RelativeCoordinates":[-2,2],"player":{"type":"ctxPath","path":["currentPlayer"]}}}},"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}},{"type":"Is","matcher":{"isKing":true}}]},{"type":"Contains","target":{"type":"RelativeCoordinates","location":{"type":"expression","expression":"player == \'0\' ? player0RelativeCoordinates : player1RelativeCoordinates","arguments":{"player0RelativeCoordinates":[2,-2],"player1RelativeCoordinates":[2,2],"player":{"type":"ctxPath","path":["currentPlayer"]}}}},"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}},{"type":"Is","matcher":{"isKing":true}}]}]},{"type":"InLine","sequence":[{"conditions":[{"type":"Contains","conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}}]}]},{"conditions":[{"type":"Contains","conditions":[{"type":"Not","conditions":[{"type":"Is","matcher":{"player":{"type":"ctxPath","path":["currentPlayer"]}}}]}]}]},{"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["originalTarget"]}}]}]}]}},"then":[{"type":"ForEach","arguments":{"targets":{"type":"contextPath","path":["moveConditionResults",0,"conditionResults","argumentResults","destination","results",0,"results",3,"matches",0,1,"entities"]}},"move":{"type":"RemoveEntity","arguments":{"entity":{"type":"contextPath","path":["loopTarget"]}}}},{"type":"SetActivePlayers","options":{"currentPlayer":{"stage":"kingPieces"}},"conditions":[{"type":"NoPossibleMoves"}]}]}}},"moveIfNoJump":{"initialMoves":[{"type":"PassTurn","conditions":[{"type":"NoPossibleMoves"}]}],"moves":{"moveChecker":{"type":"MoveEntity","arguments":{"entity":{"playerChoice":true,"constraints":[{"type":"Is","matcher":{"name":"checker","player":{"type":"ctxPath","path":["currentPlayer"]}}}]},"destination":{"playerChoice":true,"constraints":[{"type":"Is","matcher":{"type":"Space"}},{"type":"Not","conditions":[{"type":"Contains"}]},{"type":"Or","conditions":[{"type":"Contains","target":{"type":"RelativeCoordinates","location":{"type":"expression","expression":"player == \'0\' ? player0RelativeCoordinates : player1RelativeCoordinates","arguments":{"player0RelativeCoordinates":[-1,1],"player1RelativeCoordinates":[-1,-1],"player":{"type":"ctxPath","path":["currentPlayer"]}}}},"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}}]},{"type":"Contains","target":{"type":"RelativeCoordinates","location":{"type":"expression","expression":"player == \'0\' ? player0RelativeCoordinates : player1RelativeCoordinates","arguments":{"player0RelativeCoordinates":[1,1],"player1RelativeCoordinates":[1,-1],"player":{"type":"ctxPath","path":["currentPlayer"]}}}},"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}}]},{"type":"Contains","target":{"type":"RelativeCoordinates","location":{"type":"expression","expression":"player == \'0\' ? player0RelativeCoordinates : player1RelativeCoordinates","arguments":{"player0RelativeCoordinates":[-1,-1],"player1RelativeCoordinates":[-1,1],"player":{"type":"ctxPath","path":["currentPlayer"]}}}},"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}},{"type":"Is","matcher":{"isKing":true}}]},{"type":"Contains","target":{"type":"RelativeCoordinates","location":{"type":"expression","expression":"player == \'0\' ? player0RelativeCoordinates : player1RelativeCoordinates","arguments":{"player0RelativeCoordinates":[1,-1],"player1RelativeCoordinates":[1,1],"player":{"type":"ctxPath","path":["currentPlayer"]}}}},"conditions":[{"type":"Is","entity":{"type":"contextPath","path":["moveArguments","entity"]}},{"type":"Is","matcher":{"isKing":true}}]}]}]}},"then":[{"type":"SetActivePlayers","options":{"currentPlayer":{"stage":"kingPieces"}}}]}}},"kingPieces":{"initialMoves":[{"type":"ForEach","arguments":{"targets":{"type":"map","targets":{"matchMultiple":true,"constraints":[{"type":"Is","matcher":{"type":"Space"}},{"type":"Contains"},{"type":"Evaluate","expression":"(player == \'0\' and destinationCoordinates[1] == 0) or (player == \'1\' and destinationCoordinates[1] == 7)","arguments":{"player":{"type":"RelativePath","target":{"type":"contextPath","path":["originalTarget"]},"path":["entities",0,"rule","player"]},"destinationCoordinates":{"type":"Coordinates","target":{"type":"contextPath","path":["target"]}}}}]},"mapping":{"type":"contextPath","path":["loopTarget","entities",0]}}},"move":{"type":"SetState","arguments":{"entity":{"type":"contextPath","path":["loopTarget"]},"state":{"property":"isKing","value":true}}}},{"type":"EndTurn"}]}}},"endIf":[{"conditions":[{"type":"Evaluate","expression":"passCount > 0","arguments":{"passCount":{"type":"gamePath","path":["_meta","passedPlayers","length"]}}}],"result":{"winner":{"type":"expression","expression":"(currentPlayer + 1) % 2","arguments":{"currentPlayer":{"type":"ctxPath","path":["currentPlayer"]}}}}}]}');
 
 /***/ }),
 
@@ -46508,7 +46643,14 @@ function Game(_ref) {
   var bgioState = _ref.bgioState;
   var G = bgioState.G;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_abstract_choices_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "shared-board"
+    className: "shared-board",
+    style: {
+      width: '100%',
+      display: 'grid',
+      gridAutoFlow: 'column',
+      gridAutoRows: '1fr',
+      gap: '1em'
+    }
   }, G.sharedBoard.entities.map(function (entity, i) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_entity_entity_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A, {
       key: i,
@@ -46519,7 +46661,14 @@ function Game(_ref) {
   }, G.personalBoards.map(function (board, i) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       key: i,
-      className: "personal-board"
+      className: "personal-board",
+      style: {
+        width: '100%',
+        display: 'grid',
+        gridAutoFlow: 'column',
+        gridAutoRows: '1fr',
+        gap: '1em'
+      }
     }, board.entities.map(function (entity, j) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_entity_entity_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A, {
         key: j,
@@ -54159,7 +54308,7 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Paytone+One&display=swap);"]);
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `:root{--bright-sky: #01baefff;--tropical-teal: #0cbabaff;--dark-amethyst: #380036ff;--midnight-violet: #26081cff;--coffee-bean: #150811ff;--dark-orange: #F58F29}html{height:100%}body{margin:0;font-family:"Paytone One",sans-serif;height:100%}#root{display:flex;flex-direction:column;height:100%}.content{display:block;flex:1;background-color:var(--bright-sky)}.header{position:relative;padding:.5em;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 6px rgba(0,0,0,.15)}.home__splash{color:#fff;display:flex;align-items:center;justify-content:space-evenly;background:linear-gradient(to right, var(--bright-sky) 0%, var(--bright-sky) 20%, var(--dark-amethyst) 100%)}.home__tagline{padding-left:.7em}.home__description{padding:0 .7em;font-family:"Nunito",sans-serif}.home__explanation{margin-top:2em;padding:.7em;border-radius:1em;color:var(--dark-amethyst);font-family:"Nunito",sans-serif;font-weight:700;font-size:.8em}.header__home-button{font-size:1.2em;text-decoration:none;text-transform:uppercase;color:var(--bright-sky);text-align:center;line-height:1em}.header__home-button .lucide-cog{margin-right:-0.05em;margin-left:-0.05em;position:relative;top:.15em}.header__login-button,.header__logout-button{background-color:var(--dark-amethyst);color:#fff;font-family:inherit;border:none;padding:.3em .5em;cursor:pointer;border-radius:.2em}.shared-board>.space{margin:20px}.personal-board{margin:20px}.grid{box-sizing:border-box;background-color:#333;width:500px}.grid__cell{background-color:#fff;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:12px;color:#666;position:relative}.grid__cell .space{height:100%;width:100%}.roomGame{border:1px solid gray;border-radius:8px}.space{display:inline-block;border:1px solid gray;box-sizing:border-box;min-width:10px;min-height:10px}.space--clickable{background-color:rgba(144,238,144,.4)}.space--targeted{background-color:gray}.space__entity-grid{box-sizing:border-box}.entity{height:100%;width:100%;box-sizing:border-box;border:1px solid #000}.entity.player-0{background-color:pink}.entity--clickable{background-color:rgba(144,238,144,.4)}.entity.player-0.entity--clickable{background-color:#f0e0d8}.entity.player-1{background-color:#add8e6}.entity.player-1.entity--clickable{background-color:#afeeee}.debug-panel .pane{width:420px !important}`, ""]);
+___CSS_LOADER_EXPORT___.push([module.id, `:root{--bright-sky: #01baefff;--tropical-teal: #0cbabaff;--dark-amethyst: #380036ff;--midnight-violet: #26081cff;--coffee-bean: #150811ff;--dark-orange: #F58F29}html{height:100%;overscroll-behavior:none}body{margin:0;font-family:"Paytone One",sans-serif;height:100%}#root{display:flex;flex-direction:column;height:100%}.content{display:flex;flex-direction:column;flex:1;text-align:center;background:linear-gradient(to bottom, var(--bright-sky) 0%, var(--bright-sky) 50%, var(--tropical-teal) 80%, var(--tropical-teal) 100%)}.header{position:relative;padding:.5em;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 6px rgba(0,0,0,.15)}.home-splash{color:#fff;display:grid;grid-template-columns:repeat(auto-fit, minmax(135px, 1fr));gap:1em;align-items:center;background:linear-gradient(to right, var(--dark-amethyst) 0%, var(--dark-amethyst) 20%, var(--bright-sky) 100%)}.home-tagline{padding-left:.7em}.home-tagline__inner{display:inline-block;text-align:left}.home-description{padding:0 .7em;font-family:"Nunito",sans-serif}.home-explanation{display:grid;grid-template-columns:repeat(auto-fit, 200px);gap:1em;justify-content:center}.home-page-card{color:var(--dark-amethyst);font-family:"Nunito",sans-serif;font-weight:700;font-size:.8em;background-color:#fff;aspect-ratio:.8;padding:1em;border-radius:1em;text-align:center;box-shadow:0 4px 6px rgba(0,0,0,.15)}.home-page-card__icon{background-color:#fff;aspect-ratio:.8;padding:1em}.home-page-card__description{background-color:#fff;border-top:2px solid var(--tropical-teal);padding:1em}.header__home-button{font-size:1.2em;text-decoration:none;text-transform:uppercase;color:var(--bright-sky);text-align:center;line-height:1em}.header__home-button .lucide-cog{margin-right:-0.05em;margin-left:-0.05em;position:relative;top:.15em}.get-started-button{display:inline-block;background-color:var(--dark-orange);border:3px solid var(--dark-amethyst);color:var(--dark-amethyst);padding:.5em;font-size:1.5em;text-decoration:none;cursor:pointer;border-radius:.3em;margin:1.5em;box-shadow:0 4px 6px rgba(0,0,0,.15)}.header__login-button,.header__logout-button{background-color:var(--dark-amethyst);color:#fff;font-family:inherit;border:none;padding:.3em .5em;cursor:pointer;border-radius:.2em}.editor{display:flex;flex-direction:column;flex:1;margin:.7em}.editor section:has(.editor__input){flex:1}.shared-board{margin:20px 0}.grid{box-sizing:border-box;background-color:#333;max-width:500px}.grid__cell{background-color:#fff;aspect-ratio:1;display:flex;align-items:center;justify-content:center;color:#666;position:relative;overflow:hidden}.grid__cell .space{height:100%;width:100%}.roomGame{border:1px solid gray;border-radius:8px}.space{display:inline-block;box-sizing:border-box;min-width:10px;min-height:10px}.space:not(:has(.entity)){border:1px solid gray}.space--clickable{background-color:rgba(144,238,144,.4)}.space--targeted{background-color:gray}.space__entity-grid{box-sizing:border-box;grid-template-columns:repeat(auto-fit, minmax(30px, 1fr))}.space__entity-grid__cell{box-sizing:border-box;overflow:hidden}.entity{height:100%;width:100%;box-sizing:border-box;border:1px solid #000;overflow:hidden;font-size:.5em;font-family:"Nunito",sans-serif;font-weight:bold}.entity.player-0{background-color:pink}.entity--clickable{background-color:rgba(144,238,144,.4)}.entity.player-0.entity--clickable{background-color:#f0e0d8}.entity.player-1{background-color:#add8e6}.entity.player-1.entity--clickable{background-color:#afeeee}.debug-panel .pane{max-width:420px !important}.sample-game-select__inner{font-family:"Nunito",sans-serif;max-width:100%}.sample-game-select__option{font-family:inherit;max-width:100%}.editor-game-name,.editor-num-players{color:#fff}.editor__input{margin:.7em 0}.editor__controls{display:flex;flex-wrap:wrap;margin:.5em;gap:.3em;align-items:center}.editor-game-name__input,.editor-num-players__input{font-family:"Nunito",sans-serif;margin-left:1em;position:relative;bottom:.2em}.editor-game-name__input{width:10em}.editor-num-players__input{width:3em}.editor-buttons{flex:1;text-align:center;white-space:nowrap}.editor-buttons__button{display:inline-block;font-family:inherit;background-color:var(--dark-orange);border:3px solid var(--dark-amethyst);color:var(--dark-amethyst);padding:.2em .3em;font-size:.8em;text-decoration:none;cursor:pointer;border-radius:.3em;box-shadow:0 4px 6px rgba(0,0,0,.15)}.editor-buttons__button:last-child{margin-left:1em}.testing-game{margin:2em}.testing-game__title{margin-bottom:2em}@media(min-width: 600px){.sample-game-select__inner{font-size:inherit}.editor{font-size:1.4em}.editor-game-name__input,.editor-num-players__input{font-size:inherit;position:static}.editor__controls{gap:1em}}`, ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -58929,45 +59078,80 @@ var exampleGames = [{
   name: 'DEBUG Discharged for Emotional Instability Eights',
   rules: JSON.stringify(_server_eights2_json__WEBPACK_IMPORTED_MODULE_4__, null, 2)
 }];
+var RULES_LOCALSTORAGE_KEY = 'bge-editor-game-rules';
+var NAME_LOCALSTORAGE_KEY = 'bge-editor-game-name';
+var NUM_PLAYERS_LOCALSTORAGE_KEY = 'bge-editor-num-players';
+var gameRulesFromStorage = localStorage.getItem(RULES_LOCALSTORAGE_KEY);
+var gameNameFromStorage = localStorage.getItem(NAME_LOCALSTORAGE_KEY);
+var numPlayersFromStorage = +localStorage.getItem(NUM_PLAYERS_LOCALSTORAGE_KEY);
 function GameEditor(_ref) {
   var initialGameName = _ref.initialGameName,
     initialGameRules = _ref.initialGameRules,
-    saveGame = _ref.saveGame;
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(initialGameRules || ''),
+    initialNumPlayers = _ref.initialNumPlayers,
+    handleTestGame = _ref.handleTestGame,
+    handleCreateRoom = _ref.handleCreateRoom;
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(initialGameRules || gameRulesFromStorage || ''),
     _useState2 = _slicedToArray(_useState, 2),
     gameRules = _useState2[0],
     setGameRules = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(initialGameName || ''),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(initialGameName || gameNameFromStorage || ''),
     _useState4 = _slicedToArray(_useState3, 2),
     gameName = _useState4[0],
     setGameName = _useState4[1];
-  var setGameMeta = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(lodash_debounce__WEBPACK_IMPORTED_MODULE_1___default()(function (gName, gRules) {
-    saveGame({
-      gameName: gName,
-      gameRules: gRules
-    });
-  }, 500), []);
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    setGameMeta(gameName, gameRules);
-    return function () {
-      setGameMeta.cancel();
-    };
-  }, [setGameMeta, gameName, gameRules]);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, exampleGames.map(function (_ref2, i) {
-    var name = _ref2.name,
-      rules = _ref2.rules;
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(initialNumPlayers || numPlayersFromStorage || 2),
+    _useState6 = _slicedToArray(_useState5, 2),
+    numPlayers = _useState6[0],
+    setNumPlayers = _useState6[1];
+  var handleGameRulesChange = function handleGameRulesChange(newGameRules) {
+    localStorage.setItem(RULES_LOCALSTORAGE_KEY, newGameRules);
+    localStorage.setItem(NAME_LOCALSTORAGE_KEY, gameName);
+    localStorage.setItem(NUM_PLAYERS_LOCALSTORAGE_KEY, numPlayers);
+    setGameRules(newGameRules);
+  };
+  var handleGameNameChange = function handleGameNameChange(newGameName) {
+    localStorage.setItem(RULES_LOCALSTORAGE_KEY, gameRules);
+    localStorage.setItem(NAME_LOCALSTORAGE_KEY, newGameName);
+    localStorage.setItem(NUM_PLAYERS_LOCALSTORAGE_KEY, numPlayers);
+    setGameName(newGameName);
+  };
+  var handleNumPlayersChange = function handleNumPlayersChange(newNumPlayers) {
+    localStorage.setItem(RULES_LOCALSTORAGE_KEY, gameRules);
+    localStorage.setItem(NAME_LOCALSTORAGE_KEY, gameName);
+    localStorage.setItem(NUM_PLAYERS_LOCALSTORAGE_KEY, newNumPlayers);
+    setNumPlayers(+newNumPlayers);
+  };
+  var handleGameSelect = function handleGameSelect(e) {
+    var selectedIndex = e.target.value;
+    if (selectedIndex !== "") {
+      var selectedGame = exampleGames[selectedIndex];
+      setGameRules(selectedGame.rules);
+      setGameName(selectedGame.name);
+    }
+  };
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "editor"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "sample-game-select"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("select", {
+    className: "sample-game-select__inner",
+    onChange: handleGameSelect,
+    defaultValue: ""
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", {
+    value: "",
+    className: "sample-game-select__option",
+    disabled: true
+  }, "Select a legally distinct sample game..."), exampleGames.map(function (game, i) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", {
       key: i,
-      onClick: function onClick() {
-        setGameRules(rules);
-        setGameName(name);
-      }
-    }, name);
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_monaco_editor_react__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
+      value: i,
+      className: "sample-game-select__option"
+    }, game.name);
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_monaco_editor_react__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
     height: "400px",
+    className: "editor__input",
     defaultLanguage: "json",
     value: gameRules,
-    onChange: setGameRules,
+    onChange: handleGameRulesChange,
     theme: "vs-dark",
     options: {
       minimap: {
@@ -58977,15 +59161,46 @@ function GameEditor(_ref) {
       formatOnPaste: true,
       formatOnType: true
     }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", null, "Game Name:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
-    onClick: function onClick(e) {
-      e.stopPropagation();
-    },
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "editor__controls"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "editor-game-name"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", null, "Game Name:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+    className: "editor-game-name__input",
     onChange: function onChange(e) {
-      setGameName(e.target.value);
+      handleGameNameChange(e.target.value);
     },
     value: gameName
-  })))));
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "editor-num-players"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", null, "Number of Players:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+    className: "editor-num-players__input",
+    onChange: function onChange(e) {
+      handleNumPlayersChange(e.target.value);
+    },
+    value: numPlayers,
+    type: "number"
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "editor-buttons"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "editor-buttons__button",
+    onClick: function onClick() {
+      handleTestGame({
+        gameName: gameName,
+        gameRules: gameRules,
+        numPlayers: numPlayers
+      });
+    }
+  }, "Test Game"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "editor-buttons__button ",
+    onClick: function onClick() {
+      handleCreateRoom({
+        gameName: gameName,
+        gameRules: gameRules,
+        numPlayers: numPlayers
+      });
+    }
+  }, "Create Room"))));
 }
 
 /***/ }),
@@ -64710,7 +64925,8 @@ function Grid(_ref) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "grid",
     style: {
-      display: 'grid',
+      display: 'inline-grid',
+      width: '100%',
       gridTemplateColumns: "repeat(".concat(width, ", 1fr)"),
       gridTemplateRows: "repeat(".concat(height, ", 1fr)")
     }
