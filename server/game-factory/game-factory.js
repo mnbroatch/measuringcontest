@@ -92,11 +92,16 @@ export default function gameFactory (gameRules, rulesHash) {
                 )
             )
         ) {
+          // may want to hide entities inside spaces instead?
           if (entity.spaces) {
-            entity.spaces = []
+            entity.spaces = entity.rule.hideLength
+              ? []
+              : entity.spaces.map(() => G.bank.createEntity())
           }
           if (entity.entities) {
-            entity.entities = []
+            entity.entities = entity.rule.hideLength
+              ? []
+              : entity.entities.map(() => G.bank.createEntity())
           }
         }
       }))

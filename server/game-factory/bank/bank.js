@@ -11,7 +11,7 @@ class Bank {
     this.slots = entityRules.map(rule => new BankSlot(rule, this))
   }
 
-  createEntity (definition, options) {
+  createEntity (definition = {}, options) {
     const entity = new (registry[definition.type || 'Entity'])(
       {
         bank: this,

@@ -162,8 +162,9 @@ body {
   flex: 1;
 }
 
-.shared-board {
-  margin: 20px 0;
+.shared-board, .personal-board {
+  padding: 20px 0;
+  border-bottom: 1px solid white;
 }
 
 .grid {
