@@ -14,11 +14,12 @@ const BOARDGAME_SERVER_URL = 'https://gameserver.measuringcontest.com';
 
 const RoomGame = {
   name: 'bgestagingroom',
-  setup: () => ({
+  setup: (_, initialState) => ({
     players: { '1': { name: 'Room Creator' } },
     status: 'waiting',
     gameRules: '',
     gameName: '',
+    ...initialState,
   }),
   turn: {
     activePlayers: ActivePlayers.ALL,
@@ -30,12 +31,17 @@ const RoomGame = {
       }
     },
     leave: ({G, playerID}) => {
-      if (playerID !== '1' && G.status === 'waiting') {
+      if (playerID !== '1') {
         delete G.players[playerID]
       }
     },
+    kick: ({G, playerID}, targetPlayerID) => {
+      if (playerID === '0' && targetPlayerID !== '1') {
+        delete G.players[targetPlayerID];
+      }
+    },
     setGameMeta: ({G, playerID}, { gameRules, gameName }) => {
-      if (playerID === '1' && G.status === 'waiting') {
+      if ((playerID === '0' || playerID === '1') && G.status === 'waiting') {
         G.gameRules = gameRules
         G.gameName = gameName
       }

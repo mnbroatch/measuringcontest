@@ -1,56 +1,13 @@
 import { useEffect, useRef } from 'react'
 import { useParams } from '@tanstack/react-router';
 import { useQueryClient } from '@tanstack/react-query'
-import { ActivePlayers } from 'boardgame.io/core';
 import { deserialize } from "wackson";
 import { useJoinRoomMutation } from "../queries/use-join-room-mutation.js";
 import { useRoomQuery } from "../queries/use-room-query.js"
 import { useGameserverConnection } from "./use-gameserver-connection.js";
 import { registry } from "../../server/game-factory/registry.js";
+import RoomGame from "../../server/room-game.js";
 import preparePayload from "../utils/prepare-payload.js";
-
-const RoomGame = {
-  name: 'bgestagingroom',
-  setup: () => ({
-    players: { '1': { name: 'Room Creator' } },
-    status: 'waiting',
-    gameRules: '',
-    gameName: '',
-  }),
-  turn: {
-    activePlayers: ActivePlayers.ALL,
-  },
-  moves: {
-    join: ({G, playerID}, name) => {
-      if (G.status === 'waiting') {
-        G.players[playerID] = { name };
-      }
-    },
-    leave: ({G, playerID}) => {
-      if (playerID !== '1' && G.status === 'waiting') {
-        delete G.players[playerID]
-      }
-    },
-    setGameMeta: ({G, playerID}, { gameRules, gameName }) => {
-      if ((playerID === '0' || playerID === '1') && G.status === 'waiting') {
-        G.gameRules = gameRules
-        G.gameName = gameName
-      }
-    },
-    gameCreated: ({G, playerID}, newGameId) => {
-      if (playerID === '0' && G.status === 'waiting') {
-        G.gameId = newGameId;
-        G.status = 'started';
-      }
-    },
-    gameDeleted: ({G, playerID}) => {
-      if (playerID === '0') {
-        delete G.gameId;
-        G.status = 'waiting';
-      }
-    },
-  },
-};
 
 export default function useRoomConnection () {
   const { roomcode: roomCode } = useParams({})

@@ -2,60 +2,12 @@ import { Readable } from "stream";
 import jwt from 'jsonwebtoken';
 import { SSMClient, GetParameterCommand } from "@aws-sdk/client-ssm";
 import getRawBody from 'raw-body'
-import { ActivePlayers } from 'boardgame.io/dist/cjs/core.js';
 import { ProcessGameConfig } from 'boardgame.io/dist/cjs/internal.js';
 import makeServer from './guts.js';
 import gameFactory from './game-factory/game-factory.js';
+import RoomGame from './room-game.js';
 
 const ssmClient = new SSMClient({ region: 'us-west-1' });
-
-const RoomGame = {
-  name: 'bgestagingroom',
-  setup: () => ({
-    players: { '1': { name: 'Room Creator' } },
-    status: 'waiting',
-    gameRules: '',
-    gameName: '',
-  }),
-  turn: {
-    activePlayers: ActivePlayers.ALL,
-  },
-  moves: {
-    join: ({G, playerID}, name) => {
-      if (G.status === 'waiting') {
-        G.players[playerID] = { name };
-      }
-    },
-    leave: ({G, playerID}) => {
-      if (playerID !== '1') {
-        delete G.players[playerID]
-      }
-    },
-    kick: ({G, playerID}, targetPlayerID) => {
-      if (playerID === '0' && targetPlayerID !== '1') {
-        delete G.players[targetPlayerID];
-      }
-    },
-    setGameMeta: ({G, playerID}, { gameRules, gameName }) => {
-      if ((playerID === '0' || playerID === '1') && G.status === 'waiting') {
-        G.gameRules = gameRules
-        G.gameName = gameName
-      }
-    },
-    gameCreated: ({G, playerID}, newGameId) => {
-      if (playerID === '0' && G.status === 'waiting') {
-        G.gameId = newGameId;
-        G.status = 'started';
-      }
-    },
-    gameDeleted: ({G, playerID}) => {
-      if (playerID === '0') {
-        delete G.gameId;
-        G.status = 'waiting';
-      }
-    },
-  },
-};
 
 const INITIAL_GAMES = [RoomGame]
 const BOARDGAME_PORT = 8000;

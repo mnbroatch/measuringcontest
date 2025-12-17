@@ -16,11 +16,12 @@ const BOARDGAME_SERVER_URL = 'https://gameserver.measuringcontest.com';
 
 const RoomGame = {
   name: 'bgestagingroom',
-  setup: () => ({
+  setup: (_, initialState) => ({
     players: { '1': { name: 'Room Creator' } },
     status: 'waiting',
     gameRules: '',
     gameName: '',
+    ...initialState,
   }),
   turn: {
     activePlayers: ActivePlayers.ALL,
@@ -48,7 +49,7 @@ const RoomGame = {
       }
     },
     gameCreated: ({G, playerID}, newGameId) => {
-      if (playerID === '0') {
+      if (playerID === '0' && G.status === 'waiting') {
         G.gameId = newGameId;
         G.status = 'started';
       }

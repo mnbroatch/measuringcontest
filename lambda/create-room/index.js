@@ -56,7 +56,13 @@ exports.handler = async (event) => {
         "Authorization": `Bearer ${serverToken}`
       },
       body: JSON.stringify({ 
-        numPlayers: MAX_USERS_IN_LOBBY + 1 // +1 for system user
+        numPlayers: MAX_USERS_IN_LOBBY + 1, // +1 for system user
+        setupData: {
+          initialState: {
+            gameRules: body.gameRules,
+            gameName: body.gameName,
+          }
+        }
       }),
     });
 
