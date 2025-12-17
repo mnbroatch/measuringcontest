@@ -319,6 +319,12 @@ body {
   box-shadow: 0 4px 6px rgba(0,0,0,0.15);
 }
 
+.editor-buttons__button--login {
+  background-color: var(--dark-amethyst);
+  border: 3px solid var(--dark-amethyst);
+  color: white;
+}
+
 .editor-buttons__button:last-child {
   margin-left: 1em;
 }

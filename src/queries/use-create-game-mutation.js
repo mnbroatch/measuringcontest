@@ -12,7 +12,7 @@ export const useCreateGameMutation = (roomCode) => {
     mutationFn: ({ gameRules, gameName, players }) => makeAuthenticatedRequest(
       `${apiUrl}/rooms/${roomCode}/games`,
       auth.idToken,
-      { 
+      {
         method: 'POST',
         body: { gameRules, gameName, players },
       }

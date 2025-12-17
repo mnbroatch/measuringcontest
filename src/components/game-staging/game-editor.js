@@ -54,6 +54,7 @@ export default function GameEditor ({
   initialNumPlayers,
   handleTestGame,
   handleCreateRoom,
+  auth,
 }) {
   const [gameRules, setGameRules] = useState(initialGameRules || gameRulesFromStorage || '')
   const [gameName, setGameName] = useState(initialGameName || gameNameFromStorage || '')
@@ -158,12 +159,22 @@ export default function GameEditor ({
           >
             Test Game
           </button>
-          <button
-            className="editor-buttons__button "
-            onClick={() => { handleCreateRoom({ gameName, gameRules, numPlayers }) }}
-          >
-            Create Room
-          </button>
+          {!auth.loading && !auth.idToken && (
+            <button
+              className="editor-buttons__button editor-buttons__button--login"
+              onClick={auth.login}
+            >
+              Log in to Create Room
+            </button>
+          )}
+          {!auth.loading && auth.idToken && (
+            <button
+              className="editor-buttons__button "
+              onClick={() => { handleCreateRoom({ gameName, gameRules, numPlayers }) }}
+            >
+              Create Room
+            </button>
+          )}
         </div>
       </div>
     </div>
