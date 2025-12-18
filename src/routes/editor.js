@@ -1,60 +1,41 @@
 import React, { useState } from 'react'
-import { createFileRoute } from '@tanstack/react-router'
-import useSinglePlayerGame from "../hooks/use-single-player-game.js";
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import GameEditor from "../components/game-staging/game-editor.js";
-import PlayGame from "../components/play-game/play-game.js";
-import GameStatus from "../components/game-status/game-status.js";
 import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
 import { useCreateRoomMutation } from "../queries/use-create-room-mutation.js";
-
-const SCREEN_STATE_EDITING = 'editing'
-const SCREEN_STATE_TESTING = 'testing'
+import { useMyRoomsQuery } from "../queries/use-my-rooms-query.js";
 
 export default function Editor () {
-  const [screenState, setScreenState] = useState(SCREEN_STATE_EDITING)
-  const [savedGameRules, setSavedGameRules] = useState(null)
-  const [savedGameName, setSavedGameName] = useState(null)
-  const [savedNumPlayers, setSavedNumPlayers] = useState(null)
+  const navigate = useNavigate()
   const createRoomMutation = useCreateRoomMutation()
-  const gameConnection = useSinglePlayerGame(savedGameRules, savedNumPlayers)
+  const myRooms = useMyRoomsQuery()
+  const roomCode = myRooms.data?.[0]
   const auth = useCognitoAuth()
 
   return (
-    <>
-      {screenState === SCREEN_STATE_EDITING && (
-        <GameEditor
-          auth={auth}
-          handleTestGame={({ gameRules, gameName, numPlayers }) => {
-            setSavedGameRules(gameRules)
-            setSavedGameName(gameName)
-            setSavedNumPlayers(numPlayers)
-            setScreenState(SCREEN_STATE_TESTING)
-          }}
-          handleCreateRoom={async ({ gameRules, gameName }) => {
-            const x = await createRoomMutation.mutateAsync({gameRules, gameName})
-            console.log('x', x)
-          }}
-        />
-      )}
-      {gameConnection.state && screenState === SCREEN_STATE_TESTING && (
-        <div className="testing-game">
-          <div className="testing-game__title">
-            Testing Game: {savedGameName}
-            <button
-              className="editor-buttons__button"
-              onClick={() => { setScreenState(SCREEN_STATE_EDITING) }}
-            >
-              Back to Editor
-            </button>
-          </div>
-          <PlayGame gameConnection={gameConnection} />
-          <GameStatus gameConnection={gameConnection} />
-        </div>
-      )}
-    </>
+    <GameEditor
+      auth={auth}
+      handleCreateRoom={async ({ gameRules, gameName }) => {
+        await createRoomMutation.mutateAsync({gameRules, gameName})
+        navigate({
+          to: '/rooms/$roomcode',
+          params: { roomcode: roomCode }
+        })
+      }}
+      roomCode={roomCode}
+      goToRoom={() => {
+        navigate({
+          to: '/rooms/$roomcode',
+          params: { roomcode: roomCode }
+        })
+      }}
+    />
   )
 }
 
 export const Route = createFileRoute('/editor')({
-  component: Editor
+  loader: async () => {
+    return useMyRoomsQuery.preload()
+  },
+  component: Editor,
 })

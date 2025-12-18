@@ -70,7 +70,6 @@ class Bank {
     if (!slot) {
       console.error(`No matching slot for ${JSON.stringify(rule)}`)
     }
-    console.log('slot', slot)
     return slot.getOne(bgioArguments, { state: rule.state }, context)
   }
 

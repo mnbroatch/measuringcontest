@@ -14,10 +14,14 @@ import RoomGame from "../components/game-staging/room-game.js";
 import GamePreview from "../components/game-staging/game-preview.js";
 import GameEditor from "../components/game-staging/game-editor.js";
 
+const SCREEN_STATE_EDITING = 'editing'
+const SCREEN_STATE_WAITING = 'waiting'
+
 export default function RoomPage () {
   const { roomcode: roomCode } = Route.useParams()
   const navigate = useNavigate()
-  const { userId } = useCognitoAuth()
+  const auth = useCognitoAuth()
+  const userId = auth.userId
   const leaveRoomMutation = useLeaveRoomMutation(roomCode)
 
   const room = useRoomQuery(roomCode)
@@ -35,6 +39,7 @@ export default function RoomPage () {
   const iAmInGame = room.data.players && userId in room.data.players
 
   const [name, setName] = useState(players?.[playerID]?.name)
+  const [screenState, setScreenState] = useState(SCREEN_STATE_WAITING)
   const createGameMutation = useCreateGameMutation(roomCode)
   const deleteGameMutation = useDeleteGameMutation(roomCode, gameId)
 
@@ -83,23 +88,28 @@ export default function RoomPage () {
           gameName={gameName}
         />
       )}
-      {status === 'waiting' && iAmRoomCreator && (
+      {status === 'waiting' && iAmRoomCreator && screenState === SCREEN_STATE_WAITING && (
         <>
-          <GameEditor
-            initialGameRules={gameRules}
-            initialGameName={gameName}
-            saveGame={roomConnection.client.moves.setGameMeta}
-          />
+          <button onClick={() => { setScreenState(SCREEN_STATE_EDITING) }}>
+            Edit Game
+          </button>
           <button onClick={() => {
             createGameMutation.mutate({
               gameRules,
               gameName,
-              players
+              players,
             })
           }}>
             Create Game
           </button>
         </>
+      )}
+      {status === 'waiting' && iAmRoomCreator && screenState === SCREEN_STATE_EDITING && (
+        <GameEditor
+          auth={auth}
+          roomCode={roomCode}
+          goToRoom={() => { setScreenState(SCREEN_STATE_WAITING) }}
+        />
       )}
       {status === 'started' && iAmInGame && (
         <PlayGame gameConnection={gameConnection} />

@@ -1,5 +1,5 @@
-import React, { useState, useCallback, useEffect } from 'react'
-import debounce from 'lodash/debounce'
+import React, { useState } from 'react'
+import Editor from '@monaco-editor/react';
 import ticTacToe from "../../../server/tic-tac-toe.json";
 import eights from "../../../server/eights.json";
 import eights2 from "../../../server/eights2.json";
@@ -7,7 +7,12 @@ import connectFour from "../../../server/connect-four.json";
 import reversi from "../../../server/reversi.json";
 import reversi2 from "../../../server/reversi2.json";
 import checkers from "../../../server/checkers.json";
-import Editor from '@monaco-editor/react';
+import PlayGame from "../play-game/play-game.js";
+import GameStatus from "../game-status/game-status.js";
+import useSinglePlayerGame from "../../hooks/use-single-player-game.js";
+
+const SCREEN_STATE_EDITING = 'editing'
+const SCREEN_STATE_TESTING = 'testing'
 
 const exampleGames = [
   {
@@ -52,13 +57,24 @@ export default function GameEditor ({
   initialGameName,
   initialGameRules,
   initialNumPlayers,
-  handleTestGame,
   handleCreateRoom,
+  goToRoom,
+  roomCode,
   auth,
 }) {
+  const [screenState, setScreenState] = useState(SCREEN_STATE_EDITING)
+
+  // controlled input state
   const [gameRules, setGameRules] = useState(initialGameRules || gameRulesFromStorage || '')
   const [gameName, setGameName] = useState(initialGameName || gameNameFromStorage || '')
   const [numPlayers, setNumPlayers] = useState(initialNumPlayers || numPlayersFromStorage || 2)
+
+  // state that is frozen for testing (performance optimization so game connection
+  // isn't re-established on every keystroke)
+  const [savedGameRules, setSavedGameRules] = useState(null)
+  const [savedNumPlayers, setSavedNumPlayers] = useState(null)
+
+  const gameConnection = useSinglePlayerGame(savedGameRules, savedNumPlayers)
   
   const handleGameRulesChange = (newGameRules) => {
     localStorage.setItem(RULES_LOCALSTORAGE_KEY, newGameRules)
@@ -89,94 +105,125 @@ export default function GameEditor ({
       setGameName(selectedGame.name);
     }
   };
-  
+
   return (
-    <div className="editor">
-      <div className="sample-game-select">
-        <select
-          className="sample-game-select__inner"
-          onChange={handleGameSelect}
-          defaultValue=""
-        >
-          <option
-            value=""
-            className="sample-game-select__option"
-            disabled
-          >
-            Select a legally distinct sample game...
-          </option>
-          {exampleGames.map((game, i) => (
-            <option
-              key={i}
-              value={i}
-              className="sample-game-select__option"
+    <>
+      {screenState === SCREEN_STATE_EDITING && (
+        <div className="editor">
+          <div className="sample-game-select">
+            <select
+              className="sample-game-select__inner"
+              onChange={handleGameSelect}
+              defaultValue=""
             >
-              {game.name}
-            </option>
-          ))}
-        </select>
-      </div>
-      <Editor
-        height="400px"
-        className="editor__input"
-        defaultLanguage="json"
-        value={gameRules}
-        onChange={handleGameRulesChange}
-        theme="vs-dark"
-        options={{
-          minimap: { enabled: false },
-          fontSize: 14,
-          formatOnPaste: true,
-          formatOnType: true,
-        }}
-      />
-      <div className="editor__controls">
-        <div className="editor-game-name">
-          <label>
-            Game Name:
-            <input
-              className="editor-game-name__input"
-              onChange={(e) => {handleGameNameChange(e.target.value)}}
-              value={gameName}
-            />
-          </label>
+              <option
+                value=""
+                className="sample-game-select__option"
+                disabled
+              >
+                Select a legally distinct sample game...
+              </option>
+              {exampleGames.map((game, i) => (
+                <option
+                  key={i}
+                  value={i}
+                  className="sample-game-select__option"
+                >
+                  {game.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <Editor
+            height="400px"
+            className="editor__input"
+            defaultLanguage="json"
+            value={gameRules}
+            onChange={handleGameRulesChange}
+            theme="vs-dark"
+            options={{
+              minimap: { enabled: false },
+              fontSize: 14,
+              formatOnPaste: true,
+              formatOnType: true,
+            }}
+          />
+          <div className="editor__controls">
+            <div className="editor-game-name">
+              <label>
+                Game Name:
+                <input
+                  className="editor-game-name__input"
+                  onChange={(e) => {handleGameNameChange(e.target.value)}}
+                  value={gameName}
+                />
+              </label>
+            </div>
+            <div className="editor-num-players">
+              <label>
+                Number of Players:
+                <input
+                  className="editor-num-players__input"
+                  onChange={(e) => {handleNumPlayersChange(e.target.value)}}
+                  value={numPlayers}
+                  type="number"
+                />
+              </label>
+            </div>
+            <div className="editor-buttons">
+              <button
+                className="editor-buttons__button"
+                onClick={() => {
+                  setSavedGameRules(gameRules)
+                  setSavedNumPlayers(numPlayers)
+                  setScreenState(SCREEN_STATE_TESTING)
+                }}
+              >
+                Test Game
+              </button>
+              {!auth.loading && !auth.idToken && (
+                <button
+                  className="editor-buttons__button editor-buttons__button--login"
+                  onClick={auth.login}
+                >
+                  Log in to Create Room
+                </button>
+              )}
+              {!auth.loading && auth.idToken && !roomCode && (
+                <button
+                  className="editor-buttons__button"
+                  onClick={() => { handleCreateRoom({ gameName, gameRules, numPlayers }) }}
+                >
+                  Create Room
+                </button>
+              )}
+              {!auth.loading && auth.idToken && roomCode && (
+                <button
+                  className="editor-buttons__button"
+                  onClick={goToRoom}
+                >
+                  Go To Room
+                </button>
+              )}
+            </div>
+          </div>
         </div>
-        <div className="editor-num-players">
-          <label>
-            Number of Players:
-            <input
-              className="editor-num-players__input"
-              onChange={(e) => {handleNumPlayersChange(e.target.value)}}
-              value={numPlayers}
-              type="number"
-            />
-          </label>
-        </div>
-        <div className="editor-buttons">
-          <button
-            className="editor-buttons__button"
-            onClick={() => { handleTestGame({ gameName, gameRules, numPlayers }) }}
-          >
-            Test Game
-          </button>
-          {!auth.loading && !auth.idToken && (
+      )}
+      {gameConnection.state && screenState === SCREEN_STATE_TESTING && (
+        <div className="testing-game">
+          <div className="testing-game__title">
+            Testing Game: {gameName}
             <button
-              className="editor-buttons__button editor-buttons__button--login"
-              onClick={auth.login}
+              className="editor-buttons__button"
+              onClick={() => { setScreenState(SCREEN_STATE_EDITING) }}
             >
-              Log in to Create Room
+              Back to Editor
             </button>
-          )}
-          {!auth.loading && auth.idToken && (
-            <button
-              className="editor-buttons__button "
-              onClick={() => { handleCreateRoom({ gameName, gameRules, numPlayers }) }}
-            >
-              Create Room
-            </button>
-          )}
+          </div>
+          <PlayGame gameConnection={gameConnection} />
+          <GameStatus gameConnection={gameConnection} />
         </div>
-      </div>
-    </div>
+      )}
+    </>
   )
 }
