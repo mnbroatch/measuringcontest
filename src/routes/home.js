@@ -1,9 +1,13 @@
 import React from 'react'
+import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
 import { createFileRoute, Link } from '@tanstack/react-router'
 import HomePageCard from '../components/home-page-card/home-page-card.js'
+import JoinRoomButton from '../components/join-room-button/join-room-button.js'
 import { PencilRuler, Users } from 'lucide-react'
 
 export default function Home () {
+  const auth = useCognitoAuth()
+
   return (
     <div className="home">
       <div className="home-splash">
@@ -24,12 +28,25 @@ export default function Home () {
           A platform for prototyping board game rules design
         </h5>
       </div>
-      <Link
-        className="get-started-button"
-        to="/editor"
-      >
-        Get Started!
-      </Link>
+      <div className="home-buttons">
+        <Link
+          className="home__button home__button--get-started"
+          to="/editor"
+        >
+          Get Started!
+        </Link>
+        {!auth.loading && !auth.idToken && (
+          <button
+          className="home__button home__button--login"
+            onClick={auth.login}
+          >
+            Log in to Join a Room
+          </button>
+        )}
+        {!auth.loading && auth.idToken && (
+          <JoinRoomButton />
+        )}
+      </div>
       <div className="home-explanation">
         <HomePageCard
           iconComponent={PencilRuler}

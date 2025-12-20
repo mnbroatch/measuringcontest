@@ -29,12 +29,12 @@ async function getJwtSecret() {
 
 const RoomGame = {
   name: 'bgestagingroom',
-  setup: (_, initialState) => ({
+  setup: (_, setupData) => ({
     players: { '1': { name: 'Room Creator' } },
     status: 'waiting',
     gameRules: '',
     gameName: '',
-    ...initialState,
+    ...setupData?.initialState,
   }),
   turn: {
     activePlayers: ActivePlayers.ALL,

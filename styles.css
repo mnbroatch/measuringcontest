@@ -127,18 +127,31 @@ body {
   top: .15em;
 }
 
-.get-started-button {
-  display: inline-block;
-  background-color: var(--dark-orange);
+.home-buttons {
+  margin: 1.5em;
+}
+
+.home__button, .join-room-button {
   border: 3px solid var(--dark-amethyst);
-  color: var(--dark-amethyst);
+  display: inline-block;
   padding: .5em;
   font-size: 1.5em;
+  font-family: inherit;
   text-decoration: none;
   cursor: pointer;
   border-radius: .3em;
-  margin: 1.5em;
   box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+  margin: .5em;
+}
+
+.home__button--get-started, .join-room-button {
+  background-color: var(--dark-orange);
+  color: var(--dark-amethyst);
+}
+
+.home__button--login  {
+  background-color: var(--dark-amethyst);
+  color: white;
 }
 
 .header__login-button, .header__logout-button {
@@ -149,6 +162,15 @@ body {
   padding: .3em .5em;
   cursor: pointer;
   border-radius: .2em;
+}
+
+.join-room-button__input {
+  font-size: .8em;
+  margin-left: .5em;
+  width: 4em;
+  padding: 0 .5em;
+  position: relative;
+  bottom: .1em;
 }
 
 .editor {

@@ -16,7 +16,7 @@ export default function Editor () {
     <GameEditor
       auth={auth}
       handleCreateRoom={async ({ gameRules, gameName }) => {
-        await createRoomMutation.mutateAsync({gameRules, gameName})
+        const roomCode = await createRoomMutation.mutateAsync({gameRules, gameName})
         navigate({
           to: '/rooms/$roomcode',
           params: { roomcode: roomCode }
