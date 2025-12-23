@@ -75,6 +75,7 @@ export default function GameEditor ({
   const [savedNumPlayers, setSavedNumPlayers] = useState(null)
 
   const gameConnection = useSinglePlayerGame(savedGameRules, savedNumPlayers)
+  console.log('gameConnection', gameConnection)
   
   const handleGameRulesChange = (newGameRules) => {
     localStorage.setItem(RULES_LOCALSTORAGE_KEY, newGameRules)
@@ -200,7 +201,7 @@ export default function GameEditor ({
               {!auth.loading && auth.idToken && roomCode && (
                 <button
                   className="editor-buttons__button"
-                  onClick={goToRoom}
+                  onClick={() => goToRoom({ gameName, gameRules })}
                 >
                   Go To Room
                 </button>

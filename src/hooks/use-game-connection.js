@@ -27,6 +27,7 @@ export default function useGameConnection () {
     game: gameToUse,
     boardgamePlayerID,
     clientToken,
+    debug: false,
     enabled: joinGameMutation.isSuccess
   })
 

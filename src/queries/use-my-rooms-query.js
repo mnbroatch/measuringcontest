@@ -13,11 +13,13 @@ export const useMyRoomsQuery = (roomCode) => {
 function getOptions (idToken) {
   return {
     queryKey: ['my-rooms', idToken],
-    queryFn: () => makeAuthenticatedRequest(
-      apiUrl,
-      idToken,
-      { method: 'GET' }
-    ),
+    queryFn: () => idToken 
+      ? makeAuthenticatedRequest(
+        apiUrl,
+        idToken,
+        { method: 'GET' }
+      )
+      : [],
     staleTime: 1000 * 60 * 50,
   }
 }

@@ -359,6 +359,39 @@ body {
   margin-bottom: 2em;
 }
 
+.game-preview {
+  flex: 1;
+  text-align: left;
+  padding: 0 3em;
+}
+
+.debug-panel .visibility-toggle {
+  top: 70px !important;
+}
+
+.debug-panel .visibility-toggle svg {
+  display: none;
+}
+
+.debug-panel .visibility-toggle .icon::after {
+  position: relative;
+  left: 3px;
+  content: "⚙️";
+  font-size: 20px;
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+.debug-panel .menu {
+  position: relative;
+  top: 70px !important;
+}
+
+body:has(.content .editor) .debug-panel {
+  display: none;
+}
+
 @media (min-width: 600px) {
   .sample-game-select__inner {
     font-size: inherit;

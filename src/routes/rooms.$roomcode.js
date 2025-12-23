@@ -69,7 +69,7 @@ export default function RoomPage () {
               roomConnection.client.moves.join(name)
             }}
           >
-            { iAmInStagedGame ? 'Change name to:' : 'Join Game as:' }
+            { iAmInStagedGame ? 'Change my name to:' : 'Join Game as:' }
             <input
               onClick={(e) => {e.stopPropagation()}}
               onChange={(e) => {
@@ -82,7 +82,7 @@ export default function RoomPage () {
         </>
       )}
 
-      {status === 'waiting' && !iAmRoomCreator && (
+      {status === 'waiting' && (
         <GamePreview
           gameRules={gameRules}
           gameName={gameName}
@@ -100,7 +100,7 @@ export default function RoomPage () {
               players,
             })
           }}>
-            Create Game
+            Start Game
           </button>
         </>
       )}
@@ -108,7 +108,10 @@ export default function RoomPage () {
         <GameEditor
           auth={auth}
           roomCode={roomCode}
-          goToRoom={() => { setScreenState(SCREEN_STATE_WAITING) }}
+          goToRoom={({ gameRules, gameName }) => {
+            roomConnection.client.moves.setGameMeta({ gameRules, gameName })
+            setScreenState(SCREEN_STATE_WAITING)
+          }}
         />
       )}
       {status === 'started' && iAmInGame && (

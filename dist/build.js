@@ -172,7 +172,7 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-console.warn("[tanstack-router] These exports from \"/home/matt/Programming/measuringcontest/src/routes/rooms.$roomcode.js\" will not be code-split and will increase your bundle size:\n- RoomPage\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
+console.warn("[tanstack-router] These exports from \"/home/mnbro/Programming/measuringcontest/src/routes/rooms.$roomcode.js\" will not be code-split and will increase your bundle size:\n- RoomPage\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
 
 
 
@@ -188,13 +188,15 @@ console.warn("[tanstack-router] These exports from \"/home/matt/Programming/meas
 
 
 
+var SCREEN_STATE_EDITING = 'editing';
+var SCREEN_STATE_WAITING = 'waiting';
 function RoomPage() {
   var _roomConnection$state, _roomConnection$state2, _roomConnection$clien, _roomConnection$state3, _roomConnection$state4, _roomConnection$state5, _roomConnection$clien2, _players$playerID;
   var _Route$useParams = Route.useParams(),
     roomCode = _Route$useParams.roomcode;
   var navigate = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__/* .useNavigate */ .Z)();
-  var _useCognitoAuth = (0,_contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_9__/* .useCognitoAuth */ .f)(),
-    userId = _useCognitoAuth.userId;
+  var auth = (0,_contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_9__/* .useCognitoAuth */ .f)();
+  var userId = auth.userId;
   var leaveRoomMutation = (0,_queries_use_leave_room_mutation_js__WEBPACK_IMPORTED_MODULE_6__/* .useLeaveRoomMutation */ .L)(roomCode);
   var room = (0,_queries_use_room_query_js__WEBPACK_IMPORTED_MODULE_5__/* .useRoomQuery */ .P)(roomCode);
   var iAmInRoom = room.data.members && userId in room.data.members;
@@ -213,6 +215,10 @@ function RoomPage() {
     _useState2 = _slicedToArray(_useState, 2),
     name = _useState2[0],
     setName = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(SCREEN_STATE_WAITING),
+    _useState4 = _slicedToArray(_useState3, 2),
+    screenState = _useState4[0],
+    setScreenState = _useState4[1];
   var createGameMutation = (0,_queries_use_create_game_mutation_js__WEBPACK_IMPORTED_MODULE_7__/* .useCreateGameMutation */ .Z)(roomCode);
   var deleteGameMutation = (0,_queries_use_delete_game_mutation_js__WEBPACK_IMPORTED_MODULE_8__/* .useDeleteGameMutation */ .Q)(roomCode, gameId);
   var isLoading = room.isLoading || !roomConnection.state || status === 'started' && !gameConnection.state;
@@ -241,7 +247,7 @@ function RoomPage() {
     onClick: function onClick() {
       roomConnection.client.moves.join(name);
     }
-  }, iAmInStagedGame ? 'Change name to:' : 'Join Game as:', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+  }, iAmInStagedGame ? 'Change my name to:' : 'Join Game as:', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
     onClick: function onClick(e) {
       e.stopPropagation();
     },
@@ -249,14 +255,14 @@ function RoomPage() {
       setName(e.target.value);
     },
     value: name
-  }))), status === 'waiting' && !iAmRoomCreator && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_game_preview_js__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+  }))), status === 'waiting' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_game_preview_js__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     gameRules: gameRules,
     gameName: gameName
-  }), status === 'waiting' && iAmRoomCreator && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_game_editor_js__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
-    initialGameRules: gameRules,
-    initialGameName: gameName,
-    saveGame: roomConnection.client.moves.setGameMeta
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  }), status === 'waiting' && iAmRoomCreator && screenState === SCREEN_STATE_WAITING && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    onClick: function onClick() {
+      setScreenState(SCREEN_STATE_EDITING);
+    }
+  }, "Edit Game"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     onClick: function onClick() {
       createGameMutation.mutate({
         gameRules: gameRules,
@@ -264,7 +270,19 @@ function RoomPage() {
         players: players
       });
     }
-  }, "Create Game")), status === 'started' && iAmInGame && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_play_game_play_game_js__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }, "Start Game")), status === 'waiting' && iAmRoomCreator && screenState === SCREEN_STATE_EDITING && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_game_editor_js__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+    auth: auth,
+    roomCode: roomCode,
+    goToRoom: function goToRoom(_ref2) {
+      var gameRules = _ref2.gameRules,
+        gameName = _ref2.gameName;
+      roomConnection.client.moves.setGameMeta({
+        gameRules: gameRules,
+        gameName: gameName
+      });
+      setScreenState(SCREEN_STATE_WAITING);
+    }
+  }), status === 'started' && iAmInGame && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_play_game_play_game_js__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
     gameConnection: gameConnection
   }), status === 'started' && !iAmInGame && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_watch_game_watch_game_js__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     gameConnection: gameConnection
@@ -277,8 +295,8 @@ function RoomPage() {
   }, "Delete Game"));
 }
 var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__/* .createFileRoute */ .WK)("/rooms/$roomcode")({
-  loader: function loader(_ref2) {
-    var params = _ref2.params;
+  loader: function loader(_ref3) {
+    var params = _ref3.params;
     return _queries_use_room_query_js__WEBPACK_IMPORTED_MODULE_5__/* .useRoomQuery */ .P.preload(params.roomcode);
   },
   component: RoomPage
@@ -2447,11 +2465,16 @@ function gameFactory(gameRules, rulesHash) {
         playerID = _deserializeBgioArgum.playerID;
       Object.values(G.bank.tracker).forEach(function (entity) {
         if (entity.rule.contentsHiddenFrom === 'All' || entity.rule.contentsHiddenFrom === 'Others' && (playerID !== entity.rule.player || playerID == undefined)) {
+          // may want to hide entities inside spaces instead?
           if (entity.spaces) {
-            entity.spaces = [];
+            entity.spaces = entity.rule.hideLength ? [] : entity.spaces.map(function () {
+              return G.bank.createEntity();
+            });
           }
           if (entity.entities) {
-            entity.entities = [];
+            entity.entities = entity.rule.hideLength ? [] : entity.entities.map(function () {
+              return G.bank.createEntity();
+            });
           }
         }
       });
@@ -19271,19 +19294,6 @@ module.exports = getMatchData;
 
 /***/ }),
 
-/***/ 8650:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var root = __webpack_require__(80278);
-
-/** Built-in value references. */
-var Symbol = root.Symbol;
-
-module.exports = Symbol;
-
-
-/***/ }),
-
 /***/ 8798:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
@@ -20439,7 +20449,7 @@ const PlayerView = {
     },
 };
 
-__webpack_unused_export__ = turnOrder.ActivePlayers;
+exports.Pc = turnOrder.ActivePlayers;
 __webpack_unused_export__ = ({
   enumerable: true,
   get: function () {
@@ -22580,7 +22590,9 @@ var Bank = /*#__PURE__*/function () {
   }
   return _createClass(Bank, [{
     key: "createEntity",
-    value: function createEntity(definition, options) {
+    value: function createEntity() {
+      var definition = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var options = arguments.length > 1 ? arguments[1] : undefined;
       var entity = new _registry_js__WEBPACK_IMPORTED_MODULE_3__/* .registry */ .u[definition.type || 'Entity'](_objectSpread({
         bank: this,
         fromBank: true
@@ -22635,7 +22647,6 @@ var Bank = /*#__PURE__*/function () {
       if (!slot) {
         console.error("No matching slot for ".concat(JSON.stringify(rule)));
       }
-      console.log('slot', slot);
       return slot.getOne(bgioArguments, {
         state: rule.state
       }, context);
@@ -22844,12 +22855,12 @@ const createGlobalSignOutClient = (config) => (0,_aws_amplify_core_internals_aws
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
 /* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(73562);
 /* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(70802);
-/* harmony import */ var boardgame_io_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(27190);
-/* harmony import */ var wackson__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(75554);
-/* harmony import */ var _queries_use_join_room_mutation_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(18188);
-/* harmony import */ var _queries_use_room_query_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(35190);
-/* harmony import */ var _use_gameserver_connection_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(45230);
-/* harmony import */ var _server_game_factory_registry_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(14142);
+/* harmony import */ var wackson__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(75554);
+/* harmony import */ var _queries_use_join_room_mutation_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(18188);
+/* harmony import */ var _queries_use_room_query_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(35190);
+/* harmony import */ var _use_gameserver_connection_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(45230);
+/* harmony import */ var _server_game_factory_registry_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(14142);
+/* harmony import */ var _server_room_game_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(85575);
 /* harmony import */ var _utils_prepare_payload_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(65541);
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
@@ -22873,84 +22884,23 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 
 
 
-var RoomGame = {
-  name: 'bgestagingroom',
-  setup: function setup() {
-    return {
-      players: {
-        '1': {
-          name: 'Room Creator'
-        }
-      },
-      status: 'waiting',
-      gameRules: '',
-      gameName: ''
-    };
-  },
-  turn: {
-    activePlayers: boardgame_io_core__WEBPACK_IMPORTED_MODULE_3__.C.ALL
-  },
-  moves: {
-    join: function join(_ref, name) {
-      var G = _ref.G,
-        playerID = _ref.playerID;
-      if (G.status === 'waiting') {
-        G.players[playerID] = {
-          name: name
-        };
-      }
-    },
-    leave: function leave(_ref2) {
-      var G = _ref2.G,
-        playerID = _ref2.playerID;
-      if (playerID !== '1' && G.status === 'waiting') {
-        delete G.players[playerID];
-      }
-    },
-    setGameMeta: function setGameMeta(_ref3, _ref4) {
-      var G = _ref3.G,
-        playerID = _ref3.playerID;
-      var gameRules = _ref4.gameRules,
-        gameName = _ref4.gameName;
-      if ((playerID === '0' || playerID === '1') && G.status === 'waiting') {
-        G.gameRules = gameRules;
-        G.gameName = gameName;
-      }
-    },
-    gameCreated: function gameCreated(_ref5, newGameId) {
-      var G = _ref5.G,
-        playerID = _ref5.playerID;
-      if (playerID === '0' && G.status === 'waiting') {
-        G.gameId = newGameId;
-        G.status = 'started';
-      }
-    },
-    gameDeleted: function gameDeleted(_ref6) {
-      var G = _ref6.G,
-        playerID = _ref6.playerID;
-      if (playerID === '0') {
-        delete G.gameId;
-        G.status = 'waiting';
-      }
-    }
-  }
-};
 function useRoomConnection() {
   var _joinRoomMutation$dat, _joinRoomMutation$dat2;
   var _useParams = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__/* .useParams */ .g)({}),
     roomCode = _useParams.roomcode;
   var queryClient = (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_2__/* .useQueryClient */ .jE)();
-  var room = (0,_queries_use_room_query_js__WEBPACK_IMPORTED_MODULE_6__/* .useRoomQuery */ .P)(roomCode).data;
+  var room = (0,_queries_use_room_query_js__WEBPACK_IMPORTED_MODULE_5__/* .useRoomQuery */ .P)(roomCode).data;
   var roomGameId = room === null || room === void 0 ? void 0 : room.roomGameId;
-  var joinRoomMutation = (0,_queries_use_join_room_mutation_js__WEBPACK_IMPORTED_MODULE_5__/* .useJoinRoomMutation */ .k)(roomCode);
+  var joinRoomMutation = (0,_queries_use_join_room_mutation_js__WEBPACK_IMPORTED_MODULE_4__/* .useJoinRoomMutation */ .k)(roomCode);
   var boardgamePlayerID = (_joinRoomMutation$dat = joinRoomMutation.data) === null || _joinRoomMutation$dat === void 0 ? void 0 : _joinRoomMutation$dat.boardgamePlayerID;
   var clientToken = (_joinRoomMutation$dat2 = joinRoomMutation.data) === null || _joinRoomMutation$dat2 === void 0 ? void 0 : _joinRoomMutation$dat2.clientToken;
-  var game = RoomGame;
-  var client = (0,_use_gameserver_connection_js__WEBPACK_IMPORTED_MODULE_7__/* .useGameserverConnection */ .J)({
+  var game = _server_room_game_js__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A;
+  var client = (0,_use_gameserver_connection_js__WEBPACK_IMPORTED_MODULE_6__/* .useGameserverConnection */ .J)({
     gameId: roomGameId,
     game: game,
     boardgamePlayerID: boardgamePlayerID,
     clientToken: clientToken,
+    debug: false,
     enabled: !!joinRoomMutation.isSuccess
   });
   var clientState = client === null || client === void 0 ? void 0 : client.getState();
@@ -22975,13 +22925,13 @@ function useRoomConnection() {
   if (clientState) {
     var _state;
     state = _objectSpread(_objectSpread({}, clientState), {}, {
-      G: (0,wackson__WEBPACK_IMPORTED_MODULE_4__/* .deserialize */ .i)(JSON.stringify(clientState.G), _server_game_factory_registry_js__WEBPACK_IMPORTED_MODULE_8__/* .registry */ .u)
+      G: (0,wackson__WEBPACK_IMPORTED_MODULE_3__/* .deserialize */ .i)(JSON.stringify(clientState.G), _server_game_factory_registry_js__WEBPACK_IMPORTED_MODULE_7__/* .registry */ .u)
     });
     gameover = (_state = state) === null || _state === void 0 || (_state = _state.ctx) === null || _state === void 0 ? void 0 : _state.gameover;
-    moves = client && !gameover ? Object.entries(client.moves).reduce(function (acc, _ref7) {
-      var _ref8 = _slicedToArray(_ref7, 2),
-        moveName = _ref8[0],
-        m = _ref8[1];
+    moves = client && !gameover ? Object.entries(client.moves).reduce(function (acc, _ref) {
+      var _ref2 = _slicedToArray(_ref, 2),
+        moveName = _ref2[0],
+        m = _ref2[1];
       var move = function move(payload) {
         m((0,_utils_prepare_payload_js__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A)(payload));
       };
@@ -25583,69 +25533,86 @@ function Client(opts) {
 /* unused harmony export default */
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
 /* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(82820);
-/* harmony import */ var _hooks_use_single_player_game_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(87999);
+/* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(36095);
 /* harmony import */ var _components_game_staging_game_editor_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(83107);
-/* harmony import */ var _components_play_game_play_game_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(34223);
-/* harmony import */ var _components_game_status_game_status_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(45679);
-function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-console.warn("[tanstack-router] These exports from \"/home/matt/Programming/measuringcontest/src/routes/editor.js\" will not be code-split and will increase your bundle size:\n- Editor\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
+/* harmony import */ var _contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(52904);
+/* harmony import */ var _queries_use_create_room_mutation_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(62140);
+/* harmony import */ var _queries_use_my_rooms_query_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(92798);
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+console.warn("[tanstack-router] These exports from \"/home/mnbro/Programming/measuringcontest/src/routes/editor.js\" will not be code-split and will increase your bundle size:\n- Editor\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
 
 
 
 
 
 
-var SCREEN_STATE_EDITING = 'editing';
-var SCREEN_STATE_TESTING = 'testing';
 function Editor() {
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(SCREEN_STATE_EDITING),
-    _useState2 = _slicedToArray(_useState, 2),
-    screenState = _useState2[0],
-    setScreenState = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-    _useState4 = _slicedToArray(_useState3, 2),
-    savedGameRules = _useState4[0],
-    setSavedGameRules = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-    _useState6 = _slicedToArray(_useState5, 2),
-    savedGameName = _useState6[0],
-    setSavedGameName = _useState6[1];
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-    _useState8 = _slicedToArray(_useState7, 2),
-    savedNumPlayers = _useState8[0],
-    setSavedNumPlayers = _useState8[1];
-  var gameConnection = (0,_hooks_use_single_player_game_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(savedGameRules, savedNumPlayers);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, screenState === SCREEN_STATE_EDITING && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_game_editor_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
-    handleTestGame: function handleTestGame(_ref) {
-      var gameRules = _ref.gameRules,
-        gameName = _ref.gameName,
-        numPlayers = _ref.numPlayers;
-      setSavedGameRules(gameRules);
-      setSavedGameName(gameName);
-      setSavedNumPlayers(numPlayers);
-      setScreenState(SCREEN_STATE_TESTING);
+  var _myRooms$data;
+  var navigate = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__/* .useNavigate */ .Z)();
+  var createRoomMutation = (0,_queries_use_create_room_mutation_js__WEBPACK_IMPORTED_MODULE_5__/* .useCreateRoomMutation */ .q)();
+  var myRooms = (0,_queries_use_my_rooms_query_js__WEBPACK_IMPORTED_MODULE_6__/* .useMyRoomsQuery */ .s)();
+  var roomCode = (_myRooms$data = myRooms.data) === null || _myRooms$data === void 0 ? void 0 : _myRooms$data[0];
+  var auth = (0,_contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_4__/* .useCognitoAuth */ .f)();
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_game_editor_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+    auth: auth,
+    handleCreateRoom: (/*#__PURE__*/function () {
+      var _ref2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(_ref) {
+        var gameRules, gameName, roomCode;
+        return _regenerator().w(function (_context) {
+          while (1) switch (_context.n) {
+            case 0:
+              gameRules = _ref.gameRules, gameName = _ref.gameName;
+              _context.n = 1;
+              return createRoomMutation.mutateAsync({
+                gameRules: gameRules,
+                gameName: gameName
+              });
+            case 1:
+              roomCode = _context.v;
+              navigate({
+                to: '/rooms/$roomcode',
+                params: {
+                  roomcode: roomCode
+                }
+              });
+            case 2:
+              return _context.a(2);
+          }
+        }, _callee);
+      }));
+      return function (_x) {
+        return _ref2.apply(this, arguments);
+      };
+    }()),
+    roomCode: roomCode,
+    goToRoom: function goToRoom() {
+      navigate({
+        to: '/rooms/$roomcode',
+        params: {
+          roomcode: roomCode
+        }
+      });
     }
-  }), gameConnection.state && screenState === SCREEN_STATE_TESTING && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "testing-game"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "testing-game__title"
-  }, "Testing Game: ", savedGameName, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    className: "editor-buttons__button",
-    onClick: function onClick() {
-      setScreenState(SCREEN_STATE_EDITING);
-    }
-  }, "Back to Editor")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_play_game_play_game_js__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
-    gameConnection: gameConnection
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_status_game_status_js__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
-    gameConnection: gameConnection
-  })));
+  });
 }
 var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__/* .createFileRoute */ .WK)('/editor')({
+  loader: function () {
+    var _loader = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
+      return _regenerator().w(function (_context2) {
+        while (1) switch (_context2.n) {
+          case 0:
+            return _context2.a(2, _queries_use_my_rooms_query_js__WEBPACK_IMPORTED_MODULE_6__/* .useMyRoomsQuery */ .s.preload());
+        }
+      }, _callee2);
+    }));
+    function loader() {
+      return _loader.apply(this, arguments);
+    }
+    return loader;
+  }(),
   component: Editor
 });
 
@@ -27195,16 +27162,28 @@ function detect() {
 /* harmony export */   A: () => (/* binding */ GamePreview)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
+/* harmony import */ var _monaco_editor_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(36084);
+
 
 function GamePreview(_ref) {
   var gameRules = _ref.gameRules,
     gameName = _ref.gameName;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, gameName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("pre", {
-    style: {
-      width: '80%',
-      height: '50vh'
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "game-preview"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, gameName, " - Rules"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_monaco_editor_react__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Ay, {
+    height: "80%",
+    className: "editor__input",
+    defaultLanguage: "json",
+    value: gameRules,
+    theme: "vs-dark",
+    options: {
+      minimap: {
+        enabled: false
+      },
+      fontSize: 14,
+      readOnly: true
     }
-  }, gameRules));
+  }));
 }
 
 /***/ }),
@@ -28785,7 +28764,6 @@ const Outlet = react__WEBPACK_IMPORTED_MODULE_1__.memo(function OutletImpl() {
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (/* binding */ ActionCreators),
-/* harmony export */   C: () => (/* binding */ ActivePlayers),
 /* harmony export */   E: () => (/* binding */ Enhance),
 /* harmony export */   F: () => (/* binding */ FnWrap),
 /* harmony export */   G: () => (/* binding */ GameMethod),
@@ -28824,7 +28802,7 @@ const Outlet = react__WEBPACK_IMPORTED_MODULE_1__.memo(function OutletImpl() {
 /* harmony export */   y: () => (/* binding */ patch),
 /* harmony export */   z: () => (/* binding */ update)
 /* harmony export */ });
-/* unused harmony export B */
+/* unused harmony exports B, C */
 /* harmony import */ var immer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(82434);
 /* harmony import */ var _plugin_random_087f861e_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(41166);
 /* harmony import */ var lodash_isplainobject__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(61058);
@@ -31148,44 +31126,6 @@ var getNative = __webpack_require__(67205),
 var Map = getNative(root, 'Map');
 
 module.exports = Map;
-
-
-/***/ }),
-
-/***/ 31796:
-/***/ ((module) => {
-
-/**
- * Checks if `value` is the
- * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
- * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an object, else `false`.
- * @example
- *
- * _.isObject({});
- * // => true
- *
- * _.isObject([1, 2, 3]);
- * // => true
- *
- * _.isObject(_.noop);
- * // => true
- *
- * _.isObject(null);
- * // => false
- */
-function isObject(value) {
-  var type = typeof value;
-  return value != null && (type == 'object' || type == 'function');
-}
-
-module.exports = isObject;
 
 
 /***/ }),
@@ -37106,7 +37046,7 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-console.warn("[tanstack-router] These exports from \"/home/matt/Programming/measuringcontest/src/routes/index.js\" will not be code-split and will increase your bundle size:\n- IndexPage\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
+console.warn("[tanstack-router] These exports from \"/home/mnbro/Programming/measuringcontest/src/routes/index.js\" will not be code-split and will increase your bundle size:\n- IndexPage\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
 
 
 
@@ -38647,7 +38587,9 @@ var useGameserverConnection = function useGameserverConnection(_ref) {
     clientToken = _ref.clientToken,
     numPlayers = _ref.numPlayers,
     _ref$debug = _ref.debug,
-    debug = _ref$debug === void 0 ? true : _ref$debug,
+    debug = _ref$debug === void 0 ? {
+      collapseOnLoad: true
+    } : _ref$debug,
     _ref$singlePlayer = _ref.singlePlayer,
     singlePlayer = _ref$singlePlayer === void 0 ? false : _ref$singlePlayer,
     _ref$enabled = _ref.enabled,
@@ -38672,7 +38614,8 @@ var useGameserverConnection = function useGameserverConnection(_ref) {
               try {
                 clientOptions = singlePlayer ? {
                   game: game,
-                  numPlayers: numPlayers
+                  numPlayers: numPlayers,
+                  debug: debug
                 } : {
                   game: game,
                   multiplayer: singlePlayer ? undefined : (0,boardgame_io_multiplayer__WEBPACK_IMPORTED_MODULE_3__.S)({
@@ -39592,17 +39535,6 @@ const oAuthStore = new _signInWithRedirectStore_mjs__WEBPACK_IMPORTED_MODULE_1__
 
 /***/ }),
 
-/***/ 47519:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-/** Detect free variable `global` from Node.js. */
-var freeGlobal = typeof __webpack_require__.g == 'object' && __webpack_require__.g && __webpack_require__.g.Object === Object && __webpack_require__.g;
-
-module.exports = freeGlobal;
-
-
-/***/ }),
-
 /***/ 47732:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
@@ -40419,32 +40351,6 @@ module.exports = stringToPath;
 
 /***/ }),
 
-/***/ 49563:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var trimmedEndIndex = __webpack_require__(72889);
-
-/** Used to match leading whitespace. */
-var reTrimStart = /^\s+/;
-
-/**
- * The base implementation of `_.trim`.
- *
- * @private
- * @param {string} string The string to trim.
- * @returns {string} Returns the trimmed string.
- */
-function baseTrim(string) {
-  return string
-    ? string.slice(0, trimmedEndIndex(string) + 1).replace(reTrimStart, '')
-    : string;
-}
-
-module.exports = baseTrim;
-
-
-/***/ }),
-
 /***/ 49706:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -40969,17 +40875,22 @@ module.exports = isKeyable;
 /* harmony export */ });
 /* unused harmony export default */
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
-/* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(82820);
-/* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(10103);
-/* harmony import */ var _components_home_page_card_home_page_card_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(13417);
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(18458);
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(37276);
-console.warn("[tanstack-router] These exports from \"/home/matt/Programming/measuringcontest/src/routes/home.js\" will not be code-split and will increase your bundle size:\n- Home\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
+/* harmony import */ var _contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(52904);
+/* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(82820);
+/* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(10103);
+/* harmony import */ var _components_home_page_card_home_page_card_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(13417);
+/* harmony import */ var _components_join_room_button_join_room_button_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(93967);
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(18458);
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(37276);
+console.warn("[tanstack-router] These exports from \"/home/mnbro/Programming/measuringcontest/src/routes/home.js\" will not be code-split and will increase your bundle size:\n- Home\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
+
+
 
 
 
 
 function Home() {
+  var auth = (0,_contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_1__/* .useCognitoAuth */ .f)();
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "home"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -40990,24 +40901,29 @@ function Home() {
     className: "home-tagline__inner"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Play,"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Tweak,"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Repeat."))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h5", {
     className: "home-description"
-  }, "A platform for prototyping board game rules design")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__/* .Link */ .N_, {
-    className: "get-started-button",
+  }, "A platform for prototyping board game rules design")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "home-buttons"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_tanstack_react_router__WEBPACK_IMPORTED_MODULE_3__/* .Link */ .N_, {
+    className: "home__button home__button--get-started",
     to: "/editor"
-  }, "Get Started!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, "Get Started!"), !auth.loading && !auth.idToken && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "home__button home__button--login",
+    onClick: auth.login
+  }, "Log in to Join a Room"), !auth.loading && auth.idToken && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_join_room_button_join_room_button_js__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "home-explanation"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_home_page_card_home_page_card_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
-    iconComponent: lucide_react__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A,
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_home_page_card_home_page_card_js__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+    iconComponent: lucide_react__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A,
     iconSize: "5em",
     iconStrokeWidth: "1.3",
-    description: "Define a game using BAGEL (Board game Automation Game Engine Language)"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_home_page_card_home_page_card_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
-    iconComponent: lucide_react__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A,
+    description: "Define a game using BAGEL (Board-based Automated Game Engine Language)"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_home_page_card_home_page_card_js__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+    iconComponent: lucide_react__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A,
     iconSize: "5em",
     iconStrokeWidth: "1.3",
     description: "Create a lobby in seconds and play with friends using a room code!"
   })));
 }
-var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__/* .createFileRoute */ .WK)('/home')({
+var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__/* .createFileRoute */ .WK)('/home')({
   component: Home
 });
 
@@ -41668,204 +41584,6 @@ function clone(source) {
     return objectTarget;
 }
 exports.clone = clone;
-
-
-/***/ }),
-
-/***/ 53576:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var isObject = __webpack_require__(31796),
-    now = __webpack_require__(88711),
-    toNumber = __webpack_require__(69531);
-
-/** Error message constants. */
-var FUNC_ERROR_TEXT = 'Expected a function';
-
-/* Built-in method references for those with the same name as other `lodash` methods. */
-var nativeMax = Math.max,
-    nativeMin = Math.min;
-
-/**
- * Creates a debounced function that delays invoking `func` until after `wait`
- * milliseconds have elapsed since the last time the debounced function was
- * invoked. The debounced function comes with a `cancel` method to cancel
- * delayed `func` invocations and a `flush` method to immediately invoke them.
- * Provide `options` to indicate whether `func` should be invoked on the
- * leading and/or trailing edge of the `wait` timeout. The `func` is invoked
- * with the last arguments provided to the debounced function. Subsequent
- * calls to the debounced function return the result of the last `func`
- * invocation.
- *
- * **Note:** If `leading` and `trailing` options are `true`, `func` is
- * invoked on the trailing edge of the timeout only if the debounced function
- * is invoked more than once during the `wait` timeout.
- *
- * If `wait` is `0` and `leading` is `false`, `func` invocation is deferred
- * until to the next tick, similar to `setTimeout` with a timeout of `0`.
- *
- * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
- * for details over the differences between `_.debounce` and `_.throttle`.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Function
- * @param {Function} func The function to debounce.
- * @param {number} [wait=0] The number of milliseconds to delay.
- * @param {Object} [options={}] The options object.
- * @param {boolean} [options.leading=false]
- *  Specify invoking on the leading edge of the timeout.
- * @param {number} [options.maxWait]
- *  The maximum time `func` is allowed to be delayed before it's invoked.
- * @param {boolean} [options.trailing=true]
- *  Specify invoking on the trailing edge of the timeout.
- * @returns {Function} Returns the new debounced function.
- * @example
- *
- * // Avoid costly calculations while the window size is in flux.
- * jQuery(window).on('resize', _.debounce(calculateLayout, 150));
- *
- * // Invoke `sendMail` when clicked, debouncing subsequent calls.
- * jQuery(element).on('click', _.debounce(sendMail, 300, {
- *   'leading': true,
- *   'trailing': false
- * }));
- *
- * // Ensure `batchLog` is invoked once after 1 second of debounced calls.
- * var debounced = _.debounce(batchLog, 250, { 'maxWait': 1000 });
- * var source = new EventSource('/stream');
- * jQuery(source).on('message', debounced);
- *
- * // Cancel the trailing debounced invocation.
- * jQuery(window).on('popstate', debounced.cancel);
- */
-function debounce(func, wait, options) {
-  var lastArgs,
-      lastThis,
-      maxWait,
-      result,
-      timerId,
-      lastCallTime,
-      lastInvokeTime = 0,
-      leading = false,
-      maxing = false,
-      trailing = true;
-
-  if (typeof func != 'function') {
-    throw new TypeError(FUNC_ERROR_TEXT);
-  }
-  wait = toNumber(wait) || 0;
-  if (isObject(options)) {
-    leading = !!options.leading;
-    maxing = 'maxWait' in options;
-    maxWait = maxing ? nativeMax(toNumber(options.maxWait) || 0, wait) : maxWait;
-    trailing = 'trailing' in options ? !!options.trailing : trailing;
-  }
-
-  function invokeFunc(time) {
-    var args = lastArgs,
-        thisArg = lastThis;
-
-    lastArgs = lastThis = undefined;
-    lastInvokeTime = time;
-    result = func.apply(thisArg, args);
-    return result;
-  }
-
-  function leadingEdge(time) {
-    // Reset any `maxWait` timer.
-    lastInvokeTime = time;
-    // Start the timer for the trailing edge.
-    timerId = setTimeout(timerExpired, wait);
-    // Invoke the leading edge.
-    return leading ? invokeFunc(time) : result;
-  }
-
-  function remainingWait(time) {
-    var timeSinceLastCall = time - lastCallTime,
-        timeSinceLastInvoke = time - lastInvokeTime,
-        timeWaiting = wait - timeSinceLastCall;
-
-    return maxing
-      ? nativeMin(timeWaiting, maxWait - timeSinceLastInvoke)
-      : timeWaiting;
-  }
-
-  function shouldInvoke(time) {
-    var timeSinceLastCall = time - lastCallTime,
-        timeSinceLastInvoke = time - lastInvokeTime;
-
-    // Either this is the first call, activity has stopped and we're at the
-    // trailing edge, the system time has gone backwards and we're treating
-    // it as the trailing edge, or we've hit the `maxWait` limit.
-    return (lastCallTime === undefined || (timeSinceLastCall >= wait) ||
-      (timeSinceLastCall < 0) || (maxing && timeSinceLastInvoke >= maxWait));
-  }
-
-  function timerExpired() {
-    var time = now();
-    if (shouldInvoke(time)) {
-      return trailingEdge(time);
-    }
-    // Restart the timer.
-    timerId = setTimeout(timerExpired, remainingWait(time));
-  }
-
-  function trailingEdge(time) {
-    timerId = undefined;
-
-    // Only invoke if we have `lastArgs` which means `func` has been
-    // debounced at least once.
-    if (trailing && lastArgs) {
-      return invokeFunc(time);
-    }
-    lastArgs = lastThis = undefined;
-    return result;
-  }
-
-  function cancel() {
-    if (timerId !== undefined) {
-      clearTimeout(timerId);
-    }
-    lastInvokeTime = 0;
-    lastArgs = lastCallTime = lastThis = timerId = undefined;
-  }
-
-  function flush() {
-    return timerId === undefined ? result : trailingEdge(now());
-  }
-
-  function debounced() {
-    var time = now(),
-        isInvoking = shouldInvoke(time);
-
-    lastArgs = arguments;
-    lastThis = this;
-    lastCallTime = time;
-
-    if (isInvoking) {
-      if (timerId === undefined) {
-        return leadingEdge(lastCallTime);
-      }
-      if (maxing) {
-        // Handle invocations in a tight loop.
-        clearTimeout(timerId);
-        timerId = setTimeout(timerExpired, wait);
-        return invokeFunc(lastCallTime);
-      }
-    }
-    if (timerId === undefined) {
-      timerId = setTimeout(timerExpired, wait);
-    }
-    return result;
-  }
-  debounced.cancel = cancel;
-  debounced.flush = flush;
-  return debounced;
-}
-
-module.exports = debounce;
 
 
 /***/ }),
@@ -43025,41 +42743,6 @@ function memoizeCapped(func) {
 }
 
 module.exports = memoizeCapped;
-
-
-/***/ }),
-
-/***/ 57355:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var Symbol = __webpack_require__(8650),
-    getRawTag = __webpack_require__(95470),
-    objectToString = __webpack_require__(71925);
-
-/** `Object#toString` result references. */
-var nullTag = '[object Null]',
-    undefinedTag = '[object Undefined]';
-
-/** Built-in value references. */
-var symToStringTag = Symbol ? Symbol.toStringTag : undefined;
-
-/**
- * The base implementation of `getTag` without fallbacks for buggy environments.
- *
- * @private
- * @param {*} value The value to query.
- * @returns {string} Returns the `toStringTag`.
- */
-function baseGetTag(value) {
-  if (value == null) {
-    return value === undefined ? undefinedTag : nullTag;
-  }
-  return (symToStringTag && symToStringTag in Object(value))
-    ? getRawTag(value)
-    : objectToString(value);
-}
-
-module.exports = baseGetTag;
 
 
 /***/ }),
@@ -44411,8 +44094,15 @@ var useCreateRoomMutation = function useCreateRoomMutation() {
   var auth = (0,_contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_2__/* .useCognitoAuth */ .f)();
   return (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_1__/* .useMutation */ .n)({
     mutationFn: function mutationFn() {
+      var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+        gameRules = _ref.gameRules,
+        gameName = _ref.gameName;
       return (0,_utils_make_authenticated_request_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)(apiUrl, auth.idToken, {
-        method: 'POST'
+        method: 'POST',
+        body: {
+          gameRules: gameRules,
+          gameName: gameName
+        }
       });
     },
     onSuccess: function onSuccess() {
@@ -49467,77 +49157,6 @@ const cognitoIdentityPoolEndpointResolver = ({ region, }) => ({
 
 /***/ }),
 
-/***/ 69531:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var baseTrim = __webpack_require__(49563),
-    isObject = __webpack_require__(31796),
-    isSymbol = __webpack_require__(73851);
-
-/** Used as references for various `Number` constants. */
-var NAN = 0 / 0;
-
-/** Used to detect bad signed hexadecimal string values. */
-var reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
-
-/** Used to detect binary string values. */
-var reIsBinary = /^0b[01]+$/i;
-
-/** Used to detect octal string values. */
-var reIsOctal = /^0o[0-7]+$/i;
-
-/** Built-in method references without a dependency on `root`. */
-var freeParseInt = parseInt;
-
-/**
- * Converts `value` to a number.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to process.
- * @returns {number} Returns the number.
- * @example
- *
- * _.toNumber(3.2);
- * // => 3.2
- *
- * _.toNumber(Number.MIN_VALUE);
- * // => 5e-324
- *
- * _.toNumber(Infinity);
- * // => Infinity
- *
- * _.toNumber('3.2');
- * // => 3.2
- */
-function toNumber(value) {
-  if (typeof value == 'number') {
-    return value;
-  }
-  if (isSymbol(value)) {
-    return NAN;
-  }
-  if (isObject(value)) {
-    var other = typeof value.valueOf == 'function' ? value.valueOf() : value;
-    value = isObject(other) ? (other + '') : other;
-  }
-  if (typeof value != 'string') {
-    return value === 0 ? value : +value;
-  }
-  value = baseTrim(value);
-  var isBinary = reIsBinary.test(value);
-  return (isBinary || reIsOctal.test(value))
-    ? freeParseInt(value.slice(2), isBinary ? 2 : 8)
-    : (reIsBadHex.test(value) ? NAN : +value);
-}
-
-module.exports = toNumber;
-
-
-/***/ }),
-
 /***/ 69535:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
@@ -52200,35 +51819,6 @@ const parseAmplifyConfig = (amplifyConfig) => {
 
 /***/ }),
 
-/***/ 71925:
-/***/ ((module) => {
-
-/** Used for built-in method references. */
-var objectProto = Object.prototype;
-
-/**
- * Used to resolve the
- * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
- * of values.
- */
-var nativeObjectToString = objectProto.toString;
-
-/**
- * Converts `value` to a string using `Object.prototype.toString`.
- *
- * @private
- * @param {*} value The value to convert.
- * @returns {string} Returns the converted string.
- */
-function objectToString(value) {
-  return nativeObjectToString.call(value);
-}
-
-module.exports = objectToString;
-
-
-/***/ }),
-
 /***/ 72150:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
@@ -53650,32 +53240,6 @@ const isClockSkewError = (errorCode) => !!errorCode && CLOCK_SKEW_ERROR_CODES.in
 
 /***/ }),
 
-/***/ 72889:
-/***/ ((module) => {
-
-/** Used to match a single whitespace character. */
-var reWhitespace = /\s/;
-
-/**
- * Used by `_.trim` and `_.trimEnd` to get the index of the last non-whitespace
- * character of `string`.
- *
- * @private
- * @param {string} string The string to inspect.
- * @returns {number} Returns the index of the last non-whitespace character.
- */
-function trimmedEndIndex(string) {
-  var index = string.length;
-
-  while (index-- && reWhitespace.test(string.charAt(index))) {}
-  return index;
-}
-
-module.exports = trimmedEndIndex;
-
-
-/***/ }),
-
 /***/ 73413:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
@@ -53837,6 +53401,7 @@ function useGameConnection() {
     game: gameToUse,
     boardgamePlayerID: boardgamePlayerID,
     clientToken: clientToken,
+    debug: false,
     enabled: joinGameMutation.isSuccess
   });
   var clientState = client === null || client === void 0 ? void 0 : client.getState();
@@ -53900,42 +53465,6 @@ function useParams(opts) {
 }
 
 //# sourceMappingURL=useParams.js.map
-
-
-/***/ }),
-
-/***/ 73851:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var baseGetTag = __webpack_require__(57355),
-    isObjectLike = __webpack_require__(95003);
-
-/** `Object#toString` result references. */
-var symbolTag = '[object Symbol]';
-
-/**
- * Checks if `value` is classified as a `Symbol` primitive or object.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
- * @example
- *
- * _.isSymbol(Symbol.iterator);
- * // => true
- *
- * _.isSymbol('abc');
- * // => false
- */
-function isSymbol(value) {
-  return typeof value == 'symbol' ||
-    (isObjectLike(value) && baseGetTag(value) == symbolTag);
-}
-
-module.exports = isSymbol;
 
 
 /***/ }),
@@ -54308,7 +53837,7 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Paytone+One&display=swap);"]);
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `:root{--bright-sky: #01baefff;--tropical-teal: #0cbabaff;--dark-amethyst: #380036ff;--midnight-violet: #26081cff;--coffee-bean: #150811ff;--dark-orange: #F58F29}html{height:100%;overscroll-behavior:none}body{margin:0;font-family:"Paytone One",sans-serif;height:100%}#root{display:flex;flex-direction:column;height:100%}.content{display:flex;flex-direction:column;flex:1;text-align:center;background:linear-gradient(to bottom, var(--bright-sky) 0%, var(--bright-sky) 50%, var(--tropical-teal) 80%, var(--tropical-teal) 100%)}.header{position:relative;padding:.5em;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 6px rgba(0,0,0,.15)}.home-splash{color:#fff;display:grid;grid-template-columns:repeat(auto-fit, minmax(135px, 1fr));gap:1em;align-items:center;background:linear-gradient(to right, var(--dark-amethyst) 0%, var(--dark-amethyst) 20%, var(--bright-sky) 100%)}.home-tagline{padding-left:.7em}.home-tagline__inner{display:inline-block;text-align:left}.home-description{padding:0 .7em;font-family:"Nunito",sans-serif}.home-explanation{display:grid;grid-template-columns:repeat(auto-fit, 200px);gap:1em;justify-content:center}.home-page-card{color:var(--dark-amethyst);font-family:"Nunito",sans-serif;font-weight:700;font-size:.8em;background-color:#fff;aspect-ratio:.8;padding:1em;border-radius:1em;text-align:center;box-shadow:0 4px 6px rgba(0,0,0,.15)}.home-page-card__icon{background-color:#fff;aspect-ratio:.8;padding:1em}.home-page-card__description{background-color:#fff;border-top:2px solid var(--tropical-teal);padding:1em}.header__home-button{font-size:1.2em;text-decoration:none;text-transform:uppercase;color:var(--bright-sky);text-align:center;line-height:1em}.header__home-button .lucide-cog{margin-right:-0.05em;margin-left:-0.05em;position:relative;top:.15em}.get-started-button{display:inline-block;background-color:var(--dark-orange);border:3px solid var(--dark-amethyst);color:var(--dark-amethyst);padding:.5em;font-size:1.5em;text-decoration:none;cursor:pointer;border-radius:.3em;margin:1.5em;box-shadow:0 4px 6px rgba(0,0,0,.15)}.header__login-button,.header__logout-button{background-color:var(--dark-amethyst);color:#fff;font-family:inherit;border:none;padding:.3em .5em;cursor:pointer;border-radius:.2em}.editor{display:flex;flex-direction:column;flex:1;margin:.7em}.editor section:has(.editor__input){flex:1}.shared-board{margin:20px 0}.grid{box-sizing:border-box;background-color:#333;max-width:500px}.grid__cell{background-color:#fff;aspect-ratio:1;display:flex;align-items:center;justify-content:center;color:#666;position:relative;overflow:hidden}.grid__cell .space{height:100%;width:100%}.roomGame{border:1px solid gray;border-radius:8px}.space{display:inline-block;box-sizing:border-box;min-width:10px;min-height:10px}.space:not(:has(.entity)){border:1px solid gray}.space--clickable{background-color:rgba(144,238,144,.4)}.space--targeted{background-color:gray}.space__entity-grid{box-sizing:border-box;grid-template-columns:repeat(auto-fit, minmax(30px, 1fr))}.space__entity-grid__cell{box-sizing:border-box;overflow:hidden}.entity{height:100%;width:100%;box-sizing:border-box;border:1px solid #000;overflow:hidden;font-size:.5em;font-family:"Nunito",sans-serif;font-weight:bold}.entity.player-0{background-color:pink}.entity--clickable{background-color:rgba(144,238,144,.4)}.entity.player-0.entity--clickable{background-color:#f0e0d8}.entity.player-1{background-color:#add8e6}.entity.player-1.entity--clickable{background-color:#afeeee}.debug-panel .pane{max-width:420px !important}.sample-game-select__inner{font-family:"Nunito",sans-serif;max-width:100%}.sample-game-select__option{font-family:inherit;max-width:100%}.editor-game-name,.editor-num-players{color:#fff}.editor__input{margin:.7em 0}.editor__controls{display:flex;flex-wrap:wrap;margin:.5em;gap:.3em;align-items:center}.editor-game-name__input,.editor-num-players__input{font-family:"Nunito",sans-serif;margin-left:1em;position:relative;bottom:.2em}.editor-game-name__input{width:10em}.editor-num-players__input{width:3em}.editor-buttons{flex:1;text-align:center;white-space:nowrap}.editor-buttons__button{display:inline-block;font-family:inherit;background-color:var(--dark-orange);border:3px solid var(--dark-amethyst);color:var(--dark-amethyst);padding:.2em .3em;font-size:.8em;text-decoration:none;cursor:pointer;border-radius:.3em;box-shadow:0 4px 6px rgba(0,0,0,.15)}.editor-buttons__button:last-child{margin-left:1em}.testing-game{margin:2em}.testing-game__title{margin-bottom:2em}@media(min-width: 600px){.sample-game-select__inner{font-size:inherit}.editor{font-size:1.4em}.editor-game-name__input,.editor-num-players__input{font-size:inherit;position:static}.editor__controls{gap:1em}}`, ""]);
+___CSS_LOADER_EXPORT___.push([module.id, `:root{--bright-sky: #01baefff;--tropical-teal: #0cbabaff;--dark-amethyst: #380036ff;--midnight-violet: #26081cff;--coffee-bean: #150811ff;--dark-orange: #F58F29}html{height:100%;overscroll-behavior:none}body{margin:0;font-family:"Paytone One",sans-serif;height:100%}#root{display:flex;flex-direction:column;height:100%}.content{display:flex;flex-direction:column;flex:1;text-align:center;background:linear-gradient(to bottom, var(--bright-sky) 0%, var(--bright-sky) 50%, var(--tropical-teal) 80%, var(--tropical-teal) 100%)}.header{position:relative;padding:.5em;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 6px rgba(0,0,0,.15)}.home-splash{color:#fff;display:grid;grid-template-columns:repeat(auto-fit, minmax(135px, 1fr));gap:1em;align-items:center;background:linear-gradient(to right, var(--dark-amethyst) 0%, var(--dark-amethyst) 20%, var(--bright-sky) 100%)}.home-tagline{padding-left:.7em}.home-tagline__inner{display:inline-block;text-align:left}.home-description{padding:0 .7em;font-family:"Nunito",sans-serif}.home-explanation{display:grid;grid-template-columns:repeat(auto-fit, 200px);gap:1em;justify-content:center;margin-bottom:2em}.home-page-card{color:var(--dark-amethyst);font-family:"Nunito",sans-serif;font-weight:700;font-size:.8em;background-color:#fff;aspect-ratio:.8;padding:1em;border-radius:1em;text-align:center;box-shadow:0 4px 6px rgba(0,0,0,.15)}.home-page-card__icon{background-color:#fff;aspect-ratio:.8;padding:1em}.home-page-card__description{background-color:#fff;border-top:2px solid var(--tropical-teal);padding:1em}.header__home-button{font-size:1.2em;text-decoration:none;text-transform:uppercase;color:var(--bright-sky);text-align:center;line-height:1em}.header__home-button .lucide-cog{margin-right:-0.05em;margin-left:-0.05em;position:relative;top:.15em}.home-buttons{margin:1.5em}.home__button,.join-room-button{border:3px solid var(--dark-amethyst);display:inline-block;padding:.5em;font-size:1.5em;font-family:inherit;text-decoration:none;cursor:pointer;border-radius:.3em;box-shadow:0 4px 6px rgba(0,0,0,.15);margin:.5em}.home__button--get-started,.join-room-button{background-color:var(--dark-orange);color:var(--dark-amethyst)}.home__button--login{background-color:var(--dark-amethyst);color:#fff}.header__login-button,.header__logout-button{background-color:var(--dark-amethyst);color:#fff;font-family:inherit;border:none;padding:.3em .5em;cursor:pointer;border-radius:.2em}.join-room-button__input{font-size:.8em;margin-left:.5em;width:4em;padding:0 .5em;position:relative;bottom:.1em}.editor{display:flex;flex-direction:column;flex:1;margin:.7em}.editor section:has(.editor__input){flex:1}.shared-board,.personal-board{padding:20px 0;border-bottom:1px solid #fff}.grid{box-sizing:border-box;background-color:#333;max-width:500px}.grid__cell{background-color:#fff;aspect-ratio:1;display:flex;align-items:center;justify-content:center;color:#666;position:relative;overflow:hidden}.grid__cell .space{height:100%;width:100%}.roomGame{border:1px solid gray;border-radius:8px}.space{display:inline-block;box-sizing:border-box;min-width:10px;min-height:10px}.space:not(:has(.entity)){border:1px solid gray}.space--clickable{background-color:rgba(144,238,144,.4)}.space--targeted{background-color:gray}.space__entity-grid{box-sizing:border-box;grid-template-columns:repeat(auto-fit, minmax(30px, 1fr))}.space__entity-grid__cell{box-sizing:border-box;overflow:hidden}.entity{height:100%;width:100%;box-sizing:border-box;border:1px solid #000;overflow:hidden;font-size:.5em;font-family:"Nunito",sans-serif;font-weight:bold}.entity.player-0{background-color:pink}.entity--clickable{background-color:rgba(144,238,144,.4)}.entity.player-0.entity--clickable{background-color:#f0e0d8}.entity.player-1{background-color:#add8e6}.entity.player-1.entity--clickable{background-color:#afeeee}.debug-panel .pane{max-width:420px !important}.sample-game-select__inner{font-family:"Nunito",sans-serif;max-width:100%}.sample-game-select__option{font-family:inherit;max-width:100%}.editor-game-name,.editor-num-players{color:#fff}.editor__input{margin:.7em 0}.editor__controls{display:flex;flex-wrap:wrap;margin:.5em;gap:.3em;align-items:center}.editor-game-name__input,.editor-num-players__input{font-family:"Nunito",sans-serif;margin-left:1em;position:relative;bottom:.2em}.editor-game-name__input{width:10em}.editor-num-players__input{width:3em}.editor-buttons{flex:1;text-align:center;white-space:nowrap}.editor-buttons__button{display:inline-block;font-family:inherit;background-color:var(--dark-orange);border:3px solid var(--dark-amethyst);color:var(--dark-amethyst);padding:.2em .3em;font-size:.8em;text-decoration:none;cursor:pointer;border-radius:.3em;box-shadow:0 4px 6px rgba(0,0,0,.15)}.editor-buttons__button--login{background-color:var(--dark-amethyst);border:3px solid var(--dark-amethyst);color:#fff}.editor-buttons__button:last-child{margin-left:1em}.testing-game{margin:2em}.testing-game__title{margin-bottom:2em}.game-preview{flex:1;text-align:left;padding:0 3em}.debug-panel .visibility-toggle{top:70px !important}.debug-panel .visibility-toggle svg{display:none}.debug-panel .visibility-toggle .icon::after{position:relative;left:3px;content:"⚙️";font-size:20px;display:block;width:20px;height:20px}.debug-panel .menu{position:relative;top:70px !important}body:has(.content .editor) .debug-panel{display:none}@media(min-width: 600px){.sample-game-select__inner{font-size:inherit}.editor{font-size:1.4em}.editor-game-name__input,.editor-num-players__input{font-size:inherit;position:static}.editor__controls{gap:1em}}`, ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -57444,22 +56973,6 @@ function Entity(_ref) {
 
 /***/ }),
 
-/***/ 80278:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var freeGlobal = __webpack_require__(47519);
-
-/** Detect free variable `self`. */
-var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
-
-/** Used as a reference to the global object. */
-var root = freeGlobal || freeSelf || Function('return this')();
-
-module.exports = root;
-
-
-/***/ }),
-
 /***/ 80954:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -59030,8 +58543,7 @@ var api = init(defaultConverter, { path: '/' });
 /* harmony export */   A: () => (/* binding */ GameEditor)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
-/* harmony import */ var lodash_debounce__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(53576);
-/* harmony import */ var lodash_debounce__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash_debounce__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _monaco_editor_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(36084);
 /* harmony import */ var _server_tic_tac_toe_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(51026);
 /* harmony import */ var _server_eights_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(41038);
 /* harmony import */ var _server_eights2_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(17872);
@@ -59039,7 +58551,9 @@ var api = init(defaultConverter, { path: '/' });
 /* harmony import */ var _server_reversi_json__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(97752);
 /* harmony import */ var _server_reversi2_json__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(18082);
 /* harmony import */ var _server_checkers_json__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(61478);
-/* harmony import */ var _monaco_editor_react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(36084);
+/* harmony import */ var _play_game_play_game_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(34223);
+/* harmony import */ var _game_status_game_status_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(45679);
+/* harmony import */ var _hooks_use_single_player_game_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(87999);
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -59056,6 +58570,10 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+
+
+var SCREEN_STATE_EDITING = 'editing';
+var SCREEN_STATE_TESTING = 'testing';
 var exampleGames = [{
   name: 'Three in a Row',
   rules: JSON.stringify(_server_tic_tac_toe_json__WEBPACK_IMPORTED_MODULE_2__, null, 2)
@@ -59088,20 +58606,41 @@ function GameEditor(_ref) {
   var initialGameName = _ref.initialGameName,
     initialGameRules = _ref.initialGameRules,
     initialNumPlayers = _ref.initialNumPlayers,
-    handleTestGame = _ref.handleTestGame,
-    handleCreateRoom = _ref.handleCreateRoom;
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(initialGameRules || gameRulesFromStorage || ''),
+    handleCreateRoom = _ref.handleCreateRoom,
+    goToRoom = _ref.goToRoom,
+    roomCode = _ref.roomCode,
+    auth = _ref.auth;
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(SCREEN_STATE_EDITING),
     _useState2 = _slicedToArray(_useState, 2),
-    gameRules = _useState2[0],
-    setGameRules = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(initialGameName || gameNameFromStorage || ''),
+    screenState = _useState2[0],
+    setScreenState = _useState2[1];
+
+  // controlled input state
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(initialGameRules || gameRulesFromStorage || ''),
     _useState4 = _slicedToArray(_useState3, 2),
-    gameName = _useState4[0],
-    setGameName = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(initialNumPlayers || numPlayersFromStorage || 2),
+    gameRules = _useState4[0],
+    setGameRules = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(initialGameName || gameNameFromStorage || ''),
     _useState6 = _slicedToArray(_useState5, 2),
-    numPlayers = _useState6[0],
-    setNumPlayers = _useState6[1];
+    gameName = _useState6[0],
+    setGameName = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(initialNumPlayers || numPlayersFromStorage || 2),
+    _useState8 = _slicedToArray(_useState7, 2),
+    numPlayers = _useState8[0],
+    setNumPlayers = _useState8[1];
+
+  // state that is frozen for testing (performance optimization so game connection
+  // isn't re-established on every keystroke)
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState0 = _slicedToArray(_useState9, 2),
+    savedGameRules = _useState0[0],
+    setSavedGameRules = _useState0[1];
+  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState10 = _slicedToArray(_useState1, 2),
+    savedNumPlayers = _useState10[0],
+    setSavedNumPlayers = _useState10[1];
+  var gameConnection = (0,_hooks_use_single_player_game_js__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A)(savedGameRules, savedNumPlayers);
+  console.log('gameConnection', gameConnection);
   var handleGameRulesChange = function handleGameRulesChange(newGameRules) {
     localStorage.setItem(RULES_LOCALSTORAGE_KEY, newGameRules);
     localStorage.setItem(NAME_LOCALSTORAGE_KEY, gameName);
@@ -59128,7 +58667,7 @@ function GameEditor(_ref) {
       setGameName(selectedGame.name);
     }
   };
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, screenState === SCREEN_STATE_EDITING && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "editor"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "sample-game-select"
@@ -59146,7 +58685,7 @@ function GameEditor(_ref) {
       value: i,
       className: "sample-game-select__option"
     }, game.name);
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_monaco_editor_react__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_monaco_editor_react__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Ay, {
     height: "400px",
     className: "editor__input",
     defaultLanguage: "json",
@@ -59185,14 +58724,15 @@ function GameEditor(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "editor-buttons__button",
     onClick: function onClick() {
-      handleTestGame({
-        gameName: gameName,
-        gameRules: gameRules,
-        numPlayers: numPlayers
-      });
+      setSavedGameRules(gameRules);
+      setSavedNumPlayers(numPlayers);
+      setScreenState(SCREEN_STATE_TESTING);
     }
-  }, "Test Game"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    className: "editor-buttons__button ",
+  }, "Test Game"), !auth.loading && !auth.idToken && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "editor-buttons__button editor-buttons__button--login",
+    onClick: auth.login
+  }, "Log in to Create Room"), !auth.loading && auth.idToken && !roomCode && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "editor-buttons__button",
     onClick: function onClick() {
       handleCreateRoom({
         gameName: gameName,
@@ -59200,7 +58740,28 @@ function GameEditor(_ref) {
         numPlayers: numPlayers
       });
     }
-  }, "Create Room"))));
+  }, "Create Room"), !auth.loading && auth.idToken && roomCode && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "editor-buttons__button",
+    onClick: function onClick() {
+      return goToRoom({
+        gameName: gameName,
+        gameRules: gameRules
+      });
+    }
+  }, "Go To Room")))), gameConnection.state && screenState === SCREEN_STATE_TESTING && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "testing-game"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "testing-game__title"
+  }, "Testing Game: ", gameName, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "editor-buttons__button",
+    onClick: function onClick() {
+      setScreenState(SCREEN_STATE_EDITING);
+    }
+  }, "Back to Editor")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_play_game_play_game_js__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+    gameConnection: gameConnection
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_game_status_game_status_js__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    gameConnection: gameConnection
+  })));
 }
 
 /***/ }),
@@ -59836,6 +59397,94 @@ var TakeFrom = /*#__PURE__*/function (_Move) {
   }]);
 }(_move_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
 
+
+/***/ }),
+
+/***/ 85575:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var boardgame_io_dist_cjs_core_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10061);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+var RoomGame = {
+  name: 'bgestagingroom',
+  setup: function setup(_, setupData) {
+    return _objectSpread({
+      players: {
+        '1': {
+          name: 'Room Creator'
+        }
+      },
+      status: 'waiting',
+      gameRules: '',
+      gameName: ''
+    }, setupData === null || setupData === void 0 ? void 0 : setupData.initialState);
+  },
+  turn: {
+    activePlayers: boardgame_io_dist_cjs_core_js__WEBPACK_IMPORTED_MODULE_0__/* .ActivePlayers */ .Pc.ALL
+  },
+  moves: {
+    join: function join(_ref, name) {
+      var G = _ref.G,
+        playerID = _ref.playerID;
+      if (G.status === 'waiting') {
+        G.players[playerID] = {
+          name: name
+        };
+      }
+    },
+    leave: function leave(_ref2) {
+      var G = _ref2.G,
+        playerID = _ref2.playerID;
+      if (playerID !== '1') {
+        delete G.players[playerID];
+      }
+    },
+    kick: function kick(_ref3, targetPlayerID) {
+      var G = _ref3.G,
+        playerID = _ref3.playerID;
+      if (playerID === '0' && targetPlayerID !== '1') {
+        delete G.players[targetPlayerID];
+      }
+    },
+    setGameMeta: function setGameMeta(_ref4, _ref5) {
+      var G = _ref4.G,
+        playerID = _ref4.playerID;
+      var gameRules = _ref5.gameRules,
+        gameName = _ref5.gameName;
+      if ((playerID === '0' || playerID === '1') && G.status === 'waiting') {
+        G.gameRules = gameRules;
+        G.gameName = gameName;
+      }
+    },
+    gameCreated: function gameCreated(_ref6, newGameId) {
+      var G = _ref6.G,
+        playerID = _ref6.playerID;
+      if (playerID === '0' && G.status === 'waiting') {
+        G.gameId = newGameId;
+        G.status = 'started';
+      }
+    },
+    gameDeleted: function gameDeleted(_ref7) {
+      var G = _ref7.G,
+        playerID = _ref7.playerID;
+      if (playerID === '0') {
+        delete G.gameId;
+        G.status = 'waiting';
+      }
+    }
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (RoomGame);
 
 /***/ }),
 
@@ -61601,36 +61250,6 @@ const { tokenOrchestrator } = cognitoUserPoolsTokenProvider;
 
 
 //# sourceMappingURL=tokenProvider.mjs.map
-
-
-/***/ }),
-
-/***/ 88711:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var root = __webpack_require__(80278);
-
-/**
- * Gets the timestamp of the number of milliseconds that have elapsed since
- * the Unix epoch (1 January 1970 00:00:00 UTC).
- *
- * @static
- * @memberOf _
- * @since 2.4.0
- * @category Date
- * @returns {number} Returns the timestamp.
- * @example
- *
- * _.defer(function(stamp) {
- *   console.log(_.now() - stamp);
- * }, _.now());
- * // => Logs the number of milliseconds it took for the deferred invocation.
- */
-var now = function() {
-  return root.Date.now();
-};
-
-module.exports = now;
 
 
 /***/ }),
@@ -64007,9 +63626,9 @@ function getOptions(idToken) {
   return {
     queryKey: ['my-rooms', idToken],
     queryFn: function queryFn() {
-      return (0,_utils_make_authenticated_request_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(apiUrl, idToken, {
+      return idToken ? (0,_utils_make_authenticated_request_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(apiUrl, idToken, {
         method: 'GET'
-      });
+      }) : [];
     },
     staleTime: 1000 * 60 * 50
   };
@@ -64096,6 +63715,53 @@ function stackHas(key) {
 
 module.exports = stackHas;
 
+
+/***/ }),
+
+/***/ 93967:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ JoinRoomButton)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
+/* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(36095);
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+
+
+function JoinRoomButton() {
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState2 = _slicedToArray(_useState, 2),
+    roomCode = _useState2[0],
+    setRoomCode = _useState2[1];
+  var navigate = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__/* .useNavigate */ .Z)();
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "join-room-button",
+    onClick: function onClick() {
+      navigate({
+        to: '/rooms/$roomcode',
+        params: {
+          roomcode: roomCode
+        }
+      });
+    }
+  }, "Join Room:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+    className: "join-room-button__input",
+    onClick: function onClick(e) {
+      e.stopPropagation();
+    },
+    onChange: function onChange(e) {
+      setRoomCode(e.target.value);
+    },
+    value: roomCode
+  }));
+}
 
 /***/ }),
 
@@ -64324,42 +63990,6 @@ var PlaceNew = /*#__PURE__*/function (_Move) {
 
 /***/ }),
 
-/***/ 95003:
-/***/ ((module) => {
-
-/**
- * Checks if `value` is object-like. A value is object-like if it's not `null`
- * and has a `typeof` result of "object".
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
- * @example
- *
- * _.isObjectLike({});
- * // => true
- *
- * _.isObjectLike([1, 2, 3]);
- * // => true
- *
- * _.isObjectLike(_.noop);
- * // => false
- *
- * _.isObjectLike(null);
- * // => false
- */
-function isObjectLike(value) {
-  return value != null && typeof value == 'object';
-}
-
-module.exports = isObjectLike;
-
-
-/***/ }),
-
 /***/ 95025:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
@@ -64513,59 +64143,6 @@ function insertBySelector(insert, style) {
   target.appendChild(style);
 }
 module.exports = insertBySelector;
-
-/***/ }),
-
-/***/ 95470:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var Symbol = __webpack_require__(8650);
-
-/** Used for built-in method references. */
-var objectProto = Object.prototype;
-
-/** Used to check objects for own properties. */
-var hasOwnProperty = objectProto.hasOwnProperty;
-
-/**
- * Used to resolve the
- * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
- * of values.
- */
-var nativeObjectToString = objectProto.toString;
-
-/** Built-in value references. */
-var symToStringTag = Symbol ? Symbol.toStringTag : undefined;
-
-/**
- * A specialized version of `baseGetTag` which ignores `Symbol.toStringTag` values.
- *
- * @private
- * @param {*} value The value to query.
- * @returns {string} Returns the raw `toStringTag`.
- */
-function getRawTag(value) {
-  var isOwn = hasOwnProperty.call(value, symToStringTag),
-      tag = value[symToStringTag];
-
-  try {
-    value[symToStringTag] = undefined;
-    var unmasked = true;
-  } catch (e) {}
-
-  var result = nativeObjectToString.call(value);
-  if (unmasked) {
-    if (isOwn) {
-      value[symToStringTag] = tag;
-    } else {
-      delete value[symToStringTag];
-    }
-  }
-  return result;
-}
-
-module.exports = getRawTag;
-
 
 /***/ }),
 

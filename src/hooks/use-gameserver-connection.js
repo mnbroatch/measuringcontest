@@ -13,8 +13,7 @@ export const useGameserverConnection = ({
   clientToken,
   numPlayers,
   debug = {
-    collapseOnLoad: true,
-    hideToggleButton: true
+    collapseOnLoad: true
   },
   singlePlayer = false,
   enabled = true,

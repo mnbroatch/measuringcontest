@@ -1,19 +1,24 @@
 import React from 'react'
+import Editor from '@monaco-editor/react';
 
 export default function GamePreview ({ gameRules, gameName }) {
   return (
-    <div>
+    <div className="game-preview">
       <h3>
-        {gameName}
+        {gameName} - Rules
       </h3>
-      <pre
-        style={{
-          width: '80%',
-          height: '50vh',
+      <Editor
+        height="80%"
+        className="editor__input"
+        defaultLanguage="json"
+        value={gameRules}
+        theme="vs-dark"
+        options={{
+          minimap: { enabled: false },
+          fontSize: 14,
+          readOnly: true
         }}
-      >
-        {gameRules}
-      </pre>
+      />
     </div>
   )
 }

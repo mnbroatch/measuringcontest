@@ -26,6 +26,7 @@ export default function useRoomConnection () {
     game,
     boardgamePlayerID,
     clientToken,
+    debug: false,
     enabled: !!joinRoomMutation.isSuccess
   })
   const clientState = client?.getState()
