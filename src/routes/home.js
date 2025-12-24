@@ -25,12 +25,12 @@ export default function Home () {
           </h1>
         </div>
         <h5 className="home-description">
-          A platform for prototyping board game rules design
+          A platform and declarative language for prototyping board game rules design
         </h5>
       </div>
       <div className="home-buttons">
         <Link
-          className="home__button home__button--get-started"
+          className="home__button button--style-a"
           to="/editor"
         >
           Get Started!

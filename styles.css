@@ -111,6 +111,20 @@ body {
   padding: 1em;
 }
 
+.button {
+}
+
+.home__button--get-started, .join-room-button {
+}
+
+.button--style-a {
+  background-color: var(--dark-orange);
+  color: var(--dark-amethyst);
+}
+
+.button--style-b {
+}
+
 .header__home-button {
   font-size: 1.2em;
   text-decoration: none;
@@ -142,11 +156,6 @@ body {
   border-radius: .3em;
   box-shadow: 0 4px 6px rgba(0,0,0,0.15);
   margin: .5em;
-}
-
-.home__button--get-started, .join-room-button {
-  background-color: var(--dark-orange);
-  color: var(--dark-amethyst);
 }
 
 .home__button--login  {
