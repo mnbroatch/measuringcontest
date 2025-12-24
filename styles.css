@@ -144,6 +144,19 @@ body {
   border-radius: .2em;
 }
 
+.button--x-small {
+  font-size: .9em;
+  padding: .3em .5em;
+  border-radius: .2em;
+}
+
+.room-game h4 {
+  margin: 0;
+}
+
+.room-game ul {
+  margin: 0;
+}
 .header-home-button {
   font-size: 1.2em;
   text-decoration: none;
@@ -306,7 +319,7 @@ body {
   flex-wrap: wrap;
   margin: .5em;
   gap: .3em;
-  align-items: center;
+  justify-content: center;
 }
 
 .editor-game-name__input, .editor-num-players__input {
@@ -325,7 +338,6 @@ body {
 }
 
 .buttons {
-  flex: 1;
   text-align: center;
   white-space: nowrap;
 }
@@ -348,7 +360,13 @@ body {
 .game-preview {
   flex: 1;
   text-align: left;
-  padding: 0 3em;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.game-preview h3 {
+  margin: 0;
 }
 
 .debug-panel .visibility-toggle {

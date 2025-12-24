@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
 import useRoomConnection from "../hooks/use-room-connection.js";
 import useGameConnection from "../hooks/use-game-connection.js";
@@ -49,17 +49,47 @@ export default function RoomPage () {
     || !roomConnection.state
     || (status === 'started' && !gameConnection.state)
 
+  const [ pageTimedOut, setPageTimedOut ] = useState(false)
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setPageTimedOut(true)
+    }, 5000)
+
+    return () => {
+      clearTimeout(timeout)
+    }
+  }, [])
+
+  if (pageTimedOut && isLoading) {
+    return (
+      <button
+        className="button button--style-c"
+        onClick={async () => {
+          await deleteRoomMutation.mutateAsync(roomCode)
+          navigate({
+            to: '/',
+          })
+        }}
+      >
+        Delete Room
+      </button>
+    )
+  }
+
   return !isLoading && iAmInRoom && (
     <>
       {status === 'waiting' && screenState === SCREEN_STATE_WAITING && (
         <>
           {!iAmRoomCreator && (
             <button
-              className="button button--style-c"
+              className="button button--x-small button--style-c"
               disabled={leaveRoomMutation.isPending || leaveRoomMutation.isSuccess}
               onClick={async () => {
-                await leaveRoomMutation.mutateAsync()
-                navigate({ to: '/', replace: true })
+                await deleteRoomMutation.mutateAsync(roomCode)
+                navigate({
+                  to: '/',
+                })
               }}
             >
               Leave Room
@@ -67,7 +97,7 @@ export default function RoomPage () {
           )}
           {iAmRoomCreator && (
             <button
-              className="button button--style-c"
+              className="button button--x-small button--style-c"
               onClick={() => {
                 deleteRoomMutation.mutate(roomCode)
                 navigate({
@@ -78,27 +108,28 @@ export default function RoomPage () {
               Delete Room
             </button>
           )}
-          <RoomGame players={players} playerID={playerID} />
           <ButtonWithInput
+            className="button--x-small"
             defaultValue={players?.[playerID]?.name}
-            label={ iAmInStagedGame ? 'Change my name to:' : 'Join Game as:' }
+            label={ iAmInStagedGame ? 'Change name:' : 'Join Game as:' }
             handleClick={(name) => {
               roomConnection.client.moves.join(name)
             }}
           />
+          <RoomGame players={players} playerID={playerID} />
           <GamePreview
             gameRules={gameRules}
             gameName={gameName}
           />
           <div className="buttons">
             <button
-              className="button button--style-a"
+              className="button button--small button--style-a"
               onClick={() => { setScreenState(SCREEN_STATE_EDITING) }}
             >
               Edit Game
             </button>
             <button
-              className="button button--style-a"
+              className="button button--small button--style-a"
               onClick={() => {
                 createGameMutation.mutate({
                   gameRules,
@@ -133,7 +164,7 @@ export default function RoomPage () {
       )}
       {status === 'started' && iAmRoomCreator && (
         <button
-          className="button button--style-c"
+          className="button button--small button--style-c"
           onClick={() => { deleteGameMutation.mutate() }}
         >
           Delete Game

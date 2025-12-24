@@ -136,7 +136,6 @@ export default function GameEditor ({
             </select>
           </div>
           <Editor
-            height="400px"
             className="editor__input"
             defaultLanguage="json"
             value={gameRules}

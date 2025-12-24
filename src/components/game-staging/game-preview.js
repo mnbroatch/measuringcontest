@@ -8,7 +8,6 @@ export default function GamePreview ({ gameRules, gameName }) {
         {gameName} - Rules
       </h3>
       <Editor
-        height="80%"
         className="editor__input"
         defaultLanguage="json"
         value={gameRules}

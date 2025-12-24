@@ -1,5 +1,6 @@
 import React from 'react'
 import { createRootRoute, Outlet, redirect } from '@tanstack/react-router'
+import { useIsMutating } from '@tanstack/react-query'
 import { useMyRoomsQuery } from "../queries/use-my-rooms-query.js";
 import { useCognitoQuery } from '../queries/use-cognito-query.js';
 import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
@@ -7,6 +8,9 @@ import Header from "../components/header/header.js";
 
 export default function Root () {
   const auth = useCognitoAuth()
+  const mutationCount = useIsMutating()
+
+  console.log('mutationCount', mutationCount)
 
   return (
     <>
@@ -21,13 +25,18 @@ export default function Root () {
 export const Route = createRootRoute({
   beforeLoad: async ({ location }) => {
     const publicPaths = ['/', '/editor']
-    console.log('location.pathname ', location.pathname )
     const isPublicRoute = publicPaths.some(path => location.pathname === path)
     const myRooms = await useMyRoomsQuery.preload()
-    if (myRooms.length && !location.pathname.startsWith(`/rooms/${myRooms[0]}`)) {
+    console.log('myRooms', myRooms)
+    if (myRooms?.length && !location.pathname.startsWith(`/rooms/${myRooms[0]}`)) {
       throw redirect({
         to: '/rooms/$roomcode',
         params: { roomcode: myRooms[0] }
+      })
+    } else if (!myRooms?.length && location.pathname.startsWith(`/rooms/${myRooms[0]}`)) {
+      throw redirect({
+        to: '/',
+        search: { redirect: location.href }
       })
     } else if (!isPublicRoute) {
       const auth = await useCognitoQuery.preload()
