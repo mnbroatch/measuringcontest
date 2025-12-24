@@ -5,7 +5,7 @@ import { Cog } from 'lucide-react';
 export default function HomeButton () {
   return (
     <Link
-      className="header__home-button" to="/"
+      className="header-home-button" to="/"
       aria-label="Board Game Engine"
     >
       <span aria-hidden="true">

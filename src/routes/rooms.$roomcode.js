@@ -4,6 +4,7 @@ import useRoomConnection from "../hooks/use-room-connection.js";
 import useGameConnection from "../hooks/use-game-connection.js";
 import { useRoomQuery } from "../queries/use-room-query.js";
 import { useLeaveRoomMutation } from "../queries/use-leave-room-mutation.js";
+import { useDeleteRoomMutation } from "../queries/use-delete-room-mutation.js";
 import { useCreateGameMutation } from "../queries/use-create-game-mutation.js";
 import { useDeleteGameMutation } from "../queries/use-delete-game-mutation.js";
 import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
@@ -13,6 +14,7 @@ import GameStatus from "../components/game-status/game-status.js";
 import RoomGame from "../components/game-staging/room-game.js";
 import GamePreview from "../components/game-staging/game-preview.js";
 import GameEditor from "../components/game-staging/game-editor.js";
+import ButtonWithInput from '../components/button-with-input/button-with-input.js'
 
 const SCREEN_STATE_EDITING = 'editing'
 const SCREEN_STATE_WAITING = 'waiting'
@@ -23,6 +25,7 @@ export default function RoomPage () {
   const auth = useCognitoAuth()
   const userId = auth.userId
   const leaveRoomMutation = useLeaveRoomMutation(roomCode)
+  const deleteRoomMutation = useDeleteRoomMutation()
 
   const room = useRoomQuery(roomCode)
   const iAmInRoom = room.data.members && userId in room.data.members
@@ -38,7 +41,6 @@ export default function RoomPage () {
   const iAmInStagedGame = players && roomConnection.client?.playerID in players
   const iAmInGame = room.data.players && userId in room.data.players
 
-  const [name, setName] = useState(players?.[playerID]?.name)
   const [screenState, setScreenState] = useState(SCREEN_STATE_WAITING)
   const createGameMutation = useCreateGameMutation(roomCode)
   const deleteGameMutation = useDeleteGameMutation(roomCode, gameId)
@@ -49,59 +51,65 @@ export default function RoomPage () {
 
   return !isLoading && iAmInRoom && (
     <>
-      <div>
-        <button
-          disabled={leaveRoomMutation.isPending || leaveRoomMutation.isSuccess}
-          onClick={async () => {
-            await leaveRoomMutation.mutateAsync()
-            navigate({ to: '/', replace: true })
-          }}
-        >
-          Leave Room
-        </button>
-      </div>
-
-      {status === 'waiting' && (
+      {status === 'waiting' && screenState === SCREEN_STATE_WAITING && (
         <>
+          {!iAmRoomCreator && (
+            <button
+              className="button button--style-c"
+              disabled={leaveRoomMutation.isPending || leaveRoomMutation.isSuccess}
+              onClick={async () => {
+                await leaveRoomMutation.mutateAsync()
+                navigate({ to: '/', replace: true })
+              }}
+            >
+              Leave Room
+            </button>
+          )}
+          {iAmRoomCreator && (
+            <button
+              className="button button--style-c"
+              onClick={() => {
+                deleteRoomMutation.mutate(roomCode)
+                navigate({
+                  to: '/',
+                })
+              }}
+            >
+              Delete Room
+            </button>
+          )}
           <RoomGame players={players} playerID={playerID} />
-          <button
-            onClick={() => {
+          <ButtonWithInput
+            defaultValue={players?.[playerID]?.name}
+            label={ iAmInStagedGame ? 'Change my name to:' : 'Join Game as:' }
+            handleClick={(name) => {
               roomConnection.client.moves.join(name)
             }}
-          >
-            { iAmInStagedGame ? 'Change my name to:' : 'Join Game as:' }
-            <input
-              onClick={(e) => {e.stopPropagation()}}
-              onChange={(e) => {
-                setName(e.target.value)}
-              }
-              value={name}
+          />
+          <GamePreview
+            gameRules={gameRules}
+            gameName={gameName}
+          />
+          <div className="buttons">
+            <button
+              className="button button--style-a"
+              onClick={() => { setScreenState(SCREEN_STATE_EDITING) }}
             >
-            </input>
-          </button>
-        </>
-      )}
-
-      {status === 'waiting' && (
-        <GamePreview
-          gameRules={gameRules}
-          gameName={gameName}
-        />
-      )}
-      {status === 'waiting' && iAmRoomCreator && screenState === SCREEN_STATE_WAITING && (
-        <>
-          <button onClick={() => { setScreenState(SCREEN_STATE_EDITING) }}>
-            Edit Game
-          </button>
-          <button onClick={() => {
-            createGameMutation.mutate({
-              gameRules,
-              gameName,
-              players,
-            })
-          }}>
-            Start Game
-          </button>
+              Edit Game
+            </button>
+            <button
+              className="button button--style-a"
+              onClick={() => {
+                createGameMutation.mutate({
+                  gameRules,
+                  gameName,
+                  players,
+                })
+              }}
+            >
+              Start Game
+            </button>
+          </div>
         </>
       )}
       {status === 'waiting' && iAmRoomCreator && screenState === SCREEN_STATE_EDITING && (
@@ -124,7 +132,10 @@ export default function RoomPage () {
         <GameStatus gameConnection={gameConnection} />
       )}
       {status === 'started' && iAmRoomCreator && (
-        <button onClick={() => { deleteGameMutation.mutate() }}>
+        <button
+          className="button button--style-c"
+          onClick={() => { deleteGameMutation.mutate() }}
+        >
           Delete Game
         </button>
       )}

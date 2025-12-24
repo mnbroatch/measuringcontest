@@ -2,12 +2,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap');
 
 :root {
-  --bright-sky: #01baefff;
-  --tropical-teal: #0cbabaff;
-  --dark-amethyst: #380036ff;
-  --midnight-violet: #26081cff;
-  --coffee-bean: #150811ff;
+  --bright-sky: #01baef;
+  --tropical-teal: #0cbaba;
+  --dark-amethyst: #380036;
   --dark-orange: #F58F29;
+  --lipstick-red: #EC0B43;
 }
 
 html {
@@ -112,40 +111,6 @@ body {
 }
 
 .button {
-}
-
-.home__button--get-started, .join-room-button {
-}
-
-.button--style-a {
-  background-color: var(--dark-orange);
-  color: var(--dark-amethyst);
-}
-
-.button--style-b {
-}
-
-.header__home-button {
-  font-size: 1.2em;
-  text-decoration: none;
-  text-transform: uppercase;
-  color: var(--bright-sky);
-  text-align: center;
-  line-height: 1em;
-}
-
-.header__home-button .lucide-cog {
-  margin-right: -.05em;
-  margin-left: -.05em;
-  position: relative;
-  top: .15em;
-}
-
-.home-buttons {
-  margin: 1.5em;
-}
-
-.home__button, .join-room-button {
   border: 3px solid var(--dark-amethyst);
   display: inline-block;
   padding: .5em;
@@ -158,28 +123,57 @@ body {
   margin: .5em;
 }
 
-.home__button--login  {
+.button--style-a {
+  background-color: var(--dark-orange);
+  color: var(--dark-amethyst);
+}
+
+.button--style-b {
   background-color: var(--dark-amethyst);
   color: white;
 }
 
-.header__login-button, .header__logout-button {
-  background-color: var(--dark-amethyst);
+.button--style-c {
+  background-color: var(--lipstick-red);
   color: white;
-  font-family: inherit;
-  border: none;
+}
+
+.button--small {
+  font-size: 1.2em;
   padding: .3em .5em;
-  cursor: pointer;
   border-radius: .2em;
 }
 
-.join-room-button__input {
+.header-home-button {
+  font-size: 1.2em;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: var(--bright-sky);
+  text-align: center;
+  line-height: 1em;
+}
+
+.header-home-button .lucide-cog {
+  margin-right: -.05em;
+  margin-left: -.05em;
+  position: relative;
+  top: .15em;
+}
+
+.home-buttons {
+  margin: 1.5em;
+}
+
+.button-with-input__input {
   font-size: .8em;
   margin-left: .5em;
-  width: 4em;
   padding: 0 .5em;
   position: relative;
   bottom: .1em;
+}
+
+.join-room-button .button-with-input__input {
+  width: 4em;
 }
 
 .editor {
@@ -330,42 +324,25 @@ body {
   width: 3em;
 }
 
-.editor-buttons {
+.buttons {
   flex: 1;
   text-align: center;
   white-space: nowrap;
 }
 
-.editor-buttons__button {
+.editor-buttons .button {
   display: inline-block;
-  font-family: inherit;
-  background-color: var(--dark-orange);
-  border: 3px solid var(--dark-amethyst);
-  color: var(--dark-amethyst);
   padding: .2em .3em;
   font-size: .8em;
-  text-decoration: none;
-  cursor: pointer;
-  border-radius: .3em;
   box-shadow: 0 4px 6px rgba(0,0,0,0.15);
-}
-
-.editor-buttons__button--login {
-  background-color: var(--dark-amethyst);
-  border: 3px solid var(--dark-amethyst);
-  color: white;
-}
-
-.editor-buttons__button:last-child {
-  margin-left: 1em;
 }
 
 .testing-game {
   margin: 2em;
 }
 
-.testing-game__title {
-  margin-bottom: 2em;
+.testing-game__title__text {
+  margin: 0;
 }
 
 .game-preview {

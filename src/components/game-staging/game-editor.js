@@ -171,9 +171,9 @@ export default function GameEditor ({
                 />
               </label>
             </div>
-            <div className="editor-buttons">
+            <div className="buttons">
               <button
-                className="editor-buttons__button"
+                className="button button--small button--style-a"
                 onClick={() => {
                   setSavedGameRules(gameRules)
                   setSavedNumPlayers(numPlayers)
@@ -184,7 +184,7 @@ export default function GameEditor ({
               </button>
               {!auth.loading && !auth.idToken && (
                 <button
-                  className="editor-buttons__button editor-buttons__button--login"
+                  className="button button--small button--style-b"
                   onClick={auth.login}
                 >
                   Log in to Create Room
@@ -192,7 +192,7 @@ export default function GameEditor ({
               )}
               {!auth.loading && auth.idToken && !roomCode && (
                 <button
-                  className="editor-buttons__button"
+                  className="button button--small button--style-a"
                   onClick={() => { handleCreateRoom({ gameName, gameRules, numPlayers }) }}
                 >
                   Create Room
@@ -200,7 +200,7 @@ export default function GameEditor ({
               )}
               {!auth.loading && auth.idToken && roomCode && (
                 <button
-                  className="editor-buttons__button"
+                  className="button button--small button--style-a"
                   onClick={() => goToRoom({ gameName, gameRules })}
                 >
                   Go To Room
@@ -213,9 +213,11 @@ export default function GameEditor ({
       {gameConnection.state && screenState === SCREEN_STATE_TESTING && (
         <div className="testing-game">
           <div className="testing-game__title">
-            Testing Game: {gameName}
+            <h4 className="testing-game__title__text">
+              Testing Game: {gameName}
+            </h4>
             <button
-              className="editor-buttons__button"
+              className="button button--small button--style-a"
               onClick={() => { setScreenState(SCREEN_STATE_EDITING) }}
             >
               Back to Editor

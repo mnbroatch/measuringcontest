@@ -153,15 +153,17 @@ function resolveEntity(bgioArguments, target, context, targetName) {
 /* harmony import */ var _hooks_use_game_connection_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(73523);
 /* harmony import */ var _queries_use_room_query_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(35190);
 /* harmony import */ var _queries_use_leave_room_mutation_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(36789);
-/* harmony import */ var _queries_use_create_game_mutation_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(29127);
-/* harmony import */ var _queries_use_delete_game_mutation_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(50808);
-/* harmony import */ var _contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(52904);
-/* harmony import */ var _components_play_game_play_game_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(34223);
-/* harmony import */ var _components_watch_game_watch_game_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(13869);
-/* harmony import */ var _components_game_status_game_status_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(45679);
-/* harmony import */ var _components_game_staging_room_game_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(41035);
-/* harmony import */ var _components_game_staging_game_preview_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(23984);
-/* harmony import */ var _components_game_staging_game_editor_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(83107);
+/* harmony import */ var _queries_use_delete_room_mutation_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(98463);
+/* harmony import */ var _queries_use_create_game_mutation_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(29127);
+/* harmony import */ var _queries_use_delete_game_mutation_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(50808);
+/* harmony import */ var _contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(52904);
+/* harmony import */ var _components_play_game_play_game_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(34223);
+/* harmony import */ var _components_watch_game_watch_game_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(13869);
+/* harmony import */ var _components_game_status_game_status_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(45679);
+/* harmony import */ var _components_game_staging_room_game_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(41035);
+/* harmony import */ var _components_game_staging_game_preview_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(23984);
+/* harmony import */ var _components_game_staging_game_editor_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(83107);
+/* harmony import */ var _components_button_with_input_button_with_input_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(45247);
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
@@ -188,6 +190,8 @@ console.warn("[tanstack-router] These exports from \"/home/mnbro/Programming/mea
 
 
 
+
+
 var SCREEN_STATE_EDITING = 'editing';
 var SCREEN_STATE_WAITING = 'waiting';
 function RoomPage() {
@@ -195,9 +199,10 @@ function RoomPage() {
   var _Route$useParams = Route.useParams(),
     roomCode = _Route$useParams.roomcode;
   var navigate = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__/* .useNavigate */ .Z)();
-  var auth = (0,_contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_9__/* .useCognitoAuth */ .f)();
+  var auth = (0,_contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_10__/* .useCognitoAuth */ .f)();
   var userId = auth.userId;
   var leaveRoomMutation = (0,_queries_use_leave_room_mutation_js__WEBPACK_IMPORTED_MODULE_6__/* .useLeaveRoomMutation */ .L)(roomCode);
+  var deleteRoomMutation = (0,_queries_use_delete_room_mutation_js__WEBPACK_IMPORTED_MODULE_7__/* .useDeleteRoomMutation */ .d)();
   var room = (0,_queries_use_room_query_js__WEBPACK_IMPORTED_MODULE_5__/* .useRoomQuery */ .P)(roomCode);
   var iAmInRoom = room.data.members && userId in room.data.members;
   var iAmRoomCreator = userId && room.data.createdBy === userId;
@@ -211,18 +216,15 @@ function RoomPage() {
   var gameId = (_roomConnection$state5 = roomConnection.state) === null || _roomConnection$state5 === void 0 ? void 0 : _roomConnection$state5.G.gameId;
   var iAmInStagedGame = players && ((_roomConnection$clien2 = roomConnection.client) === null || _roomConnection$clien2 === void 0 ? void 0 : _roomConnection$clien2.playerID) in players;
   var iAmInGame = room.data.players && userId in room.data.players;
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(players === null || players === void 0 || (_players$playerID = players[playerID]) === null || _players$playerID === void 0 ? void 0 : _players$playerID.name),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(SCREEN_STATE_WAITING),
     _useState2 = _slicedToArray(_useState, 2),
-    name = _useState2[0],
-    setName = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(SCREEN_STATE_WAITING),
-    _useState4 = _slicedToArray(_useState3, 2),
-    screenState = _useState4[0],
-    setScreenState = _useState4[1];
-  var createGameMutation = (0,_queries_use_create_game_mutation_js__WEBPACK_IMPORTED_MODULE_7__/* .useCreateGameMutation */ .Z)(roomCode);
-  var deleteGameMutation = (0,_queries_use_delete_game_mutation_js__WEBPACK_IMPORTED_MODULE_8__/* .useDeleteGameMutation */ .Q)(roomCode, gameId);
+    screenState = _useState2[0],
+    setScreenState = _useState2[1];
+  var createGameMutation = (0,_queries_use_create_game_mutation_js__WEBPACK_IMPORTED_MODULE_8__/* .useCreateGameMutation */ .Z)(roomCode);
+  var deleteGameMutation = (0,_queries_use_delete_game_mutation_js__WEBPACK_IMPORTED_MODULE_9__/* .useDeleteGameMutation */ .Q)(roomCode, gameId);
   var isLoading = room.isLoading || !roomConnection.state || status === 'started' && !gameConnection.state;
-  return !isLoading && iAmInRoom && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  return !isLoading && iAmInRoom && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, status === 'waiting' && screenState === SCREEN_STATE_WAITING && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, !iAmRoomCreator && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "button button--style-c",
     disabled: leaveRoomMutation.isPending || leaveRoomMutation.isSuccess,
     onClick: /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
       return _regenerator().w(function (_context) {
@@ -240,29 +242,35 @@ function RoomPage() {
         }
       }, _callee);
     }))
-  }, "Leave Room")), status === 'waiting' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_room_game_js__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+  }, "Leave Room"), iAmRoomCreator && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "button button--style-c",
+    onClick: function onClick() {
+      deleteRoomMutation.mutate(roomCode);
+      navigate({
+        to: '/'
+      });
+    }
+  }, "Delete Room"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_room_game_js__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     players: players,
     playerID: playerID
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    onClick: function onClick() {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_button_with_input_button_with_input_js__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+    defaultValue: players === null || players === void 0 || (_players$playerID = players[playerID]) === null || _players$playerID === void 0 ? void 0 : _players$playerID.name,
+    label: iAmInStagedGame ? 'Change my name to:' : 'Join Game as:',
+    handleClick: function handleClick(name) {
       roomConnection.client.moves.join(name);
     }
-  }, iAmInStagedGame ? 'Change my name to:' : 'Join Game as:', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
-    onClick: function onClick(e) {
-      e.stopPropagation();
-    },
-    onChange: function onChange(e) {
-      setName(e.target.value);
-    },
-    value: name
-  }))), status === 'waiting' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_game_preview_js__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_game_preview_js__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
     gameRules: gameRules,
     gameName: gameName
-  }), status === 'waiting' && iAmRoomCreator && screenState === SCREEN_STATE_WAITING && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "buttons"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "button button--style-a",
     onClick: function onClick() {
       setScreenState(SCREEN_STATE_EDITING);
     }
   }, "Edit Game"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "button button--style-a",
     onClick: function onClick() {
       createGameMutation.mutate({
         gameRules: gameRules,
@@ -270,7 +278,7 @@ function RoomPage() {
         players: players
       });
     }
-  }, "Start Game")), status === 'waiting' && iAmRoomCreator && screenState === SCREEN_STATE_EDITING && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_game_editor_js__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+  }, "Start Game"))), status === 'waiting' && iAmRoomCreator && screenState === SCREEN_STATE_EDITING && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_game_editor_js__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
     auth: auth,
     roomCode: roomCode,
     goToRoom: function goToRoom(_ref2) {
@@ -282,13 +290,14 @@ function RoomPage() {
       });
       setScreenState(SCREEN_STATE_WAITING);
     }
-  }), status === 'started' && iAmInGame && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_play_game_play_game_js__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }), status === 'started' && iAmInGame && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_play_game_play_game_js__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     gameConnection: gameConnection
-  }), status === 'started' && !iAmInGame && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_watch_game_watch_game_js__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  }), status === 'started' && !iAmInGame && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_watch_game_watch_game_js__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     gameConnection: gameConnection
-  }), status === 'started' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_status_game_status_js__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+  }), status === 'started' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_status_game_status_js__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
     gameConnection: gameConnection
   }), status === 'started' && iAmRoomCreator && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "button button--style-c",
     onClick: function onClick() {
       deleteGameMutation.mutate();
     }
@@ -2631,7 +2640,7 @@ function createMoves(moves, game) {
 
 function HomeButton() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__/* .Link */ .N_, {
-    className: "header__home-button",
+    className: "header-home-button",
     to: "/",
     "aria-label": "Board Game Engine"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
@@ -27571,9 +27580,10 @@ const protocol = 4;
 /* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(27162);
 /* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(72382);
 /* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(36965);
-/* harmony import */ var _queries_use_cognito_query_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(31384);
-/* harmony import */ var _contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(52904);
-/* harmony import */ var _components_header_header_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(53871);
+/* harmony import */ var _queries_use_my_rooms_query_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(92798);
+/* harmony import */ var _queries_use_cognito_query_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(31384);
+/* harmony import */ var _contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(52904);
+/* harmony import */ var _components_header_header_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(53871);
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
@@ -27583,9 +27593,10 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 
 
 
+
 function Root() {
-  var auth = (0,_contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_5__/* .useCognitoAuth */ .f)();
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_header_header_js__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+  var auth = (0,_contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_6__/* .useCognitoAuth */ .f)();
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_header_header_js__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     auth: auth
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "content"
@@ -27594,34 +27605,50 @@ function Root() {
 var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__/* .createRootRoute */ .gI)({
   beforeLoad: function () {
     var _beforeLoad = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(_ref) {
-      var location, publicPaths, isPublicRoute, auth;
+      var location, publicPaths, isPublicRoute, myRooms, auth;
       return _regenerator().w(function (_context) {
         while (1) switch (_context.n) {
           case 0:
             location = _ref.location;
-            publicPaths = ['/home', '/editor'];
+            publicPaths = ['/', '/editor'];
+            console.log('location.pathname ', location.pathname);
             isPublicRoute = publicPaths.some(function (path) {
               return location.pathname === path;
             });
-            if (isPublicRoute) {
-              _context.n = 2;
-              break;
-            }
             _context.n = 1;
-            return _queries_use_cognito_query_js__WEBPACK_IMPORTED_MODULE_4__/* .useCognitoQuery */ .v.preload();
+            return _queries_use_my_rooms_query_js__WEBPACK_IMPORTED_MODULE_4__/* .useMyRoomsQuery */ .s.preload();
           case 1:
-            auth = _context.v;
-            if (auth !== null && auth !== void 0 && auth.idToken) {
+            myRooms = _context.v;
+            if (!(myRooms.length && !location.pathname.startsWith("/rooms/".concat(myRooms[0])))) {
               _context.n = 2;
               break;
             }
             throw (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_3__/* .redirect */ .V2)({
-              to: '/home',
+              to: '/rooms/$roomcode',
+              params: {
+                roomcode: myRooms[0]
+              }
+            });
+          case 2:
+            if (isPublicRoute) {
+              _context.n = 4;
+              break;
+            }
+            _context.n = 3;
+            return _queries_use_cognito_query_js__WEBPACK_IMPORTED_MODULE_5__/* .useCognitoQuery */ .v.preload();
+          case 3:
+            auth = _context.v;
+            if (auth !== null && auth !== void 0 && auth.idToken) {
+              _context.n = 4;
+              break;
+            }
+            throw (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_3__/* .redirect */ .V2)({
+              to: '/',
               search: {
                 redirect: location.href
               }
             });
-          case 2:
+          case 4:
             return _context.a(2);
         }
       }, _callee);
@@ -37033,79 +37060,67 @@ function v4(options, buf, offset) {
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
 /* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(82820);
 /* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(10103);
-/* harmony import */ var _queries_use_create_room_mutation_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(62140);
-/* harmony import */ var _queries_use_delete_room_mutation_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(98463);
-/* harmony import */ var _queries_use_my_rooms_query_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(92798);
-function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
-function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
-function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
-function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
-function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-console.warn("[tanstack-router] These exports from \"/home/mnbro/Programming/measuringcontest/src/routes/index.js\" will not be code-split and will increase your bundle size:\n- IndexPage\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
+/* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(36095);
+/* harmony import */ var _contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(52904);
+/* harmony import */ var _components_home_page_card_home_page_card_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(13417);
+/* harmony import */ var _components_button_with_input_button_with_input_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(45247);
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(18458);
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(37276);
+console.warn("[tanstack-router] These exports from \"/home/mnbro/Programming/measuringcontest/src/routes/index.js\" will not be code-split and will increase your bundle size:\n- Home\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
 
 
 
 
 
-function IndexPage() {
-  var _myRooms$data, _myRooms$data2;
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
-    _useState2 = _slicedToArray(_useState, 2),
-    roomCode = _useState2[0],
-    setRoomCode = _useState2[1];
-  var myRooms = (0,_queries_use_my_rooms_query_js__WEBPACK_IMPORTED_MODULE_5__/* .useMyRoomsQuery */ .s)();
-  var createRoomMutation = (0,_queries_use_create_room_mutation_js__WEBPACK_IMPORTED_MODULE_3__/* .useCreateRoomMutation */ .q)();
-  var deleteRoomMutation = (0,_queries_use_delete_room_mutation_js__WEBPACK_IMPORTED_MODULE_4__/* .useDeleteRoomMutation */ .d)();
-  return !myRooms.isLoading && myRooms.data && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, !((_myRooms$data = myRooms.data) !== null && _myRooms$data !== void 0 && _myRooms$data.length) && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    onClick: function onClick() {
-      createRoomMutation.mutate();
-    }
-  }, "create room"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__/* .Link */ .N_, {
-    to: "/rooms/$roomcode",
-    params: {
-      roomcode: roomCode
-    }
-  }, "Go To Room"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
-    onChange: function onChange(e) {
-      setRoomCode(e.target.value);
-    },
-    value: roomCode
-  })), ((_myRooms$data2 = myRooms.data) === null || _myRooms$data2 === void 0 ? void 0 : _myRooms$data2.length) > 0 && myRooms.data.map(function (roomCode, i) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-      key: i + 'delete'
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__/* .Link */ .N_, {
-      to: "/rooms/$roomcode",
-      params: {
-        roomcode: roomCode
-      }
-    }, roomCode), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-      onClick: function onClick() {
-        deleteRoomMutation.mutate(roomCode);
-      }
-    }, "delete"));
-  }));
-}
-var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__/* .createFileRoute */ .WK)("/")({
-  loader: function () {
-    var _loader = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
-      return _regenerator().w(function (_context) {
-        while (1) switch (_context.n) {
-          case 0:
-            return _context.a(2, _queries_use_my_rooms_query_js__WEBPACK_IMPORTED_MODULE_5__/* .useMyRoomsQuery */ .s.preload());
+
+function Home() {
+  var auth = (0,_contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_4__/* .useCognitoAuth */ .f)();
+  var navigate = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_3__/* .useNavigate */ .Z)();
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "home"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "home-splash"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "home-tagline"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
+    className: "home-tagline__inner"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Play,"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Tweak,"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Repeat."))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h5", {
+    className: "home-description"
+  }, "A platform and declarative language for prototyping board game rules design")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "home-buttons"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__/* .Link */ .N_, {
+    className: "button button--style-a",
+    to: "/editor"
+  }, "Get Started!"), !auth.loading && !auth.idToken && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "button button--style-b",
+    onClick: auth.login
+  }, "Log in to Join a Room"), !auth.loading && auth.idToken && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_button_with_input_button_with_input_js__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    className: "join-room-button",
+    label: "Join Room:",
+    handleClick: function handleClick(roomCode) {
+      navigate({
+        to: '/rooms/$roomcode',
+        params: {
+          roomcode: roomCode
         }
-      }, _callee);
-    }));
-    function loader() {
-      return _loader.apply(this, arguments);
+      });
     }
-    return loader;
-  }(),
-  component: IndexPage
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "home-explanation"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_home_page_card_home_page_card_js__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    iconComponent: lucide_react__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A,
+    iconSize: "5em",
+    iconStrokeWidth: "1.3",
+    description: "Define a game using BAGEL (Board-based Automated Game Engine Language)"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_home_page_card_home_page_card_js__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    iconComponent: lucide_react__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A,
+    iconSize: "5em",
+    iconStrokeWidth: "1.3",
+    description: "Create a lobby in seconds and play with friends using a room code!"
+  })));
+}
+var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__/* .createFileRoute */ .WK)('/')({
+  component: Home
 });
 
 /***/ }),
@@ -38662,6 +38677,49 @@ var useGameserverConnection = function useGameserverConnection(_ref) {
   }, [gameId, userId, boardgamePlayerID, clientToken, game, enabled]);
   return clientRef.current;
 };
+
+/***/ }),
+
+/***/ 45247:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ ButtonWithInput)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+
+function ButtonWithInput(_ref) {
+  var handleClick = _ref.handleClick,
+    label = _ref.label,
+    defaultValue = _ref.defaultValue,
+    className = _ref.className;
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(defaultValue || ''),
+    _useState2 = _slicedToArray(_useState, 2),
+    value = _useState2[0],
+    setValue = _useState2[1];
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: ['button', 'button--style-b', className].filter(Boolean).join(' '),
+    onClick: function onClick() {
+      handleClick(value);
+    }
+  }, label, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+    className: "button-with-input__input",
+    onClick: function onClick(e) {
+      e.stopPropagation();
+    },
+    onChange: function onChange(e) {
+      setValue(e.target.value);
+    },
+    value: value
+  }));
+}
 
 /***/ }),
 
@@ -40866,69 +40924,6 @@ module.exports = isKeyable;
 
 /***/ }),
 
-/***/ 51919:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   q: () => (/* binding */ Route)
-/* harmony export */ });
-/* unused harmony export default */
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
-/* harmony import */ var _contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(52904);
-/* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(82820);
-/* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(10103);
-/* harmony import */ var _components_home_page_card_home_page_card_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(13417);
-/* harmony import */ var _components_join_room_button_join_room_button_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(93967);
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(18458);
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(37276);
-console.warn("[tanstack-router] These exports from \"/home/mnbro/Programming/measuringcontest/src/routes/home.js\" will not be code-split and will increase your bundle size:\n- Home\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
-
-
-
-
-
-
-function Home() {
-  var auth = (0,_contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_1__/* .useCognitoAuth */ .f)();
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "home"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "home-splash"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "home-tagline"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
-    className: "home-tagline__inner"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Play,"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Tweak,"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Repeat."))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h5", {
-    className: "home-description"
-  }, "A platform for prototyping board game rules design")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "home-buttons"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_tanstack_react_router__WEBPACK_IMPORTED_MODULE_3__/* .Link */ .N_, {
-    className: "home__button home__button--get-started",
-    to: "/editor"
-  }, "Get Started!"), !auth.loading && !auth.idToken && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    className: "home__button home__button--login",
-    onClick: auth.login
-  }, "Log in to Join a Room"), !auth.loading && auth.idToken && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_join_room_button_join_room_button_js__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "home-explanation"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_home_page_card_home_page_card_js__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
-    iconComponent: lucide_react__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A,
-    iconSize: "5em",
-    iconStrokeWidth: "1.3",
-    description: "Define a game using BAGEL (Board-based Automated Game Engine Language)"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_home_page_card_home_page_card_js__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
-    iconComponent: lucide_react__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A,
-    iconSize: "5em",
-    iconStrokeWidth: "1.3",
-    description: "Create a lobby in seconds and play with friends using a room code!"
-  })));
-}
-var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__/* .createFileRoute */ .WK)('/home')({
-  component: Home
-});
-
-/***/ }),
-
 /***/ 52189:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -41719,10 +41714,10 @@ function Header(_ref) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "header"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_home_button_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A, null), !auth.loading && !auth.idToken && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    className: "header__login-button",
+    className: "button button--small button--style-b",
     onClick: auth.login
   }, "Login"), !auth.loading && !!auth.idToken && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    className: "header__logout-button",
+    className: "button button--small button--style-b",
     onClick: auth.logout
   }, "Logout"));
 }
@@ -43257,10 +43252,9 @@ function batch(fn) {
 /* harmony export */   g: () => (/* binding */ routeTree)
 /* harmony export */ });
 /* harmony import */ var _routes_root__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(24786);
-/* harmony import */ var _routes_home__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(51919);
-/* harmony import */ var _routes_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(19737);
-/* harmony import */ var _routes_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(41930);
-/* harmony import */ var _routes_rooms_$roomcode__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(246);
+/* harmony import */ var _routes_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(19737);
+/* harmony import */ var _routes_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(41930);
+/* harmony import */ var _routes_rooms_$roomcode__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(246);
 /* eslint-disable */
 
 // @ts-nocheck
@@ -43275,29 +43269,21 @@ function batch(fn) {
 
 
 
-
-var HomeRoute = _routes_home__WEBPACK_IMPORTED_MODULE_1__/* .Route */ .q.update({
-  id: '/home',
-  path: '/home',
-  getParentRoute: function getParentRoute() {
-    return _routes_root__WEBPACK_IMPORTED_MODULE_0__/* .Route */ .q;
-  }
-});
-var EditorRoute = _routes_editor__WEBPACK_IMPORTED_MODULE_2__/* .Route */ .q.update({
+var EditorRoute = _routes_editor__WEBPACK_IMPORTED_MODULE_1__/* .Route */ .q.update({
   id: '/editor',
   path: '/editor',
   getParentRoute: function getParentRoute() {
     return _routes_root__WEBPACK_IMPORTED_MODULE_0__/* .Route */ .q;
   }
 });
-var IndexRoute = _routes_index__WEBPACK_IMPORTED_MODULE_3__/* .Route */ .q.update({
+var IndexRoute = _routes_index__WEBPACK_IMPORTED_MODULE_2__/* .Route */ .q.update({
   id: '/',
   path: '/',
   getParentRoute: function getParentRoute() {
     return _routes_root__WEBPACK_IMPORTED_MODULE_0__/* .Route */ .q;
   }
 });
-var RoomsRoomcodeRoute = _routes_rooms_$roomcode__WEBPACK_IMPORTED_MODULE_4__/* .Route */ .q.update({
+var RoomsRoomcodeRoute = _routes_rooms_$roomcode__WEBPACK_IMPORTED_MODULE_3__/* .Route */ .q.update({
   id: '/rooms/$roomcode',
   path: '/rooms/$roomcode',
   getParentRoute: function getParentRoute() {
@@ -43307,7 +43293,6 @@ var RoomsRoomcodeRoute = _routes_rooms_$roomcode__WEBPACK_IMPORTED_MODULE_4__/* 
 var rootRouteChildren = {
   IndexRoute: IndexRoute,
   EditorRoute: EditorRoute,
-  HomeRoute: HomeRoute,
   RoomsRoomcodeRoute: RoomsRoomcodeRoute
 };
 var routeTree = _routes_root__WEBPACK_IMPORTED_MODULE_0__/* .Route */ .q._addFileChildren(rootRouteChildren);
@@ -53837,7 +53822,7 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Paytone+One&display=swap);"]);
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `:root{--bright-sky: #01baefff;--tropical-teal: #0cbabaff;--dark-amethyst: #380036ff;--midnight-violet: #26081cff;--coffee-bean: #150811ff;--dark-orange: #F58F29}html{height:100%;overscroll-behavior:none}body{margin:0;font-family:"Paytone One",sans-serif;height:100%}#root{display:flex;flex-direction:column;height:100%}.content{display:flex;flex-direction:column;flex:1;text-align:center;background:linear-gradient(to bottom, var(--bright-sky) 0%, var(--bright-sky) 50%, var(--tropical-teal) 80%, var(--tropical-teal) 100%)}.header{position:relative;padding:.5em;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 6px rgba(0,0,0,.15)}.home-splash{color:#fff;display:grid;grid-template-columns:repeat(auto-fit, minmax(135px, 1fr));gap:1em;align-items:center;background:linear-gradient(to right, var(--dark-amethyst) 0%, var(--dark-amethyst) 20%, var(--bright-sky) 100%)}.home-tagline{padding-left:.7em}.home-tagline__inner{display:inline-block;text-align:left}.home-description{padding:0 .7em;font-family:"Nunito",sans-serif}.home-explanation{display:grid;grid-template-columns:repeat(auto-fit, 200px);gap:1em;justify-content:center;margin-bottom:2em}.home-page-card{color:var(--dark-amethyst);font-family:"Nunito",sans-serif;font-weight:700;font-size:.8em;background-color:#fff;aspect-ratio:.8;padding:1em;border-radius:1em;text-align:center;box-shadow:0 4px 6px rgba(0,0,0,.15)}.home-page-card__icon{background-color:#fff;aspect-ratio:.8;padding:1em}.home-page-card__description{background-color:#fff;border-top:2px solid var(--tropical-teal);padding:1em}.header__home-button{font-size:1.2em;text-decoration:none;text-transform:uppercase;color:var(--bright-sky);text-align:center;line-height:1em}.header__home-button .lucide-cog{margin-right:-0.05em;margin-left:-0.05em;position:relative;top:.15em}.home-buttons{margin:1.5em}.home__button,.join-room-button{border:3px solid var(--dark-amethyst);display:inline-block;padding:.5em;font-size:1.5em;font-family:inherit;text-decoration:none;cursor:pointer;border-radius:.3em;box-shadow:0 4px 6px rgba(0,0,0,.15);margin:.5em}.home__button--get-started,.join-room-button{background-color:var(--dark-orange);color:var(--dark-amethyst)}.home__button--login{background-color:var(--dark-amethyst);color:#fff}.header__login-button,.header__logout-button{background-color:var(--dark-amethyst);color:#fff;font-family:inherit;border:none;padding:.3em .5em;cursor:pointer;border-radius:.2em}.join-room-button__input{font-size:.8em;margin-left:.5em;width:4em;padding:0 .5em;position:relative;bottom:.1em}.editor{display:flex;flex-direction:column;flex:1;margin:.7em}.editor section:has(.editor__input){flex:1}.shared-board,.personal-board{padding:20px 0;border-bottom:1px solid #fff}.grid{box-sizing:border-box;background-color:#333;max-width:500px}.grid__cell{background-color:#fff;aspect-ratio:1;display:flex;align-items:center;justify-content:center;color:#666;position:relative;overflow:hidden}.grid__cell .space{height:100%;width:100%}.roomGame{border:1px solid gray;border-radius:8px}.space{display:inline-block;box-sizing:border-box;min-width:10px;min-height:10px}.space:not(:has(.entity)){border:1px solid gray}.space--clickable{background-color:rgba(144,238,144,.4)}.space--targeted{background-color:gray}.space__entity-grid{box-sizing:border-box;grid-template-columns:repeat(auto-fit, minmax(30px, 1fr))}.space__entity-grid__cell{box-sizing:border-box;overflow:hidden}.entity{height:100%;width:100%;box-sizing:border-box;border:1px solid #000;overflow:hidden;font-size:.5em;font-family:"Nunito",sans-serif;font-weight:bold}.entity.player-0{background-color:pink}.entity--clickable{background-color:rgba(144,238,144,.4)}.entity.player-0.entity--clickable{background-color:#f0e0d8}.entity.player-1{background-color:#add8e6}.entity.player-1.entity--clickable{background-color:#afeeee}.debug-panel .pane{max-width:420px !important}.sample-game-select__inner{font-family:"Nunito",sans-serif;max-width:100%}.sample-game-select__option{font-family:inherit;max-width:100%}.editor-game-name,.editor-num-players{color:#fff}.editor__input{margin:.7em 0}.editor__controls{display:flex;flex-wrap:wrap;margin:.5em;gap:.3em;align-items:center}.editor-game-name__input,.editor-num-players__input{font-family:"Nunito",sans-serif;margin-left:1em;position:relative;bottom:.2em}.editor-game-name__input{width:10em}.editor-num-players__input{width:3em}.editor-buttons{flex:1;text-align:center;white-space:nowrap}.editor-buttons__button{display:inline-block;font-family:inherit;background-color:var(--dark-orange);border:3px solid var(--dark-amethyst);color:var(--dark-amethyst);padding:.2em .3em;font-size:.8em;text-decoration:none;cursor:pointer;border-radius:.3em;box-shadow:0 4px 6px rgba(0,0,0,.15)}.editor-buttons__button--login{background-color:var(--dark-amethyst);border:3px solid var(--dark-amethyst);color:#fff}.editor-buttons__button:last-child{margin-left:1em}.testing-game{margin:2em}.testing-game__title{margin-bottom:2em}.game-preview{flex:1;text-align:left;padding:0 3em}.debug-panel .visibility-toggle{top:70px !important}.debug-panel .visibility-toggle svg{display:none}.debug-panel .visibility-toggle .icon::after{position:relative;left:3px;content:"⚙️";font-size:20px;display:block;width:20px;height:20px}.debug-panel .menu{position:relative;top:70px !important}body:has(.content .editor) .debug-panel{display:none}@media(min-width: 600px){.sample-game-select__inner{font-size:inherit}.editor{font-size:1.4em}.editor-game-name__input,.editor-num-players__input{font-size:inherit;position:static}.editor__controls{gap:1em}}`, ""]);
+___CSS_LOADER_EXPORT___.push([module.id, `:root{--bright-sky: #01baef;--tropical-teal: #0cbaba;--dark-amethyst: #380036;--dark-orange: #F58F29;--lipstick-red: #EC0B43}html{height:100%;overscroll-behavior:none}body{margin:0;font-family:"Paytone One",sans-serif;height:100%}#root{display:flex;flex-direction:column;height:100%}.content{display:flex;flex-direction:column;flex:1;text-align:center;background:linear-gradient(to bottom, var(--bright-sky) 0%, var(--bright-sky) 50%, var(--tropical-teal) 80%, var(--tropical-teal) 100%)}.header{position:relative;padding:.5em;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 6px rgba(0,0,0,.15)}.home-splash{color:#fff;display:grid;grid-template-columns:repeat(auto-fit, minmax(135px, 1fr));gap:1em;align-items:center;background:linear-gradient(to right, var(--dark-amethyst) 0%, var(--dark-amethyst) 20%, var(--bright-sky) 100%)}.home-tagline{padding-left:.7em}.home-tagline__inner{display:inline-block;text-align:left}.home-description{padding:0 .7em;font-family:"Nunito",sans-serif}.home-explanation{display:grid;grid-template-columns:repeat(auto-fit, 200px);gap:1em;justify-content:center;margin-bottom:2em}.home-page-card{color:var(--dark-amethyst);font-family:"Nunito",sans-serif;font-weight:700;font-size:.8em;background-color:#fff;aspect-ratio:.8;padding:1em;border-radius:1em;text-align:center;box-shadow:0 4px 6px rgba(0,0,0,.15)}.home-page-card__icon{background-color:#fff;aspect-ratio:.8;padding:1em}.home-page-card__description{background-color:#fff;border-top:2px solid var(--tropical-teal);padding:1em}.button{border:3px solid var(--dark-amethyst);display:inline-block;padding:.5em;font-size:1.5em;font-family:inherit;text-decoration:none;cursor:pointer;border-radius:.3em;box-shadow:0 4px 6px rgba(0,0,0,.15);margin:.5em}.button--style-a{background-color:var(--dark-orange);color:var(--dark-amethyst)}.button--style-b{background-color:var(--dark-amethyst);color:#fff}.button--style-c{background-color:var(--lipstick-red);color:#fff}.button--small{font-size:1.2em;padding:.3em .5em;border-radius:.2em}.header-home-button{font-size:1.2em;text-decoration:none;text-transform:uppercase;color:var(--bright-sky);text-align:center;line-height:1em}.header-home-button .lucide-cog{margin-right:-0.05em;margin-left:-0.05em;position:relative;top:.15em}.home-buttons{margin:1.5em}.button-with-input__input{font-size:.8em;margin-left:.5em;padding:0 .5em;position:relative;bottom:.1em}.join-room-button .button-with-input__input{width:4em}.editor{display:flex;flex-direction:column;flex:1;margin:.7em}.editor section:has(.editor__input){flex:1}.shared-board,.personal-board{padding:20px 0;border-bottom:1px solid #fff}.grid{box-sizing:border-box;background-color:#333;max-width:500px}.grid__cell{background-color:#fff;aspect-ratio:1;display:flex;align-items:center;justify-content:center;color:#666;position:relative;overflow:hidden}.grid__cell .space{height:100%;width:100%}.roomGame{border:1px solid gray;border-radius:8px}.space{display:inline-block;box-sizing:border-box;min-width:10px;min-height:10px}.space:not(:has(.entity)){border:1px solid gray}.space--clickable{background-color:rgba(144,238,144,.4)}.space--targeted{background-color:gray}.space__entity-grid{box-sizing:border-box;grid-template-columns:repeat(auto-fit, minmax(30px, 1fr))}.space__entity-grid__cell{box-sizing:border-box;overflow:hidden}.entity{height:100%;width:100%;box-sizing:border-box;border:1px solid #000;overflow:hidden;font-size:.5em;font-family:"Nunito",sans-serif;font-weight:bold}.entity.player-0{background-color:pink}.entity--clickable{background-color:rgba(144,238,144,.4)}.entity.player-0.entity--clickable{background-color:#f0e0d8}.entity.player-1{background-color:#add8e6}.entity.player-1.entity--clickable{background-color:#afeeee}.debug-panel .pane{max-width:420px !important}.sample-game-select__inner{font-family:"Nunito",sans-serif;max-width:100%}.sample-game-select__option{font-family:inherit;max-width:100%}.editor-game-name,.editor-num-players{color:#fff}.editor__input{margin:.7em 0}.editor__controls{display:flex;flex-wrap:wrap;margin:.5em;gap:.3em;align-items:center}.editor-game-name__input,.editor-num-players__input{font-family:"Nunito",sans-serif;margin-left:1em;position:relative;bottom:.2em}.editor-game-name__input{width:10em}.editor-num-players__input{width:3em}.buttons{flex:1;text-align:center;white-space:nowrap}.editor-buttons .button{display:inline-block;padding:.2em .3em;font-size:.8em;box-shadow:0 4px 6px rgba(0,0,0,.15)}.testing-game{margin:2em}.testing-game__title__text{margin:0}.game-preview{flex:1;text-align:left;padding:0 3em}.debug-panel .visibility-toggle{top:70px !important}.debug-panel .visibility-toggle svg{display:none}.debug-panel .visibility-toggle .icon::after{position:relative;left:3px;content:"⚙️";font-size:20px;display:block;width:20px;height:20px}.debug-panel .menu{position:relative;top:70px !important}body:has(.content .editor) .debug-panel{display:none}@media(min-width: 600px){.sample-game-select__inner{font-size:inherit}.editor{font-size:1.4em}.editor-game-name__input,.editor-num-players__input{font-size:inherit;position:static}.editor__controls{gap:1em}}`, ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -58720,19 +58705,19 @@ function GameEditor(_ref) {
     value: numPlayers,
     type: "number"
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "editor-buttons"
+    className: "buttons"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    className: "editor-buttons__button",
+    className: "button button--small button--style-a",
     onClick: function onClick() {
       setSavedGameRules(gameRules);
       setSavedNumPlayers(numPlayers);
       setScreenState(SCREEN_STATE_TESTING);
     }
   }, "Test Game"), !auth.loading && !auth.idToken && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    className: "editor-buttons__button editor-buttons__button--login",
+    className: "button button--small button--style-b",
     onClick: auth.login
   }, "Log in to Create Room"), !auth.loading && auth.idToken && !roomCode && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    className: "editor-buttons__button",
+    className: "button button--small button--style-a",
     onClick: function onClick() {
       handleCreateRoom({
         gameName: gameName,
@@ -58741,7 +58726,7 @@ function GameEditor(_ref) {
       });
     }
   }, "Create Room"), !auth.loading && auth.idToken && roomCode && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    className: "editor-buttons__button",
+    className: "button button--small button--style-a",
     onClick: function onClick() {
       return goToRoom({
         gameName: gameName,
@@ -58752,8 +58737,10 @@ function GameEditor(_ref) {
     className: "testing-game"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "testing-game__title"
-  }, "Testing Game: ", gameName, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    className: "editor-buttons__button",
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h4", {
+    className: "testing-game__title__text"
+  }, "Testing Game: ", gameName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "button button--small button--style-a",
     onClick: function onClick() {
       setScreenState(SCREEN_STATE_EDITING);
     }
@@ -63715,53 +63702,6 @@ function stackHas(key) {
 
 module.exports = stackHas;
 
-
-/***/ }),
-
-/***/ 93967:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   A: () => (/* binding */ JoinRoomButton)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
-/* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(36095);
-function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-
-
-function JoinRoomButton() {
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
-    _useState2 = _slicedToArray(_useState, 2),
-    roomCode = _useState2[0],
-    setRoomCode = _useState2[1];
-  var navigate = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__/* .useNavigate */ .Z)();
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    className: "join-room-button",
-    onClick: function onClick() {
-      navigate({
-        to: '/rooms/$roomcode',
-        params: {
-          roomcode: roomCode
-        }
-      });
-    }
-  }, "Join Room:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
-    className: "join-room-button__input",
-    onClick: function onClick(e) {
-      e.stopPropagation();
-    },
-    onChange: function onChange(e) {
-      setRoomCode(e.target.value);
-    },
-    value: roomCode
-  }));
-}
 
 /***/ }),
 
