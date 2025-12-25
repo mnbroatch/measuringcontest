@@ -38,15 +38,19 @@ export default function Space ({ space }) {
         targeted && 'space--targeted'
       ].filter(Boolean).join(' ')}
       onClick={() => clickTarget(space)}
+      style={{
+        display: 'inline-block',
+        flex: '0 1 auto',
+      }}
     >
        <div 
           className="space__entity-grid"
           style={{
-            width: '100%',
             height: '100%',
+            minWidth: 'fit-content',
             display: 'grid',
             gridAutoRows: '1fr',
-            placeItems: 'center',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(30px, auto))',
           }}
         >
           {Array.from({ length: entities.length }, (_, i) => (

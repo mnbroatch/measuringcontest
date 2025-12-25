@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
+import { Trash2 } from 'lucide-react';
 import useRoomConnection from "../hooks/use-room-connection.js";
 import useGameConnection from "../hooks/use-game-connection.js";
 import { useRoomQuery } from "../queries/use-room-query.js";
@@ -95,19 +96,6 @@ export default function RoomPage () {
               Leave Room
             </button>
           )}
-          {iAmRoomCreator && (
-            <button
-              className="button button--x-small button--style-c"
-              onClick={() => {
-                deleteRoomMutation.mutate(roomCode)
-                navigate({
-                  to: '/',
-                })
-              }}
-            >
-              Delete Room
-            </button>
-          )}
           <ButtonWithInput
             className="button--x-small"
             defaultValue={players?.[playerID]?.name}
@@ -123,13 +111,13 @@ export default function RoomPage () {
           />
           <div className="buttons">
             <button
-              className="button button--small button--style-a"
+              className="button button--x-small button--style-a"
               onClick={() => { setScreenState(SCREEN_STATE_EDITING) }}
             >
               Edit Game
             </button>
             <button
-              className="button button--small button--style-a"
+              className="button button--x-small button--style-a"
               onClick={() => {
                 createGameMutation.mutate({
                   gameRules,
@@ -139,6 +127,17 @@ export default function RoomPage () {
               }}
             >
               Start Game
+            </button>
+            <button
+              className="button button--x-small button--style-c"
+              onClick={async () => {
+                await deleteRoomMutation.mutateAsync(roomCode)
+                navigate({
+                  to: '/',
+                })
+              }}
+            >
+              <Trash2 size="1em" />
             </button>
           </div>
         </>
@@ -164,7 +163,7 @@ export default function RoomPage () {
       )}
       {status === 'started' && iAmRoomCreator && (
         <button
-          className="button button--small button--style-c"
+          className="button button--x-small button--style-c"
           onClick={() => { deleteGameMutation.mutate() }}
         >
           Delete Game

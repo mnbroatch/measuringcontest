@@ -12,9 +12,10 @@ export default function Game ({ bgioState }) {
         className="shared-board"
         style={{
           width: '100%',
-          display: 'grid',
-          gridAutoFlow: 'column',
-          gridAutoRows: '1fr',
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'center',
+          alignItems: 'center',
           gap: '1em',
         }}
       >

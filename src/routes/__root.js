@@ -27,16 +27,10 @@ export const Route = createRootRoute({
     const publicPaths = ['/', '/editor']
     const isPublicRoute = publicPaths.some(path => location.pathname === path)
     const myRooms = await useMyRoomsQuery.preload()
-    console.log('myRooms', myRooms)
     if (myRooms?.length && !location.pathname.startsWith(`/rooms/${myRooms[0]}`)) {
       throw redirect({
         to: '/rooms/$roomcode',
         params: { roomcode: myRooms[0] }
-      })
-    } else if (!myRooms?.length && location.pathname.startsWith(`/rooms/${myRooms[0]}`)) {
-      throw redirect({
-        to: '/',
-        search: { redirect: location.href }
       })
     } else if (!isPublicRoute) {
       const auth = await useCognitoQuery.preload()

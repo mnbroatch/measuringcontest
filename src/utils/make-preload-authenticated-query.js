@@ -1,4 +1,3 @@
-import { getAuth } from "../../auth.js";
 import preloadQuery from "./preload-query.js";
 import { useCognitoQuery } from '../queries/use-cognito-query.js';
 
@@ -9,5 +8,3 @@ export default function makePreloadAuthenticatedQuery (getOptions) {
     return idToken ? preloadQuery(getOptions(idToken, ...arguments)) : null
   }
 }
-
-

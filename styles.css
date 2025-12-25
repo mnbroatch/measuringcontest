@@ -233,7 +233,6 @@ body {
 }
 
 .space {
-  display: inline-block;
   box-sizing: border-box;
   min-width: 10px;
   min-height: 10px;
@@ -253,7 +252,6 @@ body {
 
 .space__entity-grid {
   box-sizing: border-box;
-  grid-template-columns: repeat(auto-fit, minmax(30px, 1fr));
 }
 
 .space__entity-grid__cell {
@@ -310,10 +308,6 @@ body {
   color: white;
 }
 
-.editor__input {
-  margin: .7em 0;
-}
-
 .editor__controls {
   display: flex;
   flex-wrap: wrap;
@@ -339,7 +333,7 @@ body {
 
 .buttons {
   text-align: center;
-  white-space: nowrap;
+  /* white-space: nowrap; */
 }
 
 .editor-buttons .button {
@@ -363,6 +357,7 @@ body {
   padding: 0;
   display: flex;
   flex-direction: column;
+  min-height: 0;
 }
 
 .game-preview h3 {
@@ -394,6 +389,12 @@ body {
 
 body:has(.content .editor) .debug-panel {
   display: none;
+}
+
+@media (max-width: 600px) {
+  html {
+    font-size: 12px;
+  }
 }
 
 @media (min-width: 600px) {
