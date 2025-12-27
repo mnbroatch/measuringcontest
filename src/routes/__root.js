@@ -10,13 +10,27 @@ export default function Root () {
   const auth = useCognitoAuth()
   const mutationCount = useIsMutating()
 
-  console.log('mutationCount', mutationCount)
-
   return (
     <>
       <Header auth={auth} />
-      <div className="content">
-        <Outlet />
+      <div
+        style={{ flex: 1 }}
+        className="content"
+      >
+        <div
+          className="content__inner"
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            height: '100%',
+            visibility: mutationCount ? 'hidden' : 'visible'
+          }}
+        >
+          <Outlet />
+        </div>
+        {!!mutationCount && (
+          <div className="spinner"></div>
+        )}
       </div>
     </>
   )

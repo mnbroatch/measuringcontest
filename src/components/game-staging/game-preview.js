@@ -12,6 +12,7 @@ export default function GamePreview ({ gameRules, gameName }) {
         defaultLanguage="json"
         value={gameRules}
         theme="vs-dark"
+        loading={null} 
         options={{
           minimap: { enabled: false },
           fontSize: 14,

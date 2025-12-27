@@ -141,6 +141,7 @@ export default function GameEditor ({
               value={gameRules}
               onChange={handleGameRulesChange}
               theme="vs-dark"
+              loading={null} 
               options={{
                 minimap: { enabled: false },
                 fontSize: 14,
