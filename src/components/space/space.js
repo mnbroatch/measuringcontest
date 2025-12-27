@@ -40,25 +40,24 @@ export default function Space ({ space }) {
       onClick={() => clickTarget(space)}
       style={{
         display: 'inline-block',
-        flex: '0 1 auto',
+        flex: '1',
       }}
     >
        <div 
           className="space__entity-grid"
           style={{
+            display: 'flex',
+            justifyContent: 'flex-start',
+            flexWrap: 'wrap',
             height: '100%',
-            minWidth: 'fit-content',
-            display: 'grid',
-            gridAutoRows: '1fr',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(30px, auto))',
+            width: '100%',
           }}
         >
           {Array.from({ length: entities.length }, (_, i) => (
             <div
               className="space__entity-grid__cell"
               style={{
-                width: '100%',
-                height: '100%',
+                flex: '1 1 auto'
               }}
               key={i}
             >

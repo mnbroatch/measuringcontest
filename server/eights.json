@@ -19,7 +19,7 @@
     {
       "type": "Space",
       "name": "stock",
-      "cdontentsHiddenFrom": "All"
+      "contentsHiddenFrom": "All"
     },
     {"value": 1, "suit": "clubs", "displayProperties": ["value", "suit"], "name": "card"},
     {"value": 2, "suit": "clubs", "displayProperties": ["value", "suit"], "name": "card"},

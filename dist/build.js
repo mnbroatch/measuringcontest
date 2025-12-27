@@ -149,21 +149,22 @@ function resolveEntity(bgioArguments, target, context, targetName) {
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
 /* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(82820);
 /* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(36095);
-/* harmony import */ var _hooks_use_room_connection_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(15720);
-/* harmony import */ var _hooks_use_game_connection_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(73523);
-/* harmony import */ var _queries_use_room_query_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(35190);
-/* harmony import */ var _queries_use_leave_room_mutation_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(36789);
-/* harmony import */ var _queries_use_delete_room_mutation_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(98463);
-/* harmony import */ var _queries_use_create_game_mutation_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(29127);
-/* harmony import */ var _queries_use_delete_game_mutation_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(50808);
-/* harmony import */ var _contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(52904);
-/* harmony import */ var _components_play_game_play_game_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(34223);
-/* harmony import */ var _components_watch_game_watch_game_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(13869);
-/* harmony import */ var _components_game_status_game_status_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(45679);
-/* harmony import */ var _components_game_staging_room_game_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(41035);
-/* harmony import */ var _components_game_staging_game_preview_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(23984);
-/* harmony import */ var _components_game_staging_game_editor_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(83107);
-/* harmony import */ var _components_button_with_input_button_with_input_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(45247);
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(90461);
+/* harmony import */ var _hooks_use_room_connection_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(15720);
+/* harmony import */ var _hooks_use_game_connection_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(73523);
+/* harmony import */ var _queries_use_room_query_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(35190);
+/* harmony import */ var _queries_use_leave_room_mutation_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(36789);
+/* harmony import */ var _queries_use_delete_room_mutation_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(98463);
+/* harmony import */ var _queries_use_create_game_mutation_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(29127);
+/* harmony import */ var _queries_use_delete_game_mutation_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(50808);
+/* harmony import */ var _contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(52904);
+/* harmony import */ var _components_play_game_play_game_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(34223);
+/* harmony import */ var _components_watch_game_watch_game_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(13869);
+/* harmony import */ var _components_game_status_game_status_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(45679);
+/* harmony import */ var _components_game_staging_room_game_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(41035);
+/* harmony import */ var _components_game_staging_game_preview_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(23984);
+/* harmony import */ var _components_game_staging_game_editor_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(83107);
+/* harmony import */ var _components_button_with_input_button_with_input_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(45247);
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
@@ -174,7 +175,8 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-console.warn("[tanstack-router] These exports from \"/home/mnbro/Programming/measuringcontest/src/routes/rooms.$roomcode.js\" will not be code-split and will increase your bundle size:\n- RoomPage\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
+console.warn("[tanstack-router] These exports from \"/home/matt/Programming/measuringcontest/src/routes/rooms.$roomcode.js\" will not be code-split and will increase your bundle size:\n- RoomPage\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
+
 
 
 
@@ -199,15 +201,15 @@ function RoomPage() {
   var _Route$useParams = Route.useParams(),
     roomCode = _Route$useParams.roomcode;
   var navigate = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__/* .useNavigate */ .Z)();
-  var auth = (0,_contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_10__/* .useCognitoAuth */ .f)();
+  var auth = (0,_contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_11__/* .useCognitoAuth */ .f)();
   var userId = auth.userId;
-  var leaveRoomMutation = (0,_queries_use_leave_room_mutation_js__WEBPACK_IMPORTED_MODULE_6__/* .useLeaveRoomMutation */ .L)(roomCode);
-  var deleteRoomMutation = (0,_queries_use_delete_room_mutation_js__WEBPACK_IMPORTED_MODULE_7__/* .useDeleteRoomMutation */ .d)();
-  var room = (0,_queries_use_room_query_js__WEBPACK_IMPORTED_MODULE_5__/* .useRoomQuery */ .P)(roomCode);
+  var leaveRoomMutation = (0,_queries_use_leave_room_mutation_js__WEBPACK_IMPORTED_MODULE_7__/* .useLeaveRoomMutation */ .L)(roomCode);
+  var deleteRoomMutation = (0,_queries_use_delete_room_mutation_js__WEBPACK_IMPORTED_MODULE_8__/* .useDeleteRoomMutation */ .d)();
+  var room = (0,_queries_use_room_query_js__WEBPACK_IMPORTED_MODULE_6__/* .useRoomQuery */ .P)(roomCode);
   var iAmInRoom = room.data.members && userId in room.data.members;
   var iAmRoomCreator = userId && room.data.createdBy === userId;
-  var roomConnection = (0,_hooks_use_room_connection_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)();
-  var gameConnection = (0,_hooks_use_game_connection_js__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A)();
+  var roomConnection = (0,_hooks_use_room_connection_js__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A)();
+  var gameConnection = (0,_hooks_use_game_connection_js__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)();
   var status = (_roomConnection$state = roomConnection.state) === null || _roomConnection$state === void 0 ? void 0 : _roomConnection$state.G.status;
   var players = (_roomConnection$state2 = roomConnection.state) === null || _roomConnection$state2 === void 0 ? void 0 : _roomConnection$state2.G.players;
   var playerID = (_roomConnection$clien = roomConnection.client) === null || _roomConnection$clien === void 0 ? void 0 : _roomConnection$clien.playerID;
@@ -220,57 +222,81 @@ function RoomPage() {
     _useState2 = _slicedToArray(_useState, 2),
     screenState = _useState2[0],
     setScreenState = _useState2[1];
-  var createGameMutation = (0,_queries_use_create_game_mutation_js__WEBPACK_IMPORTED_MODULE_8__/* .useCreateGameMutation */ .Z)(roomCode);
-  var deleteGameMutation = (0,_queries_use_delete_game_mutation_js__WEBPACK_IMPORTED_MODULE_9__/* .useDeleteGameMutation */ .Q)(roomCode, gameId);
+  var createGameMutation = (0,_queries_use_create_game_mutation_js__WEBPACK_IMPORTED_MODULE_9__/* .useCreateGameMutation */ .Z)(roomCode);
+  var deleteGameMutation = (0,_queries_use_delete_game_mutation_js__WEBPACK_IMPORTED_MODULE_10__/* .useDeleteGameMutation */ .Q)(roomCode, gameId);
   var isLoading = room.isLoading || !roomConnection.state || status === 'started' && !gameConnection.state;
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState4 = _slicedToArray(_useState3, 2),
+    pageTimedOut = _useState4[0],
+    setPageTimedOut = _useState4[1];
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    var timeout = setTimeout(function () {
+      setPageTimedOut(true);
+    }, 5000);
+    return function () {
+      clearTimeout(timeout);
+    };
+  }, []);
+  if (pageTimedOut && isLoading) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+      className: "button button--style-c",
+      onClick: /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
+        return _regenerator().w(function (_context) {
+          while (1) switch (_context.n) {
+            case 0:
+              _context.n = 1;
+              return deleteRoomMutation.mutateAsync(roomCode);
+            case 1:
+              navigate({
+                to: '/'
+              });
+            case 2:
+              return _context.a(2);
+          }
+        }, _callee);
+      }))
+    }, "Delete Room");
+  }
   return !isLoading && iAmInRoom && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, status === 'waiting' && screenState === SCREEN_STATE_WAITING && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, !iAmRoomCreator && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    className: "button button--style-c",
+    className: "button button--x-small button--style-c",
     disabled: leaveRoomMutation.isPending || leaveRoomMutation.isSuccess,
-    onClick: /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
-      return _regenerator().w(function (_context) {
-        while (1) switch (_context.n) {
+    onClick: /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
+      return _regenerator().w(function (_context2) {
+        while (1) switch (_context2.n) {
           case 0:
-            _context.n = 1;
-            return leaveRoomMutation.mutateAsync();
+            _context2.n = 1;
+            return deleteRoomMutation.mutateAsync(roomCode);
           case 1:
             navigate({
-              to: '/',
-              replace: true
+              to: '/'
             });
           case 2:
-            return _context.a(2);
+            return _context2.a(2);
         }
-      }, _callee);
+      }, _callee2);
     }))
-  }, "Leave Room"), iAmRoomCreator && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    className: "button button--style-c",
-    onClick: function onClick() {
-      deleteRoomMutation.mutate(roomCode);
-      navigate({
-        to: '/'
-      });
-    }
-  }, "Delete Room"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_room_game_js__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
-    players: players,
-    playerID: playerID
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_button_with_input_button_with_input_js__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }, "Leave Room"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_button_with_input_button_with_input_js__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+    className: "button--x-small",
     defaultValue: players === null || players === void 0 || (_players$playerID = players[playerID]) === null || _players$playerID === void 0 ? void 0 : _players$playerID.name,
-    label: iAmInStagedGame ? 'Change my name to:' : 'Join Game as:',
+    label: iAmInStagedGame ? 'Change name:' : 'Join Game as:',
     handleClick: function handleClick(name) {
       roomConnection.client.moves.join(name);
     }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_game_preview_js__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_room_game_js__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+    players: players,
+    playerID: playerID
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_game_preview_js__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
     gameRules: gameRules,
     gameName: gameName
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "buttons"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    className: "button button--style-a",
+    className: "button button--x-small button--style-a",
     onClick: function onClick() {
       setScreenState(SCREEN_STATE_EDITING);
     }
   }, "Edit Game"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    className: "button button--style-a",
+    className: "button button--x-small button--style-a",
     onClick: function onClick() {
       createGameMutation.mutate({
         gameRules: gameRules,
@@ -278,35 +304,54 @@ function RoomPage() {
         players: players
       });
     }
-  }, "Start Game"))), status === 'waiting' && iAmRoomCreator && screenState === SCREEN_STATE_EDITING && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_game_editor_js__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+  }, "Start Game"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "button button--x-small button--style-c",
+    onClick: /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3() {
+      return _regenerator().w(function (_context3) {
+        while (1) switch (_context3.n) {
+          case 0:
+            _context3.n = 1;
+            return deleteRoomMutation.mutateAsync(roomCode);
+          case 1:
+            navigate({
+              to: '/'
+            });
+          case 2:
+            return _context3.a(2);
+        }
+      }, _callee3);
+    }))
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(lucide_react__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+    size: "1em"
+  })))), status === 'waiting' && iAmRoomCreator && screenState === SCREEN_STATE_EDITING && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_game_editor_js__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     auth: auth,
     roomCode: roomCode,
-    goToRoom: function goToRoom(_ref2) {
-      var gameRules = _ref2.gameRules,
-        gameName = _ref2.gameName;
+    goToRoom: function goToRoom(_ref4) {
+      var gameRules = _ref4.gameRules,
+        gameName = _ref4.gameName;
       roomConnection.client.moves.setGameMeta({
         gameRules: gameRules,
         gameName: gameName
       });
       setScreenState(SCREEN_STATE_WAITING);
     }
-  }), status === 'started' && iAmInGame && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_play_game_play_game_js__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  }), status === 'started' && iAmInGame && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_play_game_play_game_js__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     gameConnection: gameConnection
-  }), status === 'started' && !iAmInGame && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_watch_game_watch_game_js__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+  }), status === 'started' && !iAmInGame && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_watch_game_watch_game_js__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
     gameConnection: gameConnection
-  }), status === 'started' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_status_game_status_js__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+  }), status === 'started' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_status_game_status_js__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     gameConnection: gameConnection
   }), status === 'started' && iAmRoomCreator && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    className: "button button--style-c",
+    className: "button button--x-small button--style-c",
     onClick: function onClick() {
       deleteGameMutation.mutate();
     }
   }, "Delete Game"));
 }
 var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__/* .createFileRoute */ .WK)("/rooms/$roomcode")({
-  loader: function loader(_ref3) {
-    var params = _ref3.params;
-    return _queries_use_room_query_js__WEBPACK_IMPORTED_MODULE_5__/* .useRoomQuery */ .P.preload(params.roomcode);
+  loader: function loader(_ref5) {
+    var params = _ref5.params;
+    return _queries_use_room_query_js__WEBPACK_IMPORTED_MODULE_6__/* .useRoomQuery */ .P.preload(params.roomcode);
   },
   component: RoomPage
 });
@@ -1760,15 +1805,19 @@ function Space(_ref) {
     className: ['space', clickable && 'space--clickable', targeted && 'space--targeted'].filter(Boolean).join(' '),
     onClick: function onClick() {
       return clickTarget(space);
+    },
+    style: {
+      display: 'inline-block',
+      flex: '1'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "space__entity-grid",
     style: {
-      width: '100%',
+      display: 'flex',
+      justifyContent: 'flex-start',
+      flexWrap: 'wrap',
       height: '100%',
-      display: 'grid',
-      gridAutoRows: '1fr',
-      placeItems: 'center'
+      width: '100%'
     }
   }, Array.from({
     length: entities.length
@@ -1776,8 +1825,7 @@ function Space(_ref) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       className: "space__entity-grid__cell",
       style: {
-        width: '100%',
-        height: '100%'
+        flex: '1 1 auto'
       },
       key: i
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_entity_entity_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
@@ -25551,7 +25599,7 @@ function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present,
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
-console.warn("[tanstack-router] These exports from \"/home/mnbro/Programming/measuringcontest/src/routes/editor.js\" will not be code-split and will increase your bundle size:\n- Editor\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
+console.warn("[tanstack-router] These exports from \"/home/matt/Programming/measuringcontest/src/routes/editor.js\" will not be code-split and will increase your bundle size:\n- Editor\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
 
 
 
@@ -27180,7 +27228,6 @@ function GamePreview(_ref) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "game-preview"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, gameName, " - Rules"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_monaco_editor_react__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Ay, {
-    height: "80%",
     className: "editor__input",
     defaultLanguage: "json",
     value: gameRules,
@@ -27580,10 +27627,11 @@ const protocol = 4;
 /* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(27162);
 /* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(72382);
 /* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(36965);
-/* harmony import */ var _queries_use_my_rooms_query_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(92798);
-/* harmony import */ var _queries_use_cognito_query_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(31384);
-/* harmony import */ var _contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(52904);
-/* harmony import */ var _components_header_header_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(53871);
+/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(74731);
+/* harmony import */ var _queries_use_my_rooms_query_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(92798);
+/* harmony import */ var _queries_use_cognito_query_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(31384);
+/* harmony import */ var _contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(52904);
+/* harmony import */ var _components_header_header_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(53871);
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
@@ -27594,9 +27642,12 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 
 
 
+
 function Root() {
-  var auth = (0,_contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_6__/* .useCognitoAuth */ .f)();
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_header_header_js__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+  var auth = (0,_contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_7__/* .useCognitoAuth */ .f)();
+  var mutationCount = (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_4__/* .useIsMutating */ .l)();
+  console.log('mutationCount', mutationCount);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_header_header_js__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
     auth: auth
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "content"
@@ -27611,15 +27662,14 @@ var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__/* .createRoot
           case 0:
             location = _ref.location;
             publicPaths = ['/', '/editor'];
-            console.log('location.pathname ', location.pathname);
             isPublicRoute = publicPaths.some(function (path) {
               return location.pathname === path;
             });
             _context.n = 1;
-            return _queries_use_my_rooms_query_js__WEBPACK_IMPORTED_MODULE_4__/* .useMyRoomsQuery */ .s.preload();
+            return _queries_use_my_rooms_query_js__WEBPACK_IMPORTED_MODULE_5__/* .useMyRoomsQuery */ .s.preload();
           case 1:
             myRooms = _context.v;
-            if (!(myRooms.length && !location.pathname.startsWith("/rooms/".concat(myRooms[0])))) {
+            if (!(myRooms !== null && myRooms !== void 0 && myRooms.length && !location.pathname.startsWith("/rooms/".concat(myRooms[0])))) {
               _context.n = 2;
               break;
             }
@@ -27635,7 +27685,7 @@ var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__/* .createRoot
               break;
             }
             _context.n = 3;
-            return _queries_use_cognito_query_js__WEBPACK_IMPORTED_MODULE_5__/* .useCognitoQuery */ .v.preload();
+            return _queries_use_cognito_query_js__WEBPACK_IMPORTED_MODULE_6__/* .useCognitoQuery */ .v.preload();
           case 3:
             auth = _context.v;
             if (auth !== null && auth !== void 0 && auth.idToken) {
@@ -28210,7 +28260,6 @@ function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present,
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
-
 
 
 
@@ -36425,7 +36474,7 @@ function RoomGame(_ref) {
 /***/ ((module) => {
 
 "use strict";
-module.exports = /*#__PURE__*/JSON.parse('{"entities":[{"name":"score","perPlayer":true,"displayProperties":["value"],"state":{"value":0}},{"type":"Space","name":"hand","perPlayer":true,"contentsHiddenFrom":"Others"},{"type":"Space","name":"discard"},{"type":"Space","name":"stock","cdontentsHiddenFrom":"All"},{"value":1,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":2,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":3,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":4,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":5,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":6,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":7,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":8,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":9,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":10,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":11,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":12,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":13,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":1,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":2,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":3,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":4,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":5,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":6,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":7,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":8,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":9,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":10,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":11,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":12,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":13,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":13,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":1,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":2,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":3,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":4,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":5,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":6,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":7,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":8,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":9,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":10,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":11,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":12,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":13,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":13,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":1,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":2,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":3,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":4,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":5,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":6,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":7,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":8,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":9,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":10,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":11,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":12,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":13,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":13,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"}],"sharedBoard":[{"name":"stock"},{"name":"discard"}],"personalBoard":[{"name":"hand"},{"name":"score"}],"initialMoves":[{"type":"PlaceNew","matchMultiple":true,"entity":{"conditions":[{"type":"Is","matcher":{"name":"card"}}]},"arguments":{"destination":{"constraints":[{"type":"Is","matcher":{"name":"stock"}}]}}}],"minPlayers":2,"maxPlayers":5,"phases":{"play":{"start":true,"next":"score","initialMoves":[{"type":"MoveEntity","arguments":{"entity":{"matchMultiple":true,"constraints":[{"type":"Is","matcher":{"name":"card"}}]},"destination":{"constraints":[{"type":"Is","matcher":{"name":"stock"}}]}}},{"type":"Shuffle","arguments":{"target":{"constraints":[{"type":"Is","matcher":{"name":"stock"}}]}}},{"type":"ForEach","arguments":{"targets":[0,1,2,3,4]},"move":{"type":"ForEach","arguments":{"targets":{"type":"ctxPath","path":["playOrder"]}},"move":{"type":"MoveEntity","arguments":{"entity":{"constraints":[{"type":"Is","target":{"type":"Parent"},"matcher":{"name":"stock"}},{"type":"Position","position":"First"}]},"destination":{"constraints":[{"type":"Is","matcher":{"name":"hand","player":{"type":"contextPath","path":["loopTarget"]}}}]}}}}},{"type":"MoveEntity","arguments":{"entity":{"constraints":[{"type":"Is","target":{"type":"Parent"},"matcher":{"name":"stock"}},{"type":"Position","position":"First"}]},"destination":{"constraints":[{"type":"Is","matcher":{"name":"discard"}}]}}}],"turn":{"order":{"playOrder":"RotateFirst"},"activePlayers":{"currentPlayer":"normalPlay"},"initialMoves":[{"type":"ForEach","arguments":{"targets":{"matchMultiple":true,"constraints":[{"type":"Is","target":{"type":"Parent"},"matcher":{"name":"discard"}},{"type":"Not","conditions":[{"type":"Position","position":"First"}]}]}},"conditions":[{"type":"Not","target":{"constraints":[{"type":"Is","matcher":{"name":"stock"}}]},"conditions":[{"type":"Contains"}]}],"move":{"type":"MoveEntity","arguments":{"entity":{"type":"contextPath","path":["loopTarget"]},"destination":{"constraints":[{"type":"Is","matcher":{"name":"stock"}}]}}}},{"type":"Shuffle","arguments":{"target":{"constraints":[{"type":"Is","matcher":{"name":"stock"}}]}}}],"stages":{"normalPlay":{"moves":{"playCard":{"type":"MoveEntity","position":"First","arguments":{"entity":{"playerChoice":true,"constraints":[{"type":"Is","target":{"type":"Parent"},"matcher":{"name":"hand","player":{"type":"ctxPath","path":["currentPlayer"]}}},{"type":"Or","conditions":[{"type":"Is","matcher":{"value":8}},{"type":"Is","matcher":{"type":"Pick","properties":["suit"],"target":{"constraints":[{"type":"Is","target":{"type":"Parent"},"matcher":{"name":"discard"}},{"type":"Position","position":"First"}]}}},{"type":"Is","matcher":{"type":"Pick","properties":["value"],"target":{"constraints":[{"type":"Is","target":{"type":"Parent"},"matcher":{"name":"discard"}},{"type":"Position","position":"First"}]}}}]}]},"destination":{"position":"First","constraints":[{"type":"Is","matcher":{"name":"discard"}}]}},"then":[{"type":"SetActivePlayers","options":{"currentPlayer":{"stage":"nameSuit"}},"conditions":[{"type":"Is","target":{"type":"contextPath","path":["previousArguments","entity"]},"matcher":{"value":8}}]},{"type":"EndTurn","conditions":[{"type":"Not","target":{"type":"contextPath","path":["previousArguments","entity"]},"conditions":[{"type":"Is","matcher":{"value":8}}]}]}]},"takeCard":{"type":"TakeFrom","conditions":[{"type":"Contains","target":{"constraints":[{"type":"Is","matcher":{"name":"stock"}}]}}],"arguments":{"source":{"playerChoice":true,"constraints":[{"type":"Is","matcher":{"name":"stock"}}]},"destination":{"constraints":[{"type":"Is","matcher":{"name":"hand","player":{"type":"ctxPath","path":["currentPlayer"]}}}]}},"then":[{"type":"EndTurn"}]}}},"nameSuit":{"moves":{"nameSuit":{"type":"SetState","arguments":{"entity":{"constraints":[{"type":"Is","target":{"type":"Parent"},"matcher":{"name":"discard"}},{"type":"Position","position":"First"}]},"state":{"playerChoice":true,"property":"suit","possibleValues":["clubs","hearts","spades","diamonds"]}},"then":[{"type":"EndTurn"}]}}}}},"endIf":[{"conditions":[{"type":"Is","target":{"constraints":[{"type":"Is","matcher":{"name":"hand"}},{"type":"Not","conditions":[{"type":"Contains"}]}]}}]}]},"score":{"next":"play","initialMoves":[{"type":"ForEach","arguments":{"targets":{"type":"ctxPath","path":["playOrder"]}},"move":{"type":"SetState","arguments":{"entity":{"constraints":[{"type":"Is","matcher":{"name":"score","player":{"type":"RelativePath","target":{"constraints":[{"type":"Is","matcher":{"name":"hand"}},{"type":"Not","conditions":[{"type":"Contains"}]}]},"path":["player"]}}}]},"state":{"property":"value","value":{"type":"expression","expression":"existingScore + sum(faceValues)","arguments":{"existingScore":{"type":"RelativePath","target":{"constraints":[{"type":"Is","matcher":{"name":"score","player":{"type":"RelativePath","target":{"a":1,"constraints":[{"type":"Is","matcher":{"name":"hand"}},{"type":"Not","conditions":[{"type":"Contains"}]}]},"path":["player"]}}}]},"path":["value"]},"faceValues":{"type":"map","targets":{"matchMultiple":true,"constraints":[{"type":"Is","target":{"type":"Parent"},"matcher":{"name":"hand","player":{"type":"contextPath","path":["loopTarget"]}}}]},"mapping":{"type":"expression","expression":"cardValue == 8 ? 50 : (cardValue >= 10 and cardValue <= 13) ? 10 : cardValue","arguments":{"cardValue":{"type":"RelativePath","target":{"type":"contextPath","path":["loopTarget"]},"path":["value"]}}}}}}}}}},{"type":"EndTurn"}]}},"endIf":[{"conditions":[{"type":"Some","target":{"matchMultiple":true,"constraints":[{"type":"Is","matcher":{"name":"score"}}]},"conditions":[{"type":"Evaluate","expression":"score >= numPlayers * 50","arguments":{"score":{"type":"RelativePath","target":{"type":"contextPath","path":["loopTarget"]},"path":["value"]},"numPlayers":{"type":"ctxPath","path":["playOrder","length"]}}}]}],"result":{"winner":{"type":"contextPath","path":["results",0,"result","rule","player"]}}}]}');
+module.exports = /*#__PURE__*/JSON.parse('{"entities":[{"name":"score","perPlayer":true,"displayProperties":["value"],"state":{"value":0}},{"type":"Space","name":"hand","perPlayer":true,"contentsHiddenFrom":"Others"},{"type":"Space","name":"discard"},{"type":"Space","name":"stock","contentsHiddenFrom":"All"},{"value":1,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":2,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":3,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":4,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":5,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":6,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":7,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":8,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":9,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":10,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":11,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":12,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":13,"suit":"clubs","displayProperties":["value","suit"],"name":"card"},{"value":1,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":2,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":3,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":4,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":5,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":6,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":7,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":8,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":9,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":10,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":11,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":12,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":13,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":13,"suit":"hearts","displayProperties":["value","suit"],"name":"card"},{"value":1,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":2,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":3,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":4,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":5,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":6,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":7,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":8,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":9,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":10,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":11,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":12,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":13,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":13,"suit":"spades","displayProperties":["value","suit"],"name":"card"},{"value":1,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":2,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":3,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":4,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":5,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":6,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":7,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":8,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":9,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":10,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":11,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":12,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":13,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"},{"value":13,"suit":"diamonds","displayProperties":["value","suit"],"name":"card"}],"sharedBoard":[{"name":"stock"},{"name":"discard"}],"personalBoard":[{"name":"hand"},{"name":"score"}],"initialMoves":[{"type":"PlaceNew","matchMultiple":true,"entity":{"conditions":[{"type":"Is","matcher":{"name":"card"}}]},"arguments":{"destination":{"constraints":[{"type":"Is","matcher":{"name":"stock"}}]}}}],"minPlayers":2,"maxPlayers":5,"phases":{"play":{"start":true,"next":"score","initialMoves":[{"type":"MoveEntity","arguments":{"entity":{"matchMultiple":true,"constraints":[{"type":"Is","matcher":{"name":"card"}}]},"destination":{"constraints":[{"type":"Is","matcher":{"name":"stock"}}]}}},{"type":"Shuffle","arguments":{"target":{"constraints":[{"type":"Is","matcher":{"name":"stock"}}]}}},{"type":"ForEach","arguments":{"targets":[0,1,2,3,4]},"move":{"type":"ForEach","arguments":{"targets":{"type":"ctxPath","path":["playOrder"]}},"move":{"type":"MoveEntity","arguments":{"entity":{"constraints":[{"type":"Is","target":{"type":"Parent"},"matcher":{"name":"stock"}},{"type":"Position","position":"First"}]},"destination":{"constraints":[{"type":"Is","matcher":{"name":"hand","player":{"type":"contextPath","path":["loopTarget"]}}}]}}}}},{"type":"MoveEntity","arguments":{"entity":{"constraints":[{"type":"Is","target":{"type":"Parent"},"matcher":{"name":"stock"}},{"type":"Position","position":"First"}]},"destination":{"constraints":[{"type":"Is","matcher":{"name":"discard"}}]}}}],"turn":{"order":{"playOrder":"RotateFirst"},"activePlayers":{"currentPlayer":"normalPlay"},"initialMoves":[{"type":"ForEach","arguments":{"targets":{"matchMultiple":true,"constraints":[{"type":"Is","target":{"type":"Parent"},"matcher":{"name":"discard"}},{"type":"Not","conditions":[{"type":"Position","position":"First"}]}]}},"conditions":[{"type":"Not","target":{"constraints":[{"type":"Is","matcher":{"name":"stock"}}]},"conditions":[{"type":"Contains"}]}],"move":{"type":"MoveEntity","arguments":{"entity":{"type":"contextPath","path":["loopTarget"]},"destination":{"constraints":[{"type":"Is","matcher":{"name":"stock"}}]}}}},{"type":"Shuffle","arguments":{"target":{"constraints":[{"type":"Is","matcher":{"name":"stock"}}]}}}],"stages":{"normalPlay":{"moves":{"playCard":{"type":"MoveEntity","position":"First","arguments":{"entity":{"playerChoice":true,"constraints":[{"type":"Is","target":{"type":"Parent"},"matcher":{"name":"hand","player":{"type":"ctxPath","path":["currentPlayer"]}}},{"type":"Or","conditions":[{"type":"Is","matcher":{"value":8}},{"type":"Is","matcher":{"type":"Pick","properties":["suit"],"target":{"constraints":[{"type":"Is","target":{"type":"Parent"},"matcher":{"name":"discard"}},{"type":"Position","position":"First"}]}}},{"type":"Is","matcher":{"type":"Pick","properties":["value"],"target":{"constraints":[{"type":"Is","target":{"type":"Parent"},"matcher":{"name":"discard"}},{"type":"Position","position":"First"}]}}}]}]},"destination":{"position":"First","constraints":[{"type":"Is","matcher":{"name":"discard"}}]}},"then":[{"type":"SetActivePlayers","options":{"currentPlayer":{"stage":"nameSuit"}},"conditions":[{"type":"Is","target":{"type":"contextPath","path":["previousArguments","entity"]},"matcher":{"value":8}}]},{"type":"EndTurn","conditions":[{"type":"Not","target":{"type":"contextPath","path":["previousArguments","entity"]},"conditions":[{"type":"Is","matcher":{"value":8}}]}]}]},"takeCard":{"type":"TakeFrom","conditions":[{"type":"Contains","target":{"constraints":[{"type":"Is","matcher":{"name":"stock"}}]}}],"arguments":{"source":{"playerChoice":true,"constraints":[{"type":"Is","matcher":{"name":"stock"}}]},"destination":{"constraints":[{"type":"Is","matcher":{"name":"hand","player":{"type":"ctxPath","path":["currentPlayer"]}}}]}},"then":[{"type":"EndTurn"}]}}},"nameSuit":{"moves":{"nameSuit":{"type":"SetState","arguments":{"entity":{"constraints":[{"type":"Is","target":{"type":"Parent"},"matcher":{"name":"discard"}},{"type":"Position","position":"First"}]},"state":{"playerChoice":true,"property":"suit","possibleValues":["clubs","hearts","spades","diamonds"]}},"then":[{"type":"EndTurn"}]}}}}},"endIf":[{"conditions":[{"type":"Is","target":{"constraints":[{"type":"Is","matcher":{"name":"hand"}},{"type":"Not","conditions":[{"type":"Contains"}]}]}}]}]},"score":{"next":"play","initialMoves":[{"type":"ForEach","arguments":{"targets":{"type":"ctxPath","path":["playOrder"]}},"move":{"type":"SetState","arguments":{"entity":{"constraints":[{"type":"Is","matcher":{"name":"score","player":{"type":"RelativePath","target":{"constraints":[{"type":"Is","matcher":{"name":"hand"}},{"type":"Not","conditions":[{"type":"Contains"}]}]},"path":["player"]}}}]},"state":{"property":"value","value":{"type":"expression","expression":"existingScore + sum(faceValues)","arguments":{"existingScore":{"type":"RelativePath","target":{"constraints":[{"type":"Is","matcher":{"name":"score","player":{"type":"RelativePath","target":{"a":1,"constraints":[{"type":"Is","matcher":{"name":"hand"}},{"type":"Not","conditions":[{"type":"Contains"}]}]},"path":["player"]}}}]},"path":["value"]},"faceValues":{"type":"map","targets":{"matchMultiple":true,"constraints":[{"type":"Is","target":{"type":"Parent"},"matcher":{"name":"hand","player":{"type":"contextPath","path":["loopTarget"]}}}]},"mapping":{"type":"expression","expression":"cardValue == 8 ? 50 : (cardValue >= 10 and cardValue <= 13) ? 10 : cardValue","arguments":{"cardValue":{"type":"RelativePath","target":{"type":"contextPath","path":["loopTarget"]},"path":["value"]}}}}}}}}}},{"type":"EndTurn"}]}},"endIf":[{"conditions":[{"type":"Some","target":{"matchMultiple":true,"constraints":[{"type":"Is","matcher":{"name":"score"}}]},"conditions":[{"type":"Evaluate","expression":"score >= numPlayers * 50","arguments":{"score":{"type":"RelativePath","target":{"type":"contextPath","path":["loopTarget"]},"path":["value"]},"numPlayers":{"type":"ctxPath","path":["playOrder","length"]}}}]}],"result":{"winner":{"type":"contextPath","path":["results",0,"result","rule","player"]}}}]}');
 
 /***/ }),
 
@@ -37066,7 +37115,7 @@ function v4(options, buf, offset) {
 /* harmony import */ var _components_button_with_input_button_with_input_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(45247);
 /* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(18458);
 /* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(37276);
-console.warn("[tanstack-router] These exports from \"/home/mnbro/Programming/measuringcontest/src/routes/index.js\" will not be code-split and will increase your bundle size:\n- Home\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
+console.warn("[tanstack-router] These exports from \"/home/matt/Programming/measuringcontest/src/routes/index.js\" will not be code-split and will increase your bundle size:\n- Home\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
 
 
 
@@ -37109,13 +37158,13 @@ function Home() {
     className: "home-explanation"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_home_page_card_home_page_card_js__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
     iconComponent: lucide_react__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A,
-    iconSize: "5em",
-    iconStrokeWidth: "1.3",
+    iconSize: "7em",
+    iconStrokeWidth: "1.1",
     description: "Define a game using BAGEL (Board-based Automated Game Engine Language)"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_home_page_card_home_page_card_js__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
     iconComponent: lucide_react__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A,
-    iconSize: "5em",
-    iconStrokeWidth: "1.3",
+    iconSize: "7em",
+    iconStrokeWidth: "1.1",
     description: "Create a lobby in seconds and play with friends using a room code!"
   })));
 }
@@ -41714,10 +41763,10 @@ function Header(_ref) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "header"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_home_button_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A, null), !auth.loading && !auth.idToken && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    className: "button button--small button--style-b",
+    className: "button button--x-small button--style-b",
     onClick: auth.login
   }, "Login"), !auth.loading && !!auth.idToken && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    className: "button button--small button--style-b",
+    className: "button button--x-small button--style-b",
     onClick: auth.logout
   }, "Logout"));
 }
@@ -46321,9 +46370,10 @@ function Game(_ref) {
     className: "shared-board",
     style: {
       width: '100%',
-      display: 'grid',
-      gridAutoFlow: 'column',
-      gridAutoRows: '1fr',
+      display: 'flex',
+      flexWrap: 'wrap',
+      justifyContent: 'center',
+      alignItems: 'center',
       gap: '1em'
     }
   }, G.sharedBoard.entities.map(function (entity, i) {
@@ -48814,6 +48864,7 @@ var Removable = class {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   BH: () => (/* binding */ replaceEqualDeep),
 /* harmony export */   Cp: () => (/* binding */ partialMatchKey),
 /* harmony export */   EN: () => (/* binding */ hashKey),
 /* harmony export */   Eh: () => (/* binding */ resolveEnabled),
@@ -48835,7 +48886,7 @@ var Removable = class {
 /* harmony export */   y9: () => (/* binding */ addToEnd),
 /* harmony export */   yy: () => (/* binding */ sleep)
 /* harmony export */ });
-/* unused harmony exports isPlainArray, isPlainObject, keepPreviousData, replaceEqualDeep */
+/* unused harmony exports isPlainArray, isPlainObject, keepPreviousData */
 /* harmony import */ var _timeoutManager_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(22328);
 // src/utils.ts
 
@@ -53521,6 +53572,69 @@ function nextSSRDetect() {
 
 /***/ }),
 
+/***/ 74731:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   l: () => (/* binding */ useIsMutating)
+/* harmony export */ });
+/* unused harmony export useMutationState */
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
+/* harmony import */ var _tanstack_query_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(27580);
+/* harmony import */ var _tanstack_query_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(69085);
+/* harmony import */ var _QueryClientProvider_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(70802);
+"use client";
+
+// src/useMutationState.ts
+
+
+
+function useIsMutating(filters, queryClient) {
+  const client = (0,_QueryClientProvider_js__WEBPACK_IMPORTED_MODULE_3__/* .useQueryClient */ .jE)(queryClient);
+  return useMutationState(
+    { filters: { ...filters, status: "pending" } },
+    client
+  ).length;
+}
+function getResult(mutationCache, options) {
+  return mutationCache.findAll(options.filters).map(
+    (mutation) => options.select ? options.select(mutation) : mutation.state
+  );
+}
+function useMutationState(options = {}, queryClient) {
+  const mutationCache = (0,_QueryClientProvider_js__WEBPACK_IMPORTED_MODULE_3__/* .useQueryClient */ .jE)(queryClient).getMutationCache();
+  const optionsRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(options);
+  const result = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+  if (!result.current) {
+    result.current = getResult(mutationCache, options);
+  }
+  react__WEBPACK_IMPORTED_MODULE_0__.useEffect(() => {
+    optionsRef.current = options;
+  });
+  return react__WEBPACK_IMPORTED_MODULE_0__.useSyncExternalStore(
+    react__WEBPACK_IMPORTED_MODULE_0__.useCallback(
+      (onStoreChange) => mutationCache.subscribe(() => {
+        const nextResult = (0,_tanstack_query_core__WEBPACK_IMPORTED_MODULE_2__/* .replaceEqualDeep */ .BH)(
+          result.current,
+          getResult(mutationCache, optionsRef.current)
+        );
+        if (result.current !== nextResult) {
+          result.current = nextResult;
+          _tanstack_query_core__WEBPACK_IMPORTED_MODULE_1__/* .notifyManager */ .jG.schedule(onStoreChange);
+        }
+      }),
+      [mutationCache]
+    ),
+    () => result.current,
+    () => result.current
+  );
+}
+
+//# sourceMappingURL=useMutationState.js.map
+
+/***/ }),
+
 /***/ 74889:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
@@ -53822,7 +53936,7 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Paytone+One&display=swap);"]);
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `:root{--bright-sky: #01baef;--tropical-teal: #0cbaba;--dark-amethyst: #380036;--dark-orange: #F58F29;--lipstick-red: #EC0B43}html{height:100%;overscroll-behavior:none}body{margin:0;font-family:"Paytone One",sans-serif;height:100%}#root{display:flex;flex-direction:column;height:100%}.content{display:flex;flex-direction:column;flex:1;text-align:center;background:linear-gradient(to bottom, var(--bright-sky) 0%, var(--bright-sky) 50%, var(--tropical-teal) 80%, var(--tropical-teal) 100%)}.header{position:relative;padding:.5em;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 6px rgba(0,0,0,.15)}.home-splash{color:#fff;display:grid;grid-template-columns:repeat(auto-fit, minmax(135px, 1fr));gap:1em;align-items:center;background:linear-gradient(to right, var(--dark-amethyst) 0%, var(--dark-amethyst) 20%, var(--bright-sky) 100%)}.home-tagline{padding-left:.7em}.home-tagline__inner{display:inline-block;text-align:left}.home-description{padding:0 .7em;font-family:"Nunito",sans-serif}.home-explanation{display:grid;grid-template-columns:repeat(auto-fit, 200px);gap:1em;justify-content:center;margin-bottom:2em}.home-page-card{color:var(--dark-amethyst);font-family:"Nunito",sans-serif;font-weight:700;font-size:.8em;background-color:#fff;aspect-ratio:.8;padding:1em;border-radius:1em;text-align:center;box-shadow:0 4px 6px rgba(0,0,0,.15)}.home-page-card__icon{background-color:#fff;aspect-ratio:.8;padding:1em}.home-page-card__description{background-color:#fff;border-top:2px solid var(--tropical-teal);padding:1em}.button{border:3px solid var(--dark-amethyst);display:inline-block;padding:.5em;font-size:1.5em;font-family:inherit;text-decoration:none;cursor:pointer;border-radius:.3em;box-shadow:0 4px 6px rgba(0,0,0,.15);margin:.5em}.button--style-a{background-color:var(--dark-orange);color:var(--dark-amethyst)}.button--style-b{background-color:var(--dark-amethyst);color:#fff}.button--style-c{background-color:var(--lipstick-red);color:#fff}.button--small{font-size:1.2em;padding:.3em .5em;border-radius:.2em}.header-home-button{font-size:1.2em;text-decoration:none;text-transform:uppercase;color:var(--bright-sky);text-align:center;line-height:1em}.header-home-button .lucide-cog{margin-right:-0.05em;margin-left:-0.05em;position:relative;top:.15em}.home-buttons{margin:1.5em}.button-with-input__input{font-size:.8em;margin-left:.5em;padding:0 .5em;position:relative;bottom:.1em}.join-room-button .button-with-input__input{width:4em}.editor{display:flex;flex-direction:column;flex:1;margin:.7em}.editor section:has(.editor__input){flex:1}.shared-board,.personal-board{padding:20px 0;border-bottom:1px solid #fff}.grid{box-sizing:border-box;background-color:#333;max-width:500px}.grid__cell{background-color:#fff;aspect-ratio:1;display:flex;align-items:center;justify-content:center;color:#666;position:relative;overflow:hidden}.grid__cell .space{height:100%;width:100%}.roomGame{border:1px solid gray;border-radius:8px}.space{display:inline-block;box-sizing:border-box;min-width:10px;min-height:10px}.space:not(:has(.entity)){border:1px solid gray}.space--clickable{background-color:rgba(144,238,144,.4)}.space--targeted{background-color:gray}.space__entity-grid{box-sizing:border-box;grid-template-columns:repeat(auto-fit, minmax(30px, 1fr))}.space__entity-grid__cell{box-sizing:border-box;overflow:hidden}.entity{height:100%;width:100%;box-sizing:border-box;border:1px solid #000;overflow:hidden;font-size:.5em;font-family:"Nunito",sans-serif;font-weight:bold}.entity.player-0{background-color:pink}.entity--clickable{background-color:rgba(144,238,144,.4)}.entity.player-0.entity--clickable{background-color:#f0e0d8}.entity.player-1{background-color:#add8e6}.entity.player-1.entity--clickable{background-color:#afeeee}.debug-panel .pane{max-width:420px !important}.sample-game-select__inner{font-family:"Nunito",sans-serif;max-width:100%}.sample-game-select__option{font-family:inherit;max-width:100%}.editor-game-name,.editor-num-players{color:#fff}.editor__input{margin:.7em 0}.editor__controls{display:flex;flex-wrap:wrap;margin:.5em;gap:.3em;align-items:center}.editor-game-name__input,.editor-num-players__input{font-family:"Nunito",sans-serif;margin-left:1em;position:relative;bottom:.2em}.editor-game-name__input{width:10em}.editor-num-players__input{width:3em}.buttons{flex:1;text-align:center;white-space:nowrap}.editor-buttons .button{display:inline-block;padding:.2em .3em;font-size:.8em;box-shadow:0 4px 6px rgba(0,0,0,.15)}.testing-game{margin:2em}.testing-game__title__text{margin:0}.game-preview{flex:1;text-align:left;padding:0 3em}.debug-panel .visibility-toggle{top:70px !important}.debug-panel .visibility-toggle svg{display:none}.debug-panel .visibility-toggle .icon::after{position:relative;left:3px;content:"⚙️";font-size:20px;display:block;width:20px;height:20px}.debug-panel .menu{position:relative;top:70px !important}body:has(.content .editor) .debug-panel{display:none}@media(min-width: 600px){.sample-game-select__inner{font-size:inherit}.editor{font-size:1.4em}.editor-game-name__input,.editor-num-players__input{font-size:inherit;position:static}.editor__controls{gap:1em}}`, ""]);
+___CSS_LOADER_EXPORT___.push([module.id, `:root{--bright-sky: #01baef;--tropical-teal: #0cbaba;--dark-amethyst: #380036;--dark-orange: #F58F29;--lipstick-red: #EC0B43}html{height:100%;overscroll-behavior:none}body{margin:0;font-family:"Paytone One",sans-serif;height:100%}#root{display:flex;flex-direction:column;height:100%}.content:not(:has(.home)){padding:.7em}.content{display:flex;flex-direction:column;flex:1;text-align:center;background:linear-gradient(to bottom, var(--bright-sky) 0%, var(--bright-sky) 50%, var(--tropical-teal) 80%, var(--tropical-teal) 100%)}.header{position:relative;padding:.5em;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 6px rgba(0,0,0,.15)}.home-splash{color:#fff;display:grid;grid-template-columns:repeat(auto-fit, minmax(135px, 1fr));gap:1em;align-items:center;background:linear-gradient(to right, var(--dark-amethyst) 0%, var(--dark-amethyst) 20%, var(--bright-sky) 100%)}.home-tagline{padding-left:.7em}.home-tagline__inner{display:inline-block;text-align:left}.home-description{padding:0 .7em;font-family:"Nunito",sans-serif}.home-explanation{display:grid;grid-template-columns:repeat(auto-fit, 200px);gap:1em;justify-content:center;margin-bottom:2em}.home-page-card{color:var(--dark-amethyst);font-family:"Nunito",sans-serif;font-weight:700;font-size:.8em;background-color:#fff;aspect-ratio:.8;padding:1em;border-radius:1em;box-shadow:0 4px 6px rgba(0,0,0,.15);display:flex;flex-direction:column;justify-content:center;align-items:center}.home-page-card__icon,.home-page-card__description{flex:1;box-sizing:border-box}.home-page-card__icon{background-color:#fff;aspect-ratio:.8}.home-page-card__description{background-color:#fff;border-top:2px solid var(--tropical-teal);padding:2em 1em}.button{border:3px solid var(--dark-amethyst);display:inline-block;padding:.5em;font-size:1.5em;font-family:inherit;text-decoration:none;cursor:pointer;border-radius:.3em;box-shadow:0 4px 6px rgba(0,0,0,.15);margin:.5em}.button--style-a{background-color:var(--dark-orange);color:var(--dark-amethyst)}.button--style-b{background-color:var(--dark-amethyst);color:#fff}.button--style-c{background-color:var(--lipstick-red);color:#fff}.button--small{font-size:1.2em;padding:.3em .5em;border-radius:.2em}.button--x-small{font-size:.9em;padding:.3em .5em;border-radius:.2em}.room-game h4{margin:0}.room-game ul{margin:0}.header-home-button{font-size:1.2em;text-decoration:none;text-transform:uppercase;color:var(--bright-sky);text-align:center;line-height:1em}.header-home-button .lucide-cog{margin-right:-0.05em;margin-left:-0.05em;position:relative;top:.15em}.home-buttons{margin:1.5em}.button-with-input__input{font-size:.8em;margin-left:.5em;padding:0 .5em;position:relative;bottom:.1em}.join-room-button .button-with-input__input{width:4em}.editor{display:flex;flex-direction:column;flex:1}.editor section:has(.editor__input){flex:1}.shared-board,.personal-board{padding:20px 0;border-bottom:1px solid #fff}.grid{box-sizing:border-box;background-color:#333;max-width:500px}.grid__cell{background-color:#fff;aspect-ratio:1;display:flex;align-items:center;justify-content:center;color:#666;position:relative;overflow:hidden}.grid__cell .space{height:100%;width:100%}.roomGame{border:1px solid gray;border-radius:8px}.space{box-sizing:border-box;min-width:10px;min-height:10px}.space:not(:has(.entity)){border:1px solid gray}.space--clickable{background-color:rgba(144,238,144,.4)}.space--targeted{background-color:gray}.space__entity-grid{box-sizing:border-box}.space__entity-grid__cell{box-sizing:border-box;overflow:hidden}.entity{padding:.2em;min-height:20px;min-width:20px;height:100%;width:100%;box-sizing:border-box;border:1px solid #000;overflow:hidden;font-size:.5em;font-family:"Nunito",sans-serif;font-weight:bold}.entity.player-0{background-color:pink}.entity--clickable{background-color:rgba(144,238,144,.4)}.entity.player-0.entity--clickable{background-color:#f0e0d8}.entity.player-1{background-color:#add8e6}.entity.player-1.entity--clickable{background-color:#afeeee}.debug-panel .pane{max-width:420px !important}.sample-game-select{margin-bottom:.5em}.sample-game-select__inner{font-family:"Nunito",sans-serif;max-width:100%}.sample-game-select__option{font-family:inherit;max-width:100%}.editor-game-name,.editor-num-players{color:#fff}.editor__controls{display:flex;flex-wrap:wrap;margin-top:.5em;gap:.5em;justify-content:center}.editor-game-name__input,.editor-num-players__input{font-family:"Nunito",sans-serif;margin-left:1em;position:relative}.editor-game-name__input{width:10em}.editor-num-players__input{width:3em}.buttons{text-align:center}.editor-buttons .button{display:inline-block;padding:.2em .3em;font-size:.8em;box-shadow:0 4px 6px rgba(0,0,0,.15)}.testing-game{margin:2em}.testing-game__title__text{margin:0}.game-preview{flex:1;text-align:left;padding:0;display:flex;flex-direction:column;min-height:0}.game-preview h3{margin:0}.debug-panel .visibility-toggle{top:70px !important}.debug-panel .visibility-toggle svg{display:none}.debug-panel .visibility-toggle .icon::after{position:relative;left:3px;content:"⚙️";font-size:20px;display:block;width:20px;height:20px}.debug-panel .menu{position:relative;top:70px !important}body:has(.content .editor) .debug-panel{display:none}@media(max-width: 600px){html{font-size:12px}}@media(min-width: 600px){.sample-game-select__inner{font-size:inherit}.editor-game-name__input,.editor-num-players__input{font-size:inherit;position:static}.editor__controls{gap:1em}}`, ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -58625,7 +58739,6 @@ function GameEditor(_ref) {
     savedNumPlayers = _useState10[0],
     setSavedNumPlayers = _useState10[1];
   var gameConnection = (0,_hooks_use_single_player_game_js__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A)(savedGameRules, savedNumPlayers);
-  console.log('gameConnection', gameConnection);
   var handleGameRulesChange = function handleGameRulesChange(newGameRules) {
     localStorage.setItem(RULES_LOCALSTORAGE_KEY, newGameRules);
     localStorage.setItem(NAME_LOCALSTORAGE_KEY, gameName);
@@ -58652,7 +58765,7 @@ function GameEditor(_ref) {
       setGameName(selectedGame.name);
     }
   };
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, screenState === SCREEN_STATE_EDITING && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, screenState === SCREEN_STATE_EDITING && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "editor"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "sample-game-select"
@@ -58671,7 +58784,6 @@ function GameEditor(_ref) {
       className: "sample-game-select__option"
     }, game.name);
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_monaco_editor_react__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Ay, {
-    height: "400px",
     className: "editor__input",
     defaultLanguage: "json",
     value: gameRules,
@@ -58704,20 +58816,20 @@ function GameEditor(_ref) {
     },
     value: numPlayers,
     type: "number"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "buttons"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    className: "button button--small button--style-a",
+    className: "button button--x-small button--style-a",
     onClick: function onClick() {
       setSavedGameRules(gameRules);
       setSavedNumPlayers(numPlayers);
       setScreenState(SCREEN_STATE_TESTING);
     }
   }, "Test Game"), !auth.loading && !auth.idToken && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    className: "button button--small button--style-b",
+    className: "button button--x-small button--style-b",
     onClick: auth.login
   }, "Log in to Create Room"), !auth.loading && auth.idToken && !roomCode && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    className: "button button--small button--style-a",
+    className: "button button--x-small button--style-a",
     onClick: function onClick() {
       handleCreateRoom({
         gameName: gameName,
@@ -58726,21 +58838,21 @@ function GameEditor(_ref) {
       });
     }
   }, "Create Room"), !auth.loading && auth.idToken && roomCode && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    className: "button button--small button--style-a",
+    className: "button button--x-small button--style-a",
     onClick: function onClick() {
       return goToRoom({
         gameName: gameName,
         gameRules: gameRules
       });
     }
-  }, "Go To Room")))), gameConnection.state && screenState === SCREEN_STATE_TESTING && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, "Go To Room"))), gameConnection.state && screenState === SCREEN_STATE_TESTING && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "testing-game"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "testing-game__title"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h4", {
     className: "testing-game__title__text"
   }, "Testing Game: ", gameName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    className: "button button--small button--style-a",
+    className: "button button--x-small button--style-a",
     onClick: function onClick() {
       setScreenState(SCREEN_STATE_EDITING);
     }
@@ -62239,6 +62351,39 @@ module.exports = getTag;
 
 /***/ }),
 
+/***/ 90461:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ Trash2)
+/* harmony export */ });
+/* unused harmony export __iconNode */
+/* harmony import */ var _createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(68532);
+/**
+ * @license lucide-react v0.556.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const __iconNode = [
+  ["path", { d: "M10 11v6", key: "nco0om" }],
+  ["path", { d: "M14 11v6", key: "outv1u" }],
+  ["path", { d: "M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6", key: "miytrc" }],
+  ["path", { d: "M3 6h18", key: "d0wm0j" }],
+  ["path", { d: "M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2", key: "e791ji" }]
+];
+const Trash2 = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)("trash-2", __iconNode);
+
+
+//# sourceMappingURL=trash-2.js.map
+
+
+/***/ }),
+
 /***/ 90520:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
@@ -63611,7 +63756,8 @@ var useMyRoomsQuery = function useMyRoomsQuery(roomCode) {
 };
 function getOptions(idToken) {
   return {
-    queryKey: ['my-rooms', idToken],
+    // array queryKey with idToken separate mysteriously isn't working
+    queryKey: ["my-rooms-".concat(idToken)],
     queryFn: function queryFn() {
       return idToken ? (0,_utils_make_authenticated_request_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(apiUrl, idToken, {
         method: 'GET'
@@ -65091,8 +65237,9 @@ var useDeleteRoomMutation = function useDeleteRoomMutation() {
       });
     },
     onSuccess: function onSuccess() {
+      // array queryKey with idToken separate mysteriously isn't working
       queryClient.invalidateQueries({
-        queryKey: ['my-rooms', auth.idToken]
+        queryKey: ["my-rooms-".concat(auth.idToken)]
       });
     }
   });

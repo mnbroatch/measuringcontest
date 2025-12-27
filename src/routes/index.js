@@ -62,14 +62,14 @@ export default function Home () {
       <div className="home-explanation">
         <HomePageCard
           iconComponent={PencilRuler}
-          iconSize="5em"
-          iconStrokeWidth="1.3"
+          iconSize="7em"
+          iconStrokeWidth="1.1"
           description="Define a game using BAGEL (Board-based Automated Game Engine Language)"
         />
         <HomePageCard
           iconComponent={Users}
-          iconSize="5em"
-          iconStrokeWidth="1.3"
+          iconSize="7em"
+          iconStrokeWidth="1.1"
           description="Create a lobby in seconds and play with friends using a room code!"
         />
       </div>
