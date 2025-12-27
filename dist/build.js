@@ -200,6 +200,8 @@ function RoomPage() {
   var _roomConnection$state, _roomConnection$state2, _roomConnection$clien, _roomConnection$state3, _roomConnection$state4, _roomConnection$state5, _roomConnection$clien2, _players$playerID;
   var _Route$useParams = Route.useParams(),
     roomCode = _Route$useParams.roomcode;
+  var _Route$useSearch = Route.useSearch(),
+    del = _Route$useSearch.del;
   var navigate = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__/* .useNavigate */ .Z)();
   var auth = (0,_contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_11__/* .useCognitoAuth */ .f)();
   var userId = auth.userId;
@@ -225,19 +227,7 @@ function RoomPage() {
   var createGameMutation = (0,_queries_use_create_game_mutation_js__WEBPACK_IMPORTED_MODULE_9__/* .useCreateGameMutation */ .Z)(roomCode);
   var deleteGameMutation = (0,_queries_use_delete_game_mutation_js__WEBPACK_IMPORTED_MODULE_10__/* .useDeleteGameMutation */ .Q)(roomCode, gameId);
   var isLoading = room.isLoading || !roomConnection.state || status === 'started' && !gameConnection.state;
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState4 = _slicedToArray(_useState3, 2),
-    pageTimedOut = _useState4[0],
-    setPageTimedOut = _useState4[1];
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    var timeout = setTimeout(function () {
-      setPageTimedOut(true);
-    }, 5000);
-    return function () {
-      clearTimeout(timeout);
-    };
-  }, []);
-  if (pageTimedOut && isLoading) {
+  if (del) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
       className: "button button--style-c",
       onClick: /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {

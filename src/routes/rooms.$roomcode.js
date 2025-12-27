@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
 import { Trash2 } from 'lucide-react';
 import useRoomConnection from "../hooks/use-room-connection.js";
@@ -22,6 +22,7 @@ const SCREEN_STATE_WAITING = 'waiting'
 
 export default function RoomPage () {
   const { roomcode: roomCode } = Route.useParams()
+  const { del } = Route.useSearch()
   const navigate = useNavigate()
   const auth = useCognitoAuth()
   const userId = auth.userId
@@ -50,19 +51,7 @@ export default function RoomPage () {
     || !roomConnection.state
     || (status === 'started' && !gameConnection.state)
 
-  const [ pageTimedOut, setPageTimedOut ] = useState(false)
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setPageTimedOut(true)
-    }, 5000)
-
-    return () => {
-      clearTimeout(timeout)
-    }
-  }, [])
-
-  if (pageTimedOut && isLoading) {
+  if (del) {
     return (
       <button
         className="button button--style-c"
