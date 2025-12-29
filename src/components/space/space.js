@@ -25,8 +25,6 @@ export default function Space ({ space }) {
   const { clickTarget, allClickable, currentMoveTargets } = useGame()
   const { entities, entityId } = space.attributes
 
-  const columns = calculateOptimalCols(entities.length)
-
   const clickable = [...allClickable].map(e => e.entityId).includes(entityId)
   const targeted = currentMoveTargets?.map(e => e.entityId).includes(entityId)
 
@@ -47,17 +45,16 @@ export default function Space ({ space }) {
           className="space__entity-grid"
           style={{
             display: 'flex',
-            justifyContent: 'flex-start',
-            flexWrap: 'wrap',
             height: '100%',
             width: '100%',
+            flexWrap: 'wrap',
           }}
         >
           {Array.from({ length: entities.length }, (_, i) => (
             <div
               className="space__entity-grid__cell"
               style={{
-                flex: '1 1 auto'
+                display: 'inline-block',
               }}
               key={i}
             >

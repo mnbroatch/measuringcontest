@@ -93,11 +93,9 @@ export default function RoomPage () {
               roomConnection.client.moves.join(name)
             }}
           />
+          <h3>{gameName}</h3>
           <RoomGame players={players} playerID={playerID} />
-          <GamePreview
-            gameRules={gameRules}
-            gameName={gameName}
-          />
+          <GamePreview gameRules={gameRules} />
           <div className="buttons">
             <button
               className="button button--x-small button--style-a"

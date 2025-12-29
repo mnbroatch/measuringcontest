@@ -214,6 +214,9 @@ export default function GameEditor ({
       {gameConnection.state && screenState === SCREEN_STATE_TESTING && (
         <div className="testing-game">
           <div className="testing-game__title">
+            <h6 className="testing-game__title__tip">
+              Tip: Click the gear -> to choose a player's view to see
+            </h6>
             <h4 className="testing-game__title__text">
               Testing Game: {gameName}
             </h4>

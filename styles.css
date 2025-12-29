@@ -17,6 +17,7 @@ html {
 body {
   margin: 0;
   font-family: "Paytone One", sans-serif;
+  color: white;
   height: 100%;
 }
 
@@ -207,6 +208,10 @@ body {
   flex: 1;
 }
 
+.game {
+  color: black;
+}
+
 .shared-board, .personal-board {
   padding: 20px 0;
   border-bottom: 1px solid white;
@@ -226,7 +231,7 @@ body {
   justify-content: center;
   color: #666;
   position: relative;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .grid__cell .space {
@@ -259,25 +264,26 @@ body {
 
 .space__entity-grid {
   box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
 }
 
 .space__entity-grid__cell {
   box-sizing: border-box;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .entity {
   padding: .2em;
   min-height: 20px;
   min-width: 20px;
-  height: 100%;
-  width: 100%;
   box-sizing: border-box;
   border: 1px solid black;
   overflow: hidden;
   font-size: .5em;
   font-family: "Nunito", sans-serif;
   font-weight: bold;
+  display: inline-block;
 }
 
 .entity.player-0 {
@@ -362,6 +368,11 @@ body {
 
 .testing-game__title__text {
   margin: 0;
+}
+
+.testing-game__title__tip {
+  margin: 0;
+  color: black;
 }
 
 .game-preview {

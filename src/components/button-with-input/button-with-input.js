@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-
 export default function ButtonWithInput ({
   handleClick,
   label,
@@ -7,7 +6,11 @@ export default function ButtonWithInput ({
   className,
 }) {
   const [value, setValue] = useState(defaultValue || '')
-
+  
+  const handleSubmit = () => {
+    handleClick(value)
+  }
+  
   return (
     <button
       className={[
@@ -15,18 +18,24 @@ export default function ButtonWithInput ({
         'button--style-b',
         className,
       ].filter(Boolean).join(' ')}
-      onClick={() => { handleClick(value) }}
+      onClick={handleSubmit}
     >
       {label}
       <input
         className="button-with-input__input"
         onClick={(e) => { e.stopPropagation() }}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault()
+            e.stopPropagation()
+            handleSubmit()
+          }
+        }}
         onChange={(e) => {
-          setValue(e.target.value)}
-        }
+          setValue(e.target.value)
+        }}
         value={value}
-      >
-      </input>
+      />
     </button>
   )
 }

@@ -6,7 +6,7 @@ export default function Game ({ bgioState }) {
   const { G } = bgioState
 
   return (
-    <>
+    <div className="game">
       <AbstractChoices />
       <div
         className="shared-board"
@@ -42,6 +42,6 @@ export default function Game ({ bgioState }) {
           ))}
         </div>
       )}
-    </>
+    </div>
   )
 }
