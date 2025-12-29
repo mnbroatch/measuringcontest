@@ -1,3 +1,4 @@
+import { Debug } from 'boardgame.io/debug';
 import { useEffect, useReducer, useRef } from 'react'
 import { flushSync } from 'react-dom'
 import { Client } from 'boardgame.io/client'
@@ -13,7 +14,8 @@ export const useGameserverConnection = ({
   clientToken,
   numPlayers,
   debug = {
-    collapseOnLoad: true
+    collapseOnLoad: true,
+    impl: Debug,
   },
   singlePlayer = false,
   enabled = true,
