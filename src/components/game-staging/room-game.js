@@ -6,18 +6,22 @@ export default function RoomGame ({ players, playerID }) {
       <h4>
         Joined Players:
       </h4>
-      <ul>
+      <div>
         {Object.entries(players).map(([pID, player], i) => (
-          <li
+          <div
             key={i}
+            className={[
+              'joined-player-pill',
+              playerID === pID && 'joined-player-pill--me'
+            ].filter(Boolean).join(' ')}
             style={{
-              color: playerID === pID ? 'green' : 'inherit'
+              display: 'inline-block',
             }}
           >
             {player.name}
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   )
 }

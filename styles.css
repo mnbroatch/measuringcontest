@@ -388,6 +388,19 @@ body {
   margin: 0;
 }
 
+.joined-player-pill {
+  background-color: white;
+  color: var(--bright-sky);
+  text-transform: uppercase;
+  border-radius: 9999px;
+  padding: 1em;
+  margin: 1em;
+}
+
+.joined-player-pill--me {
+  color: var(--lipstick-red);
+}
+
 .spinner {
   position: absolute;
   top: 50%;
