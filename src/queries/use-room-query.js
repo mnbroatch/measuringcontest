@@ -1,8 +1,9 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import makeRequest from '../utils/make-request'
 import preloadQuery from "../utils/preload-query.js";
+import { API_URL } from "../constants/api.js";
 
-const apiUrl = 'https://api.measuringcontest.com/rooms'
+const apiUrl = `${API_URL}/rooms`
 
 export const useRoomQuery = (roomCode) => {
   return useSuspenseQuery(getOptions(roomCode))

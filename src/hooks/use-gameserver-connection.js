@@ -4,8 +4,7 @@ import { flushSync } from 'react-dom'
 import { Client } from 'boardgame.io/client'
 import { SocketIO } from 'boardgame.io/multiplayer'
 import { useCognitoAuth } from "../contexts/cognito-auth-context.js"
-
-const SERVER_URL = 'https://gameserver.measuringcontest.com'
+import { BOARDGAME_SERVER_URL } from '../constants/api.js'
 
 export const useGameserverConnection = ({
   gameId,
@@ -34,7 +33,7 @@ export const useGameserverConnection = ({
           : {
               game,
               multiplayer: singlePlayer ? undefined : SocketIO({
-                server: SERVER_URL,
+                server: BOARDGAME_SERVER_URL,
                 socketOpts: {
                   transports: ['websocket', 'polling']
                 }

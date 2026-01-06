@@ -1,6 +1,6 @@
 const USER_POOL_CLIENT_ID = "lmckmqd7bndat4ot0ajl7u2uk"
 const USER_POOL_ID = "us-west-1_G8hKy1gmb"
-const AUTH_DOMAIN = "auth.measuringcontest.com"
+const AUTH_DOMAIN = "auth.boardgameengine.com"
 const AUTH_SCOPES = ["openid", "email", "profile"]
 const COGNITO_RESPONSE_TYPE = 'code'
 

@@ -1,8 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
 import makeAuthenticatedRequest from "../utils/make-authenticated-request.js";
-
-const apiUrl = 'https://api.measuringcontest.com'
+import { API_URL } from "../constants/api.js";
 
 export const useJoinGameMutation = (roomCode, gameId) => {
   const queryClient = useQueryClient()
@@ -10,7 +9,7 @@ export const useJoinGameMutation = (roomCode, gameId) => {
 
   return useMutation({
     mutationFn: () => makeAuthenticatedRequest(
-      `${apiUrl}/rooms/${roomCode}/games/${gameId}/join`,
+      `${API_URL}/rooms/${roomCode}/games/${gameId}/join`,
       auth.idToken,
       { method: 'POST' }
     ),

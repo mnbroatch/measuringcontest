@@ -1,8 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
 import makeAuthenticatedRequest from "../utils/make-authenticated-request.js";
+import { API_URL } from "../constants/api.js";
 
-const apiUrl = 'https://api.measuringcontest.com/rooms'
+const apiUrl = `${API_URL}/rooms`
 
 export const useCreateRoomMutation = () => {
   const queryClient = useQueryClient()
