@@ -175,7 +175,7 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-console.warn("[tanstack-router] These exports from \"/home/mnbro/Programming/measuringcontest/src/routes/rooms.$roomcode.js\" will not be code-split and will increase your bundle size:\n- RoomPage\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
+console.warn("[tanstack-router] These exports from \"/home/matt/Programming/measuringcontest/src/routes/rooms.$roomcode.js\" will not be code-split and will increase your bundle size:\n- RoomPage\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
 
 
 
@@ -33904,10 +33904,12 @@ module.exports = /*#__PURE__*/JSON.parse('{"entities":[{"name":"mainGrid","type"
 /* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(53736);
 /* harmony import */ var _contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(52904);
 /* harmony import */ var _utils_make_authenticated_request_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4193);
+/* harmony import */ var _constants_api_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(48273);
 
 
 
-var apiUrl = 'https://api.measuringcontest.com/rooms';
+
+var apiUrl = "".concat(_constants_api_js__WEBPACK_IMPORTED_MODULE_4__/* .API_URL */ .H, "/rooms");
 var useJoinRoomMutation = function useJoinRoomMutation(roomCode) {
   var queryClient = (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_0__/* .useQueryClient */ .jE)();
   var auth = (0,_contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_2__/* .useCognitoAuth */ .f)();
@@ -35375,7 +35377,7 @@ function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present,
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
-console.warn("[tanstack-router] These exports from \"/home/mnbro/Programming/measuringcontest/src/routes/editor.js\" will not be code-split and will increase your bundle size:\n- Editor\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
+console.warn("[tanstack-router] These exports from \"/home/matt/Programming/measuringcontest/src/routes/editor.js\" will not be code-split and will increase your bundle size:\n- Editor\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
 
 
 
@@ -40468,10 +40470,11 @@ ConsoleLogger.BIND_ALL_LOG_LEVELS = false;
 /* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(53736);
 /* harmony import */ var _contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(52904);
 /* harmony import */ var _utils_make_authenticated_request_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4193);
+/* harmony import */ var _constants_api_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(48273);
 
 
 
-var apiUrl = 'https://api.measuringcontest.com';
+
 var useCreateGameMutation = function useCreateGameMutation(roomCode) {
   var queryClient = (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_0__/* .useQueryClient */ .jE)();
   var auth = (0,_contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_2__/* .useCognitoAuth */ .f)();
@@ -40480,7 +40483,7 @@ var useCreateGameMutation = function useCreateGameMutation(roomCode) {
       var gameRules = _ref.gameRules,
         gameName = _ref.gameName,
         players = _ref.players;
-      return (0,_utils_make_authenticated_request_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)("".concat(apiUrl, "/rooms/").concat(roomCode, "/games"), auth.idToken, {
+      return (0,_utils_make_authenticated_request_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)("".concat(_constants_api_js__WEBPACK_IMPORTED_MODULE_4__/* .API_URL */ .H, "/rooms/").concat(roomCode, "/games"), auth.idToken, {
         method: 'POST',
         body: {
           gameRules: gameRules,
@@ -43593,10 +43596,12 @@ const createGetTokensFromRefreshTokenClient = (config) => (0,_aws_amplify_core_i
 /* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(64787);
 /* harmony import */ var _utils_make_request__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(88839);
 /* harmony import */ var _utils_preload_query_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(91929);
+/* harmony import */ var _constants_api_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(48273);
 
 
 
-var apiUrl = 'https://api.measuringcontest.com/rooms';
+
+var apiUrl = "".concat(_constants_api_js__WEBPACK_IMPORTED_MODULE_3__/* .API_URL */ .H, "/rooms");
 var useRoomQuery = function useRoomQuery(roomCode) {
   return (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_0__/* .useSuspenseQuery */ .U)(getOptions(roomCode));
 };
@@ -44100,10 +44105,12 @@ function createLRUCache(max) {
 /* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(53736);
 /* harmony import */ var _contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(52904);
 /* harmony import */ var _utils_make_authenticated_request_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4193);
+/* harmony import */ var _constants_api_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(48273);
 
 
 
-var apiUrl = 'https://api.measuringcontest.com/rooms';
+
+var apiUrl = "".concat(_constants_api_js__WEBPACK_IMPORTED_MODULE_4__/* .API_URL */ .H, "/rooms");
 
 // will need to pass userId at runtime in order for creator to kick players
 var useLeaveRoomMutation = function useLeaveRoomMutation(roomCode) {
@@ -47059,7 +47066,7 @@ function v4(options, buf, offset) {
 /* harmony import */ var _components_button_with_input_button_with_input_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(45247);
 /* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(18458);
 /* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(37276);
-console.warn("[tanstack-router] These exports from \"/home/mnbro/Programming/measuringcontest/src/routes/index.js\" will not be code-split and will increase your bundle size:\n- Home\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
+console.warn("[tanstack-router] These exports from \"/home/matt/Programming/measuringcontest/src/routes/index.js\" will not be code-split and will increase your bundle size:\n- Home\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
 
 
 
@@ -47883,16 +47890,17 @@ function isObject(value) {
 /* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(53736);
 /* harmony import */ var _contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(52904);
 /* harmony import */ var _utils_make_authenticated_request_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4193);
+/* harmony import */ var _constants_api_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(48273);
 
 
 
-var apiUrl = 'https://api.measuringcontest.com';
+
 var useJoinGameMutation = function useJoinGameMutation(roomCode, gameId) {
   var queryClient = (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_0__/* .useQueryClient */ .jE)();
   var auth = (0,_contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_2__/* .useCognitoAuth */ .f)();
   return (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_1__/* .useMutation */ .n)({
     mutationFn: function mutationFn() {
-      return (0,_utils_make_authenticated_request_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)("".concat(apiUrl, "/rooms/").concat(roomCode, "/games/").concat(gameId, "/join"), auth.idToken, {
+      return (0,_utils_make_authenticated_request_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)("".concat(_constants_api_js__WEBPACK_IMPORTED_MODULE_4__/* .API_URL */ .H, "/rooms/").concat(roomCode, "/games/").concat(gameId, "/join"), auth.idToken, {
         method: 'POST'
       });
     },
@@ -48573,6 +48581,7 @@ module.exports = get;
 /* harmony import */ var boardgame_io_client__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(19714);
 /* harmony import */ var boardgame_io_multiplayer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(78547);
 /* harmony import */ var _contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(52904);
+/* harmony import */ var _constants_api_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(48273);
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
@@ -48589,7 +48598,7 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
-var SERVER_URL = 'https://gameserver.measuringcontest.com';
+
 var useGameserverConnection = function useGameserverConnection(_ref) {
   var gameId = _ref.gameId,
     game = _ref.game,
@@ -48630,7 +48639,7 @@ var useGameserverConnection = function useGameserverConnection(_ref) {
                 } : {
                   game: game,
                   multiplayer: singlePlayer ? undefined : (0,boardgame_io_multiplayer__WEBPACK_IMPORTED_MODULE_4__.S)({
-                    server: SERVER_URL,
+                    server: _constants_api_js__WEBPACK_IMPORTED_MODULE_6__/* .BOARDGAME_SERVER_URL */ ._,
                     socketOpts: {
                       transports: ['websocket', 'polling']
                     }
@@ -49857,6 +49866,19 @@ const COGNITO_IDP_SERVICE_NAME = 'cognito-idp';
 
 /***/ }),
 
+/***/ 48273:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   H: () => (/* binding */ API_URL),
+/* harmony export */   _: () => (/* binding */ BOARDGAME_SERVER_URL)
+/* harmony export */ });
+var API_URL = 'https://api.boardgameengine.com';
+var BOARDGAME_SERVER_URL = 'https://gameserver.boardgameengine.com';
+
+/***/ }),
+
 /***/ 48330:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -51040,16 +51062,17 @@ async function Simulate({ game, bots, state, depth, }) {
 /* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(53736);
 /* harmony import */ var _contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(52904);
 /* harmony import */ var _utils_make_authenticated_request_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4193);
+/* harmony import */ var _constants_api_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(48273);
 
 
 
-var apiUrl = 'https://api.measuringcontest.com';
+
 var useDeleteGameMutation = function useDeleteGameMutation(roomCode, gameId) {
   var queryClient = (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_0__/* .useQueryClient */ .jE)();
   var auth = (0,_contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_2__/* .useCognitoAuth */ .f)();
   return (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_1__/* .useMutation */ .n)({
     mutationFn: function mutationFn() {
-      return (0,_utils_make_authenticated_request_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)("".concat(apiUrl, "/rooms/").concat(roomCode, "/games/").concat(gameId), auth.idToken, {
+      return (0,_utils_make_authenticated_request_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)("".concat(_constants_api_js__WEBPACK_IMPORTED_MODULE_4__/* .API_URL */ .H, "/rooms/").concat(roomCode, "/games/").concat(gameId), auth.idToken, {
         method: 'DELETE'
       });
     },
@@ -54408,7 +54431,7 @@ const protocol = _socket_js__WEBPACK_IMPORTED_MODULE_0__/* .Socket */ .yQ.protoc
 /* harmony export */ });
 var USER_POOL_CLIENT_ID = "lmckmqd7bndat4ot0ajl7u2uk";
 var USER_POOL_ID = "us-west-1_G8hKy1gmb";
-var AUTH_DOMAIN = "auth.measuringcontest.com";
+var AUTH_DOMAIN = "auth.boardgameengine.com";
 var AUTH_SCOPES = ["openid", "email", "profile"];
 var COGNITO_RESPONSE_TYPE = 'code';
 var cognitoConfig = {
@@ -54464,10 +54487,12 @@ module.exports = /*#__PURE__*/JSON.parse('{"entities":[{"name":"mainGrid","type"
 /* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(53736);
 /* harmony import */ var _contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(52904);
 /* harmony import */ var _utils_make_authenticated_request_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4193);
+/* harmony import */ var _constants_api_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(48273);
 
 
 
-var apiUrl = 'https://api.measuringcontest.com/rooms';
+
+var apiUrl = "".concat(_constants_api_js__WEBPACK_IMPORTED_MODULE_4__/* .API_URL */ .H, "/rooms");
 var useCreateRoomMutation = function useCreateRoomMutation() {
   var queryClient = (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_0__/* .useQueryClient */ .jE)();
   var auth = (0,_contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_2__/* .useCognitoAuth */ .f)();
@@ -74095,11 +74120,13 @@ function deserializeBgioArguments(bgioArguments) {
 /* harmony import */ var _contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(52904);
 /* harmony import */ var _utils_make_authenticated_request_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4193);
 /* harmony import */ var _utils_make_preload_authenticated_query_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(26576);
+/* harmony import */ var _constants_api_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(48273);
 
 
 
 
-var apiUrl = 'https://api.measuringcontest.com/rooms';
+
+var apiUrl = "".concat(_constants_api_js__WEBPACK_IMPORTED_MODULE_4__/* .API_URL */ .H, "/rooms");
 var useMyRoomsQuery = function useMyRoomsQuery(roomCode) {
   var auth = (0,_contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_1__/* .useCognitoAuth */ .f)();
   return (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_0__/* .useSuspenseQuery */ .U)(getOptions(auth.idToken));
@@ -75573,10 +75600,12 @@ var NotCondition = /*#__PURE__*/function (_Condition) {
 /* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(53736);
 /* harmony import */ var _contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(52904);
 /* harmony import */ var _utils_make_authenticated_request_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4193);
+/* harmony import */ var _constants_api_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(48273);
 
 
 
-var apiUrl = 'https://api.measuringcontest.com/rooms';
+
+var apiUrl = "".concat(_constants_api_js__WEBPACK_IMPORTED_MODULE_4__/* .API_URL */ .H, "/rooms");
 var useDeleteRoomMutation = function useDeleteRoomMutation() {
   var queryClient = (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_0__/* .useQueryClient */ .jE)();
   var auth = (0,_contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_2__/* .useCognitoAuth */ .f)();
