@@ -21,7 +21,7 @@ export default function Home () {
               Tweak,
             </div>
             <div>
-              Repeat.
+              Repeat
             </div>
           </h1>
         </div>
