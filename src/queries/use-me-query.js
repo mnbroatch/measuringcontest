@@ -4,7 +4,7 @@ import makeAuthenticatedRequest from "../utils/make-authenticated-request.js";
 import makePreloadAuthenticatedQuery from "../utils/make-preload-authenticated-query.js";
 import { API_URL } from "../constants/api.js";
 
-const apiUrl = `${API_URL}/api.measuringcontest.com/me`
+const apiUrl = `${API_URL}/me`
 
 export const useMeQuery = () => {
   const auth = useCognitoAuth()

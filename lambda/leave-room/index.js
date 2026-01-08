@@ -10,7 +10,7 @@ const client = new DynamoDBClient({});
 const ddb = DynamoDBDocumentClient.from(client);
 const ssmClient = new SSMClient({});
 
-const BOARDGAME_SERVER_URL = 'https://gameserver.measuringcontest.com';
+const BOARDGAME_SERVER_URL = 'https://gameserver.boardgameengine.com';
 
 let cachedJwtSecret = null;
 async function getJwtSecret() {

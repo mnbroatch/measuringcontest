@@ -12,7 +12,7 @@ const client = new DynamoDBClient({});
 const dynamoDb = DynamoDBDocumentClient.from(client);
 const ssmClient = new SSMClient({});
 
-const BOARDGAME_SERVER_URL = 'https://gameserver.measuringcontest.com';
+const BOARDGAME_SERVER_URL = 'https://gameserver.boardgameengine.com';
 
 const RoomGame = {
   name: 'bgestagingroom',
