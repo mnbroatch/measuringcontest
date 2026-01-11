@@ -293,7 +293,7 @@ function RoomPage() {
         players: players
       });
     }
-  }, "Start Game"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  }, "Start Game"))), iAmRoomCreator && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "button button--x-small button--style-c",
     onClick: /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3() {
       return _regenerator().w(function (_context3) {
@@ -312,7 +312,7 @@ function RoomPage() {
     }))
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(lucide_react__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
     size: "1em"
-  })))), status === 'waiting' && iAmRoomCreator && screenState === SCREEN_STATE_EDITING && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_game_editor_js__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  })), status === 'waiting' && iAmRoomCreator && screenState === SCREEN_STATE_EDITING && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_game_editor_js__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     auth: auth,
     roomCode: roomCode,
     goToRoom: function goToRoom(_ref4) {
