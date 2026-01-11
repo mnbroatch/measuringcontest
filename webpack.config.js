@@ -50,7 +50,7 @@ module.exports = {
       extensions: ['ts', 'tsx', 'js', 'jsx'],
     }),
     new HtmlWebPackPlugin({
-      title: 'Measuring Contest',
+      title: 'Board Game Engine',
       template: './index.html',
       templateParameters: {
         version: Date.now(),

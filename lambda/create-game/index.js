@@ -183,7 +183,8 @@ exports.handler = async (event) => {
     method: "POST",
     headers: { 
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${serverToken}`
+      "Authorization": `Bearer ${serverToken}`,
+      "User-Agent": "BoardGameEngine-Lambda/1.0"
     },
     body: JSON.stringify({ 
       gameRules: body.gameRules,
@@ -205,7 +206,8 @@ exports.handler = async (event) => {
     method: "POST",
     headers: { 
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${serverToken}`
+      "Authorization": `Bearer ${serverToken}`,
+      "User-Agent": "BoardGameEngine-Lambda/1.0"
     },
     body: JSON.stringify({ 
       playerName: player.name,
