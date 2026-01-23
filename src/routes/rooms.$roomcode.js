@@ -51,7 +51,15 @@ export default function RoomPage () {
     || !roomConnection.state
     || (status === 'started' && !gameConnection.state)
 
-  if (del) {
+  console.log('room', room)
+  console.log('userId', userId)
+  console.log('room.isLoading', room.isLoading)
+  console.log('room.data', room.data)
+  console.log('room.isIdle', room.isIdle)
+  console.log('gameConnection', gameConnection)
+
+
+  if (room.isSuccess && true) {
     return (
       <button
         className="button button--style-c"
@@ -76,7 +84,7 @@ export default function RoomPage () {
               className="button button--x-small button--style-c"
               disabled={leaveRoomMutation.isPending || leaveRoomMutation.isSuccess}
               onClick={async () => {
-                await deleteRoomMutation.mutateAsync(roomCode)
+                await leaveRoomMutation.mutateAsync(roomCode)
                 navigate({
                   to: '/',
                 })
