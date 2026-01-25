@@ -17,8 +17,6 @@ export default function usePossibleMoves(gameConnection, moveBuilder, isSpectato
     const availableMoves = Object.entries(moves)
       .filter(([moveName]) => !eliminatedMoves.includes(moveName));
 
-    console.log('moveBuilder', moveBuilder)
-
     availableMoves.forEach(([moveName, move]) => {
       const moveRule = { ...move.moveInstance.rule, moveName };
       

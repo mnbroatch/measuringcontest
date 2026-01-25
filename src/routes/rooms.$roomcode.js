@@ -51,11 +51,6 @@ export default function RoomPage () {
     || !roomConnection.state
     || (status === 'started' && !gameConnection.state)
 
-  const roomIsGone = !isLoading && !room.data.roomCode
-  console.log('isLoading', isLoading)
-  console.log('room.data.roomCode', room.data.roomCode)
-  console.log('roomIsGone', roomIsGone)
-
   useEffect(() => {
     setTimeout(() => {
       setIsTimedOut(true)

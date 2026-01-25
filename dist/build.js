@@ -231,10 +231,6 @@ function RoomPage() {
   var createGameMutation = (0,_queries_use_create_game_mutation_js__WEBPACK_IMPORTED_MODULE_9__/* .useCreateGameMutation */ .Z)(roomCode);
   var deleteGameMutation = (0,_queries_use_delete_game_mutation_js__WEBPACK_IMPORTED_MODULE_10__/* .useDeleteGameMutation */ .Q)(roomCode, gameId);
   var isLoading = room.isLoading || !roomConnection.state || status === 'started' && !gameConnection.state;
-  var roomIsGone = !isLoading && !room.data.roomCode;
-  console.log('isLoading', isLoading);
-  console.log('room.data.roomCode', room.data.roomCode);
-  console.log('roomIsGone', roomIsGone);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     setTimeout(function () {
       setIsTimedOut(true);
@@ -37518,7 +37514,6 @@ var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__/* .createRoot
               _context.n = 5;
               break;
             }
-            console.log('3', 3);
             _context.n = 4;
             return _queries_use_cognito_query_js__WEBPACK_IMPORTED_MODULE_6__/* .useCognitoQuery */ .v.preload();
           case 4:

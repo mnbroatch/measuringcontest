@@ -49,7 +49,6 @@ export const Route = createRootRoute({
     } else if (!myRooms?.length && location.pathname.startsWith('/rooms/')) {
       throw redirect({ to: '/' })
     } else if (!isPublicRoute) {
-      console.log('3', 3)
       const auth = await useCognitoQuery.preload()
       if (!auth?.idToken) {
         throw redirect({
