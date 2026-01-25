@@ -37495,13 +37495,10 @@ var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__/* .createRoot
             return _queries_use_my_rooms_query_js__WEBPACK_IMPORTED_MODULE_5__/* .useMyRoomsQuery */ .s.preload();
           case 1:
             myRooms = _context.v;
-            console.log('myRooms', myRooms.length);
-            console.log('location.pathname', location.pathname);
             if (!(myRooms !== null && myRooms !== void 0 && myRooms.length && !location.pathname.startsWith("/rooms/".concat(myRooms[0])))) {
               _context.n = 2;
               break;
             }
-            console.log('1', 1);
             throw (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_3__/* .redirect */ .V2)({
               to: '/rooms/$roomcode',
               params: {
@@ -37513,7 +37510,6 @@ var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__/* .createRoot
               _context.n = 3;
               break;
             }
-            console.log('2', 2);
             throw (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_3__/* .redirect */ .V2)({
               to: '/'
             });
