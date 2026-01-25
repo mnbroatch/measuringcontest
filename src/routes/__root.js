@@ -41,16 +41,12 @@ export const Route = createRootRoute({
     const publicPaths = ['/', '/editor']
     const isPublicRoute = publicPaths.some(path => location.pathname === path)
     const myRooms = await useMyRoomsQuery.preload()
-    console.log('myRooms', myRooms.length)
-console.log('location.pathname', location.pathname)
     if (myRooms?.length && !location.pathname.startsWith(`/rooms/${myRooms[0]}`)) {
-      console.log('1', 1)
       throw redirect({
         to: '/rooms/$roomcode',
         params: { roomcode: myRooms[0] }
       })
     } else if (!myRooms?.length && location.pathname.startsWith('/rooms/')) {
-      console.log('2', 2)
       throw redirect({ to: '/' })
     } else if (!isPublicRoute) {
       console.log('3', 3)
