@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
 import { Trash2 } from 'lucide-react';
 import useRoomConnection from "../hooks/use-room-connection.js";
@@ -44,22 +44,25 @@ export default function RoomPage () {
   const iAmInGame = room.data.players && userId in room.data.players
 
   const [screenState, setScreenState] = useState(SCREEN_STATE_WAITING)
+  const [isTimedOut, setIsTimedOut] = useState(false)
   const createGameMutation = useCreateGameMutation(roomCode)
   const deleteGameMutation = useDeleteGameMutation(roomCode, gameId)
-
   const isLoading = room.isLoading
     || !roomConnection.state
     || (status === 'started' && !gameConnection.state)
 
-  console.log('room', room)
-  console.log('userId', userId)
-  console.log('room.isLoading', room.isLoading)
-  console.log('room.data', room.data)
-  console.log('room.isIdle', room.isIdle)
-  console.log('gameConnection', gameConnection)
+  const roomIsGone = !isLoading && !room.data.roomCode
+  console.log('isLoading', isLoading)
+  console.log('room.data.roomCode', room.data.roomCode)
+  console.log('roomIsGone', roomIsGone)
 
+  useEffect(() => {
+    setTimeout(() => {
+      setIsTimedOut(true)
+    }, 5000)
+  })
 
-  if (room.isSuccess && true) {
+  if (room.isSuccess && !roomConnection.state && isTimedOut) {
     return (
       <button
         className="button button--style-c"

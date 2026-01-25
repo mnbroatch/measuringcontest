@@ -15,9 +15,14 @@ export const useDeleteRoomMutation = () => {
       auth.idToken,
       { method: 'DELETE' }
     ),
-    onSuccess: () => {
-      // array queryKey with idToken separate mysteriously isn't working
-      queryClient.invalidateQueries({ queryKey: [`my-rooms-${auth.idToken}`] })
+    onSuccess: async (_, roomCode) => {
+      // Optimistic update
+      queryClient.setQueryData(['my-rooms', auth.idToken], (old) => {
+        return old?.filter(code => code !== roomCode) ?? []
+      })
+      
+      queryClient.invalidateQueries({ queryKey: ['my-rooms', auth.idToken] })
+      queryClient.invalidateQueries({ queryKey: ['room', roomCode] })
     },
   })
 }

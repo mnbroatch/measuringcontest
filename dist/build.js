@@ -175,7 +175,7 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-console.warn("[tanstack-router] These exports from \"/home/matt/Programming/measuringcontest/src/routes/rooms.$roomcode.js\" will not be code-split and will increase your bundle size:\n- RoomPage\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
+console.warn("[tanstack-router] These exports from \"/home/mnbro/Programming/measuringcontest/src/routes/rooms.$roomcode.js\" will not be code-split and will increase your bundle size:\n- RoomPage\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
 
 
 
@@ -224,10 +224,23 @@ function RoomPage() {
     _useState2 = _slicedToArray(_useState, 2),
     screenState = _useState2[0],
     setScreenState = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState4 = _slicedToArray(_useState3, 2),
+    isTimedOut = _useState4[0],
+    setIsTimedOut = _useState4[1];
   var createGameMutation = (0,_queries_use_create_game_mutation_js__WEBPACK_IMPORTED_MODULE_9__/* .useCreateGameMutation */ .Z)(roomCode);
   var deleteGameMutation = (0,_queries_use_delete_game_mutation_js__WEBPACK_IMPORTED_MODULE_10__/* .useDeleteGameMutation */ .Q)(roomCode, gameId);
   var isLoading = room.isLoading || !roomConnection.state || status === 'started' && !gameConnection.state;
-  if (del) {
+  var roomIsGone = !isLoading && !room.data.roomCode;
+  console.log('isLoading', isLoading);
+  console.log('room.data.roomCode', room.data.roomCode);
+  console.log('roomIsGone', roomIsGone);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    setTimeout(function () {
+      setIsTimedOut(true);
+    }, 5000);
+  });
+  if (room.isSuccess && !roomConnection.state && isTimedOut) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
       className: "button button--style-c",
       onClick: /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
@@ -255,7 +268,7 @@ function RoomPage() {
         while (1) switch (_context2.n) {
           case 0:
             _context2.n = 1;
-            return deleteRoomMutation.mutateAsync(roomCode);
+            return leaveRoomMutation.mutateAsync(roomCode);
           case 1:
             navigate({
               to: '/'
@@ -35377,7 +35390,7 @@ function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present,
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
-console.warn("[tanstack-router] These exports from \"/home/matt/Programming/measuringcontest/src/routes/editor.js\" will not be code-split and will increase your bundle size:\n- Editor\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
+console.warn("[tanstack-router] These exports from \"/home/mnbro/Programming/measuringcontest/src/routes/editor.js\" will not be code-split and will increase your bundle size:\n- Editor\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
 
 
 
@@ -35407,12 +35420,14 @@ function Editor() {
               });
             case 1:
               roomCode = _context.v;
-              navigate({
-                to: '/rooms/$roomcode',
-                params: {
-                  roomcode: roomCode
-                }
-              });
+              if (typeof roomCode === 'string') {
+                navigate({
+                  to: '/rooms/$roomcode',
+                  params: {
+                    roomcode: roomCode
+                  }
+                });
+              }
             case 2:
               return _context.a(2);
           }
@@ -37480,10 +37495,13 @@ var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__/* .createRoot
             return _queries_use_my_rooms_query_js__WEBPACK_IMPORTED_MODULE_5__/* .useMyRoomsQuery */ .s.preload();
           case 1:
             myRooms = _context.v;
+            console.log('myRooms', myRooms.length);
+            console.log('location.pathname', location.pathname);
             if (!(myRooms !== null && myRooms !== void 0 && myRooms.length && !location.pathname.startsWith("/rooms/".concat(myRooms[0])))) {
               _context.n = 2;
               break;
             }
+            console.log('1', 1);
             throw (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_3__/* .redirect */ .V2)({
               to: '/rooms/$roomcode',
               params: {
@@ -37491,16 +37509,26 @@ var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__/* .createRoot
               }
             });
           case 2:
-            if (isPublicRoute) {
-              _context.n = 4;
+            if (!(!(myRooms !== null && myRooms !== void 0 && myRooms.length) && location.pathname.startsWith('/rooms/'))) {
+              _context.n = 3;
               break;
             }
-            _context.n = 3;
-            return _queries_use_cognito_query_js__WEBPACK_IMPORTED_MODULE_6__/* .useCognitoQuery */ .v.preload();
+            console.log('2', 2);
+            throw (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_3__/* .redirect */ .V2)({
+              to: '/'
+            });
           case 3:
+            if (isPublicRoute) {
+              _context.n = 5;
+              break;
+            }
+            console.log('3', 3);
+            _context.n = 4;
+            return _queries_use_cognito_query_js__WEBPACK_IMPORTED_MODULE_6__/* .useCognitoQuery */ .v.preload();
+          case 4:
             auth = _context.v;
             if (auth !== null && auth !== void 0 && auth.idToken) {
-              _context.n = 4;
+              _context.n = 5;
               break;
             }
             throw (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_3__/* .redirect */ .V2)({
@@ -37509,7 +37537,7 @@ var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__/* .createRoot
                 redirect: location.href
               }
             });
-          case 4:
+          case 5:
             return _context.a(2);
         }
       }, _callee);
@@ -47066,7 +47094,7 @@ function v4(options, buf, offset) {
 /* harmony import */ var _components_button_with_input_button_with_input_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(45247);
 /* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(18458);
 /* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(37276);
-console.warn("[tanstack-router] These exports from \"/home/matt/Programming/measuringcontest/src/routes/index.js\" will not be code-split and will increase your bundle size:\n- Home\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
+console.warn("[tanstack-router] These exports from \"/home/mnbro/Programming/measuringcontest/src/routes/index.js\" will not be code-split and will increase your bundle size:\n- Home\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
 
 
 
@@ -54488,6 +54516,12 @@ module.exports = /*#__PURE__*/JSON.parse('{"entities":[{"name":"mainGrid","type"
 /* harmony import */ var _contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(52904);
 /* harmony import */ var _utils_make_authenticated_request_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4193);
 /* harmony import */ var _constants_api_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(48273);
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 
 
 
@@ -54509,7 +54543,11 @@ var useCreateRoomMutation = function useCreateRoomMutation() {
         }
       });
     },
-    onSuccess: function onSuccess() {
+    onSuccess: function onSuccess(roomCode) {
+      // Optimistic update
+      queryClient.setQueryData(['my-rooms', auth.idToken], function (old) {
+        return [].concat(_toConsumableArray(old), [roomCode]);
+      });
       queryClient.invalidateQueries({
         queryKey: ['my-rooms', auth.idToken]
       });
@@ -74133,8 +74171,7 @@ var useMyRoomsQuery = function useMyRoomsQuery(roomCode) {
 };
 function getOptions(idToken) {
   return {
-    // array queryKey with idToken separate mysteriously isn't working
-    queryKey: ["my-rooms-".concat(idToken)],
+    queryKey: ['my-rooms', idToken],
     queryFn: function queryFn() {
       return idToken ? (0,_utils_make_authenticated_request_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(apiUrl, idToken, {
         method: 'GET'
@@ -75601,6 +75638,10 @@ var NotCondition = /*#__PURE__*/function (_Condition) {
 /* harmony import */ var _contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(52904);
 /* harmony import */ var _utils_make_authenticated_request_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4193);
 /* harmony import */ var _constants_api_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(48273);
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 
 
 
@@ -75615,12 +75656,34 @@ var useDeleteRoomMutation = function useDeleteRoomMutation() {
         method: 'DELETE'
       });
     },
-    onSuccess: function onSuccess() {
-      // array queryKey with idToken separate mysteriously isn't working
-      queryClient.invalidateQueries({
-        queryKey: ["my-rooms-".concat(auth.idToken)]
-      });
-    }
+    onSuccess: function () {
+      var _onSuccess = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(_, roomCode) {
+        return _regenerator().w(function (_context) {
+          while (1) switch (_context.n) {
+            case 0:
+              // Optimistic update
+              queryClient.setQueryData(['my-rooms', auth.idToken], function (old) {
+                var _old$filter;
+                return (_old$filter = old === null || old === void 0 ? void 0 : old.filter(function (code) {
+                  return code !== roomCode;
+                })) !== null && _old$filter !== void 0 ? _old$filter : [];
+              });
+              queryClient.invalidateQueries({
+                queryKey: ['my-rooms', auth.idToken]
+              });
+              queryClient.invalidateQueries({
+                queryKey: ['room', roomCode]
+              });
+            case 1:
+              return _context.a(2);
+          }
+        }, _callee);
+      }));
+      function onSuccess(_x, _x2) {
+        return _onSuccess.apply(this, arguments);
+      }
+      return onSuccess;
+    }()
   });
 };
 

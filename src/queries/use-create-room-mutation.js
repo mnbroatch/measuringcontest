@@ -18,7 +18,12 @@ export const useCreateRoomMutation = () => {
         body: { gameRules, gameName },
       }
     ),
-    onSuccess: () => {
+    onSuccess: (roomCode) => {
+      // Optimistic update
+      queryClient.setQueryData(
+        ['my-rooms', auth.idToken],
+        (old) => [...old, roomCode]
+      )
       queryClient.invalidateQueries({ queryKey: ['my-rooms', auth.idToken] })
     },
   })

@@ -17,10 +17,12 @@ export default function Editor () {
       auth={auth}
       handleCreateRoom={async ({ gameRules, gameName }) => {
         const roomCode = await createRoomMutation.mutateAsync({gameRules, gameName})
-        navigate({
-          to: '/rooms/$roomcode',
-          params: { roomcode: roomCode }
-        })
+        if (typeof roomCode === 'string') {
+          navigate({
+            to: '/rooms/$roomcode',
+            params: { roomcode: roomCode }
+          })
+        }
       }}
       roomCode={roomCode}
       goToRoom={() => {

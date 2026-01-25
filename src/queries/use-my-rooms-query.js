@@ -13,8 +13,7 @@ export const useMyRoomsQuery = (roomCode) => {
 
 function getOptions (idToken) {
   return {
-    // array queryKey with idToken separate mysteriously isn't working
-    queryKey: [`my-rooms-${idToken}`],
+    queryKey: ['my-rooms', idToken],
     queryFn: () => idToken 
       ? makeAuthenticatedRequest(
         apiUrl,
