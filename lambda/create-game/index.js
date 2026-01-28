@@ -146,7 +146,7 @@ exports.handler = async (event) => {
     });
 
     // Add timeout
-    setTimeout(() => reject(new Error('Timeout connecting to RoomGame')), 30000);
+    setTimeout(() => reject(new Error('Timeout connecting to RoomGame')), 10000);
   });
 
   await roomStatePromise;

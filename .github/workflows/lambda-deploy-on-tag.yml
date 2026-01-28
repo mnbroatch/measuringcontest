@@ -30,7 +30,6 @@ jobs:
           - name: creategame
             path: lambda/create-game
             zip: creategame.zip
-            timeout: 40
           - name: deletegame
             path: lambda/delete-game
             zip: deletegame.zip
