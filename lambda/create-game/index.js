@@ -8,9 +8,9 @@ const { Client } = require('boardgame.io/client')
 const { SocketIO } = require('boardgame.io/multiplayer')
 const { ActivePlayers } = require('boardgame.io/core')
 
-const client = new DynamoDBClient({});
-const dynamoDb = DynamoDBDocumentClient.from(client);
-const ssmClient = new SSMClient({});
+const client = new DynamoDBClient({})
+const dynamoDb = DynamoDBDocumentClient.from(client)
+const ssmClient = new SSMClient({})
 
 const BOARDGAME_SERVER_URL = 'https://gameserver.boardgameengine.com';
 
