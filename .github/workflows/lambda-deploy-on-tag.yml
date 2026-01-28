@@ -82,6 +82,11 @@ jobs:
               --region ${{ env.AWS_REGION }}
             
             if [ -n "${TIMEOUT_ARG}" ]; then
+              echo "Waiting for code update to complete..."
+              aws lambda wait function-updated \
+                --function-name ${{ matrix.lambda.name }} \
+                --region ${{ env.AWS_REGION }}
+              
               echo "Updating function configuration..."
               aws lambda update-function-configuration \
                 --function-name ${{ matrix.lambda.name }} \
