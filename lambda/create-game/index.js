@@ -1,8 +1,8 @@
 const crypto = require('crypto')
-const jwt = require('jsonwebtoken');
-const stableHash = require('stable-hash').default;
-const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
-const { DynamoDBDocumentClient, UpdateCommand, GetCommand } = require("@aws-sdk/lib-dynamodb");
+const jwt = require('jsonwebtoken')
+const stableHash = require('stable-hash').default
+const { DynamoDBClient } = require("@aws-sdk/client-dynamodb")
+const { DynamoDBDocumentClient, UpdateCommand, GetCommand } = require("@aws-sdk/lib-dynamodb")
 const { SSMClient, GetParameterCommand } = require("@aws-sdk/client-ssm");
 const { Client } = require('boardgame.io/client')
 const { SocketIO } = require('boardgame.io/multiplayer')
