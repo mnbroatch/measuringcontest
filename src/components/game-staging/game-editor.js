@@ -106,6 +106,12 @@ export default function GameEditor ({
     }
   };
 
+  let gameRulesJSONIsValid = false
+  try {
+    JSON.parse(gameRules) 
+    gameRulesJSONIsValid = true
+  } catch {}
+
   return (
     <>
       {screenState === SCREEN_STATE_EDITING && (
@@ -176,13 +182,14 @@ export default function GameEditor ({
           <div className="buttons">
             <button
               className="button button--x-small button--style-a"
+              disabled={!gameRulesJSONIsValid}
               onClick={() => {
                 setSavedGameRules(gameRules)
                 setSavedNumPlayers(numPlayers)
                 setScreenState(SCREEN_STATE_TESTING)
               }}
             >
-              Test Game
+              {gameRulesJSONIsValid ? 'Test Game' : 'Invalid Game Rules'}
             </button>
             {!auth.loading && !auth.idToken && (
               <button

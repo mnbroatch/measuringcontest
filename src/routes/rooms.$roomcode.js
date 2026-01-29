@@ -51,6 +51,12 @@ export default function RoomPage () {
     || !roomConnection.state
     || (status === 'started' && !gameConnection.state)
 
+  let gameRulesJSONIsValid = false
+  try {
+    JSON.parse(gameRules) 
+    gameRulesJSONIsValid = true
+  } catch {}
+
   useEffect(() => {
     setTimeout(() => {
       setIsTimedOut(true)
@@ -111,6 +117,7 @@ export default function RoomPage () {
             </button>
             <button
               className="button button--x-small button--style-a"
+              disabled={!gameRulesJSONIsValid}
               onClick={() => {
                 createGameMutation.mutate({
                   gameRules,
@@ -119,7 +126,7 @@ export default function RoomPage () {
                 })
               }}
             >
-              Start Game
+              {gameRulesJSONIsValid ? 'Start Game' : 'Invalid Game Rules'}
             </button>
           </div>
         </>
