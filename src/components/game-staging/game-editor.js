@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import Editor from '@monaco-editor/react';
 import ticTacToe from "../../../server/tic-tac-toe.json";
 import eights from "../../../server/eights.json";
@@ -62,6 +62,16 @@ export default function GameEditor ({
   roomCode,
   auth,
 }) {
+  const editorRef = useRef(null);
+  const handleEditorDidMount = (editor, monaco) => {
+    editorRef.current = editor;
+  }
+  const goToNextError = () => {
+    if (editorRef.current) {
+      editorRef.current.trigger('keyboard', 'editor.action.marker.nextInFiles', null);
+    }
+  }
+
   const [screenState, setScreenState] = useState(SCREEN_STATE_EDITING)
 
   // controlled input state
@@ -148,6 +158,7 @@ export default function GameEditor ({
               onChange={handleGameRulesChange}
               theme="vs-dark"
               loading={null} 
+              onMount={handleEditorDidMount}
               options={{
                 minimap: { enabled: false },
                 fontSize: 14,
@@ -180,17 +191,26 @@ export default function GameEditor ({
             </div>
           </div>
           <div className="buttons">
-            <button
-              className="button button--x-small button--style-a"
-              disabled={!gameRulesJSONIsValid}
-              onClick={() => {
-                setSavedGameRules(gameRules)
-                setSavedNumPlayers(numPlayers)
-                setScreenState(SCREEN_STATE_TESTING)
-              }}
-            >
-              {gameRulesJSONIsValid ? 'Test Game' : 'Invalid Game Rules'}
-            </button>
+            {gameRulesJSONIsValid && (
+              <button
+                className="button button--x-small button--style-a"
+                onClick={() => {
+                  setSavedGameRules(gameRules)
+                  setSavedNumPlayers(numPlayers)
+                  setScreenState(SCREEN_STATE_TESTING)
+                }}
+              >
+                Test Game
+              </button>
+            )}
+            {!gameRulesJSONIsValid && (
+              <button
+                className="button button--x-small button--style-a button--disabled"
+                onClick={goToNextError}
+              >
+                Invalid Game Rules
+              </button>
+            )}
             {!auth.loading && !auth.idToken && (
               <button
                 className="button button--x-small button--style-b"

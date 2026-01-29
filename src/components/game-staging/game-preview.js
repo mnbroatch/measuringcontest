@@ -3,7 +3,7 @@ import Editor from '@monaco-editor/react';
 
 export default function GamePreview ({ gameRules }) {
   const [isOpen, setIsOpen] = useState(false)
-  
+
   return (
     <div className="game-preview">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -14,10 +14,11 @@ export default function GamePreview ({ gameRules }) {
           {isOpen ? 'Hide' : 'Show'} Rules
         </button>
       </div>
-      
+
       {isOpen && (
-        <>
+        <div style={{ flex: 1, minHeight: 0 }}>
           <Editor
+            height="100%"
             className="editor__input"
             defaultLanguage="json"
             value={gameRules}
@@ -29,7 +30,7 @@ export default function GamePreview ({ gameRules }) {
               readOnly: true
             }}
           />
-        </>
+        </div>
       )}
     </div>
   )
