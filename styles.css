@@ -133,7 +133,7 @@ body {
   margin: .5em;
 }
 
-.button--disabled.button--disabled {
+.button:disabled, .button--disabled.button--disabled {
   background-color: grey;
 }
 
