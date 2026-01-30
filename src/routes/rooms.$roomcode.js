@@ -79,6 +79,8 @@ export default function RoomPage () {
     )
   }
 
+  const numPlayers = players && Object.keys(players).length
+
   return !isLoading && iAmInRoom && (
     <>
       {status === 'waiting' && screenState === SCREEN_STATE_WAITING && (
@@ -105,7 +107,8 @@ export default function RoomPage () {
               roomConnection.client.moves.join(name)
             }}
           />
-          <h3>{gameName}</h3>
+          <h3 className="room-game__game-name">{gameName}</h3>
+          <h5 className="room-game__player-count">{numPlayers} Player{numPlayers > 1 && 's'}</h5>
           <RoomGame players={players} playerID={playerID} />
           <GamePreview gameRules={gameRules} />
           <div className="buttons">

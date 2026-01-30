@@ -163,7 +163,17 @@ body {
   border-radius: .2em;
 }
 
-.room-game h4 {
+.room-game__joined-players {
+  padding: 20px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+  background-color: rgb(from var(--bright-sky) calc(r + 50) calc(g + 50) calc(b + 50));
+}
+
+.room-game__game-name {
+  margin: 0;
+}
+
+.room-game__player-count {
   margin: 0;
 }
 

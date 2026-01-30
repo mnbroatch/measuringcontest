@@ -65,9 +65,15 @@ export default function GameEditor ({
   const [screenState, setScreenState] = useState(SCREEN_STATE_EDITING)
 
   // controlled input state
-  const [gameRules, setGameRules] = useState(initialGameRules || gameRulesFromStorage || '')
-  const [gameName, setGameName] = useState(initialGameName || gameNameFromStorage || '')
-  const [numPlayers, setNumPlayers] = useState(initialNumPlayers || numPlayersFromStorage || 2)
+  const [gameRules, setGameRules] = useState(() => 
+    initialGameRules || localStorage.getItem(RULES_LOCALSTORAGE_KEY) || ''
+  )
+  const [gameName, setGameName] = useState(() =>
+    initialGameName || localStorage.getItem(NAME_LOCALSTORAGE_KEY) || ''
+  )
+  const [numPlayers, setNumPlayers] = useState(() =>
+    initialNumPlayers || +localStorage.getItem(NUM_PLAYERS_LOCALSTORAGE_KEY) || 2
+  )
 
   // state that is frozen for testing (performance optimization so game connection
   // isn't re-established on every keystroke)
