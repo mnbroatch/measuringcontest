@@ -33,6 +33,7 @@ body {
 
 .content {
   text-align: center;
+  min-height: 0;
   background: linear-gradient(
     to bottom,
     var(--bright-sky) 0%,
@@ -132,7 +133,7 @@ body {
   margin: .5em;
 }
 
-.button:disabled {
+.button:disabled, .button--disabled.button--disabled {
   background-color: grey;
 }
 

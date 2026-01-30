@@ -131,21 +131,21 @@ export default function RoomPage () {
             >
               {gameRulesJSONIsValid ? 'Start Game' : 'Invalid Game Rules'}
             </button>
+            {iAmRoomCreator && (
+              <button
+                className="button button--x-small button--style-c"
+                onClick={async () => {
+                  await deleteRoomMutation.mutateAsync(roomCode)
+                  navigate({
+                    to: '/',
+                  })
+                }}
+              >
+                <Trash2 size="1em" />
+              </button>
+            )}
           </div>
         </>
-      )}
-      {iAmRoomCreator && (
-        <button
-          className="button button--x-small button--style-c"
-          onClick={async () => {
-            await deleteRoomMutation.mutateAsync(roomCode)
-            navigate({
-              to: '/',
-            })
-          }}
-        >
-          <Trash2 size="1em" />
-        </button>
       )}
       {status === 'waiting' && iAmRoomCreator && screenState === SCREEN_STATE_EDITING && (
         <GameEditor
