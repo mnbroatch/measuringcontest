@@ -1,5 +1,5 @@
 import React, { useState, useRef, useLayoutEffect } from 'react'
-import { Pencil } from 'lucide-react';
+import { Pencil, Check, X } from 'lucide-react';
 
 export default function PlayerPill ({ player, playerID, myPlayerID, changeName }) {
   const [userIsEditing, setUserIsEditing] = useState(false)
@@ -104,9 +104,6 @@ export default function PlayerPill ({ player, playerID, myPlayerID, changeName }
     setUserIsEditing(false)
   }
 
-  console.log('playerID', playerID)
-  console.log('myPlayerID', myPlayerID)
-  
   return (
     <div style={{ position: 'relative', display: 'inline-block' }}>
       <div
@@ -138,13 +135,13 @@ export default function PlayerPill ({ player, playerID, myPlayerID, changeName }
                 className="button button--x-small button--style-a"
                 onClick={handleSave}
               >
-                û
+                <Check size=".8em" />
               </button>
               <button
                 className="button button--x-small button--style-c"
                 onClick={handleCancel}
               >
-                ?
+                <X size=".8em" />
               </button>
             </div>
           )}
