@@ -99,17 +99,15 @@ export default function RoomPage () {
               Leave Room
             </button>
           )}
-          <ButtonWithInput
-            className="button--x-small"
-            defaultValue={players?.[playerID]?.name}
-            label={ iAmInStagedGame ? 'Change name:' : 'Join Game as:' }
-            handleClick={(name) => {
+          <h3 className="room-game__game-name">{gameName}</h3>
+          <h5 className="room-game__player-count">{numPlayers} Player{numPlayers > 1 && 's'}</h5>
+          <RoomGame
+            players={players}
+            playerID={playerID}
+            changeName={(name) => {
               roomConnection.client.moves.join(name)
             }}
           />
-          <h3 className="room-game__game-name">{gameName}</h3>
-          <h5 className="room-game__player-count">{numPlayers} Player{numPlayers > 1 && 's'}</h5>
-          <RoomGame players={players} playerID={playerID} />
           <GamePreview gameRules={gameRules} />
           <div className="buttons">
             <button
