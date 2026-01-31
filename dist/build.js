@@ -175,7 +175,7 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-console.warn("[tanstack-router] These exports from \"/home/mnbro/Programming/measuringcontest/src/routes/rooms.$roomcode.js\" will not be code-split and will increase your bundle size:\n- RoomPage\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
+console.warn("[tanstack-router] These exports from \"/home/matt/Programming/measuringcontest/src/routes/rooms.$roomcode.js\" will not be code-split and will increase your bundle size:\n- RoomPage\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
 
 
 
@@ -197,7 +197,7 @@ console.warn("[tanstack-router] These exports from \"/home/mnbro/Programming/mea
 var SCREEN_STATE_EDITING = 'editing';
 var SCREEN_STATE_WAITING = 'waiting';
 function RoomPage() {
-  var _roomConnection$state, _roomConnection$state2, _roomConnection$clien, _roomConnection$state3, _roomConnection$state4, _roomConnection$state5, _roomConnection$clien2, _players$playerID;
+  var _roomConnection$state, _roomConnection$state2, _roomConnection$clien, _roomConnection$state3, _roomConnection$state4, _roomConnection$state5, _roomConnection$clien2;
   var _Route$useParams = Route.useParams(),
     roomCode = _Route$useParams.roomcode;
   var _Route$useSearch = Route.useSearch(),
@@ -231,6 +231,11 @@ function RoomPage() {
   var createGameMutation = (0,_queries_use_create_game_mutation_js__WEBPACK_IMPORTED_MODULE_9__/* .useCreateGameMutation */ .Z)(roomCode);
   var deleteGameMutation = (0,_queries_use_delete_game_mutation_js__WEBPACK_IMPORTED_MODULE_10__/* .useDeleteGameMutation */ .Q)(roomCode, gameId);
   var isLoading = room.isLoading || !roomConnection.state || status === 'started' && !gameConnection.state;
+  var gameRulesJSONIsValid = false;
+  try {
+    JSON.parse(gameRules);
+    gameRulesJSONIsValid = true;
+  } catch (_unused) {}
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     setTimeout(function () {
       setIsTimedOut(true);
@@ -256,6 +261,7 @@ function RoomPage() {
       }))
     }, "Delete Room");
   }
+  var numPlayers = players && Object.keys(players).length;
   return !isLoading && iAmInRoom && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, status === 'waiting' && screenState === SCREEN_STATE_WAITING && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, !iAmRoomCreator && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "button button--x-small button--style-c",
     disabled: leaveRoomMutation.isPending || leaveRoomMutation.isSuccess,
@@ -274,16 +280,16 @@ function RoomPage() {
         }
       }, _callee2);
     }))
-  }, "Leave Room"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_button_with_input_button_with_input_js__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
-    className: "button--x-small",
-    defaultValue: players === null || players === void 0 || (_players$playerID = players[playerID]) === null || _players$playerID === void 0 ? void 0 : _players$playerID.name,
-    label: iAmInStagedGame ? 'Change name:' : 'Join Game as:',
-    handleClick: function handleClick(name) {
+  }, "Leave Room"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", {
+    className: "room-game__game-name"
+  }, gameName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h5", {
+    className: "room-game__player-count"
+  }, numPlayers, " Player", numPlayers > 1 && 's'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_room_game_js__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+    players: players,
+    playerID: playerID,
+    changeName: function changeName(name) {
       roomConnection.client.moves.join(name);
     }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, gameName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_room_game_js__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
-    players: players,
-    playerID: playerID
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_game_preview_js__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
     gameRules: gameRules
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -295,6 +301,7 @@ function RoomPage() {
     }
   }, "Edit Game"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "button button--x-small button--style-a",
+    disabled: !gameRulesJSONIsValid,
     onClick: function onClick() {
       createGameMutation.mutate({
         gameRules: gameRules,
@@ -302,7 +309,7 @@ function RoomPage() {
         players: players
       });
     }
-  }, "Start Game"))), iAmRoomCreator && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  }, gameRulesJSONIsValid ? 'Start Game' : 'Invalid Game Rules'), iAmRoomCreator && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "button button--x-small button--style-c",
     onClick: /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3() {
       return _regenerator().w(function (_context3) {
@@ -321,7 +328,7 @@ function RoomPage() {
     }))
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(lucide_react__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
     size: "1em"
-  })), status === 'waiting' && iAmRoomCreator && screenState === SCREEN_STATE_EDITING && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_game_editor_js__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  })))), status === 'waiting' && iAmRoomCreator && screenState === SCREEN_STATE_EDITING && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_game_editor_js__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     auth: auth,
     roomCode: roomCode,
     goToRoom: function goToRoom(_ref4) {
@@ -35386,7 +35393,7 @@ function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present,
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
-console.warn("[tanstack-router] These exports from \"/home/mnbro/Programming/measuringcontest/src/routes/editor.js\" will not be code-split and will increase your bundle size:\n- Editor\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
+console.warn("[tanstack-router] These exports from \"/home/matt/Programming/measuringcontest/src/routes/editor.js\" will not be code-split and will increase your bundle size:\n- Editor\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
 
 
 
@@ -37036,7 +37043,13 @@ function GamePreview(_ref) {
     onClick: function onClick() {
       return setIsOpen(!isOpen);
     }
-  }, isOpen ? 'Hide' : 'Show', " Rules")), isOpen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_monaco_editor_react__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Ay, {
+  }, isOpen ? 'Hide' : 'Show', " Rules")), isOpen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    style: {
+      flex: 1,
+      minHeight: 0
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_monaco_editor_react__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Ay, {
+    height: "100%",
     className: "editor__input",
     defaultLanguage: "json",
     value: gameRules,
@@ -46412,6 +46425,7 @@ const DEFAULT_SERVICE_CLIENT_API_CONFIG = {
 /* harmony export */   A: () => (/* binding */ RoomGame)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
+/* harmony import */ var _player_pill_player_pill_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(72375);
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -46419,23 +46433,27 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
+
 function RoomGame(_ref) {
   var players = _ref.players,
-    playerID = _ref.playerID;
+    playerID = _ref.playerID,
+    changeName = _ref.changeName;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "room-game"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h4", null, "Joined Players:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, Object.entries(players).map(function (_ref2, i) {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h4", null, "Joined Players:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "room-game__joined-players"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, Object.entries(players).map(function (_ref2, i) {
     var _ref3 = _slicedToArray(_ref2, 2),
       pID = _ref3[0],
       player = _ref3[1];
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_player_pill_player_pill_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A, {
       key: i,
-      className: ['joined-player-pill', playerID === pID && 'joined-player-pill--me'].filter(Boolean).join(' '),
-      style: {
-        display: 'inline-block'
-      }
-    }, player.name);
-  })));
+      player: player,
+      playerID: pID,
+      myPlayerID: playerID,
+      changeName: changeName
+    });
+  }))));
 }
 
 /***/ }),
@@ -47085,7 +47103,7 @@ function v4(options, buf, offset) {
 /* harmony import */ var _components_button_with_input_button_with_input_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(45247);
 /* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(18458);
 /* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(37276);
-console.warn("[tanstack-router] These exports from \"/home/mnbro/Programming/measuringcontest/src/routes/index.js\" will not be code-split and will increase your bundle size:\n- Home\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
+console.warn("[tanstack-router] These exports from \"/home/matt/Programming/measuringcontest/src/routes/index.js\" will not be code-split and will increase your bundle size:\n- Home\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
 
 
 
@@ -48385,6 +48403,36 @@ function getDefaultState(options) {
 }
 
 //# sourceMappingURL=query.js.map
+
+/***/ }),
+
+/***/ 44104:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ X)
+/* harmony export */ });
+/* unused harmony export __iconNode */
+/* harmony import */ var _createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(68532);
+/**
+ * @license lucide-react v0.556.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const __iconNode = [
+  ["path", { d: "M18 6 6 18", key: "1bl5f8" }],
+  ["path", { d: "m6 6 12 12", key: "d8bk6v" }]
+];
+const X = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)("x", __iconNode);
+
+
+//# sourceMappingURL=x.js.map
+
 
 /***/ }),
 
@@ -63394,6 +63442,187 @@ exports.update = update;
 
 /***/ }),
 
+/***/ 72375:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ PlayerPill)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(82712);
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(74399);
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(44104);
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+
+
+function PlayerPill(_ref) {
+  var player = _ref.player,
+    playerID = _ref.playerID,
+    myPlayerID = _ref.myPlayerID,
+    changeName = _ref.changeName;
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState2 = _slicedToArray(_useState, 2),
+    userIsEditing = _useState2[0],
+    setUserIsEditing = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(player.name),
+    _useState4 = _slicedToArray(_useState3, 2),
+    nameDraft = _useState4[0],
+    setNameDraft = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState6 = _slicedToArray(_useState5, 2),
+    pendingName = _useState6[0],
+    setPendingName = _useState6[1];
+  var pillRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  var measureRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  var snapshotRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  var pillIsMine = playerID === myPlayerID;
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useLayoutEffect)(function () {
+    if (!pillRef.current || !snapshotRef.current) return;
+    var element = pillRef.current;
+    var _snapshotRef$current = snapshotRef.current,
+      startHeight = _snapshotRef$current.height,
+      startWidth = _snapshotRef$current.width;
+
+    // Measure target size (either from actual content or from hidden measure element)
+    var endHeight, endWidth;
+    if (measureRef.current) {
+      endHeight = measureRef.current.offsetHeight;
+      endWidth = measureRef.current.offsetWidth;
+    } else {
+      endHeight = element.offsetHeight;
+      endWidth = element.offsetWidth;
+    }
+
+    // Clear snapshot
+    snapshotRef.current = null;
+
+    // Only animate if size changed
+    if (startHeight === endHeight && startWidth === endWidth) {
+      setPendingName(null);
+      return;
+    }
+
+    // Hide content while we set size
+    var inner = element.querySelector('.joined-player-pill__inner');
+    if (inner) inner.style.visibility = 'hidden';
+
+    // Set to start size
+    element.style.height = startHeight + 'px';
+    element.style.width = startWidth + 'px';
+
+    // Force reflow
+    void element.offsetHeight;
+
+    // Show content and animate to end size
+    requestAnimationFrame(function () {
+      if (!pillRef.current) return;
+      if (inner) inner.style.visibility = 'visible';
+      element.style.transition = 'height 0.3s ease, width 0.3s ease';
+      element.style.height = endHeight + 'px';
+      element.style.width = endWidth + 'px';
+
+      // Reset after animation and clear pending name
+      setTimeout(function () {
+        if (pillRef.current) {
+          pillRef.current.style.height = '';
+          pillRef.current.style.width = '';
+          pillRef.current.style.transition = '';
+        }
+        setPendingName(null);
+      }, 300);
+    });
+  }, [userIsEditing]);
+  var handleEdit = function handleEdit() {
+    if (pillRef.current) {
+      snapshotRef.current = {
+        height: pillRef.current.offsetHeight,
+        width: pillRef.current.offsetWidth
+      };
+    }
+    setUserIsEditing(true);
+  };
+  var handleSave = function handleSave() {
+    // Set pending name so we can measure it
+    setPendingName(nameDraft);
+    changeName(nameDraft);
+
+    // Wait a frame so measureRef gets populated
+    requestAnimationFrame(function () {
+      if (pillRef.current) {
+        snapshotRef.current = {
+          height: pillRef.current.offsetHeight,
+          width: pillRef.current.offsetWidth
+        };
+      }
+      setUserIsEditing(false);
+    });
+  };
+  var handleCancel = function handleCancel() {
+    setNameDraft(player.name);
+    if (pillRef.current) {
+      snapshotRef.current = {
+        height: pillRef.current.offsetHeight,
+        width: pillRef.current.offsetWidth
+      };
+    }
+    setUserIsEditing(false);
+  };
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    style: {
+      position: 'relative',
+      display: 'inline-block'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    ref: pillRef,
+    className: ['joined-player-pill', pillIsMine && 'joined-player-pill--me'].filter(Boolean).join(' ')
+  }, pillIsMine && !userIsEditing && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "joined-player-pill__edit-button button button--x-small button--style-c",
+    onClick: handleEdit
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(lucide_react__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+    size: ".8em"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "joined-player-pill__inner"
+  }, !userIsEditing && player.name, userIsEditing && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "joined-player-pill__editor"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+    value: nameDraft,
+    onChange: function onChange(e) {
+      setNameDraft(e.target.value);
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "button button--x-small button--style-a",
+    onClick: handleSave
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(lucide_react__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A, {
+    size: ".8em"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "button button--x-small button--style-c",
+    onClick: handleCancel
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(lucide_react__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+    size: ".8em"
+  }))))), pendingName && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    ref: measureRef,
+    className: ['joined-player-pill', pillIsMine && 'joined-player-pill--me'].filter(Boolean).join(' '),
+    style: {
+      position: 'absolute',
+      visibility: 'hidden',
+      pointerEvents: 'none',
+      top: 0,
+      left: 0
+    },
+    "aria-hidden": "true"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "joined-player-pill__inner"
+  }, pendingName)));
+}
+
+/***/ }),
+
 /***/ 72382:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
@@ -63906,6 +64135,42 @@ function useParams(opts) {
 
 /***/ }),
 
+/***/ 74399:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ Pencil)
+/* harmony export */ });
+/* unused harmony export __iconNode */
+/* harmony import */ var _createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(68532);
+/**
+ * @license lucide-react v0.556.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const __iconNode = [
+  [
+    "path",
+    {
+      d: "M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z",
+      key: "1a8usu"
+    }
+  ],
+  ["path", { d: "m15 5 4 4", key: "1mk7zo" }]
+];
+const Pencil = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)("pencil", __iconNode);
+
+
+//# sourceMappingURL=pencil.js.map
+
+
+/***/ }),
+
 /***/ 74425:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -64337,7 +64602,7 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Paytone+One&display=swap);"]);
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `:root{--bright-sky: #01baef;--tropical-teal: #0cbaba;--dark-amethyst: #380036;--dark-orange: #F58F29;--lipstick-red: #EC0B43}html{height:100%;overscroll-behavior:none}body{margin:0;font-family:"Paytone One",sans-serif;color:#fff;height:100%}#root{display:flex;flex-direction:column;height:100%}.content:not(:has(.home)){padding:.7em}.content{text-align:center;background:linear-gradient(to bottom, var(--bright-sky) 0%, var(--bright-sky) 50%, var(--tropical-teal) 80%, var(--tropical-teal) 100%)}.header{position:relative;padding:.5em;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 6px rgba(0,0,0,.15)}.home-splash{color:#fff;display:grid;grid-template-columns:repeat(auto-fit, minmax(135px, 1fr));gap:1em;align-items:center;background:linear-gradient(to right, var(--dark-amethyst) 0%, var(--dark-amethyst) 20%, var(--bright-sky) 100%)}.home-tagline{padding-left:.7em}.home-tagline__inner{display:inline-block;text-align:left}.home-description{padding:0 .7em;font-family:"Nunito",sans-serif}.home-explanation{display:grid;grid-template-columns:repeat(auto-fit, 200px);gap:1em;justify-content:center;margin-bottom:2em}.home-page-card{color:var(--dark-amethyst);font-family:"Nunito",sans-serif;font-weight:700;font-size:.8em;background-color:#fff;aspect-ratio:.8;padding:1em;border-radius:1em;box-shadow:0 4px 6px rgba(0,0,0,.15);display:flex;flex-direction:column;justify-content:center;align-items:center}.home-page-card__icon,.home-page-card__description{flex:1;box-sizing:border-box}.home-page-card__icon{background-color:#fff;aspect-ratio:.8}.home-page-card__description{background-color:#fff;border-top:2px solid var(--tropical-teal);padding:2em 1em}.button{border:3px solid var(--dark-amethyst);display:inline-block;padding:.5em;font-size:1.5em;font-family:inherit;text-decoration:none;cursor:pointer;border-radius:.3em;box-shadow:0 4px 6px rgba(0,0,0,.15);margin:.5em}.button--style-a{background-color:var(--dark-orange);color:var(--dark-amethyst)}.button--style-b{background-color:var(--dark-amethyst);color:#fff}.button--style-c{background-color:var(--lipstick-red);color:#fff}.button--small{font-size:1.2em;padding:.3em .5em;border-radius:.2em}.button--x-small{font-size:.9em;padding:.3em .5em;border-radius:.2em}.room-game h4{margin:0}.room-game ul{margin:0}.header-home-button{font-size:1.2em;text-decoration:none;text-transform:uppercase;color:var(--bright-sky);text-align:center;line-height:1em}.header-home-button .lucide-cog{margin-right:-0.05em;margin-left:-0.05em;position:relative;top:.15em}.home-buttons{margin:1.5em}.button-with-input__input{font-size:.8em;margin-left:.5em;padding:0 .5em;position:relative;bottom:.1em}.join-room-button .button-with-input__input{width:4em}.editor{display:flex;flex-direction:column;flex:1}.editor section:has(.editor__input){flex:1}.game{color:#000}.shared-board,.personal-board{padding:20px 0;border-bottom:1px solid #fff}.grid{box-sizing:border-box;background-color:#333;max-width:500px}.grid__cell{background-color:#fff;aspect-ratio:1;display:flex;align-items:center;justify-content:center;color:#666;position:relative;overflow:auto}.grid__cell .space{height:100%;width:100%}.roomGame{border:1px solid gray;border-radius:8px}.space{box-sizing:border-box;min-width:10px;min-height:10px}.space:not(:has(.entity)){border:1px solid gray}.space--clickable{background-color:rgba(144,238,144,.4)}.space--targeted{background-color:gray}.space__entity-grid{box-sizing:border-box;align-items:center;justify-content:center}.space__entity-grid__cell{box-sizing:border-box;overflow:auto}.entity{padding:.2em;min-height:20px;min-width:20px;box-sizing:border-box;border:1px solid #000;overflow:hidden;font-size:.5em;font-family:"Nunito",sans-serif;font-weight:bold;display:inline-block}.entity.player-0{background-color:pink}.entity--clickable{background-color:rgba(144,238,144,.4)}.entity.player-0.entity--clickable{background-color:#f0e0d8}.entity.player-1{background-color:#add8e6}.entity.player-1.entity--clickable{background-color:#afeeee}.debug-panel .pane{max-width:420px !important}.sample-game-select{margin-bottom:.5em}.sample-game-select__inner{font-family:"Nunito",sans-serif;max-width:100%}.sample-game-select__option{font-family:inherit;max-width:100%}.editor-game-name,.editor-num-players{color:#fff}.editor__controls{display:flex;flex-wrap:wrap;margin-top:.5em;gap:.5em;justify-content:center}.editor-game-name__input,.editor-num-players__input{font-family:"Nunito",sans-serif;margin-left:1em;position:relative}.editor-game-name__input{width:10em}.editor-num-players__input{width:3em}.buttons{text-align:center}.editor-buttons .button{display:inline-block;padding:.2em .3em;font-size:.8em;box-shadow:0 4px 6px rgba(0,0,0,.15)}.testing-game{margin:2em}.testing-game__title__text{margin:0}.testing-game__title__tip{margin:0;color:#000}.game-preview{flex:1;text-align:left;padding:0;display:flex;flex-direction:column;min-height:0}.game-preview h3{margin:0}.joined-player-pill{background-color:#fff;color:var(--bright-sky);text-transform:uppercase;border-radius:9999px;padding:1em;margin:1em}.joined-player-pill--me{color:var(--lipstick-red)}.spinner{position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);width:50px;height:50px;border:4px solid #e0e0e0;border-top-color:#3498db;border-radius:50%;animation:spin 1s linear infinite}.debug-panel .visibility-toggle{top:70px !important}.debug-panel .visibility-toggle svg{display:none}.debug-panel .visibility-toggle .icon::after{position:relative;left:3px;content:"⚙️";font-size:20px;display:block;width:20px;height:20px}.debug-panel .menu{position:relative;top:70px !important}body:has(.content .editor) .debug-panel{display:none}@media(max-width: 600px){html{font-size:12px}}@media(min-width: 600px){.sample-game-select__inner{font-size:inherit}.editor-game-name__input,.editor-num-players__input{font-size:inherit;position:static}.editor__controls{gap:1em}}@keyframes spin{to{transform:translate(-50%, -50%) rotate(360deg)}}`, ""]);
+___CSS_LOADER_EXPORT___.push([module.id, `:root{--bright-sky: #01baef;--tropical-teal: #0cbaba;--dark-amethyst: #380036;--dark-orange: #F58F29;--lipstick-red: #EC0B43}html{height:100%;overscroll-behavior:none}body{margin:0;font-family:"Paytone One",sans-serif;color:#fff;height:100%}#root{display:flex;flex-direction:column;height:100dvh}.content:not(:has(.home)){padding:.7em}.content{text-align:center;min-height:0;background:linear-gradient(to bottom, var(--bright-sky) 0%, var(--bright-sky) 50%, var(--tropical-teal) 80%, var(--tropical-teal) 100%)}.header{position:relative;padding:.5em;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 6px rgba(0,0,0,.15)}.home-splash{color:#fff;display:grid;grid-template-columns:repeat(auto-fit, minmax(135px, 1fr));gap:1em;align-items:center;background:linear-gradient(to right, var(--dark-amethyst) 0%, var(--dark-amethyst) 20%, var(--bright-sky) 100%)}.home-tagline{padding-left:.7em}.home-tagline__inner{display:inline-block;text-align:left}.home-description{padding:0 .7em;font-family:"Nunito",sans-serif}.home-explanation{display:grid;grid-template-columns:repeat(auto-fit, 200px);gap:1em;justify-content:center;margin-bottom:2em}.home-page-card{color:var(--dark-amethyst);font-family:"Nunito",sans-serif;font-weight:700;font-size:.8em;background-color:#fff;aspect-ratio:.8;padding:1em;border-radius:1em;box-shadow:0 4px 6px rgba(0,0,0,.15);display:flex;flex-direction:column;justify-content:center;align-items:center}.home-page-card__icon,.home-page-card__description{flex:1;box-sizing:border-box}.home-page-card__icon{background-color:#fff;aspect-ratio:.8}.home-page-card__description{background-color:#fff;border-top:2px solid var(--tropical-teal);padding:2em 1em}.button{border:3px solid var(--dark-amethyst);display:inline-block;padding:.5em;font-size:1.5em;font-family:inherit;text-decoration:none;cursor:pointer;border-radius:.3em;box-shadow:0 4px 6px rgba(0,0,0,.15);margin:.5em}.button:disabled,.button--disabled.button--disabled{background-color:gray}.button--style-a{background-color:var(--dark-orange);color:var(--dark-amethyst)}.button--style-b{background-color:var(--dark-amethyst);color:#fff}.button--style-c{background-color:var(--lipstick-red);color:#fff}.button--small{font-size:1.2em;padding:.3em .5em;border-radius:.2em}.button--x-small{font-size:.9em;padding:.3em .5em;border-radius:.2em}.room-game{position:relative}.room-game__joined-players{padding:1em;box-shadow:inset 0 2px 4px rgba(0,0,0,.2);background-color:rgb(from var(--bright-sky) calc(r + 50) calc(g + 50) calc(b + 50))}.room-game h4{position:absolute;top:0;left:0;margin:0;padding:.3em .5em;background-color:var(--dark-orange);transform:translate(-2%, -70%) rotate(-3deg)}.room-game__game-name{margin:0}.room-game__player-count{margin:0 0 2em}.room-game ul{margin:0}.header-home-button{font-size:1.2em;text-decoration:none;text-transform:uppercase;color:var(--bright-sky);text-align:center;line-height:1em}.header-home-button .lucide-cog{margin-right:-0.05em;margin-left:-0.05em;position:relative;top:.15em}.home-buttons{margin:1.5em}.button-with-input__input{font-size:.8em;margin-left:.5em;padding:0 .5em;position:relative;bottom:.1em}.join-room-button .button-with-input__input{width:4em}.editor{display:flex;flex-direction:column;flex:1}.editor section:has(.editor__input){flex:1}.game{color:#000}.shared-board,.personal-board{padding:20px 0;border-bottom:1px solid #fff}.grid{box-sizing:border-box;background-color:#333;max-width:500px}.grid__cell{background-color:#fff;aspect-ratio:1;display:flex;align-items:center;justify-content:center;color:#666;position:relative;overflow:auto}.grid__cell .space{height:100%;width:100%}.roomGame{border:1px solid gray;border-radius:8px}.space{box-sizing:border-box;min-width:10px;min-height:10px}.space:not(:has(.entity)){border:1px solid gray}.space--clickable{background-color:rgba(144,238,144,.4)}.space--targeted{background-color:gray}.space__entity-grid{box-sizing:border-box;align-items:center;justify-content:center}.space__entity-grid__cell{box-sizing:border-box;overflow:auto}.entity{padding:.2em;min-height:20px;min-width:20px;box-sizing:border-box;border:1px solid #000;overflow:hidden;font-size:.5em;font-family:"Nunito",sans-serif;font-weight:bold;display:inline-block}.entity.player-0{background-color:pink}.entity--clickable{background-color:rgba(144,238,144,.4)}.entity.player-0.entity--clickable{background-color:#f0e0d8}.entity.player-1{background-color:#add8e6}.entity.player-1.entity--clickable{background-color:#afeeee}.debug-panel .pane{max-width:420px !important}.sample-game-select{margin-bottom:.5em}.sample-game-select__inner{font-family:"Nunito",sans-serif;max-width:100%}.sample-game-select__option{font-family:inherit;max-width:100%}.editor-game-name,.editor-num-players{color:#fff}.editor__controls{display:flex;flex-wrap:wrap;margin-top:.5em;gap:.5em;justify-content:center}.editor-game-name__input,.editor-num-players__input{font-family:"Nunito",sans-serif;margin-left:1em;position:relative}.editor-game-name__input{width:10em}.editor-num-players__input{width:3em}.buttons{text-align:center}.editor-buttons .button{display:inline-block;padding:.2em .3em;font-size:.8em;box-shadow:0 4px 6px rgba(0,0,0,.15)}.testing-game{margin:2em}.testing-game__title__text{margin:0}.testing-game__title__tip{margin:0;color:#000}.game-preview{flex:1;text-align:left;padding:0;display:flex;flex-direction:column;min-height:0}.game-preview h3{margin:0}.joined-player-pill{position:relative;background-color:#fff;color:var(--bright-sky);text-transform:uppercase;border-radius:9999px;margin:.3em;display:inline-flex;transition:all .3s ease}.joined-player-pill--me{color:var(--lipstick-red)}.joined-player-pill__edit-button{position:absolute;top:-1.3em;left:-1.3em;padding:.2em;line-height:0}.joined-player-pill__inner{display:inline-block;padding:.5em}.joined-player-pill__editor{display:flex;align-items:center;margin:0 .5em}.joined-player-pill__editor input{margin:0em .5em;font-family:inherit;font-size:.9em;border:2px solid var(--bright-sky);border-radius:.2em}.spinner{position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);width:50px;height:50px;border:4px solid #e0e0e0;border-top-color:#3498db;border-radius:50%;animation:spin 1s linear infinite}.debug-panel .visibility-toggle{top:70px !important}.debug-panel .visibility-toggle svg{display:none}.debug-panel .visibility-toggle .icon::after{position:relative;left:3px;content:"⚙️";font-size:20px;display:block;width:20px;height:20px}.debug-panel .menu{position:relative;top:70px !important}body:has(.content .editor) .debug-panel{display:none}@media(max-width: 600px){html{font-size:12px}}@media(min-width: 600px){.sample-game-select__inner{font-size:inherit}.editor-game-name__input,.editor-num-players__input{font-size:inherit;position:static}.editor__controls{gap:1em}}@keyframes spin{to{transform:translate(-50%, -50%) rotate(360deg)}}`, ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -68587,6 +68852,33 @@ const base64Encoder = {
 
 /***/ }),
 
+/***/ 82712:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ Check)
+/* harmony export */ });
+/* unused harmony export __iconNode */
+/* harmony import */ var _createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(68532);
+/**
+ * @license lucide-react v0.556.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const __iconNode = [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]];
+const Check = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)("check", __iconNode);
+
+
+//# sourceMappingURL=check.js.map
+
+
+/***/ }),
+
 /***/ 82820:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
@@ -69110,21 +69402,36 @@ function GameEditor(_ref) {
     goToRoom = _ref.goToRoom,
     roomCode = _ref.roomCode,
     auth = _ref.auth;
+  var editorRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  var handleEditorDidMount = function handleEditorDidMount(editor, monaco) {
+    editorRef.current = editor;
+  };
+  var goToNextError = function goToNextError() {
+    if (editorRef.current) {
+      editorRef.current.trigger('keyboard', 'editor.action.marker.nextInFiles', null);
+    }
+  };
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(SCREEN_STATE_EDITING),
     _useState2 = _slicedToArray(_useState, 2),
     screenState = _useState2[0],
     setScreenState = _useState2[1];
 
   // controlled input state
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(initialGameRules || gameRulesFromStorage || ''),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(function () {
+      return initialGameRules || localStorage.getItem(RULES_LOCALSTORAGE_KEY) || '';
+    }),
     _useState4 = _slicedToArray(_useState3, 2),
     gameRules = _useState4[0],
     setGameRules = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(initialGameName || gameNameFromStorage || ''),
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(function () {
+      return initialGameName || localStorage.getItem(NAME_LOCALSTORAGE_KEY) || '';
+    }),
     _useState6 = _slicedToArray(_useState5, 2),
     gameName = _useState6[0],
     setGameName = _useState6[1];
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(initialNumPlayers || numPlayersFromStorage || 2),
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(function () {
+      return initialNumPlayers || +localStorage.getItem(NUM_PLAYERS_LOCALSTORAGE_KEY) || 2;
+    }),
     _useState8 = _slicedToArray(_useState7, 2),
     numPlayers = _useState8[0],
     setNumPlayers = _useState8[1];
@@ -69166,6 +69473,11 @@ function GameEditor(_ref) {
       setGameName(selectedGame.name);
     }
   };
+  var gameRulesJSONIsValid = false;
+  try {
+    JSON.parse(gameRules);
+    gameRulesJSONIsValid = true;
+  } catch (_unused) {}
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, screenState === SCREEN_STATE_EDITING && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "editor"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -69191,6 +69503,7 @@ function GameEditor(_ref) {
     onChange: handleGameRulesChange,
     theme: "vs-dark",
     loading: null,
+    onMount: handleEditorDidMount,
     options: {
       minimap: {
         enabled: false
@@ -69220,14 +69533,17 @@ function GameEditor(_ref) {
     type: "number"
   }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "buttons"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  }, gameRulesJSONIsValid && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "button button--x-small button--style-a",
     onClick: function onClick() {
       setSavedGameRules(gameRules);
       setSavedNumPlayers(numPlayers);
       setScreenState(SCREEN_STATE_TESTING);
     }
-  }, "Test Game"), !auth.loading && !auth.idToken && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  }, "Test Game"), !gameRulesJSONIsValid && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "button button--x-small button--style-a button--disabled",
+    onClick: goToNextError
+  }, "Invalid Game Rules"), !auth.loading && !auth.idToken && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "button button--x-small button--style-b",
     onClick: auth.login
   }, "Log in to Create Room"), !auth.loading && auth.idToken && !roomCode && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
