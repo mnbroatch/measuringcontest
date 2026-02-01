@@ -144,7 +144,7 @@ export default function GameEditor ({
                   className="sample-game-select__option"
                   disabled
                 >
-                  Select a legally distinct sample game...
+                  Select a legally distinct sample game
                 </option>
                 {exampleGames.map((game, i) => (
                   <option

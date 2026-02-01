@@ -69490,7 +69490,7 @@ function GameEditor(_ref) {
     value: "",
     className: "sample-game-select__option",
     disabled: true
-  }, "Select a legally distinct sample game..."), exampleGames.map(function (game, i) {
+  }, "Select a legally distinct sample game"), exampleGames.map(function (game, i) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", {
       key: i,
       value: i,
