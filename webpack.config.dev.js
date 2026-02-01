@@ -8,6 +8,9 @@ module.exports = {
   },
   mode: 'development',
   devServer: {
+    host: '0.0.0.0',
+    port: 8080,
+    allowedHosts: 'all',
     historyApiFallback: {
       rewrites: [
         { from: /./, to: '/index.html' }, 
