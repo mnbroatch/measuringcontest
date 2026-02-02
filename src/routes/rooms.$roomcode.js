@@ -15,14 +15,12 @@ import GameStatus from "../components/game-status/game-status.js";
 import RoomGame from "../components/game-staging/room-game.js";
 import GamePreview from "../components/game-staging/game-preview.js";
 import GameEditor from "../components/game-staging/game-editor.js";
-import ButtonWithInput from '../components/button-with-input/button-with-input.js'
 
 const SCREEN_STATE_EDITING = 'editing'
 const SCREEN_STATE_WAITING = 'waiting'
 
 export default function RoomPage () {
   const { roomcode: roomCode } = Route.useParams()
-  const { del } = Route.useSearch()
   const navigate = useNavigate()
   const auth = useCognitoAuth()
   const userId = auth.userId
@@ -40,7 +38,6 @@ export default function RoomPage () {
   const gameRules = roomConnection.state?.G.gameRules
   const gameName = roomConnection.state?.G.gameName
   const gameId = roomConnection.state?.G.gameId
-  const iAmInStagedGame = players && roomConnection.client?.playerID in players
   const iAmInGame = room.data.players && userId in room.data.players
 
   const [screenState, setScreenState] = useState(SCREEN_STATE_WAITING)

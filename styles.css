@@ -34,6 +34,7 @@ body {
 .content {
   text-align: center;
   min-height: 0;
+  overflow: auto;
   background: linear-gradient(
     to bottom,
     var(--bright-sky) 0%,
@@ -50,6 +51,7 @@ body {
   justify-content: space-between;
   align-items: center;
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  background-color: white;
 }
 
 .home-splash {
