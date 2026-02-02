@@ -123,6 +123,8 @@ export default function GameEditor ({
       const selectedGame = exampleGames[selectedIndex];
       setGameRules(selectedGame.rules);
       setGameName(selectedGame.name);
+      localStorage.setItem(RULES_LOCALSTORAGE_KEY, selectedGame.rules)
+      localStorage.setItem(NAME_LOCALSTORAGE_KEY, selectedGame.name)
     }
   };
 
