@@ -16,6 +16,10 @@ const SCREEN_STATE_TESTING = 'testing'
 
 const exampleGames = [
   {
+    name: 'Blank',
+    rules: '{}'
+  },
+  {
     name: 'Three in a Row',
     rules: JSON.stringify(ticTacToe, null, 2)
   },
