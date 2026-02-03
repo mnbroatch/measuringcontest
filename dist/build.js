@@ -240,7 +240,7 @@ function RoomPage() {
       setIsTimedOut(true);
     }, 5000);
   });
-  if (room.isSuccess && !roomConnection.state && isTimedOut) {
+  if (room.isSuccess && iAmRoomCreator && !roomConnection.state && isTimedOut) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
       className: "button button--style-c",
       onClick: /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {

@@ -62,7 +62,7 @@ export default function RoomPage () {
     }, 5000)
   })
 
-  if (room.isSuccess && !roomConnection.state && isTimedOut) {
+  if (room.isSuccess && iAmRoomCreator && !roomConnection.state && isTimedOut) {
     return (
       <button
         className="button button--style-c"

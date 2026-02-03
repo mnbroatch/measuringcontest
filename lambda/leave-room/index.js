@@ -123,6 +123,9 @@ exports.handler = async (event) => {
       multiplayer: SocketIO({ 
         server: BOARDGAME_SERVER_URL,
         socketOpts: {
+          extraHeaders: {
+            'User-Agent': 'BoardGameEngine-Lambda/1.0'
+          },
           transports: ['websocket', 'polling']
         }
       }),
