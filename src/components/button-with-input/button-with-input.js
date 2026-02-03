@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
+
 export default function ButtonWithInput ({
   handleClick,
   label,
-  defaultValue,
+  defaultValue = '',
   className,
 }) {
   const [value, setValue] = useState(defaultValue || '')

@@ -148,22 +148,24 @@ function resolveEntity(bgioArguments, target, context, targetName) {
 /* unused harmony export default */
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
 /* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(82820);
-/* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(36095);
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(90461);
-/* harmony import */ var _hooks_use_room_connection_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(15720);
-/* harmony import */ var _hooks_use_game_connection_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(73523);
-/* harmony import */ var _queries_use_room_query_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(35190);
-/* harmony import */ var _queries_use_leave_room_mutation_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(36789);
-/* harmony import */ var _queries_use_delete_room_mutation_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(98463);
-/* harmony import */ var _queries_use_create_game_mutation_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(29127);
-/* harmony import */ var _queries_use_delete_game_mutation_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(50808);
-/* harmony import */ var _contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(52904);
-/* harmony import */ var _components_play_game_play_game_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(34223);
-/* harmony import */ var _components_watch_game_watch_game_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(13869);
-/* harmony import */ var _components_game_status_game_status_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(45679);
-/* harmony import */ var _components_game_staging_room_game_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(41035);
-/* harmony import */ var _components_game_staging_game_preview_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(23984);
-/* harmony import */ var _components_game_staging_game_editor_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(83107);
+/* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(36965);
+/* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(36095);
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(90461);
+/* harmony import */ var _hooks_use_room_connection_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(15720);
+/* harmony import */ var _hooks_use_game_connection_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(73523);
+/* harmony import */ var _queries_use_room_query_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(35190);
+/* harmony import */ var _queries_use_leave_room_mutation_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(36789);
+/* harmony import */ var _queries_use_delete_room_mutation_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(98463);
+/* harmony import */ var _queries_use_create_game_mutation_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(29127);
+/* harmony import */ var _queries_use_delete_game_mutation_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(50808);
+/* harmony import */ var _contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(52904);
+/* harmony import */ var _components_play_game_play_game_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(34223);
+/* harmony import */ var _components_watch_game_watch_game_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(13869);
+/* harmony import */ var _components_game_status_game_status_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(45679);
+/* harmony import */ var _components_game_staging_room_game_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(41035);
+/* harmony import */ var _components_game_staging_game_preview_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(23984);
+/* harmony import */ var _components_game_staging_game_editor_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(83107);
+/* harmony import */ var _components_button_with_input_button_with_input_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(45247);
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
@@ -192,22 +194,23 @@ console.warn("[tanstack-router] These exports from \"/home/matt/Programming/meas
 
 
 
+
 var SCREEN_STATE_EDITING = 'editing';
 var SCREEN_STATE_WAITING = 'waiting';
 function RoomPage() {
   var _roomConnection$state, _roomConnection$state2, _roomConnection$clien, _roomConnection$state3, _roomConnection$state4, _roomConnection$state5;
   var _Route$useParams = Route.useParams(),
     roomCode = _Route$useParams.roomcode;
-  var navigate = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__/* .useNavigate */ .Z)();
-  var auth = (0,_contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_11__/* .useCognitoAuth */ .f)();
+  var navigate = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_3__/* .useNavigate */ .Z)();
+  var auth = (0,_contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_12__/* .useCognitoAuth */ .f)();
   var userId = auth.userId;
-  var leaveRoomMutation = (0,_queries_use_leave_room_mutation_js__WEBPACK_IMPORTED_MODULE_7__/* .useLeaveRoomMutation */ .L)(roomCode);
-  var deleteRoomMutation = (0,_queries_use_delete_room_mutation_js__WEBPACK_IMPORTED_MODULE_8__/* .useDeleteRoomMutation */ .d)();
-  var room = (0,_queries_use_room_query_js__WEBPACK_IMPORTED_MODULE_6__/* .useRoomQuery */ .P)(roomCode);
+  var leaveRoomMutation = (0,_queries_use_leave_room_mutation_js__WEBPACK_IMPORTED_MODULE_8__/* .useLeaveRoomMutation */ .L)(roomCode);
+  var deleteRoomMutation = (0,_queries_use_delete_room_mutation_js__WEBPACK_IMPORTED_MODULE_9__/* .useDeleteRoomMutation */ .d)();
+  var room = (0,_queries_use_room_query_js__WEBPACK_IMPORTED_MODULE_7__/* .useRoomQuery */ .P)(roomCode);
   var iAmInRoom = room.data.members && userId in room.data.members;
   var iAmRoomCreator = userId && room.data.createdBy === userId;
-  var roomConnection = (0,_hooks_use_room_connection_js__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A)();
-  var gameConnection = (0,_hooks_use_game_connection_js__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)();
+  var roomConnection = (0,_hooks_use_room_connection_js__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)();
+  var gameConnection = (0,_hooks_use_game_connection_js__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)();
   var status = (_roomConnection$state = roomConnection.state) === null || _roomConnection$state === void 0 ? void 0 : _roomConnection$state.G.status;
   var players = (_roomConnection$state2 = roomConnection.state) === null || _roomConnection$state2 === void 0 ? void 0 : _roomConnection$state2.G.players;
   var playerID = (_roomConnection$clien = roomConnection.client) === null || _roomConnection$clien === void 0 ? void 0 : _roomConnection$clien.playerID;
@@ -215,6 +218,7 @@ function RoomPage() {
   var gameName = (_roomConnection$state4 = roomConnection.state) === null || _roomConnection$state4 === void 0 ? void 0 : _roomConnection$state4.G.gameName;
   var gameId = (_roomConnection$state5 = roomConnection.state) === null || _roomConnection$state5 === void 0 ? void 0 : _roomConnection$state5.G.gameId;
   var iAmInGame = room.data.players && userId in room.data.players;
+  var iAmInStaging = players && userId in players;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(SCREEN_STATE_WAITING),
     _useState2 = _slicedToArray(_useState, 2),
     screenState = _useState2[0],
@@ -223,8 +227,8 @@ function RoomPage() {
     _useState4 = _slicedToArray(_useState3, 2),
     isTimedOut = _useState4[0],
     setIsTimedOut = _useState4[1];
-  var createGameMutation = (0,_queries_use_create_game_mutation_js__WEBPACK_IMPORTED_MODULE_9__/* .useCreateGameMutation */ .Z)(roomCode);
-  var deleteGameMutation = (0,_queries_use_delete_game_mutation_js__WEBPACK_IMPORTED_MODULE_10__/* .useDeleteGameMutation */ .Q)(roomCode, gameId);
+  var createGameMutation = (0,_queries_use_create_game_mutation_js__WEBPACK_IMPORTED_MODULE_10__/* .useCreateGameMutation */ .Z)(roomCode);
+  var deleteGameMutation = (0,_queries_use_delete_game_mutation_js__WEBPACK_IMPORTED_MODULE_11__/* .useDeleteGameMutation */ .Q)(roomCode, gameId);
   var isLoading = room.isLoading || !roomConnection.state || status === 'started' && !gameConnection.state;
   var gameRulesJSONIsValid = false;
   try {
@@ -257,15 +261,29 @@ function RoomPage() {
     }, "Delete Room");
   }
   var numPlayers = players && Object.keys(players).length;
-  return !isLoading && iAmInRoom && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, status === 'waiting' && screenState === SCREEN_STATE_WAITING && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, !iAmRoomCreator && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  return !isLoading && iAmInRoom && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, status === 'waiting' && screenState === SCREEN_STATE_WAITING && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", {
+    className: "room-game__game-name"
+  }, gameName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h5", {
+    className: "room-game__player-count"
+  }, numPlayers, " Player", numPlayers > 1 && 's'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_room_game_js__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+    players: players,
+    playerID: playerID,
+    changeName: function changeName(name) {
+      roomConnection.client.moves.join(name);
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_game_preview_js__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+    gameRules: gameRules,
+    roomCode: roomCode
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "buttons"
+  }, iAmRoomCreator && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "button button--x-small button--style-c",
-    disabled: leaveRoomMutation.isPending || leaveRoomMutation.isSuccess,
     onClick: /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
       return _regenerator().w(function (_context2) {
         while (1) switch (_context2.n) {
           case 0:
             _context2.n = 1;
-            return leaveRoomMutation.mutateAsync(roomCode);
+            return deleteRoomMutation.mutateAsync(roomCode);
           case 1:
             navigate({
               to: '/'
@@ -275,21 +293,9 @@ function RoomPage() {
         }
       }, _callee2);
     }))
-  }, "Leave Room"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", {
-    className: "room-game__game-name"
-  }, gameName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h5", {
-    className: "room-game__player-count"
-  }, numPlayers, " Player", numPlayers > 1 && 's'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_room_game_js__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
-    players: players,
-    playerID: playerID,
-    changeName: function changeName(name) {
-      roomConnection.client.moves.join(name);
-    }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_game_preview_js__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
-    gameRules: gameRules
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "buttons"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(lucide_react__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+    size: "1em"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "button button--x-small button--style-a",
     onClick: function onClick() {
       setScreenState(SCREEN_STATE_EDITING);
@@ -304,14 +310,15 @@ function RoomPage() {
         players: players
       });
     }
-  }, gameRulesJSONIsValid ? 'Start Game' : 'Invalid Game Rules'), iAmRoomCreator && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  }, gameRulesJSONIsValid ? 'Start Game' : 'Invalid Game Rules')), !iAmRoomCreator && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "button button--x-small button--style-c",
+    disabled: leaveRoomMutation.isPending || leaveRoomMutation.isSuccess,
     onClick: /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3() {
       return _regenerator().w(function (_context3) {
         while (1) switch (_context3.n) {
           case 0:
             _context3.n = 1;
-            return deleteRoomMutation.mutateAsync(roomCode);
+            return leaveRoomMutation.mutateAsync(roomCode);
           case 1:
             navigate({
               to: '/'
@@ -321,9 +328,7 @@ function RoomPage() {
         }
       }, _callee3);
     }))
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(lucide_react__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
-    size: "1em"
-  })))), status === 'waiting' && iAmRoomCreator && screenState === SCREEN_STATE_EDITING && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_game_editor_js__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }, "Leave Room"))), status === 'waiting' && iAmRoomCreator && screenState === SCREEN_STATE_EDITING && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_game_editor_js__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     auth: auth,
     roomCode: roomCode,
     goToRoom: function goToRoom(_ref4) {
@@ -335,11 +340,11 @@ function RoomPage() {
       });
       setScreenState(SCREEN_STATE_WAITING);
     }
-  }), status === 'started' && iAmInGame && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_play_game_play_game_js__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+  }), status === 'started' && iAmInGame && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_play_game_play_game_js__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
     gameConnection: gameConnection
-  }), status === 'started' && !iAmInGame && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_watch_game_watch_game_js__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+  }), status === 'started' && !iAmInGame && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_watch_game_watch_game_js__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     gameConnection: gameConnection
-  }), status === 'started' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_status_game_status_js__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+  }), status === 'started' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_status_game_status_js__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
     gameConnection: gameConnection
   }), status === 'started' && iAmRoomCreator && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "button button--x-small button--style-c",
@@ -349,10 +354,34 @@ function RoomPage() {
   }, "Delete Game"));
 }
 var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__/* .createFileRoute */ .WK)("/rooms/$roomcode")({
-  loader: function loader(_ref5) {
-    var params = _ref5.params;
-    return _queries_use_room_query_js__WEBPACK_IMPORTED_MODULE_6__/* .useRoomQuery */ .P.preload(params.roomcode);
-  },
+  loader: function () {
+    var _loader = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee4(_ref5) {
+      var params, _t;
+      return _regenerator().w(function (_context4) {
+        while (1) switch (_context4.p = _context4.n) {
+          case 0:
+            params = _ref5.params;
+            _context4.p = 1;
+            _context4.n = 2;
+            return _queries_use_room_query_js__WEBPACK_IMPORTED_MODULE_7__/* .useRoomQuery */ .P.preload(params.roomcode);
+          case 2:
+            return _context4.a(2, _context4.v);
+          case 3:
+            _context4.p = 3;
+            _t = _context4.v;
+            throw (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__/* .redirect */ .V2)({
+              to: '/'
+            });
+          case 4:
+            return _context4.a(2);
+        }
+      }, _callee4, null, [[1, 3]]);
+    }));
+    function loader(_x) {
+      return _loader.apply(this, arguments);
+    }
+    return loader;
+  }(),
   component: RoomPage
 });
 
@@ -37020,7 +37049,8 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 function GamePreview(_ref) {
-  var gameRules = _ref.gameRules;
+  var gameRules = _ref.gameRules,
+    roomCode = _ref.roomCode;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
     isOpen = _useState2[0],
@@ -37057,7 +37087,12 @@ function GamePreview(_ref) {
       fontSize: 14,
       readOnly: true
     }
-  })));
+  })), !isOpen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    style: {
+      flex: 1
+    },
+    className: "editor__input"
+  }, "Have your friends log in and join with code: ", roomCode));
 }
 
 /***/ }),
@@ -37510,24 +37545,16 @@ var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__/* .createRoot
               }
             });
           case 2:
-            if (!(!(myRooms !== null && myRooms !== void 0 && myRooms.length) && location.pathname.startsWith('/rooms/'))) {
-              _context.n = 3;
-              break;
-            }
-            throw (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_3__/* .redirect */ .V2)({
-              to: '/'
-            });
-          case 3:
             if (isPublicRoute) {
-              _context.n = 5;
+              _context.n = 4;
               break;
             }
-            _context.n = 4;
+            _context.n = 3;
             return _queries_use_cognito_query_js__WEBPACK_IMPORTED_MODULE_6__/* .useCognitoQuery */ .v.preload();
-          case 4:
+          case 3:
             auth = _context.v;
             if (auth !== null && auth !== void 0 && auth.idToken) {
-              _context.n = 5;
+              _context.n = 4;
               break;
             }
             throw (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_3__/* .redirect */ .V2)({
@@ -37536,7 +37563,7 @@ var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__/* .createRoot
                 redirect: location.href
               }
             });
-          case 5:
+          case 4:
             return _context.a(2);
         }
       }, _callee);
@@ -48765,7 +48792,8 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 function ButtonWithInput(_ref) {
   var handleClick = _ref.handleClick,
     label = _ref.label,
-    defaultValue = _ref.defaultValue,
+    _ref$defaultValue = _ref.defaultValue,
+    defaultValue = _ref$defaultValue === void 0 ? '' : _ref$defaultValue,
     className = _ref.className;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(defaultValue || ''),
     _useState2 = _slicedToArray(_useState, 2),
@@ -63587,6 +63615,13 @@ function PlayerPill(_ref) {
     className: "joined-player-pill__editor"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
     value: nameDraft,
+    onKeyDown: function onKeyDown(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        e.stopPropagation();
+        handleSave();
+      }
+    },
     onChange: function onChange(e) {
       setNameDraft(e.target.value);
     }

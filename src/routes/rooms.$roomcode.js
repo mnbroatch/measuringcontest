@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { createFileRoute, useNavigate } from "@tanstack/react-router"
+import { createFileRoute, useNavigate, redirect } from "@tanstack/react-router"
 import { Trash2 } from 'lucide-react';
 import useRoomConnection from "../hooks/use-room-connection.js";
 import useGameConnection from "../hooks/use-game-connection.js";
@@ -15,6 +15,7 @@ import GameStatus from "../components/game-status/game-status.js";
 import RoomGame from "../components/game-staging/room-game.js";
 import GamePreview from "../components/game-staging/game-preview.js";
 import GameEditor from "../components/game-staging/game-editor.js";
+import ButtonWithInput from '../components/button-with-input/button-with-input.js'
 
 const SCREEN_STATE_EDITING = 'editing'
 const SCREEN_STATE_WAITING = 'waiting'
@@ -39,6 +40,7 @@ export default function RoomPage () {
   const gameName = roomConnection.state?.G.gameName
   const gameId = roomConnection.state?.G.gameId
   const iAmInGame = room.data.players && userId in room.data.players
+  const iAmInStaging = players && userId in players
 
   const [screenState, setScreenState] = useState(SCREEN_STATE_WAITING)
   const [isTimedOut, setIsTimedOut] = useState(false)
@@ -82,20 +84,6 @@ export default function RoomPage () {
     <>
       {status === 'waiting' && screenState === SCREEN_STATE_WAITING && (
         <>
-          {!iAmRoomCreator && (
-            <button
-              className="button button--x-small button--style-c"
-              disabled={leaveRoomMutation.isPending || leaveRoomMutation.isSuccess}
-              onClick={async () => {
-                await leaveRoomMutation.mutateAsync(roomCode)
-                navigate({
-                  to: '/',
-                })
-              }}
-            >
-              Leave Room
-            </button>
-          )}
           <h3 className="room-game__game-name">{gameName}</h3>
           <h5 className="room-game__player-count">{numPlayers} Player{numPlayers > 1 && 's'}</h5>
           <RoomGame
@@ -105,38 +93,54 @@ export default function RoomPage () {
               roomConnection.client.moves.join(name)
             }}
           />
-          <GamePreview gameRules={gameRules} />
+          <GamePreview gameRules={gameRules} roomCode={roomCode} />
           <div className="buttons">
-            <button
-              className="button button--x-small button--style-a"
-              onClick={() => { setScreenState(SCREEN_STATE_EDITING) }}
-            >
-              Edit Game
-            </button>
-            <button
-              className="button button--x-small button--style-a"
-              disabled={!gameRulesJSONIsValid}
-              onClick={() => {
-                createGameMutation.mutate({
-                  gameRules,
-                  gameName,
-                  players,
-                })
-              }}
-            >
-              {gameRulesJSONIsValid ? 'Start Game' : 'Invalid Game Rules'}
-            </button>
             {iAmRoomCreator && (
+              <>
+                <button
+                  className="button button--x-small button--style-c"
+                  onClick={async () => {
+                    await deleteRoomMutation.mutateAsync(roomCode)
+                    navigate({
+                      to: '/',
+                    })
+                  }}
+                >
+                  <Trash2 size="1em" />
+                </button>
+                <button
+                  className="button button--x-small button--style-a"
+                  onClick={() => { setScreenState(SCREEN_STATE_EDITING) }}
+                >
+                  Edit Game
+                </button>
+                <button
+                  className="button button--x-small button--style-a"
+                  disabled={!gameRulesJSONIsValid}
+                  onClick={() => {
+                    createGameMutation.mutate({
+                      gameRules,
+                      gameName,
+                      players,
+                    })
+                  }}
+                >
+                  {gameRulesJSONIsValid ? 'Start Game' : 'Invalid Game Rules'}
+                </button>
+              </>
+            )}
+            {!iAmRoomCreator && (
               <button
                 className="button button--x-small button--style-c"
+                disabled={leaveRoomMutation.isPending || leaveRoomMutation.isSuccess}
                 onClick={async () => {
-                  await deleteRoomMutation.mutateAsync(roomCode)
+                  await leaveRoomMutation.mutateAsync(roomCode)
                   navigate({
                     to: '/',
                   })
                 }}
               >
-                <Trash2 size="1em" />
+                Leave Room
               </button>
             )}
           </div>
@@ -174,6 +178,12 @@ export default function RoomPage () {
 }
 
 export const Route = createFileRoute("/rooms/$roomcode")({
-  loader: ({ params }) => useRoomQuery.preload(params.roomcode),
+  loader: async ({ params }) => {
+    try {
+      return await useRoomQuery.preload(params.roomcode)
+    } catch (error) {
+      throw redirect({ to: '/' })
+    }
+  },
   component: RoomPage,
 })

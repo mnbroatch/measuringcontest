@@ -127,6 +127,13 @@ export default function PlayerPill ({ player, playerID, myPlayerID, changeName }
             <div className="joined-player-pill__editor">
               <input
                 value={nameDraft}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    handleSave()
+                  }
+                }}
                 onChange={(e) => {
                   setNameDraft(e.target.value)
                 }}

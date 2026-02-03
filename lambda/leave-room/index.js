@@ -77,6 +77,7 @@ const RoomGame = {
 };
 
 exports.handler = async (event) => {
+  try {
   const { sessionCode: roomCode } = event.pathParameters;
   const { sub } = event.requestContext.authorizer.claims;
   
@@ -151,9 +152,7 @@ exports.handler = async (event) => {
   } catch (error) {
     console.error("Error kicking from RoomGame:", error);
   } finally {
-    if (roomClient) {
-      roomClient.stop();
-    }
+    roomClient?.stop();
   }
   
   // Create JWT for server authentication
@@ -200,4 +199,7 @@ exports.handler = async (event) => {
     roomCode,
     boardgamePlayerID
   };
+  } catch (e) {
+    console.error('error:', e)
+  }
 };

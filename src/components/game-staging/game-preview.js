@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Editor from '@monaco-editor/react';
 
-export default function GamePreview ({ gameRules }) {
+export default function GamePreview ({ gameRules, roomCode }) {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -30,6 +30,14 @@ export default function GamePreview ({ gameRules }) {
               readOnly: true
             }}
           />
+        </div>
+      )}
+      {!isOpen && (
+        <div
+          style={{ flex: 1 }}
+          className="editor__input"
+        >
+          Have your friends log in and join with code: {roomCode}
         </div>
       )}
     </div>
