@@ -36,7 +36,8 @@ module.exports = {
   },
   output: {
     filename: 'build.js',
-    chunkFilename: '[name].js?cacheBust=[chunkhash]'
+    chunkFilename: '[name].js?cacheBust=[chunkhash]',
+    publicPath: '/'
   },
   optimization: {
     minimize: false,

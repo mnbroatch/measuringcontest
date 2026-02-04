@@ -10,6 +10,7 @@ import checkers from "../../../server/checkers.json";
 import PlayGame from "../play-game/play-game.js";
 import GameStatus from "../game-status/game-status.js";
 import useSinglePlayerGame from "../../hooks/use-single-player-game.js";
+import ButtonWithInput from '../../components/button-with-input/button-with-input.js'
 
 const SCREEN_STATE_EDITING = 'editing'
 const SCREEN_STATE_TESTING = 'testing'
@@ -51,16 +52,10 @@ const exampleGames = [
 
 const RULES_LOCALSTORAGE_KEY = 'bge-editor-game-rules'
 const NAME_LOCALSTORAGE_KEY = 'bge-editor-game-name'
-const NUM_PLAYERS_LOCALSTORAGE_KEY = 'bge-editor-num-players'
-
-const gameRulesFromStorage = localStorage.getItem(RULES_LOCALSTORAGE_KEY)
-const gameNameFromStorage = localStorage.getItem(NAME_LOCALSTORAGE_KEY)
-const numPlayersFromStorage = +localStorage.getItem(NUM_PLAYERS_LOCALSTORAGE_KEY)
 
 export default function GameEditor ({
   initialGameName,
   initialGameRules,
-  initialNumPlayers,
   handleCreateRoom,
   goToRoom,
   roomCode,
@@ -85,9 +80,6 @@ export default function GameEditor ({
   const [gameName, setGameName] = useState(() =>
     initialGameName || localStorage.getItem(NAME_LOCALSTORAGE_KEY) || ''
   )
-  const [numPlayers, setNumPlayers] = useState(() =>
-    initialNumPlayers || +localStorage.getItem(NUM_PLAYERS_LOCALSTORAGE_KEY) || 2
-  )
 
   // state that is frozen for testing (performance optimization so game connection
   // isn't re-established on every keystroke)
@@ -99,24 +91,15 @@ export default function GameEditor ({
   const handleGameRulesChange = (newGameRules) => {
     localStorage.setItem(RULES_LOCALSTORAGE_KEY, newGameRules)
     localStorage.setItem(NAME_LOCALSTORAGE_KEY, gameName)
-    localStorage.setItem(NUM_PLAYERS_LOCALSTORAGE_KEY, numPlayers)
     setGameRules(newGameRules)
   }
   
   const handleGameNameChange = (newGameName) => {
     localStorage.setItem(RULES_LOCALSTORAGE_KEY, gameRules)
     localStorage.setItem(NAME_LOCALSTORAGE_KEY, newGameName)
-    localStorage.setItem(NUM_PLAYERS_LOCALSTORAGE_KEY, numPlayers)
     setGameName(newGameName)
   }
 
-  const handleNumPlayersChange = (newNumPlayers) => {
-    localStorage.setItem(RULES_LOCALSTORAGE_KEY, gameRules)
-    localStorage.setItem(NAME_LOCALSTORAGE_KEY, gameName)
-    localStorage.setItem(NUM_PLAYERS_LOCALSTORAGE_KEY, newNumPlayers)
-    setNumPlayers(+newNumPlayers)
-  }
-  
   const handleGameSelect = (e) => {
     const selectedIndex = e.target.value;
     if (selectedIndex !== "") {
@@ -189,31 +172,19 @@ export default function GameEditor ({
                   />
                 </label>
               </div>
-              <div className="editor-num-players">
-                <label>
-                  Number of Players:
-                  <input
-                    className="editor-num-players__input"
-                    onChange={(e) => {handleNumPlayersChange(e.target.value)}}
-                    value={numPlayers}
-                    type="number"
-                  />
-                </label>
-              </div>
             </div>
           </div>
           <div className="buttons">
             {gameRulesJSONIsValid && (
-              <button
-                className="button button--x-small button--style-a"
-                onClick={() => {
+              <ButtonWithInput
+                className="join-room-button"
+                label="Test Game With Player Count:"
+                handleClick={(numPlayers) => {
                   setSavedGameRules(gameRules)
                   setSavedNumPlayers(numPlayers)
                   setScreenState(SCREEN_STATE_TESTING)
                 }}
-              >
-                Test Game
-              </button>
+              />
             )}
             {!gameRulesJSONIsValid && (
               <button
@@ -234,7 +205,7 @@ export default function GameEditor ({
             {!auth.loading && auth.idToken && !roomCode && (
               <button
                 className="button button--x-small button--style-a"
-                onClick={() => { handleCreateRoom({ gameName, gameRules, numPlayers }) }}
+                onClick={() => { handleCreateRoom({ gameName, gameRules }) }}
               >
                 Create Room
               </button>
