@@ -37,7 +37,7 @@ export default function GamePreview ({ gameRules, roomCode }) {
           style={{ flex: 1 }}
           className="editor__input"
         >
-          Have your friends log in and join with code: {roomCode}
+          Have the other players friends log in and join with code: {roomCode.toUpperCase()}
         </div>
       )}
     </div>

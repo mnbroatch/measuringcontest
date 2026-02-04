@@ -11,13 +11,13 @@ export const useRoomQuery = (roomCode) => {
 
 function getOptions (roomCode) {
   return {
-    queryKey: ['room', roomCode],
+    queryKey: ['room', roomCode.toLowerCase()],
     queryFn: () => makeRequest(
-      `${apiUrl}/${roomCode}`,
+      `${apiUrl}/${roomCode.toLowerCase()}`,
       { method: 'GET' }
     ),
     staleTime: 1000 * 60 * 50,
   }
 }
 
-useRoomQuery.preload = (roomCode) => { preloadQuery(getOptions(roomCode)) }
+useRoomQuery.preload = (roomCode) => preloadQuery(getOptions(roomCode))

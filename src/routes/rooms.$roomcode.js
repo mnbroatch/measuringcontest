@@ -21,7 +21,7 @@ const SCREEN_STATE_EDITING = 'editing'
 const SCREEN_STATE_WAITING = 'waiting'
 
 export default function RoomPage () {
-  const { roomcode: roomCode } = Route.useParams()
+  const roomCode = Route.useParams().roomcode?.toLowerCase()
   const navigate = useNavigate()
   const auth = useCognitoAuth()
   const userId = auth.userId

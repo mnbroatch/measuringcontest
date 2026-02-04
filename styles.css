@@ -226,6 +226,14 @@ body {
   bottom: .1em;
 }
 
+.join-room-button__container {
+  display: inline-block;
+}
+
+.join-room-button__error {
+  color: var(--lipstick-red)
+}
+
 .join-room-button .button-with-input__input {
   background-color: white;
   width: 4em;

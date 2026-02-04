@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
 import HomePageCard from '../components/home-page-card/home-page-card.js'
@@ -8,6 +8,7 @@ import { PencilRuler, Users } from 'lucide-react'
 export default function Home () {
   const auth = useCognitoAuth()
   const navigate = useNavigate()
+  const [error, setError] = useState(null)
 
   return (
     <div className="home">
@@ -38,25 +39,37 @@ export default function Home () {
         </Link>
         {!auth.loading && !auth.idToken && (
           <button
-          className="button button--style-b"
+            className="button button--style-b"
             onClick={auth.login}
           >
             Log in to Join a Room
           </button>
         )}
         {!auth.loading && auth.idToken && (
-          <ButtonWithInput
-            className="join-room-button"
-            label="Join Room:"
-            handleClick={(roomCode) => {
-              navigate({
-                to: '/rooms/$roomcode',
-                params: {
-                  roomcode: roomCode,
+          <div className="join-room-button__container">
+            {error && (
+              <div className="join-room-button__error">
+                {error}
+              </div>
+            )}
+            <ButtonWithInput
+              className="join-room-button"
+              label="Join Room:"
+              onChange={() => { setError(null) }}
+              handleClick={(roomCode) => {
+                if (roomCode?.length === 4) {
+                  navigate({
+                    to: '/rooms/$roomcode',
+                    params: {
+                      roomcode: roomCode,
+                    }
+                  })
+                } else {
+                  setError('Room Code should be 4 letters long')
                 }
-              })
-            }}
-          />
+              }}
+            />
+          </div>
         )}
       </div>
       <div className="home-explanation">

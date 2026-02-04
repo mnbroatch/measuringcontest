@@ -4,6 +4,7 @@ export default function ButtonWithInput ({
   handleClick,
   label,
   defaultValue = '',
+  onChange,
   className,
 }) {
   const [value, setValue] = useState(defaultValue || '')
@@ -33,7 +34,9 @@ export default function ButtonWithInput ({
           }
         }}
         onChange={(e) => {
-          setValue(e.target.value)
+          const value = e.target.value.trim().toLowerCase()
+          onChange?.(value)
+          setValue(value)
         }}
         value={value}
       />
