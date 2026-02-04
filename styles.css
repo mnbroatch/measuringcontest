@@ -430,7 +430,7 @@ body {
   color: var(--bright-sky);
   text-transform: uppercase;
   border-radius: 9999px;
-  margin: .3em;
+  margin: .5em;
   display: inline-flex;
   justify-content: center;
   align-items: center;
