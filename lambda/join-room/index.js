@@ -104,11 +104,11 @@ exports.handler = async (event) => {
     purpose: 'gameserver-app'
   }, jwtSecret, { expiresIn: '30d' });
 
-  const systemClientToken = jwt.sign({
-    gameId: roomGameId,
-    playerId: 'System',
-    purpose: 'gameserver-app'
-  }, jwtSecret, { expiresIn: '30d' });
+  // const systemClientToken = jwt.sign({
+  //   gameId: roomGameId,
+  //   playerId: 'System',
+  //   purpose: 'gameserver-app'
+  // }, jwtSecret, { expiresIn: '30d' });
 
   const existingPlayer = room.members && room.members[sub];
   if (existingPlayer) {
@@ -124,39 +124,6 @@ exports.handler = async (event) => {
     playerId: sub,
     purpose: 'gameserver-api'
   }, jwtSecret, { expiresIn: '30d' });
-
-  let roomClient;
-  let roomGameState;
-  
-  const roomStatePromise = new Promise((resolve, reject) => {
-    roomClient = Client({
-      game: RoomGame,
-      multiplayer: SocketIO({ 
-        server: BOARDGAME_SERVER_URL,
-        socketOpts: {
-          extraHeaders: {
-            'User-Agent': 'BoardGameEngine-Lambda/1.0'
-          },
-          transports: ['websocket', 'polling']
-        }
-      }),
-      matchID: room.roomGameId,
-      playerID: '0',
-      credentials: systemClientToken,
-    });
-
-    roomClient.start();
-
-    roomClient.subscribe((state) => {
-      if (state !== null) {
-        roomGameState = state;
-        resolve();
-      }
-    });
-
-    // Add timeout
-    setTimeout(() => reject(new Error('Timeout connecting to RoomGame')), 10000);
-  });
 
   let joinData;
   try {
@@ -191,11 +158,42 @@ exports.handler = async (event) => {
     };
   }
 
-  await roomStatePromise;
+  const boardgamePlayerID = joinData.playerID;
+  
+  let roomClient;
+  let roomGameState;
+  await new Promise((resolve, reject) => {
+    roomClient = Client({
+      game: RoomGame,
+      multiplayer: SocketIO({ 
+        server: BOARDGAME_SERVER_URL,
+        socketOpts: {
+          extraHeaders: {
+            'User-Agent': 'BoardGameEngine-Lambda/1.0'
+          },
+          transports: ['websocket', 'polling']
+        }
+      }),
+      matchID: room.roomGameId,
+      playerID: boardgamePlayerID,
+      credentials: clientToken,
+    });
+
+    roomClient.start();
+
+    roomClient.subscribe((state) => {
+      if (state !== null) {
+        roomGameState = state;
+        resolve();
+      }
+    });
+
+    // Add timeout
+    setTimeout(() => reject(new Error('Timeout connecting to RoomGame')), 10000);
+  });
+
   roomClient.moves.join();
   roomClient.stop();
-  
-  const boardgamePlayerID = joinData.playerID;
   
   await ddb.send(new UpdateCommand({
     TableName: "measuringcontest-rooms",
