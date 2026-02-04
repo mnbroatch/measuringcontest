@@ -42,7 +42,9 @@ const RoomGame = {
   moves: {
     join: ({G, playerID}, name) => {
       if (G.status === 'waiting') {
-        G.players[playerID] = { name };
+        G.players[playerID] = {
+          name: name || `Player ${playerID}`
+        };
       }
     },
     leave: ({G, playerID}) => {

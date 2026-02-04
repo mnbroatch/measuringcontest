@@ -1,12 +1,66 @@
 const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
 const { DynamoDBDocumentClient, GetCommand, UpdateCommand } = require("@aws-sdk/lib-dynamodb");
 const { SSMClient, GetParameterCommand } = require("@aws-sdk/client-ssm");
+const { Client } = require('boardgame.io/client')
+const { SocketIO } = require('boardgame.io/multiplayer')
+const { ActivePlayers } = require('boardgame.io/core')
 const jwt = require('jsonwebtoken');
 
 const client = new DynamoDBClient({});
 const ddb = DynamoDBDocumentClient.from(client);
 const ssmClient = new SSMClient({});
 const BOARDGAME_SERVER_URL = 'https://gameserver.boardgameengine.com';
+
+const RoomGame = {
+  name: 'bgestagingroom',
+  setup: (_, setupData) => ({
+    players: { '1': { name: 'Room Creator' } },
+    status: 'waiting',
+    gameRules: '',
+    gameName: '',
+    ...setupData?.initialState,
+  }),
+  turn: {
+    activePlayers: ActivePlayers.ALL,
+  },
+  moves: {
+    join: ({G, playerID}, name) => {
+      if (G.status === 'waiting') {
+        G.players[playerID] = {
+          name: name || `Player ${playerID}`
+        };
+      }
+    },
+    leave: ({G, playerID}) => {
+      if (playerID !== '1') {
+        delete G.players[playerID]
+      }
+    },
+    kick: ({G, playerID}, targetPlayerID) => {
+      if (playerID === '0' && targetPlayerID !== '1') {
+        delete G.players[targetPlayerID];
+      }
+    },
+    setGameMeta: ({G, playerID}, { gameRules, gameName }) => {
+      if ((playerID === '0' || playerID === '1') && G.status === 'waiting') {
+        G.gameRules = gameRules
+        G.gameName = gameName
+      }
+    },
+    gameCreated: ({G, playerID}, newGameId) => {
+      if (playerID === '0' && G.status === 'waiting') {
+        G.gameId = newGameId;
+        G.status = 'started';
+      }
+    },
+    gameDeleted: ({G, playerID}) => {
+      if (playerID === '0') {
+        delete G.gameId;
+        G.status = 'waiting';
+      }
+    },
+  },
+};
 
 let cachedJwtSecret = null;
 
@@ -50,6 +104,12 @@ exports.handler = async (event) => {
     purpose: 'gameserver-app'
   }, jwtSecret, { expiresIn: '30d' });
 
+  const systemClientToken = jwt.sign({
+    gameId: roomGameId,
+    playerId: 'System',
+    purpose: 'gameserver-app'
+  }, jwtSecret, { expiresIn: '30d' });
+
   const existingPlayer = room.members && room.members[sub];
   if (existingPlayer) {
     return {
@@ -64,7 +124,40 @@ exports.handler = async (event) => {
     playerId: sub,
     purpose: 'gameserver-api'
   }, jwtSecret, { expiresIn: '30d' });
+
+  let roomClient;
+  let roomGameState;
   
+  const roomStatePromise = new Promise((resolve, reject) => {
+    roomClient = Client({
+      game: RoomGame,
+      multiplayer: SocketIO({ 
+        server: BOARDGAME_SERVER_URL,
+        socketOpts: {
+          extraHeaders: {
+            'User-Agent': 'BoardGameEngine-Lambda/1.0'
+          },
+          transports: ['websocket', 'polling']
+        }
+      }),
+      matchID: room.roomGameId,
+      playerID: '0',
+      credentials: systemClientToken,
+    });
+
+    roomClient.start();
+
+    roomClient.subscribe((state) => {
+      if (state !== null) {
+        roomGameState = state;
+        resolve();
+      }
+    });
+
+    // Add timeout
+    setTimeout(() => reject(new Error('Timeout connecting to RoomGame')), 10000);
+  });
+
   let joinData;
   try {
     const joinResp = await fetch(`${BOARDGAME_SERVER_URL}/games/bgestagingroom/${roomGameId}/join`, {
@@ -84,6 +177,7 @@ exports.handler = async (event) => {
     
     if (!joinResp.ok) {
       const text = await joinResp.text();
+      roomClient.stop();
       throw new Error(`Boardgame server responded ${joinResp.status} ${joinResp.statusText}: ${text}`);
     }
     
@@ -96,6 +190,10 @@ exports.handler = async (event) => {
       cause: e.cause
     };
   }
+
+  await roomStatePromise;
+  roomClient.moves.join();
+  roomClient.stop();
   
   const boardgamePlayerID = joinData.playerID;
   

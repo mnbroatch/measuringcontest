@@ -70292,7 +70292,7 @@ var RoomGame = {
         playerID = _ref.playerID;
       if (G.status === 'waiting') {
         G.players[playerID] = {
-          name: name
+          name: name || "Player ".concat(playerID)
         };
       }
     },
