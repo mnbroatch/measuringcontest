@@ -43,7 +43,7 @@ const RoomGame = {
     join: ({G, playerID}, name) => {
       if (G.status === 'waiting') {
         G.players[playerID] = {
-          name: name || `Player ${playerID}`
+          name: name || G.players[playerID] || `Player ${playerID}`
         };
       }
     },
