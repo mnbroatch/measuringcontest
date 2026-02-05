@@ -90,7 +90,7 @@ body {
   margin-bottom: 2em;
 }
 
-.home-page-card {
+.info-card {
   color: var(--dark-amethyst);
   font-family: "Nunito", sans-serif;
   font-weight: 700;
@@ -100,23 +100,19 @@ body {
   padding: 1em;
   border-radius: 1em;
   box-shadow: 0 4px 6px rgba(0,0,0,0.15);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
-.home-page-card__icon, .home-page-card__description {
-  flex: 1;
+.info-card__icon, .info-card__description {
   box-sizing: border-box;
+  height: 50%;
 }
 
-.home-page-card__icon {
+.info-card__icon {
   background-color: white;
   aspect-ratio: .8;
 }
 
-.home-page-card__description {
+.info-card__description {
   background-color: white;
   border-top: 2px solid var(--tropical-teal);
   padding: 2em 1em;

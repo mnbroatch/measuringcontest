@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { createFileRoute, Link, useNavigate, useSearch } from '@tanstack/react-router'
 import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
-import HomePageCard from '../components/home-page-card/home-page-card.js'
+import InfoCard from '../components/info-card/info-card.js'
 import ButtonWithInput from '../components/button-with-input/button-with-input.js'
 import { PencilRuler, Users } from 'lucide-react'
 
@@ -13,7 +13,6 @@ export default function Home () {
     ? `Cannot find room ${queryParams.failedroom}`
     : null
   const [error, setError] = useState(initialError)
-  console.log('error', error)
 
   useEffect(() => {
     if (queryParams.failedroom) {
@@ -95,13 +94,13 @@ export default function Home () {
         )}
       </div>
       <div className="home-explanation">
-        <HomePageCard
+        <InfoCard
           iconComponent={PencilRuler}
           iconSize="7em"
           iconStrokeWidth="1.1"
           description="Define a game using BAGEL (Board-based Automated Game Engine Language)"
         />
-        <HomePageCard
+        <InfoCard
           iconComponent={Users}
           iconSize="7em"
           iconStrokeWidth="1.1"

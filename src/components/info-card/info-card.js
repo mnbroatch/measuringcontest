@@ -1,19 +1,19 @@
 import React from 'react'
 
-export default function HomePageCard ({
+export default function InfoCard ({
   description,
   iconComponent: IconComponent,
   iconSize,
   iconStrokeWidth,
 }) {
   return (
-    <div className="home-page-card">
+    <div className="info-card">
       <IconComponent
         size={iconSize}
         strokeWidth={iconStrokeWidth}
-        className="home-page-card__icon"
+        className="info-card__icon"
       />
-      <div className="home-page-card__description">
+      <div className="info-card__description">
         {description}
       </div>
     </div>

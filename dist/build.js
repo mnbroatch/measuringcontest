@@ -196,7 +196,7 @@ console.warn("[tanstack-router] These exports from \"/home/matt/Programming/meas
 var SCREEN_STATE_EDITING = 'editing';
 var SCREEN_STATE_WAITING = 'waiting';
 function RoomPage() {
-  var _Route$useParams$room, _roomConnection$state, _roomConnection$state2, _roomConnection$clien, _roomConnection$state3, _roomConnection$state4, _roomConnection$state5;
+  var _Route$useParams$room, _roomConnection$state, _roomConnection$state2, _roomConnection$state3, _roomConnection$clien, _roomConnection$state4, _roomConnection$state5, _roomConnection$state6;
   var roomCode = (_Route$useParams$room = Route.useParams().roomcode) === null || _Route$useParams$room === void 0 ? void 0 : _Route$useParams$room.toLowerCase();
   var navigate = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_3__/* .useNavigate */ .Z)();
   var auth = (0,_contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_12__/* .useCognitoAuth */ .f)();
@@ -208,12 +208,13 @@ function RoomPage() {
   var iAmRoomCreator = userId && room.data.createdBy === userId;
   var roomConnection = (0,_hooks_use_room_connection_js__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)();
   var gameConnection = (0,_hooks_use_game_connection_js__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)();
-  var status = (_roomConnection$state = roomConnection.state) === null || _roomConnection$state === void 0 ? void 0 : _roomConnection$state.G.status;
-  var players = (_roomConnection$state2 = roomConnection.state) === null || _roomConnection$state2 === void 0 ? void 0 : _roomConnection$state2.G.players;
+  console.log('roomConnection.state', (_roomConnection$state = roomConnection.state) === null || _roomConnection$state === void 0 ? void 0 : _roomConnection$state.G);
+  var status = (_roomConnection$state2 = roomConnection.state) === null || _roomConnection$state2 === void 0 ? void 0 : _roomConnection$state2.G.status;
+  var players = (_roomConnection$state3 = roomConnection.state) === null || _roomConnection$state3 === void 0 ? void 0 : _roomConnection$state3.G.players;
   var playerID = (_roomConnection$clien = roomConnection.client) === null || _roomConnection$clien === void 0 ? void 0 : _roomConnection$clien.playerID;
-  var gameRules = (_roomConnection$state3 = roomConnection.state) === null || _roomConnection$state3 === void 0 ? void 0 : _roomConnection$state3.G.gameRules;
-  var gameName = (_roomConnection$state4 = roomConnection.state) === null || _roomConnection$state4 === void 0 ? void 0 : _roomConnection$state4.G.gameName;
-  var gameId = (_roomConnection$state5 = roomConnection.state) === null || _roomConnection$state5 === void 0 ? void 0 : _roomConnection$state5.G.gameId;
+  var gameRules = (_roomConnection$state4 = roomConnection.state) === null || _roomConnection$state4 === void 0 ? void 0 : _roomConnection$state4.G.gameRules;
+  var gameName = (_roomConnection$state5 = roomConnection.state) === null || _roomConnection$state5 === void 0 ? void 0 : _roomConnection$state5.G.gameName;
+  var gameId = (_roomConnection$state6 = roomConnection.state) === null || _roomConnection$state6 === void 0 ? void 0 : _roomConnection$state6.G.gameId;
   var iAmInGame = room.data.players && userId in room.data.players;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(SCREEN_STATE_WAITING),
     _useState2 = _slicedToArray(_useState, 2),
@@ -232,10 +233,17 @@ function RoomPage() {
     gameRulesJSONIsValid = true;
   } catch (_unused) {}
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    if (status === 'deleted') {
+      navigate({
+        to: '/'
+      });
+    }
+  }, [status]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     setTimeout(function () {
       setIsTimedOut(true);
     }, 5000);
-  });
+  }, []);
   if (room.isSuccess && iAmRoomCreator && !roomConnection.state && isTimedOut) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
       className: "button button--style-c",
@@ -31907,33 +31915,6 @@ module.exports = baseKeys;
 
 /***/ }),
 
-/***/ 13417:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   A: () => (/* binding */ HomePageCard)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
-
-function HomePageCard(_ref) {
-  var description = _ref.description,
-    IconComponent = _ref.iconComponent,
-    iconSize = _ref.iconSize,
-    iconStrokeWidth = _ref.iconStrokeWidth;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "home-page-card"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(IconComponent, {
-    size: iconSize,
-    strokeWidth: iconStrokeWidth,
-    className: "home-page-card__icon"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "home-page-card__description"
-  }, description));
-}
-
-/***/ }),
-
 /***/ 13489:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
@@ -37039,12 +37020,14 @@ function detect() {
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
 /* harmony import */ var _monaco_editor_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(36084);
+/* harmony import */ var _info_card_info_card_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(94179);
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+
 
 
 function GamePreview(_ref) {
@@ -37086,12 +37069,12 @@ function GamePreview(_ref) {
       fontSize: 14,
       readOnly: true
     }
-  })), !isOpen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    style: {
-      flex: 1
-    },
-    className: "editor__input"
-  }, "Have the other players friends log in and join with code: ", roomCode.toUpperCase()));
+  })), !isOpen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_info_card_info_card_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+    iconComponent: Users,
+    iconSize: "7em",
+    iconStrokeWidth: "1.1",
+    description: "Have the other players log in and join with code: ".concat(roomCode.toUpperCase())
+  }));
 }
 
 /***/ }),
@@ -47122,7 +47105,7 @@ function v4(options, buf, offset) {
 /* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(36095);
 /* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(11672);
 /* harmony import */ var _contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(52904);
-/* harmony import */ var _components_home_page_card_home_page_card_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(13417);
+/* harmony import */ var _components_info_card_info_card_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(94179);
 /* harmony import */ var _components_button_with_input_button_with_input_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(45247);
 /* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(18458);
 /* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(37276);
@@ -47156,7 +47139,6 @@ function Home() {
     _useState2 = _slicedToArray(_useState, 2),
     error = _useState2[0],
     setError = _useState2[1];
-  console.log('error', error);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (queryParams.failedroom) {
       setError("Cannot find room ".concat(queryParams.failedroom));
@@ -47212,12 +47194,12 @@ function Home() {
     }
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "home-explanation"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_home_page_card_home_page_card_js__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_info_card_info_card_js__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     iconComponent: lucide_react__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A,
     iconSize: "7em",
     iconStrokeWidth: "1.1",
     description: "Define a game using BAGEL (Board-based Automated Game Engine Language)"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_home_page_card_home_page_card_js__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_info_card_info_card_js__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     iconComponent: lucide_react__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A,
     iconSize: "7em",
     iconStrokeWidth: "1.1",
@@ -64681,7 +64663,7 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Paytone+One&display=swap);"]);
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `:root{--bright-sky: #01baef;--tropical-teal: #0cbaba;--dark-amethyst: #380036;--dark-orange: #F58F29;--lipstick-red: #EC0B43}html{height:100%;overscroll-behavior:none}body{margin:0;font-family:"Paytone One",sans-serif;color:#fff;height:100%}#root{display:flex;flex-direction:column;height:100dvh}.content:not(:has(.home)){padding:.7em}.content{text-align:center;min-height:0;overflow:auto;background:linear-gradient(to bottom, var(--bright-sky) 0%, var(--bright-sky) 50%, var(--tropical-teal) 80%, var(--tropical-teal) 100%)}.header{position:relative;padding:.5em;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 6px rgba(0,0,0,.15);background-color:#fff}.home-splash{color:#fff;display:grid;grid-template-columns:repeat(auto-fit, minmax(135px, 1fr));gap:1em;align-items:center;background:linear-gradient(to right, var(--dark-amethyst) 0%, var(--dark-amethyst) 20%, var(--bright-sky) 100%)}.home-tagline{padding-left:.7em}.home-tagline__inner{display:inline-block;text-align:left}.home-description{padding:0 .7em;font-family:"Nunito",sans-serif}.home-explanation{display:grid;grid-template-columns:repeat(auto-fit, 200px);gap:1em;justify-content:center;margin-bottom:2em}.home-page-card{color:var(--dark-amethyst);font-family:"Nunito",sans-serif;font-weight:700;font-size:.8em;background-color:#fff;aspect-ratio:.8;padding:1em;border-radius:1em;box-shadow:0 4px 6px rgba(0,0,0,.15);display:flex;flex-direction:column;justify-content:center;align-items:center}.home-page-card__icon,.home-page-card__description{flex:1;box-sizing:border-box}.home-page-card__icon{background-color:#fff;aspect-ratio:.8}.home-page-card__description{background-color:#fff;border-top:2px solid var(--tropical-teal);padding:2em 1em}.button{border:3px solid var(--dark-amethyst);display:inline-block;padding:.5em;font-size:1.5em;font-family:inherit;text-decoration:none;cursor:pointer;border-radius:.3em;box-shadow:0 4px 6px rgba(0,0,0,.15);margin:.5em}.button:disabled,.button--disabled.button--disabled{background-color:gray}.button--style-a{background-color:var(--dark-orange);color:var(--dark-amethyst)}.button--style-b{background-color:var(--dark-amethyst);color:#fff}.button--style-c{background-color:var(--lipstick-red);color:#fff}.button--small{font-size:1.2em;padding:.3em .5em;border-radius:.2em}.button--x-small{font-size:.9em;padding:.3em .5em;border-radius:.2em}.room-game{position:relative}.room-game__joined-players{padding:1em;box-shadow:inset 0 2px 4px rgba(0,0,0,.2);background-color:rgb(from var(--bright-sky) calc(r + 50) calc(g + 50) calc(b + 50))}.room-game h4{position:absolute;top:0;left:0;margin:0;padding:.3em .5em;background-color:var(--dark-amethyst);transform:translate(-2%, -70%) rotate(-3deg)}.room-game__game-name{margin:0}.room-game__player-count{margin:0 0 2em}.room-game ul{margin:0}.header-home-button{font-size:1.2em;text-decoration:none;text-transform:uppercase;color:var(--bright-sky);text-align:center;line-height:1em}.header-home-button .lucide-cog{margin-right:-0.05em;margin-left:-0.05em;position:relative;top:.15em}.home-buttons{margin:1.5em}.button-with-input__input{font-size:.8em;margin-left:.5em;padding:0 .5em;position:relative;bottom:.1em}.join-room-button__container{display:inline-block}.join-room-button__error{color:var(--lipstick-red)}.join-room-button .button-with-input__input{background-color:#fff;width:4em}.editor{display:flex;flex-direction:column;flex:1;min-height:0}.editor section:has(.editor__input){min-height:0}.game{color:#000}.shared-board,.personal-board{padding:20px 0;border-bottom:1px solid #fff}.grid{border:1px solid #000;box-sizing:border-box;background-color:#333;max-width:500px}.grid__cell{border:1px solid #000;background-color:#fff;aspect-ratio:1;display:flex;align-items:center;justify-content:center;color:#666;position:relative;overflow:auto}.grid__cell .space{height:100%;width:100%}.roomGame{border:1px solid gray;border-radius:8px}.space{box-sizing:border-box;min-width:10px;min-height:10px}.space:not(:has(.entity)){border:1px solid gray}.space--clickable{background-color:rgba(144,238,144,.4)}.space--targeted{background-color:gray}.space__entity-grid{box-sizing:border-box;align-items:center;justify-content:center}.space__entity-grid__cell{box-sizing:border-box;overflow:auto}.entity{padding:.2em;min-height:20px;min-width:20px;box-sizing:border-box;border:1px solid #000;overflow:hidden;font-size:.5em;font-family:"Nunito",sans-serif;font-weight:bold;display:inline-block}.entity.player-0{background-color:pink}.entity--clickable{background-color:rgba(144,238,144,.4)}.entity.player-0.entity--clickable{background-color:#f0e0d8}.entity.player-1{background-color:#add8e6}.entity.player-1.entity--clickable{background-color:#afeeee}.debug-panel .pane{max-width:420px !important}.sample-game-select{margin-bottom:.5em}.sample-game-select__inner{font-family:"Nunito",sans-serif;max-width:100%}.sample-game-select__option{font-family:inherit;max-width:100%}.editor-game-name,.editor-num-players{color:#fff}.editor__controls{display:flex;flex-wrap:wrap;margin-top:.5em;gap:.5em;justify-content:center}.editor-game-name__input,.editor-num-players__input{font-family:"Nunito",sans-serif;margin-left:1em;position:relative}.editor-game-name__input{width:10em}.editor-num-players__input{width:3em}.buttons{text-align:center}.editor-buttons .button{display:inline-block;padding:.2em .3em;font-size:.8em;box-shadow:0 4px 6px rgba(0,0,0,.15)}.testing-game{margin:2em}.testing-game__title__text{margin:0}.testing-game__title__tip{margin:0;color:#000}.game-preview{flex:1;text-align:left;padding:0;display:flex;flex-direction:column;min-height:0}.game-preview h3{margin:0}.joined-player-pill{position:relative;background-color:#fff;color:var(--bright-sky);text-transform:uppercase;border-radius:9999px;margin:.5em;display:inline-flex;justify-content:center;align-items:center;transition:all .3s ease}.joined-player-pill--me{color:var(--lipstick-red)}.joined-player-pill__edit-button{position:absolute;top:-1.3em;left:-1.3em;padding:.2em;line-height:0}.joined-player-pill__inner{display:inline-block;padding:.5em}.joined-player-pill__editor{display:flex;align-items:center;margin:0 .5em}.joined-player-pill__editor input{margin:0em .5em;font-family:inherit;font-size:.9em;border:2px solid var(--bright-sky);border-radius:.2em}.spinner{position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);width:50px;height:50px;border:4px solid #e0e0e0;border-top-color:#3498db;border-radius:50%;animation:spin 1s linear infinite}.debug-panel .visibility-toggle{top:70px !important}.debug-panel .visibility-toggle svg{display:none}.debug-panel .visibility-toggle .icon::after{position:relative;left:3px;content:"⚙️";font-size:20px;display:block;width:20px;height:20px}.debug-panel .menu{position:relative;top:70px !important}body:has(.content .editor) .debug-panel{display:none}@media(max-width: 600px){html{font-size:12px}}@media(min-width: 600px){.sample-game-select__inner{font-size:inherit}.editor-game-name__input,.editor-num-players__input{font-size:inherit;position:static}.editor__controls{gap:1em}}@keyframes spin{to{transform:translate(-50%, -50%) rotate(360deg)}}`, ""]);
+___CSS_LOADER_EXPORT___.push([module.id, `:root{--bright-sky: #01baef;--tropical-teal: #0cbaba;--dark-amethyst: #380036;--dark-orange: #F58F29;--lipstick-red: #EC0B43}html{height:100%;overscroll-behavior:none}body{margin:0;font-family:"Paytone One",sans-serif;color:#fff;height:100%}#root{display:flex;flex-direction:column;height:100dvh}.content:not(:has(.home)){padding:.7em}.content{text-align:center;min-height:0;overflow:auto;background:linear-gradient(to bottom, var(--bright-sky) 0%, var(--bright-sky) 50%, var(--tropical-teal) 80%, var(--tropical-teal) 100%)}.header{position:relative;padding:.5em;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 6px rgba(0,0,0,.15);background-color:#fff}.home-splash{color:#fff;display:grid;grid-template-columns:repeat(auto-fit, minmax(135px, 1fr));gap:1em;align-items:center;background:linear-gradient(to right, var(--dark-amethyst) 0%, var(--dark-amethyst) 20%, var(--bright-sky) 100%)}.home-tagline{padding-left:.7em}.home-tagline__inner{display:inline-block;text-align:left}.home-description{padding:0 .7em;font-family:"Nunito",sans-serif}.home-explanation{display:grid;grid-template-columns:repeat(auto-fit, 200px);gap:1em;justify-content:center;margin-bottom:2em}.info-card{color:var(--dark-amethyst);font-family:"Nunito",sans-serif;font-weight:700;font-size:.8em;background-color:#fff;aspect-ratio:.8;padding:1em;border-radius:1em;box-shadow:0 4px 6px rgba(0,0,0,.15)}.info-card__icon,.info-card__description{box-sizing:border-box;height:50%}.info-card__icon{background-color:#fff;aspect-ratio:.8}.info-card__description{background-color:#fff;border-top:2px solid var(--tropical-teal);padding:2em 1em}.button{border:3px solid var(--dark-amethyst);display:inline-block;padding:.5em;font-size:1.5em;font-family:inherit;text-decoration:none;cursor:pointer;border-radius:.3em;box-shadow:0 4px 6px rgba(0,0,0,.15);margin:.5em}.button:disabled,.button--disabled.button--disabled{background-color:gray}.button--style-a{background-color:var(--dark-orange);color:var(--dark-amethyst)}.button--style-b{background-color:var(--dark-amethyst);color:#fff}.button--style-c{background-color:var(--lipstick-red);color:#fff}.button--small{font-size:1.2em;padding:.3em .5em;border-radius:.2em}.button--x-small{font-size:.9em;padding:.3em .5em;border-radius:.2em}.room-game{position:relative}.room-game__joined-players{padding:1em;box-shadow:inset 0 2px 4px rgba(0,0,0,.2);background-color:rgb(from var(--bright-sky) calc(r + 50) calc(g + 50) calc(b + 50))}.room-game h4{position:absolute;top:0;left:0;margin:0;padding:.3em .5em;background-color:var(--dark-amethyst);transform:translate(-2%, -70%) rotate(-3deg)}.room-game__game-name{margin:0}.room-game__player-count{margin:0 0 2em}.room-game ul{margin:0}.header-home-button{font-size:1.2em;text-decoration:none;text-transform:uppercase;color:var(--bright-sky);text-align:center;line-height:1em}.header-home-button .lucide-cog{margin-right:-0.05em;margin-left:-0.05em;position:relative;top:.15em}.home-buttons{margin:1.5em}.button-with-input__input{font-size:.8em;margin-left:.5em;padding:0 .5em;position:relative;bottom:.1em}.join-room-button__container{display:inline-block;position:relative}.join-room-button__error{color:var(--lipstick-red);position:absolute;top:-1em;left:1em}.join-room-button .button-with-input__input{background-color:#fff;width:4em}.editor{display:flex;flex-direction:column;flex:1;min-height:0}.editor section:has(.editor__input){min-height:0}.game{color:#000}.shared-board,.personal-board{padding:20px 0;border-bottom:1px solid #fff}.grid{border:1px solid #000;box-sizing:border-box;background-color:#333;max-width:500px}.grid__cell{border:1px solid #000;background-color:#fff;aspect-ratio:1;display:flex;align-items:center;justify-content:center;color:#666;position:relative;overflow:auto}.grid__cell .space{height:100%;width:100%}.roomGame{border:1px solid gray;border-radius:8px}.space{box-sizing:border-box;min-width:10px;min-height:10px}.space:not(:has(.entity)){border:1px solid gray}.space--clickable{background-color:rgba(144,238,144,.4)}.space--targeted{background-color:gray}.space__entity-grid{box-sizing:border-box;align-items:center;justify-content:center}.space__entity-grid__cell{box-sizing:border-box;overflow:auto}.entity{padding:.2em;min-height:20px;min-width:20px;box-sizing:border-box;border:1px solid #000;overflow:hidden;font-size:.5em;font-family:"Nunito",sans-serif;font-weight:bold;display:inline-block}.entity.player-0{background-color:pink}.entity--clickable{background-color:rgba(144,238,144,.4)}.entity.player-0.entity--clickable{background-color:#f0e0d8}.entity.player-1{background-color:#add8e6}.entity.player-1.entity--clickable{background-color:#afeeee}.debug-panel .pane{max-width:420px !important}.sample-game-select{margin-bottom:.5em}.sample-game-select__inner{font-family:"Nunito",sans-serif;max-width:100%}.sample-game-select__option{font-family:inherit;max-width:100%}.editor-game-name,.editor-num-players{color:#fff}.editor__controls{display:flex;flex-wrap:wrap;margin-top:.5em;gap:.5em;justify-content:center}.editor-game-name__input,.editor-num-players__input{font-family:"Nunito",sans-serif;margin-left:1em;position:relative}.editor-game-name__input{width:10em}.editor-num-players__input{width:3em}.buttons{text-align:center}.editor-buttons .button{display:inline-block;padding:.2em .3em;font-size:.8em;box-shadow:0 4px 6px rgba(0,0,0,.15)}.testing-game{margin:2em}.testing-game__title__text{margin:0}.testing-game__title__tip{margin:0;color:#000}.game-preview{flex:1;text-align:left;padding:0;display:flex;flex-direction:column;min-height:0}.game-preview h3{margin:0}.joined-player-pill{position:relative;background-color:#fff;color:var(--bright-sky);text-transform:uppercase;border-radius:9999px;margin:.5em;display:inline-flex;justify-content:center;align-items:center;transition:all .3s ease}.joined-player-pill--me{color:var(--lipstick-red)}.joined-player-pill__edit-button{position:absolute;top:-1.3em;left:-1.3em;padding:.2em;line-height:0}.joined-player-pill__inner{display:inline-block;padding:.5em}.joined-player-pill__editor{display:flex;align-items:center;margin:0 .5em}.joined-player-pill__editor input{margin:0em .5em;font-family:inherit;font-size:.9em;border:2px solid var(--bright-sky);border-radius:.2em}.spinner{position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);width:50px;height:50px;border:4px solid #e0e0e0;border-top-color:#3498db;border-radius:50%;animation:spin 1s linear infinite}.debug-panel .visibility-toggle{top:70px !important}.debug-panel .visibility-toggle svg{display:none}.debug-panel .visibility-toggle .icon::after{position:relative;left:3px;content:"⚙️";font-size:20px;display:block;width:20px;height:20px}.debug-panel .menu{position:relative;top:70px !important}body:has(.content .editor) .debug-panel{display:none}@media(max-width: 600px){html{font-size:12px}}@media(min-width: 600px){.sample-game-select__inner{font-size:inherit}.editor-game-name__input,.editor-num-players__input{font-size:inherit;position:static}.editor__controls{gap:1em}}@keyframes spin{to{transform:translate(-50%, -50%) rotate(360deg)}}`, ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -74664,6 +74646,33 @@ const handleFailure = async (error) => {
 
 //# sourceMappingURL=handleFailure.mjs.map
 
+
+/***/ }),
+
+/***/ 94179:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ InfoCard)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
+
+function InfoCard(_ref) {
+  var description = _ref.description,
+    IconComponent = _ref.iconComponent,
+    iconSize = _ref.iconSize,
+    iconStrokeWidth = _ref.iconStrokeWidth;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "info-card"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(IconComponent, {
+    size: iconSize,
+    strokeWidth: iconStrokeWidth,
+    className: "info-card__icon"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "info-card__description"
+  }, description));
+}
 
 /***/ }),
 
