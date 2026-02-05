@@ -1,0 +1,8 @@
+{
+  "name": "delete-room-lambda",
+  "version": "1.0.0",
+  "dependencies": {
+    "boardgame.io": "^0.50.2",
+    "jsonwebtoken": "^9.0.2"
+  }
+}

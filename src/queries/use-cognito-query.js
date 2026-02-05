@@ -7,6 +7,7 @@ export const AUTH_QUERY_KEY = 'auth';
 const options = {
   queryKey: [AUTH_QUERY_KEY],
   queryFn: getAuth,
+  refetchOnWindowFocus: true,
   staleTime: 1000 * 60 * 50,
 }
 

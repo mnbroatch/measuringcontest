@@ -40878,6 +40878,7 @@ var AUTH_QUERY_KEY = 'auth';
 var options = {
   queryKey: [AUTH_QUERY_KEY],
   queryFn: _auth_js__WEBPACK_IMPORTED_MODULE_1__/* .getAuth */ .x,
+  refetchOnWindowFocus: true,
   staleTime: 1000 * 60 * 50
 };
 var useCognitoQuery = function useCognitoQuery() {
@@ -70357,6 +70358,13 @@ var RoomGame = {
       if (playerID === '0') {
         delete G.gameId;
         G.status = 'waiting';
+      }
+    },
+    roomDeleted: function roomDeleted(_ref8) {
+      var G = _ref8.G,
+        playerID = _ref8.playerID;
+      if (playerID === '0') {
+        G.status = 'deleted';
       }
     }
   }

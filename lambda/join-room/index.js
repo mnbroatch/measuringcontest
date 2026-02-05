@@ -59,6 +59,11 @@ const RoomGame = {
         G.status = 'waiting';
       }
     },
+    roomDeleted: ({G, playerID}) => {
+      if (playerID === '0') {
+        G.status = 'deleted';
+      }
+    },
   },
 };
 
