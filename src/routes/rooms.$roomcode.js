@@ -32,6 +32,7 @@ export default function RoomPage () {
   const iAmRoomCreator = userId && room.data.createdBy === userId 
   const roomConnection = useRoomConnection()
   const gameConnection = useGameConnection()
+  console.log('roomConnection.state', roomConnection.state?.G)
   const status = roomConnection.state?.G.status
   const players = roomConnection.state?.G.players
   const playerID = roomConnection.client?.playerID
@@ -55,10 +56,18 @@ export default function RoomPage () {
   } catch {}
 
   useEffect(() => {
+    if (status === 'deleted') {
+      navigate({
+        to: '/',
+      })
+    }
+  }, [status])
+
+  useEffect(() => {
     setTimeout(() => {
       setIsTimedOut(true)
     }, 5000)
-  })
+  }, [])
 
   if (room.isSuccess && iAmRoomCreator && !roomConnection.state && isTimedOut) {
     return (

@@ -70,6 +70,5 @@ export const useGameserverConnection = ({
       clientRef.current = null
     }
   }, [gameId, userId, boardgamePlayerID, clientToken, game, enabled])
-
   return clientRef.current
 }

@@ -228,10 +228,14 @@ body {
 
 .join-room-button__container {
   display: inline-block;
+  position: relative;
 }
 
 .join-room-button__error {
-  color: var(--lipstick-red)
+  color: var(--lipstick-red);
+  position: absolute;
+  top: -1em;
+  left: 1em;
 }
 
 .join-room-button .button-with-input__input {
