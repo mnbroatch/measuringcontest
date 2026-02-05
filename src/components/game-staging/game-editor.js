@@ -84,7 +84,7 @@ export default function GameEditor ({
   // state that is frozen for testing (performance optimization so game connection
   // isn't re-established on every keystroke)
   const [savedGameRules, setSavedGameRules] = useState(null)
-  const [savedNumPlayers, setSavedNumPlayers] = useState(null)
+  const [savedNumPlayers, setSavedNumPlayers] = useState(2)
 
   const gameConnection = useSinglePlayerGame(savedGameRules, +savedNumPlayers)
   
@@ -177,8 +177,9 @@ export default function GameEditor ({
           <div className="buttons">
             {gameRulesJSONIsValid && (
               <ButtonWithInput
-                className="join-room-button"
+                className="join-room-button button--x-small"
                 label="Test Game With Player Count:"
+                defaultValue={2}
                 handleClick={(numPlayers) => {
                   setSavedGameRules(gameRules)
                   setSavedNumPlayers(numPlayers)

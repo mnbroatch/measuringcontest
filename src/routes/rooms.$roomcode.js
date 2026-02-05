@@ -15,7 +15,6 @@ import GameStatus from "../components/game-status/game-status.js";
 import RoomGame from "../components/game-staging/room-game.js";
 import GamePreview from "../components/game-staging/game-preview.js";
 import GameEditor from "../components/game-staging/game-editor.js";
-import ButtonWithInput from '../components/button-with-input/button-with-input.js'
 
 const SCREEN_STATE_EDITING = 'editing'
 const SCREEN_STATE_WAITING = 'waiting'
@@ -40,7 +39,6 @@ export default function RoomPage () {
   const gameName = roomConnection.state?.G.gameName
   const gameId = roomConnection.state?.G.gameId
   const iAmInGame = room.data.players && userId in room.data.players
-  const iAmInStaging = players && userId in players
 
   const [screenState, setScreenState] = useState(SCREEN_STATE_WAITING)
   const [isTimedOut, setIsTimedOut] = useState(false)
@@ -182,7 +180,10 @@ export const Route = createFileRoute("/rooms/$roomcode")({
     try {
       return await useRoomQuery.preload(params.roomcode)
     } catch (error) {
-      throw redirect({ to: '/' })
+      throw redirect({
+        to: '/',
+        search: {failedroom: params.roomcode}
+      })
     }
   },
   component: RoomPage,

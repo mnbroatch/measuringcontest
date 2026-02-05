@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
+import React, { useState, useEffect } from 'react'
+import { createFileRoute, Link, useNavigate, useSearch } from '@tanstack/react-router'
 import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
 import HomePageCard from '../components/home-page-card/home-page-card.js'
 import ButtonWithInput from '../components/button-with-input/button-with-input.js'
@@ -8,7 +8,18 @@ import { PencilRuler, Users } from 'lucide-react'
 export default function Home () {
   const auth = useCognitoAuth()
   const navigate = useNavigate()
-  const [error, setError] = useState(null)
+  const queryParams = useSearch({ from: '/' })
+  const initialError = queryParams.failedroom
+    ? `Cannot find room ${queryParams.failedroom}`
+    : null
+  const [error, setError] = useState(initialError)
+  console.log('error', error)
+
+  useEffect(() => {
+    if (queryParams.failedroom) {
+      setError(`Cannot find room ${queryParams.failedroom}`)
+    }
+  }, [queryParams.failedroom])
 
   return (
     <div className="home">
@@ -55,7 +66,18 @@ export default function Home () {
             <ButtonWithInput
               className="join-room-button"
               label="Join Room:"
-              onChange={() => { setError(null) }}
+              onChange={() => {
+                setError(null)
+                // clear failedroom query between attempts
+                const newQueryParams = {...queryParams}
+                delete newQueryParams.failedroom
+                navigate({
+                  to: '/',
+                  search: newQueryParams,
+                  replace: true
+                })
+
+              }}
               handleClick={(roomCode) => {
                 if (roomCode?.length === 4) {
                   navigate({
