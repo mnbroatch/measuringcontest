@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Editor from '@monaco-editor/react';
 import InfoCard from '../info-card/info-card.js'
+import { Users } from 'lucide-react'
 
 export default function GamePreview ({ gameRules, roomCode }) {
   const [isOpen, setIsOpen] = useState(false)

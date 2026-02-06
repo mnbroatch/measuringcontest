@@ -105,48 +105,68 @@ exports.handler = async (event) => {
     throw new Error("Unauthorized - only room creator can delete room");
   }
 
-  const jwtSecret = await getJwtSecret();
-
-  // Connect to RoomGame to notify clients
-  const clientToken = jwt.sign({
-    gameId: room.roomGameId,
-    playerId: 'System',
-    purpose: 'gameserver-app'
-  }, jwtSecret, { expiresIn: '30d' });
-
   let roomClient;
-  const clientInitializationPromise = new Promise(resolve => {
-    roomClient = Client({
-      game: RoomGame,
-      multiplayer: SocketIO({ 
-        server: BOARDGAME_SERVER_URL,
-        socketOpts: {
-          extraHeaders: {
-            'User-Agent': 'BoardGameEngine-Lambda/1.0'
-          },
-          transports: ['websocket', 'polling']
+  let socketNotificationSucceeded = false;
+
+  // Try to notify clients via socket, but don't fail if it doesn't work
+  try {
+    const jwtSecret = await getJwtSecret();
+
+    const clientToken = jwt.sign({
+      gameId: room.roomGameId,
+      playerId: 'System',
+      purpose: 'gameserver-app'
+    }, jwtSecret, { expiresIn: '30d' });
+
+    const clientInitializationPromise = new Promise((resolve, reject) => {
+      const timeout = setTimeout(() => {
+        reject(new Error('Socket connection timeout'));
+      }, 3000);
+
+      roomClient = Client({
+        game: RoomGame,
+        multiplayer: SocketIO({ 
+          server: BOARDGAME_SERVER_URL,
+          socketOpts: {
+            extraHeaders: {
+              'User-Agent': 'BoardGameEngine-Lambda/1.0'
+            },
+            transports: ['websocket', 'polling']
+          }
+        }),
+        matchID: room.roomGameId,
+        playerID: '0',
+        credentials: clientToken,
+      });
+
+      roomClient.start();
+
+      roomClient.subscribe((state) => {
+        if (state !== null) {
+          clearTimeout(timeout);
+          resolve();
         }
-      }),
-      matchID: room.roomGameId,
-      playerID: '0',
-      credentials: clientToken,
+      });
     });
 
-    roomClient.start();
+    await clientInitializationPromise;
 
-    roomClient.subscribe((state) => {
-      if (state !== null) {
-        resolve();
+    // Notify all connected clients that room is being deleted
+    roomClient.moves.roomDeleted();
+    socketNotificationSucceeded = true;
+    
+  } catch (error) {
+    console.error('Failed to notify clients via socket:', error);
+  } finally {
+    if (roomClient) {
+      try {
+        roomClient.stop();
+      } catch (error) {
+        console.error('Error stopping socket client:', error);
       }
-    });
-  });
+    }
+  }
 
-  await clientInitializationPromise;
-
-  // Notify all connected clients that room is being deleted
-  roomClient.moves.roomDeleted();
-
-  // Delete the room from DynamoDB
   await dynamoDb.send(new DeleteCommand({
     TableName: "measuringcontest-rooms",
     Key: { roomCode },
@@ -156,10 +176,9 @@ exports.handler = async (event) => {
     }
   }));
 
-  roomClient.stop();
-
   return {
     success: true,
-    message: "Room deleted successfully"
+    message: "Room deleted successfully",
+    socketNotificationSent: socketNotificationSucceeded
   };
 };
