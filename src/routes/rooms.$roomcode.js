@@ -40,6 +40,7 @@ export default function RoomPage () {
   const gameName = roomConnection.state?.G.gameName
   const gameId = roomConnection.state?.G.gameId
   const iAmInGame = room.data.players && userId in room.data.players
+  const numPlayers = players && Object.keys(players).length
 
   const [screenState, setScreenState] = useState(SCREEN_STATE_WAITING)
   const [isTimedOut, setIsTimedOut] = useState(false)
@@ -49,11 +50,17 @@ export default function RoomPage () {
     || !roomConnection.state
     || (status === 'started' && !gameConnection.state)
 
-  let gameRulesJSONIsValid = false
+  let gameDisabledReason = null
   try {
-    JSON.parse(gameRules) 
-    gameRulesJSONIsValid = true
-  } catch {}
+    const { minPlayers, maxPlayers } = JSON.parse(gameRules) 
+    if (maxPlayers && numPlayers > maxPlayers) {
+      gameDisabledReason = 'Too Many Players'
+    } else if (minPlayers && numPlayers < minPlayers) {
+      gameDisabledReason = 'Not Enough Players'
+    }
+  } catch {
+    gameDisabledReason = 'Invalid Game Rules'
+  }
 
   useEffect(() => {
     if (status === 'deleted') {
@@ -84,8 +91,6 @@ export default function RoomPage () {
       </button>
     )
   }
-
-  const numPlayers = players && Object.keys(players).length
 
   return !isLoading && iAmInRoom && (
     <>
@@ -123,7 +128,7 @@ export default function RoomPage () {
                 </button>
                 <button
                   className="button button--x-small button--style-a"
-                  disabled={!gameRulesJSONIsValid}
+                  disabled={!!gameDisabledReason}
                   onClick={() => {
                     createGameMutation.mutate({
                       gameRules,
@@ -132,7 +137,7 @@ export default function RoomPage () {
                     })
                   }}
                 >
-                  {gameRulesJSONIsValid ? 'Start Game' : 'Invalid Game Rules'}
+                  {gameDisabledReason || 'Start Game'}
                 </button>
               </>
             )}
