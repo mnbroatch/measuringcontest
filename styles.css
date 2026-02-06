@@ -100,6 +100,9 @@ body {
   padding: 1em;
   border-radius: 1em;
   box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+  width: 200px;
+  align-self: center;
+  text-align: center;
 }
 
 .info-card__icon, .info-card__description {
@@ -430,6 +433,15 @@ body {
 
 .game-preview h3 {
   margin: 0;
+}
+
+.game-preview__info-card {
+}
+
+.game-preview__info-card__code {
+  color: var(--lipstick-red);
+  font-family: "Courier New", monospace;
+  font-size: 2em;
 }
 
 .joined-player-pill {

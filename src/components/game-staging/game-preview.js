@@ -39,7 +39,14 @@ export default function GamePreview ({ gameRules, roomCode }) {
           iconComponent={Users}
           iconSize="7em"
           iconStrokeWidth="1.1"
-          description={`Have the other players log in and join with code: ${roomCode.toUpperCase()}`}
+          description={
+            <div className="game-preview__info-card">
+              Have the other players log in and join with code:
+              <div className="game-preview__info-card__code">
+                {roomCode.toUpperCase()}
+              </div>
+            </div>
+          }
         />
       )}
     </div>
