@@ -93,12 +93,25 @@ export default function RoomPage () {
     )
   }
 
+  let playerCountString = ''
+  if (minPlayers > maxPlayers) {
+    playerCountString = 'Invalid maxPlayers is less than minPlayers'
+  } else {
+    playerCountString += minPlayers?.toString() || '1'
+    if (maxPlayers && maxPlayers !== minPlayers) {
+      playerCountString += ` - ${maxPlayers}`
+    } else if (!maxPlayers) {
+      playerCountString += '+'
+    }
+    playerCountString += minPlayers > 1 || maxPlayers > 1 ? ' Players' : ' Player'
+  }
+
   return !isLoading && iAmInRoom && (
     <>
       {status === 'waiting' && screenState === SCREEN_STATE_WAITING && (
         <>
           <h3 className="room-game__game-name">{gameName}</h3>
-          <h5 className="room-game__player-count">{numPlayers} Player{numPlayers > 1 && 's'}</h5>
+          <h5 className="room-game__player-count">{playerCountString}</h5>
           <RoomGame
             players={players}
             playerID={playerID}
