@@ -1,5 +1,11 @@
 import React, { useState, useRef } from 'react'
 import Editor from '@monaco-editor/react';
+
+import PlayGame from "../play-game/play-game.js";
+import GameStatus from "../game-status/game-status.js";
+import useSinglePlayerGame from "../../hooks/use-single-player-game.js";
+import ButtonWithInput from '../../components/button-with-input/button-with-input.js'
+
 import ticTacToe from "../../../server/tic-tac-toe.json";
 import eights from "../../../server/eights.json";
 import eights2 from "../../../server/eights2.json";
@@ -7,10 +13,6 @@ import connectFour from "../../../server/connect-four.json";
 import reversi from "../../../server/reversi.json";
 import reversi2 from "../../../server/reversi2.json";
 import checkers from "../../../server/checkers.json";
-import PlayGame from "../play-game/play-game.js";
-import GameStatus from "../game-status/game-status.js";
-import useSinglePlayerGame from "../../hooks/use-single-player-game.js";
-import ButtonWithInput from '../../components/button-with-input/button-with-input.js'
 
 const SCREEN_STATE_EDITING = 'editing'
 const SCREEN_STATE_TESTING = 'testing'

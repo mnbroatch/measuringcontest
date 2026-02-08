@@ -4,12 +4,15 @@ import { useIsMutating } from '@tanstack/react-query'
 import { useMyRoomsQuery } from "../queries/use-my-rooms-query.js";
 import { useCognitoQuery } from '../queries/use-cognito-query.js';
 import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
+import { LoadingProvider, useLoading } from "../contexts/loading-context.js";
 import Header from "../components/header/header.js";
 
-export default function Root () {
+function RootContent() {
   const auth = useCognitoAuth()
+  const { isLoading } = useLoading()
   const mutationCount = useIsMutating()
-
+  const loading = isLoading || !!mutationCount
+  
   return (
     <>
       <Header auth={auth} />
@@ -17,22 +20,30 @@ export default function Root () {
         style={{ flex: 1 }}
         className="content"
       >
+        {loading && (
+          <div className="spinner"></div>
+        )}
         <div
           className="content__inner"
           style={{
             display: 'flex',
             flexDirection: 'column',
             height: '100%',
-            visibility: mutationCount ? 'hidden' : 'visible'
+            ...(loading && { display: 'none' })
           }}
         >
           <Outlet />
         </div>
-        {!!mutationCount && (
-          <div className="spinner"></div>
-        )}
       </div>
     </>
+  )
+}
+
+function Root() {
+  return (
+    <LoadingProvider>
+      <RootContent />
+    </LoadingProvider>
   )
 }
 

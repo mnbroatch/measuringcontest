@@ -198,6 +198,7 @@ exports.handler = async (event) => {
     },
     body: JSON.stringify({ 
       gameRules: body.gameRules,
+      numPlayers: Object.keys(players).length
     }),
   });
 
