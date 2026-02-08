@@ -411,6 +411,7 @@ body {
 }
 
 .testing-game {
+  position: relative;
   margin: 2em;
 }
 
@@ -421,6 +422,21 @@ body {
 .testing-game__title__tip {
   margin: 0;
   color: black;
+}
+
+.game-status {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 100%;
+  border-top: 1em;
+  border-bottom: 1em;
+  padding: 1em;
+  background-color: var(--dark-orange);
+  color: black;
+  box-sizing: border-box;
+  font-size: 3em;
 }
 
 .game-preview {

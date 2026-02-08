@@ -1,11 +1,15 @@
 import React from 'react'
-import Game from "../game/game.js";
-import { GameProvider } from "../../contexts/game-context.js";
 
 export default function GameStatus ({ gameConnection }) {
+  const players = gameConnection.client.matchData
+  const winner = gameConnection.state.ctx.gameover.winner
+  let winnerString = ''
+  if (winner) {
+    winnerString = `${players[winner].name} Wins!`
+  }
   return gameConnection.state.ctx.gameover && (
-    <pre>
-      {JSON.stringify(gameConnection.state.ctx.gameover)}
-    </pre>
+    <div className="game-status">
+      {winnerString}
+    </div>
   )
 }
