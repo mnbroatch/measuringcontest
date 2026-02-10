@@ -37,7 +37,7 @@
       "arguments": {
         "destination": {
           "playerChoice": true,
-          "constraints": [
+          "conditions": [
             {
               "type": "Is",
               "matcher": { "type": "Space" }
@@ -70,7 +70,7 @@
         "type": "Some",
         "target": {
           "matchMultiple": true,
-          "constraints": [{
+          "conditions": [{
             "type": "Is",
             "matcher": { "type": "Space" }
           }
@@ -104,7 +104,7 @@
         "type": "Every",
         "target": {
           "matchMultiple": true,
-          "constraints": [
+          "conditions": [
             {
               "type": "Is",
               "target": { "type": "Parent" },

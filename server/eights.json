@@ -97,7 +97,7 @@
       },
       "arguments": {
         "destination": {
-          "constraints": [{
+          "conditions": [{
             "type": "Is",
             "matcher": { "name": "stock" }
           }]
@@ -117,13 +117,13 @@
           "arguments": {
             "entity": {
               "matchMultiple": true,
-              "constraints": [{
+              "conditions": [{
                 "type": "Is",
                 "matcher": { "name": "card" }
               }]
             },
             "destination": {
-              "constraints": [{
+              "conditions": [{
                 "type": "Is",
                 "matcher": { "name": "stock" }
               }]
@@ -134,7 +134,7 @@
           "type": "Shuffle",
           "arguments": {
             "target": {
-              "constraints": [{
+              "conditions": [{
                 "type": "Is",
                 "matcher": { "name": "stock" }
               }]
@@ -158,7 +158,7 @@
               "type": "MoveEntity",
               "arguments": {
                 "entity": {
-                  "constraints": [
+                  "conditions": [
                     {
                       "type": "Is",
                       "target": { "type": "Parent" },
@@ -171,7 +171,7 @@
                   ]
                 },
                 "destination": {
-                  "constraints": [
+                  "conditions": [
                     {
                       "type": "Is",
                       "matcher": {
@@ -192,7 +192,7 @@
           "type": "MoveEntity",
           "arguments": {
             "entity": {
-              "constraints": [
+              "conditions": [
                 {
                   "type": "Is",
                   "target": { "type": "Parent" },
@@ -205,7 +205,7 @@
               ]
             },
             "destination": {
-              "constraints": [
+              "conditions": [
                 {
                   "type": "Is",
                   "matcher": {
@@ -228,7 +228,7 @@
             "arguments": {
               "targets": {
                 "matchMultiple": true,
-                "constraints": [
+                "conditions": [
                   {
                     "type": "Is",
                     "target": { "type": "Parent" },
@@ -247,7 +247,7 @@
             "conditions": [{
               "type": "Not",
               "target": {
-                "constraints": [{
+                "conditions": [{
                   "type": "Is",
                   "matcher": { "name": "stock" }
                 }]
@@ -262,7 +262,7 @@
                   "path": ["loopTarget"]
                 },
                 "destination": {
-                  "constraints": [
+                  "conditions": [
                     {
                       "type": "Is",
                       "matcher": {
@@ -278,7 +278,7 @@
             "type": "Shuffle",
             "arguments": {
               "target": {
-                "constraints": [{
+                "conditions": [{
                   "type": "Is",
                   "matcher": { "name": "stock" }
                 }]
@@ -295,7 +295,7 @@
                 "arguments": {
                   "entity": {
                     "playerChoice": true,
-                    "constraints": [
+                    "conditions": [
                       {
                         "type": "Is",
                         "target": { "type": "Parent" },
@@ -322,7 +322,7 @@
                               "type": "Pick",
                               "properties": ["suit"],
                               "target": {
-                                "constraints": [
+                                "conditions": [
                                   {
                                     "type": "Is",
                                     "target": { "type": "Parent" },
@@ -342,7 +342,7 @@
                               "type": "Pick",
                               "properties": ["value"],
                               "target": {
-                                "constraints": [
+                                "conditions": [
                                   {
                                     "type": "Is",
                                     "target": { "type": "Parent" },
@@ -362,7 +362,7 @@
                   },
                   "destination": {
                     "position": "First",
-                    "constraints": [
+                    "conditions": [
                       {
                         "type": "Is",
                         "matcher": { "name": "discard" }
@@ -408,7 +408,7 @@
                 "conditions": [{
                   "type": "Contains",
                   "target": {
-                    "constraints": [{
+                    "conditions": [{
                       "type": "Is",
                       "matcher": { "name": "stock" }
                     }]
@@ -417,7 +417,7 @@
                 "arguments": {
                   "source": {
                     "playerChoice": true,
-                    "constraints": [
+                    "conditions": [
                       {
                         "type": "Is",
                         "matcher": { "name": "stock" }
@@ -425,7 +425,7 @@
                     ]
                   },
                   "destination": {
-                    "constraints": [
+                    "conditions": [
                       {
                         "type": "Is",
                         "matcher": {
@@ -449,7 +449,7 @@
                 "type": "SetState",
                 "arguments": {
                   "entity": {
-                    "constraints": [
+                    "conditions": [
                       {
                         "type": "Is",
                         "target": { "type": "Parent" },
@@ -477,7 +477,7 @@
         "conditions": [{
           "type": "Is",
           "target": {
-            "constraints": [
+            "conditions": [
               {
                 "type": "Is",
                 "matcher": { "name": "hand" }
@@ -506,7 +506,7 @@
             "type": "SetState",
             "arguments": {
               "entity": {
-                "constraints": [
+                "conditions": [
                   {
                     "type": "Is",
                     "matcher": {
@@ -514,7 +514,7 @@
                       "player": {
                         "type": "RelativePath",
                         "target": {
-                          "constraints": [
+                          "conditions": [
                             {
                               "type": "Is",
                               "matcher": { "name": "hand" }
@@ -540,7 +540,7 @@
                     "existingScore": {
                       "type": "RelativePath",
                       "target": {
-                        "constraints": [
+                        "conditions": [
                           {
                             "type": "Is",
                             "matcher": {
@@ -548,8 +548,7 @@
                               "player": {
                                 "type": "RelativePath",
                                 "target": {
-                                  "a": 1,
-                                  "constraints": [
+                                  "conditions": [
                                     {
                                       "type": "Is",
                                       "matcher": { "name": "hand" }
@@ -572,7 +571,7 @@
                       "type": "map",
                       "targets": {
                         "matchMultiple": true,
-                        "constraints": [
+                        "conditions": [
                           {
                             "type": "Is",
                             "target": { "type": "Parent" },
@@ -617,7 +616,7 @@
       "type": "Some",
       "target": {
         "matchMultiple": true,
-        "constraints": [{
+        "conditions": [{
           "type": "Is",
           "matcher": { "name": "score" }
         }

@@ -30,3 +30,4 @@ add separate spectator route?
 hide game if not joined room
 handle auto join if going from room not joined to room joined
 
+

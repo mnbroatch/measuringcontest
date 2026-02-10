@@ -7,7 +7,10 @@ export default class PlaceNew extends Move {
           bgioArguments,
           {
             ...rule.entity,
-            constraints: rule.conditions,
+            conditions: [
+              ...(rule.entity?.conditions || []),
+              ...(rule.conditions || []),
+            ]
           },
           rule.count,
           context
@@ -16,7 +19,10 @@ export default class PlaceNew extends Move {
           bgioArguments,
           {
             ...rule.entity,
-            constraints: rule.conditions,
+            conditions: [
+              ...(rule.entity?.conditions || []),
+              ...(rule.conditions || []),
+            ]
           },
           context
         )]

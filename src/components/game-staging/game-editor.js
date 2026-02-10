@@ -7,6 +7,7 @@ import useSinglePlayerGame from "../../hooks/use-single-player-game.js";
 import ButtonWithInput from '../../components/button-with-input/button-with-input.js'
 
 import ticTacToe from "../../../server/tic-tac-toe.json";
+import ticTacToe2 from "../../../server/tic-tac-toe2.json";
 import eights from "../../../server/eights.json";
 import eights2 from "../../../server/eights2.json";
 import connectFour from "../../../server/connect-four.json";
@@ -43,12 +44,16 @@ const exampleGames = [
     rules: JSON.stringify(checkers, null, 2)
   },
   {
-    name: 'DEBUG Forth and Back White and Black',
+    name: 'DEV Forth and Back White and Black',
     rules: JSON.stringify(reversi2, null, 2)
   },
   {
-    name: 'DEBUG Discharged for Emotional Instability Eights',
+    name: 'DEV Discharged for Emotional Instability Eights',
     rules: JSON.stringify(eights2, null, 2)
+  },
+  {
+    name: 'DEV Three in a Row',
+    rules: JSON.stringify(ticTacToe2, null, 2)
   },
 ]
 

@@ -298,7 +298,7 @@ body {
   min-height: 10px;
 }
 
-.space:not(:has(.entity)) {
+.space:not(:has(.entity)):not(.grid__cell > :only-child) {
   border: 1px solid grey;
 }
 

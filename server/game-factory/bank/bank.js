@@ -34,8 +34,8 @@ class Bank {
   }
 
   findAll (bgioArguments, rule, context) {
-    if (!rule.constraints) {
-      throw new Error (`Cannot find entity with no constraints. Rule: ${JSON.stringify(rule)}`)
+    if (!rule.conditions) {
+      throw new Error (`Cannot find entity with no conditions. Rule: ${JSON.stringify(rule)}`)
     }
     return filter(
       Object.values(this.tracker),

@@ -4,7 +4,7 @@ import resolveProperties from "../utils/resolve-properties.js";
 
 export default class Move {
   constructor (rule) {
-    this.rule = rule
+    this.rule = this.transformRule(rule)
   }
 
   checkValidity (bgioArguments, payload, context) {
@@ -35,7 +35,7 @@ export default class Move {
         const arg = args[j]
         const result = checkConditions(
           bgioArguments,
-          { conditions: argRule.constraints },
+          argRule,
           { target: arg },
           { ...context, moveArguments: payload.arguments }
         )
@@ -116,5 +116,16 @@ export default class Move {
     }
 
     return { conditionResults }
+  }
+
+  transformRule (rule) {
+    const args = rule.arguments
+    for (let key in args) {
+      const arg = args[key]
+      if (!arg.playerChoice) {
+        arg.resolveAsEntity = true
+      }
+    }
+    return rule
   }
 }

@@ -2,7 +2,7 @@
   "entities": [
     {
       "name": "mainGrid",
-      "entityType": "Grid",
+      "type": "Grid",
       "width": 3,
       "height": 3
     }
@@ -10,6 +10,7 @@
   "numPlayers": 2,
   "moves": {
     "placePlayerMarker": {
+      "type": "PlaceNew",
       "moveType": "PlaceNew",
       "entity": {
         "thatMatches": [
@@ -18,33 +19,75 @@
       },
       "arguments": {
         "destination": {
-          "thatMatches": [
-            { "entityType": "Space" },
-            "isEmpty"
-          ],
-          "playerChoice": true
+          "playerChoice": true,
+          "conditions": [
+            {
+              "type": "Is",
+              "matcher": { "type": "Space" }
+            },
+            {
+              "type": "Not",
+              "conditions": [{"type": "Contains"}]
+            }
+          ]
         }
       }
     }
   },
-  "endConditions": [
+  "endIf": [
     {
       "conditions": [{
-        "entity": "mainGrid",
+        "type": "Some",
+        "target": {
+          "matchMultiple": true,
+          "conditions": [{
+            "type": "Is",
+            "matcher": { "type": "Space" }
+          }
+        ]},
         "conditions": [{
-          "conditionType": "HasLineContainingSame",
-          "lineLength": 3,
-          "sameProperties": [ "player" ]
+          "type": "InLine",
+          "target": {
+            "type": "contextPath",
+            "path": ["loopTarget"]
+          },
+          "sequence": [
+            {
+              "minCount": 3,
+              "conditions": [{
+                "type": "ContainsSame",
+                "properties": ["player"]
+              }]
+            }
+          ]
         }]
       }],
-      "result": { "winner": "ownerOfFirstResultEntity" }
+      "result": {
+        "winner": {
+          "type": "contextPath",
+          "path": ["results", 0, "result", "entities", 0, "attributes", "player"]
+        }
+      }
     },
     {
       "conditions": [{
-        "entity": "mainGrid",
-        "conditions": [ "isFull" ]
+        "type": "Every",
+        "target": {
+          "matchMultiple": true,
+          "conditions": [{
+            "type": "Is",
+            "matcher": { "type": "Space" }
+          }]
+        },
+        "conditions": [{
+          "target": {
+            "type": "contextPath",
+            "path": ["loopTarget"]
+          },
+          "type": "Contains"
+        }]
       }],
-      "result": "draw"
+      "result": { "draw": true }
     }
   ]
 }
