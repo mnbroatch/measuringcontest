@@ -26,7 +26,6 @@
         "conditions": [{
           "type": "Is",
           "matcher": {
-            "name": "playerMarker",
             "player": {
               "type": "ctxPath",
               "path": ["currentPlayer"]
@@ -70,10 +69,7 @@
           },
           "sequence": [
             {
-              "minCount": {
-                "type": "expression",
-                "expression": "3"
-              },
+              "minCount": 3,
               "conditions": [{
                 "type": "ContainsSame",
                 "properties": ["player"]
@@ -96,8 +92,7 @@
           "matchMultiple": true,
           "constraints": [{
             "type": "Is",
-            "target": { "type": "Parent" },
-            "matcher": { "name": "mainGrid" }
+            "matcher": { "type": "Space" }
           }]
         },
         "conditions": [{
