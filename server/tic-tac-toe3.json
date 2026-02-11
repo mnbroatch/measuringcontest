@@ -30,9 +30,9 @@
   "endConditions": [
     {
       "conditions": [{
-        "entity": "mainGrid",
         "conditions": [{
           "conditionType": "HasLineContainingSame",
+          "entity": "mainGrid",
           "lineLength": 3,
           "sameProperties": [ "player" ]
         }]
@@ -40,11 +40,8 @@
       "result": { "winner": "ownerOfFirstResultEntity" }
     },
     {
-      "conditions": [{
-        "entity": "mainGrid",
-        "conditions": [ "isFull" ]
-      }],
-      "result": "draw"
+      "entity": "mainGrid",
+      "conditionType": [ "IsFull" ]
     }
   ]
 }

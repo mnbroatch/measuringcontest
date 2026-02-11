@@ -6,6 +6,7 @@ import Every from "./every-condition.js";
 import ContainsCondition from "./contains-condition.js";
 import ContainsSameCondition from "./contains-same-condition.js";
 import InLine from "./in-line-condition.js";
+import HasLine from "./has-line-condition.js";
 import Would from "./would-condition.js";
 import NoPossibleMoves from "./no-possible-moves-condition.js";
 import Evaluate from "./evaluate-condition.js";
@@ -14,7 +15,6 @@ import Position from "./position-condition.js";
 // import RelativeMoveCondition from "./relative-move-condition.js";
 
 export default function conditionFactory(rule) {
-  console.log('rule', rule)
   if (rule.conditionType === "Is") {
     return new Is(rule);
   } else if (rule.conditionType === "Not") {
@@ -31,6 +31,8 @@ export default function conditionFactory(rule) {
     return new Every(rule);
   } else if (rule.conditionType === "InLine") {
     return new InLine(rule);
+  } else if (rule.conditionType === "HasLine") {
+    return new HasLine(rule);
   } else if (rule.conditionType === "Would") {
     return new Would(rule);
   } else if (rule.conditionType === "NoPossibleMoves") {

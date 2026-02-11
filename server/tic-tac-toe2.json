@@ -16,69 +16,31 @@
       },
       "arguments": {
         "destination": {
-          "playerChoice": true,
           "thatMatches": [
             { "type": "Space" },
             "isEmpty"
-          ]
+          ],
+          "playerChoice": true
         }
       }
     }
   },
-  "endIf": [
+  "endConditions": [
     {
       "conditions": [{
-        "conditionType": "Some",
-        "target": {
-          "matchMultiple": true,
-          "conditions": [{
-            "conditionType": "Is",
-            "matcher": { "type": "Space" }
+        "conditionType": "HasLine",
+        "target": "mainGrid",
+        "sequence": [
+          {
+            "minCount": 3,
+            "conditions": [{
+              "conditionType": "ContainsSame",
+              "properties": ["player"]
+            }]
           }
-        ]},
-        "conditions": [{
-          "conditionType": "InLine",
-          "target": {
-            "type": "contextPath",
-            "path": ["loopTarget"]
-          },
-          "sequence": [
-            {
-              "minCount": 3,
-              "conditions": [{
-                "conditionType": "ContainsSame",
-                "properties": ["player"]
-              }]
-            }
-          ]
-        }]
+        ]
       }],
-      "result": {
-        "winner": {
-          "type": "contextPath",
-          "path": ["results", 0, "result", "entities", 0, "attributes", "player"]
-        }
-      }
-    },
-    {
-      "conditions": [{
-        "conditionType": "Every",
-        "target": {
-          "matchMultiple": true,
-          "conditions": [{
-            "conditionType": "Is",
-            "matcher": { "type": "Space" }
-          }]
-        },
-        "conditions": [{
-          "target": {
-            "type": "contextPath",
-            "path": ["loopTarget"]
-          },
-          "conditionType": "Contains"
-        }]
-      }],
-      "result": { "draw": true }
+      "result": { "winner": "ownerOfFirstResultEntity" }
     }
   ]
 }

@@ -171,6 +171,13 @@ const simpleReplacements = [
       conditionType: 'Not',
       conditions: [{conditionType: 'Contains'}]
     }
+  ],
+  [
+    'ownerOfFirstResultEntity', // might have to more tightly couple this to HasLine condition
+    {
+      "type": "contextPath",
+      "path": ["results", 0, "matches", 0, 0, "entities", 0, "attributes", "player"]
+    }
   ]
 ]
 
