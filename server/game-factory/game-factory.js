@@ -25,7 +25,7 @@ export default function gameFactory (gameRules, rulesHash) {
       bgioArguments,
       {
         conditions: [{
-          type: 'Is',
+          conditionType: 'Is',
           matcher: { name: "sharedBoard" }
         }]
       }
@@ -37,7 +37,7 @@ export default function gameFactory (gameRules, rulesHash) {
           bgioArguments,
           {
             conditions: [{
-              type: 'Is',
+              conditionType: 'Is',
               matcher: {
                 name: "personalBoard",
                 player: playerID,

@@ -56,7 +56,7 @@
       "arguments": {
         "entity": {
           "playerChoice": true,
-          "constraints": [
+          "conditions": [
             {
               "type": "Is",
               "matcher": {
@@ -71,7 +71,7 @@
         },
         "destination": {
           "playerChoice": true,
-          "constraints": [
+          "conditions": [
             {
               "type": "Is",
               "matcher": { "type": "Space" }
@@ -155,7 +155,7 @@
       "arguments": {
         "entity": {
           "playerChoice": true,
-          "constraints": [
+          "conditions": [
             {
               "type": "Is",
               "matcher": {
@@ -170,7 +170,7 @@
         },
         "destination": {
           "playerChoice": true,
-          "constraints": [
+          "conditions": [
             {
               "type": "Is",
               "matcher": { "type": "Space" }
@@ -222,7 +222,7 @@
           "type": "RemoveEntity",
           "arguments": {
             "entity": {
-              "constraints": [
+              "conditions": [
                 {
                   "type": "PathBetween",
                   "from": {
@@ -289,7 +289,7 @@
         "type": "Not",
         "target": {
           "matchMultiple": true,
-          "constraints": [{
+          "conditions": [{
             "type": "Is",
             "matcher": {
               "name": "checker",
@@ -307,7 +307,7 @@
         "type": "Not",
         "target": {
           "matchMultiple": true,
-          "constraints": [{
+          "conditions": [{
             "type": "Is",
             "matcher": {
               "name": "checker",

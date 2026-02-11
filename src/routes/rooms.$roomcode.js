@@ -52,9 +52,9 @@ export default function RoomPage () {
     || (status === 'started' && !gameConnection.state)
 
   let gameDisabledReason = null
-  let minPlayers, maxPlayers
+  let minPlayers, maxPlayers, rulesNumPlayers
   try {
-    ({ minPlayers, maxPlayers } = JSON.parse(gameRules))
+    ({ minPlayers, maxPlayers, numPlayers: rulesNumPlayers } = JSON.parse(gameRules))
     if (maxPlayers && numPlayers > maxPlayers) {
       gameDisabledReason = 'Too Many Players'
     } else if (minPlayers && numPlayers < minPlayers) {

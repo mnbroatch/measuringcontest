@@ -1,5 +1,6 @@
 import cloneDeep from "lodash/cloneDeep.js";
 import find from "lodash/find.js";
+import transformJSON from "./utils/json-transformer.js";
 
 // for later when we implement deep replacement
 // { type: 'IsEmpty' } = { type: 'not', conditions: [{ type: 'Contains' }], 
@@ -26,6 +27,11 @@ const invariantEntities = [
   {
     type: "Board",
     name: 'sharedBoard'
+  },
+  {
+    name: "playerMarker",
+    perPlayer: true,
+    count: "Infinity"
   }
 ]
 
@@ -69,7 +75,7 @@ function expandInitialPlacements (rules, entities) {
       
       if (placement.destination.name === 'personalBoard') {
         return {
-          type: 'ForEach',
+          conditionType: 'ForEach',
           arguments: {
             targets: {
               type: 'ctxPath',
@@ -81,7 +87,7 @@ function expandInitialPlacements (rules, entities) {
             entity: {
               state,
               conditions: [{
-                type: 'Is',
+                conditionType: 'Is',
                 matcher: {
                   ...matcher,
                   ...(entityDefinition.perPlayer
@@ -98,8 +104,8 @@ function expandInitialPlacements (rules, entities) {
             },
             arguments: {
               destination: {
-                constraints: [{
-                  type: 'Is',
+                conditions: [{
+                  conditionType: 'Is',
                   matcher: {
                     ...placement.destination,
                     player: {
@@ -118,14 +124,14 @@ function expandInitialPlacements (rules, entities) {
           entity: {
             state,
             conditions: [{
-              type: 'Is',
+              conditionType: 'Is',
               matcher,
             }]
           },
           arguments: {
             destination: {
-              constraints: [{
-                type: 'Is',
+              conditions: [{
+                conditionType: 'Is',
                 matcher: placement.destination
               }]
             },
@@ -139,8 +145,106 @@ function expandInitialPlacements (rules, entities) {
   }
 }
 
+const keyMappings = [
+  ['thatMatches', 'conditions'],
+  ['entityType', 'type'],
+  ['moveType', 'type'],
+  ['endConditions', 'endIf'],
+]
+
+const simpleReplacements = [
+  [
+    'isCurrentPlayer', 
+    {
+      conditionType: 'Is',
+      matcher: {
+        player: {
+          type: 'ctxPath',
+          path: ['currentPlayer']
+        }
+      }
+    }
+  ],
+  [
+    'isEmpty',
+    {
+      conditionType: 'Not',
+      conditions: [{conditionType: 'Contains'}]
+    }
+  ],
+  [
+    'ownerOfFirstResultEntity', // might have to more tightly couple this to HasLine condition
+    {
+      "type": "contextPath",
+      "path": ["results", 0, "matches", 0, 0, "entities", 0, "attributes", "player"]
+    }
+  ]
+]
+
+const transformationRules = [
+  {
+    test: val => typeof val === 'object',
+    replace: (val) => {
+      keyMappings.forEach(([oldKey, newKey]) => {
+        if (val.hasOwnProperty(oldKey)) {
+          val[newKey] = val[oldKey]
+          delete val[oldKey]
+        }
+      })
+      return val
+    }
+  },
+  {
+    test: val => typeof val === 'string',
+    replace: (val) => {
+      for (let i = 0, len = simpleReplacements.length; i < len; i++) {
+        if (val === simpleReplacements[i][0]) {
+          return simpleReplacements[i][1]
+        }
+      }
+      return val
+    }
+  },
+  {
+    test: val => val?.conditions,
+    replace: (val) => {
+      if (!Array.isArray(val.conditions)) {
+        val.conditions = [val.conditions]
+      }
+      console.log('val', val)
+      return val
+    }
+  },
+  {
+    test: val => val?.conditions,
+    replace: (val) => {
+      // make "Is" the default condition
+      for (let i = 0, len = val.conditions.length; i < len; i++) {
+        if (!val.conditions[i].conditionType) {
+          val.conditions[i] = {
+            conditionType: 'Is',
+            matcher: val.conditions[i]
+          }
+        }
+      }
+      return val
+    }
+  }
+]
+
 export default function expandGameRules (gameRules) {
-  const rules = cloneDeep(gameRules)
+  const rules = transformJSON(gameRules, transformationRules)
+
+  if (!rules.sharedBoard) {
+    rules.sharedBoard = rules.entities
+  }
+
+  if (!rules.turn) {
+    rules.turn = {
+      minMoves: 1,
+      maxMoves: 1
+    }
+  }
 
   expandEntities(rules)
   expandInitialPlacements(rules, rules.entities)
@@ -151,5 +255,10 @@ export default function expandGameRules (gameRules) {
     })
   }
 
+  if (gameRules.numPlayers) {
+    gameRules.minPlayers = gameRules.maxPlayers = gameRules.numPlayers
+  }
+
+  console.log('33333rules', rules)
   return rules
 }

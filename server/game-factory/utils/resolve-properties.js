@@ -7,13 +7,12 @@ import resolveEntity from "./resolve-entity.js";
 // some keys only contain things that will be the root of a later resolution
 const resolutionTerminators = [
   'conditions',
-  'constraints',
   'move',
   'then',
   'mapping',
 ]
 
-export default function resolveProperties (bgioArguments, obj, context) {
+export default function resolveProperties (bgioArguments, obj, context, key) {
   if (!isPlainObject(obj) && !Array.isArray(obj)) {
     return obj
   }
@@ -24,17 +23,18 @@ export default function resolveProperties (bgioArguments, obj, context) {
 
   Object.entries(obj).forEach(([key, value]) => {
     if (!resolutionTerminators.includes(key)) {
-      resolvedProperties[key] = resolveProperties(bgioArguments, value, context)
+      resolvedProperties[key] = resolveProperties(bgioArguments, value, context, key)
     }
   })
 
   const resolved = resolveProperty(bgioArguments, resolvedProperties, context)
 
-  return !resolved?.playerChoice && resolved?.constraints
+  return resolved?.resolveAsEntity
     ? resolveEntity(
         bgioArguments,
         resolved,
-        context
+        context,
+        key
       )
     : resolved
 }
@@ -45,7 +45,7 @@ function resolveProperty (bgioArguments, value, context) {
       bgioArguments,
       {
         ...value,
-        arguments: resolveProperties(bgioArguments, value.arguments, context)
+        arguments: resolveProperties(bgioArguments, value.arguments, context, 'arguments')
       },
       context
     )
@@ -62,11 +62,11 @@ function resolveProperty (bgioArguments, value, context) {
   } else if (value?.type === 'gamePath') {
     return get(bgioArguments.G, value.path)
   } else if (value?.type === 'RelativePath') {
-    const target = resolveProperties(bgioArguments, value.target, context)
+    const target = resolveProperties(bgioArguments, value.target, context, 'target')
     return get(target.attributes, value.path) ?? null
   } else if (value?.type === 'Parent') {
     const originalTarget = value.target
-      ? resolveProperties(bgioArguments, value.target, context)
+      ? resolveProperties(bgioArguments, value.target, context, 'target')
       : context.originalTarget
     return bgioArguments.G.bank.findParent(originalTarget) ?? null
   } else if (value?.type === 'map') {
@@ -97,26 +97,27 @@ function resolveProperty (bgioArguments, value, context) {
     }
     return maxTargets
   } else if (value?.type === 'Pick') {
-    const target = resolveProperties(bgioArguments, value.target, context)
+    const target = resolveProperties(bgioArguments, value.target, context, 'target')
     if (target !== undefined) {
       return pick(
         resolveProperties(
           bgioArguments,
           target.attributes,
-          context
+          context,
+          'attributes'
         ),
         value.properties
       )
     }
   } else if (value?.type === 'Coordinates') {
     const originalTarget = value.target
-      ? resolveProperties(bgioArguments, value.target, context)
+      ? resolveProperties(bgioArguments, value.target, context, 'target')
       : context.originalTarget
       const parent = bgioArguments.G.bank.findParent(originalTarget)
       return parent.getCoordinates(originalTarget.rule.index)
   } else if (value?.type === 'RelativeCoordinates') {
     const originalTarget = value.target
-      ? resolveProperties(bgioArguments, value.target, context)
+      ? resolveProperties(bgioArguments, value.target, context, 'target')
       : context.originalTarget
     const parent = bgioArguments.G.bank.findParent(originalTarget)
     const oldCoordinates =
@@ -124,7 +125,7 @@ function resolveProperty (bgioArguments, value, context) {
     const newCoordinates =
       parent.getRelativeCoordinates(
       oldCoordinates,
-      resolveProperties(bgioArguments, value.location, context)
+      resolveProperties(bgioArguments, value.location, context, 'location')
     )
     return (newCoordinates && parent.spaces[parent.getIndex(newCoordinates)]) ?? null
   } else {
@@ -133,12 +134,13 @@ function resolveProperty (bgioArguments, value, context) {
 }
 
 function getMappedTargets (bgioArguments, targetsRule, mapping, context) {
+  targetsRule.resolveAsEntity = true
   return resolveProperties(bgioArguments, targetsRule, context)?.map(target => ({
     target,
     value: resolveProperties(
       bgioArguments,
       mapping,
-      { ...context, loopTarget: target }
+      { ...context, loopTarget: target },
     )
   })) ?? []
 }

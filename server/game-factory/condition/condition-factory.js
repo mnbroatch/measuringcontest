@@ -6,6 +6,7 @@ import Every from "./every-condition.js";
 import ContainsCondition from "./contains-condition.js";
 import ContainsSameCondition from "./contains-same-condition.js";
 import InLine from "./in-line-condition.js";
+import HasLine from "./has-line-condition.js";
 import Would from "./would-condition.js";
 import NoPossibleMoves from "./no-possible-moves-condition.js";
 import Evaluate from "./evaluate-condition.js";
@@ -14,33 +15,35 @@ import Position from "./position-condition.js";
 // import RelativeMoveCondition from "./relative-move-condition.js";
 
 export default function conditionFactory(rule) {
-  if (rule.type === "Is") {
+  if (rule.conditionType === "Is") {
     return new Is(rule);
-  } else if (rule.type === "Not") {
+  } else if (rule.conditionType === "Not") {
     return new Not(rule);
-  } else if (rule.type === "Or") {
+  } else if (rule.conditionType === "Or") {
     return new Or(rule);
-  } else if (rule.type === "Some") {
+  } else if (rule.conditionType === "Some") {
     return new Some(rule);
-  } else if (rule.type === "Contains") {
+  } else if (rule.conditionType === "Contains") {
     return new ContainsCondition(rule);
-  } else if (rule.type === "ContainsSame") {
+  } else if (rule.conditionType === "ContainsSame") {
     return new ContainsSameCondition(rule);
-  } else if (rule.type === "Every") {
+  } else if (rule.conditionType === "Every") {
     return new Every(rule);
-  } else if (rule.type === "InLine") {
+  } else if (rule.conditionType === "InLine") {
     return new InLine(rule);
-  } else if (rule.type === "Would") {
+  } else if (rule.conditionType === "HasLine") {
+    return new HasLine(rule);
+  } else if (rule.conditionType === "Would") {
     return new Would(rule);
-  } else if (rule.type === "NoPossibleMoves") {
+  } else if (rule.conditionType === "NoPossibleMoves") {
     return new NoPossibleMoves(rule);
-  } else if (rule.type === "Evaluate") {
+  } else if (rule.conditionType === "Evaluate") {
     return new Evaluate(rule);
-  } else if (rule.type === "Position") {
+  } else if (rule.conditionType === "Position") {
     return new Position(rule);
-  // } else if (rule.type === "bingo") {
+  // } else if (rule.conditionType === "bingo") {
     // return new BingoCondition(rule);
-  // } else if (rule.type === "relativeMove") {
+  // } else if (rule.conditionType === "relativeMove") {
   //   return new RelativeMoveCondition(rule);
   }
 }

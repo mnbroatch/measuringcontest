@@ -2,7 +2,7 @@
   "entities": [
     {
       "name": "mainGrid",
-      "type": "Grid",
+      "entityType": "Grid",
       "width": 3,
       "height": 3
     }
@@ -10,14 +10,16 @@
   "numPlayers": 2,
   "moves": {
     "placePlayerMarker": {
-      "type": "PlaceNew",
+      "moveType": "PlaceNew",
       "entity": {
-        "thatMatches": "isCurrentPlayer"
+        "thatMatches": [
+          "isCurrentPlayer"
+        ]
       },
       "arguments": {
         "destination": {
           "thatMatches": [
-            { "type": "Space" },
+            { "entityType": "Space" },
             "isEmpty"
           ],
           "playerChoice": true
@@ -28,19 +30,18 @@
   "endConditions": [
     {
       "conditions": [{
-        "conditionType": "HasLine",
-        "target": "mainGrid",
-        "sequence": [
-          {
-            "minCount": 3,
-            "conditions": [{
-              "conditionType": "ContainsSame",
-              "properties": ["player"]
-            }]
-          }
-        ]
+        "conditions": [{
+          "conditionType": "HasLineContainingSame",
+          "entity": "mainGrid",
+          "lineLength": 3,
+          "sameProperties": [ "player" ]
+        }]
       }],
       "result": { "winner": "ownerOfFirstResultEntity" }
+    },
+    {
+      "entity": "mainGrid",
+      "conditionType": [ "IsFull" ]
     }
   ]
 }
