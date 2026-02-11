@@ -29,7 +29,12 @@
     {
       "conditions": [{
         "conditionType": "HasLine",
-        "target": "mainGrid",
+        "target": {
+          "conditions": [{
+            "conditionType": "Is",
+            "matcher": { "name": "mainGrid" }
+          }
+        ]},
         "sequence": [
           {
             "minCount": 3,

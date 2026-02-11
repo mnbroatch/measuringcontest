@@ -211,7 +211,6 @@ const transformationRules = [
       if (!Array.isArray(val.conditions)) {
         val.conditions = [val.conditions]
       }
-      console.log('val', val)
       return val
     }
   },
@@ -259,6 +258,5 @@ export default function expandGameRules (gameRules) {
     gameRules.minPlayers = gameRules.maxPlayers = gameRules.numPlayers
   }
 
-  console.log('33333rules', rules)
   return rules
 }

@@ -9,7 +9,6 @@ export default class HasLineCondition extends Condition {
       rule.sequence,
       context
     );
-    
     return { matches, conditionIsMet: !!matches.length };
   }
 }

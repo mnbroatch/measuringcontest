@@ -20,7 +20,6 @@ export default function checkConditions (
     }
   }
 
-
   return {
     results,
     failedAt,
