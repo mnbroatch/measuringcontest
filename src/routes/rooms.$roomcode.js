@@ -9,6 +9,7 @@ import { useDeleteRoomMutation } from "../queries/use-delete-room-mutation.js";
 import { useCreateGameMutation } from "../queries/use-create-game-mutation.js";
 import { useDeleteGameMutation } from "../queries/use-delete-game-mutation.js";
 import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
+import { useLoading } from "../contexts/loading-context.js";
 import PlayGame from "../components/play-game/play-game.js";
 import WatchGame from "../components/watch-game/watch-game.js";
 import GameStatus from "../components/game-status/game-status.js";
@@ -23,6 +24,7 @@ export default function RoomPage () {
   const roomCode = Route.useParams().roomcode?.toLowerCase()
   const navigate = useNavigate()
   const auth = useCognitoAuth()
+  const { startLoading } = useLoading()
   const userId = auth.userId
   const leaveRoomMutation = useLeaveRoomMutation(roomCode)
   const deleteRoomMutation = useDeleteRoomMutation()
@@ -81,6 +83,7 @@ export default function RoomPage () {
       <button
         className="button button--style-c"
         onClick={async () => {
+          startLoading()
           await deleteRoomMutation.mutateAsync(roomCode)
           navigate({
             to: '/',
@@ -125,6 +128,7 @@ export default function RoomPage () {
                 <button
                   className="button button--x-small button--style-c"
                   onClick={async () => {
+                    startLoading()
                     await deleteRoomMutation.mutateAsync(roomCode)
                     navigate({
                       to: '/',
@@ -159,6 +163,7 @@ export default function RoomPage () {
                 className="button button--x-small button--style-c"
                 disabled={leaveRoomMutation.isPending || leaveRoomMutation.isSuccess}
                 onClick={async () => {
+                  startLoading()
                   await leaveRoomMutation.mutateAsync(roomCode)
                   navigate({
                     to: '/',

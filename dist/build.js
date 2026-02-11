@@ -159,12 +159,13 @@ function resolveEntity(bgioArguments, target, context, targetName) {
 /* harmony import */ var _queries_use_create_game_mutation_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(29127);
 /* harmony import */ var _queries_use_delete_game_mutation_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(50808);
 /* harmony import */ var _contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(52904);
-/* harmony import */ var _components_play_game_play_game_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(34223);
-/* harmony import */ var _components_watch_game_watch_game_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(13869);
-/* harmony import */ var _components_game_status_game_status_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(45679);
-/* harmony import */ var _components_game_staging_room_game_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(41035);
-/* harmony import */ var _components_game_staging_game_preview_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(23984);
-/* harmony import */ var _components_game_staging_game_editor_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(83107);
+/* harmony import */ var _contexts_loading_context_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(42686);
+/* harmony import */ var _components_play_game_play_game_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(34223);
+/* harmony import */ var _components_watch_game_watch_game_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(13869);
+/* harmony import */ var _components_game_status_game_status_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(45679);
+/* harmony import */ var _components_game_staging_room_game_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(41035);
+/* harmony import */ var _components_game_staging_game_preview_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(23984);
+/* harmony import */ var _components_game_staging_game_editor_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(83107);
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
@@ -193,6 +194,7 @@ console.warn("[tanstack-router] These exports from \"/home/mnbro/Programming/mea
 
 
 
+
 var SCREEN_STATE_EDITING = 'editing';
 var SCREEN_STATE_WAITING = 'waiting';
 function RoomPage() {
@@ -200,6 +202,8 @@ function RoomPage() {
   var roomCode = (_Route$useParams$room = Route.useParams().roomcode) === null || _Route$useParams$room === void 0 ? void 0 : _Route$useParams$room.toLowerCase();
   var navigate = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_3__/* .useNavigate */ .Z)();
   var auth = (0,_contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_12__/* .useCognitoAuth */ .f)();
+  var _useLoading = (0,_contexts_loading_context_js__WEBPACK_IMPORTED_MODULE_13__/* .useLoading */ .M)(),
+    startLoading = _useLoading.startLoading;
   var userId = auth.userId;
   var leaveRoomMutation = (0,_queries_use_leave_room_mutation_js__WEBPACK_IMPORTED_MODULE_8__/* .useLeaveRoomMutation */ .L)(roomCode);
   var deleteRoomMutation = (0,_queries_use_delete_room_mutation_js__WEBPACK_IMPORTED_MODULE_9__/* .useDeleteRoomMutation */ .d)();
@@ -260,6 +264,7 @@ function RoomPage() {
         return _regenerator().w(function (_context) {
           while (1) switch (_context.n) {
             case 0:
+              startLoading();
               _context.n = 1;
               return deleteRoomMutation.mutateAsync(roomCode);
             case 1:
@@ -290,13 +295,13 @@ function RoomPage() {
     className: "room-game__game-name"
   }, gameName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h5", {
     className: "room-game__player-count"
-  }, playerCountString), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_room_game_js__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+  }, playerCountString), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_room_game_js__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     players: players,
     playerID: playerID,
     changeName: function changeName(name) {
       roomConnection.client.moves.join(name);
     }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_game_preview_js__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_game_preview_js__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     gameRules: gameRules,
     roomCode: roomCode
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -307,6 +312,7 @@ function RoomPage() {
       return _regenerator().w(function (_context2) {
         while (1) switch (_context2.n) {
           case 0:
+            startLoading();
             _context2.n = 1;
             return deleteRoomMutation.mutateAsync(roomCode);
           case 1:
@@ -342,6 +348,7 @@ function RoomPage() {
       return _regenerator().w(function (_context3) {
         while (1) switch (_context3.n) {
           case 0:
+            startLoading();
             _context3.n = 1;
             return leaveRoomMutation.mutateAsync(roomCode);
           case 1:
@@ -353,7 +360,7 @@ function RoomPage() {
         }
       }, _callee3);
     }))
-  }, "Leave Room"))), status === 'waiting' && iAmRoomCreator && screenState === SCREEN_STATE_EDITING && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_game_editor_js__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+  }, "Leave Room"))), status === 'waiting' && iAmRoomCreator && screenState === SCREEN_STATE_EDITING && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_game_editor_js__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
     auth: auth,
     roomCode: roomCode,
     goToRoom: function goToRoom(_ref4) {
@@ -365,11 +372,11 @@ function RoomPage() {
       });
       setScreenState(SCREEN_STATE_WAITING);
     }
-  }), status === 'started' && iAmInGame && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_play_game_play_game_js__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+  }), status === 'started' && iAmInGame && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_play_game_play_game_js__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     gameConnection: gameConnection
-  }), status === 'started' && !iAmInGame && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_watch_game_watch_game_js__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+  }), status === 'started' && !iAmInGame && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_watch_game_watch_game_js__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
     gameConnection: gameConnection
-  }), status === 'started' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_status_game_status_js__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+  }), status === 'started' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_status_game_status_js__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
     gameConnection: gameConnection
   }), status === 'started' && iAmRoomCreator && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "button button--x-small button--style-c",
@@ -35412,8 +35419,9 @@ function Client(opts) {
 /* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(36095);
 /* harmony import */ var _components_game_staging_game_editor_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(83107);
 /* harmony import */ var _contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(52904);
-/* harmony import */ var _queries_use_create_room_mutation_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(62140);
-/* harmony import */ var _queries_use_my_rooms_query_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(92798);
+/* harmony import */ var _contexts_loading_context_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(42686);
+/* harmony import */ var _queries_use_create_room_mutation_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(62140);
+/* harmony import */ var _queries_use_my_rooms_query_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(92798);
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
@@ -35425,13 +35433,16 @@ console.warn("[tanstack-router] These exports from \"/home/mnbro/Programming/mea
 
 
 
+
 function Editor() {
   var _myRooms$data;
   var navigate = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__/* .useNavigate */ .Z)();
-  var createRoomMutation = (0,_queries_use_create_room_mutation_js__WEBPACK_IMPORTED_MODULE_5__/* .useCreateRoomMutation */ .q)();
-  var myRooms = (0,_queries_use_my_rooms_query_js__WEBPACK_IMPORTED_MODULE_6__/* .useMyRoomsQuery */ .s)();
+  var createRoomMutation = (0,_queries_use_create_room_mutation_js__WEBPACK_IMPORTED_MODULE_6__/* .useCreateRoomMutation */ .q)();
+  var myRooms = (0,_queries_use_my_rooms_query_js__WEBPACK_IMPORTED_MODULE_7__/* .useMyRoomsQuery */ .s)();
   var roomCode = (_myRooms$data = myRooms.data) === null || _myRooms$data === void 0 ? void 0 : _myRooms$data[0];
   var auth = (0,_contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_4__/* .useCognitoAuth */ .f)();
+  var _useLoading = (0,_contexts_loading_context_js__WEBPACK_IMPORTED_MODULE_5__/* .useLoading */ .M)(),
+    startLoading = _useLoading.startLoading;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_game_staging_game_editor_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
     auth: auth,
     handleCreateRoom: (/*#__PURE__*/function () {
@@ -35441,6 +35452,7 @@ function Editor() {
           while (1) switch (_context.n) {
             case 0:
               gameRules = _ref.gameRules, gameName = _ref.gameName;
+              startLoading();
               _context.n = 1;
               return createRoomMutation.mutateAsync({
                 gameRules: gameRules,
@@ -35467,6 +35479,7 @@ function Editor() {
     }()),
     roomCode: roomCode,
     goToRoom: function goToRoom() {
+      startLoading();
       navigate({
         to: '/rooms/$roomcode',
         params: {
@@ -35482,7 +35495,7 @@ var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__/* .createFile
       return _regenerator().w(function (_context2) {
         while (1) switch (_context2.n) {
           case 0:
-            return _context2.a(2, _queries_use_my_rooms_query_js__WEBPACK_IMPORTED_MODULE_6__/* .useMyRoomsQuery */ .s.preload());
+            return _context2.a(2, _queries_use_my_rooms_query_js__WEBPACK_IMPORTED_MODULE_7__/* .useMyRoomsQuery */ .s.preload());
         }
       }, _callee2);
     }));
@@ -37484,7 +37497,6 @@ const protocol = 4;
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   q: () => (/* binding */ Route)
 /* harmony export */ });
-/* unused harmony export default */
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
 /* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(27162);
 /* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(72382);
@@ -37493,11 +37505,18 @@ const protocol = 4;
 /* harmony import */ var _queries_use_my_rooms_query_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(92798);
 /* harmony import */ var _queries_use_cognito_query_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(31384);
 /* harmony import */ var _contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(52904);
-/* harmony import */ var _components_header_header_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(53871);
+/* harmony import */ var _contexts_loading_context_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(42686);
+/* harmony import */ var _components_header_header_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(53871);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
 
 
@@ -37505,27 +37524,35 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 
 
 
-function Root() {
+
+function RootContent() {
   var auth = (0,_contexts_cognito_auth_context_js__WEBPACK_IMPORTED_MODULE_7__/* .useCognitoAuth */ .f)();
+  var _useLoading = (0,_contexts_loading_context_js__WEBPACK_IMPORTED_MODULE_8__/* .useLoading */ .M)(),
+    isLoading = _useLoading.isLoading;
   var mutationCount = (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_4__/* .useIsMutating */ .l)();
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_header_header_js__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+  var loading = isLoading || !!mutationCount;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_header_header_js__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
     auth: auth
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       flex: 1
     },
     className: "content"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, loading && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "spinner"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "content__inner",
-    style: {
+    style: _objectSpread({
       display: 'flex',
       flexDirection: 'column',
-      height: '100%',
-      visibility: mutationCount ? 'hidden' : 'visible'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__/* .Outlet */ .sv, null)), !!mutationCount && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "spinner"
-  })));
+      height: '100%'
+    }, loading && {
+      display: 'none'
+    })
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__/* .Outlet */ .sv, null))));
+}
+function Root() {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_contexts_loading_context_js__WEBPACK_IMPORTED_MODULE_8__/* .LoadingProvider */ .o, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(RootContent, null));
 }
 var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_2__/* .createRootRoute */ .gI)({
   beforeLoad: function () {
@@ -47507,6 +47534,61 @@ const HubInternal = new HubClass('internal-hub');
 
 //# sourceMappingURL=index.mjs.map
 
+
+/***/ }),
+
+/***/ 42686:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   M: () => (/* binding */ useLoading),
+/* harmony export */   o: () => (/* binding */ LoadingProvider)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
+/* harmony import */ var _tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(81297);
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+
+
+var LoadingContext = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.createContext)(null);
+function LoadingProvider(_ref) {
+  var children = _ref.children;
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState2 = _slicedToArray(_useState, 2),
+    isLoading = _useState2[0],
+    setIsLoading = _useState2[1];
+  var router = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__/* .useRouter */ .r)();
+  var startLoading = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function () {
+    return setIsLoading(true);
+  }, []);
+  var stopLoading = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function () {
+    return setIsLoading(false);
+  }, []);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    return router.subscribe('onResolved', function () {
+      setIsLoading(false);
+    });
+  }, [router]);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(LoadingContext.Provider, {
+    value: {
+      isLoading: isLoading,
+      startLoading: startLoading,
+      stopLoading: stopLoading
+    }
+  }, children);
+}
+function useLoading() {
+  var context = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(LoadingContext);
+  if (!context) {
+    throw new Error('useLoading must be used within LoadingProvider');
+  }
+  return context;
+}
 
 /***/ }),
 
@@ -69428,17 +69510,17 @@ var api = init(defaultConverter, { path: '/' });
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
 /* harmony import */ var _monaco_editor_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(36084);
-/* harmony import */ var _server_tic_tac_toe_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(51026);
-/* harmony import */ var _server_eights_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(41038);
-/* harmony import */ var _server_eights2_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(17872);
-/* harmony import */ var _server_connect_four_json__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(95979);
-/* harmony import */ var _server_reversi_json__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(97752);
-/* harmony import */ var _server_reversi2_json__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(18082);
-/* harmony import */ var _server_checkers_json__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(61478);
-/* harmony import */ var _play_game_play_game_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(34223);
-/* harmony import */ var _game_status_game_status_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(45679);
-/* harmony import */ var _hooks_use_single_player_game_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(87999);
-/* harmony import */ var _components_button_with_input_button_with_input_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(45247);
+/* harmony import */ var _play_game_play_game_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(34223);
+/* harmony import */ var _game_status_game_status_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(45679);
+/* harmony import */ var _hooks_use_single_player_game_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(87999);
+/* harmony import */ var _components_button_with_input_button_with_input_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(45247);
+/* harmony import */ var _server_tic_tac_toe_json__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(51026);
+/* harmony import */ var _server_eights_json__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(41038);
+/* harmony import */ var _server_eights2_json__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(17872);
+/* harmony import */ var _server_connect_four_json__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(95979);
+/* harmony import */ var _server_reversi_json__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(97752);
+/* harmony import */ var _server_reversi2_json__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(18082);
+/* harmony import */ var _server_checkers_json__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(61478);
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -69465,25 +69547,25 @@ var exampleGames = [{
   rules: '{}'
 }, {
   name: 'Three in a Row',
-  rules: JSON.stringify(_server_tic_tac_toe_json__WEBPACK_IMPORTED_MODULE_2__, null, 2)
+  rules: JSON.stringify(_server_tic_tac_toe_json__WEBPACK_IMPORTED_MODULE_6__, null, 2)
 }, {
   name: 'Four in a Row but With Gravity',
-  rules: JSON.stringify(_server_connect_four_json__WEBPACK_IMPORTED_MODULE_5__, null, 2)
+  rules: JSON.stringify(_server_connect_four_json__WEBPACK_IMPORTED_MODULE_9__, null, 2)
 }, {
   name: 'Forth and Back White and Black',
-  rules: JSON.stringify(_server_reversi_json__WEBPACK_IMPORTED_MODULE_6__, null, 2)
+  rules: JSON.stringify(_server_reversi_json__WEBPACK_IMPORTED_MODULE_10__, null, 2)
 }, {
   name: 'Discharged for Emotional Instability Eights',
-  rules: JSON.stringify(_server_eights_json__WEBPACK_IMPORTED_MODULE_3__, null, 2)
+  rules: JSON.stringify(_server_eights_json__WEBPACK_IMPORTED_MODULE_7__, null, 2)
 }, {
   name: 'Kingly Jumps',
-  rules: JSON.stringify(_server_checkers_json__WEBPACK_IMPORTED_MODULE_8__, null, 2)
+  rules: JSON.stringify(_server_checkers_json__WEBPACK_IMPORTED_MODULE_12__, null, 2)
 }, {
   name: 'DEBUG Forth and Back White and Black',
-  rules: JSON.stringify(_server_reversi2_json__WEBPACK_IMPORTED_MODULE_7__, null, 2)
+  rules: JSON.stringify(_server_reversi2_json__WEBPACK_IMPORTED_MODULE_11__, null, 2)
 }, {
   name: 'DEBUG Discharged for Emotional Instability Eights',
-  rules: JSON.stringify(_server_eights2_json__WEBPACK_IMPORTED_MODULE_4__, null, 2)
+  rules: JSON.stringify(_server_eights2_json__WEBPACK_IMPORTED_MODULE_8__, null, 2)
 }];
 var RULES_LOCALSTORAGE_KEY = 'bge-editor-game-rules';
 var NAME_LOCALSTORAGE_KEY = 'bge-editor-game-name';
@@ -69532,7 +69614,7 @@ function GameEditor(_ref) {
     _useState0 = _slicedToArray(_useState9, 2),
     savedNumPlayers = _useState0[0],
     setSavedNumPlayers = _useState0[1];
-  var gameConnection = (0,_hooks_use_single_player_game_js__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A)(savedGameRules, +savedNumPlayers);
+  var gameConnection = (0,_hooks_use_single_player_game_js__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A)(savedGameRules, +savedNumPlayers);
   var handleGameRulesChange = function handleGameRulesChange(newGameRules) {
     localStorage.setItem(RULES_LOCALSTORAGE_KEY, newGameRules);
     localStorage.setItem(NAME_LOCALSTORAGE_KEY, gameName);
@@ -69604,7 +69686,7 @@ function GameEditor(_ref) {
     value: gameName
   }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "buttons"
-  }, gameRulesJSONIsValid && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_button_with_input_button_with_input_js__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+  }, gameRulesJSONIsValid && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_button_with_input_button_with_input_js__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
     className: "join-room-button button--x-small",
     label: "Test Game With Player Count:",
     defaultValue: 2,
@@ -69648,9 +69730,9 @@ function GameEditor(_ref) {
     onClick: function onClick() {
       setScreenState(SCREEN_STATE_EDITING);
     }
-  }, "Back to Editor")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_play_game_play_game_js__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+  }, "Back to Editor")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_play_game_play_game_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
     gameConnection: gameConnection
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_game_status_game_status_js__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_game_status_game_status_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
     gameConnection: gameConnection
   })));
 }
