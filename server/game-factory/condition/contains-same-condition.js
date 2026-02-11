@@ -11,9 +11,9 @@ export default class ContainsSame extends Condition {
     const [ first, ...restEntities ] = targets;
     const conditionIsMet = first.entities.some(entity => {
       const condition = conditionFactory({
-        type: "Contains",
+        conditionType: "Contains",
         conditions: [{
-          type: 'Is',
+          conditionType: 'Is',
           matcher: pick(entity.rule, rule.properties)
         }]
       })

@@ -75,7 +75,7 @@ function expandInitialPlacements (rules, entities) {
       
       if (placement.destination.name === 'personalBoard') {
         return {
-          type: 'ForEach',
+          conditionType: 'ForEach',
           arguments: {
             targets: {
               type: 'ctxPath',
@@ -87,7 +87,7 @@ function expandInitialPlacements (rules, entities) {
             entity: {
               state,
               conditions: [{
-                type: 'Is',
+                conditionType: 'Is',
                 matcher: {
                   ...matcher,
                   ...(entityDefinition.perPlayer
@@ -105,7 +105,7 @@ function expandInitialPlacements (rules, entities) {
             arguments: {
               destination: {
                 conditions: [{
-                  type: 'Is',
+                  conditionType: 'Is',
                   matcher: {
                     ...placement.destination,
                     player: {
@@ -124,14 +124,14 @@ function expandInitialPlacements (rules, entities) {
           entity: {
             state,
             conditions: [{
-              type: 'Is',
+              conditionType: 'Is',
               matcher,
             }]
           },
           arguments: {
             destination: {
               conditions: [{
-                type: 'Is',
+                conditionType: 'Is',
                 matcher: placement.destination
               }]
             },
@@ -146,23 +146,30 @@ function expandInitialPlacements (rules, entities) {
 }
 
 const keyMappings = [
-  ['thatMatches','conditions'],
-  ['entityType','type'],
-  ['moveType','type'],
-  ['conditionType','type'],
+  ['thatMatches', 'conditions'],
+  ['entityType', 'type'],
+  ['moveType', 'type'],
+  ['endConditions', 'endIf'],
 ]
 
 const simpleReplacements = [
   [
     'isCurrentPlayer', 
     {
-      "type": "Is",
-      "matcher": {
-        "player": {
-          "type": "ctxPath",
-          "path": ["currentPlayer"]
+      conditionType: 'Is',
+      matcher: {
+        player: {
+          type: 'ctxPath',
+          path: ['currentPlayer']
         }
       }
+    }
+  ],
+  [
+    'isEmpty',
+    {
+      conditionType: 'Not',
+      conditions: [{conditionType: 'Contains'}]
     }
   ]
 ]
@@ -186,6 +193,31 @@ const transformationRules = [
       for (let i = 0, len = simpleReplacements.length; i < len; i++) {
         if (val === simpleReplacements[i][0]) {
           return simpleReplacements[i][1]
+        }
+      }
+      return val
+    }
+  },
+  {
+    test: val => val?.conditions,
+    replace: (val) => {
+      if (!Array.isArray(val.conditions)) {
+        val.conditions = [val.conditions]
+      }
+      console.log('val', val)
+      return val
+    }
+  },
+  {
+    test: val => val?.conditions,
+    replace: (val) => {
+      // make "Is" the default condition
+      for (let i = 0, len = val.conditions.length; i < len; i++) {
+        if (!val.conditions[i].conditionType) {
+          val.conditions[i] = {
+            conditionType: 'Is',
+            matcher: val.conditions[i]
+          }
         }
       }
       return val
@@ -220,5 +252,6 @@ export default function expandGameRules (gameRules) {
     gameRules.minPlayers = gameRules.maxPlayers = gameRules.numPlayers
   }
 
+  console.log('33333rules', rules)
   return rules
 }

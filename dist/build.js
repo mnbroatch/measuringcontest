@@ -12129,7 +12129,7 @@ function gameFactory(gameRules, rulesHash) {
     initialState.bank = new _bank_bank_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A(entityDefinitions);
     initialState.sharedBoard = initialState.bank.getOne(bgioArguments, {
       conditions: [{
-        type: 'Is',
+        conditionType: 'Is',
         matcher: {
           name: "sharedBoard"
         }
@@ -12139,7 +12139,7 @@ function gameFactory(gameRules, rulesHash) {
       initialState.personalBoards = bgioArguments.ctx.playOrder.map(function (playerID) {
         return initialState.bank.getOne(bgioArguments, {
           conditions: [{
-            type: 'Is',
+            conditionType: 'Is',
             matcher: {
               name: "personalBoard",
               player: playerID
@@ -34718,33 +34718,34 @@ const getAuthUserAgentValue = (action, customUserAgentDetails) => (0,_aws_amplif
 // import RelativeMoveCondition from "./relative-move-condition.js";
 
 function conditionFactory(rule) {
-  if (rule.type === "Is") {
+  console.log('rule', rule);
+  if (rule.conditionType === "Is") {
     return new _is_condition_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A(rule);
-  } else if (rule.type === "Not") {
+  } else if (rule.conditionType === "Not") {
     return new _not_condition_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A(rule);
-  } else if (rule.type === "Or") {
+  } else if (rule.conditionType === "Or") {
     return new _or_condition_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A(rule);
-  } else if (rule.type === "Some") {
+  } else if (rule.conditionType === "Some") {
     return new _some_condition_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A(rule);
-  } else if (rule.type === "Contains") {
+  } else if (rule.conditionType === "Contains") {
     return new _contains_condition_js__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A(rule);
-  } else if (rule.type === "ContainsSame") {
+  } else if (rule.conditionType === "ContainsSame") {
     return new _contains_same_condition_js__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A(rule);
-  } else if (rule.type === "Every") {
+  } else if (rule.conditionType === "Every") {
     return new _every_condition_js__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A(rule);
-  } else if (rule.type === "InLine") {
+  } else if (rule.conditionType === "InLine") {
     return new _in_line_condition_js__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A(rule);
-  } else if (rule.type === "Would") {
+  } else if (rule.conditionType === "Would") {
     return new _would_condition_js__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A(rule);
-  } else if (rule.type === "NoPossibleMoves") {
+  } else if (rule.conditionType === "NoPossibleMoves") {
     return new _no_possible_moves_condition_js__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A(rule);
-  } else if (rule.type === "Evaluate") {
+  } else if (rule.conditionType === "Evaluate") {
     return new _evaluate_condition_js__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A(rule);
-  } else if (rule.type === "Position") {
+  } else if (rule.conditionType === "Position") {
     return new _position_condition_js__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A(rule);
-    // } else if (rule.type === "bingo") {
+    // } else if (rule.conditionType === "bingo") {
     // return new BingoCondition(rule);
-    // } else if (rule.type === "relativeMove") {
+    // } else if (rule.conditionType === "relativeMove") {
     //   return new RelativeMoveCondition(rule);
   }
 }
@@ -48006,7 +48007,7 @@ function expandInitialPlacements(rules, entities) {
       var entityDefinition = lodash_find_js__WEBPACK_IMPORTED_MODULE_1__(entities, matcher);
       if (placement.destination.name === 'personalBoard') {
         return {
-          type: 'ForEach',
+          conditionType: 'ForEach',
           arguments: {
             targets: {
               type: 'ctxPath',
@@ -48018,7 +48019,7 @@ function expandInitialPlacements(rules, entities) {
             entity: {
               state: state,
               conditions: [{
-                type: 'Is',
+                conditionType: 'Is',
                 matcher: _objectSpread(_objectSpread({}, matcher), entityDefinition.perPlayer ? {
                   player: {
                     type: 'contextPath',
@@ -48030,7 +48031,7 @@ function expandInitialPlacements(rules, entities) {
             arguments: {
               destination: {
                 conditions: [{
-                  type: 'Is',
+                  conditionType: 'Is',
                   matcher: _objectSpread(_objectSpread({}, placement.destination), {}, {
                     player: {
                       type: 'contextPath',
@@ -48048,14 +48049,14 @@ function expandInitialPlacements(rules, entities) {
           entity: {
             state: state,
             conditions: [{
-              type: 'Is',
+              conditionType: 'Is',
               matcher: matcher
             }]
           },
           arguments: {
             destination: {
               conditions: [{
-                type: 'Is',
+                conditionType: 'Is',
                 matcher: placement.destination
               }]
             }
@@ -48068,15 +48069,20 @@ function expandInitialPlacements(rules, entities) {
     delete rules.initialPlacements;
   }
 }
-var keyMappings = [['thatMatches', 'conditions'], ['entityType', 'type'], ['moveType', 'type'], ['conditionType', 'type']];
+var keyMappings = [['thatMatches', 'conditions'], ['entityType', 'type'], ['moveType', 'type'], ['endConditions', 'endIf']];
 var simpleReplacements = [['isCurrentPlayer', {
-  "type": "Is",
-  "matcher": {
-    "player": {
-      "type": "ctxPath",
-      "path": ["currentPlayer"]
+  conditionType: 'Is',
+  matcher: {
+    player: {
+      type: 'ctxPath',
+      path: ['currentPlayer']
     }
   }
+}], ['isEmpty', {
+  conditionType: 'Not',
+  conditions: [{
+    conditionType: 'Contains'
+  }]
 }]];
 var transformationRules = [{
   test: function test(val) {
@@ -48106,6 +48112,33 @@ var transformationRules = [{
     }
     return val;
   }
+}, {
+  test: function test(val) {
+    return val === null || val === void 0 ? void 0 : val.conditions;
+  },
+  replace: function replace(val) {
+    if (!Array.isArray(val.conditions)) {
+      val.conditions = [val.conditions];
+    }
+    console.log('val', val);
+    return val;
+  }
+}, {
+  test: function test(val) {
+    return val === null || val === void 0 ? void 0 : val.conditions;
+  },
+  replace: function replace(val) {
+    // make "Is" the default condition
+    for (var i = 0, len = val.conditions.length; i < len; i++) {
+      if (!val.conditions[i].conditionType) {
+        val.conditions[i] = {
+          conditionType: 'Is',
+          matcher: val.conditions[i]
+        };
+      }
+    }
+    return val;
+  }
 }];
 function expandGameRules(gameRules) {
   var rules = (0,_utils_json_transformer_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(gameRules, transformationRules);
@@ -48128,6 +48161,7 @@ function expandGameRules(gameRules) {
   if (gameRules.numPlayers) {
     gameRules.minPlayers = gameRules.maxPlayers = gameRules.numPlayers;
   }
+  console.log('33333rules', rules);
   return rules;
 }
 
@@ -57441,9 +57475,9 @@ var ContainsSame = /*#__PURE__*/function (_Condition) {
         restEntities = _targets.slice(1);
       var conditionIsMet = first.entities.some(function (entity) {
         var condition = (0,_condition_factory_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)({
-          type: "Contains",
+          conditionType: "Contains",
           conditions: [{
-            type: 'Is',
+            conditionType: 'Is',
             matcher: lodash_pick_js__WEBPACK_IMPORTED_MODULE_0__(entity.rule, rule.properties)
           }]
         });
@@ -67283,13 +67317,14 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 // recurse and replace. circular references not allowed
 function transformJSON(data, rules) {
   return JSON.parse(JSON.stringify(data), function (key, value) {
+    var result = value;
     var _iterator = _createForOfIteratorHelper(rules),
       _step;
     try {
       for (_iterator.s(); !(_step = _iterator.n()).done;) {
         var rule = _step.value;
-        if (rule.test(value)) {
-          return rule.replace(value);
+        if (rule.test(result)) {
+          result = rule.replace(result);
         }
       }
     } catch (err) {
@@ -67297,7 +67332,7 @@ function transformJSON(data, rules) {
     } finally {
       _iterator.f();
     }
-    return value;
+    return result;
   });
 }
 
@@ -68986,7 +69021,7 @@ function useRouter(opts) {
 /***/ ((module) => {
 
 "use strict";
-module.exports = /*#__PURE__*/JSON.parse('{"entities":[{"name":"mainGrid","type":"Grid","width":3,"height":3}],"numPlayers":2,"moves":{"placePlayerMarker":{"type":"PlaceNew","moveType":"PlaceNew","entity":{"thatMatches":["isCurrentPlayer"]},"arguments":{"destination":{"playerChoice":true,"conditions":[{"type":"Is","matcher":{"type":"Space"}},{"type":"Not","conditions":[{"type":"Contains"}]}]}}}},"endIf":[{"conditions":[{"type":"Some","target":{"matchMultiple":true,"conditions":[{"type":"Is","matcher":{"type":"Space"}}]},"conditions":[{"type":"InLine","target":{"type":"contextPath","path":["loopTarget"]},"sequence":[{"minCount":3,"conditions":[{"type":"ContainsSame","properties":["player"]}]}]}]}],"result":{"winner":{"type":"contextPath","path":["results",0,"result","entities",0,"attributes","player"]}}},{"conditions":[{"type":"Every","target":{"matchMultiple":true,"conditions":[{"type":"Is","matcher":{"type":"Space"}}]},"conditions":[{"target":{"type":"contextPath","path":["loopTarget"]},"type":"Contains"}]}],"result":{"draw":true}}]}');
+module.exports = /*#__PURE__*/JSON.parse('{"entities":[{"name":"mainGrid","type":"Grid","width":3,"height":3}],"numPlayers":2,"moves":{"placePlayerMarker":{"type":"PlaceNew","entity":{"thatMatches":"isCurrentPlayer"},"arguments":{"destination":{"playerChoice":true,"thatMatches":[{"type":"Space"},"isEmpty"]}}}},"endIf":[{"conditions":[{"conditionType":"Some","target":{"matchMultiple":true,"conditions":[{"conditionType":"Is","matcher":{"type":"Space"}}]},"conditions":[{"conditionType":"InLine","target":{"type":"contextPath","path":["loopTarget"]},"sequence":[{"minCount":3,"conditions":[{"conditionType":"ContainsSame","properties":["player"]}]}]}]}],"result":{"winner":{"type":"contextPath","path":["results",0,"result","entities",0,"attributes","player"]}}},{"conditions":[{"conditionType":"Every","target":{"matchMultiple":true,"conditions":[{"conditionType":"Is","matcher":{"type":"Space"}}]},"conditions":[{"target":{"type":"contextPath","path":["loopTarget"]},"conditionType":"Contains"}]}],"result":{"draw":true}}]}');
 
 /***/ }),
 
