@@ -5,103 +5,47 @@
       "type": "Grid",
       "width": 3,
       "height": 3
-    },
-    {
-      "name": "playerMarker",
-      "perPlayer": true,
-      "count": "Infinity"
     }
   ],
-  "sharedBoard": [{ "name": "mainGrid" }],
-  "minPlayers": 2,
-  "maxPlayers": 2,
-  "turn": {
-    "minMoves": 1,
-    "maxMoves": 1
-  },
+  "numPlayers": 2,
   "moves": {
     "placePlayerMarker": {
       "type": "PlaceNew",
       "entity": {
-        "conditions": [{
-          "type": "Is",
-          "matcher": {
-            "player": {
-              "type": "ctxPath",
-              "path": ["currentPlayer"]
-            }
-          }
-        }]
+        "thatMatches": "isCurrentPlayer"
       },
       "arguments": {
         "destination": {
-          "playerChoice": true,
-          "conditions": [
-            {
-              "type": "Is",
-              "matcher": { "type": "Space" }
-            },
-            {
-              "type": "Not",
-              "conditions": [{"type": "Contains"}]
-            }
-          ]
+          "thatMatches": [
+            { "type": "Space" },
+            "isEmpty"
+          ],
+          "playerChoice": true
         }
       }
     }
   },
-  "endIf": [
+  "endConditions": [
     {
       "conditions": [{
-        "type": "Some",
-        "target": {
-          "matchMultiple": true,
-          "conditions": [{
-            "type": "Is",
-            "matcher": { "type": "Space" }
+        "conditionType": "HasLine",
+        "target": "mainGrid",
+        "sequence": [
+          {
+            "minCount": 3,
+            "conditions": [{
+              "conditionType": "ContainsSame",
+              "properties": ["player"]
+            }]
           }
-        ]},
-        "conditions": [{
-          "type": "InLine",
-          "target": {
-            "type": "contextPath",
-            "path": ["loopTarget"]
-          },
-          "sequence": [
-            {
-              "minCount": 3,
-              "conditions": [{
-                "type": "ContainsSame",
-                "properties": ["player"]
-              }]
-            }
-          ]
-        }]
+        ]
       }],
-      "result": {
-        "winner": {
-          "type": "contextPath",
-          "path": ["results", 0, "result", "entities", 0, "attributes", "player"]
-        }
-      }
+      "result": { "winner": "ownerOfFirstResultEntity" }
     },
     {
       "conditions": [{
-        "type": "Every",
-        "target": {
-          "matchMultiple": true,
-          "conditions": [{
-            "type": "Is",
-            "matcher": { "type": "Space" }
-          }]
-        },
-        "conditions": [{
-          "target": {
-            "type": "contextPath",
-            "path": ["loopTarget"]
-          },
-          "type": "Contains"
-        }]
+        "conditionType": "IsFull",
+        "target": "mainGrid"
       }],
       "result": { "draw": true }
     }

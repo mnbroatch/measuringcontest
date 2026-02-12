@@ -29,12 +29,7 @@
     {
       "conditions": [{
         "conditionType": "HasLine",
-        "target": {
-          "conditions": [{
-            "conditionType": "Is",
-            "matcher": { "name": "mainGrid" }
-          }
-        ]},
+        "target": "mainGrid",
         "sequence": [
           {
             "minCount": 3,
@@ -46,6 +41,13 @@
         ]
       }],
       "result": { "winner": "ownerOfFirstResultEntity" }
+    },
+    {
+      "conditions": [{
+        "conditionType": "IsFull",
+        "target": "mainGrid"
+      }],
+      "result": { "draw": true }
     }
   ]
 }

@@ -7,6 +7,7 @@ import ContainsCondition from "./contains-condition.js";
 import ContainsSameCondition from "./contains-same-condition.js";
 import InLine from "./in-line-condition.js";
 import HasLine from "./has-line-condition.js";
+import IsFull from "./is-full-condition.js";
 import Would from "./would-condition.js";
 import NoPossibleMoves from "./no-possible-moves-condition.js";
 import Evaluate from "./evaluate-condition.js";
@@ -33,6 +34,8 @@ export default function conditionFactory(rule) {
     return new InLine(rule);
   } else if (rule.conditionType === "HasLine") {
     return new HasLine(rule);
+  } else if (rule.conditionType === "IsFull") {
+    return new IsFull(rule);
   } else if (rule.conditionType === "Would") {
     return new Would(rule);
   } else if (rule.conditionType === "NoPossibleMoves") {

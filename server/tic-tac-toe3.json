@@ -40,8 +40,11 @@
       "result": { "winner": "ownerOfFirstResultEntity" }
     },
     {
-      "entity": "mainGrid",
-      "conditionType": [ "IsFull" ]
+      "conditions": [{
+        "conditionType": "IsFull",
+        "target": "mainGrid"
+      }],
+      "result": { "draw": true }
     }
   ]
 }

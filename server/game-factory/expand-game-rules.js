@@ -228,6 +228,20 @@ const transformationRules = [
       }
       return val
     }
+  },
+  {
+    test: val => typeof val.target === 'string',
+    replace: val => ({
+      ...val,
+      target: {
+        conditions: [{
+          conditionType: 'Is',
+          matcher: {
+            name: val.target
+          }
+        }]
+      }
+    })
   }
 ]
 
