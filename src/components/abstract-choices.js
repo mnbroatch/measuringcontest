@@ -6,25 +6,48 @@ export default function AbstractChoices () {
 
   const abstractChoices = [...allClickable].filter(c => c.abstract)
 
+  // spacer assumes only one row of choices.
+  // could save and store biggest height instead?
   return (
-    <div className="abstract-choices">
-      {!!currentMoveTargets.length && (
-        <button
-          className="abstract-choices__undo"
-          onClick={undoStep}
-        >
-          Undo
-        </button>
-      )}
-      {abstractChoices.map((choice, i) => (
-        <button
-          key={i}
-          className="abstract-choices__choice"
-          onClick={() => clickTarget(choice)}
-        >
-          {choice.value}
-        </button>
-      ))}
+    <div style={{ position: 'relative' }}>
+      <button
+        style={{visibility: 'hidden'}}
+        className="button button--style-b button--x-small abstract-choices__choice"
+      >
+        Spacer
+      </button>
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          width: '100%',
+        }}>
+        {!!currentMoveTargets.length && (
+          <button
+            className="button button--style-c button--x-small abstract-choices__choice abstract-choices__choice--undo"
+            onClick={undoStep}
+          >
+            Undo
+          </button>
+        )}
+        <>
+          {abstractChoices.map((choice, i) => (
+            <button
+              key={i}
+              className="button button--style-b button--x-small abstract-choices__choice"
+              onClick={() => clickTarget(choice)}
+            >
+              {choice.value}
+            </button>
+          ))}
+          <button
+            className="button button--style-c button--x-small abstract-choices__choice abstract-choices__choice--undo"
+            onClick={undoStep}
+          >
+            Undo
+          </button>
+        </>
+      </div>
     </div>
   )
 }

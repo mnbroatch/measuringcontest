@@ -259,7 +259,7 @@ body {
 }
 
 .shared-board, .personal-board {
-  padding: 20px 0;
+  padding: 1em 0;
   border-bottom: 1px solid white;
 }
 
