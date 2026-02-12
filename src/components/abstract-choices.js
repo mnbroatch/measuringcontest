@@ -30,23 +30,15 @@ export default function AbstractChoices () {
             Undo
           </button>
         )}
-        <>
-          {abstractChoices.map((choice, i) => (
-            <button
-              key={i}
-              className="button button--style-b button--x-small abstract-choices__choice"
-              onClick={() => clickTarget(choice)}
-            >
-              {choice.value}
-            </button>
-          ))}
+        {abstractChoices.map((choice, i) => (
           <button
-            className="button button--style-c button--x-small abstract-choices__choice abstract-choices__choice--undo"
-            onClick={undoStep}
+            key={i}
+            className="button button--style-b button--x-small abstract-choices__choice"
+            onClick={() => clickTarget(choice)}
           >
-            Undo
+            {choice.value}
           </button>
-        </>
+        ))}
       </div>
     </div>
   )
