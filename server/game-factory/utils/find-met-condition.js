@@ -11,7 +11,10 @@ export default function findMetCondition (
     const result = conditionFactory(conditionRule)
       .check(bgioArguments, payload, context);
     if (result.conditionIsMet) {
-      success = result
+      success = {
+        ...result,
+        conditionRule
+      }
       break
     }
   }

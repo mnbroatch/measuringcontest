@@ -24,7 +24,7 @@
       "type": "PlaceNew",
       "entity": {
         "conditions": [{
-          "type": "Is",
+          "conditionType": "Is",
           "matcher": {
             "name": "playerMarker",
             "player": {
@@ -39,23 +39,23 @@
           "playerChoice": true,
           "conditions": [
             {
-              "type": "Is",
+              "conditionType": "Is",
               "matcher": { "type": "Space" }
             },
             {
-              "type": "Not",
-              "conditions": [{"type": "Contains"}]
+              "conditionType": "Not",
+              "conditions": [{"conditionType": "Contains"}]
             },
             {
-              "type": "Not",
+              "conditionType": "Not",
               "conditions": [
                 {
                   "target": {
                     "type": "relativeCoordinates",
                     "location": [0, 1]
                   },
-                  "type": "Not",
-                  "conditions": [{"type": "Contains"}]
+                  "conditionType": "Not",
+                  "conditions": [{"conditionType": "Contains"}]
                 }
               ]
             }
@@ -67,16 +67,16 @@
   "endIf": [
     {
       "conditions": [{
-        "type": "Some",
+        "conditionType": "Some",
         "target": {
           "matchMultiple": true,
           "conditions": [{
-            "type": "Is",
+            "conditionType": "Is",
             "matcher": { "type": "Space" }
           }
         ]},
         "conditions": [{
-          "type": "InLine",
+          "conditionType": "InLine",
           "target": {
             "type": "contextPath",
             "path": ["loopTarget"]
@@ -85,7 +85,7 @@
             {
               "minCount": 4,
               "conditions": [{
-                "type": "ContainsSame",
+                "conditionType": "ContainsSame",
                 "properties": ["player"]
               }]
             }
@@ -101,12 +101,12 @@
     },
     {
       "conditions": [{
-        "type": "Every",
+        "conditionType": "Every",
         "target": {
           "matchMultiple": true,
           "conditions": [
             {
-              "type": "Is",
+              "conditionType": "Is",
               "target": { "type": "Parent" },
               "matcher": { "name": "mainGrid" }
             }
@@ -117,7 +117,7 @@
             "type": "contextPath",
             "path": ["loopTarget"]
           },
-          "type": "Contains"
+          "conditionType": "Contains"
         }]
       }],
       "result": { "draw": true }

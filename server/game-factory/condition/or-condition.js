@@ -9,6 +9,7 @@ export default class Or extends Condition {
       payload,
       context
     )
+    console.log('result', result)
     return { conditionIsMet: !!result }
   }
 }

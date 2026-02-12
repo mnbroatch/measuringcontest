@@ -50,7 +50,7 @@
     "maxMoves": 1,
     "initialMoves": [{
       "type": "PassTurn",
-      "conditions": [{ "type": "NoPossibleMoves" }]
+      "conditions": [{ "conditionType": "NoPossibleMoves" }]
     }]
   },
   "moves": {
@@ -64,7 +64,7 @@
           }
         },
         "conditions": [{
-          "type": "Is",
+          "conditionType": "Is",
           "matcher": { "name": "disc" }
         }]
       },
@@ -73,19 +73,19 @@
           "playerChoice": true,
           "conditions": [
             {
-              "type": "Is",
+              "conditionType": "Is",
               "matcher": { "type": "Space" }
             },
             {
-              "type": "Not",
-              "conditions": [{ "type": "Contains" }]
+              "conditionType": "Not",
+              "conditions": [{ "conditionType": "Contains" }]
             },
             {
-              "type": "InLine",
+              "conditionType": "InLine",
               "sequence": [
                 {
                   "conditions": [{
-                    "type": "Is",
+                    "conditionType": "Is",
                     "entity": {
                       "type": "contextPath",
                       "path": ["originalTarget"]
@@ -96,11 +96,11 @@
                   "minCount": 1,
                   "conditions": [
                     {
-                      "type": "Not",
+                      "conditionType": "Not",
                       "conditions": [{
-                        "type": "Contains",
+                        "conditionType": "Contains",
                         "conditions": [{
-                          "type": "Is",
+                          "conditionType": "Is",
                           "matcher": {
                             "player": {
                               "type": "ctxPath",
@@ -111,16 +111,16 @@
                       }]
                     },
                     {
-                      "type": "ContainsSame",
+                      "conditionType": "ContainsSame",
                       "properties": ["player"]
                     }
                   ]
                 },
                 {
                   "conditions": [{
-                    "type": "Contains",
+                    "conditionType": "Contains",
                     "conditions": [{
-                      "type": "Is",
+                      "conditionType": "Is",
                       "matcher": {
                         "player": {
                           "type": "ctxPath",
@@ -177,7 +177,7 @@
   },
   "endIf": [{
     "conditions": [{
-      "type": "Evaluate",
+      "conditionType": "Evaluate",
       "expression": "passCount == numPlayers",
       "arguments": {
         "passCount": {
@@ -200,7 +200,7 @@
         "mapping": {
           "type": "count",
           "conditions": [{
-            "type": "Is",
+            "conditionType": "Is",
             "matcher": {
               "player": {
                 "type": "contextPath",

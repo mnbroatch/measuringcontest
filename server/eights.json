@@ -91,14 +91,14 @@
       "matchMultiple": true,
       "entity": {
         "conditions": [{
-          "type": "Is",
+          "conditionType": "Is",
           "matcher": { "name": "card" }
         }]
       },
       "arguments": {
         "destination": {
           "conditions": [{
-            "type": "Is",
+            "conditionType": "Is",
             "matcher": { "name": "stock" }
           }]
         }
@@ -118,13 +118,13 @@
             "entity": {
               "matchMultiple": true,
               "conditions": [{
-                "type": "Is",
+                "conditionType": "Is",
                 "matcher": { "name": "card" }
               }]
             },
             "destination": {
               "conditions": [{
-                "type": "Is",
+                "conditionType": "Is",
                 "matcher": { "name": "stock" }
               }]
             }
@@ -135,7 +135,7 @@
           "arguments": {
             "target": {
               "conditions": [{
-                "type": "Is",
+                "conditionType": "Is",
                 "matcher": { "name": "stock" }
               }]
             }
@@ -160,12 +160,12 @@
                 "entity": {
                   "conditions": [
                     {
-                      "type": "Is",
+                      "conditionType": "Is",
                       "target": { "type": "Parent" },
                       "matcher": { "name": "stock" }
                     },
                     {
-                      "type": "Position",
+                      "conditionType": "Position",
                       "position": "First"
                     }
                   ]
@@ -173,7 +173,7 @@
                 "destination": {
                   "conditions": [
                     {
-                      "type": "Is",
+                      "conditionType": "Is",
                       "matcher": {
                         "name": "hand",
                         "player": {
@@ -194,12 +194,12 @@
             "entity": {
               "conditions": [
                 {
-                  "type": "Is",
+                  "conditionType": "Is",
                   "target": { "type": "Parent" },
                   "matcher": { "name": "stock" }
                 },
                 {
-                  "type": "Position",
+                  "conditionType": "Position",
                   "position": "First"
                 }
               ]
@@ -207,7 +207,7 @@
             "destination": {
               "conditions": [
                 {
-                  "type": "Is",
+                  "conditionType": "Is",
                   "matcher": {
                     "name": "discard"
                   }
@@ -230,14 +230,14 @@
                 "matchMultiple": true,
                 "conditions": [
                   {
-                    "type": "Is",
+                    "conditionType": "Is",
                     "target": { "type": "Parent" },
                     "matcher": { "name": "discard" }
                   },
                   {
-                    "type": "Not",
+                    "conditionType": "Not",
                     "conditions": [{
-                      "type": "Position",
+                      "conditionType": "Position",
                       "position": "First"
                     }]
                   }
@@ -245,14 +245,14 @@
               }
             },
             "conditions": [{
-              "type": "Not",
+              "conditionType": "Not",
               "target": {
                 "conditions": [{
-                  "type": "Is",
+                  "conditionType": "Is",
                   "matcher": { "name": "stock" }
                 }]
               },
-              "conditions": [{ "type": "Contains" }]
+              "conditions": [{ "conditionType": "Contains" }]
             }],
             "move": {
               "type": "MoveEntity",
@@ -264,7 +264,7 @@
                 "destination": {
                   "conditions": [
                     {
-                      "type": "Is",
+                      "conditionType": "Is",
                       "matcher": {
                         "name": "stock"
                       }
@@ -279,7 +279,7 @@
             "arguments": {
               "target": {
                 "conditions": [{
-                  "type": "Is",
+                  "conditionType": "Is",
                   "matcher": { "name": "stock" }
                 }]
               }
@@ -297,7 +297,7 @@
                     "playerChoice": true,
                     "conditions": [
                       {
-                        "type": "Is",
+                        "conditionType": "Is",
                         "target": { "type": "Parent" },
                         "matcher": {
                           "name": "hand",
@@ -308,28 +308,28 @@
                         }
                       },
                       {
-                        "type": "Or",
+                        "conditionType": "Or",
                         "conditions": [
                           {
-                            "type": "Is",
+                            "conditionType": "Is",
                             "matcher": {
                               "value": 8
                             }
                           },
                           {
-                            "type": "Is",
+                            "conditionType": "Is",
                             "matcher": {
                               "type": "Pick",
                               "properties": ["suit"],
                               "target": {
                                 "conditions": [
                                   {
-                                    "type": "Is",
+                                    "conditionType": "Is",
                                     "target": { "type": "Parent" },
                                     "matcher": { "name": "discard" }
                                   },
                                   {
-                                    "type": "Position",
+                                    "conditionType": "Position",
                                     "position": "First"
                                   }
                                 ]
@@ -337,19 +337,19 @@
                             }
                           },
                           {
-                            "type": "Is",
+                            "conditionType": "Is",
                             "matcher": {
                               "type": "Pick",
                               "properties": ["value"],
                               "target": {
                                 "conditions": [
                                   {
-                                    "type": "Is",
+                                    "conditionType": "Is",
                                     "target": { "type": "Parent" },
                                     "matcher": { "name": "discard" }
                                   },
                                   {
-                                    "type": "Position",
+                                    "conditionType": "Position",
                                     "position": "First"
                                   }
                                 ]
@@ -364,7 +364,7 @@
                     "position": "First",
                     "conditions": [
                       {
-                        "type": "Is",
+                        "conditionType": "Is",
                         "matcher": { "name": "discard" }
                       }
                     ]
@@ -379,7 +379,7 @@
                       }
                     },
                     "conditions": [{
-                      "type": "Is",
+                      "conditionType": "Is",
                       "target": {
                         "type": "contextPath",
                         "path": ["previousArguments", "entity"]
@@ -390,13 +390,13 @@
                   {
                     "type": "EndTurn",
                     "conditions": [{
-                      "type": "Not",
+                      "conditionType": "Not",
                       "target": {
                         "type": "contextPath",
                         "path": ["previousArguments", "entity"]
                       },
                       "conditions": [{
-                        "type": "Is",
+                        "conditionType": "Is",
                         "matcher": { "value": 8 }
                       }]
                     }]
@@ -406,10 +406,10 @@
               "takeCard": {
                 "type": "TakeFrom",
                 "conditions": [{
-                  "type": "Contains",
+                  "conditionType": "Contains",
                   "target": {
                     "conditions": [{
-                      "type": "Is",
+                      "conditionType": "Is",
                       "matcher": { "name": "stock" }
                     }]
                   }
@@ -419,7 +419,7 @@
                     "playerChoice": true,
                     "conditions": [
                       {
-                        "type": "Is",
+                        "conditionType": "Is",
                         "matcher": { "name": "stock" }
                       }
                     ]
@@ -427,7 +427,7 @@
                   "destination": {
                     "conditions": [
                       {
-                        "type": "Is",
+                        "conditionType": "Is",
                         "matcher": {
                           "name": "hand",
                           "player": {
@@ -451,12 +451,12 @@
                   "entity": {
                     "conditions": [
                       {
-                        "type": "Is",
+                        "conditionType": "Is",
                         "target": { "type": "Parent" },
                         "matcher": { "name": "discard" }
                       },
                       {
-                        "type": "Position",
+                        "conditionType": "Position",
                         "position": "First"
                       }
                     ]
@@ -475,16 +475,16 @@
       },
       "endIf": [{
         "conditions": [{
-          "type": "Is",
+          "conditionType": "Is",
           "target": {
             "conditions": [
               {
-                "type": "Is",
+                "conditionType": "Is",
                 "matcher": { "name": "hand" }
               },
               {
-                "type": "Not",
-                "conditions": [{ "type": "Contains" }]
+                "conditionType": "Not",
+                "conditions": [{ "conditionType": "Contains" }]
               }
             ]
           }
@@ -508,7 +508,7 @@
               "entity": {
                 "conditions": [
                   {
-                    "type": "Is",
+                    "conditionType": "Is",
                     "matcher": {
                       "name": "score",
                       "player": {
@@ -516,12 +516,12 @@
                         "target": {
                           "conditions": [
                             {
-                              "type": "Is",
+                              "conditionType": "Is",
                               "matcher": { "name": "hand" }
                             },
                             {
-                              "type": "Not",
-                              "conditions": [{ "type": "Contains" }]
+                              "conditionType": "Not",
+                              "conditions": [{ "conditionType": "Contains" }]
                             }
                           ]
                         },
@@ -542,7 +542,7 @@
                       "target": {
                         "conditions": [
                           {
-                            "type": "Is",
+                            "conditionType": "Is",
                             "matcher": {
                               "name": "score",
                               "player": {
@@ -550,12 +550,12 @@
                                 "target": {
                                   "conditions": [
                                     {
-                                      "type": "Is",
+                                      "conditionType": "Is",
                                       "matcher": { "name": "hand" }
                                     },
                                     {
-                                      "type": "Not",
-                                      "conditions": [{ "type": "Contains" }]
+                                      "conditionType": "Not",
+                                      "conditions": [{ "conditionType": "Contains" }]
                                     }
                                   ]
                                 },
@@ -573,7 +573,7 @@
                         "matchMultiple": true,
                         "conditions": [
                           {
-                            "type": "Is",
+                            "conditionType": "Is",
                             "target": { "type": "Parent" },
                             "matcher": {
                               "name": "hand",
@@ -590,7 +590,7 @@
                         "expression": "cardValue == 8 ? 50 : (cardValue >= 10 and cardValue <= 13) ? 10 : cardValue",
                         "arguments": {
                           "cardValue": {
-                            "type": "RelativePath",
+                            "conditionType": "RelativePath",
                             "target": {
 
                               "type": "contextPath",
@@ -613,17 +613,17 @@
   },
   "endIf": [{
     "conditions": [{
-      "type": "Some",
+      "conditionType": "Some",
       "target": {
         "matchMultiple": true,
         "conditions": [{
-          "type": "Is",
+          "conditionType": "Is",
           "matcher": { "name": "score" }
         }
       ]},
       "conditions": [
         {
-          "type": "Evaluate",
+          "conditionType": "Evaluate",
           "expression": "score >= numPlayers * 50",
           "arguments": {
             "score": {

@@ -2,7 +2,7 @@ import resolveProperties from "../utils/resolve-properties.js";
 
 export default class Condition {
   constructor (rule) {
-    this.rule = this.transformRule(rule)
+    this.rule = rule
   }
   
   check (bgioArguments, payload, context) {
@@ -35,15 +35,5 @@ export default class Condition {
 
   isMet(...args) {
     return this.check(...args).conditionIsMet
-  }
-
-  transformRule (rule) {
-    if (rule.target && rule.target.conditions) {
-      rule.target.resolveAsEntity = true
-    }
-    if (rule.targets && rule.targets.conditions) {
-      rule.targets.resolveAsEntity = true
-    }
-    return rule
   }
 }

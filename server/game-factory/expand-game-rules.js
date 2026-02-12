@@ -75,7 +75,7 @@ function expandInitialPlacements (rules, entities) {
       
       if (placement.destination.name === 'personalBoard') {
         return {
-          conditionType: 'ForEach',
+          type: 'ForEach',
           arguments: {
             targets: {
               type: 'ctxPath',
@@ -183,7 +183,7 @@ const simpleReplacements = [
 
 const transformationRules = [
   {
-    test: val => typeof val === 'object',
+    test: val => val && typeof val === 'object',
     replace: (val) => {
       keyMappings.forEach(([oldKey, newKey]) => {
         if (val.hasOwnProperty(oldKey)) {
@@ -230,7 +230,7 @@ const transformationRules = [
     }
   },
   {
-    test: val => typeof val.target === 'string',
+    test: val => typeof val?.target === 'string',
     replace: val => ({
       ...val,
       target: {

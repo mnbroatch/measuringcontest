@@ -29,7 +29,11 @@ export default function resolveProperties (bgioArguments, obj, context, key) {
 
   const resolved = resolveProperty(bgioArguments, resolvedProperties, context)
 
-  return resolved?.resolveAsEntity
+  const resolveAsEntity = resolved?.resolveAsEntity
+    || key === 'target'
+    || key === 'targets'
+
+  return resolveAsEntity
     ? resolveEntity(
         bgioArguments,
         resolved,
@@ -99,7 +103,9 @@ function resolveProperty (bgioArguments, value, context) {
   } else if (value?.type === 'Pick') {
     const target = resolveProperties(bgioArguments, value.target, context, 'target')
     if (target !== undefined) {
-      return pick(
+      console.log('target', target)
+      console.log('target.attributes', target.attributes)
+      const x = pick(
         resolveProperties(
           bgioArguments,
           target.attributes,
@@ -108,6 +114,10 @@ function resolveProperty (bgioArguments, value, context) {
         ),
         value.properties
       )
+      console.log('x', x)
+      return x
+    } else {
+      console.log('8888target', target)
     }
   } else if (value?.type === 'Coordinates') {
     const originalTarget = value.target
