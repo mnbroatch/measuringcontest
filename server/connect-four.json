@@ -51,7 +51,7 @@
               "conditions": [
                 {
                   "target": {
-                    "type": "RelativeCoordinates",
+                    "type": "relativeCoordinates",
                     "location": [0, 1]
                   },
                   "type": "Not",

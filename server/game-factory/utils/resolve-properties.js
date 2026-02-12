@@ -115,7 +115,7 @@ function resolveProperty (bgioArguments, value, context) {
       : context.originalTarget
       const parent = bgioArguments.G.bank.findParent(originalTarget)
       return parent.getCoordinates(originalTarget.rule.index)
-  } else if (value?.type === 'RelativeCoordinates') {
+  } else if (value?.type === 'relativeCoordinates') {
     const originalTarget = value.target
       ? resolveProperties(bgioArguments, value.target, context, 'target')
       : context.originalTarget

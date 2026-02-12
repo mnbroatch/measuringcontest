@@ -54,7 +54,7 @@
           "options": {
             "currentPlayer": { "stage": "moveIfNoJump" }
           },
-          "conditions": [{ "type": "NoPossibleMoves" }]
+          "conditions": [{ "conditionType": "NoPossibleMoves" }]
         }],
         "moves": {
           "jumpChecker": {
@@ -64,7 +64,7 @@
                 "playerChoice": true,
                 "conditions": [
                   {
-                    "type": "Is",
+                    "conditionType": "Is",
                     "matcher": {
                       "name": "checker",
                       "player": {
@@ -79,20 +79,20 @@
                 "playerChoice": true,
                 "conditions": [
                   {
-                    "type": "Is",
+                    "conditionType": "Is",
                     "matcher": { "type": "Space" }
                   },
                   {
-                    "type": "Not",
-                    "conditions": [{ "type": "Contains" }]
+                    "conditionType": "Not",
+                    "conditions": [{ "conditionType": "Contains" }]
                   },
                   {
-                    "type": "Or",
+                    "conditionType": "Or",
                     "conditions": [
                       {
-                        "type": "Contains",
+                        "conditionType": "Contains",
                         "target": {
-                          "type": "RelativeCoordinates",
+                          "type": "relativeCoordinates",
                           "location": {
                             "type": "expression",
                             "expression": "player == '0' ? player0RelativeCoordinates : player1RelativeCoordinates",
@@ -107,7 +107,7 @@
                           }
                         },
                         "conditions": [{
-                          "type": "Is",
+                          "conditionType": "Is",
                           "entity": {
                             "type": "contextPath",
                             "path": ["moveArguments", "entity"]
@@ -115,9 +115,9 @@
                         }]
                       },
                       {
-                        "type": "Contains",
+                        "conditionType": "Contains",
                         "target": {
-                          "type": "RelativeCoordinates",
+                          "type": "relativeCoordinates",
                           "location": {
                             "type": "expression",
                             "expression": "player == '0' ? player0RelativeCoordinates : player1RelativeCoordinates",
@@ -132,7 +132,7 @@
                           }
                         },
                         "conditions": [{
-                          "type": "Is",
+                          "conditionType": "Is",
                           "entity": {
                             "type": "contextPath",
                             "path": ["moveArguments", "entity"]
@@ -140,9 +140,9 @@
                         }]
                       },
                       {
-                        "type": "Contains",
+                        "conditionType": "Contains",
                         "target": {
-                          "type": "RelativeCoordinates",
+                          "type": "relativeCoordinates",
                           "location": {
                             "type": "expression",
                             "expression": "player == '0' ? player0RelativeCoordinates : player1RelativeCoordinates",
@@ -158,22 +158,22 @@
                         },
                         "conditions": [
                           {
-                            "type": "Is",
+                            "conditionType": "Is",
                             "entity": {
                               "type": "contextPath",
                               "path": ["moveArguments", "entity"]
                             }
                           },
                           {
-                            "type": "Is",
+                            "conditionType": "Is",
                             "matcher": { "isKing": true }
                           }
                         ]
                       },
                       {
-                        "type": "Contains",
+                        "conditionType": "Contains",
                         "target": {
-                          "type": "RelativeCoordinates",
+                          "type": "relativeCoordinates",
                           "location": {
                             "type": "expression",
                             "expression": "player == '0' ? player0RelativeCoordinates : player1RelativeCoordinates",
@@ -189,14 +189,14 @@
                         },
                         "conditions": [
                           {
-                            "type": "Is",
+                            "conditionType": "Is",
                             "entity": {
                               "type": "contextPath",
                               "path": ["moveArguments", "entity"]
                             }
                           },
                           {
-                            "type": "Is",
+                            "conditionType": "Is",
                             "matcher": { "isKing": true }
                           }
                         ]
@@ -204,13 +204,13 @@
                     ]
                   },
                   {
-                    "type": "InLine",
+                    "conditionType": "InLine",
                     "sequence": [
                       {
                         "conditions": [{
-                          "type": "Contains",
+                          "conditionType": "Contains",
                           "conditions": [{
-                            "type": "Is",
+                            "conditionType": "Is",
                             "entity": {
                               "type": "contextPath",
                               "path": ["moveArguments", "entity"]
@@ -220,11 +220,11 @@
                       },
                       {
                         "conditions": [{
-                          "type": "Contains",
+                          "conditionType": "Contains",
                           "conditions": [{
-                            "type": "Not",
+                            "conditionType": "Not",
                             "conditions": [{
-                              "type": "Is",
+                              "conditionType": "Is",
                               "matcher": {
                                 "player": {
                                   "type": "ctxPath",
@@ -237,7 +237,7 @@
                       },
                       {
                         "conditions": [{
-                          "type": "Is",
+                          "conditionType": "Is",
                           "entity": {
                             "type": "contextPath",
                             "path": ["originalTarget"]
@@ -298,7 +298,7 @@
           "options": {
             "currentPlayer": { "stage": "kingPieces" }
           },
-          "conditions": [{ "type": "NoPossibleMoves" }]
+          "conditions": [{ "conditionType": "NoPossibleMoves" }]
         }],
         "moves": {
           "jumpChecker": {
@@ -307,7 +307,7 @@
               "entity": {
                 "conditions": [
                   {
-                    "type": "Is",
+                    "conditionType": "Is",
                     "entity": {
                       "type": "gamePath",
                       "path": ["_meta", "previousPayloads", "jumpChecker", "arguments", "entity"]
@@ -319,20 +319,20 @@
                 "playerChoice": true,
                 "conditions": [
                   {
-                    "type": "Is",
+                    "conditionType": "Is",
                     "matcher": { "type": "Space" }
                   },
                   {
-                    "type": "Not",
-                    "conditions": [{ "type": "Contains" }]
+                    "conditionType": "Not",
+                    "conditions": [{ "conditionType": "Contains" }]
                   },
                   {
-                    "type": "Or",
+                    "conditionType": "Or",
                     "conditions": [
                       {
-                        "type": "Contains",
+                        "conditionType": "Contains",
                         "target": {
-                          "type": "RelativeCoordinates",
+                          "type": "relativeCoordinates",
                           "location": {
                             "type": "expression",
                             "expression": "player == '0' ? player0RelativeCoordinates : player1RelativeCoordinates",
@@ -347,7 +347,7 @@
                           }
                         },
                         "conditions": [{
-                          "type": "Is",
+                          "conditionType": "Is",
                           "entity": {
                             "type": "contextPath",
                             "path": ["moveArguments", "entity"]
@@ -355,9 +355,9 @@
                         }]
                       },
                       {
-                        "type": "Contains",
+                        "conditionType": "Contains",
                         "target": {
-                          "type": "RelativeCoordinates",
+                          "type": "relativeCoordinates",
                           "location": {
                             "type": "expression",
                             "expression": "player == '0' ? player0RelativeCoordinates : player1RelativeCoordinates",
@@ -372,7 +372,7 @@
                           }
                         },
                         "conditions": [{
-                          "type": "Is",
+                          "conditionType": "Is",
                           "entity": {
                             "type": "contextPath",
                             "path": ["moveArguments", "entity"]
@@ -380,9 +380,9 @@
                         }]
                       },
                       {
-                        "type": "Contains",
+                        "conditionType": "Contains",
                         "target": {
-                          "type": "RelativeCoordinates",
+                          "type": "relativeCoordinates",
                           "location": {
                             "type": "expression",
                             "expression": "player == '0' ? player0RelativeCoordinates : player1RelativeCoordinates",
@@ -398,22 +398,22 @@
                         },
                         "conditions": [
                           {
-                            "type": "Is",
+                            "conditionType": "Is",
                             "entity": {
                               "type": "contextPath",
                               "path": ["moveArguments", "entity"]
                             }
                           },
                           {
-                            "type": "Is",
+                            "conditionType": "Is",
                             "matcher": { "isKing": true }
                           }
                         ]
                       },
                       {
-                        "type": "Contains",
+                        "conditionType": "Contains",
                         "target": {
-                          "type": "RelativeCoordinates",
+                          "type": "relativeCoordinates",
                           "location": {
                             "type": "expression",
                             "expression": "player == '0' ? player0RelativeCoordinates : player1RelativeCoordinates",
@@ -429,14 +429,14 @@
                         },
                         "conditions": [
                           {
-                            "type": "Is",
+                            "conditionType": "Is",
                             "entity": {
                               "type": "contextPath",
                               "path": ["moveArguments", "entity"]
                             }
                           },
                           {
-                            "type": "Is",
+                            "conditionType": "Is",
                             "matcher": { "isKing": true }
                           }
                         ]
@@ -444,13 +444,13 @@
                     ]
                   },
                   {
-                    "type": "InLine",
+                    "conditionType": "InLine",
                     "sequence": [
                       {
                         "conditions": [{
-                          "type": "Contains",
+                          "conditionType": "Contains",
                           "conditions": [{
-                            "type": "Is",
+                            "conditionType": "Is",
                             "entity": {
                               "type": "contextPath",
                               "path": ["moveArguments", "entity"]
@@ -460,11 +460,11 @@
                       },
                       {
                         "conditions": [{
-                          "type": "Contains",
+                          "conditionType": "Contains",
                           "conditions": [{
-                            "type": "Not",
+                            "conditionType": "Not",
                             "conditions": [{
-                              "type": "Is",
+                              "conditionType": "Is",
                               "matcher": {
                                 "player": {
                                   "type": "ctxPath",
@@ -477,7 +477,7 @@
                       },
                       {
                         "conditions": [{
-                          "type": "Is",
+                          "conditionType": "Is",
                           "entity": {
                             "type": "contextPath",
                             "path": ["originalTarget"]
@@ -527,7 +527,7 @@
                 "options": {
                   "currentPlayer": { "stage": "kingPieces" }
                 },
-                "conditions": [{ "type": "NoPossibleMoves" }]
+                "conditions": [{ "conditionType": "NoPossibleMoves" }]
               }
             ]
           }
@@ -536,7 +536,7 @@
       "moveIfNoJump": {
         "initialMoves": [{
           "type": "PassTurn",
-          "conditions": [{ "type": "NoPossibleMoves" }]
+          "conditions": [{ "conditionType": "NoPossibleMoves" }]
         }],
         "moves": {
           "moveChecker": {
@@ -546,7 +546,7 @@
                 "playerChoice": true,
                 "conditions": [
                   {
-                    "type": "Is",
+                    "conditionType": "Is",
                     "matcher": {
                       "name": "checker",
                       "player": {
@@ -561,20 +561,20 @@
                 "playerChoice": true,
                 "conditions": [
                   {
-                    "type": "Is",
+                    "conditionType": "Is",
                     "matcher": { "type": "Space" }
                   },
                   {
-                    "type": "Not",
-                    "conditions": [{ "type": "Contains" }]
+                    "conditionType": "Not",
+                    "conditions": [{ "conditionType": "Contains" }]
                   },
                   {
-                    "type": "Or",
+                    "conditionType": "Or",
                     "conditions": [
                       {
-                        "type": "Contains",
+                        "conditionType": "Contains",
                         "target": {
-                          "type": "RelativeCoordinates",
+                          "type": "relativeCoordinates",
                           "location": {
                             "type": "expression",
                             "expression": "player == '0' ? player0RelativeCoordinates : player1RelativeCoordinates",
@@ -589,7 +589,7 @@
                           }
                         },
                         "conditions": [{
-                          "type": "Is",
+                          "conditionType": "Is",
                           "entity": {
                             "type": "contextPath",
                             "path": ["moveArguments", "entity"]
@@ -597,9 +597,9 @@
                         }]
                       },
                       {
-                        "type": "Contains",
+                        "conditionType": "Contains",
                         "target": {
-                          "type": "RelativeCoordinates",
+                          "type": "relativeCoordinates",
                           "location": {
                             "type": "expression",
                             "expression": "player == '0' ? player0RelativeCoordinates : player1RelativeCoordinates",
@@ -614,7 +614,7 @@
                           }
                         },
                         "conditions": [{
-                          "type": "Is",
+                          "conditionType": "Is",
                           "entity": {
                             "type": "contextPath",
                             "path": ["moveArguments", "entity"]
@@ -622,9 +622,9 @@
                         }]
                       },
                       {
-                        "type": "Contains",
+                        "conditionType": "Contains",
                         "target": {
-                          "type": "RelativeCoordinates",
+                          "type": "relativeCoordinates",
                           "location": {
                             "type": "expression",
                             "expression": "player == '0' ? player0RelativeCoordinates : player1RelativeCoordinates",
@@ -640,22 +640,22 @@
                         },
                         "conditions": [
                           {
-                            "type": "Is",
+                            "conditionType": "Is",
                             "entity": {
                               "type": "contextPath",
                               "path": ["moveArguments", "entity"]
                             }
                           },
                           {
-                            "type": "Is",
+                            "conditionType": "Is",
                             "matcher": { "isKing": true }
                           }
                         ]
                       },
                       {
-                        "type": "Contains",
+                        "conditionType": "Contains",
                         "target": {
-                          "type": "RelativeCoordinates",
+                          "type": "relativeCoordinates",
                           "location": {
                             "type": "expression",
                             "expression": "player == '0' ? player0RelativeCoordinates : player1RelativeCoordinates",
@@ -671,14 +671,14 @@
                         },
                         "conditions": [
                           {
-                            "type": "Is",
+                            "conditionType": "Is",
                             "entity": {
                               "type": "contextPath",
                               "path": ["moveArguments", "entity"]
                             }
                           },
                           {
-                            "type": "Is",
+                            "conditionType": "Is",
                             "matcher": { "isKing": true }
                           }
                         ]
@@ -710,12 +710,12 @@
                   "matchMultiple": true,
                   "conditions": [
                     {
-                      "type": "Is",
+                      "conditionType": "Is",
                       "matcher": { "type": "Space" }
                     },
-                    { "type": "Contains" },
+                    { "conditionType": "Contains" },
                     {
-                      "type": "Evaluate",
+                      "conditionType": "Evaluate",
                       "expression": "(player == '0' and destinationCoordinates[1] == 0) or (player == '1' and destinationCoordinates[1] == 7)",
                       "arguments": {
                         "player": {
@@ -768,7 +768,7 @@
   },
   "endIf": [{
     "conditions": [{
-      "type": "Evaluate",
+      "conditionType": "Evaluate",
       "expression": "passCount > 0",
       "arguments": {
         "passCount": {
