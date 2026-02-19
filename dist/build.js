@@ -176,7 +176,7 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-console.warn("[tanstack-router] These exports from \"/home/mnbro/Programming/measuringcontest/src/routes/rooms.$roomcode.js\" will not be code-split and will increase your bundle size:\n- RoomPage\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
+console.warn("[tanstack-router] These exports from \"/home/matt/Programming/measuringcontest/src/routes/rooms.$roomcode.js\" will not be code-split and will increase your bundle size:\n- RoomPage\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
 
 
 
@@ -35435,7 +35435,7 @@ function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present,
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
-console.warn("[tanstack-router] These exports from \"/home/mnbro/Programming/measuringcontest/src/routes/editor.js\" will not be code-split and will increase your bundle size:\n- Editor\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
+console.warn("[tanstack-router] These exports from \"/home/matt/Programming/measuringcontest/src/routes/editor.js\" will not be code-split and will increase your bundle size:\n- Editor\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
 
 
 
@@ -47261,7 +47261,7 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-console.warn("[tanstack-router] These exports from \"/home/mnbro/Programming/measuringcontest/src/routes/index.js\" will not be code-split and will increase your bundle size:\n- Home\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
+console.warn("[tanstack-router] These exports from \"/home/matt/Programming/measuringcontest/src/routes/index.js\" will not be code-split and will increase your bundle size:\n- Home\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
 
 
 
@@ -49262,12 +49262,15 @@ const UNEXPECTED_SIGN_IN_INTERRUPTION_EXCEPTION = 'UnexpectedSignInInterruptionE
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53137);
 
 function GameStatus(_ref) {
-  var _gameConnection$state;
+  var _gameConnection$state, _gameConnection$state2;
   var gameConnection = _ref.gameConnection;
   var players = gameConnection.client.matchData;
   var winner = (_gameConnection$state = gameConnection.state.ctx.gameover) === null || _gameConnection$state === void 0 ? void 0 : _gameConnection$state.winner;
+  var draw = (_gameConnection$state2 = gameConnection.state.ctx.gameover) === null || _gameConnection$state2 === void 0 ? void 0 : _gameConnection$state2.draw;
   var winnerString = '';
-  if (players && winner) {
+  if (draw) {
+    winnerString = 'Draw!';
+  } else if (players && winner) {
     winnerString = "".concat(players[winner].name, " Wins!");
   } else if (winner) {
     winnerString = "Player ".concat(winner, " Wins!");
