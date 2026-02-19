@@ -1,9 +1,6 @@
-import { Debug } from 'boardgame.io/debug';
 import { useEffect, useReducer, useRef } from 'react'
 import { flushSync } from 'react-dom'
-import { Client } from 'boardgame.io/client'
-import { SocketIO } from 'boardgame.io/multiplayer'
-import { useCognitoAuth } from "../contexts/cognito-auth-context.js"
+import connectToGameserver from "../utils/connect-to-gameserver";
 import { BOARDGAME_SERVER_URL } from '../constants/api.js'
 
 export const useGameserverConnection = ({
@@ -12,63 +9,47 @@ export const useGameserverConnection = ({
   boardgamePlayerID,
   clientToken,
   numPlayers,
-  debug = {
-    collapseOnLoad: true,
-    impl: Debug,
-  },
+  debug,
   singlePlayer = false,
   enabled = true,
 }) => {
-  const { userId } = useCognitoAuth()
   const [_, forceUpdate] = useReducer(x => !x, false)
-  const clientRef = useRef(null)
+  const connectionRef = useRef(null)
 
   useEffect(() => {
-    if (!game || !singlePlayer && (!gameId || !userId || !enabled)) return
+    if (!game || !singlePlayer && (!gameId || !clientToken || !enabled)) return
 
-    const connect = async () => {
-      try {
-        const clientOptions = singlePlayer
-          ? { game, numPlayers, debug }
-          : {
-              game,
-              multiplayer: singlePlayer ? undefined : SocketIO({
-                server: BOARDGAME_SERVER_URL,
-                socketOpts: {
-                  transports: ['websocket', 'polling']
-                }
-              }),
-              matchID: gameId,
-              playerID: boardgamePlayerID,
-              credentials: clientToken,
-              debug,
-            }
-        const client = Client(clientOptions)
-
-        client.subscribe(() => {
-          // wrapping forceUpdate means we don't batch updates
-          // and skip certain transitional states
-          setTimeout(() => {
-            flushSync(() => {
-              forceUpdate()
-            })
-          }, 0)
+    const onClientUpdate = () => {
+      // wrapping forceUpdate means we don't batch updates
+      // and skip certain transitional states
+      setTimeout(() => {
+        flushSync(() => {
+          forceUpdate()
         })
-
-        client.start()
-        clientRef.current = client
-        
-      } catch (error) {
-        console.error('Failed to join game:', error)
-      }
+      }, 0)
     }
 
-    connect()
+    connectionRef.current = connectToGameserver({
+      server: BOARDGAME_SERVER_URL,
+      numPlayers,
+      onClientUpdate,
+      debug,
+      gameId,
+      game,
+      boardgamePlayerID,
+      clientToken,
+      singlePlayer,
+    })
 
     return () => {
-      clientRef.current?.stop()
-      clientRef.current = null
+      connectionRef.current?.client?.stop()
+      connectionRef.current = null
     }
-  }, [gameId, userId, boardgamePlayerID, clientToken, game, enabled])
-  return clientRef.current
+  }, [gameId, boardgamePlayerID, clientToken, game, enabled])
+
+  return {
+    client: connectionRef.current?.client,
+    ...connectionRef.current?.getState?.(),
+    game
+  }
 }
