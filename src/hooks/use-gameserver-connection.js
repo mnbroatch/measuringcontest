@@ -1,11 +1,12 @@
 import { useEffect, useReducer, useRef } from 'react'
 import { flushSync } from 'react-dom'
-import connectToGameserver from "../utils/connect-to-gameserver";
 import { BOARDGAME_SERVER_URL } from '../constants/api.js'
+import { Client } from 'board-game-engine'
 
 export const useGameserverConnection = ({
   gameId,
-  game,
+  gameRules,
+  rulesHash,
   boardgamePlayerID,
   clientToken,
   numPlayers,
@@ -17,7 +18,7 @@ export const useGameserverConnection = ({
   const connectionRef = useRef(null)
 
   useEffect(() => {
-    if (!game || !singlePlayer && (!gameId || !clientToken || !enabled)) return
+    if (!gameRules || !singlePlayer && (!gameId || !clientToken || !enabled)) return
 
     const onClientUpdate = () => {
       // wrapping forceUpdate means we don't batch updates
@@ -29,13 +30,14 @@ export const useGameserverConnection = ({
       }, 0)
     }
 
-    connectionRef.current = connectToGameserver({
+    connectionRef.current = new Client ({
       server: BOARDGAME_SERVER_URL,
       numPlayers,
       onClientUpdate,
       debug,
       gameId,
-      game,
+      gameRules,
+      rulesHash,
       boardgamePlayerID,
       clientToken,
       singlePlayer,
@@ -45,11 +47,10 @@ export const useGameserverConnection = ({
       connectionRef.current?.client?.stop()
       connectionRef.current = null
     }
-  }, [gameId, boardgamePlayerID, clientToken, game, enabled])
+  }, [gameId, boardgamePlayerID, clientToken, gameRules, enabled])
 
   return {
-    client: connectionRef.current?.client,
+    ...connectionRef.current,
     ...connectionRef.current?.getState?.(),
-    game
   }
 }
