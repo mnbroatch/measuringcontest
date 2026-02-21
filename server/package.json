@@ -11,7 +11,7 @@
     "@aws-sdk/client-ssm": "^3.891.0",
     "@koa/router": "^10.1.1",
     "@mnbroatch/boardgame.io": "0.0.1",
-    "board-game-engine": "^0.0.4",
+    "board-game-engine": "^0.0.7",
     "jsonwebtoken": "^9.0.2",
     "koa-body": "^5.0.0",
     "lodash": "^4.17.21"
