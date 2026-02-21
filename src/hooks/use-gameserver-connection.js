@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useRef } from 'react'
+import { useEffect, useReducer, useState } from 'react'
 import { flushSync } from 'react-dom'
 import { BOARDGAME_SERVER_URL } from '../constants/api.js'
 import { Client } from 'board-game-engine'
@@ -6,7 +6,8 @@ import { Client } from 'board-game-engine'
 export const useGameserverConnection = ({
   gameId,
   gameRules,
-  rulesHash,
+  gameName,
+  game,
   boardgamePlayerID,
   clientToken,
   numPlayers,
@@ -15,7 +16,7 @@ export const useGameserverConnection = ({
   enabled = true,
 }) => {
   const [_, forceUpdate] = useReducer(x => !x, false)
-  const connectionRef = useRef(null)
+  const [connection, setConnection] = useState(null)
 
   useEffect(() => {
     if (!gameRules || !singlePlayer && (!gameId || !clientToken || !enabled)) return
@@ -30,27 +31,40 @@ export const useGameserverConnection = ({
       }, 0)
     }
 
-    connectionRef.current = new Client ({
+    const options = {
       server: BOARDGAME_SERVER_URL,
       numPlayers,
       onClientUpdate,
       debug,
       gameId,
       gameRules,
-      rulesHash,
+      game,
+      gameName,
       boardgamePlayerID,
       clientToken,
       singlePlayer,
-    })
+    }
+
+    console.log('options', options)
+
+    const newConnection = new Client(options)
+
+    newConnection.connect()
+
+    setConnection(newConnection)
 
     return () => {
-      connectionRef.current?.client?.stop()
-      connectionRef.current = null
+      connection?.client?.stop()
+      setConnection(null)
     }
   }, [gameId, boardgamePlayerID, clientToken, gameRules, enabled])
 
-  return {
-    ...connectionRef.current,
-    ...connectionRef.current?.getState?.(),
+  if (connection) {
+    return Object.assign(
+      connection,
+      connection?.getState?.(),
+    )
+  } else {
+    return {}
   }
 }

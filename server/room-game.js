@@ -1,4 +1,4 @@
-import { ActivePlayers } from 'boardgame.io/dist/cjs/core.js';
+import { ActivePlayers } from '@mnbroatch/boardgame.io/dist/cjs/core.js';
 
 const RoomGame = {
   name: 'bgestagingroom',

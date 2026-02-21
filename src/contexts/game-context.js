@@ -14,12 +14,16 @@ export function GameProvider({ gameConnection, children, isSpectator }) {
 
   return (
     <GameContext.Provider value={{
-      clickTarget: target => gameConnection.doStep(target, isSpectator),
-      undoStep: gameConnection.undoStep,
-      allClickable: gameConnection.optimisticWinner
+      clickTarget: target => {
+        if (!isSpectator) {
+          gameConnection.doStep(target)
+        }
+      },
+      undoStep: () => { gameConnection.undoStep() },
+      allClickable: (gameConnection.optimisticWinner || isSpectator)
         ? new Set()
         : gameConnection.allClickable,
-      currentMoveTargets: gameConnection.optimisticWinner
+      currentMoveTargets: (gameConnection.optimisticWinner || isSpectator)
         ? []
         : gameConnection.moveBuilder.targets,
     }}>

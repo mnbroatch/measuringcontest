@@ -31,8 +31,7 @@
     "style-loader": "^3.3.1",
     "webpack": "^5.66.0",
     "webpack-cli": "^4.9.1",
-    "webpack-dev-server": "^4.8.1",
-    "yarn-bound": "0.2.3"
+    "webpack-dev-server": "^4.8.1"
   },
   "author": "",
   "license": "ISC",
@@ -42,13 +41,10 @@
     "@tanstack/react-query": "^5.82.0",
     "@tanstack/react-router": "^1.131.7",
     "aws-amplify": "^6.15.3",
-    "board-game-engine-temp": "^1.0.0",
-    "boardgame.io": "^0.50.2",
-    "expr-eval": "^2.0.2",
+    "board-game-engine": "^0.0.7",
     "lucide-react": "^0.556.0",
     "prop-types": "^15.8.1",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "wackson": "^1.1.7"
+    "react-dom": "^19.0.0"
   }
 }

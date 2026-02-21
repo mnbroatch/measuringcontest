@@ -7,9 +7,6 @@ WORKDIR /app
 # Copy only package files first to leverage caching
 COPY package*.json ./
 
-# Copy script to patch boardgame.io module
-COPY patch-bgio.cjs ./
-
 # Install dependencies
 RUN npm install --production
 

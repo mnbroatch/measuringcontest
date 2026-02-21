@@ -19,6 +19,7 @@ export default function useRoomConnection () {
   const gameServerConnection = useGameserverConnection({
     gameId: roomGameId,
     game: RoomGame,
+    gameName: 'bgestagingroom',
     boardgamePlayerID,
     clientToken,
     debug: false,

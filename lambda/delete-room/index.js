@@ -2,9 +2,9 @@ const jwt = require('jsonwebtoken');
 const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
 const { DynamoDBDocumentClient, GetCommand, DeleteCommand } = require("@aws-sdk/lib-dynamodb");
 const { SSMClient, GetParameterCommand } = require("@aws-sdk/client-ssm");
-const { Client } = require('boardgame.io/client');
-const { SocketIO } = require('boardgame.io/multiplayer');
-const { ActivePlayers } = require('boardgame.io/core');
+const { Client } = require('@mnbroatch/boardgame.io/client');
+const { SocketIO } = require('@mnbroatch/boardgame.io/multiplayer');
+const { ActivePlayers } = require('@mnbroatch/boardgame.io/core');
 
 const client = new DynamoDBClient({});
 const dynamoDb = DynamoDBDocumentClient.from(client);

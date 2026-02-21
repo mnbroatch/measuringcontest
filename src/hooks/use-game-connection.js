@@ -24,7 +24,7 @@ export default function useGameConnection () {
   return useGameserverConnection({
     gameId,
     gameRules,
-    rulesHash,
+    gameName: rulesHash, // this is what server expects
     boardgamePlayerID,
     clientToken,
     debug: false,

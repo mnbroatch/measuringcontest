@@ -1,8 +1,8 @@
 // ripped and stretched from the internals of bgio
 import Koa from 'koa';
 import Router from '@koa/router';
-import { Server, configureRouter, createServerRunConfig, configureApp, getPortFromServer, Master, TransportAPI } from 'boardgame.io/dist/cjs/server.js';
-import { ProcessGameConfig, getFilterPlayerView } from 'boardgame.io/dist/cjs/internal.js';
+import { Server, configureRouter, createServerRunConfig, configureApp, getPortFromServer, Master, TransportAPI } from '@mnbroatch/boardgame.io/dist/cjs/server.js';
+import { ProcessGameConfig, getFilterPlayerView } from '@mnbroatch/boardgame.io/dist/cjs/internal.js';
 
 
 // just exists so we're not reliant on closure from constructor for router, games

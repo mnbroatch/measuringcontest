@@ -2,9 +2,9 @@ import { Readable } from "stream";
 import jwt from 'jsonwebtoken';
 import { SSMClient, GetParameterCommand } from "@aws-sdk/client-ssm";
 import getRawBody from 'raw-body'
-import { ProcessGameConfig } from 'boardgame.io/dist/cjs/internal.js';
+import { ProcessGameConfig } from '@mnbroatch/boardgame.io/dist/cjs/internal.js';
+import { gameFactory } from '@mnbroatch/board-game-engine';
 import makeServer from './guts.js';
-import gameFactory from './game-factory/game-factory.js';
 import RoomGame from './room-game.js';
 
 const ssmClient = new SSMClient({ region: 'us-west-1' });
