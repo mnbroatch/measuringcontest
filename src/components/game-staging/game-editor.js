@@ -2,7 +2,6 @@ import React, { useState, useRef } from 'react'
 import Editor from '@monaco-editor/react';
 
 import PlayGame from "../play-game/play-game.js";
-import GameStatus from "../game-status/game-status.js";
 import useSinglePlayerGame from "../../hooks/use-single-player-game.js";
 import ButtonWithInput from '../../components/button-with-input/button-with-input.js'
 
@@ -246,7 +245,6 @@ export default function GameEditor ({
             </button>
           </div>
           <PlayGame gameConnection={gameConnection} />
-          <GameStatus gameConnection={gameConnection} />
         </div>
       )}
     </>

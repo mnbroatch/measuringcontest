@@ -12,7 +12,6 @@ import { useCognitoAuth } from "../contexts/cognito-auth-context.js";
 import { useLoading } from "../contexts/loading-context.js";
 import PlayGame from "../components/play-game/play-game.js";
 import WatchGame from "../components/watch-game/watch-game.js";
-import GameStatus from "../components/game-status/game-status.js";
 import RoomGame from "../components/game-staging/room-game.js";
 import GamePreview from "../components/game-staging/game-preview.js";
 import GameEditor from "../components/game-staging/game-editor.js";
@@ -191,9 +190,6 @@ export default function RoomPage () {
       )}
       {status === 'started' && !iAmInGame && (
         <WatchGame gameConnection={gameConnection} />
-      )}
-      {status === 'started' && (
-        <GameStatus gameConnection={gameConnection} />
       )}
       {status === 'started' && iAmRoomCreator && (
         <button

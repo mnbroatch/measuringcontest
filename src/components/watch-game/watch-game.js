@@ -1,14 +1,11 @@
 import React from 'react'
-import Game from "../game/game.js";
-import { GameProvider } from "../../contexts/game-context.js";
+import { Game } from "board-game-engine-react";
 
 export default function WatchGame ({ gameConnection }) {
   return (
-    <GameProvider
+    <Game
       gameConnection={gameConnection}
       isSpectator
-    >
-      <Game bgioState={gameConnection.state} />
-    </GameProvider>
+    />
   )
 }
