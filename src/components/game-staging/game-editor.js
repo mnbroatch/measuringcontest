@@ -93,7 +93,6 @@ export default function GameEditor ({
   const [savedNumPlayers, setSavedNumPlayers] = useState(2)
 
   const gameConnection = useSinglePlayerGame(savedGameRules, +savedNumPlayers)
-  console.log('456', 456, screenState, !!gameConnection.state)
   
   const handleGameRulesChange = (newGameRules) => {
     localStorage.setItem(RULES_LOCALSTORAGE_KEY, newGameRules)
