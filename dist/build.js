@@ -5323,13 +5323,13 @@ function Transitioner() {
 
   function Game({
     gameConnection,
-    loading
+    loading,
+    isSpectator
   }) {
-    console.log('555gameConnection', gameConnection);
-    const G = gameConnection?.state?.G;
+    const G = gameConnection?.getState?.().state.G;
     return G ? /*#__PURE__*/React__default["default"].createElement(GameProvider, {
       gameConnection: gameConnection,
-      isSpectator: true
+      isSpectator: isSpectator
     }, /*#__PURE__*/React__default["default"].createElement("div", {
       className: "game"
     }, /*#__PURE__*/React__default["default"].createElement(AbstractChoices, null), /*#__PURE__*/React__default["default"].createElement("div", {
@@ -42991,6 +42991,7 @@ function GameEditor(_ref) {
     savedNumPlayers = _useState0[0],
     setSavedNumPlayers = _useState0[1];
   var gameConnection = (0,_hooks_use_single_player_game_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)(savedGameRules, +savedNumPlayers);
+  console.log('456', 456, screenState, !!gameConnection.state);
   var handleGameRulesChange = function handleGameRulesChange(newGameRules) {
     localStorage.setItem(RULES_LOCALSTORAGE_KEY, newGameRules);
     localStorage.setItem(NAME_LOCALSTORAGE_KEY, gameName);
@@ -47507,8 +47508,8 @@ var useGameserverConnection = function useGameserverConnection(_ref) {
     _ref$enabled = _ref.enabled,
     enabled = _ref$enabled === void 0 ? true : _ref$enabled;
   var _useReducer = (0,react__WEBPACK_IMPORTED_MODULE_0__.useReducer)(function (x) {
-      return !x;
-    }, false),
+      return x + 1;
+    }, 0),
     _useReducer2 = _slicedToArray(_useReducer, 2),
     _ = _useReducer2[0],
     forceUpdate = _useReducer2[1];
@@ -47521,7 +47522,9 @@ var useGameserverConnection = function useGameserverConnection(_ref) {
     var options = {
       server: _constants_api_js__WEBPACK_IMPORTED_MODULE_1__/* .BOARDGAME_SERVER_URL */ ._,
       numPlayers: numPlayers,
-      onClientUpdate: forceUpdate,
+      onClientUpdate: function onClientUpdate() {
+        forceUpdate();
+      },
       debug: debug,
       gameId: gameId,
       gameRules: gameRules,

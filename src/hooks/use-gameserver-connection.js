@@ -14,7 +14,7 @@ export const useGameserverConnection = ({
   singlePlayer = false,
   enabled = true,
 }) => {
-  const [_, forceUpdate] = useReducer(x => !x, false)
+  const [_, forceUpdate] = useReducer(x => x + 1, 0)
   const [connection, setConnection] = useState(null)
 
   useEffect(() => {
@@ -23,7 +23,9 @@ export const useGameserverConnection = ({
     const options = {
       server: BOARDGAME_SERVER_URL,
       numPlayers,
-      onClientUpdate: forceUpdate,
+      onClientUpdate: () => {
+        forceUpdate()
+      },
       debug,
       gameId,
       gameRules,
