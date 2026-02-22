@@ -1,5 +1,4 @@
 import { useEffect, useReducer, useState } from 'react'
-import { flushSync } from 'react-dom'
 import { BOARDGAME_SERVER_URL } from '../constants/api.js'
 import { Client } from 'board-game-engine'
 
@@ -21,20 +20,10 @@ export const useGameserverConnection = ({
   useEffect(() => {
     if (!gameRules && !boardgameIOGame || !singlePlayer && (!gameId || !clientToken || !enabled)) return
 
-    const onClientUpdate = () => {
-      // wrapping forceUpdate means we don't batch updates
-      // and skip certain transitional states
-      setTimeout(() => {
-        flushSync(() => {
-          forceUpdate()
-        })
-      }, 0)
-    }
-
     const options = {
       server: BOARDGAME_SERVER_URL,
       numPlayers,
-      onClientUpdate,
+      onClientUpdate: forceUpdate,
       debug,
       gameId,
       gameRules,

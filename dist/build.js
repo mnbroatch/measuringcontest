@@ -47436,17 +47436,15 @@ useRoomQuery.preload = function (roomCode) {
 /* harmony export */   J: () => (/* binding */ useGameserverConnection)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3137);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2528);
-/* harmony import */ var _constants_api_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8273);
-/* harmony import */ var board_game_engine__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2795);
-/* harmony import */ var board_game_engine__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(board_game_engine__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _constants_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8273);
+/* harmony import */ var board_game_engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2795);
+/* harmony import */ var board_game_engine__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(board_game_engine__WEBPACK_IMPORTED_MODULE_2__);
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-
 
 
 
@@ -47475,19 +47473,10 @@ var useGameserverConnection = function useGameserverConnection(_ref) {
     setConnection = _useState2[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (!gameRules && !boardgameIOGame || !singlePlayer && (!gameId || !clientToken || !enabled)) return;
-    var onClientUpdate = function onClientUpdate() {
-      // wrapping forceUpdate means we don't batch updates
-      // and skip certain transitional states
-      setTimeout(function () {
-        (0,react_dom__WEBPACK_IMPORTED_MODULE_1__.flushSync)(function () {
-          forceUpdate();
-        });
-      }, 0);
-    };
     var options = {
-      server: _constants_api_js__WEBPACK_IMPORTED_MODULE_2__/* .BOARDGAME_SERVER_URL */ ._,
+      server: _constants_api_js__WEBPACK_IMPORTED_MODULE_1__/* .BOARDGAME_SERVER_URL */ ._,
       numPlayers: numPlayers,
-      onClientUpdate: onClientUpdate,
+      onClientUpdate: forceUpdate,
       debug: debug,
       gameId: gameId,
       gameRules: gameRules,
@@ -47497,7 +47486,7 @@ var useGameserverConnection = function useGameserverConnection(_ref) {
       clientToken: clientToken,
       singlePlayer: singlePlayer
     };
-    var newConnection = new board_game_engine__WEBPACK_IMPORTED_MODULE_3__.Client(options);
+    var newConnection = new board_game_engine__WEBPACK_IMPORTED_MODULE_2__.Client(options);
     newConnection.connect();
     setConnection(newConnection);
     return function () {
