@@ -7,7 +7,7 @@ export const useGameserverConnection = ({
   gameId,
   gameRules,
   gameName,
-  game,
+  boardgameIOGame,
   boardgamePlayerID,
   clientToken,
   numPlayers,
@@ -19,7 +19,7 @@ export const useGameserverConnection = ({
   const [connection, setConnection] = useState(null)
 
   useEffect(() => {
-    if (!gameRules || !singlePlayer && (!gameId || !clientToken || !enabled)) return
+    if (!gameRules && !boardgameIOGame || !singlePlayer && (!gameId || !clientToken || !enabled)) return
 
     const onClientUpdate = () => {
       // wrapping forceUpdate means we don't batch updates
@@ -38,14 +38,12 @@ export const useGameserverConnection = ({
       debug,
       gameId,
       gameRules,
-      game,
+      boardgameIOGame,
       gameName,
       boardgamePlayerID,
       clientToken,
       singlePlayer,
     }
-
-    console.log('options', options)
 
     const newConnection = new Client(options)
 
@@ -57,7 +55,7 @@ export const useGameserverConnection = ({
       connection?.client?.stop()
       setConnection(null)
     }
-  }, [gameId, boardgamePlayerID, clientToken, gameRules, enabled])
+  }, [gameId, boardgamePlayerID, clientToken, gameRules, boardgameIOGame, enabled])
 
   if (connection) {
     return Object.assign(
