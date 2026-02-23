@@ -1,4 +1,4 @@
-import { useGameserverConnection } from "./use-gameserver-connection.js";
+import { useGameserverConnection } from "board-game-engine-react";
 
 export default function useSinglePlayerGame (gameRules, numPlayers) {
   return useGameserverConnection({

@@ -3,8 +3,9 @@ import { useParams } from '@tanstack/react-router';
 import { useQueryClient } from '@tanstack/react-query'
 import { useJoinRoomMutation } from "../queries/use-join-room-mutation.js";
 import { useRoomQuery } from "../queries/use-room-query.js"
-import { useGameserverConnection } from "./use-gameserver-connection.js";
+import { useGameserverConnection } from "board-game-engine-react";
 import RoomGame from "../../server/room-game.js";
+import { BOARDGAME_SERVER_URL } from '../constants/api.js'
 
 export default function useRoomConnection () {
   const { roomcode: roomCode } = useParams({})
@@ -19,6 +20,7 @@ export default function useRoomConnection () {
   console.log('RoomGame', RoomGame)
 
   const gameServerConnection = useGameserverConnection({
+    server: BOARDGAME_SERVER_URL,
     gameId: roomGameId,
     boardgameIOGame: RoomGame,
     gameName: 'bgestagingroom',

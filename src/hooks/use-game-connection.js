@@ -2,7 +2,8 @@ import { useEffect } from 'react'
 import { useParams } from '@tanstack/react-router';
 import { useJoinGameMutation } from "../queries/use-join-game-mutation.js";
 import { useRoomQuery } from "../queries/use-room-query.js"
-import { useGameserverConnection } from "./use-gameserver-connection.js";
+import { useGameserverConnection } from "board-game-engine-react";
+import { BOARDGAME_SERVER_URL } from '../constants/api.js'
 
 export default function useGameConnection () {
   const { roomcode: roomCode } = useParams({})
@@ -22,6 +23,7 @@ export default function useGameConnection () {
   }, [roomCode, gameId])
 
   return useGameserverConnection({
+    server: BOARDGAME_SERVER_URL,
     gameId,
     gameRules,
     gameName: rulesHash, // this is what server expects
