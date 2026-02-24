@@ -759,7 +759,7 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-console.warn("[tanstack-router] These exports from \"/home/matt/Programming/measuringcontest/src/routes/rooms.$roomcode.js\" will not be code-split and will increase your bundle size:\n- RoomPage\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
+console.warn("[tanstack-router] These exports from \"/home/mnbro/Programming/measuringcontest/src/routes/rooms.$roomcode.js\" will not be code-split and will increase your bundle size:\n- RoomPage\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
 
 
 
@@ -2772,6 +2772,152 @@ module.exports = styleTagTransform;
 
 /***/ }),
 
+/***/ 1058:
+/***/ ((module) => {
+
+/**
+ * lodash (Custom Build) <https://lodash.com/>
+ * Build: `lodash modularize exports="npm" -o ./`
+ * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+ * Released under MIT license <https://lodash.com/license>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
+
+/** `Object#toString` result references. */
+var objectTag = '[object Object]';
+
+/**
+ * Checks if `value` is a host object in IE < 9.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
+ */
+function isHostObject(value) {
+  // Many host objects are `Object` objects that can coerce to strings
+  // despite having improperly defined `toString` methods.
+  var result = false;
+  if (value != null && typeof value.toString != 'function') {
+    try {
+      result = !!(value + '');
+    } catch (e) {}
+  }
+  return result;
+}
+
+/**
+ * Creates a unary function that invokes `func` with its argument transformed.
+ *
+ * @private
+ * @param {Function} func The function to wrap.
+ * @param {Function} transform The argument transform.
+ * @returns {Function} Returns the new function.
+ */
+function overArg(func, transform) {
+  return function(arg) {
+    return func(transform(arg));
+  };
+}
+
+/** Used for built-in method references. */
+var funcProto = Function.prototype,
+    objectProto = Object.prototype;
+
+/** Used to resolve the decompiled source of functions. */
+var funcToString = funcProto.toString;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/** Used to infer the `Object` constructor. */
+var objectCtorString = funcToString.call(Object);
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var objectToString = objectProto.toString;
+
+/** Built-in value references. */
+var getPrototype = overArg(Object.getPrototypeOf, Object);
+
+/**
+ * Checks if `value` is object-like. A value is object-like if it's not `null`
+ * and has a `typeof` result of "object".
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+ * @example
+ *
+ * _.isObjectLike({});
+ * // => true
+ *
+ * _.isObjectLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isObjectLike(_.noop);
+ * // => false
+ *
+ * _.isObjectLike(null);
+ * // => false
+ */
+function isObjectLike(value) {
+  return !!value && typeof value == 'object';
+}
+
+/**
+ * Checks if `value` is a plain object, that is, an object created by the
+ * `Object` constructor or one with a `[[Prototype]]` of `null`.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.8.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
+ * @example
+ *
+ * function Foo() {
+ *   this.a = 1;
+ * }
+ *
+ * _.isPlainObject(new Foo);
+ * // => false
+ *
+ * _.isPlainObject([1, 2, 3]);
+ * // => false
+ *
+ * _.isPlainObject({ 'x': 0, 'y': 0 });
+ * // => true
+ *
+ * _.isPlainObject(Object.create(null));
+ * // => true
+ */
+function isPlainObject(value) {
+  if (!isObjectLike(value) ||
+      objectToString.call(value) != objectTag || isHostObject(value)) {
+    return false;
+  }
+  var proto = getPrototype(value);
+  if (proto === null) {
+    return true;
+  }
+  var Ctor = hasOwnProperty.call(proto, 'constructor') && proto.constructor;
+  return (typeof Ctor == 'function' &&
+    Ctor instanceof Ctor && funcToString.call(Ctor) == objectCtorString);
+}
+
+module.exports = isPlainObject;
+
+
+/***/ }),
+
 /***/ 1087:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
@@ -3407,21 +3553,6 @@ var useCognitoQuery = function useCognitoQuery() {
 useCognitoQuery.preload = function () {
   return (0,_utils_preload_query_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(options);
 };
-
-/***/ }),
-
-/***/ 1395:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-
-if (true) {
-  module.exports = __webpack_require__(4706)
-} else // removed by dead control flow
-{}
-
 
 /***/ }),
 
@@ -4754,7 +4885,7 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-console.warn("[tanstack-router] These exports from \"/home/matt/Programming/measuringcontest/src/routes/index.js\" will not be code-split and will increase your bundle size:\n- Home\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
+console.warn("[tanstack-router] These exports from \"/home/mnbro/Programming/measuringcontest/src/routes/index.js\" will not be code-split and will increase your bundle size:\n- Home\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
 
 
 
@@ -11526,6 +11657,43 @@ class NotFoundRoute extends Route {
 
 /***/ }),
 
+/***/ 2434:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Immer: () => (/* binding */ un),
+/* harmony export */   applyPatches: () => (/* binding */ pn),
+/* harmony export */   castDraft: () => (/* binding */ K),
+/* harmony export */   castImmutable: () => (/* binding */ $),
+/* harmony export */   createDraft: () => (/* binding */ ln),
+/* harmony export */   current: () => (/* binding */ D),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   enableAllPlugins: () => (/* binding */ J),
+/* harmony export */   enableES5: () => (/* binding */ N),
+/* harmony export */   enableMapSet: () => (/* binding */ C),
+/* harmony export */   enablePatches: () => (/* binding */ T),
+/* harmony export */   finishDraft: () => (/* binding */ dn),
+/* harmony export */   freeze: () => (/* binding */ d),
+/* harmony export */   immerable: () => (/* binding */ L),
+/* harmony export */   isDraft: () => (/* binding */ t),
+/* harmony export */   isDraftable: () => (/* binding */ r),
+/* harmony export */   nothing: () => (/* binding */ H),
+/* harmony export */   original: () => (/* binding */ e),
+/* harmony export */   produce: () => (/* binding */ fn),
+/* harmony export */   produceWithPatches: () => (/* binding */ cn),
+/* harmony export */   setAutoFreeze: () => (/* binding */ sn),
+/* harmony export */   setUseProxies: () => (/* binding */ vn)
+/* harmony export */ });
+function n(n){for(var t=arguments.length,r=Array(t>1?t-1:0),e=1;e<t;e++)r[e-1]=arguments[e];if(false)// removed by dead control flow
+{ var i, o; }throw Error("[Immer] minified error nr: "+n+(r.length?" "+r.map((function(n){return"'"+n+"'"})).join(","):"")+". Find the full error at: https://bit.ly/3cXEKWf")}function t(n){return!!n&&!!n[Q]}function r(n){return!!n&&(function(n){if(!n||"object"!=typeof n)return!1;var t=Object.getPrototypeOf(n);if(null===t)return!0;var r=Object.hasOwnProperty.call(t,"constructor")&&t.constructor;return r===Object||"function"==typeof r&&Function.toString.call(r)===Z}(n)||Array.isArray(n)||!!n[L]||!!n.constructor[L]||s(n)||v(n))}function e(r){return t(r)||n(23,r),r[Q].t}function i(n,t,r){void 0===r&&(r=!1),0===o(n)?(r?Object.keys:nn)(n).forEach((function(e){r&&"symbol"==typeof e||t(e,n[e],n)})):n.forEach((function(r,e){return t(e,r,n)}))}function o(n){var t=n[Q];return t?t.i>3?t.i-4:t.i:Array.isArray(n)?1:s(n)?2:v(n)?3:0}function u(n,t){return 2===o(n)?n.has(t):Object.prototype.hasOwnProperty.call(n,t)}function a(n,t){return 2===o(n)?n.get(t):n[t]}function f(n,t,r){var e=o(n);2===e?n.set(t,r):3===e?(n.delete(t),n.add(r)):n[t]=r}function c(n,t){return n===t?0!==n||1/n==1/t:n!=n&&t!=t}function s(n){return X&&n instanceof Map}function v(n){return q&&n instanceof Set}function p(n){return n.o||n.t}function l(n){if(Array.isArray(n))return Array.prototype.slice.call(n);var t=tn(n);delete t[Q];for(var r=nn(t),e=0;e<r.length;e++){var i=r[e],o=t[i];!1===o.writable&&(o.writable=!0,o.configurable=!0),(o.get||o.set)&&(t[i]={configurable:!0,writable:!0,enumerable:o.enumerable,value:n[i]})}return Object.create(Object.getPrototypeOf(n),t)}function d(n,e){return void 0===e&&(e=!1),y(n)||t(n)||!r(n)?n:(o(n)>1&&(n.set=n.add=n.clear=n.delete=h),Object.freeze(n),e&&i(n,(function(n,t){return d(t,!0)}),!0),n)}function h(){n(2)}function y(n){return null==n||"object"!=typeof n||Object.isFrozen(n)}function b(t){var r=rn[t];return r||n(18,t),r}function m(n,t){rn[n]||(rn[n]=t)}function _(){return true||0,U}function j(n,t){t&&(b("Patches"),n.u=[],n.s=[],n.v=t)}function O(n){g(n),n.p.forEach(S),n.p=null}function g(n){n===U&&(U=n.l)}function w(n){return U={p:[],l:U,h:n,m:!0,_:0}}function S(n){var t=n[Q];0===t.i||1===t.i?t.j():t.O=!0}function P(t,e){e._=e.p.length;var i=e.p[0],o=void 0!==t&&t!==i;return e.h.g||b("ES5").S(e,t,o),o?(i[Q].P&&(O(e),n(4)),r(t)&&(t=M(e,t),e.l||x(e,t)),e.u&&b("Patches").M(i[Q],t,e.u,e.s)):t=M(e,i,[]),O(e),e.u&&e.v(e.u,e.s),t!==H?t:void 0}function M(n,t,r){if(y(t))return t;var e=t[Q];if(!e)return i(t,(function(i,o){return A(n,e,t,i,o,r)}),!0),t;if(e.A!==n)return t;if(!e.P)return x(n,e.t,!0),e.t;if(!e.I){e.I=!0,e.A._--;var o=4===e.i||5===e.i?e.o=l(e.k):e.o;i(3===e.i?new Set(o):o,(function(t,i){return A(n,e,o,t,i,r)})),x(n,o,!1),r&&n.u&&b("Patches").R(e,r,n.u,n.s)}return e.o}function A(e,i,o,a,c,s){if( false&&0,t(c)){var v=M(e,c,s&&i&&3!==i.i&&!u(i.D,a)?s.concat(a):void 0);if(f(o,a,v),!t(v))return;e.m=!1}if(r(c)&&!y(c)){if(!e.h.F&&e._<1)return;M(e,c),i&&i.A.l||x(e,c)}}function x(n,t,r){void 0===r&&(r=!1),n.h.F&&n.m&&d(t,r)}function z(n,t){var r=n[Q];return(r?p(r):n)[t]}function I(n,t){if(t in n)for(var r=Object.getPrototypeOf(n);r;){var e=Object.getOwnPropertyDescriptor(r,t);if(e)return e;r=Object.getPrototypeOf(r)}}function k(n){n.P||(n.P=!0,n.l&&k(n.l))}function E(n){n.o||(n.o=l(n.t))}function R(n,t,r){var e=s(t)?b("MapSet").N(t,r):v(t)?b("MapSet").T(t,r):n.g?function(n,t){var r=Array.isArray(n),e={i:r?1:0,A:t?t.A:_(),P:!1,I:!1,D:{},l:t,t:n,k:null,o:null,j:null,C:!1},i=e,o=en;r&&(i=[e],o=on);var u=Proxy.revocable(i,o),a=u.revoke,f=u.proxy;return e.k=f,e.j=a,f}(t,r):b("ES5").J(t,r);return(r?r.A:_()).p.push(e),e}function D(e){return t(e)||n(22,e),function n(t){if(!r(t))return t;var e,u=t[Q],c=o(t);if(u){if(!u.P&&(u.i<4||!b("ES5").K(u)))return u.t;u.I=!0,e=F(t,c),u.I=!1}else e=F(t,c);return i(e,(function(t,r){u&&a(u.t,t)===r||f(e,t,n(r))})),3===c?new Set(e):e}(e)}function F(n,t){switch(t){case 2:return new Map(n);case 3:return Array.from(n)}return l(n)}function N(){function r(n,t){var r=s[n];return r?r.enumerable=t:s[n]=r={configurable:!0,enumerable:t,get:function(){var t=this[Q];return false&&0,en.get(t,n)},set:function(t){var r=this[Q]; false&&0,en.set(r,n,t)}},r}function e(n){for(var t=n.length-1;t>=0;t--){var r=n[t][Q];if(!r.P)switch(r.i){case 5:a(r)&&k(r);break;case 4:o(r)&&k(r)}}}function o(n){for(var t=n.t,r=n.k,e=nn(r),i=e.length-1;i>=0;i--){var o=e[i];if(o!==Q){var a=t[o];if(void 0===a&&!u(t,o))return!0;var f=r[o],s=f&&f[Q];if(s?s.t!==a:!c(f,a))return!0}}var v=!!t[Q];return e.length!==nn(t).length+(v?0:1)}function a(n){var t=n.k;if(t.length!==n.t.length)return!0;var r=Object.getOwnPropertyDescriptor(t,t.length-1);return!(!r||r.get)}function f(t){t.O&&n(3,JSON.stringify(p(t)))}var s={};m("ES5",{J:function(n,t){var e=Array.isArray(n),i=function(n,t){if(n){for(var e=Array(t.length),i=0;i<t.length;i++)Object.defineProperty(e,""+i,r(i,!0));return e}var o=tn(t);delete o[Q];for(var u=nn(o),a=0;a<u.length;a++){var f=u[a];o[f]=r(f,n||!!o[f].enumerable)}return Object.create(Object.getPrototypeOf(t),o)}(e,n),o={i:e?5:4,A:t?t.A:_(),P:!1,I:!1,D:{},l:t,t:n,k:i,o:null,O:!1,C:!1};return Object.defineProperty(i,Q,{value:o,writable:!0}),i},S:function(n,r,o){o?t(r)&&r[Q].A===n&&e(n.p):(n.u&&function n(t){if(t&&"object"==typeof t){var r=t[Q];if(r){var e=r.t,o=r.k,f=r.D,c=r.i;if(4===c)i(o,(function(t){t!==Q&&(void 0!==e[t]||u(e,t)?f[t]||n(o[t]):(f[t]=!0,k(r)))})),i(e,(function(n){void 0!==o[n]||u(o,n)||(f[n]=!1,k(r))}));else if(5===c){if(a(r)&&(k(r),f.length=!0),o.length<e.length)for(var s=o.length;s<e.length;s++)f[s]=!1;else for(var v=e.length;v<o.length;v++)f[v]=!0;for(var p=Math.min(o.length,e.length),l=0;l<p;l++)void 0===f[l]&&n(o[l])}}}}(n.p[0]),e(n.p))},K:function(n){return 4===n.i?o(n):a(n)}})}function T(){function e(n){if(!r(n))return n;if(Array.isArray(n))return n.map(e);if(s(n))return new Map(Array.from(n.entries()).map((function(n){return[n[0],e(n[1])]})));if(v(n))return new Set(Array.from(n).map(e));var t=Object.create(Object.getPrototypeOf(n));for(var i in n)t[i]=e(n[i]);return u(n,L)&&(t[L]=n[L]),t}function f(n){return t(n)?e(n):n}var c="add";m("Patches",{$:function(t,r){return r.forEach((function(r){for(var i=r.path,u=r.op,f=t,s=0;s<i.length-1;s++){var v=o(f),p=""+i[s];0!==v&&1!==v||"__proto__"!==p&&"constructor"!==p||n(24),"function"==typeof f&&"prototype"===p&&n(24),"object"!=typeof(f=a(f,p))&&n(15,i.join("/"))}var l=o(f),d=e(r.value),h=i[i.length-1];switch(u){case"replace":switch(l){case 2:return f.set(h,d);case 3:n(16);default:return f[h]=d}case c:switch(l){case 1:return f.splice(h,0,d);case 2:return f.set(h,d);case 3:return f.add(d);default:return f[h]=d}case"remove":switch(l){case 1:return f.splice(h,1);case 2:return f.delete(h);case 3:return f.delete(r.value);default:return delete f[h]}default:n(17,u)}})),t},R:function(n,t,r,e){switch(n.i){case 0:case 4:case 2:return function(n,t,r,e){var o=n.t,s=n.o;i(n.D,(function(n,i){var v=a(o,n),p=a(s,n),l=i?u(o,n)?"replace":c:"remove";if(v!==p||"replace"!==l){var d=t.concat(n);r.push("remove"===l?{op:l,path:d}:{op:l,path:d,value:p}),e.push(l===c?{op:"remove",path:d}:"remove"===l?{op:c,path:d,value:f(v)}:{op:"replace",path:d,value:f(v)})}}))}(n,t,r,e);case 5:case 1:return function(n,t,r,e){var i=n.t,o=n.D,u=n.o;if(u.length<i.length){var a=[u,i];i=a[0],u=a[1];var s=[e,r];r=s[0],e=s[1]}for(var v=0;v<i.length;v++)if(o[v]&&u[v]!==i[v]){var p=t.concat([v]);r.push({op:"replace",path:p,value:f(u[v])}),e.push({op:"replace",path:p,value:f(i[v])})}for(var l=i.length;l<u.length;l++){var d=t.concat([l]);r.push({op:c,path:d,value:f(u[l])})}i.length<u.length&&e.push({op:"replace",path:t.concat(["length"]),value:i.length})}(n,t,r,e);case 3:return function(n,t,r,e){var i=n.t,o=n.o,u=0;i.forEach((function(n){if(!o.has(n)){var i=t.concat([u]);r.push({op:"remove",path:i,value:n}),e.unshift({op:c,path:i,value:n})}u++})),u=0,o.forEach((function(n){if(!i.has(n)){var o=t.concat([u]);r.push({op:c,path:o,value:n}),e.unshift({op:"remove",path:o,value:n})}u++}))}(n,t,r,e)}},M:function(n,t,r,e){r.push({op:"replace",path:[],value:t===H?void 0:t}),e.push({op:"replace",path:[],value:n.t})}})}function C(){function t(n,t){function r(){this.constructor=n}a(n,t),n.prototype=(r.prototype=t.prototype,new r)}function e(n){n.o||(n.D=new Map,n.o=new Map(n.t))}function o(n){n.o||(n.o=new Set,n.t.forEach((function(t){if(r(t)){var e=R(n.A.h,t,n);n.p.set(t,e),n.o.add(e)}else n.o.add(t)})))}function u(t){t.O&&n(3,JSON.stringify(p(t)))}var a=function(n,t){return(a=Object.setPrototypeOf||{__proto__:[]}instanceof Array&&function(n,t){n.__proto__=t}||function(n,t){for(var r in t)t.hasOwnProperty(r)&&(n[r]=t[r])})(n,t)},f=function(){function n(n,t){return this[Q]={i:2,l:t,A:t?t.A:_(),P:!1,I:!1,o:void 0,D:void 0,t:n,k:this,C:!1,O:!1},this}t(n,Map);var o=n.prototype;return Object.defineProperty(o,"size",{get:function(){return p(this[Q]).size}}),o.has=function(n){return p(this[Q]).has(n)},o.set=function(n,t){var r=this[Q];return u(r),p(r).has(n)&&p(r).get(n)===t||(e(r),k(r),r.D.set(n,!0),r.o.set(n,t),r.D.set(n,!0)),this},o.delete=function(n){if(!this.has(n))return!1;var t=this[Q];return u(t),e(t),k(t),t.D.set(n,!1),t.o.delete(n),!0},o.clear=function(){var n=this[Q];u(n),p(n).size&&(e(n),k(n),n.D=new Map,i(n.t,(function(t){n.D.set(t,!1)})),n.o.clear())},o.forEach=function(n,t){var r=this;p(this[Q]).forEach((function(e,i){n.call(t,r.get(i),i,r)}))},o.get=function(n){var t=this[Q];u(t);var i=p(t).get(n);if(t.I||!r(i))return i;if(i!==t.t.get(n))return i;var o=R(t.A.h,i,t);return e(t),t.o.set(n,o),o},o.keys=function(){return p(this[Q]).keys()},o.values=function(){var n,t=this,r=this.keys();return(n={})[V]=function(){return t.values()},n.next=function(){var n=r.next();return n.done?n:{done:!1,value:t.get(n.value)}},n},o.entries=function(){var n,t=this,r=this.keys();return(n={})[V]=function(){return t.entries()},n.next=function(){var n=r.next();if(n.done)return n;var e=t.get(n.value);return{done:!1,value:[n.value,e]}},n},o[V]=function(){return this.entries()},n}(),c=function(){function n(n,t){return this[Q]={i:3,l:t,A:t?t.A:_(),P:!1,I:!1,o:void 0,t:n,k:this,p:new Map,O:!1,C:!1},this}t(n,Set);var r=n.prototype;return Object.defineProperty(r,"size",{get:function(){return p(this[Q]).size}}),r.has=function(n){var t=this[Q];return u(t),t.o?!!t.o.has(n)||!(!t.p.has(n)||!t.o.has(t.p.get(n))):t.t.has(n)},r.add=function(n){var t=this[Q];return u(t),this.has(n)||(o(t),k(t),t.o.add(n)),this},r.delete=function(n){if(!this.has(n))return!1;var t=this[Q];return u(t),o(t),k(t),t.o.delete(n)||!!t.p.has(n)&&t.o.delete(t.p.get(n))},r.clear=function(){var n=this[Q];u(n),p(n).size&&(o(n),k(n),n.o.clear())},r.values=function(){var n=this[Q];return u(n),o(n),n.o.values()},r.entries=function(){var n=this[Q];return u(n),o(n),n.o.entries()},r.keys=function(){return this.values()},r[V]=function(){return this.values()},r.forEach=function(n,t){for(var r=this.values(),e=r.next();!e.done;)n.call(t,e.value,e.value,this),e=r.next()},n}();m("MapSet",{N:function(n,t){return new f(n,t)},T:function(n,t){return new c(n,t)}})}function J(){N(),C(),T()}function K(n){return n}function $(n){return n}var G,U,W="undefined"!=typeof Symbol&&"symbol"==typeof Symbol("x"),X="undefined"!=typeof Map,q="undefined"!=typeof Set,B="undefined"!=typeof Proxy&&void 0!==Proxy.revocable&&"undefined"!=typeof Reflect,H=W?Symbol.for("immer-nothing"):((G={})["immer-nothing"]=!0,G),L=W?Symbol.for("immer-draftable"):"__$immer_draftable",Q=W?Symbol.for("immer-state"):"__$immer_state",V="undefined"!=typeof Symbol&&Symbol.iterator||"@@iterator",Y={0:"Illegal state",1:"Immer drafts cannot have computed properties",2:"This object has been frozen and should not be mutated",3:function(n){return"Cannot use a proxy that has been revoked. Did you pass an object from inside an immer function to an async process? "+n},4:"An immer producer returned a new value *and* modified its draft. Either return a new value *or* modify the draft.",5:"Immer forbids circular references",6:"The first or second argument to `produce` must be a function",7:"The third argument to `produce` must be a function or undefined",8:"First argument to `createDraft` must be a plain object, an array, or an immerable object",9:"First argument to `finishDraft` must be a draft returned by `createDraft`",10:"The given draft is already finalized",11:"Object.defineProperty() cannot be used on an Immer draft",12:"Object.setPrototypeOf() cannot be used on an Immer draft",13:"Immer only supports deleting array indices",14:"Immer only supports setting array indices and the 'length' property",15:function(n){return"Cannot apply patch, path doesn't resolve: "+n},16:'Sets cannot have "replace" patches.',17:function(n){return"Unsupported patch operation: "+n},18:function(n){return"The plugin for '"+n+"' has not been loaded into Immer. To enable the plugin, import and call `enable"+n+"()` when initializing your application."},20:"Cannot use proxies if Proxy, Proxy.revocable or Reflect are not available",21:function(n){return"produce can only be called on things that are draftable: plain objects, arrays, Map, Set or classes that are marked with '[immerable]: true'. Got '"+n+"'"},22:function(n){return"'current' expects a draft, got: "+n},23:function(n){return"'original' expects a draft, got: "+n},24:"Patching reserved attributes like __proto__, prototype and constructor is not allowed"},Z=""+Object.prototype.constructor,nn="undefined"!=typeof Reflect&&Reflect.ownKeys?Reflect.ownKeys:void 0!==Object.getOwnPropertySymbols?function(n){return Object.getOwnPropertyNames(n).concat(Object.getOwnPropertySymbols(n))}:Object.getOwnPropertyNames,tn=Object.getOwnPropertyDescriptors||function(n){var t={};return nn(n).forEach((function(r){t[r]=Object.getOwnPropertyDescriptor(n,r)})),t},rn={},en={get:function(n,t){if(t===Q)return n;var e=p(n);if(!u(e,t))return function(n,t,r){var e,i=I(t,r);return i?"value"in i?i.value:null===(e=i.get)||void 0===e?void 0:e.call(n.k):void 0}(n,e,t);var i=e[t];return n.I||!r(i)?i:i===z(n.t,t)?(E(n),n.o[t]=R(n.A.h,i,n)):i},has:function(n,t){return t in p(n)},ownKeys:function(n){return Reflect.ownKeys(p(n))},set:function(n,t,r){var e=I(p(n),t);if(null==e?void 0:e.set)return e.set.call(n.k,r),!0;if(!n.P){var i=z(p(n),t),o=null==i?void 0:i[Q];if(o&&o.t===r)return n.o[t]=r,n.D[t]=!1,!0;if(c(r,i)&&(void 0!==r||u(n.t,t)))return!0;E(n),k(n)}return n.o[t]===r&&"number"!=typeof r&&(void 0!==r||t in n.o)||(n.o[t]=r,n.D[t]=!0,!0)},deleteProperty:function(n,t){return void 0!==z(n.t,t)||t in n.t?(n.D[t]=!1,E(n),k(n)):delete n.D[t],n.o&&delete n.o[t],!0},getOwnPropertyDescriptor:function(n,t){var r=p(n),e=Reflect.getOwnPropertyDescriptor(r,t);return e?{writable:!0,configurable:1!==n.i||"length"!==t,enumerable:e.enumerable,value:r[t]}:e},defineProperty:function(){n(11)},getPrototypeOf:function(n){return Object.getPrototypeOf(n.t)},setPrototypeOf:function(){n(12)}},on={};i(en,(function(n,t){on[n]=function(){return arguments[0]=arguments[0][0],t.apply(this,arguments)}})),on.deleteProperty=function(t,r){return false&&0,en.deleteProperty.call(this,t[0],r)},on.set=function(t,r,e){return false&&0,en.set.call(this,t[0],r,e,t[0])};var un=function(){function e(t){var e=this;this.g=B,this.F=!0,this.produce=function(t,i,o){if("function"==typeof t&&"function"!=typeof i){var u=i;i=t;var a=e;return function(n){var t=this;void 0===n&&(n=u);for(var r=arguments.length,e=Array(r>1?r-1:0),o=1;o<r;o++)e[o-1]=arguments[o];return a.produce(n,(function(n){var r;return(r=i).call.apply(r,[t,n].concat(e))}))}}var f;if("function"!=typeof i&&n(6),void 0!==o&&"function"!=typeof o&&n(7),r(t)){var c=w(e),s=R(e,t,void 0),v=!0;try{f=i(s),v=!1}finally{v?O(c):g(c)}return"undefined"!=typeof Promise&&f instanceof Promise?f.then((function(n){return j(c,o),P(n,c)}),(function(n){throw O(c),n})):(j(c,o),P(f,c))}if(!t||"object"!=typeof t){if((f=i(t))===H)return;return void 0===f&&(f=t),e.F&&d(f,!0),f}n(21,t)},this.produceWithPatches=function(n,t){return"function"==typeof n?function(t){for(var r=arguments.length,i=Array(r>1?r-1:0),o=1;o<r;o++)i[o-1]=arguments[o];return e.produceWithPatches(t,(function(t){return n.apply(void 0,[t].concat(i))}))}:[e.produce(n,t,(function(n,t){r=n,i=t})),r,i];// removed by dead control flow
+ var r, i; },"boolean"==typeof(null==t?void 0:t.useProxies)&&this.setUseProxies(t.useProxies),"boolean"==typeof(null==t?void 0:t.autoFreeze)&&this.setAutoFreeze(t.autoFreeze)}var i=e.prototype;return i.createDraft=function(e){r(e)||n(8),t(e)&&(e=D(e));var i=w(this),o=R(this,e,void 0);return o[Q].C=!0,g(i),o},i.finishDraft=function(t,r){var e=t&&t[Q]; false&&(0);var i=e.A;return j(i,r),P(void 0,i)},i.setAutoFreeze=function(n){this.F=n},i.setUseProxies=function(t){t&&!B&&n(20),this.g=t},i.applyPatches=function(n,r){var e;for(e=r.length-1;e>=0;e--){var i=r[e];if(0===i.path.length&&"replace"===i.op){n=i.value;break}}var o=b("Patches").$;return t(n)?o(n,r):this.produce(n,(function(n){return o(n,r.slice(e+1))}))},e}(),an=new un,fn=an.produce,cn=an.produceWithPatches.bind(an),sn=an.setAutoFreeze.bind(an),vn=an.setUseProxies.bind(an),pn=an.applyPatches.bind(an),ln=an.createDraft.bind(an),dn=an.finishDraft.bind(an);/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (fn);
+//# sourceMappingURL=immer.esm.js.map
+
+
+/***/ }),
+
 /***/ 2500:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
@@ -14540,6 +14708,1148 @@ function useLoaderDeps(opts) {
 
 /***/ }),
 
+/***/ 3675:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var produce = __webpack_require__(2434);
+var pluginRandom = __webpack_require__(7821);
+var isPlainObject = __webpack_require__(1058);
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var produce__default = /*#__PURE__*/_interopDefaultLegacy(produce);
+var isPlainObject__default = /*#__PURE__*/(/* unused pure expression or super */ null && (_interopDefaultLegacy(isPlainObject)));
+
+/*
+ * Copyright 2017 The boardgame.io Authors
+ *
+ * Use of this source code is governed by a MIT-style
+ * license that can be found in the LICENSE file or at
+ * https://opensource.org/licenses/MIT.
+ */
+const MAKE_MOVE = 'MAKE_MOVE';
+const GAME_EVENT = 'GAME_EVENT';
+const REDO = 'REDO';
+const RESET = 'RESET';
+const SYNC = 'SYNC';
+const UNDO = 'UNDO';
+const UPDATE = 'UPDATE';
+const PATCH = 'PATCH';
+const PLUGIN = 'PLUGIN';
+const STRIP_TRANSIENTS = 'STRIP_TRANSIENTS';
+
+/*
+ * Copyright 2017 The boardgame.io Authors
+ *
+ * Use of this source code is governed by a MIT-style
+ * license that can be found in the LICENSE file or at
+ * https://opensource.org/licenses/MIT.
+ */
+/**
+ * Generate a move to be dispatched to the game move reducer.
+ *
+ * @param {string} type - The move type.
+ * @param {Array}  args - Additional arguments.
+ * @param {string}  playerID - The ID of the player making this action.
+ * @param {string}  credentials - (optional) The credentials for the player making this action.
+ */
+const makeMove = (type, args, playerID, credentials) => ({
+    type: MAKE_MOVE,
+    payload: { type, args, playerID, credentials },
+});
+/**
+ * Generate a game event to be dispatched to the flow reducer.
+ *
+ * @param {string} type - The event type.
+ * @param {Array}  args - Additional arguments.
+ * @param {string}  playerID - The ID of the player making this action.
+ * @param {string}  credentials - (optional) The credentials for the player making this action.
+ */
+const gameEvent = (type, args, playerID, credentials) => ({
+    type: GAME_EVENT,
+    payload: { type, args, playerID, credentials },
+});
+/**
+ * Generate an automatic game event that is a side-effect of a move.
+ * @param {string} type - The event type.
+ * @param {Array}  args - Additional arguments.
+ * @param {string}  playerID - The ID of the player making this action.
+ * @param {string}  credentials - (optional) The credentials for the player making this action.
+ */
+const automaticGameEvent = (type, args, playerID, credentials) => ({
+    type: GAME_EVENT,
+    payload: { type, args, playerID, credentials },
+    automatic: true,
+});
+const sync = (info) => ({
+    type: SYNC,
+    state: info.state,
+    log: info.log,
+    initialState: info.initialState,
+    clientOnly: true,
+});
+/**
+ * Used to update the Redux store's state with patch in response to
+ * an action coming from another player.
+ * @param prevStateID previous stateID
+ * @param stateID stateID after this patch
+ * @param {Operation[]} patch - The patch to apply.
+ * @param {LogEntry[]} deltalog - A log delta.
+ */
+const patch = (prevStateID, stateID, patch, deltalog) => ({
+    type: PATCH,
+    prevStateID,
+    stateID,
+    patch,
+    deltalog,
+    clientOnly: true,
+});
+/**
+ * Used to update the Redux store's state in response to
+ * an action coming from another player.
+ * @param {object} state - The state to restore.
+ * @param {Array} deltalog - A log delta.
+ */
+const update = (state, deltalog) => ({
+    type: UPDATE,
+    state,
+    deltalog,
+    clientOnly: true,
+});
+/**
+ * Used to reset the game state.
+ * @param {object} state - The initial state.
+ */
+const reset = (state) => ({
+    type: RESET,
+    state,
+    clientOnly: true,
+});
+/**
+ * Used to undo the last move.
+ * @param {string}  playerID - The ID of the player making this action.
+ * @param {string}  credentials - (optional) The credentials for the player making this action.
+ */
+const undo = (playerID, credentials) => ({
+    type: UNDO,
+    payload: { type: null, args: null, playerID, credentials },
+});
+/**
+ * Used to redo the last undone move.
+ * @param {string}  playerID - The ID of the player making this action.
+ * @param {string}  credentials - (optional) The credentials for the player making this action.
+ */
+const redo = (playerID, credentials) => ({
+    type: REDO,
+    payload: { type: null, args: null, playerID, credentials },
+});
+/**
+ * Allows plugins to define their own actions and intercept them.
+ */
+const plugin = (type, args, playerID, credentials) => ({
+    type: PLUGIN,
+    payload: { type, args, playerID, credentials },
+});
+/**
+ * Private action used to strip transient metadata (e.g. errors) from the game
+ * state.
+ */
+const stripTransients = () => ({
+    type: STRIP_TRANSIENTS,
+});
+
+var ActionCreators = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  makeMove: makeMove,
+  gameEvent: gameEvent,
+  automaticGameEvent: automaticGameEvent,
+  sync: sync,
+  patch: patch,
+  update: update,
+  reset: reset,
+  undo: undo,
+  redo: redo,
+  plugin: plugin,
+  stripTransients: stripTransients
+});
+
+/**
+ * Moves can return this when they want to indicate
+ * that the combination of arguments is illegal and
+ * the move ought to be discarded.
+ */
+const INVALID_MOVE = 'INVALID_MOVE';
+
+/*
+ * Copyright 2018 The boardgame.io Authors
+ *
+ * Use of this source code is governed by a MIT-style
+ * license that can be found in the LICENSE file or at
+ * https://opensource.org/licenses/MIT.
+ */
+/**
+ * Plugin that allows using Immer to make immutable changes
+ * to G by just mutating it.
+ */
+const ImmerPlugin = {
+    name: 'plugin-immer',
+    fnWrap: (move) => (context, ...args) => {
+        let isInvalid = false;
+        const newG = produce__default["default"](context.G, (G) => {
+            const result = move({ ...context, G }, ...args);
+            if (result === INVALID_MOVE) {
+                isInvalid = true;
+                return;
+            }
+            return result;
+        });
+        if (isInvalid)
+            return INVALID_MOVE;
+        return newG;
+    },
+};
+
+exports.GameMethod = void 0;
+(function (GameMethod) {
+    GameMethod["MOVE"] = "MOVE";
+    GameMethod["GAME_ON_END"] = "GAME_ON_END";
+    GameMethod["PHASE_ON_BEGIN"] = "PHASE_ON_BEGIN";
+    GameMethod["PHASE_ON_END"] = "PHASE_ON_END";
+    GameMethod["TURN_ON_BEGIN"] = "TURN_ON_BEGIN";
+    GameMethod["TURN_ON_MOVE"] = "TURN_ON_MOVE";
+    GameMethod["TURN_ON_END"] = "TURN_ON_END";
+})(exports.GameMethod || (exports.GameMethod = {}));
+
+/*
+ * Copyright 2018 The boardgame.io Authors
+ *
+ * Use of this source code is governed by a MIT-style
+ * license that can be found in the LICENSE file or at
+ * https://opensource.org/licenses/MIT.
+ */
+var Errors;
+(function (Errors) {
+    Errors["CalledOutsideHook"] = "Events must be called from moves or the `onBegin`, `onEnd`, and `onMove` hooks.\nThis error probably means you called an event from other game code, like an `endIf` trigger or one of the `turn.order` methods.";
+    Errors["EndTurnInOnEnd"] = "`endTurn` is disallowed in `onEnd` hooks \u2014 the turn is already ending.";
+    Errors["MaxTurnEndings"] = "Maximum number of turn endings exceeded for this update.\nThis likely means game code is triggering an infinite loop.";
+    Errors["PhaseEventInOnEnd"] = "`setPhase` & `endPhase` are disallowed in a phase\u2019s `onEnd` hook \u2014 the phase is already ending.\nIf you\u2019re trying to dynamically choose the next phase when a phase ends, use the phase\u2019s `next` trigger.";
+    Errors["StageEventInOnEnd"] = "`setStage`, `endStage` & `setActivePlayers` are disallowed in `onEnd` hooks.";
+    Errors["StageEventInPhaseBegin"] = "`setStage`, `endStage` & `setActivePlayers` are disallowed in a phase\u2019s `onBegin` hook.\nUse `setActivePlayers` in a `turn.onBegin` hook or declare stages with `turn.activePlayers` instead.";
+    Errors["StageEventInTurnBegin"] = "`setStage` & `endStage` are disallowed in `turn.onBegin`.\nUse `setActivePlayers` or declare stages with `turn.activePlayers` instead.";
+})(Errors || (Errors = {}));
+/**
+ * Events
+ */
+class Events {
+    constructor(flow, ctx, playerID) {
+        this.flow = flow;
+        this.playerID = playerID;
+        this.dispatch = [];
+        this.initialTurn = ctx.turn;
+        this.updateTurnContext(ctx, undefined);
+        // This is an arbitrarily large upper threshold, which could be made
+        // configurable via a game option if the need arises.
+        this.maxEndedTurnsPerAction = ctx.numPlayers * 100;
+    }
+    api() {
+        const events = {
+            _private: this,
+        };
+        for (const type of this.flow.eventNames) {
+            events[type] = (...args) => {
+                this.dispatch.push({
+                    type,
+                    args,
+                    phase: this.currentPhase,
+                    turn: this.currentTurn,
+                    calledFrom: this.currentMethod,
+                    // Used to capture a stack trace in case it is needed later.
+                    error: new Error('Events Plugin Error'),
+                });
+            };
+        }
+        return events;
+    }
+    isUsed() {
+        return this.dispatch.length > 0;
+    }
+    updateTurnContext(ctx, methodType) {
+        this.currentPhase = ctx.phase;
+        this.currentTurn = ctx.turn;
+        this.currentMethod = methodType;
+    }
+    unsetCurrentMethod() {
+        this.currentMethod = undefined;
+    }
+    /**
+     * Updates ctx with the triggered events.
+     * @param {object} state - The state object { G, ctx }.
+     */
+    update(state) {
+        const initialState = state;
+        const stateWithError = ({ stack }, message) => ({
+            ...initialState,
+            plugins: {
+                ...initialState.plugins,
+                events: {
+                    ...initialState.plugins.events,
+                    data: { error: message + '\n' + stack },
+                },
+            },
+        });
+        EventQueue: for (let i = 0; i < this.dispatch.length; i++) {
+            const event = this.dispatch[i];
+            const turnHasEnded = event.turn !== state.ctx.turn;
+            // This protects against potential infinite loops if specific events are called on hooks.
+            // The moment we exceed the defined threshold, we just bail out of all phases.
+            const endedTurns = this.currentTurn - this.initialTurn;
+            if (endedTurns >= this.maxEndedTurnsPerAction) {
+                return stateWithError(event.error, Errors.MaxTurnEndings);
+            }
+            if (event.calledFrom === undefined) {
+                return stateWithError(event.error, Errors.CalledOutsideHook);
+            }
+            // Stop processing events once the game has finished.
+            if (state.ctx.gameover)
+                break EventQueue;
+            switch (event.type) {
+                case 'endStage':
+                case 'setStage':
+                case 'setActivePlayers': {
+                    switch (event.calledFrom) {
+                        // Disallow all stage events in onEnd and phase.onBegin hooks.
+                        case exports.GameMethod.TURN_ON_END:
+                        case exports.GameMethod.PHASE_ON_END:
+                            return stateWithError(event.error, Errors.StageEventInOnEnd);
+                        case exports.GameMethod.PHASE_ON_BEGIN:
+                            return stateWithError(event.error, Errors.StageEventInPhaseBegin);
+                        // Disallow setStage & endStage in turn.onBegin hooks.
+                        case exports.GameMethod.TURN_ON_BEGIN:
+                            if (event.type === 'setActivePlayers')
+                                break;
+                            return stateWithError(event.error, Errors.StageEventInTurnBegin);
+                    }
+                    // If the turn already ended, don't try to process stage events.
+                    if (turnHasEnded)
+                        continue EventQueue;
+                    break;
+                }
+                case 'endTurn': {
+                    if (event.calledFrom === exports.GameMethod.TURN_ON_END ||
+                        event.calledFrom === exports.GameMethod.PHASE_ON_END) {
+                        return stateWithError(event.error, Errors.EndTurnInOnEnd);
+                    }
+                    // If the turn already ended some other way,
+                    // don't try to end the turn again.
+                    if (turnHasEnded)
+                        continue EventQueue;
+                    break;
+                }
+                case 'endPhase':
+                case 'setPhase': {
+                    if (event.calledFrom === exports.GameMethod.PHASE_ON_END) {
+                        return stateWithError(event.error, Errors.PhaseEventInOnEnd);
+                    }
+                    // If the phase already ended some other way,
+                    // don't try to end the phase again.
+                    if (event.phase !== state.ctx.phase)
+                        continue EventQueue;
+                    break;
+                }
+            }
+            const action = automaticGameEvent(event.type, event.args, this.playerID);
+            state = this.flow.processEvent(state, action);
+        }
+        return state;
+    }
+}
+
+/*
+ * Copyright 2020 The boardgame.io Authors
+ *
+ * Use of this source code is governed by a MIT-style
+ * license that can be found in the LICENSE file or at
+ * https://opensource.org/licenses/MIT.
+ */
+const EventsPlugin = {
+    name: 'events',
+    noClient: ({ api }) => api._private.isUsed(),
+    isInvalid: ({ data }) => data.error || false,
+    // Update the events plugin’s internal turn context each time a move
+    // or hook is called. This allows events called after turn or phase
+    // endings to dispatch the current turn and phase correctly.
+    fnWrap: (method, methodType) => (context, ...args) => {
+        const api = context.events;
+        if (api)
+            api._private.updateTurnContext(context.ctx, methodType);
+        const G = method(context, ...args);
+        if (api)
+            api._private.unsetCurrentMethod();
+        return G;
+    },
+    dangerouslyFlushRawState: ({ state, api }) => api._private.update(state),
+    api: ({ game, ctx, playerID }) => new Events(game.flow, ctx, playerID).api(),
+};
+
+/*
+ * Copyright 2018 The boardgame.io Authors
+ *
+ * Use of this source code is governed by a MIT-style
+ * license that can be found in the LICENSE file or at
+ * https://opensource.org/licenses/MIT.
+ */
+/**
+ * Plugin that makes it possible to add metadata to log entries.
+ * During a move, you can set metadata using ctx.log.setMetadata and it will be
+ * available on the log entry for that move.
+ */
+const LogPlugin = {
+    name: 'log',
+    flush: () => ({}),
+    api: ({ data }) => {
+        return {
+            setMetadata: (metadata) => {
+                data.metadata = metadata;
+            },
+        };
+    },
+    setup: () => ({}),
+};
+
+/**
+ * Check if a value can be serialized (e.g. using `JSON.stringify`).
+ * Adapted from: https://stackoverflow.com/a/30712764/3829557
+ */
+function isSerializable(value) {
+    // Primitives are OK.
+    if (value === undefined ||
+        value === null ||
+        typeof value === 'boolean' ||
+        typeof value === 'number' ||
+        typeof value === 'string') {
+        return true;
+    }
+    // A non-primitive value that is neither a POJO or an array cannot be serialized.
+    if (!isPlainObject__default["default"](value) && !Array.isArray(value)) {
+        return false;
+    }
+    // Recurse entries if the value is an object or array.
+    for (const key in value) {
+        if (!isSerializable(value[key]))
+            return false;
+    }
+    return true;
+}
+/**
+ * Plugin that checks whether state is serializable, in order to avoid
+ * network serialization bugs.
+ */
+const SerializablePlugin = {
+    name: 'plugin-serializable',
+    fnWrap: (move) => (context, ...args) => {
+        const result = move(context, ...args);
+        // Check state in non-production environments.
+        if (false) // removed by dead control flow
+{}
+        return result;
+    },
+};
+
+/*
+ * Copyright 2018 The boardgame.io Authors
+ *
+ * Use of this source code is governed by a MIT-style
+ * license that can be found in the LICENSE file or at
+ * https://opensource.org/licenses/MIT.
+ */
+const production = "production" === 'production';
+const logfn = production ? () => { } : (...msg) => console.log(...msg);
+const errorfn = (...msg) => console.error(...msg);
+function info(msg) {
+    logfn(`INFO: ${msg}`);
+}
+function error(error) {
+    errorfn('ERROR:', error);
+}
+
+/*
+ * Copyright 2018 The boardgame.io Authors
+ *
+ * Use of this source code is governed by a MIT-style
+ * license that can be found in the LICENSE file or at
+ * https://opensource.org/licenses/MIT.
+ */
+/**
+ * List of plugins that are always added.
+ */
+const CORE_PLUGINS = [ImmerPlugin, pluginRandom.RandomPlugin, LogPlugin, SerializablePlugin];
+const DEFAULT_PLUGINS = [...CORE_PLUGINS, EventsPlugin];
+/**
+ * Allow plugins to intercept actions and process them.
+ */
+const ProcessAction = (state, action, opts) => {
+    // TODO(#723): Extend error handling to plugins.
+    opts.game.plugins
+        .filter((plugin) => plugin.action !== undefined)
+        .filter((plugin) => plugin.name === action.payload.type)
+        .forEach((plugin) => {
+        const name = plugin.name;
+        const pluginState = state.plugins[name] || { data: {} };
+        const data = plugin.action(pluginState.data, action.payload);
+        state = {
+            ...state,
+            plugins: {
+                ...state.plugins,
+                [name]: { ...pluginState, data },
+            },
+        };
+    });
+    return state;
+};
+/**
+ * The APIs created by various plugins are stored in the plugins
+ * section of the state object:
+ *
+ * {
+ *   G: {},
+ *   ctx: {},
+ *   plugins: {
+ *     plugin-a: {
+ *       data: {},  // this is generated by the plugin at Setup / Flush.
+ *       api: {},   // this is ephemeral and generated by Enhance.
+ *     }
+ *   }
+ * }
+ *
+ * This function retrieves plugin APIs and returns them as an object
+ * for consumption as used by move contexts.
+ */
+const GetAPIs = ({ plugins }) => Object.entries(plugins || {}).reduce((apis, [name, { api }]) => {
+    apis[name] = api;
+    return apis;
+}, {});
+/**
+ * Applies the provided plugins to the given move / flow function.
+ *
+ * @param methodToWrap - The move function or hook to apply the plugins to.
+ * @param methodType - The type of the move or hook being wrapped.
+ * @param plugins - The list of plugins.
+ */
+const FnWrap = (methodToWrap, methodType, plugins) => {
+    return [...CORE_PLUGINS, ...plugins, EventsPlugin]
+        .filter((plugin) => plugin.fnWrap !== undefined)
+        .reduce((method, { fnWrap }) => fnWrap(method, methodType), methodToWrap);
+};
+/**
+ * Allows the plugin to generate its initial state.
+ */
+const Setup = (state, opts) => {
+    [...DEFAULT_PLUGINS, ...opts.game.plugins]
+        .filter((plugin) => plugin.setup !== undefined)
+        .forEach((plugin) => {
+        const name = plugin.name;
+        const data = plugin.setup({
+            G: state.G,
+            ctx: state.ctx,
+            game: opts.game,
+        });
+        state = {
+            ...state,
+            plugins: {
+                ...state.plugins,
+                [name]: { data },
+            },
+        };
+    });
+    return state;
+};
+/**
+ * Invokes the plugin before a move or event.
+ * The API that the plugin generates is stored inside
+ * the `plugins` section of the state (which is subsequently
+ * merged into ctx).
+ */
+const Enhance = (state, opts) => {
+    [...DEFAULT_PLUGINS, ...opts.game.plugins]
+        .filter((plugin) => plugin.api !== undefined)
+        .forEach((plugin) => {
+        const name = plugin.name;
+        const pluginState = state.plugins[name] || { data: {} };
+        const api = plugin.api({
+            G: state.G,
+            ctx: state.ctx,
+            data: pluginState.data,
+            game: opts.game,
+            playerID: opts.playerID,
+        });
+        state = {
+            ...state,
+            plugins: {
+                ...state.plugins,
+                [name]: { ...pluginState, api },
+            },
+        };
+    });
+    return state;
+};
+/**
+ * Allows plugins to update their state after a move / event.
+ */
+const Flush = (state, opts) => {
+    // We flush the events plugin first, then custom plugins and the core plugins.
+    // This means custom plugins cannot use the events API but will be available in event hooks.
+    // Note that plugins are flushed in reverse, to allow custom plugins calling each other.
+    [...CORE_PLUGINS, ...opts.game.plugins, EventsPlugin]
+        .reverse()
+        .forEach((plugin) => {
+        const name = plugin.name;
+        const pluginState = state.plugins[name] || { data: {} };
+        if (plugin.flush) {
+            const newData = plugin.flush({
+                G: state.G,
+                ctx: state.ctx,
+                game: opts.game,
+                api: pluginState.api,
+                data: pluginState.data,
+            });
+            state = {
+                ...state,
+                plugins: {
+                    ...state.plugins,
+                    [plugin.name]: { data: newData },
+                },
+            };
+        }
+        else if (plugin.dangerouslyFlushRawState) {
+            state = plugin.dangerouslyFlushRawState({
+                state,
+                game: opts.game,
+                api: pluginState.api,
+                data: pluginState.data,
+            });
+            // Remove everything other than data.
+            const data = state.plugins[name].data;
+            state = {
+                ...state,
+                plugins: {
+                    ...state.plugins,
+                    [plugin.name]: { data },
+                },
+            };
+        }
+    });
+    return state;
+};
+/**
+ * Allows plugins to indicate if they should not be materialized on the client.
+ * This will cause the client to discard the state update and wait for the
+ * master instead.
+ */
+const NoClient = (state, opts) => {
+    return [...DEFAULT_PLUGINS, ...opts.game.plugins]
+        .filter((plugin) => plugin.noClient !== undefined)
+        .map((plugin) => {
+        const name = plugin.name;
+        const pluginState = state.plugins[name];
+        if (pluginState) {
+            return plugin.noClient({
+                G: state.G,
+                ctx: state.ctx,
+                game: opts.game,
+                api: pluginState.api,
+                data: pluginState.data,
+            });
+        }
+        return false;
+    })
+        .includes(true);
+};
+/**
+ * Allows plugins to indicate if the entire action should be thrown out
+ * as invalid. This will cancel the entire state update.
+ */
+const IsInvalid = (state, opts) => {
+    const firstInvalidReturn = [...DEFAULT_PLUGINS, ...opts.game.plugins]
+        .filter((plugin) => plugin.isInvalid !== undefined)
+        .map((plugin) => {
+        const { name } = plugin;
+        const pluginState = state.plugins[name];
+        const message = plugin.isInvalid({
+            G: state.G,
+            ctx: state.ctx,
+            game: opts.game,
+            data: pluginState && pluginState.data,
+        });
+        return message ? { plugin: name, message } : false;
+    })
+        .find((value) => value);
+    return firstInvalidReturn || false;
+};
+/**
+ * Update plugin state after move/event & check if plugins consider the update to be valid.
+ * @returns Tuple of `[updatedState]` or `[originalState, invalidError]`.
+ */
+const FlushAndValidate = (state, opts) => {
+    const updatedState = Flush(state, opts);
+    const isInvalid = IsInvalid(updatedState, opts);
+    if (!isInvalid)
+        return [updatedState];
+    const { plugin, message } = isInvalid;
+    error(`${plugin} plugin declared action invalid:\n${message}`);
+    return [state, isInvalid];
+};
+/**
+ * Allows plugins to customize their data for specific players.
+ * For example, a plugin may want to share no data with the client, or
+ * want to keep some player data secret from opponents.
+ */
+const PlayerView = ({ G, ctx, plugins = {} }, { game, playerID }) => {
+    [...DEFAULT_PLUGINS, ...game.plugins].forEach(({ name, playerView }) => {
+        if (!playerView)
+            return;
+        const { data } = plugins[name] || { data: {} };
+        const newData = playerView({ G, ctx, game, data, playerID });
+        plugins = {
+            ...plugins,
+            [name]: { data: newData },
+        };
+    });
+    return plugins;
+};
+
+/**
+ * Adjust the given options to use the new minMoves/maxMoves if a legacy moveLimit was given
+ * @param options The options object to apply backwards compatibility to
+ * @param enforceMinMoves Use moveLimit to set both minMoves and maxMoves
+ */
+function supportDeprecatedMoveLimit(options, enforceMinMoves = false) {
+    if (options.moveLimit) {
+        if (enforceMinMoves) {
+            options.minMoves = options.moveLimit;
+        }
+        options.maxMoves = options.moveLimit;
+        delete options.moveLimit;
+    }
+}
+
+/*
+ * Copyright 2017 The boardgame.io Authors
+ *
+ * Use of this source code is governed by a MIT-style
+ * license that can be found in the LICENSE file or at
+ * https://opensource.org/licenses/MIT.
+ */
+function SetActivePlayers(ctx, arg) {
+    let activePlayers = {};
+    let _prevActivePlayers = [];
+    let _nextActivePlayers = null;
+    let _activePlayersMinMoves = {};
+    let _activePlayersMaxMoves = {};
+    if (Array.isArray(arg)) {
+        // support a simple array of player IDs as active players
+        const value = {};
+        arg.forEach((v) => (value[v] = Stage.NULL));
+        activePlayers = value;
+    }
+    else {
+        // process active players argument object
+        // stages previously did not enforce minMoves, this behaviour is kept intentionally
+        supportDeprecatedMoveLimit(arg);
+        if (arg.next) {
+            _nextActivePlayers = arg.next;
+        }
+        if (arg.revert) {
+            _prevActivePlayers = [
+                ...ctx._prevActivePlayers,
+                {
+                    activePlayers: ctx.activePlayers,
+                    _activePlayersMinMoves: ctx._activePlayersMinMoves,
+                    _activePlayersMaxMoves: ctx._activePlayersMaxMoves,
+                    _activePlayersNumMoves: ctx._activePlayersNumMoves,
+                },
+            ];
+        }
+        if (arg.currentPlayer !== undefined) {
+            ApplyActivePlayerArgument(activePlayers, _activePlayersMinMoves, _activePlayersMaxMoves, ctx.currentPlayer, arg.currentPlayer);
+        }
+        if (arg.others !== undefined) {
+            for (let i = 0; i < ctx.playOrder.length; i++) {
+                const id = ctx.playOrder[i];
+                if (id !== ctx.currentPlayer) {
+                    ApplyActivePlayerArgument(activePlayers, _activePlayersMinMoves, _activePlayersMaxMoves, id, arg.others);
+                }
+            }
+        }
+        if (arg.all !== undefined) {
+            for (let i = 0; i < ctx.playOrder.length; i++) {
+                const id = ctx.playOrder[i];
+                ApplyActivePlayerArgument(activePlayers, _activePlayersMinMoves, _activePlayersMaxMoves, id, arg.all);
+            }
+        }
+        if (arg.value) {
+            for (const id in arg.value) {
+                ApplyActivePlayerArgument(activePlayers, _activePlayersMinMoves, _activePlayersMaxMoves, id, arg.value[id]);
+            }
+        }
+        if (arg.minMoves) {
+            for (const id in activePlayers) {
+                if (_activePlayersMinMoves[id] === undefined) {
+                    _activePlayersMinMoves[id] = arg.minMoves;
+                }
+            }
+        }
+        if (arg.maxMoves) {
+            for (const id in activePlayers) {
+                if (_activePlayersMaxMoves[id] === undefined) {
+                    _activePlayersMaxMoves[id] = arg.maxMoves;
+                }
+            }
+        }
+    }
+    if (Object.keys(activePlayers).length === 0) {
+        activePlayers = null;
+    }
+    if (Object.keys(_activePlayersMinMoves).length === 0) {
+        _activePlayersMinMoves = null;
+    }
+    if (Object.keys(_activePlayersMaxMoves).length === 0) {
+        _activePlayersMaxMoves = null;
+    }
+    const _activePlayersNumMoves = {};
+    for (const id in activePlayers) {
+        _activePlayersNumMoves[id] = 0;
+    }
+    return {
+        ...ctx,
+        activePlayers,
+        _activePlayersMinMoves,
+        _activePlayersMaxMoves,
+        _activePlayersNumMoves,
+        _prevActivePlayers,
+        _nextActivePlayers,
+    };
+}
+/**
+ * Update activePlayers, setting it to previous, next or null values
+ * when it becomes empty.
+ * @param ctx
+ */
+function UpdateActivePlayersOnceEmpty(ctx) {
+    let { activePlayers, _activePlayersMinMoves, _activePlayersMaxMoves, _activePlayersNumMoves, _prevActivePlayers, _nextActivePlayers, } = ctx;
+    if (activePlayers && Object.keys(activePlayers).length === 0) {
+        if (_nextActivePlayers) {
+            ctx = SetActivePlayers(ctx, _nextActivePlayers);
+            ({
+                activePlayers,
+                _activePlayersMinMoves,
+                _activePlayersMaxMoves,
+                _activePlayersNumMoves,
+                _prevActivePlayers,
+            } = ctx);
+        }
+        else if (_prevActivePlayers.length > 0) {
+            const lastIndex = _prevActivePlayers.length - 1;
+            ({
+                activePlayers,
+                _activePlayersMinMoves,
+                _activePlayersMaxMoves,
+                _activePlayersNumMoves,
+            } = _prevActivePlayers[lastIndex]);
+            _prevActivePlayers = _prevActivePlayers.slice(0, lastIndex);
+        }
+        else {
+            activePlayers = null;
+            _activePlayersMinMoves = null;
+            _activePlayersMaxMoves = null;
+        }
+    }
+    return {
+        ...ctx,
+        activePlayers,
+        _activePlayersMinMoves,
+        _activePlayersMaxMoves,
+        _activePlayersNumMoves,
+        _prevActivePlayers,
+    };
+}
+/**
+ * Apply an active player argument to the given player ID
+ * @param {Object} activePlayers
+ * @param {Object} _activePlayersMinMoves
+ * @param {Object} _activePlayersMaxMoves
+ * @param {String} playerID The player to apply the parameter to
+ * @param {(String|Object)} arg An active player argument
+ */
+function ApplyActivePlayerArgument(activePlayers, _activePlayersMinMoves, _activePlayersMaxMoves, playerID, arg) {
+    if (typeof arg !== 'object' || arg === Stage.NULL) {
+        arg = { stage: arg };
+    }
+    if (arg.stage !== undefined) {
+        // stages previously did not enforce minMoves, this behaviour is kept intentionally
+        supportDeprecatedMoveLimit(arg);
+        activePlayers[playerID] = arg.stage;
+        if (arg.minMoves)
+            _activePlayersMinMoves[playerID] = arg.minMoves;
+        if (arg.maxMoves)
+            _activePlayersMaxMoves[playerID] = arg.maxMoves;
+    }
+}
+/**
+ * Converts a playOrderPos index into its value in playOrder.
+ * @param {Array} playOrder - An array of player ID's.
+ * @param {number} playOrderPos - An index into the above.
+ */
+function getCurrentPlayer(playOrder, playOrderPos) {
+    // convert to string in case playOrder is set to number[]
+    return playOrder[playOrderPos] + '';
+}
+/**
+ * Called at the start of a turn to initialize turn order state.
+ *
+ * TODO: This is called inside StartTurn, which is called from
+ * both UpdateTurn and StartPhase (so it's called at the beginning
+ * of a new phase as well as between turns). We should probably
+ * split it into two.
+ */
+function InitTurnOrderState(state, turn) {
+    let { G, ctx } = state;
+    const { numPlayers } = ctx;
+    const pluginAPIs = GetAPIs(state);
+    const context = { ...pluginAPIs, G, ctx };
+    const order = turn.order;
+    let playOrder = [...Array.from({ length: numPlayers })].map((_, i) => i + '');
+    if (order.playOrder !== undefined) {
+        playOrder = order.playOrder(context);
+    }
+    const playOrderPos = order.first(context);
+    const posType = typeof playOrderPos;
+    if (posType !== 'number') {
+        error(`invalid value returned by turn.order.first — expected number got ${posType} “${playOrderPos}”.`);
+    }
+    const currentPlayer = getCurrentPlayer(playOrder, playOrderPos);
+    ctx = { ...ctx, currentPlayer, playOrderPos, playOrder };
+    ctx = SetActivePlayers(ctx, turn.activePlayers || {});
+    return ctx;
+}
+/**
+ * Called at the end of each turn to update the turn order state.
+ * @param {object} G - The game object G.
+ * @param {object} ctx - The game object ctx.
+ * @param {object} turn - A turn object for this phase.
+ * @param {string} endTurnArg - An optional argument to endTurn that
+                                may specify the next player.
+ */
+function UpdateTurnOrderState(state, currentPlayer, turn, endTurnArg) {
+    const order = turn.order;
+    let { G, ctx } = state;
+    let playOrderPos = ctx.playOrderPos;
+    let endPhase = false;
+    if (endTurnArg && endTurnArg !== true) {
+        if (typeof endTurnArg !== 'object') {
+            error(`invalid argument to endTurn: ${endTurnArg}`);
+        }
+        Object.keys(endTurnArg).forEach((arg) => {
+            switch (arg) {
+                case 'remove':
+                    currentPlayer = getCurrentPlayer(ctx.playOrder, playOrderPos);
+                    break;
+                case 'next':
+                    playOrderPos = ctx.playOrder.indexOf(endTurnArg.next);
+                    currentPlayer = endTurnArg.next;
+                    break;
+                default:
+                    error(`invalid argument to endTurn: ${arg}`);
+            }
+        });
+    }
+    else {
+        const pluginAPIs = GetAPIs(state);
+        const context = { ...pluginAPIs, G, ctx };
+        const t = order.next(context);
+        const type = typeof t;
+        if (t !== undefined && type !== 'number') {
+            error(`invalid value returned by turn.order.next — expected number or undefined got ${type} “${t}”.`);
+        }
+        if (t === undefined) {
+            endPhase = true;
+        }
+        else {
+            playOrderPos = t;
+            currentPlayer = getCurrentPlayer(ctx.playOrder, playOrderPos);
+        }
+    }
+    ctx = {
+        ...ctx,
+        playOrderPos,
+        currentPlayer,
+    };
+    return { endPhase, ctx };
+}
+/**
+ * Set of different turn orders possible in a phase.
+ * These are meant to be passed to the `turn` setting
+ * in the flow objects.
+ *
+ * Each object defines the first player when the phase / game
+ * begins, and also a function `next` to determine who the
+ * next player is when the turn ends.
+ *
+ * The phase ends if next() returns undefined.
+ */
+const TurnOrder = {
+    /**
+     * DEFAULT
+     *
+     * The default round-robin turn order.
+     */
+    DEFAULT: {
+        first: ({ ctx }) => ctx.turn === 0
+            ? ctx.playOrderPos
+            : (ctx.playOrderPos + 1) % ctx.playOrder.length,
+        next: ({ ctx }) => (ctx.playOrderPos + 1) % ctx.playOrder.length,
+    },
+    /**
+     * RESET
+     *
+     * Similar to DEFAULT, but starts from 0 each time.
+     */
+    RESET: {
+        first: () => 0,
+        next: ({ ctx }) => (ctx.playOrderPos + 1) % ctx.playOrder.length,
+    },
+    /**
+     * CONTINUE
+     *
+     * Similar to DEFAULT, but starts with the player who ended the last phase.
+     */
+    CONTINUE: {
+        first: ({ ctx }) => ctx.playOrderPos,
+        next: ({ ctx }) => (ctx.playOrderPos + 1) % ctx.playOrder.length,
+    },
+    /**
+     * ONCE
+     *
+     * Another round-robin turn order, but goes around just once.
+     * The phase ends after all players have played.
+     */
+    ONCE: {
+        first: () => 0,
+        next: ({ ctx }) => {
+            if (ctx.playOrderPos < ctx.playOrder.length - 1) {
+                return ctx.playOrderPos + 1;
+            }
+        },
+    },
+    /**
+     * CUSTOM
+     *
+     * Identical to DEFAULT, but also sets playOrder at the
+     * beginning of the phase.
+     *
+     * @param {Array} playOrder - The play order.
+     */
+    CUSTOM: (playOrder) => ({
+        playOrder: () => playOrder,
+        first: () => 0,
+        next: ({ ctx }) => (ctx.playOrderPos + 1) % ctx.playOrder.length,
+    }),
+    /**
+     * CUSTOM_FROM
+     *
+     * Identical to DEFAULT, but also sets playOrder at the
+     * beginning of the phase to a value specified by a field
+     * in G.
+     *
+     * @param {string} playOrderField - Field in G.
+     */
+    CUSTOM_FROM: (playOrderField) => ({
+        playOrder: ({ G }) => G[playOrderField],
+        first: () => 0,
+        next: ({ ctx }) => (ctx.playOrderPos + 1) % ctx.playOrder.length,
+    }),
+};
+const Stage = {
+    NULL: null,
+};
+const ActivePlayers = {
+    /**
+     * ALL
+     *
+     * The turn stays with one player, but any player can play (in any order)
+     * until the phase ends.
+     */
+    ALL: { all: Stage.NULL },
+    /**
+     * ALL_ONCE
+     *
+     * The turn stays with one player, but any player can play (once, and in any order).
+     * This is typically used in a phase where you want to elicit a response
+     * from every player in the game.
+     */
+    ALL_ONCE: { all: Stage.NULL, minMoves: 1, maxMoves: 1 },
+    /**
+     * OTHERS
+     *
+     * The turn stays with one player, and every *other* player can play (in any order)
+     * until the phase ends.
+     */
+    OTHERS: { others: Stage.NULL },
+    /**
+     * OTHERS_ONCE
+     *
+     * The turn stays with one player, and every *other* player can play (once, and in any order).
+     * This is typically used in a phase where you want to elicit a response
+     * from every *other* player in the game.
+     */
+    OTHERS_ONCE: { others: Stage.NULL, minMoves: 1, maxMoves: 1 },
+};
+
+exports.ActionCreators = ActionCreators;
+exports.ActivePlayers = ActivePlayers;
+exports.Enhance = Enhance;
+exports.FlushAndValidate = FlushAndValidate;
+exports.FnWrap = FnWrap;
+exports.GAME_EVENT = GAME_EVENT;
+exports.GetAPIs = GetAPIs;
+exports.INVALID_MOVE = INVALID_MOVE;
+exports.InitTurnOrderState = InitTurnOrderState;
+exports.MAKE_MOVE = MAKE_MOVE;
+exports.NoClient = NoClient;
+exports.PATCH = PATCH;
+exports.PLUGIN = PLUGIN;
+exports.PlayerView = PlayerView;
+exports.ProcessAction = ProcessAction;
+exports.REDO = REDO;
+exports.RESET = RESET;
+exports.STRIP_TRANSIENTS = STRIP_TRANSIENTS;
+exports.SYNC = SYNC;
+exports.SetActivePlayers = SetActivePlayers;
+exports.Setup = Setup;
+exports.Stage = Stage;
+exports.TurnOrder = TurnOrder;
+exports.UNDO = UNDO;
+exports.UPDATE = UPDATE;
+exports.UpdateActivePlayersOnceEmpty = UpdateActivePlayersOnceEmpty;
+exports.UpdateTurnOrderState = UpdateTurnOrderState;
+exports.error = error;
+exports.gameEvent = gameEvent;
+exports.info = info;
+exports.makeMove = makeMove;
+exports.patch = patch;
+exports.redo = redo;
+exports.reset = reset;
+exports.stripTransients = stripTransients;
+exports.supportDeprecatedMoveLimit = supportDeprecatedMoveLimit;
+exports.sync = sync;
+exports.undo = undo;
+exports.update = update;
+
+
+/***/ }),
+
 /***/ 3683:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
@@ -16298,15 +17608,6 @@ const authErrorMessages = {
 
 /***/ }),
 
-/***/ 4706:
-/***/ ((__unused_webpack_module, exports) => {
-
-function n(n){for(var r=arguments.length,t=Array(r>1?r-1:0),e=1;e<r;e++)t[e-1]=arguments[e];throw Error("[Immer] minified error nr: "+n+(t.length?" "+t.map((function(n){return"'"+n+"'"})).join(","):"")+". Find the full error at: https://bit.ly/3cXEKWf")}function r(n){return!!n&&!!n[H]}function t(n){var r;return!!n&&(function(n){if(!n||"object"!=typeof n)return!1;var r=Object.getPrototypeOf(n);if(null===r)return!0;var t=Object.hasOwnProperty.call(r,"constructor")&&r.constructor;return t===Object||"function"==typeof t&&Function.toString.call(t)===Q}(n)||Array.isArray(n)||!!n[G]||!!(null===(r=n.constructor)||void 0===r?void 0:r[G])||c(n)||v(n))}function e(n,r,t){void 0===t&&(t=!1),0===i(n)?(t?Object.keys:T)(n).forEach((function(e){t&&"symbol"==typeof e||r(e,n[e],n)})):n.forEach((function(t,e){return r(e,t,n)}))}function i(n){var r=n[H];return r?r.t>3?r.t-4:r.t:Array.isArray(n)?1:c(n)?2:v(n)?3:0}function u(n,r){return 2===i(n)?n.has(r):Object.prototype.hasOwnProperty.call(n,r)}function o(n,r){return 2===i(n)?n.get(r):n[r]}function f(n,r,t){var e=i(n);2===e?n.set(r,t):3===e?n.add(t):n[r]=t}function a(n,r){return n===r?0!==n||1/n==1/r:n!=n&&r!=r}function c(n){return W&&n instanceof Map}function v(n){return X&&n instanceof Set}function s(n){return n.i||n.u}function p(n){if(Array.isArray(n))return Array.prototype.slice.call(n);var r=U(n);delete r[H];for(var t=T(r),e=0;e<t.length;e++){var i=t[e],u=r[i];!1===u.writable&&(u.writable=!0,u.configurable=!0),(u.get||u.set)&&(r[i]={configurable:!0,writable:!0,enumerable:u.enumerable,value:n[i]})}return Object.create(Object.getPrototypeOf(n),r)}function l(n,u){return void 0===u&&(u=!1),h(n)||r(n)||!t(n)||(i(n)>1&&(n.set=n.add=n.clear=n.delete=d),Object.freeze(n),u&&e(n,(function(n,r){return l(r,!0)}),!0)),n}function d(){n(2)}function h(n){return null==n||"object"!=typeof n||Object.isFrozen(n)}function y(r){var t=V[r];return t||n(18,r),t}function _(n,r){V[n]||(V[n]=r)}function b(){return I}function m(n,r){r&&(y("Patches"),n.o=[],n.v=[],n.s=r)}function j(n){O(n),n.p.forEach(w),n.p=null}function O(n){n===I&&(I=n.l)}function x(n){return I={p:[],l:I,h:n,_:!0,m:0}}function w(n){var r=n[H];0===r.t||1===r.t?r.j():r.O=!0}function S(r,e){e.m=e.p.length;var i=e.p[0],u=void 0!==r&&r!==i;return e.h.S||y("ES5").P(e,r,u),u?(i[H].g&&(j(e),n(4)),t(r)&&(r=P(e,r),e.l||M(e,r)),e.o&&y("Patches").M(i[H].u,r,e.o,e.v)):r=P(e,i,[]),j(e),e.o&&e.s(e.o,e.v),r!==B?r:void 0}function P(n,r,t){if(h(r))return r;var i=r[H];if(!i)return e(r,(function(e,u){return g(n,i,r,e,u,t)}),!0),r;if(i.A!==n)return r;if(!i.g)return M(n,i.u,!0),i.u;if(!i.R){i.R=!0,i.A.m--;var u=4===i.t||5===i.t?i.i=p(i.k):i.i,o=u,f=!1;3===i.t&&(o=new Set(u),u.clear(),f=!0),e(o,(function(r,e){return g(n,i,u,r,e,t,f)})),M(n,u,!1),t&&n.o&&y("Patches").F(i,t,n.o,n.v)}return i.i}function g(n,e,i,o,a,c,v){if(r(a)){var s=P(n,a,c&&e&&3!==e.t&&!u(e.N,o)?c.concat(o):void 0);if(f(i,o,s),!r(s))return;n._=!1}else v&&i.add(a);if(t(a)&&!h(a)){if(!n.h.D&&n.m<1)return;P(n,a),e&&e.A.l||M(n,a)}}function M(n,r,t){void 0===t&&(t=!1),!n.l&&n.h.D&&n._&&l(r,t)}function A(n,r){var t=n[H];return(t?s(t):n)[r]}function z(n,r){if(r in n)for(var t=Object.getPrototypeOf(n);t;){var e=Object.getOwnPropertyDescriptor(t,r);if(e)return e;t=Object.getPrototypeOf(t)}}function E(n){n.g||(n.g=!0,n.l&&E(n.l))}function R(n){n.i||(n.i=p(n.u))}function k(n,r,t){var e=c(r)?y("MapSet").K(r,t):v(r)?y("MapSet").$(r,t):n.S?function(n,r){var t=Array.isArray(n),e={t:t?1:0,A:r?r.A:b(),g:!1,R:!1,N:{},l:r,u:n,k:null,i:null,j:null,C:!1},i=e,u=Y;t&&(i=[e],u=Z);var o=Proxy.revocable(i,u),f=o.revoke,a=o.proxy;return e.k=a,e.j=f,a}(r,t):y("ES5").I(r,t);return(t?t.A:b()).p.push(e),e}function F(u){return r(u)||n(22,u),function n(r){if(!t(r))return r;var u,a=r[H],c=i(r);if(a){if(!a.g&&(a.t<4||!y("ES5").J(a)))return a.u;a.R=!0,u=N(r,c),a.R=!1}else u=N(r,c);return e(u,(function(r,t){a&&o(a.u,r)===t||f(u,r,n(t))})),3===c?new Set(u):u}(u)}function N(n,r){switch(r){case 2:return new Map(n);case 3:return Array.from(n)}return p(n)}function D(){function n(n,r){var t=f[n];return t?t.enumerable=r:f[n]=t={configurable:!0,enumerable:r,get:function(){return Y.get(this[H],n)},set:function(r){Y.set(this[H],n,r)}},t}function t(n){for(var r=n.length-1;r>=0;r--){var t=n[r][H];if(!t.g)switch(t.t){case 5:o(t)&&E(t);break;case 4:i(t)&&E(t)}}}function i(n){for(var r=n.u,t=n.k,e=T(t),i=e.length-1;i>=0;i--){var o=e[i];if(o!==H){var f=r[o];if(void 0===f&&!u(r,o))return!0;var c=t[o],v=c&&c[H];if(v?v.u!==f:!a(c,f))return!0}}var s=!!r[H];return e.length!==T(r).length+(s?0:1)}function o(n){var r=n.k;if(r.length!==n.u.length)return!0;var t=Object.getOwnPropertyDescriptor(r,r.length-1);if(t&&!t.get)return!0;for(var e=0;e<r.length;e++)if(!r.hasOwnProperty(e))return!0;return!1}var f={};_("ES5",{I:function(r,t){var e=Array.isArray(r),i=function(r,t){if(r){for(var e=Array(t.length),i=0;i<t.length;i++)Object.defineProperty(e,""+i,n(i,!0));return e}var u=U(t);delete u[H];for(var o=T(u),f=0;f<o.length;f++){var a=o[f];u[a]=n(a,r||!!u[a].enumerable)}return Object.create(Object.getPrototypeOf(t),u)}(e,r),u={t:e?5:4,A:t?t.A:b(),g:!1,R:!1,N:{},l:t,u:r,k:i,i:null,O:!1,C:!1};return Object.defineProperty(i,H,{value:u,writable:!0}),i},P:function(n,i,f){f?r(i)&&i[H].A===n&&t(n.p):(n.o&&function n(r){if(r&&"object"==typeof r){var t=r[H];if(t){var i=t.u,f=t.k,a=t.N,c=t.t;if(4===c)e(f,(function(r){r!==H&&(void 0!==i[r]||u(i,r)?a[r]||n(f[r]):(a[r]=!0,E(t)))})),e(i,(function(n){void 0!==f[n]||u(f,n)||(a[n]=!1,E(t))}));else if(5===c){if(o(t)&&(E(t),a.length=!0),f.length<i.length)for(var v=f.length;v<i.length;v++)a[v]=!1;else for(var s=i.length;s<f.length;s++)a[s]=!0;for(var p=Math.min(f.length,i.length),l=0;l<p;l++)f.hasOwnProperty(l)||(a[l]=!0),void 0===a[l]&&n(f[l])}}}}(n.p[0]),t(n.p))},J:function(n){return 4===n.t?i(n):o(n)}})}function K(){function f(n){if(!t(n))return n;if(Array.isArray(n))return n.map(f);if(c(n))return new Map(Array.from(n.entries()).map((function(n){return[n[0],f(n[1])]})));if(v(n))return new Set(Array.from(n).map(f));var r=Object.create(Object.getPrototypeOf(n));for(var e in n)r[e]=f(n[e]);return u(n,G)&&(r[G]=n[G]),r}function a(n){return r(n)?f(n):n}var s="add";_("Patches",{W:function(r,t){return t.forEach((function(t){for(var e=t.path,u=t.op,a=r,c=0;c<e.length-1;c++){var v=i(a),p=e[c];"string"!=typeof p&&"number"!=typeof p&&(p=""+p),0!==v&&1!==v||"__proto__"!==p&&"constructor"!==p||n(24),"function"==typeof a&&"prototype"===p&&n(24),"object"!=typeof(a=o(a,p))&&n(15,e.join("/"))}var l=i(a),d=f(t.value),h=e[e.length-1];switch(u){case"replace":switch(l){case 2:return a.set(h,d);case 3:n(16);default:return a[h]=d}case s:switch(l){case 1:return"-"===h?a.push(d):a.splice(h,0,d);case 2:return a.set(h,d);case 3:return a.add(d);default:return a[h]=d}case"remove":switch(l){case 1:return a.splice(h,1);case 2:return a.delete(h);case 3:return a.delete(t.value);default:return delete a[h]}default:n(17,u)}})),r},F:function(n,r,t,i){switch(n.t){case 0:case 4:case 2:return function(n,r,t,i){var f=n.u,c=n.i;e(n.N,(function(n,e){var v=o(f,n),p=o(c,n),l=e?u(f,n)?"replace":s:"remove";if(v!==p||"replace"!==l){var d=r.concat(n);t.push("remove"===l?{op:l,path:d}:{op:l,path:d,value:p}),i.push(l===s?{op:"remove",path:d}:"remove"===l?{op:s,path:d,value:a(v)}:{op:"replace",path:d,value:a(v)})}}))}(n,r,t,i);case 5:case 1:return function(n,r,t,e){var i=n.u,u=n.N,o=n.i;if(o.length<i.length){var f=[o,i];i=f[0],o=f[1];var c=[e,t];t=c[0],e=c[1]}for(var v=0;v<i.length;v++)if(u[v]&&o[v]!==i[v]){var p=r.concat([v]);t.push({op:"replace",path:p,value:a(o[v])}),e.push({op:"replace",path:p,value:a(i[v])})}for(var l=i.length;l<o.length;l++){var d=r.concat([l]);t.push({op:s,path:d,value:a(o[l])})}i.length<o.length&&e.push({op:"replace",path:r.concat(["length"]),value:i.length})}(n,r,t,i);case 3:return function(n,r,t,e){var i=n.u,u=n.i,o=0;i.forEach((function(n){if(!u.has(n)){var i=r.concat([o]);t.push({op:"remove",path:i,value:n}),e.unshift({op:s,path:i,value:n})}o++})),o=0,u.forEach((function(n){if(!i.has(n)){var u=r.concat([o]);t.push({op:s,path:u,value:n}),e.unshift({op:"remove",path:u,value:n})}o++}))}(n,r,t,i)}},M:function(n,r,t,e){t.push({op:"replace",path:[],value:r===B?void 0:r}),e.push({op:"replace",path:[],value:n})}})}function $(){function r(n,r){function t(){this.constructor=n}f(n,r),n.prototype=(t.prototype=r.prototype,new t)}function i(n){n.i||(n.N=new Map,n.i=new Map(n.u))}function u(n){n.i||(n.i=new Set,n.u.forEach((function(r){if(t(r)){var e=k(n.A.h,r,n);n.p.set(r,e),n.i.add(e)}else n.i.add(r)})))}function o(r){r.O&&n(3,JSON.stringify(s(r)))}var f=function(n,r){return(f=Object.setPrototypeOf||{__proto__:[]}instanceof Array&&function(n,r){n.__proto__=r}||function(n,r){for(var t in r)r.hasOwnProperty(t)&&(n[t]=r[t])})(n,r)},a=function(){function n(n,r){return this[H]={t:2,l:r,A:r?r.A:b(),g:!1,R:!1,i:void 0,N:void 0,u:n,k:this,C:!1,O:!1},this}r(n,Map);var u=n.prototype;return Object.defineProperty(u,"size",{get:function(){return s(this[H]).size}}),u.has=function(n){return s(this[H]).has(n)},u.set=function(n,r){var t=this[H];return o(t),s(t).has(n)&&s(t).get(n)===r||(i(t),E(t),t.N.set(n,!0),t.i.set(n,r),t.N.set(n,!0)),this},u.delete=function(n){if(!this.has(n))return!1;var r=this[H];return o(r),i(r),E(r),r.u.has(n)?r.N.set(n,!1):r.N.delete(n),r.i.delete(n),!0},u.clear=function(){var n=this[H];o(n),s(n).size&&(i(n),E(n),n.N=new Map,e(n.u,(function(r){n.N.set(r,!1)})),n.i.clear())},u.forEach=function(n,r){var t=this;s(this[H]).forEach((function(e,i){n.call(r,t.get(i),i,t)}))},u.get=function(n){var r=this[H];o(r);var e=s(r).get(n);if(r.R||!t(e))return e;if(e!==r.u.get(n))return e;var u=k(r.A.h,e,r);return i(r),r.i.set(n,u),u},u.keys=function(){return s(this[H]).keys()},u.values=function(){var n,r=this,t=this.keys();return(n={})[L]=function(){return r.values()},n.next=function(){var n=t.next();return n.done?n:{done:!1,value:r.get(n.value)}},n},u.entries=function(){var n,r=this,t=this.keys();return(n={})[L]=function(){return r.entries()},n.next=function(){var n=t.next();if(n.done)return n;var e=r.get(n.value);return{done:!1,value:[n.value,e]}},n},u[L]=function(){return this.entries()},n}(),c=function(){function n(n,r){return this[H]={t:3,l:r,A:r?r.A:b(),g:!1,R:!1,i:void 0,u:n,k:this,p:new Map,O:!1,C:!1},this}r(n,Set);var t=n.prototype;return Object.defineProperty(t,"size",{get:function(){return s(this[H]).size}}),t.has=function(n){var r=this[H];return o(r),r.i?!!r.i.has(n)||!(!r.p.has(n)||!r.i.has(r.p.get(n))):r.u.has(n)},t.add=function(n){var r=this[H];return o(r),this.has(n)||(u(r),E(r),r.i.add(n)),this},t.delete=function(n){if(!this.has(n))return!1;var r=this[H];return o(r),u(r),E(r),r.i.delete(n)||!!r.p.has(n)&&r.i.delete(r.p.get(n))},t.clear=function(){var n=this[H];o(n),s(n).size&&(u(n),E(n),n.i.clear())},t.values=function(){var n=this[H];return o(n),u(n),n.i.values()},t.entries=function(){var n=this[H];return o(n),u(n),n.i.entries()},t.keys=function(){return this.values()},t[L]=function(){return this.values()},t.forEach=function(n,r){for(var t=this.values(),e=t.next();!e.done;)n.call(r,e.value,e.value,this),e=t.next()},n}();_("MapSet",{K:function(n,r){return new a(n,r)},$:function(n,r){return new c(n,r)}})}var C;Object.defineProperty(exports, "__esModule", ({value:!0}));var I,J="undefined"!=typeof Symbol&&"symbol"==typeof Symbol("x"),W="undefined"!=typeof Map,X="undefined"!=typeof Set,q="undefined"!=typeof Proxy&&void 0!==Proxy.revocable&&"undefined"!=typeof Reflect,B=J?Symbol.for("immer-nothing"):((C={})["immer-nothing"]=!0,C),G=J?Symbol.for("immer-draftable"):"__$immer_draftable",H=J?Symbol.for("immer-state"):"__$immer_state",L="undefined"!=typeof Symbol&&Symbol.iterator||"@@iterator",Q=""+Object.prototype.constructor,T="undefined"!=typeof Reflect&&Reflect.ownKeys?Reflect.ownKeys:void 0!==Object.getOwnPropertySymbols?function(n){return Object.getOwnPropertyNames(n).concat(Object.getOwnPropertySymbols(n))}:Object.getOwnPropertyNames,U=Object.getOwnPropertyDescriptors||function(n){var r={};return T(n).forEach((function(t){r[t]=Object.getOwnPropertyDescriptor(n,t)})),r},V={},Y={get:function(n,r){if(r===H)return n;var e=s(n);if(!u(e,r))return function(n,r,t){var e,i=z(r,t);return i?"value"in i?i.value:null===(e=i.get)||void 0===e?void 0:e.call(n.k):void 0}(n,e,r);var i=e[r];return n.R||!t(i)?i:i===A(n.u,r)?(R(n),n.i[r]=k(n.A.h,i,n)):i},has:function(n,r){return r in s(n)},ownKeys:function(n){return Reflect.ownKeys(s(n))},set:function(n,r,t){var e=z(s(n),r);if(null==e?void 0:e.set)return e.set.call(n.k,t),!0;if(!n.g){var i=A(s(n),r),o=null==i?void 0:i[H];if(o&&o.u===t)return n.i[r]=t,n.N[r]=!1,!0;if(a(t,i)&&(void 0!==t||u(n.u,r)))return!0;R(n),E(n)}return n.i[r]===t&&(void 0!==t||r in n.i)||Number.isNaN(t)&&Number.isNaN(n.i[r])||(n.i[r]=t,n.N[r]=!0),!0},deleteProperty:function(n,r){return void 0!==A(n.u,r)||r in n.u?(n.N[r]=!1,R(n),E(n)):delete n.N[r],n.i&&delete n.i[r],!0},getOwnPropertyDescriptor:function(n,r){var t=s(n),e=Reflect.getOwnPropertyDescriptor(t,r);return e?{writable:!0,configurable:1!==n.t||"length"!==r,enumerable:e.enumerable,value:t[r]}:e},defineProperty:function(){n(11)},getPrototypeOf:function(n){return Object.getPrototypeOf(n.u)},setPrototypeOf:function(){n(12)}},Z={};e(Y,(function(n,r){Z[n]=function(){return arguments[0]=arguments[0][0],r.apply(this,arguments)}})),Z.deleteProperty=function(n,r){return Z.set.call(this,n,r,void 0)},Z.set=function(n,r,t){return Y.set.call(this,n[0],r,t,n[0])};var nn=function(){function e(r){var e=this;this.S=q,this.D=!0,this.produce=function(r,i,u){if("function"==typeof r&&"function"!=typeof i){var o=i;i=r;var f=e;return function(n){var r=this;void 0===n&&(n=o);for(var t=arguments.length,e=Array(t>1?t-1:0),u=1;u<t;u++)e[u-1]=arguments[u];return f.produce(n,(function(n){var t;return(t=i).call.apply(t,[r,n].concat(e))}))}}var a;if("function"!=typeof i&&n(6),void 0!==u&&"function"!=typeof u&&n(7),t(r)){var c=x(e),v=k(e,r,void 0),s=!0;try{a=i(v),s=!1}finally{s?j(c):O(c)}return"undefined"!=typeof Promise&&a instanceof Promise?a.then((function(n){return m(c,u),S(n,c)}),(function(n){throw j(c),n})):(m(c,u),S(a,c))}if(!r||"object"!=typeof r){if(void 0===(a=i(r))&&(a=r),a===B&&(a=void 0),e.D&&l(a,!0),u){var p=[],d=[];y("Patches").M(r,a,p,d),u(p,d)}return a}n(21,r)},this.produceWithPatches=function(n,r){if("function"==typeof n)return function(r){for(var t=arguments.length,i=Array(t>1?t-1:0),u=1;u<t;u++)i[u-1]=arguments[u];return e.produceWithPatches(r,(function(r){return n.apply(void 0,[r].concat(i))}))};var t,i,u=e.produce(n,r,(function(n,r){t=n,i=r}));return"undefined"!=typeof Promise&&u instanceof Promise?u.then((function(n){return[n,t,i]})):[u,t,i]},"boolean"==typeof(null==r?void 0:r.useProxies)&&this.setUseProxies(r.useProxies),"boolean"==typeof(null==r?void 0:r.autoFreeze)&&this.setAutoFreeze(r.autoFreeze)}var i=e.prototype;return i.createDraft=function(e){t(e)||n(8),r(e)&&(e=F(e));var i=x(this),u=k(this,e,void 0);return u[H].C=!0,O(i),u},i.finishDraft=function(n,r){var t=(n&&n[H]).A;return m(t,r),S(void 0,t)},i.setAutoFreeze=function(n){this.D=n},i.setUseProxies=function(r){r&&!q&&n(20),this.S=r},i.applyPatches=function(n,t){var e;for(e=t.length-1;e>=0;e--){var i=t[e];if(0===i.path.length&&"replace"===i.op){n=i.value;break}}e>-1&&(t=t.slice(e+1));var u=y("Patches").W;return r(n)?u(n,t):this.produce(n,(function(n){return u(n,t)}))},e}(),rn=new nn,tn=rn.produce,en=rn.produceWithPatches.bind(rn),un=rn.setAutoFreeze.bind(rn),on=rn.setUseProxies.bind(rn),fn=rn.applyPatches.bind(rn),an=rn.createDraft.bind(rn),cn=rn.finishDraft.bind(rn);exports.Immer=nn,exports.applyPatches=fn,exports.castDraft=function(n){return n},exports.castImmutable=function(n){return n},exports.createDraft=an,exports.current=F,exports["default"]=tn,exports.enableAllPlugins=function(){D(),$(),K()},exports.enableES5=D,exports.enableMapSet=$,exports.enablePatches=K,exports.finishDraft=cn,exports.freeze=l,exports.immerable=G,exports.isDraft=r,exports.isDraftable=t,exports.nothing=B,exports.original=function(t){return r(t)||n(23,t),t[H].u},exports.produce=tn,exports.produceWithPatches=en,exports.setAutoFreeze=un,exports.setUseProxies=on;
-//# sourceMappingURL=immer.cjs.production.min.js.map
-
-
-/***/ }),
-
 /***/ 4731:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
@@ -16894,6 +18195,67 @@ const deDupeAsyncFunction = (asyncFunction) => {
 
 
 //# sourceMappingURL=deDupeAsyncFunction.mjs.map
+
+
+/***/ }),
+
+/***/ 5016:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+var __webpack_unused_export__;
+
+
+__webpack_unused_export__ = ({ value: true });
+
+var turnOrder = __webpack_require__(3675);
+__webpack_require__(2434);
+__webpack_require__(7821);
+__webpack_require__(1058);
+
+/*
+ * Copyright 2018 The boardgame.io Authors
+ *
+ * Use of this source code is governed by a MIT-style
+ * license that can be found in the LICENSE file or at
+ * https://opensource.org/licenses/MIT.
+ */
+/**
+ * PlayerView reducers.
+ */
+const PlayerView = {
+    /**
+     * STRIP_SECRETS
+     *
+     * Reducer which removes a key named `secret` and
+     * removes all the keys in `players`, except for the one
+     * corresponding to the current playerID.
+     */
+    STRIP_SECRETS: ({ G, playerID }) => {
+        const r = { ...G };
+        if (r.secret !== undefined) {
+            delete r.secret;
+        }
+        if (r.players) {
+            r.players = playerID
+                ? {
+                    [playerID]: r.players[playerID],
+                }
+                : {};
+        }
+        return r;
+    },
+};
+
+exports.Pc = turnOrder.ActivePlayers;
+__webpack_unused_export__ = ({
+  enumerable: true,
+  get: function () { return turnOrder.GameMethod; }
+});
+__webpack_unused_export__ = turnOrder.INVALID_MOVE;
+__webpack_unused_export__ = turnOrder.Stage;
+__webpack_unused_export__ = turnOrder.TurnOrder;
+__webpack_unused_export__ = PlayerView;
 
 
 /***/ }),
@@ -17771,7 +19133,7 @@ var queryClient = new _tanstack_react_query__WEBPACK_IMPORTED_MODULE_0__/* .Quer
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _mnbroatch_boardgame_io_dist_cjs_core_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5606);
+/* harmony import */ var _mnbroatch_boardgame_io_dist_cjs_core_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5016);
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -18054,67 +19416,6 @@ function findLast(array, predicate) {
 }
 
 //# sourceMappingURL=utils.js.map
-
-
-/***/ }),
-
-/***/ 5606:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-var __webpack_unused_export__;
-
-
-__webpack_unused_export__ = ({ value: true });
-
-var turnOrder = __webpack_require__(7937);
-__webpack_require__(1395);
-__webpack_require__(8491);
-__webpack_require__(7704);
-
-/*
- * Copyright 2018 The boardgame.io Authors
- *
- * Use of this source code is governed by a MIT-style
- * license that can be found in the LICENSE file or at
- * https://opensource.org/licenses/MIT.
- */
-/**
- * PlayerView reducers.
- */
-const PlayerView = {
-    /**
-     * STRIP_SECRETS
-     *
-     * Reducer which removes a key named `secret` and
-     * removes all the keys in `players`, except for the one
-     * corresponding to the current playerID.
-     */
-    STRIP_SECRETS: ({ G, playerID }) => {
-        const r = { ...G };
-        if (r.secret !== undefined) {
-            delete r.secret;
-        }
-        if (r.players) {
-            r.players = playerID
-                ? {
-                    [playerID]: r.players[playerID],
-                }
-                : {};
-        }
-        return r;
-    },
-};
-
-exports.Pc = turnOrder.ActivePlayers;
-__webpack_unused_export__ = ({
-  enumerable: true,
-  get: function () { return turnOrder.GameMethod; }
-});
-__webpack_unused_export__ = turnOrder.INVALID_MOVE;
-__webpack_unused_export__ = turnOrder.Stage;
-__webpack_unused_export__ = turnOrder.TurnOrder;
-__webpack_unused_export__ = PlayerView;
 
 
 /***/ }),
@@ -23993,152 +25294,6 @@ function svelteSSRDetect() {
 
 /***/ }),
 
-/***/ 7704:
-/***/ ((module) => {
-
-/**
- * lodash (Custom Build) <https://lodash.com/>
- * Build: `lodash modularize exports="npm" -o ./`
- * Copyright jQuery Foundation and other contributors <https://jquery.org/>
- * Released under MIT license <https://lodash.com/license>
- * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
- * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- */
-
-/** `Object#toString` result references. */
-var objectTag = '[object Object]';
-
-/**
- * Checks if `value` is a host object in IE < 9.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
- */
-function isHostObject(value) {
-  // Many host objects are `Object` objects that can coerce to strings
-  // despite having improperly defined `toString` methods.
-  var result = false;
-  if (value != null && typeof value.toString != 'function') {
-    try {
-      result = !!(value + '');
-    } catch (e) {}
-  }
-  return result;
-}
-
-/**
- * Creates a unary function that invokes `func` with its argument transformed.
- *
- * @private
- * @param {Function} func The function to wrap.
- * @param {Function} transform The argument transform.
- * @returns {Function} Returns the new function.
- */
-function overArg(func, transform) {
-  return function(arg) {
-    return func(transform(arg));
-  };
-}
-
-/** Used for built-in method references. */
-var funcProto = Function.prototype,
-    objectProto = Object.prototype;
-
-/** Used to resolve the decompiled source of functions. */
-var funcToString = funcProto.toString;
-
-/** Used to check objects for own properties. */
-var hasOwnProperty = objectProto.hasOwnProperty;
-
-/** Used to infer the `Object` constructor. */
-var objectCtorString = funcToString.call(Object);
-
-/**
- * Used to resolve the
- * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
- * of values.
- */
-var objectToString = objectProto.toString;
-
-/** Built-in value references. */
-var getPrototype = overArg(Object.getPrototypeOf, Object);
-
-/**
- * Checks if `value` is object-like. A value is object-like if it's not `null`
- * and has a `typeof` result of "object".
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
- * @example
- *
- * _.isObjectLike({});
- * // => true
- *
- * _.isObjectLike([1, 2, 3]);
- * // => true
- *
- * _.isObjectLike(_.noop);
- * // => false
- *
- * _.isObjectLike(null);
- * // => false
- */
-function isObjectLike(value) {
-  return !!value && typeof value == 'object';
-}
-
-/**
- * Checks if `value` is a plain object, that is, an object created by the
- * `Object` constructor or one with a `[[Prototype]]` of `null`.
- *
- * @static
- * @memberOf _
- * @since 0.8.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
- * @example
- *
- * function Foo() {
- *   this.a = 1;
- * }
- *
- * _.isPlainObject(new Foo);
- * // => false
- *
- * _.isPlainObject([1, 2, 3]);
- * // => false
- *
- * _.isPlainObject({ 'x': 0, 'y': 0 });
- * // => true
- *
- * _.isPlainObject(Object.create(null));
- * // => true
- */
-function isPlainObject(value) {
-  if (!isObjectLike(value) ||
-      objectToString.call(value) != objectTag || isHostObject(value)) {
-    return false;
-  }
-  var proto = getPrototype(value);
-  if (proto === null) {
-    return true;
-  }
-  var Ctor = hasOwnProperty.call(proto, 'constructor') && proto.constructor;
-  return (typeof Ctor == 'function' &&
-    Ctor instanceof Ctor && funcToString.call(Ctor) == objectCtorString);
-}
-
-module.exports = isPlainObject;
-
-
-/***/ }),
-
 /***/ 7719:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -24249,6 +25404,243 @@ const sharedInMemoryStorage = new _KeyValueStorage_mjs__WEBPACK_IMPORTED_MODULE_
 
 
 //# sourceMappingURL=index.mjs.map
+
+
+/***/ }),
+
+/***/ 7821:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+// Inlined version of Alea from https://github.com/davidbau/seedrandom.
+// Converted to Typescript October 2020.
+class Alea {
+    constructor(seed) {
+        const mash = Mash();
+        // Apply the seeding algorithm from Baagoe.
+        this.c = 1;
+        this.s0 = mash(' ');
+        this.s1 = mash(' ');
+        this.s2 = mash(' ');
+        this.s0 -= mash(seed);
+        if (this.s0 < 0) {
+            this.s0 += 1;
+        }
+        this.s1 -= mash(seed);
+        if (this.s1 < 0) {
+            this.s1 += 1;
+        }
+        this.s2 -= mash(seed);
+        if (this.s2 < 0) {
+            this.s2 += 1;
+        }
+    }
+    next() {
+        const t = 2091639 * this.s0 + this.c * 2.3283064365386963e-10; // 2^-32
+        this.s0 = this.s1;
+        this.s1 = this.s2;
+        return (this.s2 = t - (this.c = Math.trunc(t)));
+    }
+}
+function Mash() {
+    let n = 0xefc8249d;
+    const mash = function (data) {
+        const str = data.toString();
+        for (let i = 0; i < str.length; i++) {
+            n += str.charCodeAt(i);
+            let h = 0.02519603282416938 * n;
+            n = h >>> 0;
+            h -= n;
+            h *= n;
+            n = h >>> 0;
+            h -= n;
+            n += h * 0x100000000; // 2^32
+        }
+        return (n >>> 0) * 2.3283064365386963e-10; // 2^-32
+    };
+    return mash;
+}
+function copy(f, t) {
+    t.c = f.c;
+    t.s0 = f.s0;
+    t.s1 = f.s1;
+    t.s2 = f.s2;
+    return t;
+}
+function alea(seed, state) {
+    const xg = new Alea(seed);
+    const prng = xg.next.bind(xg);
+    if (state)
+        copy(state, xg);
+    prng.state = () => copy(xg, {});
+    return prng;
+}
+
+/*
+ * Copyright 2017 The boardgame.io Authors
+ *
+ * Use of this source code is governed by a MIT-style
+ * license that can be found in the LICENSE file or at
+ * https://opensource.org/licenses/MIT.
+ */
+/**
+ * Random
+ *
+ * Calls that require a pseudorandom number generator.
+ * Uses a seed from ctx, and also persists the PRNG
+ * state in ctx so that moves can stay pure.
+ */
+class Random {
+    /**
+     * constructor
+     * @param {object} ctx - The ctx object to initialize from.
+     */
+    constructor(state) {
+        // If we are on the client, the seed is not present.
+        // Just use a temporary seed to execute the move without
+        // crashing it. The move state itself is discarded,
+        // so the actual value doesn't matter.
+        this.state = state || { seed: '0' };
+        this.used = false;
+    }
+    /**
+     * Generates a new seed from the current date / time.
+     */
+    static seed() {
+        return Date.now().toString(36).slice(-10);
+    }
+    isUsed() {
+        return this.used;
+    }
+    getState() {
+        return this.state;
+    }
+    /**
+     * Generate a random number.
+     */
+    _random() {
+        this.used = true;
+        const R = this.state;
+        const seed = R.prngstate ? '' : R.seed;
+        const rand = alea(seed, R.prngstate);
+        const number = rand();
+        this.state = {
+            ...R,
+            prngstate: rand.state(),
+        };
+        return number;
+    }
+    api() {
+        const random = this._random.bind(this);
+        const SpotValue = {
+            D4: 4,
+            D6: 6,
+            D8: 8,
+            D10: 10,
+            D12: 12,
+            D20: 20,
+        };
+        // Generate functions for predefined dice values D4 - D20.
+        const predefined = {};
+        for (const key in SpotValue) {
+            const spotvalue = SpotValue[key];
+            predefined[key] = (diceCount) => {
+                return diceCount === undefined
+                    ? Math.floor(random() * spotvalue) + 1
+                    : Array.from({ length: diceCount }).map(() => Math.floor(random() * spotvalue) + 1);
+            };
+        }
+        function Die(spotvalue = 6, diceCount) {
+            return diceCount === undefined
+                ? Math.floor(random() * spotvalue) + 1
+                : Array.from({ length: diceCount }).map(() => Math.floor(random() * spotvalue) + 1);
+        }
+        return {
+            /**
+             * Similar to Die below, but with fixed spot values.
+             * Supports passing a diceCount
+             *    if not defined, defaults to 1 and returns the value directly.
+             *    if defined, returns an array containing the random dice values.
+             *
+             * D4: (diceCount) => value
+             * D6: (diceCount) => value
+             * D8: (diceCount) => value
+             * D10: (diceCount) => value
+             * D12: (diceCount) => value
+             * D20: (diceCount) => value
+             */
+            ...predefined,
+            /**
+             * Roll a die of specified spot value.
+             *
+             * @param {number} spotvalue - The die dimension (default: 6).
+             * @param {number} diceCount - number of dice to throw.
+             *                             if not defined, defaults to 1 and returns the value directly.
+             *                             if defined, returns an array containing the random dice values.
+             */
+            Die,
+            /**
+             * Generate a random number between 0 and 1.
+             */
+            Number: () => {
+                return random();
+            },
+            /**
+             * Shuffle an array.
+             *
+             * @param {Array} deck - The array to shuffle. Does not mutate
+             *                       the input, but returns the shuffled array.
+             */
+            Shuffle: (deck) => {
+                const clone = [...deck];
+                let sourceIndex = deck.length;
+                let destinationIndex = 0;
+                const shuffled = Array.from({ length: sourceIndex });
+                while (sourceIndex) {
+                    const randomIndex = Math.trunc(sourceIndex * random());
+                    shuffled[destinationIndex++] = clone[randomIndex];
+                    clone[randomIndex] = clone[--sourceIndex];
+                }
+                return shuffled;
+            },
+            _private: this,
+        };
+    }
+}
+
+/*
+ * Copyright 2018 The boardgame.io Authors
+ *
+ * Use of this source code is governed by a MIT-style
+ * license that can be found in the LICENSE file or at
+ * https://opensource.org/licenses/MIT.
+ */
+const RandomPlugin = {
+    name: 'random',
+    noClient: ({ api }) => {
+        return api._private.isUsed();
+    },
+    flush: ({ api }) => {
+        return api._private.getState();
+    },
+    api: ({ data }) => {
+        const random = new Random(data);
+        return random.api();
+    },
+    setup: ({ game }) => {
+        let { seed } = game;
+        if (seed === undefined) {
+            seed = Random.seed();
+        }
+        return { seed };
+    },
+    playerView: () => undefined,
+};
+
+exports.RandomPlugin = RandomPlugin;
+exports.alea = alea;
 
 
 /***/ }),
@@ -40387,1148 +41779,6 @@ module.exports = /*#__PURE__*/JSON.parse('{"DEBUG_DISABLE_SECRET_STATE":true,"en
 
 /***/ }),
 
-/***/ 7937:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-var produce = __webpack_require__(1395);
-var pluginRandom = __webpack_require__(8491);
-var isPlainObject = __webpack_require__(7704);
-
-function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
-
-var produce__default = /*#__PURE__*/_interopDefaultLegacy(produce);
-var isPlainObject__default = /*#__PURE__*/(/* unused pure expression or super */ null && (_interopDefaultLegacy(isPlainObject)));
-
-/*
- * Copyright 2017 The boardgame.io Authors
- *
- * Use of this source code is governed by a MIT-style
- * license that can be found in the LICENSE file or at
- * https://opensource.org/licenses/MIT.
- */
-const MAKE_MOVE = 'MAKE_MOVE';
-const GAME_EVENT = 'GAME_EVENT';
-const REDO = 'REDO';
-const RESET = 'RESET';
-const SYNC = 'SYNC';
-const UNDO = 'UNDO';
-const UPDATE = 'UPDATE';
-const PATCH = 'PATCH';
-const PLUGIN = 'PLUGIN';
-const STRIP_TRANSIENTS = 'STRIP_TRANSIENTS';
-
-/*
- * Copyright 2017 The boardgame.io Authors
- *
- * Use of this source code is governed by a MIT-style
- * license that can be found in the LICENSE file or at
- * https://opensource.org/licenses/MIT.
- */
-/**
- * Generate a move to be dispatched to the game move reducer.
- *
- * @param {string} type - The move type.
- * @param {Array}  args - Additional arguments.
- * @param {string}  playerID - The ID of the player making this action.
- * @param {string}  credentials - (optional) The credentials for the player making this action.
- */
-const makeMove = (type, args, playerID, credentials) => ({
-    type: MAKE_MOVE,
-    payload: { type, args, playerID, credentials },
-});
-/**
- * Generate a game event to be dispatched to the flow reducer.
- *
- * @param {string} type - The event type.
- * @param {Array}  args - Additional arguments.
- * @param {string}  playerID - The ID of the player making this action.
- * @param {string}  credentials - (optional) The credentials for the player making this action.
- */
-const gameEvent = (type, args, playerID, credentials) => ({
-    type: GAME_EVENT,
-    payload: { type, args, playerID, credentials },
-});
-/**
- * Generate an automatic game event that is a side-effect of a move.
- * @param {string} type - The event type.
- * @param {Array}  args - Additional arguments.
- * @param {string}  playerID - The ID of the player making this action.
- * @param {string}  credentials - (optional) The credentials for the player making this action.
- */
-const automaticGameEvent = (type, args, playerID, credentials) => ({
-    type: GAME_EVENT,
-    payload: { type, args, playerID, credentials },
-    automatic: true,
-});
-const sync = (info) => ({
-    type: SYNC,
-    state: info.state,
-    log: info.log,
-    initialState: info.initialState,
-    clientOnly: true,
-});
-/**
- * Used to update the Redux store's state with patch in response to
- * an action coming from another player.
- * @param prevStateID previous stateID
- * @param stateID stateID after this patch
- * @param {Operation[]} patch - The patch to apply.
- * @param {LogEntry[]} deltalog - A log delta.
- */
-const patch = (prevStateID, stateID, patch, deltalog) => ({
-    type: PATCH,
-    prevStateID,
-    stateID,
-    patch,
-    deltalog,
-    clientOnly: true,
-});
-/**
- * Used to update the Redux store's state in response to
- * an action coming from another player.
- * @param {object} state - The state to restore.
- * @param {Array} deltalog - A log delta.
- */
-const update = (state, deltalog) => ({
-    type: UPDATE,
-    state,
-    deltalog,
-    clientOnly: true,
-});
-/**
- * Used to reset the game state.
- * @param {object} state - The initial state.
- */
-const reset = (state) => ({
-    type: RESET,
-    state,
-    clientOnly: true,
-});
-/**
- * Used to undo the last move.
- * @param {string}  playerID - The ID of the player making this action.
- * @param {string}  credentials - (optional) The credentials for the player making this action.
- */
-const undo = (playerID, credentials) => ({
-    type: UNDO,
-    payload: { type: null, args: null, playerID, credentials },
-});
-/**
- * Used to redo the last undone move.
- * @param {string}  playerID - The ID of the player making this action.
- * @param {string}  credentials - (optional) The credentials for the player making this action.
- */
-const redo = (playerID, credentials) => ({
-    type: REDO,
-    payload: { type: null, args: null, playerID, credentials },
-});
-/**
- * Allows plugins to define their own actions and intercept them.
- */
-const plugin = (type, args, playerID, credentials) => ({
-    type: PLUGIN,
-    payload: { type, args, playerID, credentials },
-});
-/**
- * Private action used to strip transient metadata (e.g. errors) from the game
- * state.
- */
-const stripTransients = () => ({
-    type: STRIP_TRANSIENTS,
-});
-
-var ActionCreators = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  makeMove: makeMove,
-  gameEvent: gameEvent,
-  automaticGameEvent: automaticGameEvent,
-  sync: sync,
-  patch: patch,
-  update: update,
-  reset: reset,
-  undo: undo,
-  redo: redo,
-  plugin: plugin,
-  stripTransients: stripTransients
-});
-
-/**
- * Moves can return this when they want to indicate
- * that the combination of arguments is illegal and
- * the move ought to be discarded.
- */
-const INVALID_MOVE = 'INVALID_MOVE';
-
-/*
- * Copyright 2018 The boardgame.io Authors
- *
- * Use of this source code is governed by a MIT-style
- * license that can be found in the LICENSE file or at
- * https://opensource.org/licenses/MIT.
- */
-/**
- * Plugin that allows using Immer to make immutable changes
- * to G by just mutating it.
- */
-const ImmerPlugin = {
-    name: 'plugin-immer',
-    fnWrap: (move) => (context, ...args) => {
-        let isInvalid = false;
-        const newG = produce__default["default"](context.G, (G) => {
-            const result = move({ ...context, G }, ...args);
-            if (result === INVALID_MOVE) {
-                isInvalid = true;
-                return;
-            }
-            return result;
-        });
-        if (isInvalid)
-            return INVALID_MOVE;
-        return newG;
-    },
-};
-
-exports.GameMethod = void 0;
-(function (GameMethod) {
-    GameMethod["MOVE"] = "MOVE";
-    GameMethod["GAME_ON_END"] = "GAME_ON_END";
-    GameMethod["PHASE_ON_BEGIN"] = "PHASE_ON_BEGIN";
-    GameMethod["PHASE_ON_END"] = "PHASE_ON_END";
-    GameMethod["TURN_ON_BEGIN"] = "TURN_ON_BEGIN";
-    GameMethod["TURN_ON_MOVE"] = "TURN_ON_MOVE";
-    GameMethod["TURN_ON_END"] = "TURN_ON_END";
-})(exports.GameMethod || (exports.GameMethod = {}));
-
-/*
- * Copyright 2018 The boardgame.io Authors
- *
- * Use of this source code is governed by a MIT-style
- * license that can be found in the LICENSE file or at
- * https://opensource.org/licenses/MIT.
- */
-var Errors;
-(function (Errors) {
-    Errors["CalledOutsideHook"] = "Events must be called from moves or the `onBegin`, `onEnd`, and `onMove` hooks.\nThis error probably means you called an event from other game code, like an `endIf` trigger or one of the `turn.order` methods.";
-    Errors["EndTurnInOnEnd"] = "`endTurn` is disallowed in `onEnd` hooks \u2014 the turn is already ending.";
-    Errors["MaxTurnEndings"] = "Maximum number of turn endings exceeded for this update.\nThis likely means game code is triggering an infinite loop.";
-    Errors["PhaseEventInOnEnd"] = "`setPhase` & `endPhase` are disallowed in a phase\u2019s `onEnd` hook \u2014 the phase is already ending.\nIf you\u2019re trying to dynamically choose the next phase when a phase ends, use the phase\u2019s `next` trigger.";
-    Errors["StageEventInOnEnd"] = "`setStage`, `endStage` & `setActivePlayers` are disallowed in `onEnd` hooks.";
-    Errors["StageEventInPhaseBegin"] = "`setStage`, `endStage` & `setActivePlayers` are disallowed in a phase\u2019s `onBegin` hook.\nUse `setActivePlayers` in a `turn.onBegin` hook or declare stages with `turn.activePlayers` instead.";
-    Errors["StageEventInTurnBegin"] = "`setStage` & `endStage` are disallowed in `turn.onBegin`.\nUse `setActivePlayers` or declare stages with `turn.activePlayers` instead.";
-})(Errors || (Errors = {}));
-/**
- * Events
- */
-class Events {
-    constructor(flow, ctx, playerID) {
-        this.flow = flow;
-        this.playerID = playerID;
-        this.dispatch = [];
-        this.initialTurn = ctx.turn;
-        this.updateTurnContext(ctx, undefined);
-        // This is an arbitrarily large upper threshold, which could be made
-        // configurable via a game option if the need arises.
-        this.maxEndedTurnsPerAction = ctx.numPlayers * 100;
-    }
-    api() {
-        const events = {
-            _private: this,
-        };
-        for (const type of this.flow.eventNames) {
-            events[type] = (...args) => {
-                this.dispatch.push({
-                    type,
-                    args,
-                    phase: this.currentPhase,
-                    turn: this.currentTurn,
-                    calledFrom: this.currentMethod,
-                    // Used to capture a stack trace in case it is needed later.
-                    error: new Error('Events Plugin Error'),
-                });
-            };
-        }
-        return events;
-    }
-    isUsed() {
-        return this.dispatch.length > 0;
-    }
-    updateTurnContext(ctx, methodType) {
-        this.currentPhase = ctx.phase;
-        this.currentTurn = ctx.turn;
-        this.currentMethod = methodType;
-    }
-    unsetCurrentMethod() {
-        this.currentMethod = undefined;
-    }
-    /**
-     * Updates ctx with the triggered events.
-     * @param {object} state - The state object { G, ctx }.
-     */
-    update(state) {
-        const initialState = state;
-        const stateWithError = ({ stack }, message) => ({
-            ...initialState,
-            plugins: {
-                ...initialState.plugins,
-                events: {
-                    ...initialState.plugins.events,
-                    data: { error: message + '\n' + stack },
-                },
-            },
-        });
-        EventQueue: for (let i = 0; i < this.dispatch.length; i++) {
-            const event = this.dispatch[i];
-            const turnHasEnded = event.turn !== state.ctx.turn;
-            // This protects against potential infinite loops if specific events are called on hooks.
-            // The moment we exceed the defined threshold, we just bail out of all phases.
-            const endedTurns = this.currentTurn - this.initialTurn;
-            if (endedTurns >= this.maxEndedTurnsPerAction) {
-                return stateWithError(event.error, Errors.MaxTurnEndings);
-            }
-            if (event.calledFrom === undefined) {
-                return stateWithError(event.error, Errors.CalledOutsideHook);
-            }
-            // Stop processing events once the game has finished.
-            if (state.ctx.gameover)
-                break EventQueue;
-            switch (event.type) {
-                case 'endStage':
-                case 'setStage':
-                case 'setActivePlayers': {
-                    switch (event.calledFrom) {
-                        // Disallow all stage events in onEnd and phase.onBegin hooks.
-                        case exports.GameMethod.TURN_ON_END:
-                        case exports.GameMethod.PHASE_ON_END:
-                            return stateWithError(event.error, Errors.StageEventInOnEnd);
-                        case exports.GameMethod.PHASE_ON_BEGIN:
-                            return stateWithError(event.error, Errors.StageEventInPhaseBegin);
-                        // Disallow setStage & endStage in turn.onBegin hooks.
-                        case exports.GameMethod.TURN_ON_BEGIN:
-                            if (event.type === 'setActivePlayers')
-                                break;
-                            return stateWithError(event.error, Errors.StageEventInTurnBegin);
-                    }
-                    // If the turn already ended, don't try to process stage events.
-                    if (turnHasEnded)
-                        continue EventQueue;
-                    break;
-                }
-                case 'endTurn': {
-                    if (event.calledFrom === exports.GameMethod.TURN_ON_END ||
-                        event.calledFrom === exports.GameMethod.PHASE_ON_END) {
-                        return stateWithError(event.error, Errors.EndTurnInOnEnd);
-                    }
-                    // If the turn already ended some other way,
-                    // don't try to end the turn again.
-                    if (turnHasEnded)
-                        continue EventQueue;
-                    break;
-                }
-                case 'endPhase':
-                case 'setPhase': {
-                    if (event.calledFrom === exports.GameMethod.PHASE_ON_END) {
-                        return stateWithError(event.error, Errors.PhaseEventInOnEnd);
-                    }
-                    // If the phase already ended some other way,
-                    // don't try to end the phase again.
-                    if (event.phase !== state.ctx.phase)
-                        continue EventQueue;
-                    break;
-                }
-            }
-            const action = automaticGameEvent(event.type, event.args, this.playerID);
-            state = this.flow.processEvent(state, action);
-        }
-        return state;
-    }
-}
-
-/*
- * Copyright 2020 The boardgame.io Authors
- *
- * Use of this source code is governed by a MIT-style
- * license that can be found in the LICENSE file or at
- * https://opensource.org/licenses/MIT.
- */
-const EventsPlugin = {
-    name: 'events',
-    noClient: ({ api }) => api._private.isUsed(),
-    isInvalid: ({ data }) => data.error || false,
-    // Update the events plugin’s internal turn context each time a move
-    // or hook is called. This allows events called after turn or phase
-    // endings to dispatch the current turn and phase correctly.
-    fnWrap: (method, methodType) => (context, ...args) => {
-        const api = context.events;
-        if (api)
-            api._private.updateTurnContext(context.ctx, methodType);
-        const G = method(context, ...args);
-        if (api)
-            api._private.unsetCurrentMethod();
-        return G;
-    },
-    dangerouslyFlushRawState: ({ state, api }) => api._private.update(state),
-    api: ({ game, ctx, playerID }) => new Events(game.flow, ctx, playerID).api(),
-};
-
-/*
- * Copyright 2018 The boardgame.io Authors
- *
- * Use of this source code is governed by a MIT-style
- * license that can be found in the LICENSE file or at
- * https://opensource.org/licenses/MIT.
- */
-/**
- * Plugin that makes it possible to add metadata to log entries.
- * During a move, you can set metadata using ctx.log.setMetadata and it will be
- * available on the log entry for that move.
- */
-const LogPlugin = {
-    name: 'log',
-    flush: () => ({}),
-    api: ({ data }) => {
-        return {
-            setMetadata: (metadata) => {
-                data.metadata = metadata;
-            },
-        };
-    },
-    setup: () => ({}),
-};
-
-/**
- * Check if a value can be serialized (e.g. using `JSON.stringify`).
- * Adapted from: https://stackoverflow.com/a/30712764/3829557
- */
-function isSerializable(value) {
-    // Primitives are OK.
-    if (value === undefined ||
-        value === null ||
-        typeof value === 'boolean' ||
-        typeof value === 'number' ||
-        typeof value === 'string') {
-        return true;
-    }
-    // A non-primitive value that is neither a POJO or an array cannot be serialized.
-    if (!isPlainObject__default["default"](value) && !Array.isArray(value)) {
-        return false;
-    }
-    // Recurse entries if the value is an object or array.
-    for (const key in value) {
-        if (!isSerializable(value[key]))
-            return false;
-    }
-    return true;
-}
-/**
- * Plugin that checks whether state is serializable, in order to avoid
- * network serialization bugs.
- */
-const SerializablePlugin = {
-    name: 'plugin-serializable',
-    fnWrap: (move) => (context, ...args) => {
-        const result = move(context, ...args);
-        // Check state in non-production environments.
-        if (false) // removed by dead control flow
-{}
-        return result;
-    },
-};
-
-/*
- * Copyright 2018 The boardgame.io Authors
- *
- * Use of this source code is governed by a MIT-style
- * license that can be found in the LICENSE file or at
- * https://opensource.org/licenses/MIT.
- */
-const production = "production" === 'production';
-const logfn = production ? () => { } : (...msg) => console.log(...msg);
-const errorfn = (...msg) => console.error(...msg);
-function info(msg) {
-    logfn(`INFO: ${msg}`);
-}
-function error(error) {
-    errorfn('ERROR:', error);
-}
-
-/*
- * Copyright 2018 The boardgame.io Authors
- *
- * Use of this source code is governed by a MIT-style
- * license that can be found in the LICENSE file or at
- * https://opensource.org/licenses/MIT.
- */
-/**
- * List of plugins that are always added.
- */
-const CORE_PLUGINS = [ImmerPlugin, pluginRandom.RandomPlugin, LogPlugin, SerializablePlugin];
-const DEFAULT_PLUGINS = [...CORE_PLUGINS, EventsPlugin];
-/**
- * Allow plugins to intercept actions and process them.
- */
-const ProcessAction = (state, action, opts) => {
-    // TODO(#723): Extend error handling to plugins.
-    opts.game.plugins
-        .filter((plugin) => plugin.action !== undefined)
-        .filter((plugin) => plugin.name === action.payload.type)
-        .forEach((plugin) => {
-        const name = plugin.name;
-        const pluginState = state.plugins[name] || { data: {} };
-        const data = plugin.action(pluginState.data, action.payload);
-        state = {
-            ...state,
-            plugins: {
-                ...state.plugins,
-                [name]: { ...pluginState, data },
-            },
-        };
-    });
-    return state;
-};
-/**
- * The APIs created by various plugins are stored in the plugins
- * section of the state object:
- *
- * {
- *   G: {},
- *   ctx: {},
- *   plugins: {
- *     plugin-a: {
- *       data: {},  // this is generated by the plugin at Setup / Flush.
- *       api: {},   // this is ephemeral and generated by Enhance.
- *     }
- *   }
- * }
- *
- * This function retrieves plugin APIs and returns them as an object
- * for consumption as used by move contexts.
- */
-const GetAPIs = ({ plugins }) => Object.entries(plugins || {}).reduce((apis, [name, { api }]) => {
-    apis[name] = api;
-    return apis;
-}, {});
-/**
- * Applies the provided plugins to the given move / flow function.
- *
- * @param methodToWrap - The move function or hook to apply the plugins to.
- * @param methodType - The type of the move or hook being wrapped.
- * @param plugins - The list of plugins.
- */
-const FnWrap = (methodToWrap, methodType, plugins) => {
-    return [...CORE_PLUGINS, ...plugins, EventsPlugin]
-        .filter((plugin) => plugin.fnWrap !== undefined)
-        .reduce((method, { fnWrap }) => fnWrap(method, methodType), methodToWrap);
-};
-/**
- * Allows the plugin to generate its initial state.
- */
-const Setup = (state, opts) => {
-    [...DEFAULT_PLUGINS, ...opts.game.plugins]
-        .filter((plugin) => plugin.setup !== undefined)
-        .forEach((plugin) => {
-        const name = plugin.name;
-        const data = plugin.setup({
-            G: state.G,
-            ctx: state.ctx,
-            game: opts.game,
-        });
-        state = {
-            ...state,
-            plugins: {
-                ...state.plugins,
-                [name]: { data },
-            },
-        };
-    });
-    return state;
-};
-/**
- * Invokes the plugin before a move or event.
- * The API that the plugin generates is stored inside
- * the `plugins` section of the state (which is subsequently
- * merged into ctx).
- */
-const Enhance = (state, opts) => {
-    [...DEFAULT_PLUGINS, ...opts.game.plugins]
-        .filter((plugin) => plugin.api !== undefined)
-        .forEach((plugin) => {
-        const name = plugin.name;
-        const pluginState = state.plugins[name] || { data: {} };
-        const api = plugin.api({
-            G: state.G,
-            ctx: state.ctx,
-            data: pluginState.data,
-            game: opts.game,
-            playerID: opts.playerID,
-        });
-        state = {
-            ...state,
-            plugins: {
-                ...state.plugins,
-                [name]: { ...pluginState, api },
-            },
-        };
-    });
-    return state;
-};
-/**
- * Allows plugins to update their state after a move / event.
- */
-const Flush = (state, opts) => {
-    // We flush the events plugin first, then custom plugins and the core plugins.
-    // This means custom plugins cannot use the events API but will be available in event hooks.
-    // Note that plugins are flushed in reverse, to allow custom plugins calling each other.
-    [...CORE_PLUGINS, ...opts.game.plugins, EventsPlugin]
-        .reverse()
-        .forEach((plugin) => {
-        const name = plugin.name;
-        const pluginState = state.plugins[name] || { data: {} };
-        if (plugin.flush) {
-            const newData = plugin.flush({
-                G: state.G,
-                ctx: state.ctx,
-                game: opts.game,
-                api: pluginState.api,
-                data: pluginState.data,
-            });
-            state = {
-                ...state,
-                plugins: {
-                    ...state.plugins,
-                    [plugin.name]: { data: newData },
-                },
-            };
-        }
-        else if (plugin.dangerouslyFlushRawState) {
-            state = plugin.dangerouslyFlushRawState({
-                state,
-                game: opts.game,
-                api: pluginState.api,
-                data: pluginState.data,
-            });
-            // Remove everything other than data.
-            const data = state.plugins[name].data;
-            state = {
-                ...state,
-                plugins: {
-                    ...state.plugins,
-                    [plugin.name]: { data },
-                },
-            };
-        }
-    });
-    return state;
-};
-/**
- * Allows plugins to indicate if they should not be materialized on the client.
- * This will cause the client to discard the state update and wait for the
- * master instead.
- */
-const NoClient = (state, opts) => {
-    return [...DEFAULT_PLUGINS, ...opts.game.plugins]
-        .filter((plugin) => plugin.noClient !== undefined)
-        .map((plugin) => {
-        const name = plugin.name;
-        const pluginState = state.plugins[name];
-        if (pluginState) {
-            return plugin.noClient({
-                G: state.G,
-                ctx: state.ctx,
-                game: opts.game,
-                api: pluginState.api,
-                data: pluginState.data,
-            });
-        }
-        return false;
-    })
-        .includes(true);
-};
-/**
- * Allows plugins to indicate if the entire action should be thrown out
- * as invalid. This will cancel the entire state update.
- */
-const IsInvalid = (state, opts) => {
-    const firstInvalidReturn = [...DEFAULT_PLUGINS, ...opts.game.plugins]
-        .filter((plugin) => plugin.isInvalid !== undefined)
-        .map((plugin) => {
-        const { name } = plugin;
-        const pluginState = state.plugins[name];
-        const message = plugin.isInvalid({
-            G: state.G,
-            ctx: state.ctx,
-            game: opts.game,
-            data: pluginState && pluginState.data,
-        });
-        return message ? { plugin: name, message } : false;
-    })
-        .find((value) => value);
-    return firstInvalidReturn || false;
-};
-/**
- * Update plugin state after move/event & check if plugins consider the update to be valid.
- * @returns Tuple of `[updatedState]` or `[originalState, invalidError]`.
- */
-const FlushAndValidate = (state, opts) => {
-    const updatedState = Flush(state, opts);
-    const isInvalid = IsInvalid(updatedState, opts);
-    if (!isInvalid)
-        return [updatedState];
-    const { plugin, message } = isInvalid;
-    error(`${plugin} plugin declared action invalid:\n${message}`);
-    return [state, isInvalid];
-};
-/**
- * Allows plugins to customize their data for specific players.
- * For example, a plugin may want to share no data with the client, or
- * want to keep some player data secret from opponents.
- */
-const PlayerView = ({ G, ctx, plugins = {} }, { game, playerID }) => {
-    [...DEFAULT_PLUGINS, ...game.plugins].forEach(({ name, playerView }) => {
-        if (!playerView)
-            return;
-        const { data } = plugins[name] || { data: {} };
-        const newData = playerView({ G, ctx, game, data, playerID });
-        plugins = {
-            ...plugins,
-            [name]: { data: newData },
-        };
-    });
-    return plugins;
-};
-
-/**
- * Adjust the given options to use the new minMoves/maxMoves if a legacy moveLimit was given
- * @param options The options object to apply backwards compatibility to
- * @param enforceMinMoves Use moveLimit to set both minMoves and maxMoves
- */
-function supportDeprecatedMoveLimit(options, enforceMinMoves = false) {
-    if (options.moveLimit) {
-        if (enforceMinMoves) {
-            options.minMoves = options.moveLimit;
-        }
-        options.maxMoves = options.moveLimit;
-        delete options.moveLimit;
-    }
-}
-
-/*
- * Copyright 2017 The boardgame.io Authors
- *
- * Use of this source code is governed by a MIT-style
- * license that can be found in the LICENSE file or at
- * https://opensource.org/licenses/MIT.
- */
-function SetActivePlayers(ctx, arg) {
-    let activePlayers = {};
-    let _prevActivePlayers = [];
-    let _nextActivePlayers = null;
-    let _activePlayersMinMoves = {};
-    let _activePlayersMaxMoves = {};
-    if (Array.isArray(arg)) {
-        // support a simple array of player IDs as active players
-        const value = {};
-        arg.forEach((v) => (value[v] = Stage.NULL));
-        activePlayers = value;
-    }
-    else {
-        // process active players argument object
-        // stages previously did not enforce minMoves, this behaviour is kept intentionally
-        supportDeprecatedMoveLimit(arg);
-        if (arg.next) {
-            _nextActivePlayers = arg.next;
-        }
-        if (arg.revert) {
-            _prevActivePlayers = [
-                ...ctx._prevActivePlayers,
-                {
-                    activePlayers: ctx.activePlayers,
-                    _activePlayersMinMoves: ctx._activePlayersMinMoves,
-                    _activePlayersMaxMoves: ctx._activePlayersMaxMoves,
-                    _activePlayersNumMoves: ctx._activePlayersNumMoves,
-                },
-            ];
-        }
-        if (arg.currentPlayer !== undefined) {
-            ApplyActivePlayerArgument(activePlayers, _activePlayersMinMoves, _activePlayersMaxMoves, ctx.currentPlayer, arg.currentPlayer);
-        }
-        if (arg.others !== undefined) {
-            for (let i = 0; i < ctx.playOrder.length; i++) {
-                const id = ctx.playOrder[i];
-                if (id !== ctx.currentPlayer) {
-                    ApplyActivePlayerArgument(activePlayers, _activePlayersMinMoves, _activePlayersMaxMoves, id, arg.others);
-                }
-            }
-        }
-        if (arg.all !== undefined) {
-            for (let i = 0; i < ctx.playOrder.length; i++) {
-                const id = ctx.playOrder[i];
-                ApplyActivePlayerArgument(activePlayers, _activePlayersMinMoves, _activePlayersMaxMoves, id, arg.all);
-            }
-        }
-        if (arg.value) {
-            for (const id in arg.value) {
-                ApplyActivePlayerArgument(activePlayers, _activePlayersMinMoves, _activePlayersMaxMoves, id, arg.value[id]);
-            }
-        }
-        if (arg.minMoves) {
-            for (const id in activePlayers) {
-                if (_activePlayersMinMoves[id] === undefined) {
-                    _activePlayersMinMoves[id] = arg.minMoves;
-                }
-            }
-        }
-        if (arg.maxMoves) {
-            for (const id in activePlayers) {
-                if (_activePlayersMaxMoves[id] === undefined) {
-                    _activePlayersMaxMoves[id] = arg.maxMoves;
-                }
-            }
-        }
-    }
-    if (Object.keys(activePlayers).length === 0) {
-        activePlayers = null;
-    }
-    if (Object.keys(_activePlayersMinMoves).length === 0) {
-        _activePlayersMinMoves = null;
-    }
-    if (Object.keys(_activePlayersMaxMoves).length === 0) {
-        _activePlayersMaxMoves = null;
-    }
-    const _activePlayersNumMoves = {};
-    for (const id in activePlayers) {
-        _activePlayersNumMoves[id] = 0;
-    }
-    return {
-        ...ctx,
-        activePlayers,
-        _activePlayersMinMoves,
-        _activePlayersMaxMoves,
-        _activePlayersNumMoves,
-        _prevActivePlayers,
-        _nextActivePlayers,
-    };
-}
-/**
- * Update activePlayers, setting it to previous, next or null values
- * when it becomes empty.
- * @param ctx
- */
-function UpdateActivePlayersOnceEmpty(ctx) {
-    let { activePlayers, _activePlayersMinMoves, _activePlayersMaxMoves, _activePlayersNumMoves, _prevActivePlayers, _nextActivePlayers, } = ctx;
-    if (activePlayers && Object.keys(activePlayers).length === 0) {
-        if (_nextActivePlayers) {
-            ctx = SetActivePlayers(ctx, _nextActivePlayers);
-            ({
-                activePlayers,
-                _activePlayersMinMoves,
-                _activePlayersMaxMoves,
-                _activePlayersNumMoves,
-                _prevActivePlayers,
-            } = ctx);
-        }
-        else if (_prevActivePlayers.length > 0) {
-            const lastIndex = _prevActivePlayers.length - 1;
-            ({
-                activePlayers,
-                _activePlayersMinMoves,
-                _activePlayersMaxMoves,
-                _activePlayersNumMoves,
-            } = _prevActivePlayers[lastIndex]);
-            _prevActivePlayers = _prevActivePlayers.slice(0, lastIndex);
-        }
-        else {
-            activePlayers = null;
-            _activePlayersMinMoves = null;
-            _activePlayersMaxMoves = null;
-        }
-    }
-    return {
-        ...ctx,
-        activePlayers,
-        _activePlayersMinMoves,
-        _activePlayersMaxMoves,
-        _activePlayersNumMoves,
-        _prevActivePlayers,
-    };
-}
-/**
- * Apply an active player argument to the given player ID
- * @param {Object} activePlayers
- * @param {Object} _activePlayersMinMoves
- * @param {Object} _activePlayersMaxMoves
- * @param {String} playerID The player to apply the parameter to
- * @param {(String|Object)} arg An active player argument
- */
-function ApplyActivePlayerArgument(activePlayers, _activePlayersMinMoves, _activePlayersMaxMoves, playerID, arg) {
-    if (typeof arg !== 'object' || arg === Stage.NULL) {
-        arg = { stage: arg };
-    }
-    if (arg.stage !== undefined) {
-        // stages previously did not enforce minMoves, this behaviour is kept intentionally
-        supportDeprecatedMoveLimit(arg);
-        activePlayers[playerID] = arg.stage;
-        if (arg.minMoves)
-            _activePlayersMinMoves[playerID] = arg.minMoves;
-        if (arg.maxMoves)
-            _activePlayersMaxMoves[playerID] = arg.maxMoves;
-    }
-}
-/**
- * Converts a playOrderPos index into its value in playOrder.
- * @param {Array} playOrder - An array of player ID's.
- * @param {number} playOrderPos - An index into the above.
- */
-function getCurrentPlayer(playOrder, playOrderPos) {
-    // convert to string in case playOrder is set to number[]
-    return playOrder[playOrderPos] + '';
-}
-/**
- * Called at the start of a turn to initialize turn order state.
- *
- * TODO: This is called inside StartTurn, which is called from
- * both UpdateTurn and StartPhase (so it's called at the beginning
- * of a new phase as well as between turns). We should probably
- * split it into two.
- */
-function InitTurnOrderState(state, turn) {
-    let { G, ctx } = state;
-    const { numPlayers } = ctx;
-    const pluginAPIs = GetAPIs(state);
-    const context = { ...pluginAPIs, G, ctx };
-    const order = turn.order;
-    let playOrder = [...Array.from({ length: numPlayers })].map((_, i) => i + '');
-    if (order.playOrder !== undefined) {
-        playOrder = order.playOrder(context);
-    }
-    const playOrderPos = order.first(context);
-    const posType = typeof playOrderPos;
-    if (posType !== 'number') {
-        error(`invalid value returned by turn.order.first — expected number got ${posType} “${playOrderPos}”.`);
-    }
-    const currentPlayer = getCurrentPlayer(playOrder, playOrderPos);
-    ctx = { ...ctx, currentPlayer, playOrderPos, playOrder };
-    ctx = SetActivePlayers(ctx, turn.activePlayers || {});
-    return ctx;
-}
-/**
- * Called at the end of each turn to update the turn order state.
- * @param {object} G - The game object G.
- * @param {object} ctx - The game object ctx.
- * @param {object} turn - A turn object for this phase.
- * @param {string} endTurnArg - An optional argument to endTurn that
-                                may specify the next player.
- */
-function UpdateTurnOrderState(state, currentPlayer, turn, endTurnArg) {
-    const order = turn.order;
-    let { G, ctx } = state;
-    let playOrderPos = ctx.playOrderPos;
-    let endPhase = false;
-    if (endTurnArg && endTurnArg !== true) {
-        if (typeof endTurnArg !== 'object') {
-            error(`invalid argument to endTurn: ${endTurnArg}`);
-        }
-        Object.keys(endTurnArg).forEach((arg) => {
-            switch (arg) {
-                case 'remove':
-                    currentPlayer = getCurrentPlayer(ctx.playOrder, playOrderPos);
-                    break;
-                case 'next':
-                    playOrderPos = ctx.playOrder.indexOf(endTurnArg.next);
-                    currentPlayer = endTurnArg.next;
-                    break;
-                default:
-                    error(`invalid argument to endTurn: ${arg}`);
-            }
-        });
-    }
-    else {
-        const pluginAPIs = GetAPIs(state);
-        const context = { ...pluginAPIs, G, ctx };
-        const t = order.next(context);
-        const type = typeof t;
-        if (t !== undefined && type !== 'number') {
-            error(`invalid value returned by turn.order.next — expected number or undefined got ${type} “${t}”.`);
-        }
-        if (t === undefined) {
-            endPhase = true;
-        }
-        else {
-            playOrderPos = t;
-            currentPlayer = getCurrentPlayer(ctx.playOrder, playOrderPos);
-        }
-    }
-    ctx = {
-        ...ctx,
-        playOrderPos,
-        currentPlayer,
-    };
-    return { endPhase, ctx };
-}
-/**
- * Set of different turn orders possible in a phase.
- * These are meant to be passed to the `turn` setting
- * in the flow objects.
- *
- * Each object defines the first player when the phase / game
- * begins, and also a function `next` to determine who the
- * next player is when the turn ends.
- *
- * The phase ends if next() returns undefined.
- */
-const TurnOrder = {
-    /**
-     * DEFAULT
-     *
-     * The default round-robin turn order.
-     */
-    DEFAULT: {
-        first: ({ ctx }) => ctx.turn === 0
-            ? ctx.playOrderPos
-            : (ctx.playOrderPos + 1) % ctx.playOrder.length,
-        next: ({ ctx }) => (ctx.playOrderPos + 1) % ctx.playOrder.length,
-    },
-    /**
-     * RESET
-     *
-     * Similar to DEFAULT, but starts from 0 each time.
-     */
-    RESET: {
-        first: () => 0,
-        next: ({ ctx }) => (ctx.playOrderPos + 1) % ctx.playOrder.length,
-    },
-    /**
-     * CONTINUE
-     *
-     * Similar to DEFAULT, but starts with the player who ended the last phase.
-     */
-    CONTINUE: {
-        first: ({ ctx }) => ctx.playOrderPos,
-        next: ({ ctx }) => (ctx.playOrderPos + 1) % ctx.playOrder.length,
-    },
-    /**
-     * ONCE
-     *
-     * Another round-robin turn order, but goes around just once.
-     * The phase ends after all players have played.
-     */
-    ONCE: {
-        first: () => 0,
-        next: ({ ctx }) => {
-            if (ctx.playOrderPos < ctx.playOrder.length - 1) {
-                return ctx.playOrderPos + 1;
-            }
-        },
-    },
-    /**
-     * CUSTOM
-     *
-     * Identical to DEFAULT, but also sets playOrder at the
-     * beginning of the phase.
-     *
-     * @param {Array} playOrder - The play order.
-     */
-    CUSTOM: (playOrder) => ({
-        playOrder: () => playOrder,
-        first: () => 0,
-        next: ({ ctx }) => (ctx.playOrderPos + 1) % ctx.playOrder.length,
-    }),
-    /**
-     * CUSTOM_FROM
-     *
-     * Identical to DEFAULT, but also sets playOrder at the
-     * beginning of the phase to a value specified by a field
-     * in G.
-     *
-     * @param {string} playOrderField - Field in G.
-     */
-    CUSTOM_FROM: (playOrderField) => ({
-        playOrder: ({ G }) => G[playOrderField],
-        first: () => 0,
-        next: ({ ctx }) => (ctx.playOrderPos + 1) % ctx.playOrder.length,
-    }),
-};
-const Stage = {
-    NULL: null,
-};
-const ActivePlayers = {
-    /**
-     * ALL
-     *
-     * The turn stays with one player, but any player can play (in any order)
-     * until the phase ends.
-     */
-    ALL: { all: Stage.NULL },
-    /**
-     * ALL_ONCE
-     *
-     * The turn stays with one player, but any player can play (once, and in any order).
-     * This is typically used in a phase where you want to elicit a response
-     * from every player in the game.
-     */
-    ALL_ONCE: { all: Stage.NULL, minMoves: 1, maxMoves: 1 },
-    /**
-     * OTHERS
-     *
-     * The turn stays with one player, and every *other* player can play (in any order)
-     * until the phase ends.
-     */
-    OTHERS: { others: Stage.NULL },
-    /**
-     * OTHERS_ONCE
-     *
-     * The turn stays with one player, and every *other* player can play (once, and in any order).
-     * This is typically used in a phase where you want to elicit a response
-     * from every *other* player in the game.
-     */
-    OTHERS_ONCE: { others: Stage.NULL, minMoves: 1, maxMoves: 1 },
-};
-
-exports.ActionCreators = ActionCreators;
-exports.ActivePlayers = ActivePlayers;
-exports.Enhance = Enhance;
-exports.FlushAndValidate = FlushAndValidate;
-exports.FnWrap = FnWrap;
-exports.GAME_EVENT = GAME_EVENT;
-exports.GetAPIs = GetAPIs;
-exports.INVALID_MOVE = INVALID_MOVE;
-exports.InitTurnOrderState = InitTurnOrderState;
-exports.MAKE_MOVE = MAKE_MOVE;
-exports.NoClient = NoClient;
-exports.PATCH = PATCH;
-exports.PLUGIN = PLUGIN;
-exports.PlayerView = PlayerView;
-exports.ProcessAction = ProcessAction;
-exports.REDO = REDO;
-exports.RESET = RESET;
-exports.STRIP_TRANSIENTS = STRIP_TRANSIENTS;
-exports.SYNC = SYNC;
-exports.SetActivePlayers = SetActivePlayers;
-exports.Setup = Setup;
-exports.Stage = Stage;
-exports.TurnOrder = TurnOrder;
-exports.UNDO = UNDO;
-exports.UPDATE = UPDATE;
-exports.UpdateActivePlayersOnceEmpty = UpdateActivePlayersOnceEmpty;
-exports.UpdateTurnOrderState = UpdateTurnOrderState;
-exports.error = error;
-exports.gameEvent = gameEvent;
-exports.info = info;
-exports.makeMove = makeMove;
-exports.patch = patch;
-exports.redo = redo;
-exports.reset = reset;
-exports.stripTransients = stripTransients;
-exports.supportDeprecatedMoveLimit = supportDeprecatedMoveLimit;
-exports.sync = sync;
-exports.undo = undo;
-exports.update = update;
-
-
-/***/ }),
-
 /***/ 7945:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
@@ -43453,243 +43703,6 @@ var useDeleteRoomMutation = function useDeleteRoomMutation() {
     }()
   });
 };
-
-/***/ }),
-
-/***/ 8491:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-
-// Inlined version of Alea from https://github.com/davidbau/seedrandom.
-// Converted to Typescript October 2020.
-class Alea {
-    constructor(seed) {
-        const mash = Mash();
-        // Apply the seeding algorithm from Baagoe.
-        this.c = 1;
-        this.s0 = mash(' ');
-        this.s1 = mash(' ');
-        this.s2 = mash(' ');
-        this.s0 -= mash(seed);
-        if (this.s0 < 0) {
-            this.s0 += 1;
-        }
-        this.s1 -= mash(seed);
-        if (this.s1 < 0) {
-            this.s1 += 1;
-        }
-        this.s2 -= mash(seed);
-        if (this.s2 < 0) {
-            this.s2 += 1;
-        }
-    }
-    next() {
-        const t = 2091639 * this.s0 + this.c * 2.3283064365386963e-10; // 2^-32
-        this.s0 = this.s1;
-        this.s1 = this.s2;
-        return (this.s2 = t - (this.c = Math.trunc(t)));
-    }
-}
-function Mash() {
-    let n = 0xefc8249d;
-    const mash = function (data) {
-        const str = data.toString();
-        for (let i = 0; i < str.length; i++) {
-            n += str.charCodeAt(i);
-            let h = 0.02519603282416938 * n;
-            n = h >>> 0;
-            h -= n;
-            h *= n;
-            n = h >>> 0;
-            h -= n;
-            n += h * 0x100000000; // 2^32
-        }
-        return (n >>> 0) * 2.3283064365386963e-10; // 2^-32
-    };
-    return mash;
-}
-function copy(f, t) {
-    t.c = f.c;
-    t.s0 = f.s0;
-    t.s1 = f.s1;
-    t.s2 = f.s2;
-    return t;
-}
-function alea(seed, state) {
-    const xg = new Alea(seed);
-    const prng = xg.next.bind(xg);
-    if (state)
-        copy(state, xg);
-    prng.state = () => copy(xg, {});
-    return prng;
-}
-
-/*
- * Copyright 2017 The boardgame.io Authors
- *
- * Use of this source code is governed by a MIT-style
- * license that can be found in the LICENSE file or at
- * https://opensource.org/licenses/MIT.
- */
-/**
- * Random
- *
- * Calls that require a pseudorandom number generator.
- * Uses a seed from ctx, and also persists the PRNG
- * state in ctx so that moves can stay pure.
- */
-class Random {
-    /**
-     * constructor
-     * @param {object} ctx - The ctx object to initialize from.
-     */
-    constructor(state) {
-        // If we are on the client, the seed is not present.
-        // Just use a temporary seed to execute the move without
-        // crashing it. The move state itself is discarded,
-        // so the actual value doesn't matter.
-        this.state = state || { seed: '0' };
-        this.used = false;
-    }
-    /**
-     * Generates a new seed from the current date / time.
-     */
-    static seed() {
-        return Date.now().toString(36).slice(-10);
-    }
-    isUsed() {
-        return this.used;
-    }
-    getState() {
-        return this.state;
-    }
-    /**
-     * Generate a random number.
-     */
-    _random() {
-        this.used = true;
-        const R = this.state;
-        const seed = R.prngstate ? '' : R.seed;
-        const rand = alea(seed, R.prngstate);
-        const number = rand();
-        this.state = {
-            ...R,
-            prngstate: rand.state(),
-        };
-        return number;
-    }
-    api() {
-        const random = this._random.bind(this);
-        const SpotValue = {
-            D4: 4,
-            D6: 6,
-            D8: 8,
-            D10: 10,
-            D12: 12,
-            D20: 20,
-        };
-        // Generate functions for predefined dice values D4 - D20.
-        const predefined = {};
-        for (const key in SpotValue) {
-            const spotvalue = SpotValue[key];
-            predefined[key] = (diceCount) => {
-                return diceCount === undefined
-                    ? Math.floor(random() * spotvalue) + 1
-                    : Array.from({ length: diceCount }).map(() => Math.floor(random() * spotvalue) + 1);
-            };
-        }
-        function Die(spotvalue = 6, diceCount) {
-            return diceCount === undefined
-                ? Math.floor(random() * spotvalue) + 1
-                : Array.from({ length: diceCount }).map(() => Math.floor(random() * spotvalue) + 1);
-        }
-        return {
-            /**
-             * Similar to Die below, but with fixed spot values.
-             * Supports passing a diceCount
-             *    if not defined, defaults to 1 and returns the value directly.
-             *    if defined, returns an array containing the random dice values.
-             *
-             * D4: (diceCount) => value
-             * D6: (diceCount) => value
-             * D8: (diceCount) => value
-             * D10: (diceCount) => value
-             * D12: (diceCount) => value
-             * D20: (diceCount) => value
-             */
-            ...predefined,
-            /**
-             * Roll a die of specified spot value.
-             *
-             * @param {number} spotvalue - The die dimension (default: 6).
-             * @param {number} diceCount - number of dice to throw.
-             *                             if not defined, defaults to 1 and returns the value directly.
-             *                             if defined, returns an array containing the random dice values.
-             */
-            Die,
-            /**
-             * Generate a random number between 0 and 1.
-             */
-            Number: () => {
-                return random();
-            },
-            /**
-             * Shuffle an array.
-             *
-             * @param {Array} deck - The array to shuffle. Does not mutate
-             *                       the input, but returns the shuffled array.
-             */
-            Shuffle: (deck) => {
-                const clone = [...deck];
-                let sourceIndex = deck.length;
-                let destinationIndex = 0;
-                const shuffled = Array.from({ length: sourceIndex });
-                while (sourceIndex) {
-                    const randomIndex = Math.trunc(sourceIndex * random());
-                    shuffled[destinationIndex++] = clone[randomIndex];
-                    clone[randomIndex] = clone[--sourceIndex];
-                }
-                return shuffled;
-            },
-            _private: this,
-        };
-    }
-}
-
-/*
- * Copyright 2018 The boardgame.io Authors
- *
- * Use of this source code is governed by a MIT-style
- * license that can be found in the LICENSE file or at
- * https://opensource.org/licenses/MIT.
- */
-const RandomPlugin = {
-    name: 'random',
-    noClient: ({ api }) => {
-        return api._private.isUsed();
-    },
-    flush: ({ api }) => {
-        return api._private.getState();
-    },
-    api: ({ data }) => {
-        const random = new Random(data);
-        return random.api();
-    },
-    setup: ({ game }) => {
-        let { seed } = game;
-        if (seed === undefined) {
-            seed = Random.seed();
-        }
-        return { seed };
-    },
-    playerView: () => undefined,
-};
-
-exports.RandomPlugin = RandomPlugin;
-exports.alea = alea;
-
 
 /***/ }),
 
@@ -46957,7 +46970,7 @@ function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present,
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
-console.warn("[tanstack-router] These exports from \"/home/matt/Programming/measuringcontest/src/routes/editor.js\" will not be code-split and will increase your bundle size:\n- Editor\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
+console.warn("[tanstack-router] These exports from \"/home/mnbro/Programming/measuringcontest/src/routes/editor.js\" will not be code-split and will increase your bundle size:\n- Editor\nFor the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.");
 
 
 
@@ -48535,6 +48548,17 @@ const componentTypes = [
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/nonce */
