@@ -44039,6 +44039,29 @@ function isNotFound(obj) {
 
 /***/ }),
 
+/***/ 8731:
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7870);
+/* harmony import */ var _css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(15);
+/* harmony import */ var _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `html,body,#storybook-root,.story{height:100%}.button{border:3px solid var(--dark-amethyst);display:inline-block;padding:.5em;font-size:1.5em;font-family:inherit;text-decoration:none;cursor:pointer;border-radius:.3em;box-shadow:0 4px 6px rgba(0,0,0,.15);margin:.5em}.button--style-b{background-color:var(--dark-amethyst);color:#fff}.button--style-c{background-color:var(--lipstick-red);color:#fff}.button--x-small{font-size:.9em;padding:.3em .5em;border-radius:.2em}.game{color:#000}.shared-board,.personal-board{padding:1em 0;border-bottom:1px solid #fff}.grid{border:1px solid #000;box-sizing:border-box;background-color:#333;max-width:500px}.grid__cell{border:1px solid #000;background-color:#fff;aspect-ratio:1;display:flex;align-items:center;justify-content:center;color:#666;position:relative;overflow:auto}.grid__cell .space{height:100%;width:100%}.space{box-sizing:border-box;min-width:10px;min-height:10px}.space:not(:has(.entity)):not(.grid__cell>:only-child){border:1px solid gray}.space--clickable{background-color:rgba(144,238,144,.4)}.space--targeted{background-color:gray}.space__entity-grid{box-sizing:border-box;align-items:center;justify-content:center}.space__entity-grid__cell{box-sizing:border-box;overflow:auto}.entity{padding:.2em;min-height:20px;min-width:20px;box-sizing:border-box;border:1px solid #000;overflow:hidden;font-size:.5em;font-family:"Nunito",sans-serif;font-weight:bold;display:inline-block}.entity.player-0{background-color:pink}.entity--clickable{background-color:rgba(144,238,144,.4)}.entity.player-0.entity--clickable{background-color:#f0e0d8}.entity.player-1{background-color:#add8e6}.entity.player-1.entity--clickable{background-color:#afeeee}.debug-panel .pane{max-width:420px !important}.game-status{position:absolute;top:50%;left:0;transform:translateY(-50%);width:100%;border-top:1em;border-bottom:1em;padding:1em;background-color:var(--dark-orange);color:#000;box-sizing:border-box;font-size:3em}.debug-panel .visibility-toggle{top:70px !important}.debug-panel .visibility-toggle svg{display:none}.debug-panel .visibility-toggle .icon::after{position:relative;left:3px;content:"⚙️";font-size:20px;display:block;width:20px;height:20px}.debug-panel .menu{position:relative;top:70px !important}`, ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
 /***/ 8733:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
@@ -47237,6 +47260,54 @@ function getRegionFromIdentityPoolId(identityPoolId) {
 
 /***/ }),
 
+/***/ 9794:
+/***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony import */ var _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5639);
+/* harmony import */ var _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9060);
+/* harmony import */ var _style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5384);
+/* harmony import */ var _style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7087);
+/* harmony import */ var _style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(291);
+/* harmony import */ var _style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1056);
+/* harmony import */ var _style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _css_loader_dist_cjs_js_sass_loader_dist_cjs_js_board_game_engine_react_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(8731);
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+
+      options.insert = _style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+    
+options.domAPI = (_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_css_loader_dist_cjs_js_sass_loader_dist_cjs_js_board_game_engine_react_css__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, options);
+
+
+
+
+       /* unused harmony default export */ var __WEBPACK_DEFAULT_EXPORT__ = (_css_loader_dist_cjs_js_sass_loader_dist_cjs_js_board_game_engine_react_css__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A && _css_loader_dist_cjs_js_sass_loader_dist_cjs_js_board_game_engine_react_css__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A.locals ? _css_loader_dist_cjs_js_sass_loader_dist_cjs_js_board_game_engine_react_css__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A.locals : undefined);
+
+
+/***/ }),
+
 /***/ 9830:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
@@ -48550,7 +48621,9 @@ var __webpack_exports__ = {};
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3137);
 /* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3273);
 /* harmony import */ var _app_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6149);
-/* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3515);
+/* harmony import */ var board_game_engine_react_dist_board_game_engine_react_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9794);
+/* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3515);
+
 
 
 
