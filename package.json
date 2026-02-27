@@ -42,7 +42,7 @@
     "@tanstack/react-router": "^1.131.7",
     "aws-amplify": "^6.15.3",
     "board-game-engine": "^0.0.8",
-    "board-game-engine-react": "^0.0.13",
+    "board-game-engine-react": "^0.0.14",
     "lucide-react": "^0.556.0",
     "prop-types": "^15.8.1",
     "react": "^19.0.0",
