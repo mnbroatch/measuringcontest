@@ -820,6 +820,10 @@ function RoomPage() {
     minPlayers = _JSON$parse.minPlayers;
     maxPlayers = _JSON$parse.maxPlayers;
     rulesNumPlayers = _JSON$parse.numPlayers;
+    if (rulesNumPlayers) {
+      minPlayers = rulesNumPlayers;
+      maxPlayers = rulesNumPlayers;
+    }
     if (maxPlayers && numPlayers > maxPlayers) {
       gameDisabledReason = 'Too Many Players';
     } else if (minPlayers && numPlayers < minPlayers) {
