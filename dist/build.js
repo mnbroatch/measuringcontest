@@ -10786,6 +10786,11 @@ function Space({
   }))), !entities.length && space.attributes.name));
 }
 
+function sameEntity(a, b) {
+  const idA = a.entityId ?? a.attributes?.entityId;
+  const idB = b.entityId ?? b.attributes?.entityId;
+  return idA != null && idB != null && idA === idB;
+}
 function Entity({
   entity
 }) {
@@ -10793,9 +10798,10 @@ function Entity({
     clickTarget,
     allClickable
   } = useGame();
-  const isClickable = allClickable.has(entity);
+  const isClickable = [...allClickable].some(c => sameEntity(c, entity));
   const attributes = entity.attributes;
-  switch (attributes.type) {
+  const entityType = attributes.entityType ?? attributes.type;
+  switch (entityType) {
     case 'Grid':
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(Grid, {
         grid: entity,
@@ -10814,7 +10820,7 @@ function Entity({
             clickTarget(entity);
           }
         },
-        className: ['entity', attributes.player && `player-${attributes.player}`, allClickable.has(entity) && 'entity--clickable'].filter(Boolean).join(' ')
+        className: ['entity', attributes.player && `player-${attributes.player}`, isClickable && 'entity--clickable'].filter(Boolean).join(' ')
       }, entity.rule.displayProperties?.map((property, i) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         key: i
       }, property, ": ", entity.attributes[property]?.toString())));
@@ -10881,6 +10887,7 @@ function Game({
   loading,
   isSpectator
 }) {
+  console.log('gameConnection?.getState?.()', gameConnection?.getState?.());
   const G = gameConnection?.getState?.().state.G;
   return G ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(GameProvider, {
     gameConnection: gameConnection,
