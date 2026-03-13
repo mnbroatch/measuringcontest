@@ -21,12 +21,28 @@ jobs:
     environment: prod
     steps:
 
-      - name: Set DEPLOY_PATH with default
-        run: |
-          DEPLOY_PATH="${DEPLOY_PATH:-./dist}"
-          echo "DEPLOY_PATH=$DEPLOY_PATH" >> $GITHUB_ENV
-
       - uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install root dependencies
+        run: npm ci
+
+      - name: Build main app
+        run: npm run build
+
+      - name: Install docs dependencies
+        run: cd documentation-vitepress && npm ci
+
+      - name: Build docs
+        run: npm run docs:build
+
+      - name: Copy docs into dist
+        run: cp -r documentation-vitepress/docs/.vitepress/dist dist/docs
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -35,4 +51,4 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Sync files to S3
-        run: aws s3 sync $DEPLOY_PATH s3://${{ env.S3_BUCKET_NAME }} --delete
+        run: aws s3 sync ./dist s3://${{ env.S3_BUCKET_NAME }} --delete

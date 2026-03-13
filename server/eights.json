@@ -7,17 +7,17 @@
       "state": { "value": 0 }
     },
     {
-      "type": "Space",
+      "entityType": "Space",
       "name": "hand",
       "perPlayer": true,
       "contentsHiddenFrom": "Others"
     },
     {
-      "type": "Space",
+      "entityType": "Space",
       "name": "discard"
     },
     {
-      "type": "Space",
+      "entityType": "Space",
       "name": "stock",
       "contentsHiddenFrom": "All"
     },
@@ -87,7 +87,7 @@
   ],
   "initialMoves": [
     {
-      "type": "PlaceNew",
+      "moveType": "PlaceNew",
       "matchMultiple": true,
       "entity": {
         "conditions": [{
@@ -113,7 +113,7 @@
       "next": "score",
       "initialMoves": [
         {
-          "type": "MoveEntity",
+          "moveType": "MoveEntity",
           "arguments": {
             "entity": {
               "matchMultiple": true,
@@ -131,7 +131,7 @@
           }
         },
         {
-          "type": "Shuffle",
+          "moveType": "Shuffle",
           "arguments": {
             "target": {
               "conditions": [{
@@ -142,12 +142,12 @@
           }
         },
         {
-          "type": "ForEach",
+          "moveType": "ForEach",
           "arguments": {
             "targets": [0,1,2,3,4]
           },
           "move": {
-            "type": "ForEach",
+            "moveType": "ForEach",
             "arguments": {
               "targets": {
                 "type": "ctxPath",
@@ -155,7 +155,7 @@
               }
             },
             "move": {
-              "type": "MoveEntity",
+              "moveType": "MoveEntity",
               "arguments": {
                 "entity": {
                   "conditions": [
@@ -189,7 +189,7 @@
           }
         },
         {
-          "type": "MoveEntity",
+          "moveType": "MoveEntity",
           "arguments": {
             "entity": {
               "conditions": [
@@ -224,7 +224,7 @@
         "activePlayers": { "currentPlayer": "normalPlay" },
         "initialMoves": [
           {
-            "type": "ForEach",
+            "moveType": "ForEach",
             "arguments": {
               "targets": {
                 "matchMultiple": true,
@@ -255,7 +255,7 @@
               "conditions": [{ "conditionType": "Contains" }]
             }],
             "move": {
-              "type": "MoveEntity",
+              "moveType": "MoveEntity",
               "arguments": {
                 "entity": {
                   "type": "contextPath",
@@ -275,7 +275,7 @@
             }
           },
           {
-            "type": "Shuffle",
+            "moveType": "Shuffle",
             "arguments": {
               "target": {
                 "conditions": [{
@@ -290,7 +290,7 @@
           "normalPlay": {
             "moves": {
               "playCard": {
-                "type": "MoveEntity",
+                "moveType": "MoveEntity",
                 "position": "First",
                 "arguments": {
                   "entity": {
@@ -372,7 +372,7 @@
                 },
                 "then": [
                   {
-                    "type": "SetActivePlayers",
+                    "moveType": "SetActivePlayers",
                     "options": {
                       "currentPlayer": {
                         "stage": "nameSuit"
@@ -388,7 +388,7 @@
                     }]
                   },
                   {
-                    "type": "EndTurn",
+                    "moveType": "EndTurn",
                     "conditions": [{
                       "conditionType": "Not",
                       "target": {
@@ -404,7 +404,7 @@
                 ]
               },
               "takeCard": {
-                "type": "TakeFrom",
+                "moveType": "TakeFrom",
                 "conditions": [{
                   "conditionType": "Contains",
                   "target": {
@@ -439,14 +439,14 @@
                     ]
                   }
                 },
-                "then": [{ "type": "EndTurn" }]
+                "then": [{ "moveType": "EndTurn" }]
               }
             }
           },
           "nameSuit": {
             "moves": {
               "nameSuit": {
-                "type": "SetState",
+              "moveType": "SetState",
                 "arguments": {
                   "entity": {
                     "conditions": [
@@ -466,8 +466,8 @@
                     "property": "suit",
                     "possibleValues": [ "clubs", "hearts", "spades", "diamonds" ]
                   }
-                },
-                "then": [{ "type": "EndTurn" }]
+              },
+              "then": [{ "moveType": "EndTurn" }]
               }
             }
           }
@@ -495,7 +495,7 @@
       "next": "play",
       "initialMoves": [
         {
-          "type": "ForEach",
+          "moveType": "ForEach",
           "arguments": {
             "targets": {
               "type": "ctxPath",
@@ -503,7 +503,7 @@
             }
           },
           "move": {
-            "type": "SetState",
+            "moveType": "SetState",
             "arguments": {
               "entity": {
                 "conditions": [
@@ -607,7 +607,7 @@
             }
           }
         },
-        { "type": "EndTurn" }
+        { "moveType": "EndTurn" }
       ]
     }
   },

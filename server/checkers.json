@@ -2,7 +2,7 @@
   "entities": [
     {
       "name": "mainGrid",
-      "type": "Grid",
+      "entityType": "Grid",
       "width": 8,
       "height": 8
     },
@@ -50,7 +50,7 @@
     "stages": {
       "jumpIfPossible": {
         "initialMoves": [{
-          "type": "SetActivePlayers",
+          "moveType": "SetActivePlayers",
           "options": {
             "currentPlayer": { "stage": "moveIfNoJump" }
           },
@@ -58,7 +58,7 @@
         }],
         "moves": {
           "jumpChecker": {
-            "type": "MoveEntity",
+            "moveType": "MoveEntity",
             "arguments": {
               "entity": {
                 "playerChoice": true,
@@ -80,7 +80,7 @@
                 "conditions": [
                   {
                     "conditionType": "Is",
-                    "matcher": { "type": "Space" }
+                    "matcher": { "entityType": "Space" }
                   },
                   {
                     "conditionType": "Not",
@@ -251,7 +251,7 @@
             },
             "then": [
               {
-                "type": "ForEach",
+                "moveType": "ForEach",
                 "arguments": {
                   "targets": {
                     "type": "contextPath",
@@ -273,7 +273,7 @@
                   }
                 },
                 "move": {
-                  "type": "RemoveEntity",
+                  "moveType": "RemoveEntity",
                   "arguments": {
                     "entity": {
                       "type": "contextPath",
@@ -283,7 +283,7 @@
                 }
               },
               {
-                "type": "SetActivePlayers",
+                "moveType": "SetActivePlayers",
                 "options": {
                   "currentPlayer": { "stage": "keepJumping" }
                 }
@@ -294,7 +294,7 @@
       },
       "keepJumping": {
         "initialMoves": [{
-          "type": "SetActivePlayers",
+          "moveType": "SetActivePlayers",
           "options": {
             "currentPlayer": { "stage": "kingPieces" }
           },
@@ -302,7 +302,7 @@
         }],
         "moves": {
           "jumpChecker": {
-            "type": "MoveEntity",
+            "moveType": "MoveEntity",
             "arguments": {
               "entity": {
                 "conditions": [
@@ -320,7 +320,7 @@
                 "conditions": [
                   {
                     "conditionType": "Is",
-                    "matcher": { "type": "Space" }
+                    "matcher": { "entityType": "Space" }
                   },
                   {
                     "conditionType": "Not",
@@ -491,7 +491,7 @@
             },
             "then": [
               {
-                "type": "ForEach",
+                "moveType": "ForEach",
                 "arguments": {
                   "targets": {
                     "type": "contextPath",
@@ -513,7 +513,7 @@
                   }
                 },
                 "move": {
-                  "type": "RemoveEntity",
+                  "moveType": "RemoveEntity",
                   "arguments": {
                     "entity": {
                       "type": "contextPath",
@@ -523,7 +523,7 @@
                 }
               },
               {
-                "type": "SetActivePlayers",
+                "moveType": "SetActivePlayers",
                 "options": {
                   "currentPlayer": { "stage": "kingPieces" }
                 },
@@ -535,12 +535,12 @@
       },
       "moveIfNoJump": {
         "initialMoves": [{
-          "type": "PassTurn",
+          "moveType": "PassTurn",
           "conditions": [{ "conditionType": "NoPossibleMoves" }]
         }],
         "moves": {
           "moveChecker": {
-            "type": "MoveEntity",
+            "moveType": "MoveEntity",
             "arguments": {
               "entity": {
                 "playerChoice": true,
@@ -562,7 +562,7 @@
                 "conditions": [
                   {
                     "conditionType": "Is",
-                    "matcher": { "type": "Space" }
+                    "matcher": { "entityType": "Space" }
                   },
                   {
                     "conditionType": "Not",
@@ -690,7 +690,7 @@
             },
             "then": [
               {
-                "type": "SetActivePlayers",
+                "moveType": "SetActivePlayers",
                 "options": {
                   "currentPlayer": { "stage": "kingPieces" }
                 }
@@ -702,7 +702,7 @@
       "kingPieces": {
         "initialMoves": [
           {
-            "type": "ForEach",
+            "moveType": "ForEach",
             "arguments": {
               "targets": {
                 "type": "map",
@@ -711,7 +711,7 @@
                   "conditions": [
                     {
                       "conditionType": "Is",
-                      "matcher": { "type": "Space" }
+                          "matcher": { "entityType": "Space" }
                     },
                     { "conditionType": "Contains" },
                     {
@@ -748,7 +748,7 @@
               }
             },
             "move": {
-              "type": "SetState",
+              "moveType": "SetState",
               "arguments": {
                 "entity": {
                   "type": "contextPath",
@@ -761,7 +761,7 @@
               }
             }
           },
-          { "type": "EndTurn" }
+          { "moveType": "EndTurn" }
         ]
       }
     }

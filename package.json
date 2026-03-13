@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --config ./webpack.config.dev.js",
-    "build": "webpack --config ./webpack.config.js"
+    "build": "webpack --config ./webpack.config.js",
+    "docs:start": "cd documentation-vitepress && npm run docs:dev",
+    "docs:build": "cd documentation-vitepress && npm run docs:build"
   },
   "devDependencies": {
     "@babel/core": "^7.16.7",
@@ -41,8 +43,7 @@
     "@tanstack/react-query": "^5.82.0",
     "@tanstack/react-router": "^1.131.7",
     "aws-amplify": "^6.15.3",
-    "board-game-engine": "^0.0.8",
-    "board-game-engine-react": "^0.0.14",
+    "board-game-engine-react": "^0.0.16",
     "lucide-react": "^0.556.0",
     "prop-types": "^15.8.1",
     "react": "^19.0.0",

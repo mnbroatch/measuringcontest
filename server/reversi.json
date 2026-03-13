@@ -2,7 +2,7 @@
   "entities": [
     {
       "name": "mainGrid",
-      "type": "Grid",
+      "entityType": "Grid",
       "width": 8,
       "height": 8
     },
@@ -49,13 +49,13 @@
     "minMoves": 1,
     "maxMoves": 1,
     "initialMoves": [{
-      "type": "PassTurn",
+      "moveType": "PassTurn",
       "conditions": [{ "conditionType": "NoPossibleMoves" }]
     }]
   },
   "moves": {
     "placeDisc": {
-      "type": "PlaceNew",
+      "moveType": "PlaceNew",
       "entity": {
         "state": {
           "player": {
@@ -74,7 +74,7 @@
           "conditions": [
             {
               "conditionType": "Is",
-              "matcher": { "type": "Space" }
+              "matcher": { "entityType": "Space" }
             },
             {
               "conditionType": "Not",
@@ -136,7 +136,7 @@
         }
       },
       "then": [{
-        "type": "ForEach",
+        "moveType": "ForEach",
         "arguments": {
           "targets": {
             "type": "contextPath",
@@ -157,7 +157,7 @@
           }
         },
         "move": {
-          "type": "SetState",
+          "moveType": "SetState",
           "arguments": {
             "entity": {
               "type": "contextPath",

@@ -2,7 +2,7 @@
   "entities": [
     {
       "name": "mainGrid",
-      "type": "Grid",
+      "entityType": "Grid",
       "width": 7,
       "height": 6
     },
@@ -21,7 +21,7 @@
   },
   "moves": {
     "placePlayerMarker": {
-      "type": "PlaceNew",
+      "moveType": "PlaceNew",
       "entity": {
         "conditions": [{
           "conditionType": "Is",
@@ -40,7 +40,7 @@
           "conditions": [
             {
               "conditionType": "Is",
-              "matcher": { "type": "Space" }
+              "matcher": { "entityType": "Space" }
             },
             {
               "conditionType": "Not",
@@ -67,14 +67,14 @@
   "endIf": [
     {
       "conditions": [{
-        "conditionType": "Some",
-        "target": {
-          "matchMultiple": true,
-          "conditions": [{
-            "conditionType": "Is",
-            "matcher": { "type": "Space" }
-          }
-        ]},
+      "conditionType": "Some",
+      "target": {
+        "matchMultiple": true,
+        "conditions": [{
+          "conditionType": "Is",
+          "matcher": { "entityType": "Space" }
+        }
+      ]},
         "conditions": [{
           "conditionType": "InLine",
           "target": {
