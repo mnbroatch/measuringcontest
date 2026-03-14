@@ -25,12 +25,20 @@ class CacheBustPlugin {
   }
 }
 
+const boardGameEngineReact = path.resolve(__dirname, 'node_modules/board-game-engine-react')
+const boardGameEngine = path.resolve(__dirname, 'node_modules/board-game-engine')
+
 module.exports = {
+  mode: 'production',
   entry: './index.js',
   resolve: {
     alias: {
       react: path.resolve(__dirname, 'node_modules/react'),
       'react-dom': path.resolve(__dirname, 'node_modules/react-dom'),
+      // Work around package.json "exports" missing "./" prefix (board-game-engine-react and board-game-engine)
+      'board-game-engine-react/dist/board-game-engine-react.css': path.join(boardGameEngineReact, 'dist/board-game-engine-react.css'),
+      'board-game-engine-react': path.join(boardGameEngineReact, 'dist/board-game-engine-react.mjs'),
+      'board-game-engine': path.join(boardGameEngine, 'dist/board-game-engine.mjs'),
     },
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
   },
