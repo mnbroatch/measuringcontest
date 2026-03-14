@@ -3,11 +3,9 @@ import jwt from 'jsonwebtoken';
 import { SSMClient, GetParameterCommand } from "@aws-sdk/client-ssm";
 import getRawBody from 'raw-body'
 import { ProcessGameConfig } from '@mnbroatch/boardgame.io/dist/cjs/internal.js';
-import BoardGameEngine from 'board-game-engine';
+import { gameFactory } from 'board-game-engine';
 import makeServer from './guts.js';
 import RoomGame from './room-game.js';
-
-const { gameFactory } = BoardGameEngine
 const ssmClient = new SSMClient({ region: 'us-west-1' });
 
 const INITIAL_GAMES = [RoomGame]

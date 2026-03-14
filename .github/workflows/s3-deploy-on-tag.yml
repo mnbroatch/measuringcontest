@@ -52,3 +52,8 @@ jobs:
 
       - name: Sync files to S3
         run: aws s3 sync ./dist s3://${{ env.S3_BUCKET_NAME }} --delete
+
+      - name: Upload docs redirect objects
+        run: |
+          aws s3 cp scripts/docs-redirect.html s3://${{ env.S3_BUCKET_NAME }}/docs --content-type "text/html"
+          aws s3api put-object --bucket ${{ env.S3_BUCKET_NAME }} --key "docs/" --body scripts/docs-redirect.html --content-type "text/html"
