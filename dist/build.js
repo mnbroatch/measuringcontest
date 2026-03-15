@@ -328,6 +328,8 @@ function GameEditor(_ref) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, screenState === SCREEN_STATE_EDITING && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "editor"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "editor-toolbar"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "sample-game-select"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("select", {
     className: "sample-game-select__inner",
@@ -343,7 +345,12 @@ function GameEditor(_ref) {
       value: i,
       className: "sample-game-select__option"
     }, game.name);
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_monaco_editor_react__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Ay, {
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+    href: "https://boardgameengine.com/docs/index.html",
+    target: "_blank",
+    rel: "noopener noreferrer",
+    className: "editor-toolbar__docs-link"
+  }, "Language Docs")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_monaco_editor_react__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Ay, {
     className: "editor__input",
     defaultLanguage: "json",
     value: gameRules,
@@ -552,7 +559,12 @@ function Header(_ref) {
   var auth = _ref.auth;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "header"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_home_button_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A, null), !auth.loading && !auth.idToken && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_home_button_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+    href: "https://boardgameengine.com/docs/index.html",
+    target: "_blank",
+    rel: "noopener noreferrer",
+    className: "header-docs-link"
+  }, "Docs"), !auth.loading && !auth.idToken && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "button button--x-small button--style-b",
     onClick: auth.login
   }, "Login"), !auth.loading && !!auth.idToken && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
@@ -1075,12 +1087,12 @@ function useGameConnection() {
   }, [roomCode, gameId]);
   return (0,board_game_engine_react__WEBPACK_IMPORTED_MODULE_4__/* .useGameserverConnection */ .JQ)({
     server: _constants_api_js__WEBPACK_IMPORTED_MODULE_5__/* .BOARDGAME_SERVER_URL */ ._,
-    gameId: gameId,
+    matchID: gameId,
     gameRules: gameRules,
     gameName: rulesHash,
     // this is what server expects
-    boardgamePlayerID: boardgamePlayerID,
-    clientToken: clientToken,
+    playerID: boardgamePlayerID,
+    credentials: clientToken,
     debug: false,
     enabled: joinGameMutation.isSuccess
   });
@@ -1121,14 +1133,13 @@ function useRoomConnection() {
   var joinRoomMutation = (0,_queries_use_join_room_mutation_js__WEBPACK_IMPORTED_MODULE_3__/* .useJoinRoomMutation */ .k)(roomCode);
   var boardgamePlayerID = (_joinRoomMutation$dat = joinRoomMutation.data) === null || _joinRoomMutation$dat === void 0 ? void 0 : _joinRoomMutation$dat.boardgamePlayerID;
   var clientToken = (_joinRoomMutation$dat2 = joinRoomMutation.data) === null || _joinRoomMutation$dat2 === void 0 ? void 0 : _joinRoomMutation$dat2.clientToken;
-  console.log('RoomGame', _server_room_game_js__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A);
   var gameServerConnection = (0,board_game_engine_react__WEBPACK_IMPORTED_MODULE_5__/* .useGameserverConnection */ .JQ)({
     server: _constants_api_js__WEBPACK_IMPORTED_MODULE_7__/* .BOARDGAME_SERVER_URL */ ._,
-    gameId: roomGameId,
+    matchID: roomGameId,
     boardgameIOGame: _server_room_game_js__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A,
     gameName: 'bgestagingroom',
-    boardgamePlayerID: boardgamePlayerID,
-    clientToken: clientToken,
+    playerID: boardgamePlayerID,
+    credentials: clientToken,
     debug: false,
     enabled: !!joinRoomMutation.isSuccess
   });
@@ -1164,7 +1175,6 @@ function useRoomConnection() {
 function useSinglePlayerGame(gameRules, numPlayers) {
   return (0,board_game_engine_react__WEBPACK_IMPORTED_MODULE_0__/* .useGameserverConnection */ .JQ)({
     gameRules: gameRules,
-    singlePlayer: true,
     numPlayers: numPlayers
   });
 }
@@ -1966,7 +1976,11 @@ function Home() {
     iconComponent: lucide_react__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A,
     iconSize: "7em",
     iconStrokeWidth: "1.1",
-    description: "Define a game using BAGEL (Board-based Automated Game Engine Language)"
+    description: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, "Define a game using ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      href: "https://boardgameengine.com/docs/index.html",
+      target: "_blank",
+      rel: "noopener noreferrer"
+    }, "B.A.G.E.L."), " (Board-based Automated Game Engine Language)")
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_info_card_info_card_js__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     iconComponent: lucide_react__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A,
     iconSize: "7em",
@@ -2054,6 +2068,7 @@ function RoomPage() {
   var status = (_roomConnection$state = roomConnection.state) === null || _roomConnection$state === void 0 ? void 0 : _roomConnection$state.G.status;
   var players = (_roomConnection$state2 = roomConnection.state) === null || _roomConnection$state2 === void 0 ? void 0 : _roomConnection$state2.G.players;
   var playerID = (_roomConnection$clien = roomConnection.client) === null || _roomConnection$clien === void 0 ? void 0 : _roomConnection$clien.playerID;
+  console.log('roomConnection.client', roomConnection.client);
   var gameRules = (_roomConnection$state3 = roomConnection.state) === null || _roomConnection$state3 === void 0 ? void 0 : _roomConnection$state3.G.gameRules;
   var gameName = (_roomConnection$state4 = roomConnection.state) === null || _roomConnection$state4 === void 0 ? void 0 : _roomConnection$state4.G.gameName;
   var gameId = (_roomConnection$state5 = roomConnection.state) === null || _roomConnection$state5 === void 0 ? void 0 : _roomConnection$state5.G.gameId;
@@ -2509,7 +2524,7 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Paytone+One&display=swap);"]);
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `:root{--bright-sky: #01baef;--tropical-teal: #0cbaba;--dark-amethyst: #380036;--dark-orange: #F58F29;--lipstick-red: #EC0B43}html{height:100%;overscroll-behavior:none}body{margin:0;font-family:"Paytone One",sans-serif;color:#fff;height:100%}#root{display:flex;flex-direction:column;height:100dvh}.content:not(:has(.home)){padding:.7em}.content{text-align:center;min-height:0;overflow:auto;background:linear-gradient(to bottom, var(--bright-sky) 0%, var(--bright-sky) 50%, var(--tropical-teal) 80%, var(--tropical-teal) 100%)}.header{position:relative;padding:.5em;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 6px rgba(0,0,0,.15);background-color:#fff}.home-splash{color:#fff;display:grid;grid-template-columns:repeat(auto-fit, minmax(135px, 1fr));gap:1em;align-items:center;background:linear-gradient(to right, var(--dark-amethyst) 0%, var(--dark-amethyst) 20%, var(--bright-sky) 100%)}.home-tagline{padding-left:.7em}.home-tagline__inner{display:inline-block;text-align:left}.home-description{padding:0 .7em;font-family:"Nunito",sans-serif}.home-explanation{display:grid;grid-template-columns:repeat(auto-fit, 200px);gap:1em;justify-content:center;margin-bottom:2em}.info-card{box-sizing:border-box;color:var(--dark-amethyst);font-family:"Nunito",sans-serif;font-weight:700;font-size:.8em;background-color:#fff;aspect-ratio:.8;padding:1em;border-radius:1em;box-shadow:0 4px 6px rgba(0,0,0,.15);width:200px;align-self:center;text-align:center}.info-card__icon,.info-card__description{box-sizing:border-box;height:50%}.info-card__icon{background-color:#fff;aspect-ratio:.8}.info-card__description{background-color:#fff;border-top:2px solid var(--tropical-teal);padding:2em 1em}.button{border:3px solid var(--dark-amethyst);display:inline-block;padding:.5em;font-size:1.5em;font-family:inherit;text-decoration:none;cursor:pointer;border-radius:.3em;box-shadow:0 4px 6px rgba(0,0,0,.15);margin:.5em}.button:disabled,.button--disabled.button--disabled{background-color:gray}.button--style-a{background-color:var(--dark-orange);color:var(--dark-amethyst)}.button--style-b{background-color:var(--dark-amethyst);color:#fff}.button--style-c{background-color:var(--lipstick-red);color:#fff}.button--small{font-size:1.2em;padding:.3em .5em;border-radius:.2em}.button--x-small{font-size:.9em;padding:.3em .5em;border-radius:.2em}.room-game{position:relative}.room-game__joined-players{padding:1em;box-shadow:inset 0 2px 4px rgba(0,0,0,.2);background-color:rgb(from var(--bright-sky) calc(r + 50) calc(g + 50) calc(b + 50))}.room-game h4{position:absolute;top:0;left:0;margin:0;padding:.3em .5em;background-color:var(--dark-amethyst);transform:translate(-2%, -70%) rotate(-3deg)}.room-game__game-name{margin:0}.room-game__player-count{margin:0 0 2em}.room-game ul{margin:0}.header-home-button{font-size:1.2em;text-decoration:none;text-transform:uppercase;color:var(--bright-sky);text-align:center;line-height:1em}.header-home-button .lucide-cog{margin-right:-0.05em;margin-left:-0.05em;position:relative;top:.15em}.home-buttons{margin:1.5em}.button-with-input__input{font-size:.8em;margin-left:.5em;padding:0 .5em;position:relative;bottom:.1em}.join-room-button__container{display:inline-block;position:relative}.join-room-button__error{color:var(--lipstick-red);position:absolute;top:-1em;left:1em}.join-room-button .button-with-input__input{background-color:#fff;width:4em}.editor{display:flex;flex-direction:column;flex:1;min-height:0}.editor section:has(.editor__input){min-height:0}.roomGame{border:1px solid gray;border-radius:8px}.sample-game-select{margin-bottom:.5em}.sample-game-select__inner{font-family:"Nunito",sans-serif;max-width:100%}.sample-game-select__option{font-family:inherit;max-width:100%}.editor-game-name,.editor-num-players{color:#fff}.editor__controls{display:flex;flex-wrap:wrap;margin-top:.5em;gap:.5em;justify-content:center}.editor-game-name__input,.editor-num-players__input{font-family:"Nunito",sans-serif;margin-left:1em;position:relative}.editor-game-name__input{width:10em}.editor-num-players__input{width:3em}.buttons{text-align:center}.editor-buttons .button{display:inline-block;padding:.2em .3em;font-size:.8em;box-shadow:0 4px 6px rgba(0,0,0,.15)}.testing-game{position:relative;margin:2em}.testing-game__title__text{margin:0}.testing-game__title__tip{margin:0;color:#000}.game-preview{flex:1;text-align:left;padding:0;display:flex;flex-direction:column;min-height:0}.game-preview h3{margin:0}.game-preview__info-card__code{color:var(--lipstick-red);font-family:"Courier New",monospace;font-size:2em}.joined-player-pill{position:relative;background-color:#fff;color:var(--bright-sky);text-transform:uppercase;border-radius:9999px;margin:.5em;display:inline-flex;justify-content:center;align-items:center;transition:all .3s ease}.joined-player-pill--me{color:var(--lipstick-red)}.joined-player-pill__edit-button{position:absolute;top:-1.3em;left:-1.3em;padding:.2em;line-height:0}.joined-player-pill__inner{display:inline-block;padding:.5em}.joined-player-pill__editor{display:flex;align-items:center;margin:0 .5em}.joined-player-pill__editor input{margin:0em .5em;font-family:inherit;font-size:.9em;border:2px solid var(--bright-sky);border-radius:.2em}.spinner{position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);width:50px;height:50px;border:4px solid #e0e0e0;border-top-color:#3498db;border-radius:50%;animation:spin 1s linear infinite}body:has(.content .editor) .debug-panel{display:none}@media(max-width: 600px){html{font-size:12px}}@media(min-width: 600px){.sample-game-select__inner{font-size:inherit}.editor-game-name__input,.editor-num-players__input{font-size:inherit;position:static}.editor__controls{gap:1em}}@keyframes spin{to{transform:translate(-50%, -50%) rotate(360deg)}}`, ""]);
+___CSS_LOADER_EXPORT___.push([module.id, `:root{--bright-sky: #01baef;--tropical-teal: #0cbaba;--dark-amethyst: #380036;--dark-orange: #F58F29;--lipstick-red: #EC0B43}html{height:100%;overscroll-behavior:none}body{margin:0;font-family:"Paytone One",sans-serif;color:#fff;height:100%}#root{display:flex;flex-direction:column;height:100dvh}.content:not(:has(.home)){padding:.7em}.content{text-align:center;min-height:0;overflow:auto;background:linear-gradient(to bottom, var(--bright-sky) 0%, var(--bright-sky) 50%, var(--tropical-teal) 80%, var(--tropical-teal) 100%)}.header{position:relative;padding:.5em;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 6px rgba(0,0,0,.15);background-color:#fff}.home-splash{color:#fff;display:grid;grid-template-columns:repeat(auto-fit, minmax(135px, 1fr));gap:1em;align-items:center;background:linear-gradient(to right, var(--dark-amethyst) 0%, var(--dark-amethyst) 20%, var(--bright-sky) 100%)}.home-tagline{padding-left:.7em}.home-tagline__inner{display:inline-block;text-align:left}.home-description{padding:0 .7em;font-family:"Nunito",sans-serif}.home-explanation{display:grid;grid-template-columns:repeat(auto-fit, 200px);gap:1em;justify-content:center;margin-bottom:2em}.info-card{box-sizing:border-box;color:var(--dark-amethyst);font-family:"Nunito",sans-serif;font-weight:700;font-size:.8em;background-color:#fff;aspect-ratio:.8;padding:1em;border-radius:1em;box-shadow:0 4px 6px rgba(0,0,0,.15);width:200px;align-self:center;text-align:center}.info-card__icon,.info-card__description{box-sizing:border-box;height:50%}.info-card__icon{background-color:#fff;aspect-ratio:.8}.info-card__description{background-color:#fff;border-top:2px solid var(--tropical-teal);padding:2em 1em}.info-card__description a{color:var(--bright-sky);text-decoration:none}.info-card__description a:hover{text-decoration:underline}.button{border:3px solid var(--dark-amethyst);display:inline-block;padding:.5em;font-size:1.5em;font-family:inherit;text-decoration:none;cursor:pointer;border-radius:.3em;box-shadow:0 4px 6px rgba(0,0,0,.15);margin:.5em}.button:disabled,.button--disabled.button--disabled{background-color:gray}.button--style-a{background-color:var(--dark-orange);color:var(--dark-amethyst)}.button--style-b{background-color:var(--dark-amethyst);color:#fff}.button--style-c{background-color:var(--lipstick-red);color:#fff}.button--small{font-size:1.2em;padding:.3em .5em;border-radius:.2em}.button--x-small{font-size:.9em;padding:.3em .5em;border-radius:.2em}.room-game{position:relative}.room-game__joined-players{padding:1em;box-shadow:inset 0 2px 4px rgba(0,0,0,.2);background-color:rgb(from var(--bright-sky) calc(r + 50) calc(g + 50) calc(b + 50))}.room-game h4{position:absolute;top:0;left:0;margin:0;padding:.3em .5em;background-color:var(--dark-amethyst);transform:translate(-2%, -70%) rotate(-3deg)}.room-game__game-name{margin:0}.room-game__player-count{margin:0 0 2em}.room-game ul{margin:0}.header-home-button{font-size:1.2em;text-decoration:none;text-transform:uppercase;color:var(--bright-sky);text-align:center;line-height:1em}.header-home-button .lucide-cog{margin-right:-0.05em;margin-left:-0.05em;position:relative;top:.15em}.header-docs-link{font-size:.9rem;color:var(--bright-sky);text-decoration:none}.header-docs-link:hover{text-decoration:underline}.home-buttons{margin:1.5em}.button-with-input__input{font-size:.8em;margin-left:.5em;padding:0 .5em;position:relative;bottom:.1em}.join-room-button__container{display:inline-block;position:relative}.join-room-button__error{color:var(--lipstick-red);position:absolute;top:-1em;left:1em}.join-room-button .button-with-input__input{background-color:#fff;width:4em}.editor{display:flex;flex-direction:column;flex:1;min-height:0}.editor section:has(.editor__input){min-height:0}.roomGame{border:1px solid gray;border-radius:8px}.editor-toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5em;gap:.5em}.editor-toolbar__docs-link{font-size:.85rem;color:hsla(0,0%,100%,.85);text-decoration:none;white-space:nowrap}.editor-toolbar__docs-link:hover{text-decoration:underline}.sample-game-select{flex:1;min-width:0}.sample-game-select__inner{font-family:"Nunito",sans-serif;max-width:100%}.sample-game-select__option{font-family:inherit;max-width:100%}.editor-game-name,.editor-num-players{color:#fff}.editor__controls{display:flex;flex-wrap:wrap;margin-top:.5em;gap:.5em;justify-content:center}.editor-game-name__input,.editor-num-players__input{font-family:"Nunito",sans-serif;margin-left:1em;position:relative}.editor-game-name__input{width:10em}.editor-num-players__input{width:3em}.buttons{text-align:center}.editor-buttons .button{display:inline-block;padding:.2em .3em;font-size:.8em;box-shadow:0 4px 6px rgba(0,0,0,.15)}.testing-game{position:relative;margin:2em}.testing-game__title__text{margin:0}.testing-game__title__tip{margin:0;color:#000}.game-preview{flex:1;text-align:left;padding:0;display:flex;flex-direction:column;min-height:0}.game-preview h3{margin:0}.game-preview__info-card__code{color:var(--lipstick-red);font-family:"Courier New",monospace;font-size:2em}.joined-player-pill{position:relative;background-color:#fff;color:var(--bright-sky);text-transform:uppercase;border-radius:9999px;margin:.5em;display:inline-flex;justify-content:center;align-items:center;transition:all .3s ease}.joined-player-pill--me{color:var(--lipstick-red)}.joined-player-pill__edit-button{position:absolute;top:-1.3em;left:-1.3em;padding:.2em;line-height:0}.joined-player-pill__inner{display:inline-block;padding:.5em}.joined-player-pill__editor{display:flex;align-items:center;margin:0 .5em}.joined-player-pill__editor input{margin:0em .5em;font-family:inherit;font-size:.9em;border:2px solid var(--bright-sky);border-radius:.2em}.spinner{position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);width:50px;height:50px;border:4px solid #e0e0e0;border-top-color:#3498db;border-radius:50%;animation:spin 1s linear infinite}body:has(.content .editor) .debug-panel{display:none}@media(max-width: 600px){html{font-size:12px}}@media(min-width: 600px){.sample-game-select__inner{font-size:inherit}.editor-game-name__input,.editor-num-players__input{font-size:inherit;position:static}.editor__controls{gap:1em}}@keyframes spin{to{transform:translate(-50%, -50%) rotate(360deg)}}`, ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -43607,7 +43622,6 @@ const DefaultAmplify = {
 /* harmony export */   JQ: () => (/* binding */ useGameserverConnection),
 /* harmony export */   Zt: () => (/* binding */ Game)
 /* harmony export */ });
-/* unused harmony export Client */
 /* harmony import */ var board_game_engine__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8917);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3137);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1637);
@@ -43880,24 +43894,25 @@ function Game({ gameConnection, loading, isSpectator }) {
 // src/use-gameserver-connection.js
 
 
-var Client2 = board_game_engine__WEBPACK_IMPORTED_MODULE_0__/* .Client */ .K;
 var useGameserverConnection = ({
   server,
-  gameId,
+  multiplayer,
+  matchID,
   gameRules,
   gameName,
   boardgameIOGame,
-  boardgamePlayerID,
-  clientToken,
+  playerID,
+  credentials,
   numPlayers,
   debug,
-  singlePlayer = false,
   enabled = true
 }) => {
   const [_, forceUpdate] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useReducer)((x) => x + 1, 0);
   const [connection, setConnection] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-    if (!gameRules && !boardgameIOGame || !singlePlayer && (!gameId || !clientToken || !enabled || !server)) return;
+    if (!gameRules && !boardgameIOGame || credentials && !(matchID && enabled && server)) {
+      return;
+    }
     const options = {
       server,
       numPlayers,
@@ -43905,22 +43920,31 @@ var useGameserverConnection = ({
         forceUpdate();
       },
       debug,
-      gameId,
+      matchID,
       gameRules,
       boardgameIOGame,
       gameName,
-      boardgamePlayerID,
-      clientToken,
-      singlePlayer
+      playerID,
+      credentials,
+      multiplayer
     };
-    const newConnection = new Client2(options);
+    const newConnection = new board_game_engine__WEBPACK_IMPORTED_MODULE_0__/* .Client */ .K(options);
     newConnection.connect();
     setConnection(newConnection);
     return () => {
       connection?.client?.stop();
       setConnection(null);
     };
-  }, [gameId, boardgamePlayerID, clientToken, gameRules, boardgameIOGame, enabled]);
+  }, [
+    matchID,
+    server,
+    playerID,
+    credentials,
+    gameRules,
+    boardgameIOGame,
+    enabled,
+    multiplayer
+  ]);
   if (connection) {
     return Object.assign(
       connection,
@@ -43930,9 +43954,6 @@ var useGameserverConnection = ({
     return {};
   }
 };
-
-// src/index.js
-var Client4 = board_game_engine__WEBPACK_IMPORTED_MODULE_0__/* .Client */ .K;
 
 
 
@@ -71022,18 +71043,19 @@ var Client2 = class {
         collapseOnLoad: true,
         impl: Debug
       },
-      gameId,
-      boardgamePlayerID,
-      clientToken,
-      singlePlayer = !clientToken
+      matchID,
+      playerID,
+      credentials,
+      multiplayer = SocketIO({ server, socketOpts: { transports: ["websocket", "polling"] } })
     } = this.options;
     try {
-      const clientOptions = singlePlayer ? { game: this.game, numPlayers, debug } : {
+      const clientOptions = !credentials ? { game: this.game, numPlayers, debug } : {
         game: this.game,
-        multiplayer: SocketIO({ server, socketOpts: { transports: ["websocket", "polling"] } }),
-        matchID: gameId,
-        playerID: boardgamePlayerID,
-        credentials: clientToken,
+        multiplayer,
+        matchID,
+        playerID,
+        credentials,
+        numPlayers,
         debug
       };
       this.client = Client(clientOptions);
@@ -71049,46 +71071,45 @@ var Client2 = class {
     this.options.onClientUpdate?.();
   }
   getState() {
-    const clientState = this.client?.getState();
-    if (!clientState) return {};
+    const bgioState = this.client?.getState();
+    if (!bgioState) return {};
+    const state = this.options.boardgameIOGame ? bgioState : {
+      ...bgioState,
+      G: deserialize(JSON.stringify(bgioState.G), registry)
+    };
+    const gameover = this.optimisticWinner ?? state?.ctx?.gameover;
+    const currentMoves = gameover ? [] : getCurrentMoves(state, this.client);
     if (this.options.boardgameIOGame) {
       return {
-        state: clientState,
-        gameover: clientState?.ctx?.gameover,
-        moves: this.client.moves
+        state,
+        gameover,
+        moves: this.client.moves,
+        currentMoves
       };
     }
-    const state = {
-      ...clientState,
-      G: deserialize(JSON.stringify(clientState.G), registry),
-      originalG: clientState.G
-    };
-    const gameover = state?.ctx?.gameover;
-    const moves = !gameover ? Object.entries(getCurrentMoves(state, this.client)).reduce((acc, [moveName, rawMove]) => {
+    const _wrappedMoves = Object.entries(currentMoves).reduce((acc, [moveName, rawMove]) => {
       const move = (payload) => {
         this.client.moves[moveName](preparePayload(payload));
       };
       move.moveInstance = rawMove.moveInstance;
       return { ...acc, [moveName]: move };
-    }, {}) : [];
-    const possibleMoves = getPossibleMoves(state, moves, this.moveBuilder);
-    const allClickable = possibleMoves.allClickable;
-    const possibleMoveMeta = possibleMoves.possibleMoveMeta;
-    return { state, gameover, moves, allClickable, possibleMoveMeta };
+    }, {});
+    const { allClickable, _possibleMoveMeta } = getPossibleMoves(state, _wrappedMoves, this.moveBuilder);
+    return { state, gameover, allClickable, _wrappedMoves, _possibleMoveMeta };
   }
   doStep(_target) {
     if (this.options.boardgameIOGame) return;
-    const { state, moves, possibleMoveMeta } = this.getState();
+    const { state, _wrappedMoves, _possibleMoveMeta } = this.getState();
     const target = _target.abstract ? _target : state.G.bank.locate(_target.entityId);
-    const newEliminated = Object.entries(possibleMoveMeta).filter(([_2, meta]) => !hasTarget(meta.clickableForMove, target)).map(([name]) => name).concat(this.moveBuilder.eliminatedMoves);
-    if (newEliminated.length === Object.keys(moves).length) {
+    const newEliminated = Object.entries(_possibleMoveMeta).filter(([_2, meta]) => !hasTarget(meta.clickableForMove, target)).map(([name]) => name).concat(this.moveBuilder.eliminatedMoves);
+    if (newEliminated.length === Object.keys(_wrappedMoves).length) {
       console.error("invalid move with target:", target?.rule);
       return;
     }
-    const remainingMoveEntries = Object.entries(possibleMoveMeta).filter(([name]) => !newEliminated.includes(name));
-    if (isMoveCompleted(state, moves, remainingMoveEntries, this.moveBuilder.stepIndex)) {
+    const remainingMoveEntries = Object.entries(_possibleMoveMeta).filter(([name]) => !newEliminated.includes(name));
+    if (isMoveCompleted(state, _wrappedMoves, remainingMoveEntries, this.moveBuilder.stepIndex)) {
       const [moveName] = remainingMoveEntries[0];
-      const move = moves[moveName];
+      const move = _wrappedMoves[moveName];
       const payload = createPayload(
         state,
         move.moveInstance.rule,
@@ -71131,7 +71152,7 @@ function hasTarget(clickableSet, target) {
 }
 function getPossibleMoves(bgioState, moves, moveBuilder) {
   const { eliminatedMoves, stepIndex } = moveBuilder;
-  const possibleMoveMeta = {};
+  const _possibleMoveMeta = {};
   const allClickable = /* @__PURE__ */ new Set();
   Object.entries(moves).filter(([moveName]) => !eliminatedMoves.includes(moveName)).forEach(([moveName, move]) => {
     const moveRule = resolveProperties(bgioState, { ...move.moveInstance.rule, moveName });
@@ -71149,10 +71170,10 @@ function getPossibleMoves(bgioState, moves, moveBuilder) {
     const clickableForMove = new Set(
       moveIsAllowed && moveSteps?.[stepIndex]?.getClickable(context) || []
     );
-    possibleMoveMeta[moveName] = { clickableForMove };
+    _possibleMoveMeta[moveName] = { clickableForMove };
     clickableForMove.forEach((entity) => allClickable.add(entity));
   });
-  return { possibleMoveMeta, allClickable };
+  return { _possibleMoveMeta, allClickable };
 }
 function isMoveCompleted(state, moves, remainingMoveEntries, stepIndex) {
   return remainingMoveEntries.length === 1 && getSteps(state, moves[remainingMoveEntries[0][0]].moveInstance.rule).length === stepIndex + 1;

@@ -122,6 +122,15 @@ body {
   padding: 2em 1em;
 }
 
+.info-card__description a {
+  color: var(--bright-sky);
+  text-decoration: none;
+}
+
+.info-card__description a:hover {
+  text-decoration: underline;
+}
+
 .button {
   border: 3px solid var(--dark-amethyst);
   display: inline-block;
@@ -214,6 +223,16 @@ body {
   top: .15em;
 }
 
+.header-docs-link {
+  font-size: 0.9rem;
+  color: var(--bright-sky);
+  text-decoration: none;
+}
+
+.header-docs-link:hover {
+  text-decoration: underline;
+}
+
 .home-buttons {
   margin: 1.5em;
 }
@@ -259,8 +278,28 @@ body {
   border-radius: 8px;
 }
 
-.sample-game-select {
+.editor-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: .5em;
+  gap: 0.5em;
+}
+
+.editor-toolbar__docs-link {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.editor-toolbar__docs-link:hover {
+  text-decoration: underline;
+}
+
+.sample-game-select {
+  flex: 1;
+  min-width: 0;
 }
 
 .sample-game-select__inner {

@@ -128,8 +128,9 @@ export default function GameEditor ({
       {screenState === SCREEN_STATE_EDITING && (
         <>
           <div className="editor">
-            <div className="sample-game-select">
-              <select
+            <div className="editor-toolbar">
+              <div className="sample-game-select">
+                <select
                 className="sample-game-select__inner"
                 onChange={handleGameSelect}
                 defaultValue=""
@@ -151,6 +152,15 @@ export default function GameEditor ({
                   </option>
                 ))}
               </select>
+              </div>
+              <a
+                href="https://boardgameengine.com/docs/index.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="editor-toolbar__docs-link"
+              >
+                Language Docs
+              </a>
             </div>
             <Editor
               className="editor__input"

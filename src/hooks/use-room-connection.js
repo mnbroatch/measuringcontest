@@ -17,15 +17,13 @@ export default function useRoomConnection () {
   const boardgamePlayerID = joinRoomMutation.data?.boardgamePlayerID
   const clientToken = joinRoomMutation.data?.clientToken
 
-  console.log('RoomGame', RoomGame)
-
   const gameServerConnection = useGameserverConnection({
     server: BOARDGAME_SERVER_URL,
-    gameId: roomGameId,
+    matchID: roomGameId,
     boardgameIOGame: RoomGame,
     gameName: 'bgestagingroom',
-    boardgamePlayerID,
-    clientToken,
+    playerID: boardgamePlayerID,
+    credentials: clientToken,
     debug: false,
     enabled: !!joinRoomMutation.isSuccess
   })

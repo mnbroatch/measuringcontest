@@ -98,7 +98,7 @@ export default function Home () {
           iconComponent={PencilRuler}
           iconSize="7em"
           iconStrokeWidth="1.1"
-          description="Define a game using BAGEL (Board-based Automated Game Engine Language)"
+          description={<>Define a game using <a href="https://boardgameengine.com/docs/index.html" target="_blank" rel="noopener noreferrer">B.A.G.E.L.</a> (Board-based Automated Game Engine Language)</>}
         />
         <InfoCard
           iconComponent={Users}

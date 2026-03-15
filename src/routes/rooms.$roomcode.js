@@ -36,6 +36,7 @@ export default function RoomPage () {
   const status = roomConnection.state?.G.status
   const players = roomConnection.state?.G.players
   const playerID = roomConnection.client?.playerID
+  console.log('roomConnection.client', roomConnection.client)
   const gameRules = roomConnection.state?.G.gameRules
   const gameName = roomConnection.state?.G.gameName
   const gameId = roomConnection.state?.G.gameId

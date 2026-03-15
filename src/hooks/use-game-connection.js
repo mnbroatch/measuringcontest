@@ -24,11 +24,11 @@ export default function useGameConnection () {
 
   return useGameserverConnection({
     server: BOARDGAME_SERVER_URL,
-    gameId,
+    matchID: gameId,
     gameRules,
     gameName: rulesHash, // this is what server expects
-    boardgamePlayerID,
-    clientToken,
+    playerID: boardgamePlayerID,
+    credentials: clientToken,
     debug: false,
     enabled: joinGameMutation.isSuccess
   })
