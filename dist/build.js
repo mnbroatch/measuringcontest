@@ -559,12 +559,7 @@ function Header(_ref) {
   var auth = _ref.auth;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "header"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_home_button_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
-    href: "https://boardgameengine.com/docs/index.html",
-    target: "_blank",
-    rel: "noopener noreferrer",
-    className: "header-docs-link"
-  }, "Docs"), !auth.loading && !auth.idToken && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_home_button_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A, null), !auth.loading && !auth.idToken && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "button button--x-small button--style-b",
     onClick: auth.login
   }, "Login"), !auth.loading && !!auth.idToken && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
