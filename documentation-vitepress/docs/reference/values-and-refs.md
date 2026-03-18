@@ -51,28 +51,28 @@ Resolve to the space at a relative offset from a given space (e.g. “one step u
 
 Used in: Checkers (move/jump directions), Connect Four (space below for “gravity”).
 
-## Coordinates
+## coordinates
 
 Absolute coordinates of a space in its parent grid.
 
-- **type**: `"Coordinates"`
+- **type**: `"coordinates"`
 - **target** — Optional. Defaults to **originalTarget**. Resolves to a space; parent must be a Grid.
 
 Used in: Checkers (king row: e.g. `destinationCoordinates[1] == 0` for player 0).
 
-## RelativePath
+## relativePath
 
 Path into **target.attributes** (rule + state of an entity).
 
-- **type**: `"RelativePath"`
+- **type**: `"relativePath"`
 - **target** — Resolved to an entity.
 - **path** — Array of keys into that entity’s attributes.
 
-## Parent
+## parent
 
 The parent container of a space or entity (e.g. the grid that contains the space).
 
-- **type**: `"Parent"`
+- **type**: `"parent"`
 - **target** — Optional. Defaults to **originalTarget**.
 
 ## map
@@ -85,11 +85,11 @@ Map a set of targets to another value (e.g. “for each space, get this attribut
 
 **mapMax** — Same as **map** but returns only the targets whose mapped value is maximum (e.g. “players with highest score”).
 
-## Pick
+## pick
 
 Subset of attributes from a resolved entity.
 
-- **type**: `"Pick"`
+- **type**: `"pick"`
 - **target** — Resolved to an entity.
 - **properties** — Array of attribute names.
 

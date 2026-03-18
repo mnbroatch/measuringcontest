@@ -2,6 +2,11 @@
 
 Conditions are used in move **arguments** (to restrict choices), in **endIf** (to detect win/draw), and in **initialMoves** / **then** (to decide when to run a move). Each condition object has a **conditionType** and type-specific fields.
 
+In the built-in examples, conditions also use two shorthands (documented in [Shorthand](shorthand)):
+
+- String conditions like `"isEmpty"` and `"isCurrentPlayer"`.
+- A bare matcher object like `{ "entityType": "Space" }`, which the engine treats as `conditionType: "Is"` with that object as the matcher.
+
 ## Is
 
 Match an entity (or the current **target**) against a **matcher**. Uses lodash-style matching on entity rule + state.
@@ -9,27 +14,71 @@ Match an entity (or the current **target**) against a **matcher**. Uses lodash-s
 - **matcher** — Object with `name`, `type`, `player`, or state fields. **player** can be a resolved value (e.g. **ctxPath** `["currentPlayer"]`).
 - **entity** — Optional. When present, the condition is checked against this entity instead of **target**.
 
+**Shape used in examples:**
+
+```json
+{
+  "conditionType": "Is",
+  "target": { "type": "parent" },
+  "matcher": { "name": "discard" }
+}
+```
+
 ## Not / Or
 
 - **Not** — **conditions**: array of one or more conditions; passes when all fail.
 - **Or** — **conditions**: array; passes when at least one passes.
 
+**Shape used in examples:**
+
+```json
+{ "conditionType": "Not", "conditions": [{ "conditionType": "Contains" }] }
+```
+
 ## Contains
 
 The **target** (a space or container) contains something matching nested **conditions**. If no nested conditions, “contains anything”. Often used as **Not** + **Contains** for “empty”.
+
+**Shape used in examples:**
+
+```json
+{
+  "conditionType": "Contains",
+  "conditions": [{ "conditionType": "Is", "matcher": { "player": "0" } }]
+}
+```
 
 ## ContainsSame
 
 Used inside a **sequence** (see InLine / HasLine). All items in the segment share the same value for the given **properties** (e.g. `["player"]` for “same owner”).
 
+**Shape used in examples:**
+
+```json
+{ "conditionType": "ContainsSame", "properties": ["player"] }
+```
+
 ## Some / Every
 
 Quantifiers over a set.
 
-- **target** — Resolution that yields multiple entities (e.g. **matchMultiple** + **conditions** for “all spaces in grid”).
+- **target** — A selector that yields multiple entities (examples use `matchMultiple: true` + `conditions`).
 - **conditions** — Conditions that must hold for **Some** (at least one) or **Every** (all).
 
 Used in: Connect Four (some space has a line of 4; every space filled → draw).
+
+**Shape used in examples:**
+
+```json
+{
+  "conditionType": "Some",
+  "target": {
+    "matchMultiple": true,
+    "conditions": [{ "conditionType": "Is", "matcher": { "entityType": "Space" } }]
+  },
+  "conditions": [{ "conditionType": "InLine", "sequence": [{ "minCount": 4, "conditions": ["isCurrentPlayer"] }] }]
+}
+```
 
 ## InLine
 

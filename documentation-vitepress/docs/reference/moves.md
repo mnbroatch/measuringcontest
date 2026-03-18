@@ -12,6 +12,16 @@ Puts an entity from the bank into a destination (space or container).
 
 Used in: tic-tac-toe (place marker), Connect Four (drop piece), Reversi (place disc), Eights (play card).
 
+**Shape used in examples:**
+
+```json
+{
+  "moveType": "PlaceNew",
+  "entity": { "conditions": ["isCurrentPlayer"] },
+  "arguments": { "destination": { "playerChoice": true, "conditions": [{ "entityType": "Space" }, "isEmpty"] } }
+}
+```
+
 ## MoveEntity
 
 Moves an existing entity to a new destination.
@@ -21,17 +31,47 @@ Moves an existing entity to a new destination.
 
 Used in: Checkers (move/jump), Reversi (flip by moving/capturing).
 
+**Shape used in examples:**
+
+```json
+{
+  "moveType": "MoveEntity",
+  "arguments": {
+    "entity": { "playerChoice": true, "conditions": [{ "conditionType": "Is", "matcher": { "name": "checker" } }] },
+    "destination": { "playerChoice": true, "conditions": [{ "entityType": "Space" }, { "conditionType": "Not", "conditions": [{ "conditionType": "Contains" }] }] }
+  }
+}
+```
+
 ## RemoveEntity
 
 Removes an entity from the game (e.g. capture).
 
 - **arguments.entity** — Which entity to remove (conditions or contextPath). Often used inside **then** after a move (e.g. remove the jumped piece).
 
+**Shape used in examples:**
+
+```json
+{ "moveType": "RemoveEntity", "arguments": { "entity": { "type": "contextPath", "path": ["loopTarget"] } } }
+```
+
 ## TakeFrom
 
 Takes an entity from a container (e.g. draw from deck).
 
 - **arguments** — Define the source and, if needed, how many. Used in card games (draw from stock).
+
+**Shape used in examples:**
+
+```json
+{
+  "moveType": "TakeFrom",
+  "arguments": {
+    "source": { "playerChoice": true, "conditions": [{ "conditionType": "Is", "matcher": { "name": "stock" } }] },
+    "destination": { "conditions": [{ "conditionType": "Is", "matcher": { "name": "hand" } }] }
+  }
+}
+```
 
 ## SetState
 
@@ -42,6 +82,18 @@ Updates an entity’s state (e.g. promote to king).
 
 Used in: Checkers (king pieces that reach the back row).
 
+**Shape used in examples:**
+
+```json
+{
+  "moveType": "SetState",
+  "arguments": {
+    "entity": { "type": "contextPath", "path": ["loopTarget"] },
+    "state": { "property": "isKing", "value": true }
+  }
+}
+```
+
 ## SetActivePlayers
 
 Changes whose turn it is or which stage they’re in.
@@ -51,12 +103,32 @@ Changes whose turn it is or which stage they’re in.
 
 Used in: Checkers (jumpIfPossible → moveIfNoJump → kingPieces).
 
+**Shape used in examples:**
+
+```json
+{
+  "moveType": "SetActivePlayers",
+  "options": { "currentPlayer": { "stage": "moveIfNoJump" } },
+  "conditions": [{ "conditionType": "NoPossibleMoves" }]
+}
+```
+
 ## EndTurn / PassTurn
 
 - **EndTurn** — Ends the current turn (e.g. after a normal move).
 - **PassTurn** — Pass without making a move; often has a **conditions** array with one object: `conditionType: "NoPossibleMoves"`, so it only runs when there are no legal moves.
 
 Both can appear in **initialMoves** of a turn or stage.
+
+**Shapes used in examples:**
+
+```json
+{ "moveType": "EndTurn" }
+```
+
+```json
+{ "moveType": "PassTurn", "conditions": [{ "conditionType": "NoPossibleMoves" }] }
+```
 
 ## ForEach
 
@@ -67,10 +139,26 @@ Runs a move once per target in a set.
 
 Used in: Checkers (king all pieces that reached the back row), Eights (deal cards to hands).
 
+**Shape used in examples:**
+
+```json
+{
+  "moveType": "ForEach",
+  "arguments": { "targets": { "type": "ctxPath", "path": ["playOrder"] } },
+  "move": { "moveType": "EndTurn" }
+}
+```
+
 ## Pass / Shuffle
 
 - **Pass** — No-op (e.g. placeholder in a stage).
 - **Shuffle** — Shuffles a container (e.g. deck). Used in card games.
+
+**Shuffle shape used in examples:**
+
+```json
+{ "moveType": "Shuffle", "arguments": { "target": { "conditions": [{ "conditionType": "Is", "matcher": { "name": "stock" } }] } } }
+```
 
 ---
 

@@ -8,16 +8,29 @@ Array of entity definitions: boards, pieces, cards, etc.
 
 ```json
 // Subset used in the built-in examples
+// entityType: Grid
 {
   "name": "string",
-  "entityType": "Grid" | "Space",        // omit for generic pieces/cards
-  "width": number,                       // only when entityType === "Grid"
-  "height": number,                      // only when entityType === "Grid"
-  "perPlayer": boolean,                  // e.g. hands, scores, per-player markers
-  "count": number | "Infinity",          // how many copies exist in the bank
+  "entityType": "Grid",
+  "width": 3,
+  "height": 3
+}
+
+// entityType: Space
+{
+  "name": "string",
+  "entityType": "Space",
+  "perPlayer": true,
+  "contentsHiddenFrom": "All" | "Others"
+}
+
+// generic piece/card (entityType omitted)
+{
+  "name": "string",
+  "perPlayer": true,
+  "count": 12 | "Infinity",
   "state": { /* default attribute values */ },
-  "displayProperties": ["string", "..."],
-  "contentsHiddenFrom": "All" | "Others" // for hidden containers
+  "displayProperties": ["string", "..."]
 }
 ```
 
