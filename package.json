@@ -43,7 +43,7 @@
     "@monaco-editor/react": "^4.7.0",
     "@tanstack/react-query": "^5.82.0",
     "@tanstack/react-router": "^1.131.7",
-    "board-game-engine-react": "^1.0.2",
+    "board-game-engine-react": "^1.0.3",
     "aws-amplify": "^6.15.3",
     "lucide-react": "^0.556.0",
     "prop-types": "^15.8.1",

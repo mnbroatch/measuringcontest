@@ -22,4 +22,4 @@ Move/jump **destination** conditions use **relativeCoordinates** with **expressi
 
 **endIf**: **Evaluate** `passCount > 0` (using **gamePath** to `_meta.passedPlayers.length`) → **winner** is **expression** `(currentPlayer + 1) % 2` (opponent of who just passed).
 
-Full definition: `server/checkers.json`.
+Full definition: `server/examples/checkers.json`.

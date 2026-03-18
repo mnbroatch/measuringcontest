@@ -20,4 +20,4 @@ Eights uses personal and shared boards: hands (hidden from others), discard, sto
 
 Typical moves: **TakeFrom** stock → hand (draw), or **PlaceNew** from hand to discard (play). Legal play is usually expressed with conditions (e.g. match suit or value with top of discard). **Shuffle** can be used when stock is empty and discard is reshuffled.
 
-Full definition: `server/eights.json`, `server/eights2.json`.
+Full definition: `server/examples/eights.json`, `server/eights2.json`.

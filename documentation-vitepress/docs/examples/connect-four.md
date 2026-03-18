@@ -18,4 +18,4 @@ Connect Four uses a 7×6 grid, “gravity” (pieces stack from the bottom), and
 1. **Some** space in the grid has an **InLine** of 4 with **ContainsSame** `player` → **winner** is taken from the condition **contextPath** into the first result’s entities’ player.
 2. **Every** space in the grid **Contains** (board full) → **draw**.
 
-Full definition: `server/connect-four.json`.
+Full definition: `server/examples/connect-four.json`.

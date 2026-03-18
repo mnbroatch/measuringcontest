@@ -19,4 +19,4 @@ Turn has **initialMoves** with **PassTurn** when **NoPossibleMoves**.
 
 Game ends when no moves possible; winner is determined by disc count (or similar logic in **endIf** with **Evaluate** / **Every**).
 
-Full definition: `server/reversi.json`, `server/reversi2.json`.
+Full definition: `server/examples/reversi.json`, `server/reversi2.json`.

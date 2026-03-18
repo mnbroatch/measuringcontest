@@ -4,7 +4,7 @@ Many fields in B.A.G.E.L. (move arguments, end results, conditions) accept **res
 
 ## ctxPath
 
-Path into **ctx** (boardgame.io context).
+Path into **ctx** (engine context).
 
 - **type**: `"ctxPath"`
 - **path**: Array of keys, e.g. `["currentPlayer"]`, `["playOrder"]`.
@@ -95,4 +95,4 @@ Subset of attributes from a resolved entity.
 
 ---
 
-When documenting or writing game JSON, remember: **ctxPath** = boardgame.io context; **contextPath** = current B.A.G.E.L. evaluation context (move, end check, loop); **gamePath** = game state G.
+When documenting or writing game JSON, remember: **ctxPath** = engine context; **contextPath** = current B.A.G.E.L. evaluation context (move, end check, loop); **gamePath** = game state G.

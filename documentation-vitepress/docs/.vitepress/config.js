@@ -12,6 +12,9 @@ export default {
         text: 'Reference',
         items: [
           { text: 'Overview', link: '/reference/overview' },
+          { text: 'Turn', link: '/reference/turn' },
+          { text: 'Stages', link: '/reference/stages' },
+          { text: 'Phases', link: '/reference/phases' },
           { text: 'Moves', link: '/reference/moves' },
           { text: 'Conditions', link: '/reference/conditions' },
           { text: 'Values and refs', link: '/reference/values-and-refs' },
@@ -27,10 +30,6 @@ export default {
           { text: 'Checkers', link: '/examples/checkers' },
           { text: 'Eights', link: '/examples/eights' },
         ],
-      },
-      {
-        text: 'Appendix',
-        items: [{ text: 'Engine and boardgame.io', link: '/appendix/engine-and-bgio' }],
       },
     ],
   },

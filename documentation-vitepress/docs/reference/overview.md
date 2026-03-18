@@ -6,21 +6,47 @@ A B.A.G.E.L. game is a single JSON object. These are the top-level keys.
 
 Array of entity definitions: boards, pieces, cards, etc.
 
-- **name** — Identifier used in `sharedBoard`, `personalBoard`, conditions, and moves.
-- **type** — `"Grid"` or `"Space"`. Omit for generic pieces/cards.
-- **width** / **height** — For `type: "Grid"`, the grid dimensions.
-- **perPlayer** — If `true`, one copy of the entity (or set) per player (e.g. hand, score).
-- **count** — Number of instances (e.g. `12` for checkers, `"Infinity"` for unbounded).
-- **state** — Default state (e.g. `isKing: false` or `player: "0"`).
-- **displayProperties** — List of property names to show in the UI (e.g. `["value", "suit"]` for cards).
-- **contentsHiddenFrom** — `"All"` or `"Others"` for hidden containers (e.g. hand).
+```json
+// Subset used in the built-in examples
+{
+  "name": "string",
+  "entityType": "Grid" | "Space",        // omit for generic pieces/cards
+  "width": number,                       // only when entityType === "Grid"
+  "height": number,                      // only when entityType === "Grid"
+  "perPlayer": boolean,                  // e.g. hands, scores, per-player markers
+  "count": number | "Infinity",          // how many copies exist in the bank
+  "state": { /* default attribute values */ },
+  "displayProperties": ["string", "..."],
+  "contentsHiddenFrom": "All" | "Others" // for hidden containers
+}
+```
 
-The engine also injects built-in entities: a `Space` type, a `sharedBoard` board, and a per-player `playerMarker` entity.
+- **name** — Identifier used in `sharedBoard`, `personalBoard`, conditions, and moves.
+- **entityType** — `"Grid"` or `"Space"`. Omit for generic pieces/cards.
+- **width** / **height** — For grids.
+- **perPlayer** — If `true`, one copy per player (e.g. `hand`, `score`, `playerMarker`).
+- **count** — Number of instances (`12` for checkers, `"Infinity"` for unbounded banks).
+- **state** — Default state (e.g. `isKing: false`, `player: "0"`).
+- **displayProperties** — Properties to show in the UI (e.g. `["value", "suit"]`).
+- **contentsHiddenFrom** — `"All"` or `"Others"` for hidden containers (e.g. hands, stock).
+
+The engine also injects built-in entities used by the examples: a `Space` type, a `sharedBoard` board, and a per-player `playerMarker` entity.
 
 ## sharedBoard / personalBoard
 
-- **sharedBoard** — Array of entity matchers (e.g. name `mainGrid`) that form the shared board. Defaults to all entities if omitted.
-- **personalBoard** — Optional. Array of entity matchers that form each player’s personal board (e.g. hand, score). Creates a per-player board and places those entities there at setup.
+```json
+// Subset used in the built-in examples
+"sharedBoard": [
+  { "name": "mainGrid" }
+],
+"personalBoard": [
+  { "name": "hand" },
+  { "name": "score" }
+]
+```
+
+- **sharedBoard** — Array of simple matchers (usually by **name**) that form the shared board. Defaults to all entities if omitted.
+- **personalBoard** — Optional. Array of matchers forming each player’s personal board (e.g. `hand`, `score`).
 
 ## initialPlacements
 
@@ -28,31 +54,95 @@ Optional array of placement objects (each with **entity** and **destination**) t
 
 ## Players
 
+```json
+// Subset used in the built-in examples
+{
+  "numPlayers": 2,          // tic-tac-toe, or
+  "minPlayers": 2,
+  "maxPlayers": 2 | 5       // 5 in Eights
+}
+```
+
 - **numPlayers** — Shorthand: sets both `minPlayers` and `maxPlayers`.
 - **minPlayers** / **maxPlayers** — Allowed player count range.
 
 ## turn
 
-- **minMoves** / **maxMoves** — Moves per turn (default when omitted: 1 and 1).
-- **activePlayers** — Optional. Maps current player to a stage (e.g. currentPlayer → `"jumpIfPossible"`).
-- **stages** — Optional. Map of stage names to objects with **initialMoves** and **moves**. Used for multi-stage turns (e.g. checkers: jump if possible → move → king pieces).
+Configures moves per turn, who is active, stages, turn order, and automatic start-of-turn moves.
+
+```json
+// Subset used in the built-in examples
+"turn": {
+  "minMoves": 1,
+  "maxMoves": 1,
+  "initialMoves": [ /* move rules (e.g. PassTurn when NoPossibleMoves) */ ],
+  "activePlayers": { "currentPlayer": "stageName" },
+  "stages": {
+    "stageName": {
+      "initialMoves": [ /* move rules when entering stage */ ],
+      "moves": {
+        "moveName": { /* move definition */ }
+      }
+    }
+  },
+  "order": {
+    "playOrder": "RotateFirst"
+  }
+}
+```
+
+See [Turn](turn) for detailed descriptions of `initialMoves`, `activePlayers`, `stages`, and `order`.
 
 ## moves
 
-Object mapping move names to move definitions. Each definition has:
+Object mapping move names to move definitions.
 
-- **type** — One of: `PlaceNew`, `MoveEntity`, `RemoveEntity`, `TakeFrom`, `SetState`, `SetActivePlayers`, `EndTurn`, `PassTurn`, `ForEach`, `Pass`, `Shuffle`.
-- **arguments** — Depends on the move type (e.g. `entity`, `destination`).
-- **then** — Optional array of automatic follow-up move rules after a successful move.
+```json
+// Subset of move types used in the examples
+"moves": {
+  "moveName": {
+    "moveType": "PlaceNew"
+      | "MoveEntity"
+      | "RemoveEntity"
+      | "TakeFrom"
+      | "SetState"
+      | "SetActivePlayers"
+      | "EndTurn"
+      | "PassTurn"
+      | "ForEach"
+      | "Shuffle",
+    "arguments": { /* per-move arguments like entity, destination, source, target */ },
+    "conditions": [ /* optional top-level conditions for the move */ ],
+    "then": [ /* follow-up move rules after a successful move */ ],
+    "position": "First"      // only used by some MoveEntity/PlaceNew moves
+  }
+}
+```
 
-See [Moves](moves) for details.
+See [Moves](moves) for how each `moveType` uses `arguments` and `conditions`.
 
 ## endIf
 
-Array of end scenarios. Each item:
+Array of end scenarios.
 
-- **conditions** — Array of condition objects. All must be satisfied.
-- **result** — Outcome when conditions are met (e.g. **winner** or **draw: true**). Values can use [value resolution](values-and-refs) (e.g. contextPath, expression).
+```json
+// Subset used in the built-in examples
+"endIf": [
+  {
+    "conditions": [ /* condition objects */ ],
+    "result": {
+      "winner": "ownerOfFirstResultEntity"
+        | { "type": "contextPath", "path": ["..."] }
+        | { "type": "expression", "expression": "...", "arguments": { /* ... */ } },
+      "draw": true,
+      "winners": { "type": "mapMax", /* ... */ }
+    }
+  }
+]
+```
+
+- **conditions** — Array of condition objects (e.g. `HasLine`, `IsFull`, `Some`, `Every`, `Evaluate`, `NoPossibleMoves`). All must be satisfied.
+- **result** — Outcome when conditions are met. Values can use [value resolution](values-and-refs) (e.g. `contextPath`, `expression`, `mapMax`).
 
 Legacy key **endConditions** is normalized to **endIf** by the engine.
 
@@ -62,4 +152,4 @@ Optional array of move rules run once at game setup (after boards and initial pl
 
 ## phases
 
-Optional. Map of phase names to phase config (each can have `turn`, `moves`, `initialMoves`, `endIf`, `next`). For multi-phase games.
+Optional. Map of phase names to phase config (each can have `turn`, `moves`, `initialMoves`, `endIf`, `next`). Use phases for multi-phase games, like “setup”, “main play”, “scoring”, or different mini-games within one match. See [Phases](phases) for a full example and patterns.

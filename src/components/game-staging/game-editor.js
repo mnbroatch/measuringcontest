@@ -5,14 +5,11 @@ import PlayGame from "../play-game/play-game.js";
 import useSinglePlayerGame from "../../hooks/use-single-player-game.js";
 import ButtonWithInput from '../../components/button-with-input/button-with-input.js'
 
-import ticTacToe from "../../../server/tic-tac-toe.json";
-import ticTacToe2 from "../../../server/tic-tac-toe2.json";
-import eights from "../../../server/eights.json";
-import eights2 from "../../../server/eights2.json";
-import connectFour from "../../../server/connect-four.json";
-import reversi from "../../../server/reversi.json";
-import reversi2 from "../../../server/reversi2.json";
-import checkers from "../../../server/checkers.json";
+import ticTacToe from "../../../server/examples/tic-tac-toe.json";
+import eights from "../../../server/examples/eights.json";
+import connectFour from "../../../server/examples/connect-four.json";
+import reversi from "../../../server/examples/reversi.json";
+import checkers from "../../../server/examples/checkers.json";
 
 const SCREEN_STATE_EDITING = 'editing'
 const SCREEN_STATE_TESTING = 'testing'
@@ -41,18 +38,6 @@ const exampleGames = [
   {
     name: 'Kingly Jumps',
     rules: JSON.stringify(checkers, null, 2)
-  },
-  {
-    name: 'DEV Forth and Back White and Black',
-    rules: JSON.stringify(reversi2, null, 2)
-  },
-  {
-    name: 'DEV Discharged for Emotional Instability Eights',
-    rules: JSON.stringify(eights2, null, 2)
-  },
-  {
-    name: 'DEV Three in a Row',
-    rules: JSON.stringify(ticTacToe2, null, 2)
   },
 ]
 

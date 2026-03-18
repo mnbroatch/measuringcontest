@@ -26,4 +26,4 @@ The engine adds the shared board and per-player markers.
 1. **HasLine** on `mainGrid` with **sequence** of 3 spaces that **ContainsSame** `player` → **winner**: **ownerOfFirstResultEntity**.
 2. **IsFull** on `mainGrid` → **draw**: true.
 
-See the full JSON in the app’s “Three in a Row” example or in `server/tic-tac-toe.json` / `server/tic-tac-toe2.json`.
+See the full JSON in the app’s “Three in a Row” example or in `server/examples/tic-tac-toe.json` / `server/tic-tac-toe2.json`.

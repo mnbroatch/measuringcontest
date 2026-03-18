@@ -1,0 +1,566 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://boardgameengine.com/schemas/bagel-examples-subset.json",
+  "title": "B.A.G.E.L. Game (Examples Subset)",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "entities": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/entity" },
+      "minItems": 1
+    },
+    "sharedBoard": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/entityMatcher" }
+    },
+    "personalBoard": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/entityMatcher" }
+    },
+    "initialPlacements": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/initialPlacement" }
+    },
+    "numPlayers": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "minPlayers": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "maxPlayers": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "turn": {
+      "$ref": "#/$defs/turnConfig"
+    },
+    "moves": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/moveDefinition" }
+    },
+    "initialMoves": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/moveRule" }
+    },
+    "phases": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/phaseConfig" }
+    },
+    "endIf": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/endRule" }
+    }
+  },
+  "allOf": [
+    {
+      "anyOf": [
+        { "required": ["numPlayers"] },
+        { "required": ["minPlayers", "maxPlayers"] }
+      ]
+    }
+  ],
+  "$defs": {
+    "entity": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "name": { "type": "string" },
+        "entityType": {
+          "type": "string",
+          "enum": ["Grid", "Space"]
+        },
+        "width": { "type": "integer", "minimum": 1 },
+        "height": { "type": "integer", "minimum": 1 },
+        "perPlayer": { "type": "boolean" },
+        "count": {
+          "oneOf": [
+            { "type": "integer", "minimum": 0 },
+            { "type": "string", "enum": ["Infinity"] }
+          ]
+        },
+        "state": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "displayProperties": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "contentsHiddenFrom": {
+          "type": "string",
+          "enum": ["All", "Others"]
+        }
+      },
+      "required": ["name"]
+    },
+    "entityMatcher": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "name": { "type": "string" }
+      },
+      "minProperties": 1
+    },
+    "initialPlacement": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "entity": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "destination": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "index": { "type": "integer", "minimum": 0 },
+            "name": { "type": "string" }
+          }
+        }
+      },
+      "required": ["entity", "destination"]
+    },
+    "turnConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "minMoves": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "maxMoves": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "initialMoves": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/moveRule" }
+        },
+        "activePlayers": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "stages": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/stageConfig" }
+        },
+        "order": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "playOrder": {
+              "type": "string",
+              "enum": ["RotateFirst"]
+            }
+          }
+        }
+      }
+    },
+    "stageConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "initialMoves": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/moveRule" }
+        },
+        "moves": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/moveDefinition" }
+        }
+      }
+    },
+    "phaseConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "start": { "type": "boolean" },
+        "next": { "type": "string" },
+        "turn": { "$ref": "#/$defs/turnConfig" },
+        "moves": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/moveDefinition" }
+        },
+        "initialMoves": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/moveRule" }
+        },
+        "endIf": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/endRule" }
+        }
+      }
+    },
+    "moveDefinition": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "moveType": {
+          "type": "string",
+          "enum": [
+            "PlaceNew",
+            "MoveEntity",
+            "RemoveEntity",
+            "TakeFrom",
+            "SetState",
+            "SetActivePlayers",
+            "EndTurn",
+            "PassTurn",
+            "ForEach",
+            "Shuffle"
+          ]
+        },
+        "arguments": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "conditions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/condition" }
+        },
+        "then": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/moveRule" }
+        },
+        "position": {
+          "type": "string",
+          "enum": ["First"]
+        }
+      },
+      "required": ["moveType"]
+    },
+    "moveRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "moveType": {
+          "type": "string",
+          "enum": [
+            "PlaceNew",
+            "MoveEntity",
+            "RemoveEntity",
+            "TakeFrom",
+            "SetState",
+            "SetActivePlayers",
+            "EndTurn",
+            "PassTurn",
+            "ForEach",
+            "Shuffle"
+          ]
+        },
+        "arguments": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "conditions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/condition" }
+        },
+        "then": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/moveRule" }
+        },
+        "position": {
+          "type": "string",
+          "enum": ["First"]
+        }
+      },
+      "required": ["moveType"]
+    },
+    "endRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "conditions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/condition" }
+        },
+        "result": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "winner": {
+              "oneOf": [
+                { "type": "string" },
+                { "$ref": "#/$defs/valueRef" }
+              ]
+            },
+            "winners": { "$ref": "#/$defs/valueRef" },
+            "draw": { "type": "boolean" }
+          }
+        }
+      },
+      "required": ["conditions"]
+    },
+    "condition": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "conditionType": {
+          "type": "string",
+          "enum": [
+            "HasLine",
+            "IsFull",
+            "Is",
+            "Not",
+            "Or",
+            "Some",
+            "Every",
+            "Contains",
+            "ContainsSame",
+            "Position",
+            "InLine",
+            "NoPossibleMoves",
+            "Evaluate"
+          ]
+        },
+        "target": {},
+        "sequence": {
+          "type": "array",
+          "items": { "type": "object" }
+        },
+        "minCount": { "type": "integer", "minimum": 0 },
+        "properties": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "matcher": {},
+        "conditions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/condition" }
+        },
+        "expression": { "type": "string" },
+        "arguments": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/valueRef" }
+        }
+      },
+      "required": ["conditionType"]
+    },
+    "valueRef": {
+      "oneOf": [
+        { "$ref": "#/$defs/ctxPathRef" },
+        { "$ref": "#/$defs/contextPathRef" },
+        { "$ref": "#/$defs/gamePathRef" },
+        { "$ref": "#/$defs/expressionRef" },
+        { "$ref": "#/$defs/relativeCoordinatesRef" },
+        { "$ref": "#/$defs/coordinatesRef" },
+        { "$ref": "#/$defs/relativePathRef" },
+        { "$ref": "#/$defs/parentRef" },
+        { "$ref": "#/$defs/mapRef" },
+        { "$ref": "#/$defs/mapMaxRef" },
+        { "$ref": "#/$defs/pickRef" },
+        { "$ref": "#/$defs/countRef" }
+      ]
+    },
+    "ctxPathRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "ctxPath" },
+        "path": {
+          "type": "array",
+          "items": { "oneOf": [{ "type": "string" }, { "type": "integer" }] },
+          "minItems": 1
+        }
+      },
+      "required": ["type", "path"]
+    },
+    "contextPathRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "contextPath" },
+        "path": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              { "type": "string" },
+              { "type": "integer" },
+              {
+                "type": "object",
+                "properties": {
+                  "flatten": { "type": "boolean" },
+                  "map": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  }
+                }
+              }
+            ]
+          },
+          "minItems": 1
+        }
+      },
+      "required": ["type", "path"]
+    },
+    "gamePathRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "gamePath" },
+        "path": {
+          "type": "array",
+          "items": { "oneOf": [{ "type": "string" }, { "type": "integer" }] },
+          "minItems": 1
+        }
+      },
+      "required": ["type", "path"]
+    },
+    "expressionRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "expression" },
+        "expression": { "type": "string" },
+        "arguments": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/valueRef" }
+        }
+      },
+      "required": ["type", "expression", "arguments"]
+    },
+    "relativeCoordinatesRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "relativeCoordinates" },
+        "target": { "$ref": "#/$defs/valueRef" },
+        "location": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": { "type": "integer" },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            { "$ref": "#/$defs/valueRef" }
+          ]
+        }
+      },
+      "required": ["type", "location"]
+    },
+    "coordinatesRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "Coordinates" },
+        "target": { "$ref": "#/$defs/valueRef" }
+      },
+      "required": ["type"]
+    },
+    "relativePathRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "RelativePath" },
+        "target": { "$ref": "#/$defs/valueRef" },
+        "path": {
+          "type": "array",
+          "items": { "oneOf": [{ "type": "string" }, { "type": "integer" }] },
+          "minItems": 1
+        }
+      },
+      "required": ["type", "target", "path"]
+    },
+    "parentRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "Parent" },
+        "target": { "$ref": "#/$defs/valueRef" }
+      },
+      "required": ["type"]
+    },
+    "mapRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "map" },
+        "targets": {
+          "oneOf": [
+            { "$ref": "#/$defs/valueRef" },
+            {
+              "type": "object",
+              "properties": {
+                "matchMultiple": { "type": "boolean" },
+                "conditions": {
+                  "type": "array",
+                  "items": { "$ref": "#/$defs/condition" }
+                }
+              },
+              "required": ["conditions"]
+            }
+          ]
+        },
+        "mapping": {
+          "oneOf": [
+            { "$ref": "#/$defs/valueRef" },
+            { "$ref": "#/$defs/countRef" }
+          ]
+        }
+      },
+      "required": ["type", "targets", "mapping"]
+    },
+    "mapMaxRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "mapMax" },
+        "targets": { "$ref": "#/$defs/valueRef" },
+        "mapping": {
+          "oneOf": [
+            { "$ref": "#/$defs/valueRef" },
+            { "$ref": "#/$defs/countRef" }
+          ]
+        }
+      },
+      "required": ["type", "targets", "mapping"]
+    },
+    "pickRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "Pick" },
+        "target": {
+          "oneOf": [
+            { "$ref": "#/$defs/valueRef" },
+            {
+              "type": "object",
+              "properties": {
+                "conditions": {
+                  "type": "array",
+                  "items": { "$ref": "#/$defs/condition" }
+                }
+              },
+              "required": ["conditions"]
+            }
+          ]
+        },
+        "properties": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        }
+      },
+      "required": ["type", "target", "properties"]
+    },
+    "countRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "count" },
+        "conditions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/condition" },
+          "minItems": 1
+        }
+      },
+      "required": ["type", "conditions"]
+    }
+  }
+}
+
