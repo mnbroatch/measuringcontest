@@ -15,6 +15,7 @@ import WatchGame from "../components/watch-game/watch-game.js";
 import RoomGame from "../components/game-staging/room-game.js";
 import GamePreview from "../components/game-staging/game-preview.js";
 import GameEditor from "../components/game-staging/game-editor.js";
+import { toGameRulesObject } from "../utils/game-rules-object.js";
 
 const SCREEN_STATE_EDITING = 'editing'
 const SCREEN_STATE_WAITING = 'waiting'
@@ -36,7 +37,6 @@ export default function RoomPage () {
   const status = roomConnection.state?.G.status
   const players = roomConnection.state?.G.players
   const playerID = roomConnection.client?.playerID
-  console.log('roomConnection.client', roomConnection.client)
   const gameRules = roomConnection.state?.G.gameRules
   const gameName = roomConnection.state?.G.gameName
   const gameId = roomConnection.state?.G.gameId
@@ -53,8 +53,11 @@ export default function RoomPage () {
 
   let gameDisabledReason = null
   let minPlayers, maxPlayers, rulesNumPlayers
-  try {
-    ({ minPlayers, maxPlayers, numPlayers: rulesNumPlayers } = JSON.parse(gameRules))
+  const rulesObject = toGameRulesObject(gameRules)
+  if (!rulesObject) {
+    gameDisabledReason = 'Invalid Game Rules'
+  } else {
+    ({ minPlayers, maxPlayers, numPlayers: rulesNumPlayers } = rulesObject)
     if (rulesNumPlayers) {
       minPlayers = rulesNumPlayers
       maxPlayers = rulesNumPlayers
@@ -64,8 +67,6 @@ export default function RoomPage () {
     } else if (minPlayers && numPlayers < minPlayers) {
       gameDisabledReason = 'Not Enough Players'
     }
-  } catch {
-    gameDisabledReason = 'Invalid Game Rules'
   }
 
   useEffect(() => {
@@ -152,7 +153,7 @@ export default function RoomPage () {
                   disabled={!!gameDisabledReason}
                   onClick={() => {
                     createGameMutation.mutate({
-                      gameRules,
+                      gameRules: rulesObject,
                       gameName,
                       players,
                     })

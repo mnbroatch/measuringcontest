@@ -179,7 +179,10 @@ exports.handler = async (event) => {
 
   let rulesObject
   try {
-    rulesObject = JSON.parse(body.gameRules)
+    rulesObject =
+      typeof body.gameRules === 'string'
+        ? JSON.parse(body.gameRules)
+        : body.gameRules
     validateRulesObject(rulesObject)
   } catch (e) {
     throw new Error('Invalid rules object: ' + e.message)
@@ -196,8 +199,8 @@ exports.handler = async (event) => {
       "Authorization": `Bearer ${serverToken}`,
       "User-Agent": "BoardGameEngine-Lambda/1.0"
     },
-    body: JSON.stringify({ 
-      gameRules: body.gameRules,
+    body: JSON.stringify({
+      gameRules: rulesObject,
       numPlayers: Object.keys(players).length
     }),
   });
@@ -246,7 +249,7 @@ exports.handler = async (event) => {
       ":gameId": gameId,
       ":gameCreatedAt": Date.now(),
       ":gameName": body.gameName,
-      ":gameRules": JSON.stringify(body.gameRules),
+      ":gameRules": JSON.stringify(rulesObject),
       ":rulesHash": rulesHash,
       ":players": {
         ...players,

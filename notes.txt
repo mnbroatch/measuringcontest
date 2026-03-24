@@ -36,13 +36,12 @@ handle auto join if going from room not joined to room joined
 
 schema
 
-enum: Infinity vs const Grid -- any difference?
-displayProperties ideally pulls from entity + state
-same with entityMatcher
 separate schema needed for in-game object
 separate schema needed for unexpanded game
+
 initialPlacement -> entity should use entity?
 	- what unexpected additionalProperties are tehre
+
 same with initialPlacement -> destination
 in reversi, how does initialplacements get destination?
 what initialProperties exist on entitySpace, entityGeneric, entityGrid ?

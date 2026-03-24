@@ -195,17 +195,19 @@ function ButtonWithInput(_ref) {
 /* harmony import */ var _play_game_play_game_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7668);
 /* harmony import */ var _hooks_use_single_player_game_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6688);
 /* harmony import */ var _components_button_with_input_button_with_input_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6884);
-/* harmony import */ var _server_examples_tic_tac_toe_json__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(5230);
-/* harmony import */ var _server_examples_eights_json__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(7794);
-/* harmony import */ var _server_examples_connect_four_json__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(5935);
-/* harmony import */ var _server_examples_reversi_json__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(5156);
-/* harmony import */ var _server_examples_checkers_json__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(9522);
+/* harmony import */ var _utils_game_rules_object_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(9804);
+/* harmony import */ var _server_examples_tic_tac_toe_json__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(5230);
+/* harmony import */ var _server_examples_eights_json__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(7794);
+/* harmony import */ var _server_examples_connect_four_json__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(5935);
+/* harmony import */ var _server_examples_reversi_json__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(5156);
+/* harmony import */ var _server_examples_checkers_json__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(9522);
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+
 
 
 
@@ -223,19 +225,19 @@ var exampleGames = [{
   rules: '{}'
 }, {
   name: 'Three in a Row',
-  rules: JSON.stringify(_server_examples_tic_tac_toe_json__WEBPACK_IMPORTED_MODULE_5__, null, 2)
+  rules: JSON.stringify(_server_examples_tic_tac_toe_json__WEBPACK_IMPORTED_MODULE_6__, null, 2)
 }, {
   name: 'Four in a Row but With Gravity',
-  rules: JSON.stringify(_server_examples_connect_four_json__WEBPACK_IMPORTED_MODULE_7__, null, 2)
+  rules: JSON.stringify(_server_examples_connect_four_json__WEBPACK_IMPORTED_MODULE_8__, null, 2)
 }, {
   name: 'Forth and Back White and Black',
-  rules: JSON.stringify(_server_examples_reversi_json__WEBPACK_IMPORTED_MODULE_8__, null, 2)
+  rules: JSON.stringify(_server_examples_reversi_json__WEBPACK_IMPORTED_MODULE_9__, null, 2)
 }, {
   name: 'Discharged for Emotional Instability Eights',
-  rules: JSON.stringify(_server_examples_eights_json__WEBPACK_IMPORTED_MODULE_6__, null, 2)
+  rules: JSON.stringify(_server_examples_eights_json__WEBPACK_IMPORTED_MODULE_7__, null, 2)
 }, {
   name: 'Kingly Jumps',
-  rules: JSON.stringify(_server_examples_checkers_json__WEBPACK_IMPORTED_MODULE_9__, null, 2)
+  rules: JSON.stringify(_server_examples_checkers_json__WEBPACK_IMPORTED_MODULE_10__, null, 2)
 }];
 var RULES_LOCALSTORAGE_KEY = 'bge-editor-game-rules';
 var NAME_LOCALSTORAGE_KEY = 'bge-editor-game-name';
@@ -381,17 +383,19 @@ function GameEditor(_ref) {
   }, "Log in to Create Room"), !auth.loading && auth.idToken && !roomCode && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "button button--x-small button--style-a",
     onClick: function onClick() {
-      handleCreateRoom({
+      var rules = (0,_utils_game_rules_object_js__WEBPACK_IMPORTED_MODULE_5__/* .toGameRulesObject */ .E)(gameRules);
+      if (rules) handleCreateRoom({
         gameName: gameName,
-        gameRules: gameRules
+        gameRules: rules
       });
     }
   }, "Create Room"), !auth.loading && auth.idToken && roomCode && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "button button--x-small button--style-a",
     onClick: function onClick() {
-      return goToRoom({
+      var rules = (0,_utils_game_rules_object_js__WEBPACK_IMPORTED_MODULE_5__/* .toGameRulesObject */ .E)(gameRules);
+      if (rules) goToRoom({
         gameName: gameName,
-        gameRules: gameRules
+        gameRules: rules
       });
     }
   }, "Go To Room"))), gameConnection.state && screenState === SCREEN_STATE_TESTING && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -425,12 +429,14 @@ function GameEditor(_ref) {
 /* harmony import */ var _monaco_editor_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6084);
 /* harmony import */ var _info_card_info_card_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9368);
 /* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7276);
+/* harmony import */ var _utils_game_rules_object_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9804);
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+
 
 
 
@@ -464,7 +470,7 @@ function GamePreview(_ref) {
     height: "100%",
     className: "editor__input",
     defaultLanguage: "json",
-    value: gameRules,
+    value: (0,_utils_game_rules_object_js__WEBPACK_IMPORTED_MODULE_4__/* .formatGameRulesForDisplay */ .K)(gameRules),
     theme: "vs-dark",
     loading: null,
     options: {
@@ -1043,6 +1049,8 @@ function useLoading() {
 /* harmony import */ var _queries_use_room_query_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4797);
 /* harmony import */ var board_game_engine_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1157);
 /* harmony import */ var _constants_api_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(24);
+/* harmony import */ var _utils_game_rules_object_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(9804);
+
 
 
 
@@ -1056,7 +1064,9 @@ function useGameConnection() {
   var room = (0,_queries_use_room_query_js__WEBPACK_IMPORTED_MODULE_3__/* .useRoomQuery */ .P)(roomCode).data;
   var gameId = room === null || room === void 0 ? void 0 : room.gameId;
   var rulesHash = room === null || room === void 0 ? void 0 : room.rulesHash;
-  var gameRules = room === null || room === void 0 ? void 0 : room.gameRules;
+  var gameRules = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
+    return (0,_utils_game_rules_object_js__WEBPACK_IMPORTED_MODULE_6__/* .toGameRulesObject */ .E)(room === null || room === void 0 ? void 0 : room.gameRules);
+  }, [room === null || room === void 0 ? void 0 : room.gameRules]);
   var joinGameMutation = (0,_queries_use_join_game_mutation_js__WEBPACK_IMPORTED_MODULE_2__/* .useJoinGameMutation */ .D)(roomCode, gameId);
   var boardgamePlayerID = (_joinGameMutation$dat = joinGameMutation.data) === null || _joinGameMutation$dat === void 0 ? void 0 : _joinGameMutation$dat.boardgamePlayerID;
   var clientToken = (_joinGameMutation$dat2 = joinGameMutation.data) === null || _joinGameMutation$dat2 === void 0 ? void 0 : _joinGameMutation$dat2.clientToken;
@@ -1150,11 +1160,18 @@ function useRoomConnection() {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (/* binding */ useSinglePlayerGame)
 /* harmony export */ });
-/* harmony import */ var board_game_engine_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1157);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3137);
+/* harmony import */ var board_game_engine_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1157);
+/* harmony import */ var _utils_game_rules_object_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9804);
+
+
 
 function useSinglePlayerGame(gameRules, numPlayers) {
-  return (0,board_game_engine_react__WEBPACK_IMPORTED_MODULE_0__/* .useGameserverConnection */ .JQ)({
-    gameRules: gameRules,
+  var rulesObject = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
+    return (0,_utils_game_rules_object_js__WEBPACK_IMPORTED_MODULE_2__/* .toGameRulesObject */ .E)(gameRules);
+  }, [gameRules]);
+  return (0,board_game_engine_react__WEBPACK_IMPORTED_MODULE_1__/* .useGameserverConnection */ .JQ)({
+    gameRules: rulesObject,
     numPlayers: numPlayers
   });
 }
@@ -2001,6 +2018,7 @@ var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__/* .createFile
 /* harmony import */ var _components_game_staging_room_game_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(2826);
 /* harmony import */ var _components_game_staging_game_preview_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(7223);
 /* harmony import */ var _components_game_staging_game_editor_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(2734);
+/* harmony import */ var _utils_game_rules_object_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(9804);
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
@@ -2011,6 +2029,7 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+
 
 
 
@@ -2048,7 +2067,6 @@ function RoomPage() {
   var status = (_roomConnection$state = roomConnection.state) === null || _roomConnection$state === void 0 ? void 0 : _roomConnection$state.G.status;
   var players = (_roomConnection$state2 = roomConnection.state) === null || _roomConnection$state2 === void 0 ? void 0 : _roomConnection$state2.G.players;
   var playerID = (_roomConnection$clien = roomConnection.client) === null || _roomConnection$clien === void 0 ? void 0 : _roomConnection$clien.playerID;
-  console.log('roomConnection.client', roomConnection.client);
   var gameRules = (_roomConnection$state3 = roomConnection.state) === null || _roomConnection$state3 === void 0 ? void 0 : _roomConnection$state3.G.gameRules;
   var gameName = (_roomConnection$state4 = roomConnection.state) === null || _roomConnection$state4 === void 0 ? void 0 : _roomConnection$state4.G.gameName;
   var gameId = (_roomConnection$state5 = roomConnection.state) === null || _roomConnection$state5 === void 0 ? void 0 : _roomConnection$state5.G.gameId;
@@ -2067,11 +2085,13 @@ function RoomPage() {
   var isLoading = room.isLoading || !roomConnection.state || status === 'started' && !gameConnection.state;
   var gameDisabledReason = null;
   var minPlayers, maxPlayers, rulesNumPlayers;
-  try {
-    var _JSON$parse = JSON.parse(gameRules);
-    minPlayers = _JSON$parse.minPlayers;
-    maxPlayers = _JSON$parse.maxPlayers;
-    rulesNumPlayers = _JSON$parse.numPlayers;
+  var rulesObject = (0,_utils_game_rules_object_js__WEBPACK_IMPORTED_MODULE_19__/* .toGameRulesObject */ .E)(gameRules);
+  if (!rulesObject) {
+    gameDisabledReason = 'Invalid Game Rules';
+  } else {
+    minPlayers = rulesObject.minPlayers;
+    maxPlayers = rulesObject.maxPlayers;
+    rulesNumPlayers = rulesObject.numPlayers;
     if (rulesNumPlayers) {
       minPlayers = rulesNumPlayers;
       maxPlayers = rulesNumPlayers;
@@ -2081,8 +2101,6 @@ function RoomPage() {
     } else if (minPlayers && numPlayers < minPlayers) {
       gameDisabledReason = 'Not Enough Players';
     }
-  } catch (_unused) {
-    gameDisabledReason = 'Invalid Game Rules';
   }
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (status === 'deleted') {
@@ -2175,7 +2193,7 @@ function RoomPage() {
     disabled: !!gameDisabledReason,
     onClick: function onClick() {
       createGameMutation.mutate({
-        gameRules: gameRules,
+        gameRules: rulesObject,
         gameName: gameName,
         players: players
       });
@@ -2256,6 +2274,38 @@ var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_1__/* .createFile
   }(),
   component: RoomPage
 });
+
+/***/ },
+
+/***/ 9804
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   E: () => (/* binding */ toGameRulesObject),
+/* harmony export */   K: () => (/* binding */ formatGameRulesForDisplay)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+/**
+ * B.A.G.E.L. rules as stored/transmitted: either a JSON string or a parsed object.
+ * board-game-engine / board-game-engine-react expect a plain object.
+ */
+function toGameRulesObject(gameRules) {
+  if (gameRules == null || gameRules === '') return undefined;
+  if (_typeof(gameRules) === 'object') return gameRules;
+  try {
+    return JSON.parse(gameRules);
+  } catch (_unused) {
+    return undefined;
+  }
+}
+
+/** Monaco / read-only editors want a string value. */
+function formatGameRulesForDisplay(gameRules) {
+  if (gameRules == null || gameRules === '') return '';
+  if (typeof gameRules === 'string') return gameRules;
+  return JSON.stringify(gameRules, null, 2);
+}
 
 /***/ },
 
@@ -43605,48 +43655,58 @@ const DefaultAmplify = {
 /* harmony import */ var board_game_engine__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8917);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3137);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1637);
-// src/index.js
+// src/index.ts
 
 
-// src/components/game/game.js
-
-
-// src/components/entity/entity.js
-
-
-// src/contexts/game-context.js
+// src/contexts/game-context.tsx
 
 
 var GameContext = (0,react__WEBPACK_IMPORTED_MODULE_1__.createContext)({
   clickTarget: () => {
-  }
+  },
+  undoStep: () => {
+  },
+  allClickable: /* @__PURE__ */ new Set(),
+  currentMoveTargets: []
 });
-function GameProvider({ gameConnection, children, isSpectator }) {
+function GameProvider({
+  gameConnection,
+  children,
+  isSpectator
+}) {
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-    if (gameConnection.state._stateID === 0) {
+    if (gameConnection.state?._stateID === 0) {
       gameConnection.reset();
     }
-  }, [gameConnection.state._stateID]);
-  return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(GameContext.Provider, { value: {
-    clickTarget: (target) => {
-      if (!isSpectator) {
-        gameConnection.doStep(target);
-      }
-    },
-    undoStep: () => {
-      gameConnection.undoStep();
-    },
-    allClickable: gameConnection.optimisticWinner || isSpectator ? /* @__PURE__ */ new Set() : gameConnection.allClickable,
-    currentMoveTargets: gameConnection.optimisticWinner || isSpectator ? [] : gameConnection.moveBuilder.targets
-  }, children });
+  }, [gameConnection.state?._stateID]);
+  return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(
+    GameContext.Provider,
+    {
+      value: {
+        clickTarget: (target) => {
+          if (!isSpectator) {
+            gameConnection.doStep(target);
+          }
+        },
+        undoStep: () => {
+          gameConnection.undoStep();
+        },
+        allClickable: gameConnection.optimisticWinner || isSpectator ? /* @__PURE__ */ new Set() : gameConnection.allClickable ?? /* @__PURE__ */ new Set(),
+        currentMoveTargets: gameConnection.optimisticWinner || isSpectator ? [] : gameConnection.moveBuilder?.targets ?? []
+      },
+      children
+    }
+  );
 }
 var useGame = () => (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(GameContext);
 
-// src/components/board/grid.js
-
+// src/components/board/grid.tsx
 
 function Grid({ grid }) {
   const { width, height, spaces } = grid.attributes;
+  const w = Number(width ?? 0);
+  const h = Number(height ?? 0);
+  const spaceList = spaces ?? [];
   return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(
     "div",
     {
@@ -43654,31 +43714,29 @@ function Grid({ grid }) {
       style: {
         display: "inline-grid",
         width: "100%",
-        gridTemplateColumns: `repeat(${width}, 1fr)`,
-        gridTemplateRows: `repeat(${height}, 1fr)`
+        gridTemplateColumns: `repeat(${w}, 1fr)`,
+        gridTemplateRows: `repeat(${h}, 1fr)`
       },
-      children: spaces.map((space, index) => {
-        return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(
-          "div",
-          {
-            className: "grid__cell",
-            children: /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Entity, { entity: space })
-          },
-          index
-        );
-      })
+      children: spaceList.map((space, index) => /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(
+        "div",
+        {
+          className: "grid__cell",
+          children: /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Entity, { entity: space })
+        },
+        index
+      ))
     }
   );
 }
 
-// src/components/space/space.js
-
+// src/components/space/space.tsx
 
 function Space({ space }) {
   const { clickTarget, allClickable, currentMoveTargets } = useGame();
   const { entities, entityId } = space.attributes;
+  const entityList = entities ?? [];
   const clickable = allClickable.has(space);
-  const targeted = currentMoveTargets?.map((e) => e.entityId).includes(entityId);
+  const targeted = currentMoveTargets.map((e) => e.entityId ?? e.attributes?.entityId).includes(entityId);
   return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(
     "a",
     {
@@ -43703,18 +43761,18 @@ function Space({ space }) {
             flexWrap: "wrap"
           },
           children: [
-            Array.from({ length: entities.length }, (_, i) => /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(
+            Array.from({ length: entityList.length }, (_, i) => /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(
               "div",
               {
                 className: "space__entity-grid__cell",
                 style: {
                   display: "inline-block"
                 },
-                children: /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Entity, { entity: entities[i] })
+                children: /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Entity, { entity: entityList[i] })
               },
               i
             )),
-            !entities.length && space.attributes.name
+            !entityList.length && String(space.attributes.name ?? "")
           ]
         }
       )
@@ -43722,7 +43780,7 @@ function Space({ space }) {
   );
 }
 
-// src/components/entity/entity.js
+// src/components/entity/entity.tsx
 
 function Entity({ entity }) {
   const { clickTarget, allClickable } = useGame();
@@ -43731,9 +43789,9 @@ function Entity({ entity }) {
   const entityType = attributes.entityType ?? attributes.type;
   switch (entityType) {
     case "Grid":
-      return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Grid, { grid: entity, isClickable });
+      return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Grid, { grid: entity });
     case "Space":
-      return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Space, { space: entity, isClickable });
+      return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Space, { space: entity });
     default:
       return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(
         "div",
@@ -43746,31 +43804,33 @@ function Entity({ entity }) {
           },
           className: [
             "entity",
-            attributes.player && `player-${attributes.player}`,
+            attributes.player !== void 0 && `player-${String(attributes.player)}`,
             isClickable && "entity--clickable"
           ].filter(Boolean).join(" "),
           children: entity.rule.displayProperties?.map((property, i) => /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", { children: [
             property,
             ": ",
-            entity.attributes[property]?.toString()
+            String(attributes[property] ?? "")
           ] }, i))
         }
       );
   }
 }
 
-// src/components/abstract-choices/abstract-choices.js
-
+// src/components/abstract-choices/abstract-choices.tsx
 
 function AbstractChoices() {
   const { clickTarget, allClickable, undoStep, currentMoveTargets } = useGame();
-  const abstractChoices = [...allClickable].filter((c) => c.abstract);
+  const abstractChoices = [...allClickable].filter(
+    (c) => c.abstract
+  );
   return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", { style: { position: "relative" }, children: [
     /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(
       "button",
       {
         style: { visibility: "hidden" },
         className: "button button--style-b button--x-small abstract-choices__choice",
+        type: "button",
         children: "Spacer"
       }
     ),
@@ -43786,6 +43846,7 @@ function AbstractChoices() {
           !!currentMoveTargets.length && /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(
             "button",
             {
+              type: "button",
               className: "button button--style-c button--x-small abstract-choices__choice abstract-choices__choice--undo",
               onClick: undoStep,
               children: "Undo"
@@ -43794,9 +43855,10 @@ function AbstractChoices() {
           abstractChoices.map((choice, i) => /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(
             "button",
             {
+              type: "button",
               className: "button button--style-b button--x-small abstract-choices__choice",
               onClick: () => clickTarget(choice),
-              children: choice.value
+              children: String(choice.value ?? "")
             },
             i
           ))
@@ -43806,28 +43868,36 @@ function AbstractChoices() {
   ] });
 }
 
-// src/components/game-status/game-status.js
+// src/components/game-status/game-status.tsx
 
-
-function GameStatus({ gameConnection }) {
-  const players = gameConnection.client.matchData;
-  const winner = gameConnection.state.ctx.gameover?.winner;
-  const draw = gameConnection.state.ctx.gameover?.draw;
+function GameStatus({
+  gameConnection
+}) {
+  const state = gameConnection.state;
+  if (!state) return null;
+  const players = gameConnection.client?.matchData;
+  const winner = state.ctx.gameover?.winner;
+  const draw = state.ctx.gameover?.draw;
   let winnerString = "";
   if (draw) {
     winnerString = "Draw!";
-  } else if (players && winner) {
-    winnerString = `${players[winner].name} Wins!`;
-  } else if (winner) {
-    winnerString = `Player ${winner} Wins!`;
+  } else if (players != null && winner != null && winner !== "") {
+    const key = String(winner);
+    winnerString = `${players[key]?.name ?? ""} Wins!`;
+  } else if (winner != null && winner !== "") {
+    winnerString = `Player ${String(winner)} Wins!`;
   }
-  return gameConnection.state.ctx.gameover && /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", { className: "game-status", children: winnerString });
+  return state.ctx.gameover && /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", { className: "game-status", children: winnerString });
 }
 
-// src/components/game/game.js
+// src/components/game/game.tsx
 
-function Game({ gameConnection, loading, isSpectator }) {
-  const G = gameConnection?.state?.G;
+function Game({
+  gameConnection,
+  loading,
+  isSpectator
+}) {
+  const G = gameConnection && "state" in gameConnection ? gameConnection.state?.G : void 0;
   return G ? /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(
     GameProvider,
     {
@@ -43871,10 +43941,10 @@ function Game({ gameConnection, loading, isSpectator }) {
   ) : loading;
 }
 
-// src/use-gameserver-connection.js
+// src/use-gameserver-connection.ts
 
 
-var useGameserverConnection = ({
+function useGameserverConnection({
   server,
   multiplayer,
   matchID,
@@ -43886,8 +43956,8 @@ var useGameserverConnection = ({
   numPlayers,
   debug,
   enabled = true
-}) => {
-  const [_, forceUpdate] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useReducer)((x) => x + 1, 0);
+}) {
+  const [_tick, forceUpdate] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useReducer)((x) => x + 1, 0);
   const [connection, setConnection] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
     if (!gameRules && !boardgameIOGame || credentials && !(matchID && enabled && server)) {
@@ -43912,7 +43982,7 @@ var useGameserverConnection = ({
     newConnection.connect();
     setConnection(newConnection);
     return () => {
-      connection?.client?.stop();
+      newConnection.client?.stop();
       setConnection(null);
     };
   }, [
@@ -43928,12 +43998,11 @@ var useGameserverConnection = ({
   if (connection) {
     return Object.assign(
       connection,
-      connection?.getState?.()
+      connection.getState?.()
     );
-  } else {
-    return {};
   }
-};
+  return {};
+}
 
 
 
@@ -49741,19 +49810,6 @@ var require_matches = __commonJS({
   }
 });
 
-// node_modules/lodash/cloneDeep.js
-var require_cloneDeep = __commonJS({
-  "node_modules/lodash/cloneDeep.js"(exports, module) {
-    var baseClone = require_baseClone();
-    var CLONE_DEEP_FLAG = 1;
-    var CLONE_SYMBOLS_FLAG = 4;
-    function cloneDeep2(value2) {
-      return baseClone(value2, CLONE_DEEP_FLAG | CLONE_SYMBOLS_FLAG);
-    }
-    module.exports = cloneDeep2;
-  }
-});
-
 // node_modules/rfc6902/pointer.js
 var require_pointer = __commonJS({
   "node_modules/rfc6902/pointer.js"(exports) {
@@ -50549,10 +50605,10 @@ function walkCyclical(value2, visitor, seen = /* @__PURE__ */ new WeakSet(), par
   return { duplicates, circular };
 }
 
-// src/game-factory/move/move-factory.js
+// src/game-factory/move/move-factory.ts
 var import_core2 = __toESM(require_core());
 
-// src/game-factory/entity.js
+// src/game-factory/entity.ts
 var Entity = class {
   constructor(options, rule, id) {
     if (!options?.fromBank) {
@@ -50580,10 +50636,10 @@ var Entity = class {
   }
 };
 
-// src/game-factory/space/space.js
+// src/game-factory/space/space.ts
 var Space = class extends Entity {
-  constructor(...args) {
-    super(...args);
+  constructor(options, rule, id) {
+    super(options, rule, id);
     this.entities = [];
   }
   placeEntity(entity, position = "Last") {
@@ -50606,24 +50662,27 @@ var Space = class extends Entity {
   }
 };
 
-// src/game-factory/board.js
+// src/game-factory/board.ts
 var Board = class extends Space {
 };
 
-// src/game-factory/space-group/space-group.js
+// src/game-factory/space-group/space-group.ts
 var SpaceGroup = class extends Entity {
-  constructor(options, ...rest) {
-    super(options, ...rest);
+  constructor(options, rule, id) {
+    super(options, rule, id);
     this.spaces = this.makeSpaces(options.bank);
   }
   makeSpaces(bank) {
-    return Array(this.getSpacesCount()).fill().map((_2, i2) => bank.createEntity({ entityType: "Space", index: i2 }));
+    return Array(this.getSpacesCount()).fill(void 0).map((_2, i2) => bank.createEntity({ entityType: "Space", index: i2 }));
   }
   getEmptySpaces() {
     return this.spaces.filter((space2) => space2.isEmpty());
   }
-  getSpace(index) {
-    return this.spaces[index];
+  getSpace(arg) {
+    if (Array.isArray(arg)) {
+      throw new Error("Numeric index only for SpaceGroup#getSpace");
+    }
+    return this.spaces[arg];
   }
   getEntities(index) {
     return this.getSpace(index).entities;
@@ -50631,9 +50690,12 @@ var SpaceGroup = class extends Entity {
   placeEntity(index, entity) {
     this.getSpace(index).placeEntity(entity);
   }
+  getSpacesCount() {
+    throw new Error("SpaceGroup#getSpacesCount must be implemented by subclass");
+  }
 };
 
-// src/game-factory/space-group/grid.js
+// src/game-factory/space-group/grid.ts
 var import_chunk = __toESM(require_chunk());
 var Grid = class extends SpaceGroup {
   getSpacesCount() {
@@ -50653,8 +50715,11 @@ var Grid = class extends SpaceGroup {
     const { width } = this.rule;
     return y2 * width + x2;
   }
-  getSpace(coordinates) {
-    return this.spaces[this.getIndex(coordinates)];
+  getSpace(arg) {
+    if (Array.isArray(arg)) {
+      return this.spaces[this.getIndex(arg)];
+    }
+    return this.spaces[arg];
   }
   getRelativeCoordinates([oldX, oldY], [relativeX, relativeY]) {
     const newCoordinates = [oldX + relativeX, oldY + relativeY];
@@ -50665,29 +50730,30 @@ var Grid = class extends SpaceGroup {
   }
 };
 
-// src/game-factory/bank/bank.js
+// src/game-factory/bank/bank.ts
 var import_find = __toESM(require_find());
 var import_filter = __toESM(require_filter());
 
-// src/utils/resolve-properties.js
+// src/utils/resolve-properties.ts
 var import_isPlainObject2 = __toESM(require_isPlainObject());
 var import_pick = __toESM(require_pick());
 
-// src/utils/get.js
+// src/utils/get.ts
 function get(obj, pathArray) {
   let current = obj;
   for (const step of pathArray) {
     if (current === void 0) {
       return current;
     }
-    if (step?.flatten) {
+    if (step && typeof step === "object" && "flatten" in step && step.flatten) {
       if (!Array.isArray(current)) {
         return void 0;
       }
-      current = current.flat();
+      let flat = current.flat();
       if (step.map) {
-        current = current.map((item) => get(item, step.map));
+        flat = flat.map((item) => get(item, step.map));
       }
+      current = flat;
     } else {
       current = current[step];
     }
@@ -52301,36 +52367,43 @@ Parser.prototype.isOperatorEnabled = function(op) {
   return !(optionName in operators) || !!operators[optionName];
 };
 
-// src/utils/resolve-expression.js
+// src/utils/resolve-expression.ts
 var parser = new Parser();
-parser.functions.sum = (array) => array.reduce((acc, val) => acc + val, 0);
+parser.functions.sum = (...args) => args[0].reduce((acc, val) => acc + val, 0);
 function resolveExpression2(bgioArguments, rule, context) {
   const args = resolveProperties(bgioArguments, rule.arguments, context);
   return parser.evaluate(rule.expression, args);
 }
 
-// src/utils/resolve-entity.js
+// src/utils/resolve-entity.ts
 var import_isPlainObject = __toESM(require_isPlainObject());
-var abstractTargetNames = ["state"];
-function resolveEntity(bgioArguments, target, context, targetName) {
-  return !abstractTargetNames.includes(targetName) && (0, import_isPlainObject.default)(target) ? bgioArguments.G.bank.find(bgioArguments, target, context) : target;
+
+// src/utils/bgio-resolve-types.ts
+function bankOf(bg) {
+  return bg.G.bank;
 }
 
-// src/utils/resolve-properties.js
+// src/utils/resolve-entity.ts
+var abstractTargetNames = ["state"];
+function resolveEntity(bgioArguments, target, context, targetName) {
+  return !abstractTargetNames.includes(targetName ?? "") && (0, import_isPlainObject.default)(target) ? bankOf(bgioArguments).find(bgioArguments, target, context) : target;
+}
+
+// src/utils/resolve-properties.ts
 var resolutionTerminators = [
   "conditions",
   "move",
   "then",
   "mapping"
 ];
-function resolveProperties(bgioArguments, obj, context, key) {
+function resolveProperties(bgioArguments, obj, context = {}, key) {
   if (!(0, import_isPlainObject2.default)(obj) && !Array.isArray(obj)) {
     return obj;
   }
   let resolvedProperties = Array.isArray(obj) ? [...obj] : { ...obj };
-  Object.entries(obj).forEach(([key2, value2]) => {
-    if (!resolutionTerminators.includes(key2)) {
-      resolvedProperties[key2] = resolveProperties(bgioArguments, value2, context, key2);
+  Object.entries(obj).forEach(([k2, value2]) => {
+    if (!resolutionTerminators.includes(k2)) {
+      resolvedProperties[k2] = resolveProperties(bgioArguments, value2, context, k2);
     }
   });
   const resolved = resolveProperty(bgioArguments, resolvedProperties, context);
@@ -52343,45 +52416,47 @@ function resolveProperties(bgioArguments, obj, context, key) {
   ) : resolved;
 }
 function resolveProperty(bgioArguments, value2, context) {
-  if (value2?.type === "expression") {
+  const v2 = value2;
+  if (v2?.type === "expression") {
+    const expr = v2;
     return resolveExpression2(
       bgioArguments,
       {
-        ...value2,
-        arguments: resolveProperties(bgioArguments, value2.arguments, context, "arguments")
+        ...expr,
+        arguments: resolveProperties(bgioArguments, expr.arguments, context, "arguments")
       },
       context
     );
-  } else if (value2?.type === "count") {
-    return bgioArguments.G.bank.findAll(
+  } else if (v2?.type === "count") {
+    return bankOf(bgioArguments).findAll(
       bgioArguments,
       value2,
       context
     ).length;
-  } else if (value2?.type === "contextPath") {
-    return get(context, value2.path);
-  } else if (value2?.type === "ctxPath") {
-    return get(bgioArguments.ctx, value2.path);
-  } else if (value2?.type === "gamePath") {
-    return get(bgioArguments.G, value2.path);
-  } else if (value2?.type === "relativePath" || value2?.type === "RelativePath") {
-    const target = resolveProperties(bgioArguments, value2.target, context, "target");
-    return get(target.attributes, value2.path) ?? null;
-  } else if (value2?.type === "parent" || value2?.type === "Parent") {
-    const originalTarget = value2.target ? resolveProperties(bgioArguments, value2.target, context, "target") : context.originalTarget;
-    return bgioArguments.G.bank.findParent(originalTarget) ?? null;
-  } else if (value2?.type === "map") {
+  } else if (v2?.type === "contextPath") {
+    return get(context, v2.path);
+  } else if (v2?.type === "ctxPath") {
+    return get(bgioArguments.ctx, v2.path);
+  } else if (v2?.type === "gamePath") {
+    return get(bgioArguments.G, v2.path);
+  } else if (v2?.type === "relativePath" || v2?.type === "RelativePath") {
+    const target = resolveProperties(bgioArguments, v2.target, context, "target");
+    return get(target?.attributes, v2.path) ?? null;
+  } else if (v2?.type === "parent" || v2?.type === "Parent") {
+    const originalTarget = v2.target ? resolveProperties(bgioArguments, v2.target, context, "target") : context.originalTarget;
+    return bankOf(bgioArguments).findParent(originalTarget) ?? null;
+  } else if (v2?.type === "map") {
     return getMappedTargets(
       bgioArguments,
-      value2.targets,
-      value2.mapping,
+      v2.targets,
+      v2.mapping,
       context
     ).map((mappedTarget) => mappedTarget.value);
-  } else if (value2?.type === "mapMax") {
+  } else if (v2?.type === "mapMax") {
     const mappedTargets = getMappedTargets(
       bgioArguments,
-      value2.targets,
-      value2.mapping,
+      v2.targets,
+      v2.mapping,
       context
     );
     let maxValue;
@@ -52397,28 +52472,28 @@ function resolveProperty(bgioArguments, value2, context) {
       }
     }
     return maxTargets;
-  } else if (value2?.type === "pick" || value2?.type === "Pick") {
-    const target = resolveProperties(bgioArguments, value2.target, context, "target");
+  } else if (v2?.type === "pick" || v2?.type === "Pick") {
+    const target = resolveProperties(bgioArguments, v2.target, context, "target");
     return (0, import_pick.default)(
       resolveProperties(
         bgioArguments,
-        target.attributes,
+        target?.attributes,
         context,
         "attributes"
       ),
-      value2.properties
+      v2.properties
     );
-  } else if (value2?.type === "coordinates" || value2?.type === "Coordinates") {
-    const originalTarget = value2.target ? resolveProperties(bgioArguments, value2.target, context, "target") : context.originalTarget;
-    const parent = bgioArguments.G.bank.findParent(originalTarget);
+  } else if (v2?.type === "coordinates" || v2?.type === "Coordinates") {
+    const originalTarget = v2.target ? resolveProperties(bgioArguments, v2.target, context, "target") : context.originalTarget;
+    const parent = bankOf(bgioArguments).findParent(originalTarget);
     return parent.getCoordinates(originalTarget.rule.index);
-  } else if (value2?.type === "relativeCoordinates") {
-    const originalTarget = value2.target ? resolveProperties(bgioArguments, value2.target, context, "target") : context.originalTarget;
-    const parent = bgioArguments.G.bank.findParent(originalTarget);
+  } else if (v2?.type === "relativeCoordinates") {
+    const originalTarget = v2.target ? resolveProperties(bgioArguments, v2.target, context, "target") : context.originalTarget;
+    const parent = bankOf(bgioArguments).findParent(originalTarget);
     const oldCoordinates = parent.getCoordinates(originalTarget.rule.index);
     const newCoordinates = parent.getRelativeCoordinates(
       oldCoordinates,
-      resolveProperties(bgioArguments, value2.location, context, "location")
+      resolveProperties(bgioArguments, v2.location, context, "location")
     );
     return (newCoordinates && parent.spaces[parent.getIndex(newCoordinates)]) ?? null;
   } else {
@@ -52427,7 +52502,8 @@ function resolveProperty(bgioArguments, value2, context) {
 }
 function getMappedTargets(bgioArguments, targetsRule, mapping, context) {
   targetsRule.resolveAsEntity = true;
-  return resolveProperties(bgioArguments, targetsRule, context)?.map((target) => ({
+  const resolved = resolveProperties(bgioArguments, targetsRule, context);
+  return resolved?.map((target) => ({
     target,
     value: resolveProperties(
       bgioArguments,
@@ -52437,7 +52513,7 @@ function getMappedTargets(bgioArguments, targetsRule, mapping, context) {
   })) ?? [];
 }
 
-// src/game-factory/condition/condition.js
+// src/game-factory/condition/condition.ts
 var Condition = class {
   constructor(rule) {
     this.rule = rule;
@@ -52462,11 +52538,15 @@ var Condition = class {
     return this.checkCondition(bgioArguments, rule, conditionPayload, newContext);
   }
   isMet(...args) {
-    return this.check(...args).conditionIsMet;
+    return this.check(
+      args[0],
+      args[1] ?? {},
+      args[2] ?? {}
+    ).conditionIsMet;
   }
 };
 
-// src/utils/entity-matches.js
+// src/utils/entity-matches.ts
 var import_matches = __toESM(require_matches());
 function resolveMatcher(bgioArguments, matcher, context) {
   const resolvedMatcher = { ...matcher };
@@ -52484,7 +52564,7 @@ function entityMatches(bgioArguments, matcher, entity, context) {
   return (0, import_matches.default)(resolveMatcher(bgioArguments, matcher, context))(getEntityMatcher(entity));
 }
 
-// src/game-factory/condition/is-condition.js
+// src/game-factory/condition/is-condition.ts
 var Is = class extends Condition {
   checkCondition(bgioArguments, rule, { target }, context) {
     if (this.rule.entity && target !== rule.entity) {
@@ -52505,12 +52585,12 @@ var Is = class extends Condition {
   }
 };
 
-// src/game-factory/condition/not-condition.js
+// src/game-factory/condition/not-condition.ts
 var NotCondition = class extends Condition {
   checkCondition(bgioArguments, rule, payload, context) {
     const result = checkConditions(
       bgioArguments,
-      rule,
+      rule.conditions,
       payload,
       context
     );
@@ -52518,8 +52598,8 @@ var NotCondition = class extends Condition {
   }
 };
 
-// src/utils/find-met-condition.js
-function findMetCondition(bgioArguments, { conditions = [] }, payload, context) {
+// src/utils/find-met-condition.ts
+function findMetCondition(bgioArguments, conditions = [], payload, context) {
   let success;
   for (const conditionRule of conditions) {
     const result = conditionFactory(conditionRule).check(bgioArguments, payload, context);
@@ -52534,12 +52614,12 @@ function findMetCondition(bgioArguments, { conditions = [] }, payload, context) 
   return success;
 }
 
-// src/game-factory/condition/or-condition.js
+// src/game-factory/condition/or-condition.ts
 var Or = class extends Condition {
   checkCondition(bgioArguments, rule, payload, context) {
     const result = findMetCondition(
       bgioArguments,
-      rule,
+      rule.conditions,
       payload,
       context
     );
@@ -52547,9 +52627,10 @@ var Or = class extends Condition {
   }
 };
 
-// src/game-factory/condition/some-condition.js
+// src/game-factory/condition/some-condition.ts
 var SomeCondition = class extends Condition {
-  checkCondition(bgioArguments, rule, { target: targets }, context) {
+  checkCondition(bgioArguments, rule, conditionPayload, context) {
+    const targets = conditionPayload.target;
     const result = targets.find((target) => {
       const loopContext = {
         ...context,
@@ -52557,7 +52638,7 @@ var SomeCondition = class extends Condition {
       };
       return checkConditions(
         bgioArguments,
-        rule,
+        rule.conditions,
         void 0,
         loopContext
       ).conditionsAreMet;
@@ -52569,9 +52650,10 @@ var SomeCondition = class extends Condition {
   }
 };
 
-// src/game-factory/condition/every-condition.js
+// src/game-factory/condition/every-condition.ts
 var EveryCondition = class extends Condition {
-  checkCondition(bgioArguments, rule, { target: targets }, context) {
+  checkCondition(bgioArguments, rule, conditionPayload, context) {
+    const targets = conditionPayload.target;
     const results = targets.map((target) => {
       const loopContext = {
         ...context,
@@ -52579,7 +52661,7 @@ var EveryCondition = class extends Condition {
       };
       return checkConditions(
         bgioArguments,
-        rule,
+        rule.conditions,
         void 0,
         loopContext
       );
@@ -52591,18 +52673,18 @@ var EveryCondition = class extends Condition {
   }
 };
 
-// src/game-factory/condition/contains-condition.js
+// src/game-factory/condition/contains-condition.ts
 var import_matches2 = __toESM(require_matches());
 var ContainsCondition = class extends Condition {
   checkCondition(bgioArguments, rule, payload, context) {
-    const { target } = payload;
+    const target = payload.target;
     if (!target) {
       return { matches: [], conditionIsMet: false };
     } else {
       const candidates = target.entities ?? target.spaces;
       const matches2 = candidates?.filter((entity) => checkConditions(
         bgioArguments,
-        rule,
+        rule.conditions,
         { target: entity },
         context
       ).conditionsAreMet) ?? [];
@@ -52611,22 +52693,25 @@ var ContainsCondition = class extends Condition {
   }
 };
 
-// src/game-factory/condition/contains-same-condition.js
+// src/game-factory/condition/contains-same-condition.ts
 var import_pick2 = __toESM(require_pick());
 var ContainsSame = class extends Condition {
-  checkCondition(bgioArguments, rule, { targets }) {
+  checkCondition(bgioArguments, rule, conditionPayload, _newContext) {
+    const { targets } = conditionPayload;
     if (targets.length === 1 && targets[0].entities?.length) {
       return { conditionIsMet: true };
     }
     const [first, ...restEntities] = targets;
-    const conditionIsMet = first.entities.some((entity) => {
+    const conditionIsMet = (first.entities ?? []).some((entity) => {
+      const e = entity;
       const condition2 = conditionFactory({
         conditionType: "Contains",
         conditions: [{
           conditionType: "Is",
-          matcher: (0, import_pick2.default)(entity.rule, rule.properties)
+          matcher: (0, import_pick2.default)(e.rule, rule.properties)
         }]
       });
+      if (!condition2) return false;
       return restEntities.every((ent) => {
         return condition2.isMet(bgioArguments, { target: ent });
       });
@@ -52635,7 +52720,7 @@ var ContainsSame = class extends Condition {
   }
 };
 
-// src/utils/grid-contains-sequence.js
+// src/utils/grid-contains-sequence.ts
 var import_matches3 = __toESM(require_matches());
 var directions = [
   [1, 0],
@@ -52754,12 +52839,9 @@ function tryMatchSequence(bgioArguments, lineSpaces, startIndex, sequencePattern
   return matchedSpaces.length > 0 ? matchedSpaces : null;
 }
 function checkSpaceConditions(bgioArguments, space2, conditions, chunkMatches = [], context) {
-  if (!conditions || conditions.length === 0) {
-    return true;
-  }
   return checkConditions(
     bgioArguments,
-    { conditions },
+    conditions,
     {
       target: space2,
       targets: [space2, ...chunkMatches]
@@ -52808,13 +52890,18 @@ function gridContainsSequence(bgioArguments, grid, sequencePattern, context) {
   return result;
 }
 
-// src/game-factory/condition/in-line-condition.js
+// src/game-factory/condition/in-line-condition.ts
 var InLineCondition = class extends Condition {
   checkCondition(bgioArguments, rule, payload, context) {
     const { G: G2 } = bgioArguments;
     const { target } = payload;
     const parent = G2.bank.findParent(payload.target);
-    const { matches: allMatches } = gridContainsSequence(bgioArguments, parent, rule.sequence, context);
+    const { matches: allMatches } = gridContainsSequence(
+      bgioArguments,
+      parent,
+      rule.sequence,
+      context
+    );
     const matches2 = allMatches.filter(
       (sequence) => sequence.some((space2) => space2 === target)
     );
@@ -52822,7 +52909,7 @@ var InLineCondition = class extends Condition {
   }
 };
 
-// src/game-factory/condition/has-line-condition.js
+// src/game-factory/condition/has-line-condition.ts
 var HasLineCondition = class extends Condition {
   checkCondition(bgioArguments, rule, payload, context) {
     const { matches: matches2 } = gridContainsSequence(
@@ -52835,16 +52922,17 @@ var HasLineCondition = class extends Condition {
   }
 };
 
-// src/game-factory/condition/is-full-condition.js
+// src/game-factory/condition/is-full-condition.ts
 var IsFull = class extends Condition {
-  checkCondition(bgioArguments, rule, payload, context) {
+  checkCondition(_bgioArguments, _rule, payload, _context) {
+    const t2 = payload.target;
     return {
-      conditionIsMet: payload.target.spaces.every((space2) => space2?.entities.length)
+      conditionIsMet: t2.spaces.every((space2) => space2?.entities?.length)
     };
   }
 };
 
-// src/utils/simulate-move.js
+// src/utils/simulate-move.ts
 function simulateMove(bgioArguments, payload, context) {
   const simulatedG = deserialize(serialize(bgioArguments.G), registry);
   const newBgioArguments = {
@@ -52864,7 +52952,7 @@ function simulateMove(bgioArguments, payload, context) {
   return simulatedG;
 }
 
-// src/game-factory/condition/would-condition.js
+// src/game-factory/condition/would-condition.ts
 var argNameMap = {
   PlaceNew: ["destination"],
   RemoveEntity: ["entity"],
@@ -52873,12 +52961,16 @@ var argNameMap = {
   SetState: ["entity", "state"]
 };
 var WouldCondition = class extends Condition {
-  checkCondition(bgioArguments, rule, { target, targets = [target] }, context) {
+  checkCondition(bgioArguments, rule, conditionPayload, context) {
+    const target = conditionPayload.target;
+    const targets = conditionPayload.targets ?? [target];
+    const moveType = context.moveInstance?.rule?.moveType;
+    const argNames = moveType ? argNameMap[moveType] : void 0;
     const payload = {
-      arguments: targets.reduce((acc, target2, i2) => ({
-        ...acc,
-        [argNameMap[context.moveInstance.rule.moveType][i2]]: target2
-      }), {})
+      arguments: targets.reduce((acc, t2, i2) => {
+        const key = argNames?.[i2] ?? `arg${i2}`;
+        return { ...acc, [key]: t2 };
+      }, {})
     };
     const simulatedG = simulateMove(
       bgioArguments,
@@ -52896,11 +52988,8 @@ var WouldCondition = class extends Condition {
       };
     }
     const conditionResults = checkConditions(
-      {
-        ...bgioArguments,
-        G: simulatedG
-      },
-      rule,
+      { ...bgioArguments, G: simulatedG },
+      rule.conditions,
       simulatedConditionsPayload,
       context
     );
@@ -52928,26 +53017,26 @@ function restoreReferences(obj, getOriginalEntity, seen = /* @__PURE__ */ new We
   }
   if (Array.isArray(obj)) {
     return obj.map((item) => restoreReferences(item, getOriginalEntity, seen));
-  } else {
-    const restored = {};
-    for (const key in obj) {
-      if (obj.hasOwnProperty(key)) {
-        restored[key] = restoreReferences(obj[key], getOriginalEntity, seen);
-      }
-    }
-    return restored;
   }
+  const restored = {};
+  for (const key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+      restored[key] = restoreReferences(obj[key], getOriginalEntity, seen);
+    }
+  }
+  return restored;
 }
 
-// src/utils/any-valid-moves.js
+// src/utils/any-valid-moves.ts
 var import_isPlainObject3 = __toESM(require_isPlainObject());
 function findMoveArgumentReferences(obj, refs = /* @__PURE__ */ new Set()) {
   if (!obj || typeof obj !== "object") {
     return refs;
   }
-  if (obj.type === "contextPath" && Array.isArray(obj.path)) {
-    if (obj.path[0] === "moveArguments" && obj.path[1]) {
-      refs.add(obj.path[1]);
+  const o2 = obj;
+  if (o2.type === "contextPath" && Array.isArray(o2.path)) {
+    if (o2.path[0] === "moveArguments" && o2.path[1]) {
+      refs.add(String(o2.path[1]));
     }
   }
   for (const value2 of Object.values(obj)) {
@@ -53021,21 +53110,23 @@ function findValidCombination(bgioArguments, moveInstance, ruleArguments, ordere
   });
 }
 function areThereValidMoves(bgioArguments, moves) {
+  const bgio = bgioArguments;
   return Object.values(moves).some((move) => {
-    const { moveInstance } = move;
+    const moveInstance = move?.moveInstance;
+    if (!moveInstance) return false;
     const context = { moveInstance };
     const rule = resolveProperties(
-      bgioArguments,
+      bgio,
       moveInstance.rule,
       context
     );
     const ruleArguments = rule.arguments ?? {};
     if (Object.keys(ruleArguments).length === 0) {
-      return moveInstance.isValid(bgioArguments, { arguments: {} }, context);
+      return moveInstance.isValid(bgio, { arguments: {} }, context);
     }
     const orderedArgNames = getArgumentOrder(ruleArguments);
     return findValidCombination(
-      bgioArguments,
+      bgio,
       moveInstance,
       ruleArguments,
       orderedArgNames,
@@ -53044,18 +53135,19 @@ function areThereValidMoves(bgioArguments, moves) {
   });
 }
 
-// src/utils/get-current-moves.js
-function getCurrentMoves(state, { game, playerID, stageName }) {
+// src/utils/get-current-moves.ts
+function getCurrentMoves(state, client) {
+  const { game, playerID, stageName } = client;
   const phaseName = state.ctx.phase;
-  const stageNameToUse = stageName ?? state.ctx.activePlayers?.[playerID ?? state.ctx.currentPlayer];
+  const stageNameToUse = stageName ?? state.ctx.activePlayers?.[playerID ?? state.ctx.currentPlayer ?? ""];
   const phaseOrRoot = game.phases?.[phaseName] ?? game;
   const stageOrPhaseOrRoot = phaseOrRoot.turn?.stages?.[stageNameToUse] ?? phaseOrRoot;
   return stageOrPhaseOrRoot.moves ?? {};
 }
 
-// src/game-factory/condition/no-possible-moves-condition.js
+// src/game-factory/condition/no-possible-moves-condition.ts
 var NoPossibleMoves = class extends Condition {
-  checkCondition(bgioArguments, _2, __, context) {
+  checkCondition(bgioArguments, _unused, _payload, context) {
     return {
       conditionIsMet: !areThereValidMoves(
         bgioArguments,
@@ -53065,7 +53157,7 @@ var NoPossibleMoves = class extends Condition {
   }
 };
 
-// src/game-factory/condition/evaluate-condition.js
+// src/game-factory/condition/evaluate-condition.ts
 var import_matches4 = __toESM(require_matches());
 var Evaluate = class extends Condition {
   checkCondition(bgioArguments, rule, payload, context) {
@@ -53082,11 +53174,12 @@ var Evaluate = class extends Condition {
   }
 };
 
-// src/game-factory/condition/position-condition.js
+// src/game-factory/condition/position-condition.ts
 var Position = class extends Condition {
-  checkCondition(bgioArguments, rule, { target }) {
+  checkCondition(bgioArguments, rule, conditionPayload, _newContext) {
+    const target = conditionPayload.target;
     const parent = bgioArguments.G.bank.findParent(target);
-    let conditionIsMet;
+    let conditionIsMet = false;
     if (rule.position === "First") {
       conditionIsMet = parent.entities.indexOf(target) === 0;
     }
@@ -53094,42 +53187,46 @@ var Position = class extends Condition {
   }
 };
 
-// src/game-factory/condition/condition-factory.js
+// src/game-factory/condition/condition-factory.ts
 function conditionFactory(rule) {
-  if (rule.conditionType === "Is") {
-    return new Is(rule);
-  } else if (rule.conditionType === "Not") {
-    return new NotCondition(rule);
-  } else if (rule.conditionType === "Or") {
-    return new Or(rule);
-  } else if (rule.conditionType === "Some") {
-    return new SomeCondition(rule);
-  } else if (rule.conditionType === "Contains") {
-    return new ContainsCondition(rule);
-  } else if (rule.conditionType === "ContainsSame") {
-    return new ContainsSame(rule);
-  } else if (rule.conditionType === "Every") {
-    return new EveryCondition(rule);
-  } else if (rule.conditionType === "InLine") {
-    return new InLineCondition(rule);
-  } else if (rule.conditionType === "HasLine") {
-    return new HasLineCondition(rule);
-  } else if (rule.conditionType === "IsFull") {
-    return new IsFull(rule);
-  } else if (rule.conditionType === "Would") {
-    return new WouldCondition(rule);
-  } else if (rule.conditionType === "NoPossibleMoves") {
-    return new NoPossibleMoves(rule);
-  } else if (rule.conditionType === "Evaluate") {
-    return new Evaluate(rule);
-  } else if (rule.conditionType === "Position") {
-    return new Position(rule);
+  if (typeof rule !== "object" || rule === null || !("conditionType" in rule)) {
+    return void 0;
   }
+  const r2 = rule;
+  if (r2.conditionType === "Is") {
+    return new Is(r2);
+  } else if (r2.conditionType === "Not") {
+    return new NotCondition(r2);
+  } else if (r2.conditionType === "Or") {
+    return new Or(r2);
+  } else if (r2.conditionType === "Some") {
+    return new SomeCondition(r2);
+  } else if (r2.conditionType === "Contains") {
+    return new ContainsCondition(r2);
+  } else if (r2.conditionType === "ContainsSame") {
+    return new ContainsSame(r2);
+  } else if (r2.conditionType === "Every") {
+    return new EveryCondition(r2);
+  } else if (r2.conditionType === "InLine") {
+    return new InLineCondition(r2);
+  } else if (r2.conditionType === "HasLine") {
+    return new HasLineCondition(r2);
+  } else if (r2.conditionType === "IsFull") {
+    return new IsFull(r2);
+  } else if (r2.conditionType === "Would") {
+    return new WouldCondition(r2);
+  } else if (r2.conditionType === "NoPossibleMoves") {
+    return new NoPossibleMoves(r2);
+  } else if (r2.conditionType === "Evaluate") {
+    return new Evaluate(r2);
+  } else if (r2.conditionType === "Position") {
+    return new Position(r2);
+  }
+  return void 0;
 }
 
-// src/utils/check-conditions.js
-function checkConditions(bgioArguments, rule, payload, context) {
-  const { conditions = [] } = rule;
+// src/utils/check-conditions.ts
+function checkConditions(bgioArguments, conditions = [], payload = {}, context = {}) {
   const results = [];
   let failedAt;
   for (const conditionRule of conditions) {
@@ -53148,18 +53245,18 @@ function checkConditions(bgioArguments, rule, payload, context) {
   };
 }
 
-// src/game-factory/bank/bank-slot.js
+// src/game-factory/bank/bank-slot.ts
 var BankSlot = class {
   constructor(rule, bank) {
     this.bank = bank;
     this.rule = rule;
     this.pool = [];
-    this.remaining = +rule.count || 1;
+    this.remaining = +(rule.count || 1);
   }
   getOne(bgioArguments, options, context) {
     return this.getMultiple(bgioArguments, 1, options, context)[0];
   }
-  getMultiple(bgioArguments, count = Infinity, options = {}, context) {
+  getMultiple(bgioArguments, count = Infinity, options = {}, context = {}) {
     const toReturn = [];
     if (this.remaining === Infinity && count === Infinity) {
       throw new Error(`Cannot get infinite pieces from slot with infinite remaining: ${this.rule.name}`);
@@ -53184,7 +53281,10 @@ var BankSlot = class {
     if (options.state) {
       const newState = resolveProperties(bgioArguments, options.state, context);
       toReturn.forEach((entity) => {
-        entity.state = { ...entity.state, ...newState };
+        entity.state = {
+          ...entity.state,
+          ...newState
+        };
       });
     }
     return toReturn;
@@ -53203,7 +53303,7 @@ var BankSlot = class {
 };
 var bank_slot_default = BankSlot;
 
-// src/game-factory/bank/bank.js
+// src/game-factory/bank/bank.ts
 var Bank = class {
   constructor(entityRules) {
     this.currentEntityId = 0;
@@ -53211,7 +53311,8 @@ var Bank = class {
     this.slots = entityRules.map((rule) => new bank_slot_default(rule, this));
   }
   createEntity(definition = {}, options) {
-    const entity = new registry[definition.entityType || "Entity"](
+    const Ctor = registry[definition.entityType || "Entity"];
+    const entity = new Ctor(
       {
         bank: this,
         fromBank: true,
@@ -53237,7 +53338,7 @@ var Bank = class {
       Object.values(this.tracker),
       (entity) => checkConditions(
         bgioArguments,
-        rule,
+        rule.conditions,
         { target: entity },
         context
       ).conditionsAreMet
@@ -53276,7 +53377,7 @@ var Bank = class {
     return this.slots.find(
       (slot) => checkConditions(
         bgioArguments,
-        rule,
+        rule.conditions,
         { target: slot },
         context
       ).conditionsAreMet
@@ -53286,7 +53387,7 @@ var Bank = class {
     return this.slots.filter(
       (slot) => checkConditions(
         bgioArguments,
-        rule,
+        rule.conditions,
         { target: slot },
         context
       ).conditionsAreMet
@@ -53294,13 +53395,13 @@ var Bank = class {
   }
   returnToBank(bgioArguments, entity) {
     this.findParent(entity).remove(entity);
-    this.getSlot(bgioArguments, entity.rule).returnToBank(entity);
+    this.getSlot(bgioArguments, entity.rule, {}).returnToBank(entity);
     delete this.tracker[entity.entityId];
   }
 };
 var bank_default = Bank;
 
-// src/registry.js
+// src/registry.ts
 var registry = {
   Board,
   SpaceGroup,
@@ -53311,7 +53412,7 @@ var registry = {
   Entity
 };
 
-// src/utils/deserialize-bgio-arguments.js
+// src/utils/deserialize-bgio-arguments.ts
 function deserializeBgioArguments(bgioArguments) {
   return {
     ...bgioArguments,
@@ -53319,14 +53420,15 @@ function deserializeBgioArguments(bgioArguments) {
   };
 }
 
-// src/game-factory/move/move.js
+// src/game-factory/move/move.ts
 var import_core = __toESM(require_core());
 var Move = class {
   constructor(rule) {
     this.rule = this.transformRule(rule);
   }
   checkValidity(bgioArguments, payload, context) {
-    const argRuleEntries = Object.entries(this.rule.arguments ?? {});
+    const moveArguments = "arguments" in this.rule && this.rule.arguments ? this.rule.arguments : {};
+    const argRuleEntries = Object.entries(moveArguments);
     if (!argRuleEntries.every(([argName]) => {
       const arg = payload.arguments[argName];
       return arg !== void 0 && (!Array.isArray(arg) || arg.length);
@@ -53339,11 +53441,11 @@ var Move = class {
       const payloadArg = payload.arguments[argName];
       const args = Array.isArray(payloadArg) ? payloadArg : [payloadArg];
       const argResults = [];
-      for (let j2 = 0, len2 = args.length; j2 < len2; j2++) {
+      for (let j2 = 0, lenj = args.length; j2 < lenj; j2++) {
         const arg = args[j2];
         const result = checkConditions(
           bgioArguments,
-          argRule,
+          argRule.conditions,
           { target: arg },
           { ...context, moveArguments: payload.arguments }
         );
@@ -53352,7 +53454,8 @@ var Move = class {
           break;
         }
       }
-      const argConditionsAreMet = argResults.at(-1).conditionsAreMet;
+      const last = argResults[argResults.length - 1];
+      const argConditionsAreMet = last?.conditionsAreMet ?? false;
       argumentResults[argName] = {
         results: argResults,
         conditionsAreMet: argConditionsAreMet
@@ -53363,8 +53466,8 @@ var Move = class {
     }
     const moveResults = checkConditions(
       bgioArguments,
-      { conditions: this.rule.conditions },
-      void 0,
+      this.rule.conditions,
+      {},
       { ...context, moveArguments: payload.arguments }
     );
     return {
@@ -53379,6 +53482,7 @@ var Move = class {
       payload,
       context
     );
+    if (conditionResults === false) return false;
     return conditionResults.conditionsAreMet;
   }
   doMove(bgioArguments, payload, context, { skipCheck = false } = {}) {
@@ -53389,12 +53493,10 @@ var Move = class {
     );
     const resolvedPayload = {
       ...payload,
-      arguments: Object.entries(rule.arguments ?? {}).reduce((acc, [argName, arg]) => {
-        return {
-          ...acc,
-          [argName]: payload?.arguments?.[argName] ?? arg
-        };
-      }, {})
+      arguments: Object.entries(rule.arguments ?? {}).reduce((acc, [argName, arg]) => ({
+        ...acc,
+        [argName]: payload?.arguments?.[argName] ?? arg
+      }), {})
     };
     if (rule.name) {
       bgioArguments.G._meta.previousPayloads[rule.name] = resolvedPayload;
@@ -53403,7 +53505,7 @@ var Move = class {
     if (!skipCheck) {
       conditionResults = this.checkValidity(bgioArguments, resolvedPayload, context);
     }
-    if (!skipCheck && !conditionResults.conditionsAreMet) {
+    if (!skipCheck && conditionResults !== false && !conditionResults.conditionsAreMet) {
       return import_core.INVALID_MOVE;
     } else {
       this.do(bgioArguments, rule, resolvedPayload, context);
@@ -53413,81 +53515,100 @@ var Move = class {
     }
     return { conditionResults };
   }
+  do(_bgioArguments, _rule, _resolvedPayload, _context) {
+    throw new Error("Move#do must be implemented by subclass");
+  }
   transformRule(rule) {
     const args = rule.arguments;
-    for (let key in args) {
-      const arg = args[key];
-      if (!arg.playerChoice) {
-        arg.resolveAsEntity = true;
+    if (args) {
+      for (const key in args) {
+        const arg = args[key];
+        if (arg && !arg.playerChoice) {
+          arg.resolveAsEntity = true;
+        }
       }
     }
     return rule;
   }
 };
 
-// src/game-factory/move/move-entity.js
+// src/game-factory/move/move-entity.ts
 var MoveEntity = class extends Move {
-  do(bgioArguments, rule, { arguments: { entity, destination } }) {
+  do(bgioArguments, rule, resolvedPayload) {
+    const { entity, destination } = resolvedPayload.arguments;
+    const g2 = bgioArguments;
     if (Array.isArray(entity)) {
       entity.forEach((e) => {
-        bgioArguments.G.bank.findParent(e)?.remove(e);
+        g2.G.bank.findParent(e)?.remove(e);
         destination.placeEntity(e, rule.position);
       });
     } else {
-      bgioArguments.G.bank.findParent(entity)?.remove(entity);
+      g2.G.bank.findParent(entity)?.remove(entity);
       destination.placeEntity(entity, rule.position);
     }
   }
 };
 
-// src/game-factory/move/remove-entity.js
+// src/game-factory/move/remove-entity.ts
 var RemoveEntity = class extends Move {
-  do(bgioArguments, rule, { arguments: { entity } }) {
-    bgioArguments.G.bank.returnToBank(bgioArguments, entity);
+  do(bgioArguments, _rule, resolvedPayload) {
+    const { entity } = resolvedPayload.arguments;
+    const bgio = bgioArguments;
+    bankOf(bgio).returnToBank(bgio, entity);
   }
 };
 
-// src/game-factory/move/place-new.js
+// src/game-factory/move/place-new.ts
 var PlaceNew = class extends Move {
-  do(bgioArguments, rule, { arguments: { destination } }, context) {
-    const entities = rule.matchMultiple ? bgioArguments.G.bank.getMultiple(
-      bgioArguments,
+  do(bgioArguments, rule, resolvedPayload, context) {
+    const { destination } = resolvedPayload.arguments;
+    const bgio = bgioArguments;
+    const r2 = rule;
+    const bank = bankOf(bgio);
+    const entities = r2.matchMultiple ? bank.getMultiple(
+      bgio,
       {
-        ...rule.entity,
+        ...r2.entity,
         conditions: [
-          ...rule.entity?.conditions || [],
-          ...rule.conditions || []
+          ...r2.entity?.conditions || [],
+          ...r2.conditions || []
         ]
       },
-      rule.count,
+      r2.count ?? 1,
       context
-    ) : [bgioArguments.G.bank.getOne(
-      bgioArguments,
+    ) : [bank.getOne(
+      bgio,
       {
-        ...rule.entity,
+        ...r2.entity,
         conditions: [
-          ...rule.entity?.conditions || [],
-          ...rule.conditions || []
+          ...r2.entity?.conditions || [],
+          ...r2.conditions || []
         ]
       },
       context
     )];
     entities.forEach((entity) => {
-      destination.placeEntity(entity, rule.position);
+      destination.placeEntity(entity, r2.position);
     });
   }
 };
 
-// src/game-factory/move/take-from.js
+// src/game-factory/move/take-from.ts
 var TakeFrom = class extends Move {
-  do(bgioArguments, rule, { arguments: { source, destination } }) {
-    destination.placeEntity(source.takeOne(rule.arguments.source.position));
+  do(_bgioArguments, rule, resolvedPayload) {
+    const { source, destination } = resolvedPayload.arguments;
+    destination.placeEntity(
+      source.takeOne(
+        rule.arguments.source.position
+      )
+    );
   }
 };
 
-// src/game-factory/move/set-state.js
+// src/game-factory/move/set-state.ts
 var SetState = class extends Move {
-  do(_2, __, { arguments: { entity, state } }) {
+  do(_unused, _rule, resolvedPayload) {
+    const { entity, state } = resolvedPayload.arguments;
     entity.state = {
       ...entity.state,
       [state.property]: state.value
@@ -53495,7 +53616,7 @@ var SetState = class extends Move {
   }
 };
 
-// src/utils/do-moves.js
+// src/utils/do-moves.ts
 function doMoves(bgioArguments, moves = [], context) {
   if (!moves?.length) {
     return bgioArguments.G;
@@ -53510,11 +53631,12 @@ function doMoves(bgioArguments, moves = [], context) {
   return bgioArguments.G;
 }
 
-// src/game-factory/move/set-active-players.js
+// src/game-factory/move/set-active-players.ts
 var SetActivePlayers = class extends Move {
-  do(bgioArguments, rule, _2, context) {
-    bgioArguments.events.setActivePlayers(rule.options);
-    const phaseName = bgioArguments.ctx.phase;
+  do(bgioArguments, rule, _unused, context) {
+    const b2 = bgioArguments;
+    b2.events.setActivePlayers(rule.options);
+    const phaseName = b2.ctx.phase;
     const stageName = rule.options.currentPlayer?.stage;
     const phaseOrRoot = context.game.phases?.[phaseName] ?? context.game;
     const stage = phaseOrRoot?.turn?.stages?.[stageName];
@@ -53529,26 +53651,28 @@ var SetActivePlayers = class extends Move {
   }
 };
 
-// src/game-factory/move/end-turn.js
+// src/game-factory/move/end-turn.ts
 var EndTurn = class extends Move {
   do(bgioArguments) {
     bgioArguments.events.endTurn();
   }
 };
 
-// src/game-factory/move/pass-turn.js
+// src/game-factory/move/pass-turn.ts
 var PassTurn = class extends Move {
   do(bgioArguments) {
-    if (bgioArguments.G._meta.passedPlayers.length < bgioArguments.ctx.numPlayers) {
-      bgioArguments.G._meta.passedPlayers.push(bgioArguments.ctx.currentPlayer);
-      bgioArguments.events.pass();
+    const a2 = bgioArguments;
+    if (a2.G._meta.passedPlayers.length < a2.ctx.numPlayers) {
+      a2.G._meta.passedPlayers.push(a2.ctx.currentPlayer);
+      a2.events.pass();
     }
   }
 };
 
-// src/game-factory/move/for-each.js
+// src/game-factory/move/for-each.ts
 var ForEach = class extends Move {
-  do(bgioArguments, rule, { arguments: { targets } }, context) {
+  do(bgioArguments, rule, resolvedPayload, context) {
+    const { targets } = resolvedPayload.arguments;
     targets.forEach((target) => {
       const loopContext = {
         ...context,
@@ -53563,23 +53687,28 @@ var ForEach = class extends Move {
   }
 };
 
-// src/game-factory/move/pass.js
+// src/game-factory/move/pass.ts
 var Pass = class extends Move {
   do(bgioArguments) {
     bgioArguments.events.endTurn();
   }
 };
 
-// src/game-factory/move/shuffle.js
+// src/game-factory/move/shuffle.ts
 var Shuffle = class extends Move {
-  do(bgioArguments, _2, { arguments: { target } }) {
-    target.entities = bgioArguments.random.Shuffle(target.entities);
+  do(bgioArguments, _rule, resolvedPayload) {
+    const { target } = resolvedPayload.arguments;
+    const b2 = bgioArguments;
+    target.entities = b2.random.Shuffle(target.entities);
   }
 };
 
-// src/game-factory/move/move-factory.js
+// src/game-factory/move/move-factory.ts
 function moveFactory(moveRule, game) {
   const moveInstance = getMoveInstance(moveRule);
+  if (!moveInstance) {
+    throw new Error("moveFactory: unknown moveType");
+  }
   const compatibleMove = function(bgioArguments, serializablePayload) {
     const newBgioArguments = deserializeBgioArguments(bgioArguments);
     const { G: G2 } = newBgioArguments;
@@ -53588,8 +53717,10 @@ function moveFactory(moveRule, game) {
     const moveConditionResults = moveInstance.doMove(newBgioArguments, payload, context);
     context.moveConditionResults = [moveConditionResults];
     if (moveConditionResults !== import_core2.INVALID_MOVE && moveRule.then) {
-      for (let automaticMoveRule of moveRule.then) {
-        const result = getMoveInstance(automaticMoveRule).doMove(
+      for (const automaticMoveRule of moveRule.then) {
+        const auto = getMoveInstance(automaticMoveRule);
+        if (!auto) continue;
+        const result = auto.doMove(
           newBgioArguments,
           {},
           { ...context }
@@ -53604,16 +53735,15 @@ function moveFactory(moveRule, game) {
   return compatibleMove;
 }
 function revivePayload(serializablePayload, G2) {
-  if (serializablePayload) {
-    const payload = deserialize(JSON.stringify(serializablePayload), registry);
-    payload.arguments = Object.entries(payload.arguments).reduce((acc, [key, argOrEntityId]) => ({
-      ...acc,
-      [key]: typeof argOrEntityId === "number" ? G2.bank.locate(argOrEntityId) : argOrEntityId
-    }), {});
-    return payload;
-  } else {
-    return serializablePayload;
+  if (!serializablePayload) {
+    return void 0;
   }
+  const payload = deserialize(JSON.stringify(serializablePayload), registry);
+  payload.arguments = Object.entries(payload.arguments).reduce((acc, [key, argOrEntityId]) => ({
+    ...acc,
+    [key]: typeof argOrEntityId === "number" ? G2.bank.locate(argOrEntityId) : argOrEntityId
+  }), {});
+  return payload;
 }
 function getMoveInstance(moveRule) {
   switch (moveRule.moveType) {
@@ -53642,13 +53772,12 @@ function getMoveInstance(moveRule) {
   }
 }
 
-// src/game-factory/expand-game-rules.js
-var import_cloneDeep = __toESM(require_cloneDeep());
+// src/game-factory/expand-game-rules.ts
 var import_find2 = __toESM(require_find());
 
-// src/utils/json-transformer.js
+// src/utils/json-transformer.ts
 function transformJSON(data, rules) {
-  return JSON.parse(JSON.stringify(data), (key, value2) => {
+  return JSON.parse(JSON.stringify(data), (_key, value2) => {
     let result = value2;
     for (const rule of rules) {
       if (rule.test(result)) {
@@ -53659,7 +53788,7 @@ function transformJSON(data, rules) {
   });
 }
 
-// src/game-factory/expand-game-rules.js
+// src/game-factory/expand-game-rules.ts
 var invariantEntities = [
   {
     entityType: "Space",
@@ -53683,7 +53812,8 @@ function expandEntities(rules) {
 }
 function expandInitialPlacements(rules, entities) {
   if (rules.sharedBoard) {
-    const sharedBoardPlacements = rules.sharedBoard.map((matcher) => ({ entity: matcher, destination: { name: "sharedBoard" } }));
+    const sharedBoard = rules.sharedBoard;
+    const sharedBoardPlacements = sharedBoard.map((matcher) => ({ entity: matcher, destination: { name: "sharedBoard" } }));
     if (!rules.initialPlacements) rules.initialPlacements = [];
     rules.initialPlacements.unshift(...sharedBoardPlacements);
   }
@@ -53693,7 +53823,8 @@ function expandInitialPlacements(rules, entities) {
       name: "personalBoard",
       perPlayer: true
     });
-    const personalBoardPlacements = rules.personalBoard.map((matcher) => ({
+    const personalBoard = rules.personalBoard;
+    const personalBoardPlacements = personalBoard.map((matcher) => ({
       entity: matcher,
       destination: {
         name: "personalBoard"
@@ -53723,7 +53854,7 @@ function expandInitialPlacements(rules, entities) {
                 conditionType: "Is",
                 matcher: {
                   ...matcher,
-                  ...entityDefinition.perPlayer ? {
+                  ...entityDefinition?.perPlayer ? {
                     player: {
                       type: "contextPath",
                       path: ["loopTarget"]
@@ -53797,21 +53928,21 @@ var simpleReplacements = [
   ],
   [
     "ownerOfFirstResultEntity",
-    // might have to more tightly couple this to HasLine condition
     {
-      "type": "contextPath",
-      "path": ["results", 0, "matches", 0, 0, "entities", 0, "attributes", "player"]
+      type: "contextPath",
+      path: ["results", 0, "matches", 0, 0, "entities", 0, "attributes", "player"]
     }
   ]
 ];
 var transformationRules = [
   {
-    test: (val) => val && typeof val === "object",
+    test: (val) => Boolean(val && typeof val === "object"),
     replace: (val) => {
+      const obj = val;
       keyMappings.forEach(([oldKey, newKey]) => {
-        if (val.hasOwnProperty(oldKey)) {
-          val[newKey] = val[oldKey];
-          delete val[oldKey];
+        if (Object.prototype.hasOwnProperty.call(obj, oldKey)) {
+          obj[newKey] = obj[oldKey];
+          delete obj[oldKey];
         }
       });
       return val;
@@ -53829,22 +53960,24 @@ var transformationRules = [
     }
   },
   {
-    test: (val) => val?.conditions,
+    test: (val) => Boolean(val && typeof val === "object" && val.conditions),
     replace: (val) => {
-      if (!Array.isArray(val.conditions)) {
-        val.conditions = [val.conditions];
+      const v2 = val;
+      if (!Array.isArray(v2.conditions)) {
+        v2.conditions = [v2.conditions];
       }
       return val;
     }
   },
   {
-    test: (val) => val?.conditions,
+    test: (val) => Boolean(val && typeof val === "object" && val.conditions),
     replace: (val) => {
-      for (let i2 = 0, len = val.conditions.length; i2 < len; i2++) {
-        if (!val.conditions[i2].conditionType) {
-          val.conditions[i2] = {
+      const v2 = val;
+      for (let i2 = 0, len = v2.conditions.length; i2 < len; i2++) {
+        if (!v2.conditions[i2].conditionType) {
+          v2.conditions[i2] = {
             conditionType: "Is",
-            matcher: val.conditions[i2]
+            matcher: v2.conditions[i2]
           };
         }
       }
@@ -53852,18 +53985,21 @@ var transformationRules = [
     }
   },
   {
-    test: (val) => typeof val?.target === "string",
-    replace: (val) => ({
-      ...val,
-      target: {
-        conditions: [{
-          conditionType: "Is",
-          matcher: {
-            name: val.target
-          }
-        }]
-      }
-    })
+    test: (val) => Boolean(val && typeof val === "object" && typeof val.target === "string"),
+    replace: (val) => {
+      const v2 = val;
+      return {
+        ...v2,
+        target: {
+          conditions: [{
+            conditionType: "Is",
+            matcher: {
+              name: v2.target
+            }
+          }]
+        }
+      };
+    }
   }
 ];
 function expandGameRules(gameRules) {
@@ -53890,11 +54026,14 @@ function expandGameRules(gameRules) {
   return rules;
 }
 
-// src/utils/get-scenario-results.js
-function getScenarioResults(bgioArguments, scenarios, context) {
+// src/utils/get-scenario-results.ts
+function getScenarioResults(bgioArguments, scenarios) {
   let match;
   for (const scenario of scenarios) {
-    const conditionResults = checkConditions(bgioArguments, scenario);
+    const conditionResults = checkConditions(
+      bgioArguments,
+      scenario.conditions
+    );
     if (conditionResults.conditionsAreMet) {
       match = { scenario, conditionResults };
       break;
@@ -53911,7 +54050,7 @@ function getScenarioResults(bgioArguments, scenarios, context) {
   }
 }
 
-// src/game-factory/game-factory.js
+// src/game-factory/game-factory.ts
 function gameFactory(gameRules, gameName) {
   const game = { name: gameName };
   const rules = expandGameRules(gameRules);
@@ -53924,19 +54063,21 @@ function gameFactory(gameRules, gameName) {
       }
     };
     const entityDefinitions = expandEntityDefinitions(rules.entities, ctx);
-    initialState.bank = new bank_default(entityDefinitions);
-    initialState.sharedBoard = initialState.bank.getOne(
+    const bank = new bank_default(entityDefinitions);
+    initialState.bank = bank;
+    initialState.sharedBoard = bank.getOne(
       bgioArguments,
       {
         conditions: [{
           conditionType: "Is",
           matcher: { name: "sharedBoard" }
         }]
-      }
+      },
+      {}
     );
     if (rules.personalBoard) {
       initialState.personalBoards = bgioArguments.ctx.playOrder.map(
-        (playerID) => initialState.bank.getOne(
+        (playerID) => bank.getOne(
           bgioArguments,
           {
             conditions: [{
@@ -53946,13 +54087,16 @@ function gameFactory(gameRules, gameName) {
                 player: playerID
               }
             }]
-          }
+          },
+          {}
         )
       );
     }
     rules.initialMoves?.forEach((moveRule) => {
       moveFactory(moveRule, game).moveInstance.doMove(
-        { ...bgioArguments, G: initialState }
+        { ...bgioArguments, G: initialState },
+        void 0,
+        {}
       );
     });
     return JSON.parse(serialize(initialState));
@@ -53970,16 +54114,18 @@ function gameFactory(gameRules, gameName) {
     }), {});
   }
   if (rules.endIf) {
+    const endIfRules = rules.endIf;
     game.endIf = (bgioArguments) => {
       const newBgioArguments = deserializeBgioArguments(bgioArguments);
-      return getScenarioResults(newBgioArguments, rules.endIf);
+      return getScenarioResults(newBgioArguments, endIfRules);
     };
   }
   if (!gameRules.DEBUG_DISABLE_SECRET_STATE) {
     game.playerView = (bgioArguments) => {
       const { G: G2, playerID } = deserializeBgioArguments(bgioArguments);
-      Object.values(G2.bank.tracker).forEach((entity) => {
-        if (entity.rule.contentsHiddenFrom === "All" || entity.rule.contentsHiddenFrom === "Others" && (playerID !== entity.rule.player || playerID == void 0)) {
+      const tracker = G2.bank.tracker;
+      Object.values(tracker).forEach((entity) => {
+        if (entity.rule.contentsHiddenFrom === "All" || entity.rule.contentsHiddenFrom === "Others" && (playerID !== entity.rule.player || playerID === void 0)) {
           if (entity.spaces) {
             entity.spaces = entity.rule.hideLength ? [] : entity.spaces.map(() => G2.bank.createEntity());
           }
@@ -53999,12 +54145,12 @@ function expandEntityDefinitions(entities, ctx) {
     if (entityCopy.perPlayer) {
       delete entityCopy.perPlayer;
       if (entityCopy.variants) {
-        entityCopy.variants = new Array(ctx.numPlayers).fill().reduce((accu, _2, i2) => [
+        entityCopy.variants = new Array(ctx.numPlayers).fill(void 0).reduce((accu, _2, i2) => [
           ...accu,
           ...entityCopy.variants.map((variant) => ({ ...variant, player: `${i2}` }))
         ], []);
       } else {
-        entityCopy.variants = new Array(ctx.numPlayers).fill().map((_2, i2) => ({ player: `${i2}` }));
+        entityCopy.variants = new Array(ctx.numPlayers).fill(void 0).map((_2, i2) => ({ player: `${i2}` }));
       }
     }
     if (entityCopy.variants) {
@@ -54042,9 +54188,10 @@ function createTurn(turnRule, game) {
       }
     });
   }
-  if (turnRule.order?.playOrder === "RotateFirst") {
-    turnRule.order.first = () => 0;
-    turnRule.order.next = ({ ctx }) => (ctx.playOrderPos + 1) % ctx.numPlayers;
+  const order = turnRule.order;
+  if (order?.playOrder === "RotateFirst") {
+    order.first = () => 0;
+    order.next = ({ ctx }) => (ctx.playOrderPos + 1) % ctx.numPlayers;
     turn.order.playOrder = ({ ctx, G: G2 }) => {
       return G2._meta.isAfterFirstPhase ? [...ctx.playOrder.slice(1), ctx.playOrder[0]] : ctx.playOrder;
     };
@@ -54067,10 +54214,11 @@ function createPhase(phaseRule, game) {
     return JSON.parse(serialize(newBgioArguments.G));
   };
   if (phaseRule.endIf) {
+    const phaseEndIf = phaseRule.endIf;
     phase.endIf = (bgioArguments) => {
       const newBgioArguments = deserializeBgioArguments(bgioArguments);
       if (newBgioArguments.G._meta.currentPhaseHasBeenSetUp) {
-        const result = getScenarioResults(newBgioArguments, phaseRule.endIf);
+        const result = getScenarioResults(newBgioArguments, phaseEndIf);
         if (result) {
           return result;
         }
@@ -70953,21 +71101,24 @@ function SocketIO({ server, socketOpts } = {}) {
 var import_lodash4 = __toESM(require_lodash());
 var import_rfc69024 = __toESM(require_rfc6902());
 
-// src/utils/prepare-payload.js
+// src/utils/prepare-payload.ts
 function preparePayload(payload) {
-  if (payload?.arguments) {
-    const payloadCopy = { ...payload };
-    payloadCopy.arguments = Object.entries(payloadCopy.arguments).reduce((acc, [key, argument]) => ({
-      ...acc,
-      [key]: argument.abstract ? argument : argument.entityId
-    }), {});
+  const p2 = payload;
+  if (p2?.arguments) {
+    const payloadCopy = {
+      ...p2,
+      arguments: Object.entries(p2.arguments).reduce((acc, [key, argument]) => ({
+        ...acc,
+        [key]: argument.abstract ? argument : argument.entityId
+      }), {})
+    };
     return JSON.parse(serialize(payloadCopy, { deduplicateInstances: false }));
   } else {
     return payload;
   }
 }
 
-// src/utils/get-steps.js
+// src/utils/get-steps.ts
 var argNamesMap = {
   PlaceNew: ["destination"],
   RemoveEntity: ["entity"],
@@ -70976,13 +71127,15 @@ var argNamesMap = {
   SetState: ["entity", "state"]
 };
 function getSteps(bgioState, moveRule) {
-  return argNamesMap[moveRule.moveType].filter((argName) => moveRule.arguments[argName].playerChoice).map((argName) => ({
+  const names = argNamesMap[moveRule.moveType];
+  if (!names) return [];
+  return names.filter((argName) => moveRule.arguments[argName]?.playerChoice).map((argName) => ({
     argName,
     getClickable: argName === "state" ? () => moveRule.arguments[argName].possibleValues.map((value2) => ({
       abstract: true,
       ...moveRule.arguments[argName],
       value: value2
-    })) : (context) => bgioState.G.bank.findAll(
+    })) : (context) => bankOf(bgioState).findAll(
       bgioState,
       moveRule.arguments[argName],
       context
@@ -70990,12 +71143,11 @@ function getSteps(bgioState, moveRule) {
   }));
 }
 
-// src/utils/create-payload.js
-function createPayload(bgioState, moveRule, targets, context) {
+// src/utils/create-payload.ts
+function createPayload(bgioState, moveRule, targets, _context) {
   const argNames = getSteps(
     bgioState,
-    moveRule,
-    context
+    moveRule
   ).map((s2) => s2.argName);
   return {
     arguments: targets.reduce((acc, target, i2) => ({
@@ -71005,11 +71157,11 @@ function createPayload(bgioState, moveRule, targets, context) {
   };
 }
 
-// src/client/client.js
+// src/client/client.ts
 var Client2 = class {
   constructor(options) {
     this.options = options;
-    this.game = options.boardgameIOGame || gameFactory(JSON.parse(options.gameRules), options.gameName);
+    this.game = options.boardgameIOGame || gameFactory(options.gameRules, options.gameName ?? "");
     if (!options.boardgameIOGame) {
       this.moveBuilder = { targets: [], stepIndex: 0, eliminatedMoves: [] };
       this.optimisticWinner = null;
@@ -71033,7 +71185,7 @@ var Client2 = class {
         game: this.game,
         multiplayer,
         matchID,
-        playerID,
+        playerID: playerID ?? void 0,
         credentials,
         numPlayers,
         debug
@@ -71043,8 +71195,9 @@ var Client2 = class {
       this.client.start();
       return this;
     } catch (error2) {
-      console.error("Failed to join game:", error2?.message ?? error2);
-      if (error2?.stack) console.error(error2.stack);
+      const err = error2;
+      console.error("Failed to join game:", err?.message ?? error2);
+      if (err?.stack) console.error(err.stack);
     }
   }
   update() {
@@ -71087,7 +71240,12 @@ var Client2 = class {
       return;
     }
     const remainingMoveEntries = Object.entries(_possibleMoveMeta).filter(([name]) => !newEliminated.includes(name));
-    if (isMoveCompleted(state, _wrappedMoves, remainingMoveEntries, this.moveBuilder.stepIndex)) {
+    if (isMoveCompleted(
+      state,
+      _wrappedMoves,
+      remainingMoveEntries,
+      this.moveBuilder.stepIndex
+    )) {
       const [moveName] = remainingMoveEntries[0];
       const move = _wrappedMoves[moveName];
       const payload = createPayload(
@@ -71135,7 +71293,10 @@ function getPossibleMoves(bgioState, moves, moveBuilder) {
   const _possibleMoveMeta = {};
   const allClickable = /* @__PURE__ */ new Set();
   Object.entries(moves).filter(([moveName]) => !eliminatedMoves.includes(moveName)).forEach(([moveName, move]) => {
-    const moveRule = resolveProperties(bgioState, { ...move.moveInstance.rule, moveName });
+    const moveRule = resolveProperties(bgioState, {
+      ...move.moveInstance.rule,
+      moveName
+    });
     const context = {
       moveInstance: move.moveInstance,
       moveArguments: moveRule.arguments
@@ -71143,10 +71304,23 @@ function getPossibleMoves(bgioState, moves, moveBuilder) {
     const targets = moveBuilder.targets.map(
       (t2) => t2.abstract ? t2 : bgioState.G.bank.locate(t2.entityId)
     );
-    const payload = createPayload(bgioState, moveRule, targets, context);
+    const payload = createPayload(
+      bgioState,
+      moveRule,
+      targets,
+      context
+    );
     context.moveArguments = { ...context.moveArguments, ...payload.arguments };
-    const moveIsAllowed = checkConditions(bgioState, moveRule, {}, context).conditionsAreMet;
-    const moveSteps = getSteps(bgioState, moveRule);
+    const moveIsAllowed = checkConditions(
+      bgioState,
+      moveRule.conditions,
+      {},
+      context
+    ).conditionsAreMet;
+    const moveSteps = getSteps(
+      bgioState,
+      moveRule
+    );
     const clickableForMove = new Set(
       moveIsAllowed && moveSteps?.[stepIndex]?.getClickable(context) || []
     );
@@ -71156,11 +71330,19 @@ function getPossibleMoves(bgioState, moves, moveBuilder) {
   return { _possibleMoveMeta, allClickable };
 }
 function isMoveCompleted(state, moves, remainingMoveEntries, stepIndex) {
-  return remainingMoveEntries.length === 1 && getSteps(state, moves[remainingMoveEntries[0][0]].moveInstance.rule).length === stepIndex + 1;
+  return remainingMoveEntries.length === 1 && getSteps(
+    state,
+    moves[remainingMoveEntries[0][0]].moveInstance.rule
+  ).length === stepIndex + 1;
 }
 function getWinnerAfterMove(state, game, moveInstance, movePayload) {
-  const simulatedG = simulateMove(state, preparePayload(movePayload), { moveInstance });
-  return game.endIf?.({ ...state, G: JSON.parse(serialize(simulatedG)) });
+  const simulatedG = simulateMove(
+    state,
+    preparePayload(movePayload),
+    { moveInstance }
+  );
+  const endIf = game.endIf;
+  return endIf?.({ ...state, G: JSON.parse(serialize(simulatedG)) });
 }
 
 /*! Bundled license information:

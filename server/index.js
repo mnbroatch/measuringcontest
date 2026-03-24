@@ -82,10 +82,12 @@ server.app.use(async (ctx, next) => {
     // Do your processing
     if (!server.games) server.games = [];
     if (!server.games.find(g => g.name === nameOrRulesHash)) {
-      const gameRules = parsedBody?.gameRules;
+      const rawRules = parsedBody?.gameRules;
+      const gameRules =
+        typeof rawRules === 'string' ? JSON.parse(rawRules) : rawRules;
 
       // make sure this parsing happens before we do other operations
-      const newGameDef = gameFactory(JSON.parse(gameRules), nameOrRulesHash);
+      const newGameDef = gameFactory(gameRules, nameOrRulesHash);
 
       const processedGame = ProcessGameConfig(newGameDef);
       server.games.push(processedGame);

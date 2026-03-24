@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Editor from '@monaco-editor/react';
 import InfoCard from '../info-card/info-card.js'
 import { Users } from 'lucide-react'
+import { formatGameRulesForDisplay } from '../../utils/game-rules-object.js'
 
 export default function GamePreview ({ gameRules, roomCode }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -23,7 +24,7 @@ export default function GamePreview ({ gameRules, roomCode }) {
             height="100%"
             className="editor__input"
             defaultLanguage="json"
-            value={gameRules}
+            value={formatGameRulesForDisplay(gameRules)}
             theme="vs-dark"
             loading={null} 
             options={{
