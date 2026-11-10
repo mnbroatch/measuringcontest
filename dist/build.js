@@ -384,7 +384,7 @@ function GameEditor(_ref) {
   }, "Log in to Create Room"), !auth.loading && auth.idToken && !roomCode && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "button button--x-small button--style-a",
     onClick: function onClick() {
-      var rules = (0,_utils_game_rules_object_js__WEBPACK_IMPORTED_MODULE_5__/* .toGameRulesObject */ .E)(gameRules);
+      var rules = (0,_utils_game_rules_object_js__WEBPACK_IMPORTED_MODULE_5__/* .normalizeGameRules */ .f)(gameRules);
       if (rules) handleCreateRoom({
         gameName: gameName,
         gameRules: rules
@@ -393,7 +393,7 @@ function GameEditor(_ref) {
   }, "Create Room"), !auth.loading && auth.idToken && roomCode && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "button button--x-small button--style-a",
     onClick: function onClick() {
-      var rules = (0,_utils_game_rules_object_js__WEBPACK_IMPORTED_MODULE_5__/* .toGameRulesObject */ .E)(gameRules);
+      var rules = (0,_utils_game_rules_object_js__WEBPACK_IMPORTED_MODULE_5__/* .normalizeGameRules */ .f)(gameRules);
       if (rules) goToRoom({
         gameName: gameName,
         gameRules: rules
@@ -471,7 +471,7 @@ function GamePreview(_ref) {
     height: "100%",
     className: "editor__input",
     defaultLanguage: "json",
-    value: (0,_utils_game_rules_object_js__WEBPACK_IMPORTED_MODULE_4__/* .formatGameRulesForDisplay */ .K)(gameRules),
+    value: (0,_utils_game_rules_object_js__WEBPACK_IMPORTED_MODULE_4__.formatGameRulesForDisplay)(gameRules),
     theme: "vs-dark",
     loading: null,
     options: {
@@ -1066,7 +1066,7 @@ function useGameConnection() {
   var gameId = room === null || room === void 0 ? void 0 : room.gameId;
   var rulesHash = room === null || room === void 0 ? void 0 : room.rulesHash;
   var gameRules = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
-    return (0,_utils_game_rules_object_js__WEBPACK_IMPORTED_MODULE_6__/* .toGameRulesObject */ .E)(room === null || room === void 0 ? void 0 : room.gameRules);
+    return (0,_utils_game_rules_object_js__WEBPACK_IMPORTED_MODULE_6__/* .normalizeGameRules */ .f)(room === null || room === void 0 ? void 0 : room.gameRules);
   }, [room === null || room === void 0 ? void 0 : room.gameRules]);
   var joinGameMutation = (0,_queries_use_join_game_mutation_js__WEBPACK_IMPORTED_MODULE_2__/* .useJoinGameMutation */ .D)(roomCode, gameId);
   var boardgamePlayerID = (_joinGameMutation$dat = joinGameMutation.data) === null || _joinGameMutation$dat === void 0 ? void 0 : _joinGameMutation$dat.boardgamePlayerID;
@@ -1169,7 +1169,7 @@ function useRoomConnection() {
 
 function useSinglePlayerGame(gameRules, numPlayers) {
   var rulesObject = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
-    return (0,_utils_game_rules_object_js__WEBPACK_IMPORTED_MODULE_2__/* .toGameRulesObject */ .E)(gameRules);
+    return (0,_utils_game_rules_object_js__WEBPACK_IMPORTED_MODULE_2__/* .normalizeGameRules */ .f)(gameRules);
   }, [gameRules]);
   return (0,board_game_engine_react__WEBPACK_IMPORTED_MODULE_1__/* .useGameserverConnection */ .JQ)({
     gameRules: rulesObject,
@@ -2084,7 +2084,7 @@ function RoomPage() {
   var isLoading = room.isLoading || !roomConnection.state || status === 'started' && !gameConnection.state;
   var gameDisabledReason = null;
   var minPlayers, maxPlayers, rulesNumPlayers;
-  var rulesObject = (0,_utils_game_rules_object_js__WEBPACK_IMPORTED_MODULE_19__/* .toGameRulesObject */ .E)(gameRules);
+  var rulesObject = (0,_utils_game_rules_object_js__WEBPACK_IMPORTED_MODULE_19__/* .normalizeGameRules */ .f)(gameRules);
   if (!rulesObject) {
     gameDisabledReason = 'Invalid Game Rules';
   } else {
@@ -2281,29 +2281,21 @@ var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_3__/* .createFile
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   E: () => (/* binding */ toGameRulesObject),
-/* harmony export */   K: () => (/* binding */ formatGameRulesForDisplay)
+/* harmony export */   f: () => (/* binding */ normalizeGameRules)
 /* harmony export */ });
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 /**
  * B.A.G.E.L. rules as stored/transmitted: either a JSON string or a parsed object.
- * board-game-engine / board-game-engine-react expect a plain object.
+ * board-game-engine / board-game-engine-react expect text
  */
-function toGameRulesObject(gameRules) {
+function normalizeGameRules(gameRules) {
   if (gameRules == null || gameRules === '') return undefined;
   if (_typeof(gameRules) === 'object') return gameRules;
   try {
-    return JSON.parse(gameRules);
+    return JSON.stringify(JSON.parse(gameRules), null, 2);
   } catch (_unused) {
     return undefined;
   }
-}
-
-/** Monaco / read-only editors want a string value. */
-function formatGameRulesForDisplay(gameRules) {
-  if (gameRules == null || gameRules === '') return '';
-  if (typeof gameRules === 'string') return gameRules;
-  return JSON.stringify(gameRules, null, 2);
 }
 
 /***/ },
