@@ -1,20 +1,13 @@
 /**
  * B.A.G.E.L. rules as stored/transmitted: either a JSON string or a parsed object.
- * board-game-engine / board-game-engine-react expect a plain object.
+ * board-game-engine / board-game-engine-react expect text
  */
-export function toGameRulesObject (gameRules) {
+export function normalizeGameRules (gameRules) {
   if (gameRules == null || gameRules === '') return undefined
   if (typeof gameRules === 'object') return gameRules
   try {
-    return JSON.parse(gameRules)
+    return JSON.stringify(JSON.parse(gameRules), null, 2)
   } catch {
     return undefined
   }
-}
-
-/** Monaco / read-only editors want a string value. */
-export function formatGameRulesForDisplay (gameRules) {
-  if (gameRules == null || gameRules === '') return ''
-  if (typeof gameRules === 'string') return gameRules
-  return JSON.stringify(gameRules, null, 2)
 }

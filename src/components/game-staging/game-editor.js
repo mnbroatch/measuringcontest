@@ -4,7 +4,7 @@ import Editor from '@monaco-editor/react';
 import PlayGame from "../play-game/play-game.js";
 import useSinglePlayerGame from "../../hooks/use-single-player-game.js";
 import ButtonWithInput from '../../components/button-with-input/button-with-input.js'
-import { toGameRulesObject } from '../../utils/game-rules-object.js'
+import { normalizeGameRules } from '../../utils/game-rules-object.js'
 
 import ticTacToe from "../../../server/examples/tic-tac-toe.json";
 import eights from "../../../server/examples/eights.json";
@@ -209,7 +209,7 @@ export default function GameEditor ({
               <button
                 className="button button--x-small button--style-a"
                 onClick={() => {
-                  const rules = toGameRulesObject(gameRules)
+                  const rules = normalizeGameRules(gameRules)
                   if (rules) handleCreateRoom({ gameName, gameRules: rules })
                 }}
               >
@@ -220,7 +220,7 @@ export default function GameEditor ({
               <button
                 className="button button--x-small button--style-a"
                 onClick={() => {
-                  const rules = toGameRulesObject(gameRules)
+                  const rules = normalizeGameRules(gameRules)
                   if (rules) goToRoom({ gameName, gameRules: rules })
                 }}
               >

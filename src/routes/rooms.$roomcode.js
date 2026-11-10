@@ -15,7 +15,7 @@ import WatchGame from "../components/watch-game/watch-game.js";
 import RoomGame from "../components/game-staging/room-game.js";
 import GamePreview from "../components/game-staging/game-preview.js";
 import GameEditor from "../components/game-staging/game-editor.js";
-import { toGameRulesObject } from "../utils/game-rules-object.js";
+import { normalizeGameRules } from "../utils/game-rules-object.js";
 
 const SCREEN_STATE_EDITING = 'editing'
 const SCREEN_STATE_WAITING = 'waiting'
@@ -53,7 +53,7 @@ export default function RoomPage () {
 
   let gameDisabledReason = null
   let minPlayers, maxPlayers, rulesNumPlayers
-  const rulesObject = toGameRulesObject(gameRules)
+  const rulesObject = normalizeGameRules(gameRules)
   if (!rulesObject) {
     gameDisabledReason = 'Invalid Game Rules'
   } else {

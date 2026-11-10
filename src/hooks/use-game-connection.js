@@ -4,7 +4,7 @@ import { useJoinGameMutation } from "../queries/use-join-game-mutation.js";
 import { useRoomQuery } from "../queries/use-room-query.js"
 import { useGameserverConnection } from "board-game-engine-react";
 import { BOARDGAME_SERVER_URL } from '../constants/api.js'
-import { toGameRulesObject } from '../utils/game-rules-object.js'
+import { normalizeGameRules } from '../utils/game-rules-object.js'
 
 export default function useGameConnection () {
   const { roomcode: roomCode } = useParams({})
@@ -12,7 +12,7 @@ export default function useGameConnection () {
   const gameId = room?.gameId
   const rulesHash = room?.rulesHash
   const gameRules = useMemo(
-    () => toGameRulesObject(room?.gameRules),
+    () => normalizeGameRules(room?.gameRules),
     [room?.gameRules]
   )
 
