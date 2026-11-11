@@ -4,7 +4,6 @@
  */
 export function normalizeGameRules (gameRules) {
   if (gameRules == null || gameRules === '') return undefined
-  if (typeof gameRules === 'object') return gameRules
   try {
     return JSON.stringify(JSON.parse(gameRules), null, 2)
   } catch {

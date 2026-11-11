@@ -471,7 +471,7 @@ function GamePreview(_ref) {
     height: "100%",
     className: "editor__input",
     defaultLanguage: "json",
-    value: (0,_utils_game_rules_object_js__WEBPACK_IMPORTED_MODULE_4__.formatGameRulesForDisplay)(gameRules),
+    value: (0,_utils_game_rules_object_js__WEBPACK_IMPORTED_MODULE_4__/* .normalizeGameRules */ .f)(gameRules),
     theme: "vs-dark",
     loading: null,
     options: {
@@ -2283,14 +2283,12 @@ var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_3__/* .createFile
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   f: () => (/* binding */ normalizeGameRules)
 /* harmony export */ });
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 /**
  * B.A.G.E.L. rules as stored/transmitted: either a JSON string or a parsed object.
  * board-game-engine / board-game-engine-react expect text
  */
 function normalizeGameRules(gameRules) {
   if (gameRules == null || gameRules === '') return undefined;
-  if (_typeof(gameRules) === 'object') return gameRules;
   try {
     return JSON.stringify(JSON.parse(gameRules), null, 2);
   } catch (_unused) {
