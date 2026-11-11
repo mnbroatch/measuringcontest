@@ -47,6 +47,8 @@ export default function RoomPage () {
   const [isTimedOut, setIsTimedOut] = useState(false)
   const createGameMutation = useCreateGameMutation(roomCode)
   const deleteGameMutation = useDeleteGameMutation(roomCode, gameId)
+  console.log('roomConnection', roomConnection.state)
+  console.log('gameConnection', gameConnection.state)
   const isLoading = room.isLoading
     || !roomConnection.state
     || (status === 'started' && !gameConnection.state)
@@ -112,6 +114,8 @@ export default function RoomPage () {
     }
     playerCountString += minPlayers > 1 || maxPlayers > 1 ? ' Players' : ' Player'
   }
+
+  console.log('isLoading', isLoading)
 
   return !isLoading && iAmInRoom && (
     <>

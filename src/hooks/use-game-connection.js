@@ -11,6 +11,7 @@ export default function useGameConnection () {
   const room = useRoomQuery(roomCode).data
   const gameId = room?.gameId
   const rulesHash = room?.rulesHash
+  console.log('room', room)
   const gameRules = useMemo(
     () => normalizeGameRules(room?.gameRules),
     [room?.gameRules]
@@ -25,6 +26,14 @@ export default function useGameConnection () {
       joinGameMutation.mutate()
     }
   }, [roomCode, gameId])
+
+  console.log('gameRules', gameRules)
+  console.log('gameId', gameId)
+  rulesHash
+  console.log('boardgamePlayerID', boardgamePlayerID)
+  console.log('clientToken', clientToken)
+  console.log('joinGameMutation.isSuccess', joinGameMutation.isSuccess)
+  console.log('BOARDGAME_SERVER_URL', BOARDGAME_SERVER_URL)
 
   return useGameserverConnection({
     server: BOARDGAME_SERVER_URL,

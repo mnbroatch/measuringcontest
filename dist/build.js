@@ -1065,6 +1065,7 @@ function useGameConnection() {
   var room = (0,_queries_use_room_query_js__WEBPACK_IMPORTED_MODULE_3__/* .useRoomQuery */ .P)(roomCode).data;
   var gameId = room === null || room === void 0 ? void 0 : room.gameId;
   var rulesHash = room === null || room === void 0 ? void 0 : room.rulesHash;
+  console.log('room', room);
   var gameRules = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
     return (0,_utils_game_rules_object_js__WEBPACK_IMPORTED_MODULE_6__/* .normalizeGameRules */ .f)(room === null || room === void 0 ? void 0 : room.gameRules);
   }, [room === null || room === void 0 ? void 0 : room.gameRules]);
@@ -1076,6 +1077,13 @@ function useGameConnection() {
       joinGameMutation.mutate();
     }
   }, [roomCode, gameId]);
+  console.log('gameRules', gameRules);
+  console.log('gameId', gameId);
+  rulesHash;
+  console.log('boardgamePlayerID', boardgamePlayerID);
+  console.log('clientToken', clientToken);
+  console.log('joinGameMutation.isSuccess', joinGameMutation.isSuccess);
+  console.log('BOARDGAME_SERVER_URL', _constants_api_js__WEBPACK_IMPORTED_MODULE_5__/* .BOARDGAME_SERVER_URL */ ._);
   return (0,board_game_engine_react__WEBPACK_IMPORTED_MODULE_4__/* .useGameserverConnection */ .JQ)({
     server: _constants_api_js__WEBPACK_IMPORTED_MODULE_5__/* .BOARDGAME_SERVER_URL */ ._,
     matchID: gameId,
@@ -2081,6 +2089,8 @@ function RoomPage() {
     setIsTimedOut = _useState4[1];
   var createGameMutation = (0,_queries_use_create_game_mutation_js__WEBPACK_IMPORTED_MODULE_10__/* .useCreateGameMutation */ .Z)(roomCode);
   var deleteGameMutation = (0,_queries_use_delete_game_mutation_js__WEBPACK_IMPORTED_MODULE_11__/* .useDeleteGameMutation */ .Q)(roomCode, gameId);
+  console.log('roomConnection', roomConnection.state);
+  console.log('gameConnection', gameConnection.state);
   var isLoading = room.isLoading || !roomConnection.state || status === 'started' && !gameConnection.state;
   var gameDisabledReason = null;
   var minPlayers, maxPlayers, rulesNumPlayers;
@@ -2147,6 +2157,7 @@ function RoomPage() {
     }
     playerCountString += minPlayers > 1 || maxPlayers > 1 ? ' Players' : ' Player';
   }
+  console.log('isLoading', isLoading);
   return !isLoading && iAmInRoom && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, status === 'waiting' && screenState === SCREEN_STATE_WAITING && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", {
     className: "room-game__game-name"
   }, gameName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h5", {
@@ -2290,7 +2301,7 @@ var Route = (0,_tanstack_react_router__WEBPACK_IMPORTED_MODULE_3__/* .createFile
 function normalizeGameRules(gameRules) {
   if (gameRules == null || gameRules === '') return undefined;
   try {
-    return JSON.stringify(JSON.parse(gameRules), null, 2);
+    return typeof gameRules === 'string' ? JSON.stringify(JSON.parse(gameRules), null, 2) : JSON.stringify(gameRules, null, 2);
   } catch (_unused) {
     return undefined;
   }
@@ -48988,6 +48999,7 @@ var useGameserverConnection = ({
       multiplayer
     };
     const newConnection = new board_game_engine__WEBPACK_IMPORTED_MODULE_0__/* .Client */ .K(options);
+    console.log('newConnection', newConnection)
     newConnection.connect();
     setConnection(newConnection);
     return () => {
