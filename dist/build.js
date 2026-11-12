@@ -2188,7 +2188,7 @@ function RoomPage() {
     onClick: function onClick() {
       setScreenState(SCREEN_STATE_EDITING);
     }
-  }, "Edit Game"), "laksjdalskdjasldkj", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  }, "Edit Game"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "button button--x-small button--style-a",
     disabled: !!gameDisabledReason,
     onClick: function onClick() {
